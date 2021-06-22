@@ -8,13 +8,12 @@ const envConfig = require('./envConfig');
 
 module.exports = () => {
   const clientEnv = envConfig();
-  const { REACT_APP_NODE_ENV, REACT_APP_PUBLIC_URL } = process.env;
   return {
-    mode: REACT_APP_NODE_ENV,
+    mode: clientEnv.REACT_APP_NODE_ENV,
     entry: paths.entryPath,
     output: {
       path: paths.buildPath,
-      publicPath: REACT_APP_PUBLIC_URL,
+      publicPath: clientEnv.REACT_APP_PUBLIC_URL,
       filename: 'static/js/[name].[contenthash:8].js',
       chunkFilename: 'static/js/[name].[contenthash:8].js',
     },
@@ -103,7 +102,7 @@ module.exports = () => {
       }),
       new WebpackManifestPlugin({
         fileName: 'asset-manifest.json',
-        publicPath: REACT_APP_PUBLIC_URL,
+        publicPath: clientEnv.REACT_APP_PUBLIC_URL,
         generate: (seed, files, entrypoints) => {
           const manifestFiles = files.reduce((manifest, file) => {
             manifest[file.name] = file.path;

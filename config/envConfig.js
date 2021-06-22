@@ -4,8 +4,9 @@ const { config } = require('dotenv');
 
 function envConfig() {
   // const baseEnv = { REACT_APP_SSR: target === 'web' ? 'disabled' : 'enabled' };
+  const { NODE_ENV } = process.env;
   config({
-    path: path.resolve(paths.rootPath, `.env.${process.env.NODE_ENV}`),
+    path: path.resolve(paths.rootPath, `.env.${NODE_ENV}`),
   });
   return {
     'process.env': JSON.stringify(
@@ -14,7 +15,7 @@ function envConfig() {
         .reduce((env, key) => {
           env[key] = process.env[key];
           return env;
-        }, baseEnv),
+        }, {}),
     ),
   };
 }

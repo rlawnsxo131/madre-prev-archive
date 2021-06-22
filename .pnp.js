@@ -43,6 +43,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:687d1eda43251072d49f1c5ac2e4619d49d360050426a770fbd69cb0ca2199508ea27513052211950e20f79b67c113ee4a6ae02599de3c35bd8a914818da6dc1#npm:7.14.5"],
             ["@emotion/babel-plugin", "virtual:687d1eda43251072d49f1c5ac2e4619d49d360050426a770fbd69cb0ca2199508ea27513052211950e20f79b67c113ee4a6ae02599de3c35bd8a914818da6dc1#npm:11.3.0"],
             ["@emotion/react", "virtual:687d1eda43251072d49f1c5ac2e4619d49d360050426a770fbd69cb0ca2199508ea27513052211950e20f79b67c113ee4a6ae02599de3c35bd8a914818da6dc1#npm:11.4.0"],
+            ["@types/node", "npm:15.12.4"],
             ["@types/react", "npm:17.0.11"],
             ["@types/react-dom", "npm:17.0.8"],
             ["@types/react-router-dom", "npm:5.1.7"],
@@ -57,6 +58,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react", "npm:17.0.2"],
             ["react-dom", "virtual:687d1eda43251072d49f1c5ac2e4619d49d360050426a770fbd69cb0ca2199508ea27513052211950e20f79b67c113ee4a6ae02599de3c35bd8a914818da6dc1#npm:17.0.2"],
             ["react-router-dom", "virtual:687d1eda43251072d49f1c5ac2e4619d49d360050426a770fbd69cb0ca2199508ea27513052211950e20f79b67c113ee4a6ae02599de3c35bd8a914818da6dc1#npm:5.2.0"],
+            ["recoil", "virtual:687d1eda43251072d49f1c5ac2e4619d49d360050426a770fbd69cb0ca2199508ea27513052211950e20f79b67c113ee4a6ae02599de3c35bd8a914818da6dc1#npm:0.3.1"],
             ["ts-loader", "virtual:687d1eda43251072d49f1c5ac2e4619d49d360050426a770fbd69cb0ca2199508ea27513052211950e20f79b67c113ee4a6ae02599de3c35bd8a914818da6dc1#npm:9.2.3"],
             ["typescript", "patch:typescript@npm%3A4.3.4#builtin<compat/typescript>::version=4.3.4&hash=ddfc1b"],
             ["url-loader", "virtual:687d1eda43251072d49f1c5ac2e4619d49d360050426a770fbd69cb0ca2199508ea27513052211950e20f79b67c113ee4a6ae02599de3c35bd8a914818da6dc1#npm:4.1.1"],
@@ -4047,6 +4049,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:687d1eda43251072d49f1c5ac2e4619d49d360050426a770fbd69cb0ca2199508ea27513052211950e20f79b67c113ee4a6ae02599de3c35bd8a914818da6dc1#npm:7.14.5"],
             ["@emotion/babel-plugin", "virtual:687d1eda43251072d49f1c5ac2e4619d49d360050426a770fbd69cb0ca2199508ea27513052211950e20f79b67c113ee4a6ae02599de3c35bd8a914818da6dc1#npm:11.3.0"],
             ["@emotion/react", "virtual:687d1eda43251072d49f1c5ac2e4619d49d360050426a770fbd69cb0ca2199508ea27513052211950e20f79b67c113ee4a6ae02599de3c35bd8a914818da6dc1#npm:11.4.0"],
+            ["@types/node", "npm:15.12.4"],
             ["@types/react", "npm:17.0.11"],
             ["@types/react-dom", "npm:17.0.8"],
             ["@types/react-router-dom", "npm:5.1.7"],
@@ -4061,6 +4064,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react", "npm:17.0.2"],
             ["react-dom", "virtual:687d1eda43251072d49f1c5ac2e4619d49d360050426a770fbd69cb0ca2199508ea27513052211950e20f79b67c113ee4a6ae02599de3c35bd8a914818da6dc1#npm:17.0.2"],
             ["react-router-dom", "virtual:687d1eda43251072d49f1c5ac2e4619d49d360050426a770fbd69cb0ca2199508ea27513052211950e20f79b67c113ee4a6ae02599de3c35bd8a914818da6dc1#npm:5.2.0"],
+            ["recoil", "virtual:687d1eda43251072d49f1c5ac2e4619d49d360050426a770fbd69cb0ca2199508ea27513052211950e20f79b67c113ee4a6ae02599de3c35bd8a914818da6dc1#npm:0.3.1"],
             ["ts-loader", "virtual:687d1eda43251072d49f1c5ac2e4619d49d360050426a770fbd69cb0ca2199508ea27513052211950e20f79b67c113ee4a6ae02599de3c35bd8a914818da6dc1#npm:9.2.3"],
             ["typescript", "patch:typescript@npm%3A4.3.4#builtin<compat/typescript>::version=4.3.4&hash=ddfc1b"],
             ["url-loader", "virtual:687d1eda43251072d49f1c5ac2e4619d49d360050426a770fbd69cb0ca2199508ea27513052211950e20f79b67c113ee4a6ae02599de3c35bd8a914818da6dc1#npm:4.1.1"],
@@ -5229,6 +5233,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/graceful-fs-npm-4.2.6-535b2234f1-84d39c7756.zip/node_modules/graceful-fs/",
           "packageDependencies": [
             ["graceful-fs", "npm:4.2.6"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["hamt_plus", [
+        ["npm:1.0.2", {
+          "packageLocation": "./.yarn/cache/hamt_plus-npm-1.0.2-67a52ee1df-b1b1d65d19.zip/node_modules/hamt_plus/",
+          "packageDependencies": [
+            ["hamt_plus", "npm:1.0.2"]
           ],
           "linkType": "HARD",
         }]
@@ -7722,6 +7735,33 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["rechoir", "npm:0.7.0"],
             ["resolve", "patch:resolve@npm%3A1.20.0#builtin<compat/resolve>::version=1.20.0&hash=3388aa"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["recoil", [
+        ["npm:0.3.1", {
+          "packageLocation": "./.yarn/cache/recoil-npm-0.3.1-f7ef15c8ed-6cc0ee6320.zip/node_modules/recoil/",
+          "packageDependencies": [
+            ["recoil", "npm:0.3.1"]
+          ],
+          "linkType": "SOFT",
+        }],
+        ["virtual:687d1eda43251072d49f1c5ac2e4619d49d360050426a770fbd69cb0ca2199508ea27513052211950e20f79b67c113ee4a6ae02599de3c35bd8a914818da6dc1#npm:0.3.1", {
+          "packageLocation": "./.yarn/$$virtual/recoil-virtual-27dd85eaae/0/cache/recoil-npm-0.3.1-f7ef15c8ed-6cc0ee6320.zip/node_modules/recoil/",
+          "packageDependencies": [
+            ["recoil", "virtual:687d1eda43251072d49f1c5ac2e4619d49d360050426a770fbd69cb0ca2199508ea27513052211950e20f79b67c113ee4a6ae02599de3c35bd8a914818da6dc1#npm:0.3.1"],
+            ["@types/react", "npm:17.0.11"],
+            ["hamt_plus", "npm:1.0.2"],
+            ["react", "npm:17.0.2"],
+            ["react-dom", "virtual:687d1eda43251072d49f1c5ac2e4619d49d360050426a770fbd69cb0ca2199508ea27513052211950e20f79b67c113ee4a6ae02599de3c35bd8a914818da6dc1#npm:17.0.2"],
+            ["react-native", null]
+          ],
+          "packagePeers": [
+            "@types/react",
+            "react-dom",
+            "react-native",
+            "react"
           ],
           "linkType": "HARD",
         }]

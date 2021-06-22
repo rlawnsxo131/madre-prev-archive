@@ -1462,7 +1462,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
+"@types/node@npm:*, @types/node@npm:^15.12.4":
   version: 15.12.4
   resolution: "@types/node@npm:15.12.4"
   checksum: 64b121a7e805379382aeb3eefed56c4c34f1ebf5e818ba2c732e43beebc4fbde20be438f3eaaffd8dba5062f0e0c9ae085127b7239906d170eda816885a6c508
@@ -2754,6 +2754,7 @@ __metadata:
     "@babel/preset-typescript": ^7.14.5
     "@emotion/babel-plugin": ^11.3.0
     "@emotion/react": ^11.4.0
+    "@types/node": ^15.12.4
     "@types/react": ^17.0.11
     "@types/react-dom": ^17.0.8
     "@types/react-router-dom": ^5.1.7
@@ -2768,6 +2769,7 @@ __metadata:
     react: ^17.0.2
     react-dom: ^17.0.2
     react-router-dom: ^5.2.0
+    recoil: ^0.3.1
     ts-loader: ^9.2.3
     typescript: ^4.3.4
     url-loader: ^4.1.1
@@ -3752,6 +3754,13 @@ fsevents@~2.3.2:
   version: 4.2.6
   resolution: "graceful-fs@npm:4.2.6"
   checksum: 84d39c7756892553da990a9db7e45f844b3309b37b5a00174cbb4748476f2250c54f24594d4d252f64f085c65c2fdac7c809419bf6d55f0e6e42eb07ac0f5bf2
+  languageName: node
+  linkType: hard
+
+"hamt_plus@npm:1.0.2":
+  version: 1.0.2
+  resolution: "hamt_plus@npm:1.0.2"
+  checksum: b1b1d65d19546a513cd68ea8e9970b5e76c61549bd395ea7d8f809d439940738cc5a36eaa712668e69099a5fd62cfafb8c34079e392697f31eee04ab5b6d4094
   languageName: node
   linkType: hard
 
@@ -5939,6 +5948,22 @@ fsevents@~2.3.2:
   dependencies:
     resolve: ^1.9.0
   checksum: 1d4cc8db1d4ff51d4c156db7ff6fe0a376e7527b61afafd148f1cfa2c19a6c454f3f77f1cb175e1f1f1476a83dbeba3632de088441dbaa404091a30d39c8749f
+  languageName: node
+  linkType: hard
+
+"recoil@npm:^0.3.1":
+  version: 0.3.1
+  resolution: "recoil@npm:0.3.1"
+  dependencies:
+    hamt_plus: 1.0.2
+  peerDependencies:
+    react: ">=16.13.1"
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+  checksum: 6cc0ee6320f66e3e26bf119fd03c83455389e138ee53411c03290c6fdbcd2282248c00ab4308181983fb3258f30448e0254e52b4b04c54c7da3e697893c63596
   languageName: node
   linkType: hard
 
