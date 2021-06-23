@@ -2,6 +2,7 @@ import { css, Global } from '@emotion/react';
 import { Route, Switch } from 'react-router-dom';
 import Core from './components/common/Core';
 import ErrorBoundary from './components/error';
+import UserHome from './components/user/UserHome';
 import HomePage from './pages/HomePage';
 
 interface AppProps {}
@@ -12,6 +13,12 @@ function App(props: AppProps) {
       <Switch>
         <Route exact path="/">
           <HomePage />
+        </Route>
+        <Route path="/user/name">
+          <UserHome />
+        </Route>
+        <Route>
+          <div>not found</div>
         </Route>
       </Switch>
       <Core />

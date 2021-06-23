@@ -4,16 +4,17 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
+const PnpWebpackPlugin = require('pnp-webpack-plugin');
 const envConfig = require('./envConfig');
 
 module.exports = () => {
   const clientEnv = envConfig();
   return {
-    mode: clientEnv.REACT_APP_NODE_ENV,
+    mode: 'development',
     entry: paths.entryPath,
     output: {
       path: paths.buildPath,
-      publicPath: clientEnv.REACT_APP_PUBLIC_URL,
+      publicPath: '/',
       filename: 'static/js/[name].[contenthash:8].js',
       chunkFilename: 'static/js/[name].[contenthash:8].js',
     },
@@ -73,6 +74,10 @@ module.exports = () => {
       fallback: {
         path: false,
       },
+      plugins: [PnpWebpackPlugin],
+    },
+    resolveLoader: {
+      plugins: [PnpWebpackPlugin.moduleLoader(module)],
     },
     optimization: {
       minimize: false,
@@ -102,7 +107,7 @@ module.exports = () => {
       }),
       new WebpackManifestPlugin({
         fileName: 'asset-manifest.json',
-        publicPath: clientEnv.REACT_APP_PUBLIC_URL,
+        publicPath: '/',
         generate: (seed, files, entrypoints) => {
           const manifestFiles = files.reduce((manifest, file) => {
             manifest[file.name] = file.path;
@@ -128,6 +133,7 @@ module.exports = () => {
       publicPath: '/',
       port: 8080,
       open: true,
+      hot: true,
       overlay: true,
       historyApiFallback: true,
       stats: 'errors-warnings',
