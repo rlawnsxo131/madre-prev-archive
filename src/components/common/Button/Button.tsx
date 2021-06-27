@@ -79,7 +79,6 @@ const block = (
     }
   `}
   
-
   &:disabled {
     cursor: not-allowed;
     border: 1px solid ${palette.gray[1]};
