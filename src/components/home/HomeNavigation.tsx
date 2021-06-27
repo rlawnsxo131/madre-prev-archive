@@ -1,7 +1,6 @@
 import { css } from '@emotion/react';
 import { DarkmodeThemeType } from '../../atoms/darkmodeState';
-import { GoogleIcon } from '../../image/icons';
-import DropArrowIcon from '../../image/icons/DropArrowIcon';
+import { DropArrowIcon, GoogleIcon } from '../../image/icons';
 import palette, { themeColor } from '../../styles/palette';
 import Button from '../common/Button';
 import { ThemeTrigger } from '../common/Theme';

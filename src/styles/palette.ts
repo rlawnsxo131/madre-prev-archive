@@ -28,18 +28,6 @@ const palette = {
     8: '#e03131',
     9: '#c92a2a',
   },
-  violet: {
-    0: '#f3f0ff',
-    1: '#e5dbff',
-    2: '#d0bfff',
-    3: '#b197fc',
-    4: '#9775fa',
-    5: '#845ef7',
-    6: '#7950f2',
-    7: '#7048e8',
-    8: '#6741d9',
-    9: '#5f3dc4',
-  },
 };
 
 const darkmodeColor = {

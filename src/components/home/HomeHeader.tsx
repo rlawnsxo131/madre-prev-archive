@@ -33,7 +33,7 @@ const content = css`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 5rem;
+  height: 4rem;
   ${media.xxxsmall} {
     width: 100%;
   }
