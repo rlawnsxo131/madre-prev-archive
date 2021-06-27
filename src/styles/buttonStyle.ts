@@ -31,10 +31,6 @@ export const buttonColorMap = {
     background: palette.red[7],
     hoverBackground: palette.red[5],
   },
-  violet: {
-    background: palette.violet[6],
-    hoverBackground: palette.violet[4],
-  },
 };
 
 export const outlineButtonStyle = {
