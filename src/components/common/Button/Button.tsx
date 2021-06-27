@@ -1,4 +1,10 @@
 import { css } from '@emotion/react';
+import { memo } from 'react';
+import { useRecoilValue } from 'recoil';
+import {
+  darkmodeStateSelector,
+  DarkmodeThemeType,
+} from '../../../atoms/darkmodeState';
 import {
   buttonColorMap,
   ButtonColorType,
@@ -15,6 +21,7 @@ interface ButtonProps extends Omit<React.HTMLProps<HTMLButtonElement>, 'size'> {
   size?: ButtonSizeType;
   shape?: ButtonShapeType;
   outline?: boolean;
+  icon?: React.ReactNode;
 }
 function Button({
   children,
@@ -22,12 +29,14 @@ function Button({
   size = 'medium',
   shape = 'rect',
   outline = false,
+  icon,
   ...rest
 }: ButtonProps) {
   const htmlProps = rest as any;
+  const { theme } = useRecoilValue(darkmodeStateSelector);
   return (
     <button
-      css={block(color, size, shape, outline)}
+      css={block(color, size, shape, outline, theme)}
       onClick={(e) => {
         if (htmlProps.onClick) {
           htmlProps.onClick(e);
@@ -36,6 +45,7 @@ function Button({
       }}
       {...htmlProps}
     >
+      {icon && <div css={iconStyle}>{icon}</div>}
       {children}
     </button>
   );
@@ -46,6 +56,7 @@ const block = (
   size: ButtonSizeType,
   shape: ButtonShapeType,
   outline: boolean,
+  theme: DarkmodeThemeType,
 ) => css`
   display: inline-flex;
   align-items: center;
@@ -62,11 +73,11 @@ const block = (
   ${outline &&
   css`
     color: ${buttonColorMap[color].background};
-    background: ${outlineButtonStyle.background};
+    background: ${outlineButtonStyle[theme].background};
     &:hover {
       color: ${buttonColorMap[color].hoverBackground};
       border: 1px solid ${buttonColorMap[color].hoverBackground};
-      opacity: ${outlineButtonStyle.opacity};
+      opacity: ${outlineButtonStyle[theme].opacity};
     }
   `}
   ${!outline &&
@@ -85,9 +96,9 @@ const block = (
     color: ${palette.gray[5]};
     ${outline &&
     css`
-      background: ${outlineButtonStyle.background};
+      background: ${outlineButtonStyle[theme].background};
       &:hover {
-        background: ${outlineButtonStyle.background};
+        background: ${outlineButtonStyle[theme].background};
       }
     `}
     ${!outline &&
@@ -109,7 +120,7 @@ const block = (
     flex: 1;
     width: 100%;
     min-height: 2.5rem;
-    max-height: 2.5rem;
+    height: auto;
     font-size: 1.125rem;
   `};
 
@@ -121,4 +132,11 @@ const block = (
   `};
 `;
 
-export default Button;
+const iconStyle = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 0.4rem;
+`;
+
+export default memo(Button);

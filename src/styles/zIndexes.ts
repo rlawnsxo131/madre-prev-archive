@@ -1,5 +1,7 @@
 const zIndexes = {
-  homeHeader: 10,
+  homeHeader: 8,
+  dropdownItem: 8,
+  opaqueLayer: 10,
 };
 
 export default zIndexes;

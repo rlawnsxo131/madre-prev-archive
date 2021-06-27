@@ -38,6 +38,12 @@ export const buttonColorMap = {
 };
 
 export const outlineButtonStyle = {
-  background: 'rgba(255, 255, 255, 0.5)',
-  opacity: '0.7',
+  light: {
+    background: 'rgba(255, 255, 255, 0)',
+    opacity: '0.7',
+  },
+  dark: {
+    background: palette.white,
+    opacity: '1',
+  },
 };

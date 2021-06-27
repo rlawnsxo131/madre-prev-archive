@@ -1,18 +1,48 @@
-import { atom, selector } from 'recoil';
+import { useCallback } from 'react';
+import {
+  atom,
+  DefaultValue,
+  selector,
+  useRecoilValue,
+  useSetRecoilState,
+} from 'recoil';
 
+export type DarkmodeThemeType = 'dark' | 'light';
 interface DarkmodeState {
-  them: 'dark' | 'light';
+  theme: DarkmodeThemeType;
 }
 
 const darkmodeState = atom<DarkmodeState>({
   key: 'darkmodeState',
   default: {
-    them: 'light',
+    theme: 'light',
   },
 });
 
-export const darkmodeSelector = selector<DarkmodeState>({
-  key: 'darkmodeSelector',
+export const darkmodeStateSelector = selector<DarkmodeState>({
+  key: 'darkmodeStateSelector',
   get: ({ get }) => get(darkmodeState),
-  set: ({ set }, newValue) => set(darkmodeState, (prevValue) => newValue),
+  set: ({ set }, newValue) =>
+    set(darkmodeState, (prevValue) =>
+      newValue instanceof DefaultValue
+        ? newValue
+        : { ...prevValue, ...newValue },
+    ),
 });
+
+export function useDarkmode() {
+  const state = useRecoilValue(darkmodeStateSelector);
+  const setState = useSetRecoilState(darkmodeStateSelector);
+
+  const handleDarkmode = useCallback(() => {
+    setState((prev) => ({
+      ...prev,
+      theme: prev.theme === 'dark' ? 'light' : 'dark',
+    }));
+  }, [setState]);
+
+  return {
+    state,
+    handleDarkmode,
+  };
+}

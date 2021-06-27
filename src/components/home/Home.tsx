@@ -1,16 +1,19 @@
 import { css } from '@emotion/react';
-import HomeTemplate from './HomeTemplate';
+import HomeFirstSection from './HomeFirstSection';
 
 interface HomeProps {}
 
 function Home(props: HomeProps) {
   return (
-    <HomeTemplate>
-      <div css={block}>home main content</div>
-    </HomeTemplate>
+    <div css={block}>
+      <HomeFirstSection />
+    </div>
   );
 }
 
-const block = css``;
+const block = css`
+  display: flex;
+  flex-direction: column;
+`;
 
 export default Home;

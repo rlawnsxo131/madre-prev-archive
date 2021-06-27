@@ -1,11 +1,13 @@
+import { PopupCommon } from '../Popup';
+
 interface CoreProps {}
 
 function Core(props: CoreProps) {
   return (
-    <div>
-      <div>popup</div>
-      <div>toast</div>
-    </div>
+    <>
+      <PopupCommon />
+      {/* <div>toast</div> */}
+    </>
   );
 }
 

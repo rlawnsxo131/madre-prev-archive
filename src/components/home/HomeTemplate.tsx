@@ -11,7 +11,7 @@ function HomeTemplate({ children = null }: HomeTemplateProps) {
     <div css={block}>
       <HomeHeader />
       <main css={main}>
-        <section css={section}>{children}</section>
+        <div css={content}>{children}</div>
       </main>
     </div>
   );
@@ -21,15 +21,14 @@ const block = css`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid black;
 `;
 
 const main = css`
-  border: 1px solid black;
   display: flex;
   justify-content: center;
   position: relative;
-  padding-top: 4rem;
+  padding: 5rem 0.5rem 0 0.5rem;
+  padding-top: 5rem;
   ${media.xxxsmall} {
     width: 100%;
   }
@@ -44,15 +43,10 @@ const main = css`
   }
 `;
 
-const section = css`
-  border: 1px solid blue;
+const content = css`
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  ${media.xxxsmall} {
-    width: 92%;
-  }
-  ${media.small} {
-    width: 94%;
-  }
 `;
 
 export default HomeTemplate;

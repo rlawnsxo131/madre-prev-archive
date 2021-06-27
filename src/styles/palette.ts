@@ -1,3 +1,6 @@
+/**
+ * undraw color: violet['7']
+ */
 const palette = {
   white: '#FFFF',
   black: '#000000',
@@ -36,6 +39,40 @@ const palette = {
     7: '#7048e8',
     8: '#6741d9',
     9: '#5f3dc4',
+  },
+};
+
+const darkmodeColor = {
+  background: {
+    1: '#282c35',
+    2: '#292f35',
+  },
+};
+
+export const themeColor = {
+  common: {
+    light: palette.white,
+    dark: darkmodeColor.background['1'],
+  },
+  commonDeepDark: {
+    light: palette.white,
+    dark: darkmodeColor.background['2'],
+  },
+  font: {
+    light: palette.black,
+    dark: palette.gray['3'],
+  },
+  fill: {
+    light: palette.black,
+    dark: palette.gray['3'],
+  },
+  hover: {
+    light: palette.gray['3'],
+    dark: darkmodeColor.background['2'],
+  },
+  shadow: {
+    light: `1px 1px 3px 1px ${palette.gray['3']}`,
+    dark: `1px 1px 3px 1px ${palette.gray['9']}`,
   },
 };
 
