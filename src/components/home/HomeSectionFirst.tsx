@@ -2,9 +2,9 @@ import { css } from '@emotion/react';
 import { DataTrendsImage, DataImage } from '../../image/images';
 import media, { mediaQuery } from '../../styles/media';
 
-interface HomeFirstSectionProps {}
+interface HomeSectionFirstProps {}
 
-function HomeFirstSection(props: HomeFirstSectionProps) {
+function HomeSectionFirst(props: HomeSectionFirstProps) {
   return (
     <section css={block}>
       <div css={imageBlock}>
@@ -76,4 +76,4 @@ const description = css`
   }
 `;
 
-export default HomeFirstSection;
+export default HomeSectionFirst;
