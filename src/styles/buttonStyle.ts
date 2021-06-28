@@ -2,7 +2,7 @@ import palette from './palette';
 
 export type ButtonShapeType = 'rect' | 'round';
 export type ButtonSizeType = 'small' | 'medium' | 'large' | 'responsive';
-export type ButtonColorType = 'gray' | 'red' | 'violet';
+export type ButtonColorType = 'gray' | 'red';
 
 export const buttonSizeMap = {
   small: {
@@ -24,12 +24,12 @@ export const buttonSizeMap = {
 
 export const buttonColorMap = {
   gray: {
-    background: palette.gray[7],
-    hoverBackground: palette.gray[6],
+    background: palette.gray['700'],
+    hoverBackground: palette.gray['600'],
   },
   red: {
-    background: palette.red[7],
-    hoverBackground: palette.red[5],
+    background: palette.red['500'],
+    hoverBackground: palette.red['400'],
   },
 };
 

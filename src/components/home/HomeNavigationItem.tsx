@@ -1,16 +1,37 @@
 import { css } from '@emotion/react';
-import { memo } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { DarkmodeThemeType } from '../../atoms/darkmodeState';
 import { themeColor } from '../../styles/palette';
+import transitions from '../../styles/transitions';
 import zIndexes from '../../styles/zIndexes';
 
-interface HomeDropDownItemProps {
+interface HomeNavigationItemProps {
   theme: DarkmodeThemeType;
   visible: boolean;
 }
 
-function HomeDropDownItem({ theme, visible }: HomeDropDownItemProps) {
+function HomeNavigationItem({ theme, visible }: HomeNavigationItemProps) {
+  const [closed, setClosed] = useState(true);
+
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout | null = null;
+    if (visible) {
+      setClosed(false);
+    } else {
+      timeoutId = setTimeout(() => {
+        setClosed(true);
+      }, 250);
+    }
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [visible]);
+
+  if (!visible && closed) return null;
+
   return (
     <div css={block(theme, visible)}>
       <NavLink css={link} to="/notice">
@@ -37,9 +58,16 @@ const block = (theme: DarkmodeThemeType, visible: boolean) => css`
   flex-direction: column;
   z-index: ${zIndexes.dropdownItem};
   border-radius: 0.25rem;
-  background: ${themeColor.commonDeepDark[theme]};
+  background: ${themeColor.background[theme]};
   box-shadow: ${themeColor.shadow[theme]};
-  opacity: ${visible ? 1 : 0};
+  transform-origin: top;
+  ${visible
+    ? css`
+        animation: ${transitions.scaleUp} 0.125s forwards ease-in-out;
+      `
+    : css`
+        animation: ${transitions.scaleDown} 0.125s forwards ease-in-out;
+      `};
 `;
 
 const link = css`
@@ -53,4 +81,4 @@ const link = css`
   }
 `;
 
-export default memo(HomeDropDownItem);
+export default memo(HomeNavigationItem);

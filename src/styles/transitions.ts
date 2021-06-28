@@ -42,11 +42,35 @@ const popOutToBottom = keyframes`
     transform: translateY(400px) scale(0.75);
   }`;
 
+const scaleUp = keyframes`
+  0% {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+`;
+
+const scaleDown = keyframes`
+  0% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+`;
+
 const transitions = {
   fadeIn,
   fadeOut,
   popInFromBottom,
   popOutToBottom,
+  scaleUp,
+  scaleDown,
 };
 
 export default transitions;

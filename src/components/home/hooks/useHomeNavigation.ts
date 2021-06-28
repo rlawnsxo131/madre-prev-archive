@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { darkmodeStateSelector } from '../../../atoms/darkmodeState';
 
-export default function useHome() {
+export default function useHomeNavigation() {
   const { theme } = useRecoilValue(darkmodeStateSelector);
   const [visible, setVisible] = useState<boolean>(false);
 

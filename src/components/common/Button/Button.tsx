@@ -92,8 +92,8 @@ const block = (
   
   &:disabled {
     cursor: not-allowed;
-    border: 1px solid ${palette.gray[1]};
-    color: ${palette.gray[5]};
+    border: 1px solid ${palette.gray['100']};
+    color: ${palette.gray['500']};
     ${outline &&
     css`
       background: ${outlineButtonStyle[theme].background};
@@ -103,9 +103,9 @@ const block = (
     `}
     ${!outline &&
     css`
-      background: ${palette.gray[3]};
+      background: ${palette.gray['300']};
       &:hover {
-        background: ${palette.gray[3]};
+        background: ${palette.gray['300']};
       }
     `}
   }

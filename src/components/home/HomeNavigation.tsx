@@ -1,31 +1,30 @@
 import { css } from '@emotion/react';
 import { DarkmodeThemeType } from '../../atoms/darkmodeState';
-import { DropArrowIcon, GoogleIcon } from '../../image/icons';
+import { GoogleIcon, MenuIcon } from '../../image/icons';
 import palette, { themeColor } from '../../styles/palette';
 import Button from '../common/Button';
 import { ThemeTrigger } from '../common/Theme';
-import HomeDropDownItem from './HomeDropDownItem';
-import useHome from './hooks/useHome';
+import HomeNavigationItem from './HomeNavigationItem';
+import useHomeNavigation from './hooks/useHomeNavigation';
 
 interface HomeNavigationProps {}
 
 function HomeNavigation(props: HomeNavigationProps) {
-  const { theme, visible, handleVisible } = useHome();
+  const { theme, visible, handleVisible } = useHomeNavigation();
 
   return (
     <nav css={block}>
       <ul>
         <li>
-          <button css={buttonStyle(theme)} onClick={handleVisible}>
-            <p>자료</p>
-            <DropArrowIcon />
-          </button>
-          <HomeDropDownItem theme={theme} visible={visible} />
-        </li>
-        <li>
           <Button size="medium" icon={<GoogleIcon />} outline>
             Sign in with Google
           </Button>
+        </li>
+        <li>
+          <button css={buttonStyle(theme)} onClick={handleVisible}>
+            <MenuIcon />
+          </button>
+          <HomeNavigationItem theme={theme} visible={visible} />
         </li>
         <li>
           <ThemeTrigger />
@@ -66,16 +65,10 @@ const buttonStyle = (theme: DarkmodeThemeType) => css`
   align-items: center;
   padding: 0.5rem;
   border-radius: 3px;
-  color: ${palette.gray['5']};
-  p {
-    margin: 0;
-    padding: 0;
-    font-size: 0.9375rem;
-    font-weight: 500;
-  }
+  color: ${palette.gray['500']};
   svg {
-    width: 10px;
-    height: 10px;
+    width: 1.125rem;
+    height: 1.125rem;
     margin-left: 0.4rem;
     fill: ${themeColor.fill[theme]};
   }

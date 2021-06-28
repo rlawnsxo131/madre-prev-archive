@@ -20,10 +20,10 @@ const globalStyle = (theme: DarkmodeThemeType) => css`
     margin: 0;
     padding: 0;
     height: 100%;
-    background: ${themeColor.commonDeepDark[theme]};
+    background: ${themeColor.background[theme]};
   }
   header {
-    background: ${themeColor.commonDeepDark[theme]};
+    background: ${themeColor.background[theme]};
   }
 
   html {

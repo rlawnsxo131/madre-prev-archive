@@ -49,7 +49,7 @@ const popup = (visible: boolean, theme: DarkmodeThemeType) => css`
   justify-content: center;
   align-items: center;
   border-radius: 3px;
-  background: ${themeColor.commonDeepDark[theme]};
+  background: ${themeColor.background[theme]};
   ${visible
     ? css`
         animation: ${transitions.popInFromBottom} 0.25s forwards ease-in-out;

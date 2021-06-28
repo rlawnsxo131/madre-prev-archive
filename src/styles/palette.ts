@@ -5,62 +5,58 @@ const palette = {
   white: '#FFFF',
   black: '#000000',
   gray: {
-    0: '#f8f9fa',
-    1: '#f1f3f5',
-    2: '#e9ecef',
-    3: '#dee2e6',
-    4: '#ced4da',
-    5: '#adb5bd',
-    6: '#868e96',
-    7: '#495057',
-    8: '#343a40',
-    9: '#212529',
+    50: '#f8f9fa',
+    100: '#f1f3f5',
+    200: '#e9ecef',
+    300: '#dee2e6',
+    400: '#ced4da',
+    500: '#adb5bd',
+    600: '#868e96',
+    700: '#495057',
+    800: '#343a40',
+    900: '#212529',
   },
   red: {
-    0: '#fff5f5',
-    1: '#ffe3e3',
-    2: '#ffc9c9',
-    3: '#ffa8a8',
-    4: '#ff8787',
-    5: '#ff6b6b',
-    6: '#fa5252',
-    7: '#f03e3e',
-    8: '#e03131',
-    9: '#c92a2a',
+    50: '#fff5f5',
+    100: '#ffe3e3',
+    200: '#ffc9c9',
+    300: '#ffa8a8',
+    400: '#ff8787',
+    500: '#ff6b6b',
+    600: '#fa5252',
+    700: '#f03e3e',
+    800: '#e03131',
+    900: '#c92a2a',
   },
 };
 
 const darkmodeColor = {
   background: {
-    1: '#282c35',
-    2: '#292f35',
+    100: '#282c35',
+    200: '#292f35',
   },
 };
 
 export const themeColor = {
-  common: {
+  background: {
     light: palette.white,
-    dark: darkmodeColor.background['1'],
-  },
-  commonDeepDark: {
-    light: palette.white,
-    dark: darkmodeColor.background['2'],
+    dark: darkmodeColor.background['100'],
   },
   font: {
     light: palette.black,
-    dark: palette.gray['3'],
+    dark: palette.gray['200'],
   },
   fill: {
     light: palette.black,
-    dark: palette.gray['3'],
+    dark: palette.gray['200'],
   },
   hover: {
-    light: palette.gray['3'],
-    dark: darkmodeColor.background['2'],
+    light: palette.gray['200'],
+    dark: darkmodeColor.background['200'],
   },
   shadow: {
-    light: `1px 1px 3px 1px ${palette.gray['3']}`,
-    dark: `1px 1px 3px 1px ${palette.gray['9']}`,
+    light: `1px 1px 3px 1px ${palette.gray['500']}`,
+    dark: `1px 1px 3px 1px ${palette.black}`,
   },
 };
 

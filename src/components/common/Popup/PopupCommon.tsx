@@ -14,7 +14,7 @@ function PopupCommon(props: PopupCommonProps) {
         <h3>{state.title}</h3>
         <p>{state.message}</p>
         <div css={buttonBlock}>
-          <Button color="violet" onClick={closePopup}>
+          <Button color="red" onClick={closePopup}>
             확인
           </Button>
         </div>

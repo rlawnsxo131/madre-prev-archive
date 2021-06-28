@@ -1,8 +1,6 @@
 import { css } from '@emotion/react';
-import { GoogleIcon } from '../../image/icons';
 import { DataTrendsImage, DataImage } from '../../image/images';
 import media, { mediaQuery } from '../../styles/media';
-import Button from '../common/Button';
 
 interface HomeFirstSectionProps {}
 
@@ -18,11 +16,6 @@ function HomeFirstSection(props: HomeFirstSectionProps) {
       <div css={description}>
         <h1>데이터 시각화</h1>
         <p>데이터를 손쉽게 시각화 하세요.</p>
-      </div>
-      <div css={buttonBlock}>
-        <Button icon={<GoogleIcon />} size="responsive">
-          Sign in with Google
-        </Button>
       </div>
     </section>
   );
@@ -81,11 +74,6 @@ const description = css`
     font-size: 1.5rem;
     margin-top: 1rem;
   }
-`;
-
-const buttonBlock = css`
-  width: 90%;
-  margin-top: 1.5rem;
 `;
 
 export default HomeFirstSection;

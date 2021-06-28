@@ -7,3 +7,4 @@
 
 # icon monster
 - [drop-arrow](https://iconmonstr.com/arrow-65-svg/)
+- [menu](https://iconmonstr.com/menu-7-svg/)
