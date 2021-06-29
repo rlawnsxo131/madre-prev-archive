@@ -1,6 +1,3 @@
-/**
- * undraw color: violet['7']
- */
 const palette = {
   white: '#FFFF',
   black: '#000000',
