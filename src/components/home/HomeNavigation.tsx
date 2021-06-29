@@ -49,7 +49,7 @@ const block = css`
   }
   li {
     &:not(:nth-of-type(3)) {
-      margin-right: 1rem;
+      padding: 0 0.5rem;
     }
   }
 `;
@@ -69,7 +69,6 @@ const buttonStyle = (theme: DarkmodeThemeType) => css`
   svg {
     width: 1.125rem;
     height: 1.125rem;
-    margin-left: 0.4rem;
     fill: ${themeColor.fill[theme]};
   }
 `;
