@@ -32,14 +32,14 @@ export const darkmodeStateSelector = selector<DarkmodeState>({
 
 export function useDarkmode() {
   const state = useRecoilValue(darkmodeStateSelector);
-  const setState = useSetRecoilState(darkmodeStateSelector);
+  const set = useSetRecoilState(darkmodeStateSelector);
 
   const handleDarkmode = useCallback(() => {
-    setState((prev) => ({
+    set((prev) => ({
       ...prev,
       theme: prev.theme === 'dark' ? 'light' : 'dark',
     }));
-  }, [setState]);
+  }, [set]);
 
   return {
     state,

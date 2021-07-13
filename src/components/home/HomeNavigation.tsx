@@ -1,16 +1,16 @@
 import { css } from '@emotion/react';
 import { DarkmodeThemeType } from '../../atoms/darkmodeState';
+import { useHomeState } from '../../atoms/homeState';
 import { GoogleIcon, MenuIcon } from '../../image/icons';
 import palette, { themeColor } from '../../styles/palette';
 import Button from '../common/Button';
 import { ThemeTrigger } from '../common/Theme';
 import HomeNavigationItem from './HomeNavigationItem';
-import useHomeNavigation from './hooks/useHomeNavigation';
 
 interface HomeNavigationProps {}
 
 function HomeNavigation(props: HomeNavigationProps) {
-  const { theme, visible, handleVisible } = useHomeNavigation();
+  const { theme, visible, handleVisible } = useHomeState();
 
   return (
     <nav css={block}>

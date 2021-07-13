@@ -36,24 +36,24 @@ const popupCommonStateSelector = selector<PopupCommonState>({
 
 export function usePopupCommon() {
   const state = useRecoilValue(popupCommonStateSelector);
-  const setState = useSetRecoilState(popupCommonStateSelector);
-  const resetState = useResetRecoilState(popupCommonStateSelector);
+  const set = useSetRecoilState(popupCommonStateSelector);
+  const reset = useResetRecoilState(popupCommonStateSelector);
 
   const showPopup = useCallback(
     ({ title, message }: { title: string; message: string }) => {
-      setState((prev) => ({
+      set((prev) => ({
         ...prev,
         title,
         message,
         visible: true,
       }));
     },
-    [setState],
+    [set],
   );
 
   const closePopup = useCallback(() => {
-    resetState();
-  }, [resetState]);
+    reset();
+  }, [reset]);
 
   return {
     state,
