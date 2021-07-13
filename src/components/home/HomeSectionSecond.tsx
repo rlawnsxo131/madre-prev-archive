@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { randomColors } from '../../lib/utils';
 import d3Data from '../../mocks/d3';
-import LineChart from '../d3/LineChart/LineChart';
+import { LineChart } from '../d3';
 
 interface HomeSectionSecondProps {}
 
