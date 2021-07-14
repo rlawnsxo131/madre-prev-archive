@@ -1,4 +1,4 @@
-import { extent, scaleLinear } from 'd3';
+import { scaleLinear } from 'd3';
 import D3Common, { D3CommonInterface } from './D3Common';
 import { D3DoubleNumberArray, D3Selection } from './types/d3CommonTypes';
 import { D3LineChartConstructorParams } from './types/d3LineChartTypes';
@@ -31,11 +31,6 @@ export default class D3LineChart extends D3Common implements D3CommonInterface {
     this.yDomain = this.getExtent(yDomainData);
     this.xRange = xRange;
     this.yRange = yRange;
-  }
-
-  private getExtent(data: number[]): D3DoubleNumberArray {
-    const [min = 0, max = 0] = extent(data);
-    return [min, max];
   }
 
   private xScale() {
