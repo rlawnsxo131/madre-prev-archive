@@ -70,7 +70,7 @@ export function randomColors(maxLength: number) {
   const min = 0;
   const max = colors.length - 1;
   while (result.length < maxLength) {
-    const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+    const randomNumber = getRandomIntInclusive(min, max);
     if (!result.includes(colors[randomNumber])) {
       result.push(colors[randomNumber]);
     }
@@ -78,7 +78,8 @@ export function randomColors(maxLength: number) {
   return result;
 }
 
-export function randomNumber(min: number, max: number) {
-  const randomNumber = Math.random() * (max - min) + min;
-  return Math.floor(randomNumber);
+export function getRandomIntInclusive(min: number, max: number) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }

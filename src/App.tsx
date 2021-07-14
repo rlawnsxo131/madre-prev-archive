@@ -5,6 +5,7 @@ import ErrorBoundary from './components/error';
 import HomeTemplate from './components/home/HomeTemplate';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
+import TestPage from './pages/TestPage';
 import UserPage from './pages/UserPage';
 
 interface AppProps {}
@@ -31,6 +32,9 @@ function App(props: AppProps) {
               <UserPage />
             </Route>
           </HomeTemplate>
+        </Route>
+        <Route path="/test">
+          <TestPage />
         </Route>
         <Route>
           <NotFoundPage />
