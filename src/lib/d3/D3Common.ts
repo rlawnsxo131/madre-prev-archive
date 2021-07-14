@@ -2,7 +2,7 @@ import { select } from 'd3';
 import { AppendSvgParams } from './types/d3CommonTypes';
 
 export interface D3CommonInterface {
-  setAxis: () => void;
+  setAxis(): void;
 }
 
 export default class D3Common {
