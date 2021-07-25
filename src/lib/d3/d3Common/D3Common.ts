@@ -1,16 +1,12 @@
-import { extent, select } from 'd3';
-import { AppendSvgParams, D3DoubleNumberArray } from './types/d3CommonTypes';
-
-export interface D3CommonInterface {
-  setAxis(): void;
-}
+import { extent, randomInt, randomUniform, select } from 'd3';
+import { AppendSvgParams, D3DoubleNumberArray } from './d3CommonTypes';
 
 export default class D3Common {
   protected appendSvg({
     container,
     width,
     height,
-    className,
+    className = '',
   }: AppendSvgParams) {
     const svg = select(container)
       .append('svg')
@@ -23,5 +19,13 @@ export default class D3Common {
   protected getExtent(data: number[]): D3DoubleNumberArray {
     const [min = 0, max = 0] = extent(data);
     return [min, max];
+  }
+
+  protected getRandomInt(min: number, max: number) {
+    return randomInt(min, max)();
+  }
+
+  protected getRendomUniform(min: number, max: number) {
+    return randomUniform(min, max)();
   }
 }

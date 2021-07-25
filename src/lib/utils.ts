@@ -1,4 +1,4 @@
-export function randomColors(maxLength: number) {
+export function getRandomColors(maxLength: number) {
   const result: string[] = [];
   const colors = [
     '#adb5bd',

@@ -16,5 +16,5 @@ export type AppendSvgParams = {
   container: HTMLElement;
   width: number;
   height: number;
-  className: string;
+  className?: string;
 };
