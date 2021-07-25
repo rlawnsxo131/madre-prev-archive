@@ -15,6 +15,6 @@ export type D3LineChartSetAxisParams = {
   yTicks?: number;
   xTickSize?: number;
   yTickSize?: number;
-  xClassName?: string;
-  yClassName?: string;
+  xClass?: string;
+  yClass?: string;
 };

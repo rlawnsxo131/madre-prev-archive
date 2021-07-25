@@ -53,19 +53,19 @@ export default class D3LineChart extends D3Common {
     yTicks = 0,
     xTickSize = 0,
     yTickSize = 0,
-    xClassName = '',
-    yClassName = '',
+    xClass = '',
+    yClass = '',
   }: D3LineChartSetAxisParams) {
     const svg = this.svg;
 
     const xAxisSvg = svg
       .append('g')
-      .attr('class', xClassName)
+      .attr('class', xClass)
       .attr('transform', `translate(24, ${this.height - 10 - 6})`);
 
     const yAxisSvg = svg
       .append('g')
-      .attr('className', yClassName)
+      .attr('class', yClass)
       .attr('transform', `translate(24, 24)`);
 
     const xAxis = axisBottom(this.xScale()).tickSize(xTickSize).ticks(xTicks);
