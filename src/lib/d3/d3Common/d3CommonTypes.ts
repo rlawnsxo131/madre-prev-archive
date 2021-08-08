@@ -2,6 +2,7 @@
  * Types that have dependencies on types defined in d3
  */
 export type D3Selection = d3.Selection<SVGSVGElement, unknown, null, undefined>;
+export type D3Path = d3.Selection<SVGPathElement, unknown, null, undefined>;
 
 /**
  * Types that do not depend on the types defined in d3
