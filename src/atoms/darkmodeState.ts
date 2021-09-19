@@ -1,11 +1,5 @@
 import { useCallback } from 'react';
-import {
-  atom,
-  DefaultValue,
-  selector,
-  useRecoilValue,
-  useSetRecoilState,
-} from 'recoil';
+import { atom, useRecoilValue, useSetRecoilState } from 'recoil';
 
 export type DarkmodeThemeType = 'dark' | 'light';
 interface DarkmodeState {
