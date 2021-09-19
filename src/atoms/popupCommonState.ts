@@ -34,8 +34,11 @@ const popupCommonStateSelector = selector<PopupCommonState>({
     ),
 });
 
-export function usePopupCommon() {
-  const state = useRecoilValue(popupCommonStateSelector);
+export function usePopupCommonState() {
+  return useRecoilValue(popupCommonStateSelector);
+}
+
+export function usePopupCommonAction() {
   const set = useSetRecoilState(popupCommonStateSelector);
   const reset = useResetRecoilState(popupCommonStateSelector);
 
@@ -56,7 +59,6 @@ export function usePopupCommon() {
   }, [reset]);
 
   return {
-    state,
     showPopup,
     closePopup,
   };

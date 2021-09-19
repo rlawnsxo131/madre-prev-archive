@@ -1,3 +1,4 @@
+import GlobalStyle from '../GlobalStyle';
 import { PopupCommon } from '../Popup';
 
 interface CoreProps {}
@@ -7,6 +8,7 @@ function Core(props: CoreProps) {
     <>
       <PopupCommon />
       {/* <div>toast</div> */}
+      <GlobalStyle />
     </>
   );
 }

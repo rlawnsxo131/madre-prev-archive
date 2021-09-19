@@ -13,7 +13,11 @@ function HomeHeaderLogo(props: HomeHeaderLogoProps) {
   );
 }
 
-const block = css``;
+const block = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const link = css`
   display: inline-flex;

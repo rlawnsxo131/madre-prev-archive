@@ -1,15 +1,14 @@
 import { css, Global } from '@emotion/react';
-import { useRecoilValue } from 'recoil';
 import {
-  darkmodeStateSelector,
   DarkmodeThemeType,
+  useDarkmodeState,
 } from '../../../atoms/darkmodeState';
 import { themeColor } from '../../../styles/palette';
 
 interface GlobalStyleProps {}
 
 function GlobalStyle(props: GlobalStyleProps) {
-  const { theme } = useRecoilValue(darkmodeStateSelector);
+  const { theme } = useDarkmodeState();
   return <Global styles={globalStyle(theme)} />;
 }
 

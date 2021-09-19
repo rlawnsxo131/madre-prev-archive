@@ -1,9 +1,8 @@
 import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
 import {
-  darkmodeStateSelector,
   DarkmodeThemeType,
+  useDarkmodeState,
 } from '../../../atoms/darkmodeState';
 import { themeColor } from '../../../styles/palette';
 import transitions from '../../../styles/transitions';
@@ -15,7 +14,7 @@ interface PopupBaseProps {
 }
 
 function PopupBase({ children, visible }: PopupBaseProps) {
-  const { theme } = useRecoilValue(darkmodeStateSelector);
+  const { theme } = useDarkmodeState();
   const [closed, setClosed] = useState(true);
 
   useEffect(() => {

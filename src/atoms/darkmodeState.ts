@@ -19,7 +19,7 @@ const darkmodeState = atom<DarkmodeState>({
   },
 });
 
-export const darkmodeStateSelector = selector<DarkmodeState>({
+const darkmodeStateSelector = selector<DarkmodeState>({
   key: 'darkmodeStateSelector',
   get: ({ get }) => get(darkmodeState),
   set: ({ set }, newValue) =>
@@ -30,8 +30,11 @@ export const darkmodeStateSelector = selector<DarkmodeState>({
     ),
 });
 
-export function useDarkmode() {
-  const state = useRecoilValue(darkmodeStateSelector);
+export function useDarkmodeState() {
+  return useRecoilValue(darkmodeStateSelector);
+}
+
+export function useDarkmodeAction() {
   const set = useSetRecoilState(darkmodeStateSelector);
 
   const handleDarkmode = useCallback(() => {
@@ -42,7 +45,6 @@ export function useDarkmode() {
   }, [set]);
 
   return {
-    state,
     handleDarkmode,
   };
 }

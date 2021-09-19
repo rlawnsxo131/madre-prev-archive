@@ -1,9 +1,8 @@
 import { css } from '@emotion/react';
 import { memo } from 'react';
-import { useRecoilValue } from 'recoil';
 import {
-  darkmodeStateSelector,
   DarkmodeThemeType,
+  useDarkmodeState,
 } from '../../../atoms/darkmodeState';
 import {
   buttonColorMap,
@@ -33,7 +32,7 @@ function Button({
   ...rest
 }: ButtonProps) {
   const htmlProps = rest as any;
-  const { theme } = useRecoilValue(darkmodeStateSelector);
+  const { theme } = useDarkmodeState();
   return (
     <button
       css={block(color, size, shape, outline, theme)}

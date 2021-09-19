@@ -1,6 +1,5 @@
 import { Route, Switch } from 'react-router-dom';
 import Core from './components/common/Core';
-import GlobalStyle from './components/common/GlobalStyle';
 import ErrorBoundary from './components/error';
 import HomeTemplate from './components/home/HomeTemplate';
 import HomePage from './pages/HomePage';
@@ -41,7 +40,6 @@ function App(props: AppProps) {
         </Route>
       </Switch>
       <Core />
-      <GlobalStyle />
     </ErrorBoundary>
   );
 }

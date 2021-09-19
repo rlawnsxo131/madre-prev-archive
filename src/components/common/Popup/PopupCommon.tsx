@@ -1,5 +1,8 @@
 import { css } from '@emotion/react';
-import { usePopupCommon } from '../../../atoms/popupCommonState';
+import {
+  usePopupCommonAction,
+  usePopupCommonState,
+} from '../../../atoms/popupCommonState';
 import media, { mediaQuery } from '../../../styles/media';
 import Button from '../Button';
 import PopupBase from '../PopupBase';
@@ -7,7 +10,8 @@ import PopupBase from '../PopupBase';
 interface PopupCommonProps {}
 
 function PopupCommon(props: PopupCommonProps) {
-  const { state, closePopup } = usePopupCommon();
+  const state = usePopupCommonState();
+  const { closePopup } = usePopupCommonAction();
   return (
     <PopupBase visible={state.visible}>
       <div css={block}>

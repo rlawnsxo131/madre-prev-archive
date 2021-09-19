@@ -5,10 +5,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const PnpWebpackPlugin = require('pnp-webpack-plugin');
-const envConfig = require('./envConfig');
+const initializeEnvironment = require('./initializeEnvironment');
 
 module.exports = () => {
-  const clientEnv = envConfig();
+  const clientEnvironment = initializeEnvironment();
   return {
     mode: 'development',
     entry: paths.entryPath,
@@ -122,21 +122,29 @@ module.exports = () => {
           };
         },
       }),
-      new webpack.DefinePlugin(clientEnv),
+      new webpack.DefinePlugin(clientEnvironment),
       new webpack.HotModuleReplacementPlugin(),
     ].filter(Boolean),
     cache: {
       type: 'memory',
     },
     devServer: {
-      // host: '',
-      publicPath: '/',
+      client: {
+        overlay: {
+          errors: true,
+          warnings: true,
+        },
+        progress: true,
+      },
+      static: {
+        directory: path.join(__dirname, 'public'),
+        publicPath: '/',
+      },
       port: 8080,
-      open: true,
-      hot: true,
-      overlay: true,
+      compress: true,
       historyApiFallback: true,
-      stats: 'errors-warnings',
+      allowedHosts: 'localhost',
+      open: true,
     },
     stats: {
       builtAt: true,
