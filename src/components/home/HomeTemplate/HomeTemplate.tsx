@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import media, { mediaQuery } from '../../styles/media';
+import media, { mediaQuery } from '../../../styles/media';
 import HomeHeader from './HomeHeader';
 
 interface HomeTemplateProps {

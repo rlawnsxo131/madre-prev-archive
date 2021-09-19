@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
-import { DataTrendsImage, DataImage } from '../../image/images';
-import media, { mediaQuery } from '../../styles/media';
+import { DataImage, DataTrendsImage } from '../../../image/images';
+import media, { mediaQuery } from '../../../styles/media';
 
 interface HomeSectionFirstProps {}
 

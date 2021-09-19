@@ -1,10 +1,10 @@
 import { css } from '@emotion/react';
 import { memo, useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { DarkmodeThemeType } from '../../atoms/darkmodeState';
-import { themeColor } from '../../styles/palette';
-import transitions from '../../styles/transitions';
-import zIndexes from '../../styles/zIndexes';
+import { DarkmodeThemeType } from '../../../atoms/darkmodeState';
+import { themeColor } from '../../../styles/palette';
+import transitions from '../../../styles/transitions';
+import zIndexes from '../../../styles/zIndexes';
 
 interface HomeNavigationItemProps {
   theme: DarkmodeThemeType;
