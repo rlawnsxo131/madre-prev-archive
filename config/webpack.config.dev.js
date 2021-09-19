@@ -123,7 +123,6 @@ module.exports = () => {
         },
       }),
       new webpack.DefinePlugin(clientEnvironment),
-      new webpack.HotModuleReplacementPlugin(),
     ].filter(Boolean),
     cache: {
       type: 'memory',
