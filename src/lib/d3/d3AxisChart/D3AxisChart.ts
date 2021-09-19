@@ -21,6 +21,7 @@ export default class D3AxisChart extends D3Common {
   private xRange: D3DoubleNumberArray;
   private yRange: D3DoubleNumberArray;
   private data: D3Data;
+  private strockWidth: number = 1;
   private path: D3Path | null = null;
   private pathLength?: number;
   private maxUnitExpressionLength: number = 0;
@@ -108,6 +109,7 @@ export default class D3AxisChart extends D3Common {
   }
 
   setLine({ color = 'black', strokeWidth = 1 }: D3AxisChartSetLineParams) {
+    this.strockWidth = strokeWidth;
     const xScale = this.xScale();
     const yScale = this.yScale();
     const linearGenerator = line()
@@ -131,5 +133,7 @@ export default class D3AxisChart extends D3Common {
     this.pathLength = path.node()?.getTotalLength() ?? 0;
   }
 
-  getStrockWidth() {}
+  getStrockWidth() {
+    return this.strockWidth;
+  }
 }

@@ -34,11 +34,14 @@ function HomeNavigationItem({ theme, visible }: HomeNavigationItemProps) {
 
   return (
     <div css={block(theme, visible)}>
-      <NavLink css={link} to="/notice">
-        공지사항
+      <NavLink css={link} exact to="/">
+        홈
       </NavLink>
       <NavLink css={link} to="/guides">
         가이드 및 튜토리얼
+      </NavLink>
+      <NavLink css={link} to="/notice">
+        공지사항
       </NavLink>
       <NavLink css={link} to="/policy">
         서비스 정책
@@ -50,7 +53,7 @@ function HomeNavigationItem({ theme, visible }: HomeNavigationItemProps) {
 const block = (theme: DarkmodeThemeType, visible: boolean) => css`
   position: absolute;
   top: 3.25rem;
-  left: 0;
+  left: 0.5rem;
   width: 18rem;
   height: auto;
   padding: 0.25rem 0.5rem;

@@ -12,30 +12,19 @@ interface DarkmodeState {
   theme: DarkmodeThemeType;
 }
 
-const darkmodeState = atom<DarkmodeState>({
+export const darkmodeState = atom<DarkmodeState>({
   key: 'darkmodeState',
   default: {
     theme: 'light',
   },
 });
 
-const darkmodeStateSelector = selector<DarkmodeState>({
-  key: 'darkmodeStateSelector',
-  get: ({ get }) => get(darkmodeState),
-  set: ({ set }, newValue) =>
-    set(darkmodeState, (prevValue) =>
-      newValue instanceof DefaultValue
-        ? newValue
-        : { ...prevValue, ...newValue },
-    ),
-});
-
 export function useDarkmodeState() {
-  return useRecoilValue(darkmodeStateSelector);
+  return useRecoilValue(darkmodeState);
 }
 
 export function useDarkmodeAction() {
-  const set = useSetRecoilState(darkmodeStateSelector);
+  const set = useSetRecoilState(darkmodeState);
 
   const handleDarkmode = useCallback(() => {
     set((prev) => ({

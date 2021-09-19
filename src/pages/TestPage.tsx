@@ -11,7 +11,7 @@ function TestPage(props: TestPageProps) {
   const ref = useRef<HTMLDivElement | null>(null);
   const min = 50;
   const max = 87;
-  const data: D3Data = Array.from({ length: 101 }).map((_, i) => [
+  const data: D3Data = Array.from({ length: 51 }).map((_, i) => [
     i * 2,
     getRandomIntInclusive(min, max),
   ]);
@@ -26,7 +26,6 @@ function TestPage(props: TestPageProps) {
 
   useEffect(() => {
     if (!ref.current) return;
-
     const chart = new D3AxisChart({
       container: ref.current,
       width: width,
@@ -47,6 +46,7 @@ function TestPage(props: TestPageProps) {
       yClass: 'y-class',
       maxUnitExpressionLength,
     });
+
     chart.setLine({
       color: palette.teal['700'],
       strokeWidth,
@@ -62,6 +62,7 @@ const block = (fontSize: number) => css`
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-x: scroll;
   .x-class,
   .y-class {
     font-size: ${fontSize}px;

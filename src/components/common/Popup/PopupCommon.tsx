@@ -15,7 +15,7 @@ function PopupCommon(props: PopupCommonProps) {
   return (
     <PopupBase visible={state.visible}>
       <div css={block}>
-        <h3>{state.title}</h3>
+        {state.title && <h3>{state.title}</h3>}
         <p>{state.message}</p>
         <div css={buttonBlock}>
           <Button color="red" onClick={closePopup}>

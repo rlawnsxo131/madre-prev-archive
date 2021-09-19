@@ -23,30 +23,19 @@ const popupCommonState = atom<PopupCommonState>({
   },
 });
 
-const popupCommonStateSelector = selector<PopupCommonState>({
-  key: 'popupStateSelector',
-  get: ({ get }) => get(popupCommonState),
-  set: ({ set }, newValue) =>
-    set(popupCommonState, (prevValue) =>
-      newValue instanceof DefaultValue
-        ? newValue
-        : { ...prevValue, ...newValue },
-    ),
-});
-
 export function usePopupCommonState() {
-  return useRecoilValue(popupCommonStateSelector);
+  return useRecoilValue(popupCommonState);
 }
 
 export function usePopupCommonAction() {
-  const set = useSetRecoilState(popupCommonStateSelector);
-  const reset = useResetRecoilState(popupCommonStateSelector);
+  const set = useSetRecoilState(popupCommonState);
+  const reset = useResetRecoilState(popupCommonState);
 
   const showPopup = useCallback(
-    ({ title, message }: { title: string; message: string }) => {
+    ({ title, message }: { title?: string; message: string }) => {
       set((prev) => ({
         ...prev,
-        title,
+        title: title ?? '',
         message,
         visible: true,
       }));

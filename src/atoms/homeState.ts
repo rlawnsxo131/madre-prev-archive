@@ -1,32 +1,41 @@
 import { useCallback } from 'react';
 import { atom, selector, useRecoilValue, useSetRecoilState } from 'recoil';
-import { useDarkmodeState } from './darkmodeState';
+import { darkmodeState, DarkmodeThemeType } from './darkmodeState';
 
-interface NavigationState {
+interface HomeNavigationState {
   visible: boolean;
 }
 
-const navigationState = atom<NavigationState>({
+const homeNavigationState = atom<HomeNavigationState>({
   key: 'navigationState',
   default: {
     visible: false,
   },
 });
 
-const homeStateSelector = selector<NavigationState>({
+interface HomeState {
+  visible: boolean;
+  theme: DarkmodeThemeType;
+}
+
+const homeStateSelector = selector<HomeState>({
   key: 'homeStateSelector',
   get: ({ get }) => {
-    const { visible } = get(navigationState);
+    const { visible } = get(homeNavigationState);
+    const { theme } = get(darkmodeState);
     return {
       visible,
+      theme,
     };
   },
 });
 
 export function useHomeState() {
-  const { theme } = useDarkmodeState();
-  const { visible } = useRecoilValue(homeStateSelector);
-  const set = useSetRecoilState(navigationState);
+  return useRecoilValue(homeStateSelector);
+}
+
+export function useHomeAction() {
+  const set = useSetRecoilState(homeNavigationState);
 
   const handleVisible = useCallback(() => {
     set((prev) => ({
@@ -36,8 +45,6 @@ export function useHomeState() {
   }, [set]);
 
   return {
-    theme,
-    visible,
     handleVisible,
   };
 }
