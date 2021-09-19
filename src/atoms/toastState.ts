@@ -1,4 +1,4 @@
-import { atom, DefaultValue, selector, useRecoilValue } from 'recoil';
+import { atom, useRecoilValue } from 'recoil';
 
 interface ToastState {
   message: string;
@@ -13,17 +13,6 @@ const toastState = atom<ToastState>({
   },
 });
 
-const toastStateSelector = selector<ToastState>({
-  key: 'toastStateSelector',
-  get: ({ get }) => get(toastState),
-  set: ({ set }, newValue) =>
-    set(toastState, (prevValue) =>
-      newValue instanceof DefaultValue
-        ? newValue
-        : { ...prevValue, ...newValue },
-    ),
-});
-
 export function useToastState() {
-  return useRecoilValue(toastStateSelector);
+  return useRecoilValue(toastState);
 }

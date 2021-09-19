@@ -5,7 +5,6 @@ import HomeTemplate from './components/home/HomeTemplate';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
 import TestPage from './pages/TestPage';
-import UserPage from './pages/UserPage';
 
 interface AppProps {}
 
@@ -28,7 +27,7 @@ function App(props: AppProps) {
               <div>policy</div>
             </Route>
             <Route path="/user">
-              <UserPage />
+              <div>user</div>
             </Route>
           </HomeTemplate>
         </Route>
