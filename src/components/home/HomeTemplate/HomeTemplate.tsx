@@ -6,7 +6,7 @@ interface HomeTemplateProps {
   children: React.ReactNode;
 }
 
-function HomeTemplate({ children = null }: HomeTemplateProps) {
+function HomeTemplate({ children }: HomeTemplateProps) {
   return (
     <div css={block}>
       <HomeHeader />

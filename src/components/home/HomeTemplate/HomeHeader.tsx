@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import media, { mediaQuery } from '../../../styles/media';
 import zIndexes from '../../../styles/zIndexes';
 import HomeHeaderLogo from './HomeHeaderLogo';
-import HomeNavigation from './HomeNavigation';
+import HomeHeaderItems from './HomeHeaderItems';
 
 interface HomeHeaderProps {}
 
@@ -11,7 +11,7 @@ function HomeHeader(props: HomeHeaderProps) {
     <header css={block}>
       <div css={content}>
         <HomeHeaderLogo />
-        <HomeNavigation />
+        <HomeHeaderItems />
       </div>
     </header>
   );
