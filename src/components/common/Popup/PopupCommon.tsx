@@ -10,13 +10,13 @@ import PopupBase from '../PopupBase';
 interface PopupCommonProps {}
 
 function PopupCommon(props: PopupCommonProps) {
-  const state = usePopupCommonState();
+  const { visible, title, message } = usePopupCommonState();
   const { closePopup } = usePopupCommonAction();
   return (
-    <PopupBase visible={state.visible}>
+    <PopupBase visible={visible}>
       <div css={block}>
-        {state.title && <h3>{state.title}</h3>}
-        <p>{state.message}</p>
+        {title && <h3>{title}</h3>}
+        <p>{message}</p>
         <div css={buttonBlock}>
           <Button color="red" onClick={closePopup}>
             확인

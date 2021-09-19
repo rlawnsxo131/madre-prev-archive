@@ -11,7 +11,7 @@ interface HomeNavigationProps {}
 
 function HomeNavigation(props: HomeNavigationProps) {
   const { theme, visible } = useHomeState();
-  const { handleVisible } = useHomeAction();
+  const { handleNavigation } = useHomeAction();
 
   return (
     <nav css={block}>
@@ -22,7 +22,7 @@ function HomeNavigation(props: HomeNavigationProps) {
           </Button>
         </li>
         <li>
-          <button css={buttonStyle(theme)} onClick={handleVisible}>
+          <button css={buttonStyle(theme)} onClick={handleNavigation}>
             <MenuIcon />
           </button>
           <HomeNavigationItem theme={theme} visible={visible} />

@@ -37,7 +37,7 @@ export function useHomeState() {
 export function useHomeAction() {
   const set = useSetRecoilState(homeNavigationState);
 
-  const handleVisible = useCallback(() => {
+  const handleNavigation = useCallback(() => {
     set((prev) => ({
       ...prev,
       visible: !prev.visible,
@@ -45,6 +45,6 @@ export function useHomeAction() {
   }, [set]);
 
   return {
-    handleVisible,
+    handleNavigation,
   };
 }
