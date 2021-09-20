@@ -1,14 +1,14 @@
 import { css, Global } from '@emotion/react';
 import {
   DarkmodeThemeType,
-  useDarkmodeState,
+  useDarkmodeValue,
 } from '../../../atoms/darkmodeState';
 import { themeColor } from '../../../styles/palette';
 
 interface GlobalStyleProps {}
 
 function GlobalStyle(props: GlobalStyleProps) {
-  const { theme } = useDarkmodeState();
+  const { theme } = useDarkmodeValue();
   return <Global styles={globalStyle(theme)} />;
 }
 

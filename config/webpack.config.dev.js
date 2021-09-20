@@ -5,10 +5,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const PnpWebpackPlugin = require('pnp-webpack-plugin');
+
+// client environment
 const initializeEnvironment = require('./initializeEnvironment');
+const clientEnvironment = initializeEnvironment();
 
 module.exports = () => {
-  const clientEnvironment = initializeEnvironment();
   return {
     mode: 'development',
     entry: paths.entryPath,
@@ -99,7 +101,6 @@ module.exports = () => {
             REACT_APP_IMAGE_URL: path.resolve(__dirname, '../static'),
           },
         },
-        filename: 'index.html',
       }),
       new MiniCssExtractPlugin({
         filename: 'static/css/[name].[contenthash:8].css',

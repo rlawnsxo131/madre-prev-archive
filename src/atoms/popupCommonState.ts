@@ -21,11 +21,11 @@ const popupCommonState = atom<PopupCommonState>({
   },
 });
 
-export function usePopupCommonState() {
+export function usePopupCommonValue() {
   return useRecoilValue(popupCommonState);
 }
 
-export function usePopupCommonAction() {
+export function usePopupCommonActions() {
   const set = useSetRecoilState(popupCommonState);
   const reset = useResetRecoilState(popupCommonState);
 

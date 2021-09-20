@@ -13,6 +13,6 @@ const toastState = atom<ToastState>({
   },
 });
 
-export function useToastState() {
+export function useToastValue() {
   return useRecoilValue(toastState);
 }

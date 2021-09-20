@@ -3,15 +3,15 @@ import Button from '../../common/Button';
 import { ThemeTrigger } from '../../common/Theme';
 import { GoogleIcon, MenuIcon } from '../../../image/icons';
 import HomeNavigation from './HomeNavigation';
-import { useHomeAction, useHomeState } from '../../../atoms/homeState';
+import { useHomeValue, useHomeActions } from '../../../atoms/homeState';
 import { DarkmodeThemeType } from '../../../atoms/darkmodeState';
 import palette, { themeColor } from '../../../styles/palette';
 
 interface HomeHeaderItemsProps {}
 
 function HomeHeaderItems(props: HomeHeaderItemsProps) {
-  const { theme, visible } = useHomeState();
-  const { handleNavigation } = useHomeAction();
+  const { theme, visible } = useHomeValue();
+  const { handleNavigation } = useHomeActions();
 
   return (
     <div css={block}>

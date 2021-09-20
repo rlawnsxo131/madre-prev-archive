@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
 import {
   DarkmodeThemeType,
-  useDarkmodeState,
+  useDarkmodeValue,
 } from '../../../atoms/darkmodeState';
 import { themeColor } from '../../../styles/palette';
 import transitions from '../../../styles/transitions';
@@ -14,7 +14,7 @@ interface PopupBaseProps {
 }
 
 function PopupBase({ children, visible }: PopupBaseProps) {
-  const { theme } = useDarkmodeState();
+  const { theme } = useDarkmodeValue();
   const [closed, setClosed] = useState(true);
 
   useEffect(() => {

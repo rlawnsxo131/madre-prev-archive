@@ -13,11 +13,11 @@ export const darkmodeState = atom<DarkmodeState>({
   },
 });
 
-export function useDarkmodeState() {
+export function useDarkmodeValue() {
   return useRecoilValue(darkmodeState);
 }
 
-export function useDarkmodeAction() {
+export function useDarkmodeActions() {
   const set = useSetRecoilState(darkmodeState);
 
   const handleDarkmode = useCallback(() => {

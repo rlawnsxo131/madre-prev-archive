@@ -30,11 +30,11 @@ const homeStateSelector = selector<HomeState>({
   },
 });
 
-export function useHomeState() {
+export function useHomeValue() {
   return useRecoilValue(homeStateSelector);
 }
 
-export function useHomeAction() {
+export function useHomeActions() {
   const set = useSetRecoilState(homeNavigationState);
 
   const handleNavigation = useCallback(() => {

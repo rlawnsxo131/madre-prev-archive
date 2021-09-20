@@ -3,7 +3,8 @@
   "scripts": {
     "sdk": "yarn dlx @yarnpkg/sdks vscode",
     "sdk:update": "yarn dlx @yarnpkg/sdks",
-    "dev": "NODE_ENV=development webpack serve --config config/webpack.config.dev.js"
+    "dev": "NODE_ENV=development webpack serve --config config/webpack.config.dev.js",
+    "build:production": "NODE_ENV=production webpack --config config/webpack.config.prod.js"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
@@ -18,6 +19,7 @@
     "@types/react-router-dom": "^5.1.9",
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^4.0.0",
+    "css-minimizer-webpack-plugin": "^3.0.2",
     "dotenv": "^10.0.0",
     "file-loader": "^6.2.0",
     "fork-ts-checker-webpack-plugin": "^6.3.3",
@@ -25,6 +27,7 @@
     "mini-css-extract-plugin": "^2.3.0",
     "pnp-webpack-plugin": "^1.7.0",
     "prettier": "^2.4.1",
+    "terser-webpack-plugin": "^5.2.4",
     "ts-loader": "^9.2.5",
     "typescript": "^4.4.3",
     "url-loader": "^4.1.1",

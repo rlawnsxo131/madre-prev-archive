@@ -1,8 +1,8 @@
 import { css } from '@emotion/react';
 import {
   DarkmodeThemeType,
-  useDarkmodeAction,
-  useDarkmodeState,
+  useDarkmodeValue,
+  useDarkmodeActions,
 } from '../../../atoms/darkmodeState';
 import { LightIcon, NightIcon } from '../../../image/icons';
 import { themeColor } from '../../../styles/palette';
@@ -10,13 +10,13 @@ import { themeColor } from '../../../styles/palette';
 interface ThemTriggerProps {}
 
 function ThemeTrigger(props: ThemTriggerProps) {
-  const state = useDarkmodeState();
-  const { handleDarkmode } = useDarkmodeAction();
+  const { theme } = useDarkmodeValue();
+  const { handleDarkmode } = useDarkmodeActions();
 
   return (
-    <button css={block(state.theme)} onClick={handleDarkmode}>
-      {state.theme === 'light' && <LightIcon />}
-      {state.theme === 'dark' && <NightIcon />}
+    <button css={block(theme)} onClick={handleDarkmode}>
+      {theme === 'light' && <LightIcon />}
+      {theme === 'dark' && <NightIcon />}
     </button>
   );
 }
