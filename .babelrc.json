@@ -2,17 +2,17 @@
     "presets": [
         [
             "@babel/preset-env",
-            { 
-                "targets": { 
-                    "browsers": ["last 2 versions", ">= 5% in KR"]
-                } 
+            {
+                "targets": {
+                  "esmodules": true
+                }
             }
         ],
         "@babel/preset-typescript"
     ],
     "plugins": [
         "@emotion",
-        // "@loadable/babel-plugin",
         "@babel/plugin-syntax-dynamic-import"
+        // "@loadable/babel-plugin"
     ]
 }

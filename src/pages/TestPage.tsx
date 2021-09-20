@@ -11,8 +11,8 @@ function TestPage(props: TestPageProps) {
   const ref = useRef<HTMLDivElement | null>(null);
   const min = 50;
   const max = 87;
-  const data: D3Data = Array.from({ length: 51 }).map((_, i) => [
-    i * 2,
+  const data: D3Data = Array.from({ length: 401 }).map((_, i) => [
+    i * 0.25,
     getRandomIntInclusive(min, max),
   ]);
 
@@ -20,9 +20,11 @@ function TestPage(props: TestPageProps) {
   const width = 460;
   const height = 400;
   const fontSize = 10;
-  const maxUnitExpressionLength = fontSize * 3;
+  const axisMaxUnitExpressionLength = fontSize * 3;
   const ticks = 25;
   const tickSize = 6;
+  const xDomain = [0, 100];
+  const yDomain = [0, 100];
 
   useEffect(() => {
     if (!ref.current) return;
@@ -30,10 +32,10 @@ function TestPage(props: TestPageProps) {
       container: ref.current,
       width: width,
       height: height,
-      xDomain: [0, 100],
-      yDomain: [0, 100],
-      xRange: [0, width - (maxUnitExpressionLength + ticks + tickSize)],
-      yRange: [height - (maxUnitExpressionLength + ticks + tickSize), 0],
+      xDomain,
+      yDomain,
+      xRange: [0, width - (axisMaxUnitExpressionLength + ticks + tickSize)],
+      yRange: [height - (axisMaxUnitExpressionLength + ticks + tickSize), 0],
       data,
     });
 
@@ -44,7 +46,7 @@ function TestPage(props: TestPageProps) {
       yTickSize: tickSize,
       xClass: 'x-class',
       yClass: 'y-class',
-      maxUnitExpressionLength,
+      axisMaxUnitExpressionLength,
     });
 
     chart.setLine({
@@ -53,20 +55,15 @@ function TestPage(props: TestPageProps) {
     });
   }, [ref.current]);
 
-  return <div css={block(fontSize)} ref={ref}></div>;
+  return <div css={block} ref={ref}></div>;
 }
 
-const block = (fontSize: number) => css`
+const block = css`
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow-x: scroll;
-  .x-class,
-  .y-class {
-    font-size: ${fontSize}px;
-  }
 `;
 
 export default TestPage;

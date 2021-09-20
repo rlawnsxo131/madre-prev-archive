@@ -20,7 +20,8 @@ export type D3AxisChartSetAxisParams = Partial<{
   yTickSize: number;
   xClass: string;
   yClass: string;
-  maxUnitExpressionLength: number;
+  axisFontSize: number;
+  axisMaxUnitExpressionLength: number;
   xTickFormat: D3TickFormat;
   yTickFormat: D3TickFormat;
 }>;
