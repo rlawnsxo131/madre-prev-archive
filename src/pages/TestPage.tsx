@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import { useEffect, useRef } from 'react';
+import apiClient from '../api/apiClient';
 import { D3AxisChart } from '../lib/d3';
 import { D3Data } from '../lib/d3/d3Common/d3CommonTypes';
 import { getRandomIntInclusive } from '../lib/utils';

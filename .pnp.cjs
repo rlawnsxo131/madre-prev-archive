@@ -46,6 +46,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/react", "npm:17.0.21"],
             ["@types/react-dom", "npm:17.0.9"],
             ["@types/react-router-dom", "npm:5.1.9"],
+            ["axios", "npm:0.21.4"],
             ["babel-loader", "virtual:687d1eda43251072d49f1c5ac2e4619d49d360050426a770fbd69cb0ca2199508ea27513052211950e20f79b67c113ee4a6ae02599de3c35bd8a914818da6dc1#npm:8.2.2"],
             ["clean-webpack-plugin", "virtual:687d1eda43251072d49f1c5ac2e4619d49d360050426a770fbd69cb0ca2199508ea27513052211950e20f79b67c113ee4a6ae02599de3c35bd8a914818da6dc1#npm:4.0.0"],
             ["css-minimizer-webpack-plugin", "virtual:687d1eda43251072d49f1c5ac2e4619d49d360050426a770fbd69cb0ca2199508ea27513052211950e20f79b67c113ee4a6ae02599de3c35bd8a914818da6dc1#npm:3.0.2"],
@@ -3865,6 +3866,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["axios", [
+        ["npm:0.21.4", {
+          "packageLocation": "./.yarn/cache/axios-npm-0.21.4-e278873748-44245f24ac.zip/node_modules/axios/",
+          "packageDependencies": [
+            ["axios", "npm:0.21.4"],
+            ["follow-redirects", "virtual:e278873748b4e9d158db595d2f6cb0351c74052f52b53924aec4d9299e7b6babfb62aead374cf2f6e453bc8bea3b052380dc6b1137a162bbfc102bbb1c8cac42#npm:1.14.4"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["babel-loader", [
         ["npm:8.2.2", {
           "packageLocation": "./.yarn/cache/babel-loader-npm-8.2.2-b4e600c2c5-df5092ef98.zip/node_modules/babel-loader/",
@@ -5204,6 +5215,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/react", "npm:17.0.21"],
             ["@types/react-dom", "npm:17.0.9"],
             ["@types/react-router-dom", "npm:5.1.9"],
+            ["axios", "npm:0.21.4"],
             ["babel-loader", "virtual:687d1eda43251072d49f1c5ac2e4619d49d360050426a770fbd69cb0ca2199508ea27513052211950e20f79b67c113ee4a6ae02599de3c35bd8a914818da6dc1#npm:8.2.2"],
             ["clean-webpack-plugin", "virtual:687d1eda43251072d49f1c5ac2e4619d49d360050426a770fbd69cb0ca2199508ea27513052211950e20f79b67c113ee4a6ae02599de3c35bd8a914818da6dc1#npm:4.0.0"],
             ["css-minimizer-webpack-plugin", "virtual:687d1eda43251072d49f1c5ac2e4619d49d360050426a770fbd69cb0ca2199508ea27513052211950e20f79b67c113ee4a6ae02599de3c35bd8a914818da6dc1#npm:3.0.2"],
@@ -5967,10 +5979,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
+        ["npm:1.14.4", {
+          "packageLocation": "./.yarn/cache/follow-redirects-npm-1.14.4-19eb02e590-d4ce74cf5c.zip/node_modules/follow-redirects/",
+          "packageDependencies": [
+            ["follow-redirects", "npm:1.14.4"]
+          ],
+          "linkType": "SOFT",
+        }],
         ["virtual:a313c479c5c7e54d9ec8fbeeea69ff640f56b8989ea2dff42351a3fa5c4061fb80a52d8ede0f0826a181a216820c2d2c3f15da881e7fdf31cef1c446e42f0c45#npm:1.14.1", {
           "packageLocation": "./.yarn/__virtual__/follow-redirects-virtual-813c27ce66/0/cache/follow-redirects-npm-1.14.1-e6bdc0f8e5-7381a55bdc.zip/node_modules/follow-redirects/",
           "packageDependencies": [
             ["follow-redirects", "virtual:a313c479c5c7e54d9ec8fbeeea69ff640f56b8989ea2dff42351a3fa5c4061fb80a52d8ede0f0826a181a216820c2d2c3f15da881e7fdf31cef1c446e42f0c45#npm:1.14.1"],
+            ["debug", null]
+          ],
+          "packagePeers": [
+            "debug"
+          ],
+          "linkType": "HARD",
+        }],
+        ["virtual:e278873748b4e9d158db595d2f6cb0351c74052f52b53924aec4d9299e7b6babfb62aead374cf2f6e453bc8bea3b052380dc6b1137a162bbfc102bbb1c8cac42#npm:1.14.4", {
+          "packageLocation": "./.yarn/__virtual__/follow-redirects-virtual-60ab585f0d/0/cache/follow-redirects-npm-1.14.4-19eb02e590-d4ce74cf5c.zip/node_modules/follow-redirects/",
+          "packageDependencies": [
+            ["follow-redirects", "virtual:e278873748b4e9d158db595d2f6cb0351c74052f52b53924aec4d9299e7b6babfb62aead374cf2f6e453bc8bea3b052380dc6b1137a162bbfc102bbb1c8cac42#npm:1.14.4"],
             ["debug", null]
           ],
           "packagePeers": [
