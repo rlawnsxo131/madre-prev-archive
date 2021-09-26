@@ -13,6 +13,7 @@ export default class D3Common {
       .attr('width', width)
       .attr('height', height)
       .attr('class', className);
+
     return svg;
   }
 

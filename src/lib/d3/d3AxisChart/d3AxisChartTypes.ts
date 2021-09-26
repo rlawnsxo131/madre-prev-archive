@@ -10,7 +10,6 @@ export type D3AxisChartConstructorParams = {
   yDomain: number[];
   xRange: D3DoubleNumberArray;
   yRange: D3DoubleNumberArray;
-  data: D3Data;
 } & AppendSvgParams;
 
 export type D3AxisChartSetAxisParams = Partial<{
@@ -24,9 +23,16 @@ export type D3AxisChartSetAxisParams = Partial<{
   axisMaxUnitExpressionLength: number;
   xTickFormat: D3TickFormat;
   yTickFormat: D3TickFormat;
+  xGridClass: string;
+  yGridClass: string;
 }>;
 
-export type D3AxisChartSetLineParams = Partial<{
-  color: string;
-  strokeWidth: number;
-}>;
+export type D3AxisChartLineType = 'STRAIGHT' | 'CURVE';
+
+export type D3AxisChartSetLineParams = {
+  data: D3Data;
+  color?: string;
+  strokeWidth?: number;
+  lineType?: D3AxisChartLineType;
+  animate?: boolean;
+};
