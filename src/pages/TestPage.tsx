@@ -9,17 +9,13 @@ interface TestPageProps {}
 
 function TestPage(props: TestPageProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const min = 10;
-  const max = 87;
   const dataList: D3Data[] = Array.from({ length: 5 }).map(() => {
-    const data: D3Data = Array.from({ length: 11 }).map((_, i) => [
+    return Array.from({ length: 11 }).map((_, i) => [
       i * 10,
-      getRandomIntInclusive(min, max),
+      getRandomIntInclusive(10, 87),
     ]);
-    return data;
   });
 
-  const strokeWidth = 1;
   const width = 460;
   const height = 400;
   const fontSize = 10;
@@ -28,6 +24,7 @@ function TestPage(props: TestPageProps) {
   const tickSize = 6;
   const xDomain = [0, 100];
   const yDomain = [0, 100];
+  const strokeWidth = 1;
 
   useEffect(() => {
     if (!ref.current) return;
@@ -43,15 +40,18 @@ function TestPage(props: TestPageProps) {
     });
 
     chart.setAxis({
-      xTicks: 6,
+      xTicks: 5,
       yTicks: 10,
       xTickSize: tickSize,
       yTickSize: tickSize,
-      xClass: 'x-class',
-      yClass: 'y-class',
+      xClass: 'x-axis',
+      yClass: 'y-axis',
       axisMaxUnitExpressionLength,
-      xGridClass: 'grid',
-      yGridClass: 'grid',
+    });
+
+    chart.setAxisBackgroundGrid({
+      xClass: 'grid',
+      yClass: 'grid',
     });
 
     const colors = getRandomColors(dataList.length);
@@ -77,6 +77,12 @@ const block = css`
   justify-content: center;
   align-items: center;
 
+  .x-axis,
+  .y-axis {
+    & path {
+      /* color: ${palette.gray[300]}; */
+    }
+  }
   .grid {
     color: ${palette.gray[300]};
   }

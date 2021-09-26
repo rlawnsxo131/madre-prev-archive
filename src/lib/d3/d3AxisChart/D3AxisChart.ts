@@ -9,13 +9,10 @@ import {
   scaleLinear,
 } from 'd3';
 import D3Common from '../d3Common';
-import {
-  D3DoubleNumberArray,
-  D3Path,
-  D3Selection,
-} from '../d3Common/d3CommonTypes';
+import { D3DoubleNumberArray, D3Selection } from '../d3Common/d3CommonTypes';
 import {
   D3AxisChartConstructorParams,
+  D3AxisChartSetAxisBackgroundGridParams,
   D3AxisChartSetAxisParams,
   D3AxisChartSetLineParams,
 } from './d3AxisChartTypes';
@@ -32,11 +29,14 @@ export default class D3AxisChart extends D3Common {
   private yDomain: D3DoubleNumberArray;
   private xRange: D3DoubleNumberArray;
   private yRange: D3DoubleNumberArray;
+
   // axis attribute
   private axisFontSize = 10;
   private axisMaxUnitExpressionLength = 0;
-  // straight attribute
-  private strockWidth = 1;
+  private axisXTicks = 0;
+  private axisXTickSize = 0;
+  private axisYTicks = 0;
+  private axisYTickSize = 0;
 
   constructor({
     container,
@@ -82,11 +82,13 @@ export default class D3AxisChart extends D3Common {
     axisMaxUnitExpressionLength = 0,
     xTickFormat = (d, i) => `${d}`,
     yTickFormat = (d, i) => `${d}`,
-    xGridClass = '',
-    yGridClass = '',
   }: D3AxisChartSetAxisParams) {
     this.axisFontSize = axisFontSize;
     this.axisMaxUnitExpressionLength = axisMaxUnitExpressionLength;
+    this.axisXTicks = xTicks;
+    this.axisXTickSize = xTickSize;
+    this.axisYTicks = yTicks;
+    this.axisYTickSize = yTickSize;
 
     const xAxisSvg = this.svg
       .append('g')
@@ -95,7 +97,8 @@ export default class D3AxisChart extends D3Common {
         'transform',
         `translate(
           ${this.axisMaxUnitExpressionLength}, 
-          ${this.height - yTicks - yTickSize})`,
+          ${this.height - this.axisYTicks - this.axisYTickSize}
+        )`,
       )
       .style('font-size', this.axisFontSize);
 
@@ -111,58 +114,61 @@ export default class D3AxisChart extends D3Common {
       .style('font-size', this.axisFontSize);
 
     const xAxis = axisBottom(this.xScale())
-      .tickSize(xTickSize)
-      .ticks(xTicks)
+      .tickSize(this.axisXTickSize)
+      .ticks(this.axisXTicks)
       .tickFormat(xTickFormat);
 
     const yAxis = axisLeft(this.yScale())
-      .tickSize(yTickSize)
-      .ticks(yTicks)
+      .tickSize(this.axisYTickSize)
+      .ticks(this.axisYTicks)
       .tickFormat(yTickFormat);
 
     xAxis(xAxisSvg);
     yAxis(yAxisSvg);
+  }
 
-    // grid line
+  setAxisBackgroundGrid({
+    xClass = '',
+    yClass = '',
+    xTickFormat = () => '',
+    yTickFormat = () => '',
+  }: D3AxisChartSetAxisBackgroundGridParams) {
     const xGridSvg = this.svg
       .append('g')
-      .attr('class', xGridClass)
+      .attr('class', xClass)
       .attr(
         'transform',
         `translate(
-          ${this.axisMaxUnitExpressionLength},
-          ${this.axisMaxUnitExpressionLength})`,
+        ${this.axisMaxUnitExpressionLength},
+        ${this.axisMaxUnitExpressionLength})`,
       )
       .style('font-size', this.axisFontSize);
 
     const yGirdSvg = this.svg
       .append('g')
-      .attr('class', yGridClass)
+      .attr('class', yClass)
       .attr(
         'transform',
         `translate(
-          ${this.axisMaxUnitExpressionLength},
-          ${this.height - yTicks - yTickSize}
-        )`,
+        ${this.axisMaxUnitExpressionLength},
+        ${this.height - this.axisYTicks - this.axisYTickSize}
+      )`,
       )
       .style('fornt-size', this.axisFontSize);
 
     const xGrid = axisRight(this.yScale())
       .tickSize(this.width)
       .ticks(5)
-      .tickFormat(() => '');
+      .tickFormat(xTickFormat);
 
     const yGrid = axisTop(this.xScale())
       .tickSize(this.height)
       .ticks(5)
-      .tickFormat(() => '');
+      .tickFormat(yTickFormat);
 
     xGrid(xGridSvg);
     yGrid(yGirdSvg);
   }
-
-  // axis background grid line
-  setGrid() {}
 
   // line graph
   setLine({
@@ -172,8 +178,6 @@ export default class D3AxisChart extends D3Common {
     lineType = 'STRAIGHT',
     animate = false,
   }: D3AxisChartSetLineParams) {
-    this.strockWidth = strokeWidth;
-
     const xScale = this.xScale();
     const yScale = this.yScale();
 
@@ -197,21 +201,18 @@ export default class D3AxisChart extends D3Common {
           ${this.axisMaxUnitExpressionLength})
         `,
       );
-
     const pathLength = path.node()?.getTotalLength();
 
     if (animate && path && pathLength) {
-      this.lineAnimate(path, pathLength);
+      path
+        .attr('stroke-dashoffset', pathLength)
+        .attr('stroke-dasharray', pathLength)
+        .transition()
+        .ease(easeSinInOut)
+        .duration(1500)
+        .attr('stroke-dashoffset', 0); //시작점
     }
   }
 
-  private lineAnimate(path: D3Path, pathLength: number) {
-    path
-      .attr('stroke-dashoffset', pathLength)
-      .attr('stroke-dasharray', pathLength)
-      .transition()
-      .ease(easeSinInOut)
-      .duration(1500)
-      .attr('stroke-dashoffset', 0); //시작점
-  }
+  setArea() {}
 }

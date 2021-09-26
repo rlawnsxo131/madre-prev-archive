@@ -23,8 +23,13 @@ export type D3AxisChartSetAxisParams = Partial<{
   axisMaxUnitExpressionLength: number;
   xTickFormat: D3TickFormat;
   yTickFormat: D3TickFormat;
-  xGridClass: string;
-  yGridClass: string;
+}>;
+
+export type D3AxisChartSetAxisBackgroundGridParams = Partial<{
+  xClass: string;
+  yClass: string;
+  xTickFormat: D3TickFormat;
+  yTickFormat: D3TickFormat;
 }>;
 
 export type D3AxisChartLineType = 'STRAIGHT' | 'CURVE';

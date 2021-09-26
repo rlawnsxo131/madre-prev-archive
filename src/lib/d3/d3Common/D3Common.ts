@@ -12,6 +12,7 @@ export default class D3Common {
       .append('svg')
       .attr('width', width)
       .attr('height', height)
+      .attr('viewBox', `0, 0, ${width}, ${height}`)
       .attr('class', className);
 
     return svg;
