@@ -18,7 +18,6 @@ import {
 } from './d3AxisChartTypes';
 
 /**
- * strockWidth: linechart strock width
  * axisMaxUnitExpressionLength: maximum number of characters displayed
  */
 export default class D3AxisChart extends D3Common {
