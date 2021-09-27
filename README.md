@@ -1,1 +1,1 @@
-# data-visualizer-client
+# madre-client

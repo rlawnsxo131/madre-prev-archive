@@ -7,7 +7,7 @@ function HomeHeaderLogo(props: HomeHeaderLogoProps) {
   return (
     <div css={block}>
       <Link css={link} to="/">
-        <h1>Data Visualizer</h1>
+        <h1>Madre</h1>
       </Link>
     </div>
   );
