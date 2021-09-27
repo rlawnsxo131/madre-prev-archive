@@ -1,5 +1,5 @@
 {
-  "name": "data-visualizer-client",
+  "name": "madre-client",
   "scripts": {
     "sdk": "yarn dlx @yarnpkg/sdks vscode",
     "sdk:update": "yarn dlx @yarnpkg/sdks",
