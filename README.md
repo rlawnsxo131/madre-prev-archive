@@ -7,4 +7,5 @@
 * React Router
 * TypeScript
 * Recoil
+* D3
 * Emotion
