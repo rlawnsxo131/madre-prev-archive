@@ -20,5 +20,9 @@ coverage.txt
 # docker
 /docker/mariadb/data
 
+# environment variable
+.env
+.env.production
+
 # misc
 .DS_Store
