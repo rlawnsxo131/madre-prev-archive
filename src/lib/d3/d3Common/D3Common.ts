@@ -27,7 +27,7 @@ export default class D3Common {
     return randomInt(min, max)();
   }
 
-  protected getRendomUniform(min: number, max: number) {
+  protected getRandomUniform(min: number, max: number) {
     return randomUniform(min, max)();
   }
 }
