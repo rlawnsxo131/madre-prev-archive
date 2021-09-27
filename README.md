@@ -1,6 +1,6 @@
 # madre-client
 
-## Project Stack
+### Project Stack
 * Yarn Berry
 * React
 * React Router
