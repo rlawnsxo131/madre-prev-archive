@@ -1,9 +1,6 @@
 import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
-import {
-  DarkmodeThemeType,
-  useDarkmodeValue,
-} from '../../../atoms/darkmodeState';
+import { DarkmodeTheme, useDarkmodeValue } from '../../../atoms/darkmodeState';
 import { themeColor } from '../../../styles/palette';
 import transitions from '../../../styles/transitions';
 import OpaqueLayer from '../OpaqueLayer';
@@ -42,7 +39,7 @@ function PopupBase({ children, visible }: PopupBaseProps) {
   );
 }
 
-const popup = (visible: boolean, theme: DarkmodeThemeType) => css`
+const popup = (visible: boolean, theme: DarkmodeTheme) => css`
   position: relative;
   display: flex;
   justify-content: center;

@@ -1,9 +1,11 @@
 import { useCallback } from 'react';
 import { atom, useRecoilValue, useSetRecoilState } from 'recoil';
+import { MADRE_DARKMODE } from '../constants';
+import { storage } from '../lib/storage';
 
-export type DarkmodeThemeType = 'dark' | 'light';
+export type DarkmodeTheme = 'dark' | 'light';
 interface DarkmodeState {
-  theme: DarkmodeThemeType;
+  theme: DarkmodeTheme;
 }
 
 export const darkmodeState = atom<DarkmodeState>({
@@ -21,10 +23,14 @@ export function useDarkmodeActions() {
   const set = useSetRecoilState(darkmodeState);
 
   const handleDarkmode = useCallback(() => {
-    set((prev) => ({
-      ...prev,
-      theme: prev.theme === 'dark' ? 'light' : 'dark',
-    }));
+    set((prev) => {
+      const theme = prev.theme === 'dark' ? 'light' : 'dark';
+      storage.setItem(MADRE_DARKMODE, theme);
+      return {
+        ...prev,
+        theme,
+      };
+    });
   }, [set]);
 
   return {

@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { atom, selector, useRecoilValue, useSetRecoilState } from 'recoil';
-import { darkmodeState, DarkmodeThemeType } from './darkmodeState';
+import { darkmodeState, DarkmodeTheme } from './darkmodeState';
 
 interface HomeNavigationState {
   visible: boolean;
@@ -15,7 +15,7 @@ const homeNavigationState = atom<HomeNavigationState>({
 
 interface HomeState {
   visible: boolean;
-  theme: DarkmodeThemeType;
+  theme: DarkmodeTheme;
 }
 
 const homeStateSelector = selector<HomeState>({

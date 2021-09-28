@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import {
-  DarkmodeThemeType,
+  DarkmodeTheme,
   useDarkmodeValue,
   useDarkmodeActions,
 } from '../../../atoms/darkmodeState';
@@ -21,7 +21,7 @@ function ThemeTrigger(props: ThemTriggerProps) {
   );
 }
 
-const block = (theme: DarkmodeThemeType) => css`
+const block = (theme: DarkmodeTheme) => css`
   background: inherit;
   border: none;
   box-shadow: none;

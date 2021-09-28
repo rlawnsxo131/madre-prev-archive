@@ -1,13 +1,13 @@
 import { css } from '@emotion/react';
 import { memo, useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { DarkmodeThemeType } from '../../../atoms/darkmodeState';
+import { DarkmodeTheme } from '../../../atoms/darkmodeState';
 import { themeColor } from '../../../styles/palette';
 import transitions from '../../../styles/transitions';
 import zIndexes from '../../../styles/zIndexes';
 
 interface HomeNavigationProps {
-  theme: DarkmodeThemeType;
+  theme: DarkmodeTheme;
   visible: boolean;
 }
 
@@ -60,7 +60,7 @@ function HomeNavigation({ theme, visible }: HomeNavigationProps) {
   );
 }
 
-const block = (theme: DarkmodeThemeType, visible: boolean) => css`
+const block = (theme: DarkmodeTheme, visible: boolean) => css`
   position: absolute;
   top: 3.25rem;
   left: 0.5rem;

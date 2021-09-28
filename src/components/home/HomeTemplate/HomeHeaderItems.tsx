@@ -4,7 +4,7 @@ import { ThemeTrigger } from '../../common/Theme';
 import { GoogleIcon, MenuIcon } from '../../../image/icons';
 import HomeNavigation from './HomeNavigation';
 import { useHomeValue, useHomeActions } from '../../../atoms/homeState';
-import { DarkmodeThemeType } from '../../../atoms/darkmodeState';
+import { DarkmodeTheme } from '../../../atoms/darkmodeState';
 import palette, { themeColor } from '../../../styles/palette';
 
 interface HomeHeaderItemsProps {}
@@ -48,7 +48,7 @@ const itemWrapperStyle = css`
   }
 `;
 
-const buttonStyle = (theme: DarkmodeThemeType) => css`
+const buttonStyle = (theme: DarkmodeTheme) => css`
   background: inherit;
   border: none;
   box-shadow: none;

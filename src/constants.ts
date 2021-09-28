@@ -1,0 +1,1 @@
+export const MADRE_DARKMODE = 'MADRE_DARKMODE';

@@ -3717,9 +3717,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3@npm:^7.0.1":
-  version: 7.0.1
-  resolution: "d3@npm:7.0.1"
+"d3@npm:^7.0.4":
+  version: 7.0.4
+  resolution: "d3@npm:7.0.4"
   dependencies:
     d3-array: 3
     d3-axis: 3
@@ -3751,7 +3751,7 @@ __metadata:
     d3-timer: 3
     d3-transition: 3
     d3-zoom: 3
-  checksum: b3fd5e0ba9e36791b9b99b34b874e74d8ad5bb3dec5b63a0609fafd3cd88ed2f5658a21d2d9ad8435f626275a4156966c48d835cc103dcdcf1e2002452d95f42
+  checksum: 375f504939de00ead114b404210b66a53271ae820cf86cfc9bfb5bd7e3c924fc128a0ab984619b9edaf4ed480bded855b6c1bff2ffd0c2f30536ad3df8a81e0e
   languageName: node
   linkType: hard
 
@@ -5466,7 +5466,7 @@ fsevents@~2.3.2:
     babel-loader: ^8.2.2
     clean-webpack-plugin: ^4.0.0
     css-minimizer-webpack-plugin: ^3.0.2
-    d3: ^7.0.1
+    d3: ^7.0.4
     dotenv: ^10.0.0
     file-loader: ^6.2.0
     fork-ts-checker-webpack-plugin: ^6.3.3

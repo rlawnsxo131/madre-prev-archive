@@ -50,7 +50,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["babel-loader", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:8.2.2"],
             ["clean-webpack-plugin", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:4.0.0"],
             ["css-minimizer-webpack-plugin", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:3.0.2"],
-            ["d3", "npm:7.0.1"],
+            ["d3", "npm:7.0.4"],
             ["dotenv", "npm:10.0.0"],
             ["file-loader", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:6.2.0"],
             ["fork-ts-checker-webpack-plugin", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:6.3.3"],
@@ -4845,10 +4845,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["d3", [
-        ["npm:7.0.1", {
-          "packageLocation": "./.yarn/cache/d3-npm-7.0.1-e330fdab60-b3fd5e0ba9.zip/node_modules/d3/",
+        ["npm:7.0.4", {
+          "packageLocation": "./.yarn/cache/d3-npm-7.0.4-0716e3aeb7-375f504939.zip/node_modules/d3/",
           "packageDependencies": [
-            ["d3", "npm:7.0.1"],
+            ["d3", "npm:7.0.4"],
             ["d3-array", "npm:3.0.1"],
             ["d3-axis", "npm:3.0.0"],
             ["d3-brush", "npm:3.0.0"],
@@ -7221,7 +7221,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["babel-loader", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:8.2.2"],
             ["clean-webpack-plugin", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:4.0.0"],
             ["css-minimizer-webpack-plugin", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:3.0.2"],
-            ["d3", "npm:7.0.1"],
+            ["d3", "npm:7.0.4"],
             ["dotenv", "npm:10.0.0"],
             ["file-loader", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:6.2.0"],
             ["fork-ts-checker-webpack-plugin", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:6.3.3"],
