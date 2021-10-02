@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
-import { DarkmodeTheme, useDarkmodeValue } from '../../../atoms/darkmodeState';
+import { ColorTheme, useColorThemeValue } from '../../../atoms/colorThemeState';
+import useTransitionTimeoutEffect from '../../../lib/hooks/useTransitionTimeoutEffect';
 import { themeColor } from '../../../styles/palette';
 import transitions from '../../../styles/transitions';
 import OpaqueLayer from '../OpaqueLayer';
@@ -11,24 +12,8 @@ interface PopupBaseProps {
 }
 
 function PopupBase({ children, visible }: PopupBaseProps) {
-  const { theme } = useDarkmodeValue();
-  const [closed, setClosed] = useState(true);
-
-  useEffect(() => {
-    let timeoutId: NodeJS.Timeout | null = null;
-    if (visible) {
-      setClosed(false);
-    } else {
-      timeoutId = setTimeout(() => {
-        setClosed(true);
-      }, 250);
-    }
-    return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
-  }, [visible]);
+  const { theme } = useColorThemeValue();
+  const closed = useTransitionTimeoutEffect({ visible });
 
   if (!visible && closed) return null;
 
@@ -39,7 +24,7 @@ function PopupBase({ children, visible }: PopupBaseProps) {
   );
 }
 
-const popup = (visible: boolean, theme: DarkmodeTheme) => css`
+const popup = (visible: boolean, theme: ColorTheme) => css`
   position: relative;
   display: flex;
   justify-content: center;

@@ -18,7 +18,7 @@ function HomeHeader(props: HomeHeaderProps) {
 }
 
 const block = css`
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   width: 100%;

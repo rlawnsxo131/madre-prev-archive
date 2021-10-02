@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { memo } from 'react';
-import { DarkmodeTheme, useDarkmodeValue } from '../../../atoms/darkmodeState';
+import { ColorTheme, useColorThemeValue } from '../../../atoms/colorThemeState';
 import {
   buttonColorMap,
   ButtonColorType,
@@ -29,7 +29,7 @@ function Button({
   ...rest
 }: ButtonProps) {
   const htmlProps = rest as any;
-  const { theme } = useDarkmodeValue();
+  const { theme } = useColorThemeValue();
   return (
     <button
       css={block(color, size, shape, outline, theme)}
@@ -52,7 +52,7 @@ const block = (
   size: ButtonSizeType,
   shape: ButtonShapeType,
   outline: boolean,
-  theme: DarkmodeTheme,
+  theme: ColorTheme,
 ) => css`
   display: inline-flex;
   align-items: center;

@@ -1,34 +1,19 @@
 import { css } from '@emotion/react';
 import { memo, useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { DarkmodeTheme } from '../../../atoms/darkmodeState';
+import { ColorTheme } from '../../../atoms/colorThemeState';
+import useTransitionTimeoutEffect from '../../../lib/hooks/useTransitionTimeoutEffect';
 import { themeColor } from '../../../styles/palette';
 import transitions from '../../../styles/transitions';
 import zIndexes from '../../../styles/zIndexes';
 
 interface HomeNavigationProps {
-  theme: DarkmodeTheme;
+  theme: ColorTheme;
   visible: boolean;
 }
 
 function HomeNavigation({ theme, visible }: HomeNavigationProps) {
-  const [closed, setClosed] = useState(true);
-
-  useEffect(() => {
-    let timeoutId: NodeJS.Timeout | null = null;
-    if (visible) {
-      setClosed(false);
-    } else {
-      timeoutId = setTimeout(() => {
-        setClosed(true);
-      }, 250);
-    }
-    return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
-  }, [visible]);
+  const closed = useTransitionTimeoutEffect({ visible });
 
   if (!visible && closed) return null;
 
@@ -60,7 +45,7 @@ function HomeNavigation({ theme, visible }: HomeNavigationProps) {
   );
 }
 
-const block = (theme: DarkmodeTheme, visible: boolean) => css`
+const block = (theme: ColorTheme, visible: boolean) => css`
   position: absolute;
   top: 3.25rem;
   left: 0.5rem;

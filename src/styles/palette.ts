@@ -159,7 +159,7 @@ const palette = {
   },
 };
 
-const darkmodeColor = {
+const colorThemeColor = {
   background: {
     100: '#282c35',
     200: '#292f35',
@@ -169,7 +169,7 @@ const darkmodeColor = {
 export const themeColor = {
   background: {
     light: palette.white,
-    dark: darkmodeColor.background['100'],
+    dark: colorThemeColor.background['100'],
   },
   font: {
     light: palette.black,
@@ -181,7 +181,7 @@ export const themeColor = {
   },
   hover: {
     light: palette.gray['200'],
-    dark: darkmodeColor.background['200'],
+    dark: colorThemeColor.background['200'],
   },
   shadow: {
     light: `1px 1px 3px 1px ${palette.gray['500']}`,

@@ -85,10 +85,11 @@ export function getRandomIntInclusive(min: number, max: number) {
 }
 
 export function getPrefersColorScheme() {
-  return ['light', 'dark'].reduce((acc, mode) => {
+  const colorScheme = ['light', 'dark'].reduce((acc, mode) => {
     if (globalThis.matchMedia(`(prefers-color-scheme: ${mode})`).matches) {
       acc += mode;
     }
     return acc;
   }, '');
+  return colorScheme || 'light';
 }

@@ -1,1 +1,1 @@
-export const MADRE_DARKMODE = 'MADRE_DARKMODE';
+export const MADRE_COLOR_THEME = 'MADRE_COLOR_THEME';
