@@ -13,13 +13,19 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 // client environment
 const initializeEnvironment = require('./initializeEnvironment');
 const clientEnvironment = initializeEnvironment();
+const { NODE_ENV, REACT_APP_PUBLIC_URL, REACT_APP_IMAGE_URL } = process.env;
+
+const isProduction = NODE_ENV === 'production';
+const prefix = isProduction ? '/' : '';
+const publicPath = `${REACT_APP_PUBLIC_URL}${prefix}`;
+const reactAppPublicUrl = isProduction ? REACT_APP_PUBLIC_URL : prefix;
 
 module.exports = {
   mode: 'production',
   entry: paths.entryPath,
   output: {
     path: paths.buildPath,
-    publicPath: '/',
+    publicPath,
     filename: 'static/js/[name].[contenthash:8].js',
     chunkFilename: 'static/js/[name].[contenthash:8].js',
   },
@@ -101,8 +107,8 @@ module.exports = {
       template: path.resolve(paths.publicPath, 'index.html'),
       templateParameters: {
         env: {
-          REACT_APP_PUBLIC_URL: '',
-          REACT_APP_IMAGE_URL: path.resolve(__dirname, '../static'),
+          REACT_APP_PUBLIC_URL: reactAppPublicUrl,
+          REACT_APP_IMAGE_URL: REACT_APP_IMAGE_URL,
         },
       },
       minify: {
