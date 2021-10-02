@@ -2150,10 +2150,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^16.10.1":
-  version: 16.10.1
-  resolution: "@types/node@npm:16.10.1"
-  checksum: 84d7f082e9421fdf1f08dbe00b66848897b2675eacc94a4fa445c4d34cef57c901ecd3276d03ebe110607a848d3df0ab33816aeff51a234e036111dd8ef1422f
+"@types/node@npm:^16.10.2":
+  version: 16.10.2
+  resolution: "@types/node@npm:16.10.2"
+  checksum: 83c1c3c68e7500103908c3f16094e458879c840a719c15b6ea577f81fe1f24a1b3473bb6c8e8091fe79a82543ca7639c6b1088fcf80292ec091d1d1c9504a87e
   languageName: node
   linkType: hard
 
@@ -2212,14 +2212,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^17.0.24":
-  version: 17.0.24
-  resolution: "@types/react@npm:17.0.24"
+"@types/react@npm:^17.0.26":
+  version: 17.0.26
+  resolution: "@types/react@npm:17.0.26"
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: 99383e2cbaa85831984cc17ec4a5fe7fd091aa21ef023855570440d8d0b5038efb8159701e8e2a0f6ddff3efae655922ded690190e7d172653608cbde016cb66
+  checksum: 943fe7e912ea6d664910fb9391a96d8f31c985265fb768d448461123dd970080494b7987a9bd54ca664c8675cb09680c8763823ff18622222e302c8d121b7d31
   languageName: node
   linkType: hard
 
@@ -2656,12 +2656,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^0.21.4":
-  version: 0.21.4
-  resolution: "axios@npm:0.21.4"
+"axios@npm:^0.22.0":
+  version: 0.22.0
+  resolution: "axios@npm:0.22.0"
   dependencies:
-    follow-redirects: ^1.14.0
-  checksum: 44245f24ac971e7458f3120c92f9d66d1fc695e8b97019139de5b0cc65d9b8104647db01e5f46917728edfc0cfd88eb30fc4c55e6053eef4ace76768ce95ff3c
+    follow-redirects: ^1.14.4
+  checksum: 83dc4d02e180f69aa9f0d1d0d50b84ec3603517230d58b4c3720ebd440c7e64ea86c5e892dc6e19061608e8e1103504a709d8baa4051c4b7652101b523d04b63
   languageName: node
   linkType: hard
 
@@ -3717,9 +3717,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3@npm:^7.0.4":
-  version: 7.0.4
-  resolution: "d3@npm:7.0.4"
+"d3@npm:^7.1.0":
+  version: 7.1.0
+  resolution: "d3@npm:7.1.0"
   dependencies:
     d3-array: 3
     d3-axis: 3
@@ -3751,7 +3751,7 @@ __metadata:
     d3-timer: 3
     d3-transition: 3
     d3-zoom: 3
-  checksum: 375f504939de00ead114b404210b66a53271ae820cf86cfc9bfb5bd7e3c924fc128a0ab984619b9edaf4ed480bded855b6c1bff2ffd0c2f30536ad3df8a81e0e
+  checksum: 7161bc15fc8af7822644edddb3db2380402dcf88968e8c31d520647c39933f549fa70991d52295fa1144924293f0332a64efb28786a29e2c8e6699f6d0c50590
   languageName: node
   linkType: hard
 
@@ -4378,7 +4378,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.14.0":
+"follow-redirects@npm:^1.14.4":
   version: 1.14.4
   resolution: "follow-redirects@npm:1.14.4"
   peerDependenciesMeta:
@@ -5458,15 +5458,15 @@ fsevents@~2.3.2:
     "@emotion/babel-plugin": ^11.3.0
     "@emotion/react": ^11.4.1
     "@types/d3": ^7.0.0
-    "@types/node": ^16.10.1
-    "@types/react": ^17.0.24
+    "@types/node": ^16.10.2
+    "@types/react": ^17.0.26
     "@types/react-dom": ^17.0.9
     "@types/react-router-dom": ^5.3.0
-    axios: ^0.21.4
+    axios: ^0.22.0
     babel-loader: ^8.2.2
     clean-webpack-plugin: ^4.0.0
     css-minimizer-webpack-plugin: ^3.0.2
-    d3: ^7.0.4
+    d3: ^7.1.0
     dotenv: ^10.0.0
     file-loader: ^6.2.0
     fork-ts-checker-webpack-plugin: ^6.3.3
@@ -5482,7 +5482,7 @@ fsevents@~2.3.2:
     ts-loader: ^9.2.6
     typescript: ^4.4.3
     url-loader: ^4.1.1
-    webpack: ^5.54.0
+    webpack: ^5.56.0
     webpack-cli: ^4.8.0
     webpack-dev-server: ^4.3.0
     webpack-manifest-plugin: ^4.0.2
@@ -8175,9 +8175,9 @@ typescript@^4.4.3:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.54.0":
-  version: 5.54.0
-  resolution: "webpack@npm:5.54.0"
+"webpack@npm:^5.56.0":
+  version: 5.56.0
+  resolution: "webpack@npm:5.56.0"
   dependencies:
     "@types/eslint-scope": ^3.7.0
     "@types/estree": ^0.0.50
@@ -8208,7 +8208,7 @@ typescript@^4.4.3:
       optional: true
   bin:
     webpack: bin/webpack.js
-  checksum: aa75ccf1fcd0cb67e886bcfa7944637018657905e23e053a31cb999c61731395c1a7395023b60dced793cb0b5ee9f4184c6f109a2758e154d9c8f8941346128b
+  checksum: 27eebf2ac518fe6198fe1933a1ba3a72fb34c6540319f63caed09c7d8bd9e5c3aef20805fb2122adecfbe3bc971b28ca09b1f809655cb1136e083549e09470d7
   languageName: node
   linkType: hard
 
