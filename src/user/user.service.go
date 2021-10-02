@@ -16,5 +16,6 @@ func FindById(id int) *User {
 		CreatedAt:   time.Now(),
 		UpdatedAt:   time.Now(),
 	}
+
 	return user
 }

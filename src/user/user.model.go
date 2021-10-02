@@ -6,11 +6,11 @@ import (
 )
 
 type User struct {
-	ID          uint
-	Email       string
-	UserName    sql.NullString
-	DisplayName string
-	PhotoUrl    sql.NullString
-	CreatedAt   time.Time
-	UpdatedAt   time.Time
+	ID          int            `json:"id"`
+	Email       string         `json:"email"`
+	UserName    sql.NullString `json:"user_name"`
+	DisplayName string         `json:"display_name"`
+	PhotoUrl    sql.NullString `json:"photo_url"`
+	CreatedAt   time.Time      `json:"created_at"`
+	UpdatedAt   time.Time      `json:"updated_at"`
 }
