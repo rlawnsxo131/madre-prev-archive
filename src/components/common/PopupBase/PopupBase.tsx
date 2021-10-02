@@ -1,5 +1,4 @@
 import { css } from '@emotion/react';
-import { useEffect, useState } from 'react';
 import { ColorTheme, useColorThemeValue } from '../../../atoms/colorThemeState';
 import useTransitionTimeoutEffect from '../../../lib/hooks/useTransitionTimeoutEffect';
 import { themeColor } from '../../../styles/palette';

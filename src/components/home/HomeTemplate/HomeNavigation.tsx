@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { memo, useEffect, useState } from 'react';
+import { memo } from 'react';
 import { NavLink } from 'react-router-dom';
 import { ColorTheme } from '../../../atoms/colorThemeState';
 import useTransitionTimeoutEffect from '../../../lib/hooks/useTransitionTimeoutEffect';
