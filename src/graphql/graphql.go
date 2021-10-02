@@ -4,7 +4,7 @@ import (
 	"github.com/graphql-go/graphql"
 	"github.com/graphql-go/handler"
 
-	"github.com/rlawnsxo131/madre-server/src/user"
+	"github.com/rlawnsxo131/madre-server/src/components/user"
 )
 
 var queryType = graphql.NewObject(
