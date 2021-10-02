@@ -1,19 +1,26 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
-
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
+	"github.com/rlawnsxo131/madre-server/src/api"
 	"github.com/rlawnsxo131/madre-server/src/graphql"
 )
 
 func main() {
-	h, err := graphql.NewHandler()
+	e := echo.New()
+	e.Debug = true
+	e.Use(middleware.Recover())
+	e.Use(middleware.Logger())
+	api.RegisterRoutes(e)
 
+	// graphql
+	handler, err := graphql.NewHandler()
 	if err != nil {
-		fmt.Println("err: ", err)
+		e.Logger.Fatal(err)
 	}
+	e.GET("/graphql", echo.WrapHandler(handler))
+	e.POST("/graphql", echo.WrapHandler(handler))
 
-	http.Handle("/graphql", h)
-	http.ListenAndServe(":3001", nil)
+	e.Logger.Fatal(e.Start(":3001"))
 }

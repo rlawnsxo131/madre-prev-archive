@@ -16,6 +16,21 @@ var userType = graphql.NewObject(
 			"email": &graphql.Field{
 				Type: graphql.String,
 			},
+			"user_name": &graphql.Field{
+				Type: graphql.String,
+			},
+			"display_name": &graphql.Field{
+				Type: graphql.String,
+			},
+			"photo_url": &graphql.Field{
+				Type: graphql.String,
+			},
+			"created_at": &graphql.Field{
+				Type: graphql.DateTime,
+			},
+			"updated_at": &graphql.Field{
+				Type: graphql.DateTime,
+			},
 		},
 	},
 )
@@ -47,7 +62,7 @@ var UserQueryType = &graphql.Field{
 var UserMutationType = graphql.Fields{
 	"createUser": &graphql.Field{
 		Type:        userType,
-		Description: "Get book by name",
+		Description: "user mutation",
 		Args: graphql.FieldConfigArgument{
 			"id": &graphql.ArgumentConfig{
 				Type: graphql.Int,
