@@ -42,7 +42,7 @@ const block = css`
     display: -webkit-box;
   }
   ${media.xxxsmall} {
-    width: calc(100vw);
+    width: 100vw;
   }
   ${mediaQuery(400)} {
     width: 400px;
