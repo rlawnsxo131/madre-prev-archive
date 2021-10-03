@@ -12,15 +12,11 @@ export const typeDef = gql`
   }
 `;
 
-interface UserArgs {
-  id: number;
-}
-
 export const resolvers: IResolvers = {
   User: {},
   Query: {
-    async user(parent, args, context, info) {
-      const { id } = args as UserArgs;
+    user: async (parent, args, context, info) => {
+      const { id } = args;
       const user = await UserService.findOne(id);
       return user;
     },
