@@ -1,5 +1,5 @@
 import { IResolvers } from '@graphql-tools/utils';
-import { ApolloError, gql } from 'apollo-server-core';
+import { gql } from 'apollo-server-core';
 import { DataService } from '.';
 
 export const typeDef = gql`
