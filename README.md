@@ -8,7 +8,7 @@
 * Apollo Server
 * TypeORM
 
-### Prepare MariaDB Databse
+### Prepare MariaDB Database
 ```shell
 $ cd ./docker
 $ docker compose up -d
