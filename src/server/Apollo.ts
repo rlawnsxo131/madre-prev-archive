@@ -24,7 +24,7 @@ export default class Apollo {
           ? ApolloServerPluginLandingPageDisabled()
           : ApolloServerPluginLandingPageGraphQLPlayground(),
       ],
-      debug: true,
+      debug: !isProduction,
     });
   }
 
