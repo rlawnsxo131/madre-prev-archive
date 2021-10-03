@@ -1,6 +1,12 @@
 # madre-server
 
-## Project Stack
+## Prepare MariaDB Databse
+```shell
+$ cd ./docker
+$ docker compose up -d
+```
 
-- Golang
-- Echo
+## Start
+```shell
+$ yarn start:dev
+```
