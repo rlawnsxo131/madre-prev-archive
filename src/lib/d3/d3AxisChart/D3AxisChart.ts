@@ -8,14 +8,14 @@ import {
   line,
   scaleLinear,
 } from 'd3';
-import D3Common from '../d3Common';
-import { D3DoubleNumberArray, D3Selection } from '../d3Common/d3CommonTypes';
+import D3Common from '../D3Common';
+import { D3DoubleNumberArray, D3Selection } from '../D3Common/D3CommonTypes';
 import {
   D3AxisChartConstructorParams,
   D3AxisChartSetAxisBackgroundGridParams,
   D3AxisChartSetAxisParams,
   D3AxisChartSetLineParams,
-} from './d3AxisChartTypes';
+} from './D3AxisChartTypes';
 
 /**
  * axisMaxUnitExpressionLength: maximum number of characters displayed

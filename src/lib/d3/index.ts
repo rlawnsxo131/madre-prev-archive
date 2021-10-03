@@ -1,1 +1,1 @@
-export { default as D3AxisChart } from './d3AxisChart';
+export { default as D3AxisChart } from './D3AxisChart';

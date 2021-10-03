@@ -1,5 +1,5 @@
 import { extent, randomInt, randomUniform, select } from 'd3';
-import { AppendSvgParams, D3DoubleNumberArray } from './d3CommonTypes';
+import { AppendSvgParams, D3DoubleNumberArray } from './D3CommonTypes';
 
 export default class D3Common {
   protected appendSvg({

@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import { memo } from 'react';
 import { NavLink } from 'react-router-dom';
 import { ColorTheme } from '../../../atoms/colorThemeState';
-import useTransitionTimeoutEffect from '../../../lib/hooks/useTransitionTimeoutEffect';
+import { useTransitionTimeoutEffect } from '../../../lib/hooks';
 import { themeColor } from '../../../styles/palette';
 import transitions from '../../../styles/transitions';
 import zIndexes from '../../../styles/zIndexes';
@@ -13,7 +13,7 @@ interface HomeNavigationProps {
 }
 
 function HomeNavigation({ theme, visible }: HomeNavigationProps) {
-  const closed = useTransitionTimeoutEffect({ visible });
+  const closed = useTransitionTimeoutEffect({ visible, delay: 125 });
 
   if (!visible && closed) return null;
 

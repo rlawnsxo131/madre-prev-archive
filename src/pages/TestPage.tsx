@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { useEffect, useRef } from 'react';
 import { D3AxisChart } from '../lib/d3';
-import { D3Data } from '../lib/d3/d3Common/d3CommonTypes';
+import { D3Data } from '../lib/d3/D3Common/D3CommonTypes';
 import { getRandomColors, getRandomIntInclusive } from '../lib/utils';
 import palette from '../styles/palette';
 

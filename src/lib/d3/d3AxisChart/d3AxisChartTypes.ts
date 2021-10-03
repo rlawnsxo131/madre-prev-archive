@@ -3,7 +3,7 @@ import {
   D3Data,
   D3DoubleNumberArray,
   D3TickFormat,
-} from '../d3Common/d3CommonTypes';
+} from '../D3Common/D3CommonTypes';
 
 export type D3AxisChartConstructorParams = {
   xDomain: number[];

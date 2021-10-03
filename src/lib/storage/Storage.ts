@@ -1,33 +1,30 @@
-class FallbackStorage {
-  private static fallbackStorage: {
-    [key: string]: string;
-  } = {};
-
-  static valid: boolean = this.checkStorage();
-
-  private static checkStorage() {
-    try {
-      localStorage.setItem('check', 'check');
-      localStorage.removeItem('check');
-      return true;
-    } catch (e) {
-      return false;
-    }
+function checkStorage() {
+  try {
+    localStorage.setItem('check', 'check');
+    localStorage.removeItem('check');
+    return true;
+  } catch (e) {
+    return false;
   }
+}
 
-  static setItem(key: string, value: any) {
+class Storage {
+  private fallbackStorage = new Map<string, string>([]);
+  private valid: boolean = checkStorage();
+
+  setItem(key: string, value: any) {
     const string = JSON.stringify(value);
     if (this.valid) {
       localStorage.setItem(key, string);
       return;
     }
-    this.fallbackStorage[key] = string;
+    this.fallbackStorage.set(key, string);
   }
 
-  static getItem(key: string) {
+  getItem(key: string) {
     const value = this.valid
       ? localStorage.getItem(key)
-      : this.fallbackStorage[key];
+      : this.fallbackStorage.get(key);
     try {
       const parsed = JSON.parse(value || '');
       return parsed;
@@ -36,13 +33,15 @@ class FallbackStorage {
     }
   }
 
-  static removeItem(key: string) {
+  removeItem(key: string) {
     if (this.valid) {
       localStorage.removeItem(key);
       return;
     }
-    delete this.fallbackStorage[key];
+    this.fallbackStorage.delete(key);
   }
 }
 
-export default FallbackStorage;
+const storage = new Storage();
+
+export default storage;
