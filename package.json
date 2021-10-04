@@ -4,6 +4,7 @@
   "scripts": {
     "sdk": "yarn dlx @yarnpkg/sdks vscode",
     "sdk:update": "yarn dlx @yarnpkg/sdks",
+    "test": "yarn mocha src/test/**/*.spec.ts -r ts-node/register",
     "start:dev": "NODE_ENV=development ts-node-dev --respawn --transpile-only ./src/index.ts"
   },
   "dependencies": {
@@ -23,10 +24,15 @@
     "typeorm": "^0.2.37"
   },
   "devDependencies": {
+    "@types/chai": "^4.2.22",
     "@types/lodash.merge": "^4.6.6",
+    "@types/mocha": "^9.0.0",
     "@types/node": "^16.9.6",
+    "chai": "^4.3.4",
     "dotenv": "^10.0.0",
+    "mocha": "^9.1.2",
     "prettier": "^2.4.1",
+    "ts-node": "^10.2.1",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.4.3"
   }
