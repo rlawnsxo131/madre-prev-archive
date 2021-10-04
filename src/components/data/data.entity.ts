@@ -4,6 +4,7 @@ import {
   CreateDateColumn,
   Entity,
   Index,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -14,10 +15,6 @@ import { User } from '../user';
 export default class Data extends BaseEntity {
   @PrimaryGeneratedColumn({ unsigned: true })
   id!: number;
-
-  @Index('ix_user_id')
-  @Column()
-  user_id!: number;
 
   @Column({ length: 255 })
   file_url!: string;
@@ -38,5 +35,6 @@ export default class Data extends BaseEntity {
   updated_at!: Date;
 
   @ManyToOne(() => User, (user) => user.datas)
+  @JoinColumn({ name: 'user_id' })
   user!: User;
 }
