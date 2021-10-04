@@ -15,7 +15,7 @@ export default class User extends BaseEntity {
   @PrimaryGeneratedColumn({ unsigned: true })
   id!: number;
 
-  @Index()
+  @Index('ix_email', { unique: true })
   @Column()
   email!: string;
 

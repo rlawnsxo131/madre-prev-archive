@@ -3,6 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -34,6 +35,7 @@ export default class Data extends BaseEntity {
   updated_at!: Date;
 
   @ManyToOne(() => User, (user) => user.datas)
+  @Index('ix_user_id')
   @JoinColumn({ name: 'user_id' })
   user!: User;
 }
