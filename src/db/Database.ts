@@ -5,8 +5,6 @@ import {
   ConnectionOptions,
   createConnection,
 } from 'typeorm';
-import { User } from '../modules/user';
-import { Data } from '../modules/data';
 
 export default class Database {
   private connectionManager: ConnectionManager;
@@ -30,7 +28,7 @@ export default class Database {
         connectionLimit: 10,
       },
       synchronize: false,
-      entities: [User, Data],
+      entities: ['src/components/**/*.entity.ts'],
     };
   }
 

@@ -19,7 +19,6 @@ export default class User extends BaseEntity {
   @Column()
   email!: string;
 
-  @Index()
   @Column({ length: 16, nullable: true, default: null })
   username?: string;
 
@@ -35,6 +34,6 @@ export default class User extends BaseEntity {
   @UpdateDateColumn({ type: 'timestamp' })
   updated_at!: Date;
 
-  @OneToMany((type) => Data, (data) => data.user)
+  @OneToMany(() => Data, (data) => data.user)
   datas?: Data[];
 }

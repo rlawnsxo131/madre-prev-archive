@@ -37,6 +37,6 @@ export default class Data extends BaseEntity {
   @UpdateDateColumn({ type: 'timestamp' })
   updated_at!: Date;
 
-  @ManyToOne((type) => User, (user) => user.datas)
+  @ManyToOne(() => User, (user) => user.datas)
   user!: User;
 }

@@ -20,7 +20,7 @@ export const resolvers: IResolvers = {
   Query: {
     async data(_, args: DataArgs) {
       const { id } = args;
-      const data = await DataService.findOne(id);
+      const data = await DataService.findById(id);
       return data;
     },
   },
