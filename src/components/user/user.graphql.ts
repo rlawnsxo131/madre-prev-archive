@@ -15,7 +15,7 @@ export const typeDef = gql`
 export const resolvers: IResolvers = {
   User: {},
   Query: {
-    user: async (parent, args, context, info) => {
+    async user(parent, args, context, info) {
       const { id } = args;
       const user = await UserService.findById(id);
       return user;
