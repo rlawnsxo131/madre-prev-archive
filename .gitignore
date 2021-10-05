@@ -16,5 +16,16 @@
 # docker
 /docker/mariadb/data
 
+# production
+/build
+
 # testing
 /coverage
+
+# misc
+.DS_Store
+.env.production
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
