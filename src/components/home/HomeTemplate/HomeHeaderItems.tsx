@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import Button from '../../common/Button';
-import { ThemeTrigger } from '../../common/Theme';
+import ThemeTrigger from '../../common/Theme';
 import { GoogleIcon, MenuIcon } from '../../../image/icons';
 import HomeNavigation from './HomeNavigation';
 import { useHomeValue, useHomeActions } from '../../../atoms/homeState';

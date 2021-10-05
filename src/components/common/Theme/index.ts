@@ -1,1 +1,1 @@
-export { default as ThemeTrigger } from './ThemeTrigger';
+export { default } from './ThemeTrigger';

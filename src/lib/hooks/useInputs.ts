@@ -36,10 +36,10 @@ export default function useInputs<T>(defaultValues: T) {
     dispatch(null);
   }, []);
 
-  return [state, onChange, onReset, dispatch] as [
-    T,
-    typeof onChange,
-    typeof onReset,
-    typeof dispatch,
-  ];
+  return {
+    state,
+    onChange,
+    onReset,
+    dispatch,
+  };
 }
