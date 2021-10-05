@@ -7,11 +7,12 @@ import {
 } from 'typeorm';
 
 class Database {
-  private ormconfig: ConnectionOptions;
   private connectionManager: ConnectionManager;
+  private connectionOptions: ConnectionOptions;
 
   constructor() {
-    this.ormconfig = {
+    this.connectionManager = getConnectionManager();
+    this.connectionOptions = {
       name: 'default',
       type: 'mariadb',
       host: process.env.DB_HOST,
@@ -29,11 +30,10 @@ class Database {
       synchronize: false,
       entities: ['src/components/**/*.entity.ts'],
     };
-    this.connectionManager = getConnectionManager();
   }
 
   async connect() {
-    return createConnection(this.ormconfig);
+    return createConnection(this.connectionOptions);
   }
 
   async getConnection(): Promise<Connection> {

@@ -4,7 +4,7 @@ import { UserService } from '.';
 import { Database } from '../../datastore';
 import initializeEnvironment from '../../lib/initializeEnvironment';
 
-describe('User components tests', () => {
+describe('User component tests', () => {
   initializeEnvironment();
   const database = new Database();
   let connection: Connection | null = null;
