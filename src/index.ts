@@ -1,12 +1,12 @@
-import { Database } from './db';
+import { Database } from './datastore';
 import initializeEnvironment from './lib/initializeEnvironment';
-import Server from './server';
+import Application from './application';
 
 initializeEnvironment();
-const server = new Server();
 const database = new Database();
+const application = new Application();
 
 database.getConnection().then(async () => {
-  await server.setup();
-  await server.start();
+  await application.setup();
+  await application.start();
 });

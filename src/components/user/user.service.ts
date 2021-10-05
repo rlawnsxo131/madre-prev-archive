@@ -1,11 +1,26 @@
 import { User } from '.';
 
-export default class UserService {
-  static findById(id: number) {
+class UserService {
+  private static instance: UserService;
+
+  private constructor() {}
+
+  static getInstance() {
+    if (!this.instance) {
+      this.instance = new UserService();
+    }
+    return this.instance;
+  }
+
+  findById(id: number) {
     return User.findOne({ id });
   }
 
-  static findByEmail(email: string) {
+  findByEmail(email: string) {
     return User.findOne({ email });
   }
 }
+
+const userService = UserService.getInstance();
+
+export default userService;

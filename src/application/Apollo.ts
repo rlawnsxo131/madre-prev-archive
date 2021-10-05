@@ -8,7 +8,7 @@ import { FastifyInstance } from 'fastify';
 import { schema } from '../graphql';
 import { isProduction } from '../constants';
 
-export default class Apollo {
+class Apollo {
   private app: ApolloServer;
 
   constructor(fastify: FastifyInstance) {
@@ -52,3 +52,5 @@ export default class Apollo {
     return this.app.createHandler({ cors: false });
   }
 }
+
+export default Apollo;

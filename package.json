@@ -4,7 +4,7 @@
   "scripts": {
     "sdk": "yarn dlx @yarnpkg/sdks vscode",
     "sdk:update": "yarn dlx @yarnpkg/sdks",
-    "test": "yarn mocha src/test/**/*.spec.ts -r ts-node/register",
+    "test": "yarn mocha",
     "start:dev": "NODE_ENV=development ts-node-dev --respawn --transpile-only ./src/index.ts"
   },
   "dependencies": {

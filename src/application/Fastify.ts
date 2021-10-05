@@ -5,7 +5,7 @@ import cookie from 'fastify-cookie';
 import jwtPlugin from '../plugins/jwtPlugin';
 import routes from '../routes';
 
-export default class Fastify {
+class Fastify {
   private app: FastifyInstance;
 
   constructor() {
@@ -50,3 +50,5 @@ export default class Fastify {
     this.app.register(apolloHandler);
   }
 }
+
+export default Fastify;
