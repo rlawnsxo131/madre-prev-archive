@@ -14,7 +14,7 @@
 .env.production
 
 # docker
-/docker/mariadb/data
+/docker/mysql/data
 
 # production
 /build

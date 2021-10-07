@@ -17,7 +17,7 @@ describe('DataService Test', () => {
     await connection?.close();
   });
 
-  test('findById user_id to 0', async () => {
+  test('findById data_id to 0', async () => {
     const data_id = 0;
     const data = await DataService.findById(data_id);
     expect([null, undefined]).toContain(data);

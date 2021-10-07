@@ -1,3 +1,4 @@
 export { default as User } from './user.entity';
+export { default as UserRepository } from './user.repository';
 export { default as UserService } from './user.service';
-export * as userGraphql from './user.graphql';
+export { default as UserGraphQL } from './user.graphql';

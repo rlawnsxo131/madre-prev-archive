@@ -1,4 +1,5 @@
-import { User } from '.';
+import { getCustomRepository } from 'typeorm';
+import { UserRepository } from '.';
 
 class UserService {
   private static instance: UserService;
@@ -13,11 +14,11 @@ class UserService {
   }
 
   findById(id: number) {
-    return User.findOne({ id });
+    return getCustomRepository(UserRepository).findOne({ id });
   }
 
   findByEmail(email: string) {
-    return User.findOne({ email });
+    return getCustomRepository(UserRepository).findOne({ email });
   }
 }
 

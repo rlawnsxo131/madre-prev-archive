@@ -2,7 +2,7 @@ import { gql } from 'apollo-server-core';
 import { IResolvers } from '@graphql-tools/utils';
 import { UserService } from '.';
 
-export const typeDef = gql`
+const typeDef = gql`
   type User {
     id: Int!
     name: String!
@@ -12,7 +12,7 @@ export const typeDef = gql`
   }
 `;
 
-export const resolvers: IResolvers = {
+const resolvers: IResolvers = {
   User: {},
   Query: {
     async user(_, args) {
@@ -23,3 +23,10 @@ export const resolvers: IResolvers = {
   },
   Mutation: {},
 };
+
+const UserGraphQL = {
+  typeDef,
+  resolvers,
+};
+
+export default UserGraphQL;

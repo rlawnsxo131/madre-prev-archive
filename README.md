@@ -1,14 +1,14 @@
 # madre-server
 
 ### Project Stack
-* MariaDB
+* MySQL
 * Yarn Berry
 * TypeScript
 * Fastify
 * Apollo Server
 * TypeORM
 
-### Prepare MariaDB Database
+### Prepare MySQL Database
 ```shell
 $ cd ./docker
 $ docker compose up -d

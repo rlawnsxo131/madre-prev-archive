@@ -1,4 +1,5 @@
-import { Data } from '.';
+import { getCustomRepository } from 'typeorm';
+import { DataRepository } from '.';
 
 class DataService {
   private static instance: DataService;
@@ -13,7 +14,7 @@ class DataService {
   }
 
   findById(id: number) {
-    return Data.findOne({ id });
+    return getCustomRepository(DataRepository).findOne({ id });
   }
 }
 

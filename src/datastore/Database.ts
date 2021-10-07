@@ -14,7 +14,7 @@ class Database {
     this.connectionManager = getConnectionManager();
     this.connectionOptions = {
       name: 'default',
-      type: 'mariadb',
+      type: 'mysql',
       host: process.env.DB_HOST,
       port: Number(process.env.DB_PORT),
       username: process.env.DB_USERNAME,
@@ -32,7 +32,7 @@ class Database {
     };
   }
 
-  async connect() {
+  connect() {
     return createConnection(this.connectionOptions);
   }
 
