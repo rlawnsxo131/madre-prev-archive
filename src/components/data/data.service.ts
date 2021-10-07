@@ -3,6 +3,7 @@ import { DataRepository } from '.';
 
 class DataService {
   private static instance: DataService;
+  private dataRepository = getCustomRepository(DataRepository);
 
   private constructor() {}
 
@@ -14,10 +15,8 @@ class DataService {
   }
 
   findById(id: number) {
-    return getCustomRepository(DataRepository).findOne({ id });
+    return this.dataRepository.findOne({ id });
   }
 }
 
-const dataService = DataService.getInstance();
-
-export default dataService;
+export default DataService.getInstance();

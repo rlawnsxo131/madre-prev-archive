@@ -3,6 +3,7 @@ import { UserRepository } from '.';
 
 class UserService {
   private static instance: UserService;
+  private userRepository = getCustomRepository(UserRepository);
 
   private constructor() {}
 
@@ -14,14 +15,12 @@ class UserService {
   }
 
   findById(id: number) {
-    return getCustomRepository(UserRepository).findOne({ id });
+    return this.userRepository.findOne({ id });
   }
 
   findByEmail(email: string) {
-    return getCustomRepository(UserRepository).findOne({ email });
+    return this.userRepository.findOne({ email });
   }
 }
 
-const userService = UserService.getInstance();
-
-export default userService;
+export default UserService.getInstance();
