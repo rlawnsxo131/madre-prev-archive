@@ -5,8 +5,8 @@ import {
   ApolloServerPluginLandingPageGraphQLPlayground,
 } from 'apollo-server-core';
 import { FastifyInstance } from 'fastify';
-import { schema } from '../graphql';
-import { isProduction } from '../constants';
+import schema from './schema.graphql';
+import { isProduction } from '../../constants';
 
 class Apollo {
   private app: ApolloServer;
@@ -14,9 +14,9 @@ class Apollo {
   constructor(fastify: FastifyInstance) {
     this.app = new ApolloServer({
       schema,
-      // context: ({ request }) => {
-      //   request.log.info(request.user);
-      // },
+      context: ({ request }) => {
+        request.log.info(request.user);
+      },
       plugins: [
         this.fastifyAppClosePlugin(fastify),
         ApolloServerPluginDrainHttpServer({ httpServer: fastify.server }),

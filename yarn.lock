@@ -518,6 +518,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@graphql-tools/utils@npm:^8.2.5":
+  version: 8.2.5
+  resolution: "@graphql-tools/utils@npm:8.2.5"
+  dependencies:
+    tslib: ~2.3.0
+  peerDependencies:
+    graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
+  checksum: 421147485cbb61ff143ff890d48452d6973a61f23bc82ea999d17ed6b4d78d401f6cb3b3abe64a1ad03bdb37070fc114e62fb6532b05e935280f6bed149feb71
+  languageName: node
+  linkType: hard
+
 "@istanbuljs/load-nyc-config@npm:^1.0.0":
   version: 1.1.0
   resolution: "@istanbuljs/load-nyc-config@npm:1.1.0"
@@ -978,7 +989,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^16.9.6":
+"@types/node@npm:*":
   version: 16.10.2
   resolution: "@types/node@npm:16.10.2"
   checksum: 83c1c3c68e7500103908c3f16094e458879c840a719c15b6ea577f81fe1f24a1b3473bb6c8e8091fe79a82543ca7639c6b1088fcf80292ec091d1d1c9504a87e
@@ -989,6 +1000,13 @@ __metadata:
   version: 10.17.60
   resolution: "@types/node@npm:10.17.60"
   checksum: 2cdb3a77d071ba8513e5e8306fa64bf50e3c3302390feeaeff1fd325dd25c8441369715dfc8e3701011a72fed5958c7dfa94eb9239a81b3c286caa4d97db6eef
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^16.10.3":
+  version: 16.10.3
+  resolution: "@types/node@npm:16.10.3"
+  checksum: 3fd429bce8a4acb497dcc62b536782a5e87ccf7cd91d64a78b263ae5d66cb72bf84be9eeeff6f84ae0567b065a40b267caa66d311f9e094990a5847bbd168a29
   languageName: node
   linkType: hard
 
@@ -2500,9 +2518,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fastify@npm:3.21.5":
-  version: 3.21.5
-  resolution: "fastify@npm:3.21.5"
+"fastify@npm:^3.22.0":
+  version: 3.22.0
+  resolution: "fastify@npm:3.22.0"
   dependencies:
     "@fastify/ajv-compiler": ^1.0.0
     abstract-logging: ^2.0.0
@@ -2520,7 +2538,7 @@ __metadata:
     secure-json-parse: ^2.0.0
     semver: ^7.3.2
     tiny-lru: ^7.0.0
-  checksum: dca084de52c68bc8b1c02210027b6dac7d9658f3fe79998226ab47689c589bc5675dc6a5340d21eca6619cb9ca3ee0459065d1e579544dbbbdfb04ca360b9ca7
+  checksum: 4f06ccb4b75df5748d8683b11050920439db642a6fecf508d0e6aa58cefd874a4d9ef76e3ec29a9e87a06c373c4d1adfa0d92c092f793d1bbfd9f3207e2c1c6a
   languageName: node
   linkType: hard
 
@@ -2769,10 +2787,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphql@npm:^15.6.0":
-  version: 15.6.0
-  resolution: "graphql@npm:15.6.0"
-  checksum: 439959514665bc03ba86d6e55d8fb81d4c1e8ba3fc7f5114878b0ba794147e7ef57f368e40dadbb3f94d7c5f6685d15599bebb3a124cee2a1a8871a797d5ae81
+"graphql@npm:^15.6.1":
+  version: 15.6.1
+  resolution: "graphql@npm:15.6.1"
+  checksum: 4c6dcf385f7a87a5103fcb7640394244ae8d1d4ede521085192a1cf1e60115c4f6285d783961575d908709f7ee3e4cdd16b3f7c54eb37499c0420c6301e98968
   languageName: node
   linkType: hard
 
@@ -3909,19 +3927,19 @@ __metadata:
   resolution: "madre-server@workspace:."
   dependencies:
     "@graphql-tools/schema": ^8.2.0
-    "@graphql-tools/utils": ^8.2.3
+    "@graphql-tools/utils": ^8.2.5
     "@types/jest": ^27.0.2
     "@types/lodash.merge": ^4.6.6
-    "@types/node": ^16.9.6
+    "@types/node": ^16.10.3
     apollo-server-core: ^3.3.0
     apollo-server-fastify: ^3.3.0
     dotenv: ^10.0.0
-    fastify: 3.21.5
+    fastify: ^3.22.0
     fastify-compress: ^3.6.0
     fastify-cookie: ^5.3.1
     fastify-cors: ^6.0.2
     fastify-plugin: ^3.0.0
-    graphql: ^15.6.0
+    graphql: ^15.6.1
     jest: ^27.2.4
     lodash.merge: ^4.6.2
     mysql2: ^2.3.0
@@ -3929,7 +3947,7 @@ __metadata:
     prettier: ^2.4.1
     ts-jest: ^27.0.5
     ts-node-dev: ^1.1.8
-    typeorm: ^0.2.37
+    typeorm: ^0.2.38
     typescript: ^4.4.3
   languageName: unknown
   linkType: soft
@@ -5567,7 +5585,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typeorm@npm:^0.2.37":
+"typeorm@npm:^0.2.38":
   version: 0.2.38
   resolution: "typeorm@npm:0.2.38"
   dependencies:
