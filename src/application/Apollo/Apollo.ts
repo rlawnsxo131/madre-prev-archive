@@ -5,7 +5,7 @@ import {
   ApolloServerPluginLandingPageGraphQLPlayground,
 } from 'apollo-server-core';
 import { FastifyInstance } from 'fastify';
-import schema from './schema.graphql';
+import schema from './apollo.schema';
 import { isProduction } from '../../constants';
 
 class Apollo {

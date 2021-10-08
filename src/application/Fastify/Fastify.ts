@@ -3,7 +3,7 @@ import compress from 'fastify-compress';
 import corsPlugin from 'fastify-cors';
 import cookie from 'fastify-cookie';
 import jwtPlugin from '../../plugins/jwtPlugin';
-import routes from './routes';
+import routes from './fastify.routes';
 
 class Fastify {
   private app: FastifyInstance;
