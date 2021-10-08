@@ -7,6 +7,7 @@ class AuthService {
     if (!this.instance) {
       this.instance = new AuthService();
     }
+    return this.instance;
   }
 }
 

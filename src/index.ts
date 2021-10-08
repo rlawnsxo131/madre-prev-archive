@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { Database } from './datastore';
 import initializeEnvironment from './lib/initializeEnvironment';
 import Application from './application';
