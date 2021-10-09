@@ -1,8 +1,6 @@
-import { Service } from 'typedi';
 import { getCustomRepository } from 'typeorm';
 import { UserRepository } from '.';
 
-@Service()
 class UserService {
   private static instance: UserService;
 
@@ -15,7 +13,7 @@ class UserService {
     return this.instance;
   }
 
-  async findById(id: number) {
+  findById(id: number) {
     return getCustomRepository(UserRepository).findOne({ id });
   }
 }

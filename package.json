@@ -22,8 +22,6 @@
     "lodash.merge": "^4.6.2",
     "mysql2": "^2.3.0",
     "pino-pretty": "^7.0.1",
-    "reflect-metadata": "^0.1.13",
-    "typedi": "^0.10.0",
     "typeorm": "^0.2.38"
   },
   "devDependencies": {

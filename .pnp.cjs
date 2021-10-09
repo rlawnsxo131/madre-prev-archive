@@ -54,10 +54,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mysql2", "npm:2.3.0"],
             ["pino-pretty", "npm:7.0.1"],
             ["prettier", "npm:2.4.1"],
-            ["reflect-metadata", "npm:0.1.13"],
             ["ts-jest", "virtual:0c9114e0a6c540251b6045286cdc8a2edd6cb1868f3d5f40b071b25310ed34c298aa10c1068c82801dce7e51d985423bc281d63edf68b15382ca4c157421c7b8#npm:27.0.5"],
             ["ts-node-dev", "virtual:0c9114e0a6c540251b6045286cdc8a2edd6cb1868f3d5f40b071b25310ed34c298aa10c1068c82801dce7e51d985423bc281d63edf68b15382ca4c157421c7b8#npm:1.1.8"],
-            ["typedi", "npm:0.10.0"],
             ["typeorm", "virtual:0c9114e0a6c540251b6045286cdc8a2edd6cb1868f3d5f40b071b25310ed34c298aa10c1068c82801dce7e51d985423bc281d63edf68b15382ca4c157421c7b8#npm:0.2.38"],
             ["typescript", "patch:typescript@npm%3A4.4.3#~builtin<compat/typescript>::version=4.4.3&hash=32657b"]
           ],
@@ -5094,10 +5092,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mysql2", "npm:2.3.0"],
             ["pino-pretty", "npm:7.0.1"],
             ["prettier", "npm:2.4.1"],
-            ["reflect-metadata", "npm:0.1.13"],
             ["ts-jest", "virtual:0c9114e0a6c540251b6045286cdc8a2edd6cb1868f3d5f40b071b25310ed34c298aa10c1068c82801dce7e51d985423bc281d63edf68b15382ca4c157421c7b8#npm:27.0.5"],
             ["ts-node-dev", "virtual:0c9114e0a6c540251b6045286cdc8a2edd6cb1868f3d5f40b071b25310ed34c298aa10c1068c82801dce7e51d985423bc281d63edf68b15382ca4c157421c7b8#npm:1.1.8"],
-            ["typedi", "npm:0.10.0"],
             ["typeorm", "virtual:0c9114e0a6c540251b6045286cdc8a2edd6cb1868f3d5f40b071b25310ed34c298aa10c1068c82801dce7e51d985423bc281d63edf68b15382ca4c157421c7b8#npm:0.2.38"],
             ["typescript", "patch:typescript@npm%3A4.4.3#~builtin<compat/typescript>::version=4.4.3&hash=32657b"]
           ],
@@ -6964,15 +6960,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["typedarray-to-buffer", "npm:3.1.5"],
             ["is-typedarray", "npm:1.0.0"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
-      ["typedi", [
-        ["npm:0.10.0", {
-          "packageLocation": "./.yarn/cache/typedi-npm-0.10.0-d5771a2dc0-d26491e368.zip/node_modules/typedi/",
-          "packageDependencies": [
-            ["typedi", "npm:0.10.0"]
           ],
           "linkType": "HARD",
         }]
