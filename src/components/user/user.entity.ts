@@ -10,7 +10,7 @@ import {
 import { Data } from '../data';
 
 @Entity('user')
-class User {
+export default class User {
   @PrimaryGeneratedColumn({ unsigned: true })
   id!: number;
 
@@ -36,5 +36,3 @@ class User {
   @OneToMany(() => Data, (data) => data.user)
   datas?: Data[];
 }
-
-export default User;
