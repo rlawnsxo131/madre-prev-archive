@@ -20,7 +20,8 @@ function TestPage(props: TestPageProps) {
   const height = 400;
   const fontSize = 10;
   const axisMaxUnitExpressionLength = fontSize * 3;
-  const ticks = 10;
+  const xTicks = 5;
+  const yTicks = 10;
   const tickSize = 6;
   const xDomain = [0, 100];
   const yDomain = [0, 100];
@@ -35,17 +36,18 @@ function TestPage(props: TestPageProps) {
       className: 'axis-chart',
       xDomain,
       yDomain,
-      xRange: [0, width - (axisMaxUnitExpressionLength + ticks + tickSize)],
-      yRange: [height - (axisMaxUnitExpressionLength + ticks + tickSize), 0],
+      xRange: [0, width - (axisMaxUnitExpressionLength + xTicks + tickSize)],
+      yRange: [height - (axisMaxUnitExpressionLength + yTicks + tickSize), 0],
     });
 
     chart.setAxis({
-      xTicks: 5,
-      yTicks: 10,
+      xTicks,
+      yTicks,
       xTickSize: tickSize,
       yTickSize: tickSize,
       xClass: 'x-axis',
       yClass: 'y-axis',
+      axisFontSize: fontSize,
       axisMaxUnitExpressionLength,
     });
 
@@ -65,6 +67,9 @@ function TestPage(props: TestPageProps) {
         animate: true,
       });
     });
+
+    chart.drawAxis();
+    chart.drawGrid();
   }, [ref.current]);
 
   return <div css={block} ref={ref}></div>;
@@ -80,11 +85,11 @@ const block = css`
   .x-axis,
   .y-axis {
     & path {
-      /* color: ${palette.gray[300]}; */
+      color: ${palette.gray['200']};
     }
   }
   .grid {
-    color: ${palette.gray[300]};
+    color: ${palette.gray['200']};
   }
 `;
 

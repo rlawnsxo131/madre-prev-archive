@@ -9,7 +9,13 @@ import {
   scaleLinear,
 } from 'd3';
 import D3Common from '../D3Common';
-import { D3DoubleNumberArray, D3Selection } from '../D3Common/D3CommonTypes';
+import {
+  D3Axis,
+  D3DoubleNumberArray,
+  D3Line,
+  D3Selection,
+  D3SelectionSVG,
+} from '../D3Common/D3CommonTypes';
 import {
   D3AxisChartConstructorParams,
   D3AxisChartSetAxisBackgroundGridParams,
@@ -17,11 +23,11 @@ import {
   D3AxisChartSetLineParams,
 } from './D3AxisChartTypes';
 
-/**
- * axisMaxUnitExpressionLength: maximum number of characters displayed
- */
 export default class D3AxisChart extends D3Common {
-  private svg: D3Selection;
+  /**
+   * @Initialize
+   */
+  private svg: D3SelectionSVG;
   private width: number;
   private height: number;
   private xDomain: D3DoubleNumberArray;
@@ -29,13 +35,35 @@ export default class D3AxisChart extends D3Common {
   private xRange: D3DoubleNumberArray;
   private yRange: D3DoubleNumberArray;
 
-  // axis attribute
+  /**
+   * @Axis
+   * axisMaxUnitExpressionLength: maximum number of characters displayed
+   * axisX: axis draw function
+   * axisY: axis draw function
+   */
   private axisFontSize = 10;
   private axisMaxUnitExpressionLength = 0;
   private axisXTicks = 0;
   private axisXTickSize = 0;
   private axisYTicks = 0;
   private axisYTickSize = 0;
+  private axisXSvg: D3Selection = null;
+  private axisYSvg: D3Selection = null;
+  private axisX: D3Axis = null;
+  private axisY: D3Axis = null;
+
+  /**
+   * @AxisGrid
+   */
+  private axisGridXSvg: D3Selection = null;
+  private axisGridYSvg: D3Selection = null;
+  private axisGridX: D3Axis = null;
+  private axisGridY: D3Axis = null;
+
+  /**
+   * @LineGraph
+   */
+  private lineGenerator: D3Line = null;
 
   constructor({
     container,
@@ -89,41 +117,39 @@ export default class D3AxisChart extends D3Common {
     this.axisYTicks = yTicks;
     this.axisYTickSize = yTickSize;
 
-    const xAxisSvg = this.svg
+    this.axisXSvg = this.svg
       .append('g')
       .attr('class', xClass)
       .attr(
         'transform',
         `translate(
-          ${this.axisMaxUnitExpressionLength}, 
+          ${this.axisMaxUnitExpressionLength - this.axisXTickSize}, 
           ${this.height - this.axisYTicks - this.axisYTickSize}
         )`,
       )
       .style('font-size', this.axisFontSize);
 
-    const yAxisSvg = this.svg
+    this.axisYSvg = this.svg
       .append('g')
       .attr('class', yClass)
       .attr(
         'transform',
         `translate(
-          ${this.axisMaxUnitExpressionLength},
-          ${this.axisMaxUnitExpressionLength})`,
+          ${this.axisMaxUnitExpressionLength - this.axisXTickSize},
+          ${this.axisMaxUnitExpressionLength}
+        )`,
       )
       .style('font-size', this.axisFontSize);
 
-    const xAxis = axisBottom(this.xScale())
+    this.axisX = axisBottom(this.xScale())
       .tickSize(this.axisXTickSize)
       .ticks(this.axisXTicks)
       .tickFormat(xTickFormat);
 
-    const yAxis = axisLeft(this.yScale())
+    this.axisY = axisLeft(this.yScale())
       .tickSize(this.axisYTickSize)
       .ticks(this.axisYTicks)
       .tickFormat(yTickFormat);
-
-    xAxis(xAxisSvg);
-    yAxis(yAxisSvg);
   }
 
   setAxisBackgroundGrid({
@@ -132,41 +158,38 @@ export default class D3AxisChart extends D3Common {
     xTickFormat = () => '',
     yTickFormat = () => '',
   }: D3AxisChartSetAxisBackgroundGridParams) {
-    const xGridSvg = this.svg
+    this.axisGridXSvg = this.svg
       .append('g')
       .attr('class', xClass)
       .attr(
         'transform',
         `translate(
-        ${this.axisMaxUnitExpressionLength},
+        ${this.axisMaxUnitExpressionLength - this.axisXTickSize},
         ${this.axisMaxUnitExpressionLength})`,
       )
       .style('font-size', this.axisFontSize);
 
-    const yGirdSvg = this.svg
+    this.axisGridYSvg = this.svg
       .append('g')
       .attr('class', yClass)
       .attr(
         'transform',
         `translate(
-        ${this.axisMaxUnitExpressionLength},
-        ${this.height - this.axisYTicks - this.axisYTickSize}
-      )`,
+          ${this.axisMaxUnitExpressionLength - this.axisXTickSize},
+          ${this.height - this.axisYTicks - this.axisYTickSize}
+        )`,
       )
       .style('fornt-size', this.axisFontSize);
 
-    const xGrid = axisRight(this.yScale())
+    this.axisGridX = axisRight(this.yScale())
       .tickSize(this.width)
       .ticks(5)
       .tickFormat(xTickFormat);
 
-    const yGrid = axisTop(this.xScale())
+    this.axisGridY = axisTop(this.xScale())
       .tickSize(this.height)
       .ticks(5)
       .tickFormat(yTickFormat);
-
-    xGrid(xGridSvg);
-    yGrid(yGirdSvg);
   }
 
   // line graph
@@ -180,24 +203,30 @@ export default class D3AxisChart extends D3Common {
     const xScale = this.xScale();
     const yScale = this.yScale();
 
-    let linearGenerator = line()
+    this.lineGenerator = line()
       .x((d) => xScale(d[0]))
       .y((d) => yScale(d[1]));
 
     if (lineType === 'CURVE') {
-      linearGenerator.curve(curveBasis);
+      this.lineGenerator.curve(curveBasis);
     }
 
     const path = this.svg
       .append('path')
       .attr('fill', 'none')
-      .attr('d', `${linearGenerator(data)}`)
+      .attr('d', `${this.lineGenerator(data)}`)
       .attr('stroke-width', strokeWidth)
       .attr('stroke', color)
       .attr(
         'transform',
-        `translate(${this.axisMaxUnitExpressionLength + strokeWidth / 2}, 
-          ${this.axisMaxUnitExpressionLength})
+        `translate(
+          ${
+            this.axisMaxUnitExpressionLength -
+            this.axisXTickSize +
+            strokeWidth / 2
+          },
+          ${this.axisMaxUnitExpressionLength}
+        )
         `,
       );
     const pathLength = path.node()?.getTotalLength();
@@ -214,4 +243,24 @@ export default class D3AxisChart extends D3Common {
   }
 
   setArea() {}
+
+  drawAxis() {
+    if (this.axisXSvg && this.axisX) {
+      this.axisX(this.axisXSvg);
+    }
+    if (this.axisYSvg && this.axisY) {
+      this.axisY(this.axisYSvg);
+    }
+  }
+
+  drawGrid() {
+    if (this.axisGridXSvg && this.axisGridX) {
+      this.axisGridX(this.axisGridXSvg);
+    }
+    if (this.axisGridYSvg && this.axisGridY) {
+      this.axisGridY(this.axisGridYSvg);
+    }
+  }
+
+  drawLine() {}
 }
