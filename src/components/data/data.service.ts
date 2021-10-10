@@ -1,4 +1,4 @@
-import { getCustomRepository, getRepository } from 'typeorm';
+import { getRepository } from 'typeorm';
 import { DataRepository } from '.';
 
 class DataService {
