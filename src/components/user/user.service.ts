@@ -14,7 +14,8 @@ class UserService {
   }
 
   findById(id: number) {
-    return getCustomRepository(UserRepository).findOne({ id });
+    const userRepo = getCustomRepository(UserRepository);
+    return userRepo.findOne({ id });
   }
 }
 
