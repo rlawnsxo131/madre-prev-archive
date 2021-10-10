@@ -56,7 +56,7 @@ const block = (theme: ColorTheme, visible: boolean) => css`
   flex-direction: column;
   z-index: ${zIndexes.dropdownItem};
   border-radius: 0.25rem;
-  background: ${themeColor.background[theme]};
+  background: ${themeColor.navigation[theme]};
   box-shadow: ${themeColor.shadow[theme]};
   transform-origin: top;
   ul,

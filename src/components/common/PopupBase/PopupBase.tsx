@@ -29,7 +29,7 @@ const popup = (visible: boolean, theme: ColorTheme) => css`
   justify-content: center;
   align-items: center;
   border-radius: 3px;
-  background: ${themeColor.background[theme]};
+  background: ${themeColor.popup[theme]};
   ${visible
     ? css`
         animation: ${transitions.popInFromBottom} 0.25s forwards ease-in-out;

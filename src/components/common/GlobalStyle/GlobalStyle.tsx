@@ -16,10 +16,10 @@ const globalStyle = (theme: ColorTheme) => css`
     margin: 0;
     padding: 0;
     height: 100%;
-    background: ${themeColor.background[theme]};
+    background: ${themeColor.body[theme]};
   }
   header {
-    background: ${themeColor.background[theme]};
+    background: ${themeColor.header[theme]};
   }
 
   html {

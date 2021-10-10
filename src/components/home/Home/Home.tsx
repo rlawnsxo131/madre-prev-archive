@@ -1,14 +1,14 @@
 import { css } from '@emotion/react';
-import HomeSectionFirst from './HomeSectionFirst';
-import HomeSectionSecond from './HomeSectionSecond';
+import HomeSectionGraph from './HomeSectionGraph';
+import HomeSectionThinkAbout from './HomeSectionThinkAbout';
 
 interface HomeProps {}
 
 function Home(props: HomeProps) {
   return (
     <div css={block}>
-      <HomeSectionFirst />
-      <HomeSectionSecond />
+      <HomeSectionGraph />
+      <HomeSectionThinkAbout />
     </div>
   );
 }

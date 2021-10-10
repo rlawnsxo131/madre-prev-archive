@@ -1,2 +1,2 @@
-export { default as DataTrendsImage } from './DataTrendsImage';
-export { default as DataImage } from './DataImage';
+export { default as CountingStarsImage } from './CountingStarsImage';
+export { default as WorkingLateImage } from './WorkingLateImage';
