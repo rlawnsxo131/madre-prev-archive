@@ -6,7 +6,7 @@ import {
   ConnectionOptions,
 } from 'typeorm';
 
-class Database {
+export default class Database {
   private connectionManager: ConnectionManager;
   private connectionOptions: ConnectionOptions;
 
@@ -51,5 +51,3 @@ class Database {
     return this.connect();
   }
 }
-
-export default Database;

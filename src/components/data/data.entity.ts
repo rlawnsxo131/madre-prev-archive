@@ -11,7 +11,7 @@ import {
 import { User } from '../user';
 
 @Entity('data')
-class Data {
+export default class Data {
   @PrimaryGeneratedColumn({ unsigned: true })
   id!: number;
 
@@ -38,5 +38,3 @@ class Data {
   @JoinColumn({ name: 'user_id' })
   user!: User;
 }
-
-export default Data;
