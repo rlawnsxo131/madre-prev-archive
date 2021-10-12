@@ -39,7 +39,7 @@ export const homeP = css`
   margin: 0;
   padding: 0;
   font-size: 1.125rem;
-  font-weight: 550;
+  font-weight: 500;
   line-height: 2;
   white-space: pre-line;
 `;

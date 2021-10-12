@@ -214,7 +214,6 @@ export default class D3AxisChart extends D3Common {
     }
   }
 
-  // line graph
   drawLine({
     data,
     color = 'black',

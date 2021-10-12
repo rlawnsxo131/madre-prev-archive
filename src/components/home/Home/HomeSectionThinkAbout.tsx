@@ -51,8 +51,8 @@ const imageBlock = css`
   display: flex;
   gap: 1.25rem;
   svg {
-    height: auto;
     width: 100%;
+    height: auto;
   }
 `;
 
