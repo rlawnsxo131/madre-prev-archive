@@ -24,7 +24,7 @@ export const homeH3 = css`
   margin: 0;
   padding: 0;
   font-size: 1.75rem;
-  font-weight: 500;
+  font-weight: 550;
   line-height: 2;
   white-space: pre-line;
 `;
@@ -39,7 +39,7 @@ export const homeP = css`
   margin: 0;
   padding: 0;
   font-size: 1.125rem;
-  font-weight: 500;
+  font-weight: 550;
   line-height: 2;
   white-space: pre-line;
 `;

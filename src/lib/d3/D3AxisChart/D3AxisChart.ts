@@ -5,8 +5,10 @@ import {
   axisTop,
   curveBasis,
   easeSinInOut,
+  extent,
   line,
   scaleLinear,
+  select,
 } from 'd3';
 import D3Common from '../D3Common';
 import {
@@ -18,9 +20,9 @@ import {
 } from '../D3Common/D3CommonTypes';
 import {
   D3AxisChartConstructorParams,
+  D3AxisChartDrawLineParams,
   D3AxisChartSetAxisBackgroundGridParams,
   D3AxisChartSetAxisParams,
-  D3AxisChartSetLineParams,
 } from './D3AxisChartTypes';
 
 export default class D3AxisChart extends D3Common {
@@ -84,8 +86,8 @@ export default class D3AxisChart extends D3Common {
     });
     this.width = width;
     this.height = height;
-    this.xDomain = this.getExtent(xDomain);
-    this.yDomain = this.getExtent(yDomain);
+    this.xDomain = this.serializedExtent(extent(xDomain));
+    this.yDomain = this.serializedExtent(extent(yDomain));
     this.xRange = xRange;
     this.yRange = yRange;
   }
@@ -192,56 +194,6 @@ export default class D3AxisChart extends D3Common {
       .tickFormat(yTickFormat);
   }
 
-  // line graph
-  setLine({
-    data,
-    color = 'black',
-    strokeWidth = 1,
-    lineType = 'STRAIGHT',
-    animate = false,
-  }: D3AxisChartSetLineParams) {
-    const xScale = this.xScale();
-    const yScale = this.yScale();
-
-    this.lineGenerator = line()
-      .x((d) => xScale(d[0]))
-      .y((d) => yScale(d[1]));
-
-    if (lineType === 'CURVE') {
-      this.lineGenerator.curve(curveBasis);
-    }
-
-    const path = this.svg
-      .append('path')
-      .attr('fill', 'none')
-      .attr('d', `${this.lineGenerator(data)}`)
-      .attr('stroke-width', strokeWidth)
-      .attr('stroke', color)
-      .attr(
-        'transform',
-        `translate(
-          ${
-            this.axisMaxUnitExpressionLength -
-            this.axisXTickSize +
-            strokeWidth / 2
-          },
-          ${this.axisMaxUnitExpressionLength}
-        )
-        `,
-      );
-    const pathLength = path.node()?.getTotalLength();
-
-    if (animate && path && pathLength) {
-      path
-        .attr('stroke-dashoffset', pathLength)
-        .attr('stroke-dasharray', pathLength)
-        .transition()
-        .ease(easeSinInOut)
-        .duration(1500)
-        .attr('stroke-dashoffset', 0); //시작점
-    }
-  }
-
   setArea() {}
 
   drawAxis() {
@@ -262,5 +214,64 @@ export default class D3AxisChart extends D3Common {
     }
   }
 
-  drawLine() {}
+  // line graph
+  drawLine({
+    data,
+    color = 'black',
+    strokeWidth = 2,
+    lineType = 'STRAIGHT',
+    animate = false,
+  }: D3AxisChartDrawLineParams) {
+    const xScale = this.xScale();
+    const yScale = this.yScale();
+
+    this.lineGenerator = line()
+      .x((d) => xScale(d[0]))
+      .y((d) => yScale(d[1]));
+
+    if (lineType === 'CURVE') {
+      this.lineGenerator.curve(curveBasis);
+    }
+
+    const path = this.svg
+      .append('path')
+      .attr('fill', 'none')
+      .attr('d', `${this.lineGenerator(data.d3Position)}`)
+      .attr('stroke-width', strokeWidth)
+      .attr('stroke', color)
+      .attr(
+        'transform',
+        `translate(
+          ${
+            this.axisMaxUnitExpressionLength -
+            this.axisXTickSize +
+            strokeWidth / 2
+          },
+          ${this.axisMaxUnitExpressionLength}
+        )
+        `,
+      )
+      .on('mouseover', function (d) {
+        select(this)
+          .style('stroke-width', strokeWidth * 2.5)
+          .style('cursor', 'pointer');
+      })
+      .on('mouseout', function (d) {
+        select(this)
+          .style('stroke-width', strokeWidth)
+          .style('cursor', 'default');
+      });
+
+    const pathLength = path.node()?.getTotalLength();
+
+    if (animate && path && pathLength) {
+      path
+        .attr('stroke-dashoffset', pathLength)
+        .attr('stroke-dasharray', pathLength)
+        .transition()
+        .ease(easeSinInOut)
+        .duration(1500)
+        .attr('stroke-dashoffset', 0); //시작점
+    }
+  }
 }

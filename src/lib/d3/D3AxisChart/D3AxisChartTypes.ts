@@ -34,7 +34,7 @@ export type D3AxisChartSetAxisBackgroundGridParams = Partial<{
 
 export type D3AxisChartLineType = 'STRAIGHT' | 'CURVE';
 
-export type D3AxisChartSetLineParams = {
+export type D3AxisChartDrawLineParams = {
   data: D3Data;
   color?: string;
   strokeWidth?: number;

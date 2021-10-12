@@ -1,5 +1,9 @@
-import { extent, randomInt, randomUniform, select } from 'd3';
-import { AppendSvgParams, D3DoubleNumberArray } from './D3CommonTypes';
+import { randomInt, randomUniform, select } from 'd3';
+import {
+  AppendSvgParams,
+  D3DoubleNumberArray,
+  D3ExtentResult,
+} from './D3CommonTypes';
 
 export default class D3Common {
   protected appendSvg({
@@ -18,9 +22,9 @@ export default class D3Common {
     return svg;
   }
 
-  protected getExtent(data: number[]): D3DoubleNumberArray {
-    const [min = 0, max = 0] = extent(data);
-    return [min, max];
+  protected serializedExtent(data: D3ExtentResult): D3DoubleNumberArray {
+    if (!data[1]) return [0, 0];
+    return data;
   }
 
   protected getRandomInt(min: number, max: number) {

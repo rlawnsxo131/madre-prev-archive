@@ -1,7 +1,5 @@
 import { css } from '@emotion/react';
-import { CountingStarsImage, WorkingLateImage } from '../../../image/images';
-import media from '../../../styles/media';
-import { themeColor } from '../../../styles/palette';
+import { LostOnlineImage } from '../../../image/images';
 import {
   homeBlock,
   homeBlockItemCommon,
@@ -20,13 +18,12 @@ function HomeSectionThinkAbout(props: HomeSectionThinkAboutProps) {
           <h5 css={homeH5}>Think About</h5>
           <h3 css={homeH3}>우린 지금, 얼마나{'\n'}많은 데이터와 함께할까요?</h3>
           <p css={homeP}>
-            어쩌면, 밤하늘에{'\n'}빛나는 별만큼이나 많을지도 몰라요.
+            어쩌면, 저 밤하늘에{'\n'}반짝이는 것들만큼이나 많을지도 몰라요.
           </p>
         </div>
       </div>
       <div css={imageBlock}>
-        <CountingStarsImage />
-        <WorkingLateImage />
+        <LostOnlineImage />
       </div>
     </section>
   );
@@ -41,10 +38,10 @@ const descriptionBlock = css`
 `;
 
 const description = css`
-  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: flex-start;
   gap: 1.25rem;
 `;
 
@@ -52,18 +49,10 @@ const imageBlock = css`
   ${homeBlockItemCommon};
   flex: 1;
   display: flex;
-  flex-flow: row wrap;
-  justify-content: space-around;
   gap: 1.25rem;
-  background: ${themeColor.content['light']};
   svg {
     height: auto;
-    ${media.xxxsmall} {
-      width: 100%;
-    }
-    ${media.xxsmall} {
-      width: 15rem;
-    }
+    width: 100%;
   }
 `;
 

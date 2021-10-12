@@ -193,7 +193,7 @@ export const themeColor = {
   },
   popup: {
     light: darkmodeColor.light['100'],
-    dark: darkmodeColor.deep['200'],
+    dark: darkmodeColor.deep['100'],
   },
   navigation: {
     light: darkmodeColor.light['100'],

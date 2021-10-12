@@ -2,7 +2,7 @@ import palette from './palette';
 
 export type ButtonShapeType = 'rect' | 'round';
 export type ButtonSizeType = 'small' | 'medium' | 'large' | 'responsive';
-export type ButtonColorType = 'gray' | 'red';
+export type ButtonColorType = 'gray' | 'pink';
 
 export const buttonSizeMap = {
   small: {
@@ -27,9 +27,9 @@ export const buttonColorMap = {
     background: palette.gray['700'],
     hoverBackground: palette.gray['600'],
   },
-  red: {
-    background: palette.red['500'],
-    hoverBackground: palette.red['400'],
+  pink: {
+    background: palette.pink['600'],
+    hoverBackground: palette.pink['500'],
   },
 };
 
