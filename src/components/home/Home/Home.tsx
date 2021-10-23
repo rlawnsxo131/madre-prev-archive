@@ -9,7 +9,6 @@ function Home(props: HomeProps) {
     <div css={block}>
       <HomeSectionThinkAbout />
       <HomeSectionGraph />
-      <div style={{ padding: '5rem' }} />
     </div>
   );
 }

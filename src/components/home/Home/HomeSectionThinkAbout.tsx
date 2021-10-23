@@ -32,7 +32,6 @@ const descriptionBlock = css`
   flex: 1;
   display: flex;
   align-items: center;
-  justify-content: center;
 `;
 
 const description = css`
