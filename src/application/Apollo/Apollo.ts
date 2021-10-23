@@ -8,14 +8,14 @@ import { FastifyInstance } from 'fastify';
 import schema from './apollo.schema';
 import { isProduction } from '../../constants';
 
-class Apollo {
+export default class Apollo {
   private app: ApolloServer;
 
   constructor(fastify: FastifyInstance) {
     this.app = new ApolloServer({
       schema,
       context: ({ request }) => {
-        request.log.info(request.user);
+        request.log.info(request.id);
       },
       plugins: [
         this.fastifyAppClosePlugin(fastify),
@@ -52,5 +52,3 @@ class Apollo {
     return this.app.createHandler({ cors: false });
   }
 }
-
-export default Apollo;
