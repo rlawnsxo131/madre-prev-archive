@@ -1,16 +1,16 @@
-function checkStorage() {
-  try {
-    localStorage.setItem('check', 'check');
-    localStorage.removeItem('check');
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
-
 class Storage {
   private fallbackStorage = new Map<string, string>([]);
-  private valid: boolean = checkStorage();
+  private valid: boolean = this.checkStorage();
+
+  private checkStorage() {
+    try {
+      localStorage.setItem('check', 'check');
+      localStorage.removeItem('check');
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 
   setItem(key: string, value: any) {
     const string = JSON.stringify(value);
