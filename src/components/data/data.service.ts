@@ -1,4 +1,4 @@
-import { getRepository } from 'typeorm';
+import { getCustomRepository } from 'typeorm';
 import { DataRepository } from '.';
 
 class DataService {
@@ -14,7 +14,7 @@ class DataService {
   }
 
   findById(id: number) {
-    const dataRepo = getRepository(DataRepository);
+    const dataRepo = getCustomRepository(DataRepository);
     return dataRepo.findOne(id);
   }
 }
