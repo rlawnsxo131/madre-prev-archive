@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server-core';
 import { IResolvers } from '@graphql-tools/utils';
-import { UserService } from '.';
+import { userService } from '.';
 
 const typeDef = gql`
   type User {
@@ -17,16 +17,14 @@ const resolvers: IResolvers = {
   Query: {
     async user(_, args) {
       const { id } = args;
-      const user = await UserService.findById(id);
+      const user = await userService.findById(id);
       return user;
     },
   },
   Mutation: {},
 };
 
-const UserGraphQL = {
+export default {
   typeDef,
   resolvers,
 };
-
-export default UserGraphQL;

@@ -3,7 +3,7 @@ import { Connection } from 'typeorm';
 import { Database } from '../../../datastore';
 import initializeEnvironment from '../../../lib/initializeEnvironment';
 
-describe('UserService Test', () => {
+describe('authService Test', () => {
   let connection: Connection | null = null;
 
   beforeAll(async () => {
@@ -14,5 +14,9 @@ describe('UserService Test', () => {
 
   afterAll(async () => {
     await connection?.close();
+  });
+
+  test('auth', () => {
+    console.log('hello');
   });
 });

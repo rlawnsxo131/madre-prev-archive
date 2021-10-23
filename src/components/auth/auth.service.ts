@@ -1,14 +1,3 @@
-class AuthService {
-  private static instance: AuthService;
+const authService = {};
 
-  private constructor() {}
-
-  static getInstance() {
-    if (!this.instance) {
-      this.instance = new AuthService();
-    }
-    return this.instance;
-  }
-}
-
-export default AuthService.getInstance();
+export default authService;

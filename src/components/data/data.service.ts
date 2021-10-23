@@ -1,22 +1,11 @@
 import { getCustomRepository } from 'typeorm';
 import { DataRepository } from '.';
 
-class DataService {
-  private static instance: DataService;
-
-  private constructor() {}
-
-  static getInstance() {
-    if (!this.instance) {
-      this.instance = new DataService();
-    }
-    return this.instance;
-  }
-
+const dataService = {
   findById(id: number) {
     const dataRepo = getCustomRepository(DataRepository);
     return dataRepo.findOne(id);
-  }
-}
+  },
+};
 
-export default DataService.getInstance();
+export default dataService;

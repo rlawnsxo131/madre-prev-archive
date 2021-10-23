@@ -1,10 +1,10 @@
 import 'jest';
 import { Connection } from 'typeorm';
-import { DataService } from '..';
+import { dataService } from '..';
 import { Database } from '../../../datastore';
 import initializeEnvironment from '../../../lib/initializeEnvironment';
 
-describe('DataService Test', () => {
+describe('dataService Test', () => {
   let connection: Connection | null = null;
 
   beforeAll(async () => {
@@ -19,7 +19,7 @@ describe('DataService Test', () => {
 
   test('findById data_id to 0', async () => {
     const data_id = 0;
-    const data = await DataService.findById(data_id);
+    const data = await dataService.findById(data_id);
     expect([null, undefined]).toContain(data);
   });
 });

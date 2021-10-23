@@ -1,6 +1,6 @@
 import { IResolvers } from '@graphql-tools/utils';
 import { gql } from 'apollo-server-core';
-import { DataService } from '.';
+import { dataService } from '.';
 
 const typeDef = gql`
   type Data {
@@ -16,15 +16,13 @@ const resolvers: IResolvers = {
   Query: {
     async data(_, args) {
       const { id } = args;
-      const data = await DataService.findById(id);
+      const data = await dataService.findById(id);
       return data;
     },
   },
 };
 
-const DataGraphQL = {
+export default {
   typeDef,
   resolvers,
 };
-
-export default DataGraphQL;
