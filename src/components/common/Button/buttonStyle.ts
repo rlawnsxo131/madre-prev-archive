@@ -1,4 +1,4 @@
-import palette from './palette';
+import palette from '../../../styles/palette';
 
 export type ButtonShapeType = 'rect' | 'round';
 export type ButtonSizeType = 'small' | 'medium' | 'large' | 'responsive';

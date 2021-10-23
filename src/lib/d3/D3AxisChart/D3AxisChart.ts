@@ -93,11 +93,11 @@ export default class D3AxisChart extends D3Common {
   }
 
   private xScale() {
-    return scaleLinear().domain(this.xDomain).nice().range(this.xRange);
+    return scaleLinear().domain(this.xDomain).range(this.xRange).nice();
   }
 
   private yScale() {
-    return scaleLinear().domain(this.yDomain).nice().range(this.yRange);
+    return scaleLinear().domain(this.yDomain).range(this.yRange).nice();
   }
 
   setAxis({
@@ -155,43 +155,48 @@ export default class D3AxisChart extends D3Common {
   }
 
   setAxisBackgroundGrid({
+    direction,
     xClass = '',
     yClass = '',
     xTickFormat = () => '',
     yTickFormat = () => '',
   }: D3AxisChartSetAxisBackgroundGridParams) {
-    this.axisGridXSvg = this.svg
-      .append('g')
-      .attr('class', xClass)
-      .attr(
-        'transform',
-        `translate(
+    if (direction.x) {
+      this.axisGridXSvg = this.svg
+        .append('g')
+        .attr('class', xClass)
+        .attr(
+          'transform',
+          `translate(
         ${this.axisMaxUnitExpressionLength - this.axisXTickSize},
         ${this.axisMaxUnitExpressionLength})`,
-      )
-      .style('font-size', this.axisFontSize);
+        )
+        .style('font-size', this.axisFontSize);
 
-    this.axisGridYSvg = this.svg
-      .append('g')
-      .attr('class', yClass)
-      .attr(
-        'transform',
-        `translate(
+      this.axisGridX = axisRight(this.yScale())
+        .tickSize(this.width)
+        .ticks(5)
+        .tickFormat(xTickFormat);
+    }
+
+    if (direction.y) {
+      this.axisGridYSvg = this.svg
+        .append('g')
+        .attr('class', yClass)
+        .attr(
+          'transform',
+          `translate(
           ${this.axisMaxUnitExpressionLength - this.axisXTickSize},
           ${this.height - this.axisYTicks - this.axisYTickSize}
         )`,
-      )
-      .style('fornt-size', this.axisFontSize);
+        )
+        .style('fornt-size', this.axisFontSize);
 
-    this.axisGridX = axisRight(this.yScale())
-      .tickSize(this.width)
-      .ticks(5)
-      .tickFormat(xTickFormat);
-
-    this.axisGridY = axisTop(this.xScale())
-      .tickSize(this.height)
-      .ticks(5)
-      .tickFormat(yTickFormat);
+      this.axisGridY = axisTop(this.xScale())
+        .tickSize(this.height)
+        .ticks(5)
+        .tickFormat(yTickFormat);
+    }
   }
 
   setArea() {}

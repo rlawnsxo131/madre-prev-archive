@@ -8,7 +8,7 @@ import {
   buttonSizeMap,
   ButtonSizeType,
   outlineButtonStyle,
-} from '../../../styles/buttonStyle';
+} from './buttonStyle';
 import palette from '../../../styles/palette';
 
 interface ButtonProps extends Omit<React.HTMLProps<HTMLButtonElement>, 'size'> {

@@ -7,8 +7,8 @@ interface HomeProps {}
 function Home(props: HomeProps) {
   return (
     <div css={block}>
-      <HomeSectionGraph />
       <HomeSectionThinkAbout />
+      <HomeSectionGraph />
       <div style={{ padding: '5rem' }} />
     </div>
   );

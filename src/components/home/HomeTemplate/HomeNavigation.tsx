@@ -1,24 +1,22 @@
 import { css } from '@emotion/react';
 import { memo } from 'react';
 import { NavLink } from 'react-router-dom';
-import { ColorTheme } from '../../../atoms/colorThemeState';
 import { useTransitionTimeoutEffect } from '../../../lib/hooks';
-import { themeColor } from '../../../styles/palette';
+import themeColor from '../../../styles/themeColor';
 import transitions from '../../../styles/transitions';
 import zIndexes from '../../../styles/zIndexes';
 
 interface HomeNavigationProps {
-  theme: ColorTheme;
   visible: boolean;
 }
 
-function HomeNavigation({ theme, visible }: HomeNavigationProps) {
+function HomeNavigation({ visible }: HomeNavigationProps) {
   const closed = useTransitionTimeoutEffect({ visible, delay: 125 });
 
   if (!visible && closed) return null;
 
   return (
-    <nav css={block(theme, visible)}>
+    <nav css={block(visible)}>
       <ul>
         <li>
           <NavLink css={link} exact to="/">
@@ -45,19 +43,19 @@ function HomeNavigation({ theme, visible }: HomeNavigationProps) {
   );
 }
 
-const block = (theme: ColorTheme, visible: boolean) => css`
+const block = (visible: boolean) => css`
   position: absolute;
   top: 3.25rem;
   left: 0.5rem;
-  width: 18rem;
+  width: 15.15rem;
   height: auto;
   padding: 0.25rem 0.5rem;
   display: flex;
   flex-direction: column;
   z-index: ${zIndexes.dropdownItem};
   border-radius: 0.25rem;
-  background: ${themeColor.navigation[theme]};
-  box-shadow: ${themeColor.shadow[theme]};
+  background: ${themeColor.navigation['light']};
+  box-shadow: ${themeColor.shadow['light']};
   transform-origin: top;
   ul,
   li {

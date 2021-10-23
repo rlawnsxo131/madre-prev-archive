@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { ColorTheme, useColorThemeValue } from '../../../atoms/colorThemeState';
 import { useTransitionTimeoutEffect } from '../../../lib/hooks';
-import { themeColor } from '../../../styles/palette';
+import themeColor from '../../../styles/themeColor';
 import transitions from '../../../styles/transitions';
 import OpaqueLayer from '../OpaqueLayer';
 

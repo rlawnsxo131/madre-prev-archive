@@ -25,12 +25,16 @@ export type D3AxisChartSetAxisParams = Partial<{
   yTickFormat: D3TickFormat;
 }>;
 
-export type D3AxisChartSetAxisBackgroundGridParams = Partial<{
-  xClass: string;
-  yClass: string;
-  xTickFormat: D3TickFormat;
-  yTickFormat: D3TickFormat;
-}>;
+export type D3AxisChartSetAxisBackgroundGridParams = {
+  direction: {
+    x: boolean;
+    y: boolean;
+  };
+  xClass?: string;
+  yClass?: string;
+  xTickFormat?: D3TickFormat;
+  yTickFormat?: D3TickFormat;
+};
 
 export type D3AxisChartLineType = 'STRAIGHT' | 'CURVE';
 

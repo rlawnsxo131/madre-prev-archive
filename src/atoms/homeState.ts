@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 import { atom, selector, useRecoilValue, useSetRecoilState } from 'recoil';
-import { colorThemeState, ColorTheme } from './colorThemeState';
 
 interface HomeNavigationState {
   visible: boolean;
@@ -15,17 +14,14 @@ const homeNavigationState = atom<HomeNavigationState>({
 
 interface HomeState {
   visible: boolean;
-  theme: ColorTheme;
 }
 
 const homeStateSelector = selector<HomeState>({
   key: 'homeStateSelector',
   get: ({ get }) => {
     const { visible } = get(homeNavigationState);
-    const { theme } = get(colorThemeState);
     return {
       visible,
-      theme,
     };
   },
 });

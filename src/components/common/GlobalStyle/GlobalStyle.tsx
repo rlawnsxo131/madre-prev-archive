@@ -1,6 +1,6 @@
 import { css, Global } from '@emotion/react';
 import { ColorTheme, useColorThemeValue } from '../../../atoms/colorThemeState';
-import { themeColor } from '../../../styles/palette';
+import themeColor from '../../../styles/themeColor';
 
 interface GlobalStyleProps {}
 

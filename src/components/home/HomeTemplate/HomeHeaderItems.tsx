@@ -1,16 +1,15 @@
 import { css } from '@emotion/react';
 import Button from '../../common/Button';
-import ThemeTrigger from '../../common/Theme';
 import { GoogleIcon, MenuIcon } from '../../../image/icons';
 import HomeNavigation from './HomeNavigation';
 import { useHomeValue, useHomeActions } from '../../../atoms/homeState';
-import { ColorTheme } from '../../../atoms/colorThemeState';
-import palette, { themeColor } from '../../../styles/palette';
+import palette from '../../../styles/palette';
+import themeColor from '../../../styles/themeColor';
 
 interface HomeHeaderItemsProps {}
 
 function HomeHeaderItems(props: HomeHeaderItemsProps) {
-  const { theme, visible } = useHomeValue();
+  const { visible } = useHomeValue();
   const { handleNavigation } = useHomeActions();
 
   return (
@@ -21,13 +20,10 @@ function HomeHeaderItems(props: HomeHeaderItemsProps) {
         </Button>
       </div>
       <div css={itemWrapperStyle}>
-        <button css={buttonStyle(theme)} onClick={handleNavigation}>
+        <button css={buttonStyle} onClick={handleNavigation}>
           <MenuIcon />
         </button>
-        <HomeNavigation theme={theme} visible={visible} />
-      </div>
-      <div css={itemWrapperStyle}>
-        <ThemeTrigger />
+        <HomeNavigation visible={visible} />
       </div>
     </div>
   );
@@ -48,7 +44,7 @@ const itemWrapperStyle = css`
   }
 `;
 
-const buttonStyle = (theme: ColorTheme) => css`
+const buttonStyle = css`
   background: inherit;
   border: none;
   box-shadow: none;
@@ -63,7 +59,7 @@ const buttonStyle = (theme: ColorTheme) => css`
   svg {
     width: 1.125rem;
     height: 1.125rem;
-    fill: ${themeColor.fill[theme]};
+    fill: ${themeColor.fill['light']};
   }
 `;
 
