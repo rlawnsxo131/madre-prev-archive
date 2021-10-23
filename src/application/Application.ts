@@ -1,7 +1,7 @@
 import Fastify from './Fastify';
 import Apollo from './Apollo';
 
-class Application {
+export default class Application {
   private fastify: Fastify;
   private apollo: Apollo;
 
@@ -32,5 +32,3 @@ class Application {
     }
   }
 }
-
-export default Application;
