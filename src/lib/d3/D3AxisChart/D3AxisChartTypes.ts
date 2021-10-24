@@ -1,15 +1,22 @@
 import {
   AppendSvgParams,
   D3Data,
-  D3DoubleNumberArray,
   D3TickFormat,
 } from '../D3Common/D3CommonTypes';
+
+export type D3Margin = {
+  left: number;
+  right: number;
+  top: number;
+  bottom: number;
+};
 
 export type D3AxisChartConstructorParams = {
   xDomain: number[];
   yDomain: number[];
-  xRange: D3DoubleNumberArray;
-  yRange: D3DoubleNumberArray;
+  width: number;
+  height: number;
+  margin: D3Margin;
 } & AppendSvgParams;
 
 export type D3AxisChartSetAxisParams = Partial<{
@@ -20,7 +27,6 @@ export type D3AxisChartSetAxisParams = Partial<{
   xClass: string;
   yClass: string;
   axisFontSize: number;
-  axisMaxUnitExpressionLength: number;
   xTickFormat: D3TickFormat;
   yTickFormat: D3TickFormat;
 }>;
@@ -32,6 +38,8 @@ export type D3AxisChartSetAxisBackgroundGridParams = {
   };
   xClass?: string;
   yClass?: string;
+  xTicks?: number;
+  yTicks?: number;
   xTickFormat?: D3TickFormat;
   yTickFormat?: D3TickFormat;
 };
@@ -44,4 +52,13 @@ export type D3AxisChartDrawLineParams = {
   strokeWidth?: number;
   lineType?: D3AxisChartLineType;
   animate?: boolean;
+  duration?: number;
+};
+
+export type D3AxisChartDrawAreaParams = {
+  data: D3Data;
+  color?: string;
+  opacity?: number;
+  animate?: boolean;
+  duration?: number;
 };

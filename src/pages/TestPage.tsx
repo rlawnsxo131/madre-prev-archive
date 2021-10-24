@@ -20,16 +20,15 @@ function TestPage(props: TestPageProps) {
   const width = 460;
   const height = 400;
   const margin = {
-    left: 20,
-    right: 20,
-    bottom: 20,
-    top: 20,
+    left: 30,
+    right: 30,
+    top: 30,
+    bottom: 30,
   };
   const fontSize = 10;
-  const axisMaxUnitExpressionLength = fontSize * 3;
   const xTicks = 2;
-  const yTicks = 10;
-  const tickSize = 6;
+  const yTicks = 5;
+  const tickSize = 0;
   const xDomain = [0, 100];
   const yDomain = [0, 100];
   const strokeWidth = 2;
@@ -43,10 +42,7 @@ function TestPage(props: TestPageProps) {
       className: 'axis-chart',
       xDomain,
       yDomain,
-      // xRange: [0, width - (axisMaxUnitExpressionLength + xTicks + tickSize)],
-      // yRange: [height - (axisMaxUnitExpressionLength + yTicks + tickSize), 0],
-      xRange: [0, width - (margin.left + margin.right)],
-      yRange: [height - (margin.top + margin.bottom), 0],
+      margin,
     });
 
     chart.setAxis({
@@ -57,13 +53,16 @@ function TestPage(props: TestPageProps) {
       xClass: 'x-axis',
       yClass: 'y-axis',
       axisFontSize: fontSize,
-      axisMaxUnitExpressionLength,
     });
 
-    // chart.setAxisBackgroundGrid({
-    //   xClass: 'grid',
-    //   yClass: 'grid',
-    // });
+    chart.setAxisBackgroundGrid({
+      direction: {
+        x: true,
+        y: true,
+      },
+      xClass: 'grid',
+      yClass: 'grid',
+    });
 
     chart.drawAxis();
     chart.drawGrid();
@@ -76,6 +75,11 @@ function TestPage(props: TestPageProps) {
         color: colors[i],
         strokeWidth,
         lineType: 'CURVE',
+        animate: true,
+      });
+      chart.drawArea({
+        data: v,
+        color: colors[i],
         animate: true,
       });
     });

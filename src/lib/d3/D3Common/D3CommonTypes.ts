@@ -11,7 +11,7 @@ export type D3Selection = Selection<
   undefined
 > | null;
 export type D3Axis = Axis<NumberValue> | null;
-export type D3Path = Selection<SVGPathElement, unknown, null, undefined>;
+export type D3Path = Selection<SVGPathElement, unknown, null, undefined> | null;
 export type D3Line = Line<[number, number]> | null;
 export type D3ExtentResult = [number, number] | [undefined, undefined];
 export type D3TickFormat = (domainValue: NumberValue, index: number) => string;
