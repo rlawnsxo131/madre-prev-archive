@@ -46,6 +46,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/react", "npm:17.0.31"],
             ["@types/react-dom", "npm:17.0.10"],
             ["@types/react-router-dom", "npm:5.3.1"],
+            ["@types/uuid", "npm:8.3.1"],
             ["axios", "npm:0.23.0"],
             ["babel-loader", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:8.2.3"],
             ["clean-webpack-plugin", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:4.0.0"],
@@ -66,6 +67,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["ts-loader", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:9.2.6"],
             ["typescript", "patch:typescript@npm%3A4.4.4#~builtin<compat/typescript>::version=4.4.4&hash=32657b"],
             ["url-loader", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:4.1.1"],
+            ["uuid", "npm:8.3.2"],
             ["webpack", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:5.59.1"],
             ["webpack-cli", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:4.9.1"],
             ["webpack-dev-server", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:4.3.1"],
@@ -3364,6 +3366,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-scheduler-npm-0.16.1-9a58541608-2ff8034df0.zip/node_modules/@types/scheduler/",
           "packageDependencies": [
             ["@types/scheduler", "npm:0.16.1"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["@types/uuid", [
+        ["npm:8.3.1", {
+          "packageLocation": "./.yarn/cache/@types-uuid-npm-8.3.1-4239b14bac-b41bdc5e86.zip/node_modules/@types/uuid/",
+          "packageDependencies": [
+            ["@types/uuid", "npm:8.3.1"]
           ],
           "linkType": "HARD",
         }]
@@ -7286,6 +7297,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/react", "npm:17.0.31"],
             ["@types/react-dom", "npm:17.0.10"],
             ["@types/react-router-dom", "npm:5.3.1"],
+            ["@types/uuid", "npm:8.3.1"],
             ["axios", "npm:0.23.0"],
             ["babel-loader", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:8.2.3"],
             ["clean-webpack-plugin", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:4.0.0"],
@@ -7306,6 +7318,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["ts-loader", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:9.2.6"],
             ["typescript", "patch:typescript@npm%3A4.4.4#~builtin<compat/typescript>::version=4.4.4&hash=32657b"],
             ["url-loader", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:4.1.1"],
+            ["uuid", "npm:8.3.2"],
             ["webpack", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:5.59.1"],
             ["webpack-cli", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:4.9.1"],
             ["webpack-dev-server", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:4.3.1"],
@@ -10510,6 +10523,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/uuid-npm-3.4.0-4fd8ef88ad-58de2feed6.zip/node_modules/uuid/",
           "packageDependencies": [
             ["uuid", "npm:3.4.0"]
+          ],
+          "linkType": "HARD",
+        }],
+        ["npm:8.3.2", {
+          "packageLocation": "./.yarn/cache/uuid-npm-8.3.2-eca0baba53-5575a8a75c.zip/node_modules/uuid/",
+          "packageDependencies": [
+            ["uuid", "npm:8.3.2"]
           ],
           "linkType": "HARD",
         }]

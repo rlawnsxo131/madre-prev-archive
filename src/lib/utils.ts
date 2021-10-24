@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 export function getRandomColors(maxLength: number) {
   const result: string[] = [];
   const colors = [
@@ -92,4 +94,8 @@ export function getPrefersColorScheme() {
     return acc;
   }, '');
   return colorScheme || 'light';
+}
+
+export function generateUUID() {
+  return uuidv4();
 }

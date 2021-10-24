@@ -10,7 +10,6 @@ import {
   line,
   scaleLinear,
   select,
-  selectAll,
 } from 'd3';
 import D3Common from '../D3Common';
 import {
@@ -266,7 +265,7 @@ export default class D3AxisChart extends D3Common {
       .attr(
         'transform',
         `translate(
-          ${this.margin.left + this.strokeWidth},
+          ${this.margin.left + this.strokeWidth / 2},
           ${this.margin.top}
         )
         `,
@@ -338,7 +337,7 @@ export default class D3AxisChart extends D3Common {
       .attr(
         'transform',
         `translate(
-          ${this.margin.left + this.strokeWidth},
+          ${this.margin.left + this.strokeWidth / 2},
           ${this.margin.top}
         )
         `,
@@ -349,7 +348,7 @@ export default class D3AxisChart extends D3Common {
         const colorKey = targetClass.split('-')[1];
 
         select(`.${this.lineKey}${colorKey}`)
-          .style('stroke-width', this.strokeWidth * 2.5)
+          .style('stroke-width', this.strokeWidth * 2)
           .style('cursor', 'pointer');
 
         select(`.${this.areaKey}${colorKey}`)

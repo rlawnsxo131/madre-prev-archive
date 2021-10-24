@@ -2,7 +2,11 @@ import { css } from '@emotion/react';
 import { useEffect, useRef } from 'react';
 import { D3AxisChart } from '../lib/d3';
 import { D3Data } from '../lib/d3/D3Common/D3CommonTypes';
-import { getRandomColors, getRandomIntInclusive } from '../lib/utils';
+import {
+  generateUUID,
+  getRandomColors,
+  getRandomIntInclusive,
+} from '../lib/utils';
 import palette from '../styles/palette';
 
 interface TestPageProps {}
@@ -70,6 +74,8 @@ function TestPage(props: TestPageProps) {
     const colors = getRandomColors(dataList.length);
 
     dataList.forEach((v, i) => {
+      const id = generateUUID();
+      console.log(id);
       chart.drawLine({
         data: v,
         color: colors[i],
