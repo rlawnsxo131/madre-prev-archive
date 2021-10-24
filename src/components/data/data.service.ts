@@ -4,6 +4,6 @@ import { DataRepository } from '.';
 export default {
   findById(id: number) {
     const dataRepo = getCustomRepository(DataRepository);
-    return dataRepo.findOne(id);
+    return dataRepo.findOne({ id });
   },
 };
