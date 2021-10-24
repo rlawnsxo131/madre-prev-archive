@@ -10,6 +10,7 @@ import {
   line,
   scaleLinear,
   select,
+  selectAll,
 } from 'd3';
 import D3Common from '../D3Common';
 import {
@@ -106,6 +107,10 @@ export default class D3AxisChart extends D3Common {
   private yScale() {
     return scaleLinear().domain(this.yDomain).range(this.yRange).nice();
   }
+
+  private onMouseOverAction(targetClass?: string) {}
+
+  private onMouseOutAction(targetClass?: string) {}
 
   setAxis({
     xTicks = 0,
@@ -266,16 +271,30 @@ export default class D3AxisChart extends D3Common {
         )
         `,
       )
-      .attr('class', `${this.lineKey}${color}`)
-      .on('mouseover', function (d) {
-        select(this)
-          .style('stroke-width', strokeWidth * 2.5)
+      .attr('class', `${this.lineKey}${this.replaceColorHex(color)}`)
+      .on('mouseover', (d) => {
+        const targetClass = d.target.classList[0];
+        const colorKey = targetClass.split('-')[1];
+
+        select(`.${this.lineKey}${colorKey}`)
+          .style('stroke-width', this.strokeWidth * 2.5)
+          .style('cursor', 'pointer');
+
+        select(`.${this.areaKey}${colorKey}`)
+          .style('fill-opacity', 0.7)
           .style('cursor', 'pointer');
       })
-      .on('mouseout', function (d) {
-        select(this)
-          .style('stroke-width', strokeWidth)
+      .on('mouseout', (d) => {
+        const targetClass = d.target.classList[0];
+        const colorKey = targetClass.split('-')[1];
+
+        select(`.${this.lineKey}${colorKey}`)
+          .style('stroke-width', this.strokeWidth)
           .style('cursor', 'default');
+
+        select(`.${this.areaKey}${colorKey}`)
+          .style('fill-opacity', 0)
+          .style('cursor', 'pointer');
       });
 
     const pathLength = path.node()?.getTotalLength();
@@ -312,7 +331,6 @@ export default class D3AxisChart extends D3Common {
 
     const path = this.svg
       .append('path')
-      .datum(data)
       .attr('fill', color)
       .attr('fill-opacity', opacity)
       .attr('stroke', 'none')
@@ -325,12 +343,30 @@ export default class D3AxisChart extends D3Common {
         )
         `,
       )
-      .attr('class', `${this.areaKey}${color}`)
-      .on('mouseover', function (d) {
-        select(this).style('fill-opacity', 0.7).style('cursor', 'pointer');
+      .attr('class', `${this.areaKey}${this.replaceColorHex(color)}`)
+      .on('mouseover', (d) => {
+        const targetClass = d.target.classList[0];
+        const colorKey = targetClass.split('-')[1];
+
+        select(`.${this.lineKey}${colorKey}`)
+          .style('stroke-width', this.strokeWidth * 2.5)
+          .style('cursor', 'pointer');
+
+        select(`.${this.areaKey}${colorKey}`)
+          .style('fill-opacity', 0.7)
+          .style('cursor', 'pointer');
       })
-      .on('mouseout', function (d) {
-        select(this).style('fill-opacity', opacity).style('cursor', 'default');
+      .on('mouseout', (d) => {
+        const targetClass = d.target.classList[0];
+        const colorKey = targetClass.split('-')[1];
+
+        select(`.${this.lineKey}${colorKey}`)
+          .style('stroke-width', this.strokeWidth)
+          .style('cursor', 'default');
+
+        select(`.${this.areaKey}${colorKey}`)
+          .style('fill-opacity', 0)
+          .style('cursor', 'pointer');
       });
 
     const pathLength = path.node()?.getTotalLength();

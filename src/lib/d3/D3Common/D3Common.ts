@@ -34,4 +34,8 @@ export default class D3Common {
   protected getRandomUniform(min: number, max: number) {
     return randomUniform(min, max)();
   }
+
+  protected replaceColorHex(hex: string) {
+    return hex.replace('#', '');
+  }
 }
