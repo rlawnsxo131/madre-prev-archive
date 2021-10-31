@@ -12,8 +12,9 @@ function HomeSectionThinkAbout(props: HomeSectionThinkAboutProps) {
           <h3>Think About</h3>
           <h2>우린 지금, 얼마나 많은 데이터와 함께할까요?</h2>
           <p>
-            그리고 우리에게 어떤 의미가 될 수 있을까요.{`\n`}
-            어쩌면 우리가 생각하는 그 이상으로 많은 곳에 함께 있을 거예요.
+            그리고 어떤 의미가 될 수 있을까요.{`\n`}
+            어쩌면 우리가 생각하는 그 이상으로 많은 곳에서 함께 하고 있었을
+            거예요.
           </p>
         </div>
       </div>

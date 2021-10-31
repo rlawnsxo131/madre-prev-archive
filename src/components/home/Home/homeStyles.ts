@@ -35,10 +35,15 @@ export const homeBlock = css`
       flex-direction: row-reverse;
     }
     justify-content: space-around;
-    gap: 1.5rem;
+    gap: 2rem;
   }
 `;
 
 export const homeBlockItemCommon = css`
-  padding: 4rem 0 3rem 0;
+  ${media.xxxsmall} {
+    padding: 3rem 0 0 0;
+  }
+  ${media.medium} {
+    padding: 3rem 0;
+  }
 `;
