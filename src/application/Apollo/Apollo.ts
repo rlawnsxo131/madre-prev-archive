@@ -9,7 +9,7 @@ import schema from './apollo.schema';
 import { isProduction } from '../../constants';
 
 export default class Apollo {
-  private app: ApolloServer;
+  private readonly app: ApolloServer;
 
   constructor(fastify: FastifyInstance) {
     this.app = new ApolloServer({

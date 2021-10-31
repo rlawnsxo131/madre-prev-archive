@@ -1,9 +1,15 @@
 import { getCustomRepository } from 'typeorm';
-import { UserRepository } from '.';
+import { userError, UserRepository } from '.';
+
+async function getUserById(id: number) {
+  const userRepo = getCustomRepository(UserRepository);
+  const user = await userRepo.findOne({ id });
+  if (!user) {
+    throw userError.notFoundUser;
+  }
+  return user;
+}
 
 export default {
-  findById(id: number) {
-    const userRepo = getCustomRepository(UserRepository);
-    return userRepo.findOne({ id });
-  },
+  getUserById,
 };

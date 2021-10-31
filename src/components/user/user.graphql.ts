@@ -17,7 +17,7 @@ const resolvers: IResolvers = {
   Query: {
     async user(_, args) {
       const { id } = args;
-      const user = await userService.findById(id);
+      const user = await userService.getUserById(id);
       return user;
     },
   },

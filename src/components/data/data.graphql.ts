@@ -16,7 +16,7 @@ const resolvers: IResolvers = {
   Query: {
     async data(_, args) {
       const { id } = args;
-      const data = await dataService.findById(id);
+      const data = await dataService.getDataById(id);
       return data;
     },
   },

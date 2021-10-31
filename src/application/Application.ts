@@ -2,8 +2,8 @@ import Fastify from './Fastify';
 import Apollo from './Apollo';
 
 export default class Application {
-  private fastify: Fastify;
-  private apollo: Apollo;
+  private readonly fastify: Fastify;
+  private readonly apollo: Apollo;
 
   constructor() {
     this.fastify = new Fastify();

@@ -6,7 +6,7 @@ import jwtPlugin from '../../plugins/jwtPlugin';
 import routes from './fastify.routes';
 
 export default class Fastify {
-  private app: FastifyInstance;
+  private readonly app: FastifyInstance;
 
   constructor() {
     this.app = fastify({
