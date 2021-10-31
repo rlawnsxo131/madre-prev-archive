@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import media from '../../../styles/media';
 import palette from '../../../styles/palette';
 
-export const homeBlock = css`
+const block = css`
   display: flex;
   h1,
   h2,
@@ -39,7 +39,7 @@ export const homeBlock = css`
   }
 `;
 
-export const homeBlockItemCommon = css`
+const itemCommon = css`
   ${media.xxxsmall} {
     padding: 3rem 0 0 0;
   }
@@ -47,3 +47,8 @@ export const homeBlockItemCommon = css`
     padding: 3rem 0;
   }
 `;
+
+export default {
+  block,
+  itemCommon,
+};

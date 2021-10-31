@@ -62,10 +62,12 @@ function TestPage(props: TestPageProps) {
     chart.setAxisBackgroundGrid({
       direction: {
         x: true,
-        y: true,
+        y: false,
       },
       xClass: 'grid',
       yClass: 'grid',
+      xTicks: 5,
+      // yTicks: 5,
     });
 
     chart.drawAxis();
