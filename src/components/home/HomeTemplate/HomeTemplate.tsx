@@ -38,7 +38,7 @@ const main = css`
     width: calc(100% - 4vw);
   }
   ${mediaQuery(1300)} {
-    width: 1260px;
+    width: 1250px;
   }
 `;
 

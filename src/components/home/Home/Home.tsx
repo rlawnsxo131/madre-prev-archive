@@ -1,5 +1,4 @@
 import { css } from '@emotion/react';
-import HomeSectionGraph from './HomeSectionGraph';
 import HomeSectionThinkAbout from './HomeSectionThinkAbout';
 
 interface HomeProps {}
@@ -8,7 +7,7 @@ function Home(props: HomeProps) {
   return (
     <div css={block}>
       <HomeSectionThinkAbout />
-      <HomeSectionGraph />
+      <HomeSectionThinkAbout />
     </div>
   );
 }

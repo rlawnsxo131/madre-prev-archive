@@ -1,45 +1,44 @@
 import { css } from '@emotion/react';
 import media from '../../../styles/media';
+import palette from '../../../styles/palette';
 
 export const homeBlock = css`
   display: flex;
-  gap: 1.5rem;
+  h1,
+  h2,
+  h3,
+  h4,
+  p {
+    margin: 0;
+    padding: 0;
+    white-space: pre-line;
+    line-height: 1.5;
+  }
+  p {
+    font-size: 1.125rem;
+    color: ${palette.gray['700']};
+    font-weight: 600;
+    line-height: 2;
+  }
   & + & {
     margin-top: 2rem;
   }
   ${media.xxxsmall} {
+    gap: 0;
     flex-direction: column;
   }
   ${media.medium} {
-    flex-flow: row;
+    &:nth-of-type(odd) {
+      flex-direction: row;
+    }
+    &:nth-of-type(even) {
+      flex-direction: row-reverse;
+    }
     justify-content: space-around;
+    gap: 1.5rem;
   }
 `;
 
 export const homeBlockItemCommon = css`
   padding: 4rem 0 3rem 0;
-`;
-
-export const homeH3 = css`
-  margin: 0;
-  padding: 0;
-  font-size: 1.75rem;
-  font-weight: 550;
-  line-height: 2;
-  white-space: pre-line;
-`;
-
-export const homeH5 = css`
-  margin: 0;
-  padding: 0;
-  font-size: 1rem;
-`;
-
-export const homeP = css`
-  margin: 0;
-  padding: 0;
-  font-size: 1.125rem;
-  font-weight: 500;
-  line-height: 2;
-  white-space: pre-line;
 `;

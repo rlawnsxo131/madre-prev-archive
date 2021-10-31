@@ -1,12 +1,6 @@
 import { css } from '@emotion/react';
-import InsertImage from '../../../image/images/InsertImage';
-import {
-  homeBlock,
-  homeBlockItemCommon,
-  homeH3,
-  homeH5,
-  homeP,
-} from './homeStyles';
+import RealTimeAsyncImage from '../../../image/images/RealTimeAsyncImage';
+import { homeBlock, homeBlockItemCommon } from './homeStyles';
 
 interface HomeSectionThinkAboutProps {}
 
@@ -15,13 +9,16 @@ function HomeSectionThinkAbout(props: HomeSectionThinkAboutProps) {
     <section css={homeBlock}>
       <div css={descriptionBlock}>
         <div css={description}>
-          <h5 css={homeH5}>Think About</h5>
-          <h3 css={homeH3}>우린 지금, 얼마나{'\n'}많은 데이터와 함께할까요?</h3>
-          <p css={homeP}>그리고 우리에게 어떤 의미가 될 수 있을까요.</p>
+          <h3>Think About</h3>
+          <h2>우린 지금, 얼마나 많은 데이터와 함께할까요?</h2>
+          <p>
+            그리고 우리에게 어떤 의미가 될 수 있을까요.{`\n`}
+            어쩌면 우리가 생각하는 그 이상으로 많은 곳에 함께 있을 거예요.
+          </p>
         </div>
       </div>
       <div css={imageBlock}>
-        <InsertImage />
+        <RealTimeAsyncImage />
       </div>
     </section>
   );
@@ -44,7 +41,7 @@ const description = css`
 
 const imageBlock = css`
   ${homeBlockItemCommon};
-  flex: 1;
+  flex: 1.25;
   display: flex;
   gap: 1.25rem;
   svg {

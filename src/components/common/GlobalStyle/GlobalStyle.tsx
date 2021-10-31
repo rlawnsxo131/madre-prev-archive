@@ -1,5 +1,6 @@
 import { css, Global } from '@emotion/react';
 import { ColorTheme, useColorThemeValue } from '../../../atoms/colorThemeState';
+import media from '../../../styles/media';
 import themeColor from '../../../styles/themeColor';
 
 interface GlobalStyleProps {}
@@ -46,8 +47,6 @@ const globalStyle = (theme: ColorTheme) => css`
   p,
   span,
   a {
-    margin: 0;
-    padding: 0;
     color: ${themeColor.font[theme]};
   }
   a {
