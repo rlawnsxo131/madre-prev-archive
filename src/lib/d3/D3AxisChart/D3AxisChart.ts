@@ -46,11 +46,7 @@ export default class D3AxisChart extends D3Common {
    * axisX: axis draw function
    * axisY: axis draw function
    */
-  private axisFontSize = 10;
-  private axisXTicks = 0;
-  private axisXTickSize = 0;
-  private axisYTicks = 0;
-  private axisYTickSize = 0;
+  private axisFontSize: number = 10;
   private axisXSvg: D3Selection = null;
   private axisYSvg: D3Selection = null;
   private axisX: D3Axis = null;
@@ -63,14 +59,13 @@ export default class D3AxisChart extends D3Common {
   private axisGridYSvg: D3Selection = null;
   private axisGridX: D3Axis = null;
   private axisGridY: D3Axis = null;
-  private axisGridXTicks: number = 5;
-  private axisGridYTicks: number = 5;
 
   /**
    * @AxisLine @AxisArea
    */
-  private lineKey = 'line-';
-  private areaKey = 'area-';
+  private readonly lineKey = 'line-';
+  private readonly areaKey = 'area-';
+  private readonly lineAndAreaKeyRegex = /(line-|area-)/gi;
   private strokeWidth: number = 2;
   private lineType: D3AxisChartLineType = 'STRAIGHT';
 
@@ -107,9 +102,29 @@ export default class D3AxisChart extends D3Common {
     return scaleLinear().domain(this.yDomain).range(this.yRange).nice();
   }
 
-  private onMouseOverAction(targetClass?: string) {}
+  private removeLineOrAreaKey(target: string) {
+    return target.replace(this.lineAndAreaKeyRegex, '');
+  }
 
-  private onMouseOutAction(targetClass?: string) {}
+  private onMouseOverAction(targetClass: string) {
+    select(`.${this.lineKey}${targetClass}`)
+      .style('stroke-width', this.strokeWidth * 2)
+      .style('cursor', 'pointer');
+
+    select(`.${this.areaKey}${targetClass}`)
+      .style('fill-opacity', 0.7)
+      .style('cursor', 'pointer');
+  }
+
+  private onMouseOutAction(targetClass: string) {
+    select(`.${this.lineKey}${targetClass}`)
+      .style('stroke-width', this.strokeWidth)
+      .style('cursor', 'default');
+
+    select(`.${this.areaKey}${targetClass}`)
+      .style('fill-opacity', 0)
+      .style('cursor', 'pointer');
+  }
 
   setAxis({
     xTicks = 0,
@@ -123,10 +138,6 @@ export default class D3AxisChart extends D3Common {
     yTickFormat = (d, i) => `${d}`,
   }: D3AxisChartSetAxisParams) {
     this.axisFontSize = axisFontSize;
-    this.axisXTicks = xTicks;
-    this.axisXTickSize = xTickSize;
-    this.axisYTicks = yTicks;
-    this.axisYTickSize = yTickSize;
 
     this.axisXSvg = this.svg
       .append('g')
@@ -153,13 +164,13 @@ export default class D3AxisChart extends D3Common {
       .style('font-size', this.axisFontSize);
 
     this.axisX = axisBottom(this.xScale())
-      .tickSize(this.axisXTickSize)
-      .ticks(this.axisXTicks)
+      .tickSize(xTickSize)
+      .ticks(xTicks)
       .tickFormat(xTickFormat);
 
     this.axisY = axisLeft(this.yScale())
-      .tickSize(this.axisYTickSize)
-      .ticks(this.axisYTicks)
+      .tickSize(yTickSize)
+      .ticks(yTicks)
       .tickFormat(yTickFormat);
   }
 
@@ -172,9 +183,6 @@ export default class D3AxisChart extends D3Common {
     xTickFormat = () => '',
     yTickFormat = () => '',
   }: D3AxisChartSetAxisBackgroundGridParams) {
-    this.axisGridXTicks = xTicks;
-    this.axisGridYTicks = yTicks;
-
     if (direction.x) {
       this.axisGridXSvg = this.svg
         .append('g')
@@ -185,12 +193,11 @@ export default class D3AxisChart extends D3Common {
             ${this.margin.left},
             ${this.margin.top}
           )`,
-        )
-        .style('font-size', this.axisFontSize);
+        );
 
       this.axisGridX = axisRight(this.yScale())
         .tickSize(this.width)
-        .ticks(this.axisGridXTicks)
+        .ticks(xTicks)
         .tickFormat(xTickFormat);
     }
 
@@ -203,13 +210,12 @@ export default class D3AxisChart extends D3Common {
           `translate(
             ${this.margin.left},
             ${this.height - this.margin.top}
-        )`,
-        )
-        .style('fornt-size', this.axisFontSize);
+          )`,
+        );
 
       this.axisGridY = axisTop(this.xScale())
         .tickSize(this.height)
-        .ticks(this.axisGridYTicks)
+        .ticks(yTicks)
         .tickFormat(yTickFormat);
     }
   }
@@ -241,6 +247,7 @@ export default class D3AxisChart extends D3Common {
     lineType = 'STRAIGHT',
     animate = false,
     duration = 1500,
+    uuid = '',
   }: D3AxisChartDrawLineParams) {
     this.strokeWidth = strokeWidth;
     this.lineType = lineType;
@@ -270,30 +277,14 @@ export default class D3AxisChart extends D3Common {
         )
         `,
       )
-      .attr('class', `${this.lineKey}${this.replaceColorHex(color)}`)
+      .attr('class', `${this.lineKey}${uuid}`)
       .on('mouseover', (d) => {
-        const targetClass = d.target.classList[0];
-        const colorKey = targetClass.split('-')[1];
-
-        select(`.${this.lineKey}${colorKey}`)
-          .style('stroke-width', this.strokeWidth * 2.5)
-          .style('cursor', 'pointer');
-
-        select(`.${this.areaKey}${colorKey}`)
-          .style('fill-opacity', 0.7)
-          .style('cursor', 'pointer');
+        const targetClass = this.removeLineOrAreaKey(d.target.classList[0]);
+        this.onMouseOverAction(targetClass);
       })
       .on('mouseout', (d) => {
-        const targetClass = d.target.classList[0];
-        const colorKey = targetClass.split('-')[1];
-
-        select(`.${this.lineKey}${colorKey}`)
-          .style('stroke-width', this.strokeWidth)
-          .style('cursor', 'default');
-
-        select(`.${this.areaKey}${colorKey}`)
-          .style('fill-opacity', 0)
-          .style('cursor', 'pointer');
+        const targetClass = this.removeLineOrAreaKey(d.target.classList[0]);
+        this.onMouseOutAction(targetClass);
       });
 
     const pathLength = path.node()?.getTotalLength();
@@ -315,6 +306,7 @@ export default class D3AxisChart extends D3Common {
     opacity = 0,
     animate = false,
     duration = 1500,
+    uuid = '',
   }: D3AxisChartDrawAreaParams) {
     const xScale = this.xScale();
     const yScale = this.yScale();
@@ -342,30 +334,14 @@ export default class D3AxisChart extends D3Common {
         )
         `,
       )
-      .attr('class', `${this.areaKey}${this.replaceColorHex(color)}`)
+      .attr('class', `${this.areaKey}${uuid}`)
       .on('mouseover', (d) => {
-        const targetClass = d.target.classList[0];
-        const colorKey = targetClass.split('-')[1];
-
-        select(`.${this.lineKey}${colorKey}`)
-          .style('stroke-width', this.strokeWidth * 2)
-          .style('cursor', 'pointer');
-
-        select(`.${this.areaKey}${colorKey}`)
-          .style('fill-opacity', 0.7)
-          .style('cursor', 'pointer');
+        const targetClass = this.removeLineOrAreaKey(d.target.classList[0]);
+        this.onMouseOverAction(targetClass);
       })
       .on('mouseout', (d) => {
-        const targetClass = d.target.classList[0];
-        const colorKey = targetClass.split('-')[1];
-
-        select(`.${this.lineKey}${colorKey}`)
-          .style('stroke-width', this.strokeWidth)
-          .style('cursor', 'default');
-
-        select(`.${this.areaKey}${colorKey}`)
-          .style('fill-opacity', 0)
-          .style('cursor', 'pointer');
+        const targetClass = this.removeLineOrAreaKey(d.target.classList[0]);
+        this.onMouseOutAction(targetClass);
       });
 
     const pathLength = path.node()?.getTotalLength();

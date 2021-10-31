@@ -44,21 +44,24 @@ export type D3AxisChartSetAxisBackgroundGridParams = {
   yTickFormat?: D3TickFormat;
 };
 
-export type D3AxisChartLineType = 'STRAIGHT' | 'CURVE';
+/**
+ * Draw Line And Area
+ */
 
-export type D3AxisChartDrawLineParams = {
+export type D3AxisDrawLineAndAreaParams = {
   data: D3Data;
   color?: string;
+  animate?: boolean;
+  duration?: number;
+  uuid?: string;
+};
+
+export type D3AxisChartLineType = 'STRAIGHT' | 'CURVE';
+export type D3AxisChartDrawLineParams = {
   strokeWidth?: number;
   lineType?: D3AxisChartLineType;
-  animate?: boolean;
-  duration?: number;
-};
+} & D3AxisDrawLineAndAreaParams;
 
 export type D3AxisChartDrawAreaParams = {
-  data: D3Data;
-  color?: string;
   opacity?: number;
-  animate?: boolean;
-  duration?: number;
-};
+} & D3AxisDrawLineAndAreaParams;

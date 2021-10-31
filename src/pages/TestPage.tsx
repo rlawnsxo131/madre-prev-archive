@@ -74,19 +74,20 @@ function TestPage(props: TestPageProps) {
     const colors = getRandomColors(dataList.length);
 
     dataList.forEach((v, i) => {
-      const id = generateUUID();
-      console.log(id);
+      const uuid = generateUUID();
       chart.drawLine({
         data: v,
         color: colors[i],
         strokeWidth,
         lineType: 'CURVE',
         animate: true,
+        uuid,
       });
       chart.drawArea({
         data: v,
         color: colors[i],
         animate: true,
+        uuid,
       });
     });
   }, [ref.current]);
