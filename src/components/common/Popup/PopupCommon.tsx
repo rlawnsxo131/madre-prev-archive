@@ -3,7 +3,7 @@ import {
   usePopupCommonActions,
   usePopupCommonValue,
 } from '../../../atoms/popupCommonState';
-import media, { mediaQuery } from '../../../styles/media';
+import { media, mediaQuery } from '../../../styles';
 import Button from '../Button';
 import PopupBase from '../PopupBase';
 

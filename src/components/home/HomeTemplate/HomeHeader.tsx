@@ -1,8 +1,8 @@
 import { css } from '@emotion/react';
-import media, { mediaQuery } from '../../../styles/media';
 import zIndexes from '../../../styles/zIndexes';
 import HomeHeaderLogo from './HomeHeaderLogo';
 import HomeHeaderItems from './HomeHeaderItems';
+import { media, mediaQuery } from '../../../styles';
 
 interface HomeHeaderProps {}
 

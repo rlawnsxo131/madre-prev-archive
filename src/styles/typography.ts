@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import media from './media';
+import { media } from '.';
 
 export default css`
   h1,

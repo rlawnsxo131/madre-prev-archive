@@ -1,6 +1,5 @@
 import { css } from '@emotion/react';
-import transitions from '../../../styles/transitions';
-import zIndexes from '../../../styles/zIndexes';
+import { transitions, zIndexes } from '../../../styles';
 
 interface OpaqueLayerProps {
   children: React.ReactNode;

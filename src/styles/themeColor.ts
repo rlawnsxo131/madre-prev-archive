@@ -1,5 +1,4 @@
-import darkmodeColor from './darkmodeColor';
-import palette from './palette';
+import { darkmodeColor, palette } from '.';
 
 const themeColor = {
   body: {

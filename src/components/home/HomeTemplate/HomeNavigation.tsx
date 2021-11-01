@@ -2,9 +2,7 @@ import { css } from '@emotion/react';
 import { memo } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useTransitionTimeoutEffect } from '../../../lib/hooks';
-import themeColor from '../../../styles/themeColor';
-import transitions from '../../../styles/transitions';
-import zIndexes from '../../../styles/zIndexes';
+import { themeColor, transitions, zIndexes } from '../../../styles';
 
 interface HomeNavigationProps {
   visible: boolean;

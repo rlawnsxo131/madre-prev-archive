@@ -1,6 +1,5 @@
 import { css } from '@emotion/react';
-import media from '../../../styles/media';
-import palette from '../../../styles/palette';
+import { media, palette } from '../../../styles';
 
 const block = css`
   display: flex;

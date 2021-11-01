@@ -3,8 +3,7 @@ import Button from '../../common/Button';
 import { GoogleIcon, MenuIcon } from '../../../image/icons';
 import HomeNavigation from './HomeNavigation';
 import { useHomeValue, useHomeActions } from '../../../atoms/homeState';
-import palette from '../../../styles/palette';
-import themeColor from '../../../styles/themeColor';
+import { palette, themeColor } from '../../../styles';
 
 interface HomeHeaderItemsProps {}
 

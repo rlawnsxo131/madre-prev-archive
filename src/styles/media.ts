@@ -1,6 +1,4 @@
-export const mediaQuery = (minWidth: number) => `
-  @media(min-width: ${minWidth}px)
-`;
+import { mediaQuery } from '.';
 
 const media = {
   xxxsmall: mediaQuery(0),

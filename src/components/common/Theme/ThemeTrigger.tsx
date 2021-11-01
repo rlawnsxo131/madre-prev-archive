@@ -5,7 +5,7 @@ import {
   useColorThemeActions,
 } from '../../../atoms/colorThemeState';
 import { LightIcon, NightIcon } from '../../../image/icons';
-import { themeColor } from '../../../styles/palette';
+import { themeColor } from '../../../styles';
 
 interface ThemTriggerProps {}
 

@@ -7,7 +7,7 @@ import {
   getRandomColors,
   getRandomIntInclusive,
 } from '../lib/utils';
-import palette from '../styles/palette';
+import { palette } from '../styles';
 
 interface TestPageProps {}
 

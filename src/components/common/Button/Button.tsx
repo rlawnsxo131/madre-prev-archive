@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import { memo } from 'react';
 import { ColorTheme, useColorThemeValue } from '../../../atoms/colorThemeState';
+import { palette } from '../../../styles';
 import {
   buttonColorMap,
   ButtonColorType,
@@ -9,7 +10,6 @@ import {
   ButtonSizeType,
   outlineButtonStyle,
 } from './buttonStyle';
-import palette from '../../../styles/palette';
 
 interface ButtonProps extends Omit<React.HTMLProps<HTMLButtonElement>, 'size'> {
   children: React.ReactNode;
