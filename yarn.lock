@@ -2,7 +2,7 @@
 # Manual changes might be lost - proceed with caution!
 
 __metadata:
-  version: 4
+  version: 5
   cacheKey: 8
 
 "@apollo/protobufjs@npm:1.2.2":
@@ -61,7 +61,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:7.15.5, @babel/core@npm:^7.1.0, @babel/core@npm:^7.7.2, @babel/core@npm:^7.7.5":
+"@babel/core@npm:^7.1.0, @babel/core@npm:^7.7.2, @babel/core@npm:^7.7.5":
   version: 7.15.5
   resolution: "@babel/core@npm:7.15.5"
   dependencies:
@@ -479,15 +479,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphql-tools/merge@npm:^8.2.0":
-  version: 8.2.0
-  resolution: "@graphql-tools/merge@npm:8.2.0"
+"@graphql-tools/merge@npm:^8.2.1":
+  version: 8.2.1
+  resolution: "@graphql-tools/merge@npm:8.2.1"
   dependencies:
-    "@graphql-tools/utils": ^8.4.0
+    "@graphql-tools/utils": ^8.5.1
     tslib: ~2.3.0
   peerDependencies:
     graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
-  checksum: 9ae3b35fd3d53fff3f649831be27fbc8c1c89ba3cdaf7d7bad5f7216b5ee8b358aabb0ac9404f5b2b02fe66f68c04ea9d7fd64422d52847dbc59e5fb102127c8
+  checksum: b2c126fc697ad1cf0fb2c09d3766d791ba6243a318edfa24932b558628244f822b9454bd47cd98f5a7eee90caca264573695c582e10730b7a67785fea21c346c
   languageName: node
   linkType: hard
 
@@ -519,17 +519,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphql-tools/schema@npm:^8.3.0":
-  version: 8.3.0
-  resolution: "@graphql-tools/schema@npm:8.3.0"
+"@graphql-tools/schema@npm:^8.3.1":
+  version: 8.3.1
+  resolution: "@graphql-tools/schema@npm:8.3.1"
   dependencies:
-    "@graphql-tools/merge": ^8.2.0
-    "@graphql-tools/utils": ^8.4.0
+    "@graphql-tools/merge": ^8.2.1
+    "@graphql-tools/utils": ^8.5.1
     tslib: ~2.3.0
     value-or-promise: 1.0.11
   peerDependencies:
     graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
-  checksum: 0a253276efd4d90f04558a9e43969d1fee63b9ce4af4a1201989889125e9254e5892569c7db8596547d9ebdb3fdff363de3dd0c99cd78e073288a2f166fd5d00
+  checksum: 5fd6dbd3f4e92fd1b9a627e04b339bf2a4564768299e45576f79df70e167c3ec6c822576c37b3ba6537e2dd561b3b445b322bc90b205389260b7084fe777f5d4
   languageName: node
   linkType: hard
 
@@ -544,14 +544,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphql-tools/utils@npm:^8.4.0, @graphql-tools/utils@npm:^8.5.0":
-  version: 8.5.0
-  resolution: "@graphql-tools/utils@npm:8.5.0"
+"@graphql-tools/utils@npm:^8.5.1":
+  version: 8.5.1
+  resolution: "@graphql-tools/utils@npm:8.5.1"
   dependencies:
     tslib: ~2.3.0
   peerDependencies:
     graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
-  checksum: f2ac1874bedf313f65335089e0369d13a8b60f52e1417ae4ea9b5e0777683800be7088f8256f5dc74b659600add563f02aa6dbd0153bfac2cbf301f5be4ac4e1
+  checksum: 518c0bcfc853a8f77e9f7f426f434cc2c1c9501ff66e5a1d2cc5d833a6b6ad75205bfb58da1c475936ab1aa0696d1ceaf362517d07246aaf8f5842126fe6285a
   languageName: node
   linkType: hard
 
@@ -1043,10 +1043,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^16.11.4":
-  version: 16.11.4
-  resolution: "@types/node@npm:16.11.4"
-  checksum: 96e08c0f8bb17601c18640a8eac61e2f236fe0c8a6b01a9221c10749157358fb29fdef4b5e264f72559e72f9830e6093f3ab5fef2df90afdad562ffa45ac534c
+"@types/node@npm:^16.11.6":
+  version: 16.11.6
+  resolution: "@types/node@npm:16.11.6"
+  checksum: 6e19634766ff589d3d2f361c2196b671f8f133cdadc5ad347a621c360d8994b6c4fbccfb2ad9c60c588c593831a96497c9c6b77d2b7e91be723384b94f6368e7
   languageName: node
   linkType: hard
 
@@ -2694,15 +2694,16 @@ __metadata:
   dependencies:
     node-gyp: latest
   checksum: 97ade64e75091afee5265e6956cb72ba34db7819b4c3e94c431d4be2b19b8bb7a2d4116da417950c3425f17c8fe693d25e20212cac583ac1521ad066b77ae31f
+  conditions: os=darwin
   languageName: node
   linkType: hard
 
 "fsevents@patch:fsevents@^2.3.2#~builtin<compat/fsevents>, fsevents@patch:fsevents@~2.3.2#~builtin<compat/fsevents>":
   version: 2.3.2
-  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=1cc4b2"
+  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=18f3a7"
   dependencies:
     node-gyp: latest
-  checksum: 78db9daf1f6526a49cefee3917cc988f62dc7f25b5dd80ad6de4ffc4af7f0cab7491ac737626ff53e482a111bc53aac9e411fe3602458eca36f6a003ecf69c16
+  conditions: os=darwin
   languageName: node
   linkType: hard
 
@@ -2826,10 +2827,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphql@npm:^15.6.1":
-  version: 15.6.1
-  resolution: "graphql@npm:15.6.1"
-  checksum: 4c6dcf385f7a87a5103fcb7640394244ae8d1d4ede521085192a1cf1e60115c4f6285d783961575d908709f7ee3e4cdd16b3f7c54eb37499c0420c6301e98968
+"graphql@npm:^16.0.1":
+  version: 16.0.1
+  resolution: "graphql@npm:16.0.1"
+  checksum: e2fbddc78ac93b84af5b1871cdced5ce796102373b91f888983e8bae26856788833aa641f5da15b9e4da05cef2edcc82b744a86a27e7e1ef6c9ce422571ab16c
   languageName: node
   linkType: hard
 
@@ -3558,7 +3559,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-resolve@npm:27.3.1, jest-resolve@npm:^27.3.1":
+"jest-resolve@npm:^27.3.1":
   version: 27.3.1
   resolution: "jest-resolve@npm:27.3.1"
   dependencies:
@@ -4004,11 +4005,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "madre-server@workspace:."
   dependencies:
-    "@graphql-tools/schema": ^8.3.0
-    "@graphql-tools/utils": ^8.5.0
+    "@graphql-tools/schema": ^8.3.1
+    "@graphql-tools/utils": ^8.5.1
     "@types/jest": ^27.0.2
     "@types/lodash.merge": ^4.6.6
-    "@types/node": ^16.11.4
+    "@types/node": ^16.11.6
     apollo-server-core: ^3.4.0
     apollo-server-fastify: ^3.4.0
     dotenv: ^10.0.0
@@ -4017,7 +4018,7 @@ __metadata:
     fastify-cookie: ^5.3.1
     fastify-cors: ^6.0.2
     fastify-plugin: ^3.0.0
-    graphql: ^15.6.1
+    graphql: ^16.0.1
     jest: ^27.3.1
     lodash.merge: ^4.6.2
     mysql2: ^2.3.2
@@ -4873,11 +4874,11 @@ __metadata:
 
 "resolve@patch:resolve@^1.0.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.20.0#~builtin<compat/resolve>":
   version: 1.20.0
-  resolution: "resolve@patch:resolve@npm%3A1.20.0#~builtin<compat/resolve>::version=1.20.0&hash=00b1ff"
+  resolution: "resolve@patch:resolve@npm%3A1.20.0#~builtin<compat/resolve>::version=1.20.0&hash=07638b"
   dependencies:
     is-core-module: ^2.2.0
     path-parse: ^1.0.6
-  checksum: bed00be983cd20a8af0e7840664f655c4b269786dbd9595c5f156cd9d8a0050e65cdbbbdafc30ee9b6245b230c78a2c8ab6447a52545b582f476c29adb188cc5
+  checksum: a0dd7d16a8e47af23afa9386df2dff10e3e0debb2c7299a42e581d9d9b04d7ad5d2c53f24f1e043f7b3c250cbdc71150063e53d0b6559683d37f790b7c8c3cd5
   languageName: node
   linkType: hard
 
@@ -5769,11 +5770,11 @@ typescript@^4.4.4:
 
 "typescript@patch:typescript@^4.4.4#~builtin<compat/typescript>":
   version: 4.4.4
-  resolution: "typescript@patch:typescript@npm%3A4.4.4#~builtin<compat/typescript>::version=4.4.4&hash=32657b"
+  resolution: "typescript@patch:typescript@npm%3A4.4.4#~builtin<compat/typescript>::version=4.4.4&hash=ddd1e8"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: c97c33903f1eb4f9e178649befdfc859d93157db1eccd1e521e84976ec6861db53412d8018e5e4c5d09268771c65498d42caa64bd881878346c3644f6b7cd202
+  checksum: bd629ad0da4a15d79aaad56baf3ee7d96f6a181760d430ae77f8c5325df7bffd9edee57544a3970e3651e8b796fe03a5838a7eb39c6d46cc3866c0b23d36a0dd
   languageName: node
   linkType: hard
 
