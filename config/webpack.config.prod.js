@@ -30,6 +30,7 @@ module.exports = {
     chunkFilename: 'static/js/[name].[contenthash:8].js',
   },
   target: 'web',
+  devtool: 'cheap-module-source-map',
   module: {
     rules: [
       {

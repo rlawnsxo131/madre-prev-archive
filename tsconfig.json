@@ -9,8 +9,11 @@
     "lib": [
       "DOM",
       "DOM.Iterable",
-      "ESNext"
+      "ES5",
+      "ES6",
+      "ESNext",
     ],
+    "allowSyntheticDefaultImports": true,
     "allowJs": true,
     "skipLibCheck": true,
     "moduleResolution": "node",
