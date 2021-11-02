@@ -47,7 +47,6 @@ export type D3AxisChartSetAxisBackgroundGridParams = {
 /**
  * Draw Line And Area
  */
-
 export type D3AxisDrawLineAndAreaParams = {
   data: D3Data;
   color?: string;

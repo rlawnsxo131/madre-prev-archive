@@ -15,11 +15,11 @@ export type D3Path = Selection<SVGPathElement, unknown, null, undefined> | null;
 export type D3Line = Line<[number, number]> | null;
 export type D3ExtentResult = [number, number] | [undefined, undefined];
 export type D3TickFormat = (domainValue: NumberValue, index: number) => string;
+export type D3Position = [number, number][] | Iterable<[number, number]>;
 
 /**
  * Types that do not depend on the types defined in d3
  */
-export type D3Position = [number, number][] | Iterable<[number, number]>;
 export type D3Data = {
   d3Position: D3Position;
   [key: string]: any;
