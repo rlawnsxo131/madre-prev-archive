@@ -11,7 +11,7 @@ import {
   outlineButtonStyle,
 } from './buttonStyle';
 
-interface ButtonProps extends Omit<React.HTMLProps<HTMLButtonElement>, 'size'> {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   color?: ButtonColorType;
   size?: ButtonSizeType;
@@ -19,6 +19,7 @@ interface ButtonProps extends Omit<React.HTMLProps<HTMLButtonElement>, 'size'> {
   outline?: boolean;
   icon?: React.ReactNode;
 }
+
 function Button({
   children,
   color = 'gray',
@@ -28,18 +29,17 @@ function Button({
   icon,
   ...rest
 }: ButtonProps) {
-  const htmlProps = rest as any;
   const { theme } = useColorThemeValue();
   return (
     <button
       css={block(color, size, shape, outline, theme)}
       onClick={(e) => {
-        if (htmlProps.onClick) {
-          htmlProps.onClick(e);
+        if (rest.onClick) {
+          rest.onClick(e);
         }
         (e.target as HTMLButtonElement).blur();
       }}
-      {...htmlProps}
+      {...rest}
     >
       {icon && <div css={iconStyle}>{icon}</div>}
       {children}
