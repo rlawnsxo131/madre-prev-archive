@@ -66,10 +66,6 @@ export default class D3AxisChart extends D3Common {
   private readonly lineKey = 'line-';
   private readonly areaKey = 'area-';
   private readonly lineAndAreaKeyRegex = /(line-|area-)/gi;
-  private readonly lineAndAreaMap: Map<
-    string,
-    Record<'className' | 'color', string>
-  > = new Map([]);
   private strokeWidth: number = 2;
   private lineType: D3AxisChartLineType = 'STRAIGHT';
 
@@ -253,9 +249,9 @@ export default class D3AxisChart extends D3Common {
     duration = 1500,
     uuid = '',
   }: D3AxisChartDrawLineParams) {
-    const className = `${this.lineKey}${this.replaceColorHexWithClassName(
-      color,
-    )}${uuid}`;
+    const replaceHexColor = this.replaceSharpFromHexColor(color);
+    const commonKey = `${replaceHexColor}${uuid}`;
+    const className = `${this.lineKey}${commonKey}`; // key + color + uuid
     this.strokeWidth = strokeWidth;
     this.lineType = lineType;
 
@@ -315,9 +311,9 @@ export default class D3AxisChart extends D3Common {
     duration = 1500,
     uuid = '',
   }: D3AxisChartDrawAreaParams) {
-    const className = `${this.areaKey}${this.replaceColorHexWithClassName(
-      color,
-    )}${uuid}`;
+    const replaceHexColor = this.replaceSharpFromHexColor(color);
+    const commonKey = `${replaceHexColor}${uuid}`;
+    const className = `${this.areaKey}${commonKey}`; // key + color + uuid
     const xScale = this.xScale();
     const yScale = this.yScale();
 
@@ -339,7 +335,7 @@ export default class D3AxisChart extends D3Common {
       .attr(
         'transform',
         `translate(
-          ${this.margin.left + this.strokeWidth / 2},
+          ${this.margin.left + this.strokeWidth},
           ${this.margin.top}
         )
         `,

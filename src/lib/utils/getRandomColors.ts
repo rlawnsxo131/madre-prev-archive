@@ -1,6 +1,6 @@
-import { v4 as uuidv4 } from 'uuid';
+import { getRandomIntInclusive } from '.';
 
-export function getRandomColors(maxLength: number) {
+export default function getRandomColors(maxLength: number) {
   const result: string[] = [];
   const colors = [
     '#adb5bd',
@@ -78,24 +78,4 @@ export function getRandomColors(maxLength: number) {
     }
   }
   return result;
-}
-
-export function getRandomIntInclusive(min: number, max: number) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-export function getPrefersColorScheme() {
-  const colorScheme = ['light', 'dark'].reduce((acc, mode) => {
-    if (globalThis.matchMedia(`(prefers-color-scheme: ${mode})`).matches) {
-      acc += mode;
-    }
-    return acc;
-  }, '');
-  return colorScheme || 'light';
-}
-
-export function generateUUID() {
-  return uuidv4();
 }

@@ -35,7 +35,7 @@ export default class D3Common {
     return randomUniform(min, max)();
   }
 
-  protected replaceColorHexWithClassName(hex: string) {
+  protected replaceSharpFromHexColor(hex: string) {
     return `${hex.replace('#', '')}-`;
   }
 }
