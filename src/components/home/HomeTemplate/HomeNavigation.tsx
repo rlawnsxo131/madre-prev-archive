@@ -17,7 +17,7 @@ function HomeNavigation({ visible }: HomeNavigationProps) {
     <nav css={block(visible)}>
       <ul>
         <li>
-          <NavLink css={link} exact to="/">
+          <NavLink css={link} to="/">
             홈
           </NavLink>
         </li>

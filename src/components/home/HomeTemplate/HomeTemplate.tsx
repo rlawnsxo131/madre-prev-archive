@@ -1,17 +1,18 @@
 import { css } from '@emotion/react';
+import { Outlet } from 'react-router-dom';
 import { media, mediaQuery } from '../../../styles';
 import HomeHeader from './HomeHeader';
 
-interface HomeTemplateProps {
-  children: React.ReactNode;
-}
+interface HomeTemplateProps {}
 
-function HomeTemplate({ children }: HomeTemplateProps) {
+function HomeTemplate(props: HomeTemplateProps) {
   return (
     <div css={block}>
       <HomeHeader />
       <main css={main}>
-        <div css={content}>{children}</div>
+        <div css={content}>
+          <Outlet />
+        </div>
       </main>
     </div>
   );
