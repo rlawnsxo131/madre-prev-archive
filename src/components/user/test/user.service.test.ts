@@ -24,7 +24,7 @@ describe('userService Test', () => {
       await userService.getUserById(id);
     } catch (e) {
       expect(e).toStrictEqual(
-        errorService.createError({
+        errorService.createApolloError({
           message: userError.errorMessage.notFoundUser,
           errorCode: errorCode.NOT_FOUND,
           params: { id },

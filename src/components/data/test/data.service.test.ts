@@ -24,7 +24,7 @@ describe('dataService Test', () => {
       await dataService.getDataById(id);
     } catch (e) {
       expect(e).toStrictEqual(
-        errorService.createError({
+        errorService.createApolloError({
           message: dataError.errorMessage.NotFoundData,
           errorCode: errorCode.NOT_FOUND,
           params: { id },

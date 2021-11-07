@@ -6,7 +6,7 @@ async function getUserById(id: number) {
   const userRepo = getCustomRepository(UserRepository);
   const user = await userRepo.findOne({ id });
   if (!user) {
-    throw errorService.createError({
+    throw errorService.createApolloError({
       message: userError.errorMessage.notFoundUser,
       errorCode: errorCode.NOT_FOUND,
       params: { id },

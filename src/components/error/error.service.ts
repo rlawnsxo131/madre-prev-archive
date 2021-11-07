@@ -7,10 +7,10 @@ interface CreateErrorParams {
   params: Record<string, any>;
 }
 
-function createError({ message, errorCode, params }: CreateErrorParams) {
+function createApolloError({ message, errorCode, params }: CreateErrorParams) {
   return new ApolloError(message, errorCode, params);
 }
 
 export default {
-  createError,
+  createApolloError,
 };

@@ -6,7 +6,7 @@ async function getDataById(id: number) {
   const dataRepo = getCustomRepository(DataRepository);
   const data = await dataRepo.findOne({ id });
   if (!data) {
-    throw errorService.createError({
+    throw errorService.createApolloError({
       message: dataError.errorMessage.NotFoundData,
       errorCode: errorCode.NOT_FOUND,
       params: { id },
