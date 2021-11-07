@@ -3,6 +3,7 @@ import { Connection } from 'typeorm';
 import { dataError, dataService } from '..';
 import { Database } from '../../../datastore';
 import initializeEnvironment from '../../../lib/initializeEnvironment';
+import { errorCode, errorService } from '../../error';
 
 describe('dataService Test', () => {
   let connection: Connection | null = null;
@@ -22,7 +23,13 @@ describe('dataService Test', () => {
     try {
       await dataService.getDataById(id);
     } catch (e) {
-      expect(e).toStrictEqual(dataError.notFoundData);
+      expect(e).toStrictEqual(
+        errorService.createError({
+          message: dataError.errorMessage.NotFoundData,
+          errorCode: errorCode.NOT_FOUND,
+          params: { id },
+        }),
+      );
     }
   });
 });

@@ -1,7 +1,7 @@
-import { ForbiddenError } from 'apollo-server-core';
-
-const notFoundData = new ForbiddenError('Not Found Data');
+const NotFoundData = 'Not Found Data';
 
 export default {
-  notFoundData,
+  errorMessage: {
+    NotFoundData,
+  },
 };

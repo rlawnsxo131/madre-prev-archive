@@ -1,7 +1,7 @@
-import { ForbiddenError } from 'apollo-server-core';
-
-const notFoundUser = new ForbiddenError('Not Found User');
+const notFoundUser = 'Not Found User';
 
 export default {
-  notFoundUser,
+  errorMessage: {
+    notFoundUser,
+  },
 };
