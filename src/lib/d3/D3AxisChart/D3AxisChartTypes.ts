@@ -53,14 +53,39 @@ export type D3AxisDrawLineAndAreaParams = {
   animate?: boolean;
   duration?: number;
   uuid?: string;
+  isMouseOverAction?: boolean;
 };
 
+/**
+ * Line
+ */
 export type D3AxisChartLineType = 'STRAIGHT' | 'CURVE';
+export type LinejoinType = 'round' | 'miter';
+export type LinecapType = 'round' | 'butt';
 export type D3AxisChartDrawLineParams = {
   strokeWidth?: number;
   lineType?: D3AxisChartLineType;
+  linejoinType?: LinejoinType;
+  linecapType?: LinecapType;
 } & D3AxisDrawLineAndAreaParams;
 
+/**
+ * Area
+ */
+export type AreaType = 'full' | 'boundary';
 export type D3AxisChartDrawAreaParams = {
   opacity?: number;
+  areaType?: AreaType;
+  mouseOverOpacity?: number;
 } & D3AxisDrawLineAndAreaParams;
+
+/**
+ * Circle
+ */
+export type D3AxisChartDrawCircleParams = {
+  data: D3Data;
+  color?: string;
+  radius?: number;
+  uuid?: string;
+  isMouseOverAction?: boolean;
+};

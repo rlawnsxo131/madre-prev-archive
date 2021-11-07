@@ -36,6 +36,6 @@ export default class D3Common {
   }
 
   protected replaceSharpFromHexColor(hex: string) {
-    return `${hex.replace('#', '')}-`;
+    return `${hex.replace('#', '')}`;
   }
 }

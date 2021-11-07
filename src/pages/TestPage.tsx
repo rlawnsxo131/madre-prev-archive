@@ -29,13 +29,8 @@ function TestPage(props: TestPageProps) {
     top: 30,
     bottom: 30,
   };
-  const fontSize = 10;
-  const xTicks = 2;
-  const yTicks = 5;
-  const tickSize = 0;
   const xDomain = [0, 100];
   const yDomain = [0, 100];
-  const strokeWidth = 2;
 
   useEffect(() => {
     if (!ref.current) return;
@@ -50,13 +45,13 @@ function TestPage(props: TestPageProps) {
     });
 
     chart.setAxis({
-      xTicks,
-      yTicks,
-      xTickSize: tickSize,
-      yTickSize: tickSize,
+      xTicks: 2,
+      yTicks: 5,
+      xTickSize: 0,
+      yTickSize: 0,
       xClass: 'x-axis',
       yClass: 'y-axis',
-      axisFontSize: fontSize,
+      axisFontSize: 12,
     });
 
     chart.setAxisBackgroundGrid({
@@ -64,8 +59,8 @@ function TestPage(props: TestPageProps) {
         x: true,
         y: false,
       },
-      xClass: 'grid',
-      yClass: 'grid',
+      xClass: 'x-grid',
+      yClass: 'y-grid',
       xTicks: 5,
       // yTicks: 5,
     });
@@ -80,15 +75,27 @@ function TestPage(props: TestPageProps) {
       chart.drawLine({
         data: v,
         color: colors[i],
-        strokeWidth,
-        lineType: 'CURVE',
+        strokeWidth: 2,
+        // lineType: 'CURVE',
         animate: true,
         uuid,
+        linejoinType: 'round',
+        linecapType: 'round',
+        isMouseOverAction: true,
       });
       chart.drawArea({
         data: v,
         color: colors[i],
         animate: true,
+        uuid,
+        areaType: 'boundary',
+        isMouseOverAction: true,
+        mouseOverOpacity: 0.8,
+        // opacity: 0.3,
+      });
+      chart.drawCircle({
+        data: v,
+        color: colors[i],
         uuid,
       });
     });
@@ -104,14 +111,26 @@ const block = css`
   justify-content: center;
   align-items: center;
 
-  .x-axis,
-  .y-axis {
+  .x-axis {
     & path {
       color: ${palette.gray['200']};
     }
   }
-  .grid {
+
+  .y-axis {
+    & path {
+      display: none;
+    }
+  }
+
+  .y-gird {
     color: ${palette.gray['200']};
+  }
+  .x-grid {
+    color: ${palette.gray['200']};
+    & path {
+      display: none;
+    }
   }
 `;
 

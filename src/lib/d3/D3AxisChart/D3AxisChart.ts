@@ -21,6 +21,7 @@ import {
 import {
   D3AxisChartConstructorParams,
   D3AxisChartDrawAreaParams,
+  D3AxisChartDrawCircleParams,
   D3AxisChartDrawLineParams,
   D3AxisChartLineType,
   D3AxisChartSetAxisBackgroundGridParams,
@@ -63,11 +64,17 @@ export default class D3AxisChart extends D3Common {
   /**
    * @AxisLine @AxisArea
    */
-  private readonly lineKey = 'line-';
-  private readonly areaKey = 'area-';
+  private readonly lineKey = 'line';
+  private readonly areaKey = 'area';
   private readonly lineAndAreaKeyRegex = /(line-|area-)/gi;
-  private strokeWidth: number = 2;
   private lineType: D3AxisChartLineType = 'STRAIGHT';
+  private commonKeyMap: Map<string, string> = new Map([]);
+  private mouseOverActionMap = new Map([
+    [this.lineKey, false],
+    [this.areaKey, false],
+  ]);
+  private mouseOverOpacity: number = 0.6;
+  private strokeWidth: number = 2;
 
   constructor({
     container,
@@ -106,24 +113,48 @@ export default class D3AxisChart extends D3Common {
     return target.replace(this.lineAndAreaKeyRegex, '');
   }
 
-  onMouseOverAction(targetClass: string) {
-    select(`.${this.lineKey}${targetClass}`)
-      .style('stroke-width', this.strokeWidth * 2)
-      .style('cursor', 'pointer');
-
-    select(`.${this.areaKey}${targetClass}`)
-      .style('fill-opacity', 0.7)
-      .style('cursor', 'pointer');
+  private getCommonKeyAndClassName(
+    type: typeof this.lineKey | typeof this.areaKey,
+    color: string,
+    uuid: string,
+  ) {
+    const replaceHexColor = this.replaceSharpFromHexColor(color);
+    const commonKey = `${replaceHexColor}-${uuid}`;
+    const className = `${type}-${commonKey}`; // key + color + uuid
+    return { commonKey, className };
   }
 
-  onMouseOutAction(targetClass: string) {
-    select(`.${this.lineKey}${targetClass}`)
-      .style('stroke-width', this.strokeWidth)
-      .style('cursor', 'default');
+  private setCommonKeyMap(commonKey: string, color: string) {
+    const defined = !!this.commonKeyMap.get(commonKey);
+    if (!defined) {
+      this.commonKeyMap.set(commonKey, color);
+    }
+  }
 
-    select(`.${this.areaKey}${targetClass}`)
-      .style('fill-opacity', 0)
-      .style('cursor', 'pointer');
+  private onMouseOverAction(targetClass: string) {
+    if (this.mouseOverActionMap.get(this.lineKey)) {
+      select(`.${this.lineKey}-${targetClass}`)
+        .style('stroke-width', this.strokeWidth * 2)
+        .style('cursor', 'pointer');
+    }
+    if (this.mouseOverActionMap.get(this.areaKey)) {
+      select(`.${this.areaKey}-${targetClass}`)
+        .style('fill-opacity', this.mouseOverOpacity)
+        .style('cursor', 'pointer');
+    }
+  }
+
+  private onMouseOutAction(targetClass: string) {
+    if (this.mouseOverActionMap.get(this.lineKey)) {
+      select(`.${this.lineKey}-${targetClass}`)
+        .style('stroke-width', this.strokeWidth)
+        .style('cursor', 'default');
+    }
+    if (this.mouseOverActionMap.get(this.areaKey)) {
+      select(`.${this.areaKey}-${targetClass}`)
+        .style('fill-opacity', 0)
+        .style('cursor', 'pointer');
+    }
   }
 
   setAxis({
@@ -145,7 +176,7 @@ export default class D3AxisChart extends D3Common {
       .attr(
         'transform',
         `translate(
-          ${this.margin.left}, 
+          ${this.margin.left + this.margin.left * 0.4}, 
           ${this.height - this.margin.top}
         )`,
       )
@@ -238,7 +269,33 @@ export default class D3AxisChart extends D3Common {
     }
   }
 
-  drawCircle() {}
+  drawCircle({
+    data,
+    color = 'black',
+    radius = 3,
+    uuid = '',
+    isMouseOverAction = false,
+  }: D3AxisChartDrawCircleParams) {
+    const xScale = this.xScale();
+    const yScale = this.yScale();
+    this.svg
+      .selectAll('circles')
+      .data(data.d3Position)
+      .enter()
+      .append('circle')
+      .attr('fill', color)
+      .attr('r', radius)
+      .attr('cx', (d) => xScale(d[0]))
+      .attr('cy', (d) => yScale(d[1]))
+      .attr(
+        'transform',
+        `translate(
+          ${this.margin.left + this.margin.left * 0.4},
+          ${this.margin.top}
+        )
+        `,
+      );
+  }
 
   drawLine({
     data,
@@ -248,10 +305,18 @@ export default class D3AxisChart extends D3Common {
     animate = false,
     duration = 1500,
     uuid = '',
+    linejoinType = 'miter',
+    linecapType = 'butt',
+    isMouseOverAction = false,
   }: D3AxisChartDrawLineParams) {
-    const replaceHexColor = this.replaceSharpFromHexColor(color);
-    const commonKey = `${replaceHexColor}${uuid}`;
-    const className = `${this.lineKey}${commonKey}`; // key + color + uuid
+    const { commonKey, className } = this.getCommonKeyAndClassName(
+      this.lineKey,
+      color,
+      uuid,
+    );
+    this.setCommonKeyMap(commonKey, color);
+    this.mouseOverActionMap.set(this.lineKey, isMouseOverAction);
+
     this.strokeWidth = strokeWidth;
     this.lineType = lineType;
 
@@ -272,23 +337,28 @@ export default class D3AxisChart extends D3Common {
       .attr('d', `${lineGenerator(data.d3Position)}`)
       .attr('stroke-width', this.strokeWidth)
       .attr('stroke', color)
+      .attr('stroke-linejoin', linejoinType)
+      .attr('stroke-linecap', linecapType)
       .attr(
         'transform',
         `translate(
-          ${this.margin.left + this.strokeWidth},
+          ${this.margin.left + this.margin.left * 0.4},
           ${this.margin.top}
         )
         `,
       )
-      .attr('class', className)
-      .on('mouseover', (d) => {
+      .attr('class', className);
+
+    if (this.mouseOverActionMap.get(this.lineKey)) {
+      path.on('mouseover', (d) => {
         const targetClass = this.replaceLineOrAreaKey(d.target.classList[0]);
         this.onMouseOverAction(targetClass);
-      })
-      .on('mouseout', (d) => {
+      });
+      path.on('mouseout', (d) => {
         const targetClass = this.replaceLineOrAreaKey(d.target.classList[0]);
         this.onMouseOutAction(targetClass);
       });
+    }
 
     const pathLength = path.node()?.getTotalLength();
 
@@ -310,18 +380,36 @@ export default class D3AxisChart extends D3Common {
     animate = false,
     duration = 1500,
     uuid = '',
+    areaType = 'full',
+    isMouseOverAction = false,
+    mouseOverOpacity = 0.6,
   }: D3AxisChartDrawAreaParams) {
-    const replaceHexColor = this.replaceSharpFromHexColor(color);
-    const commonKey = `${replaceHexColor}${uuid}`;
-    const className = `${this.areaKey}${commonKey}`; // key + color + uuid
+    const { commonKey, className } = this.getCommonKeyAndClassName(
+      this.areaKey,
+      color,
+      uuid,
+    );
+    this.mouseOverOpacity = mouseOverOpacity;
+    this.setCommonKeyMap(commonKey, color);
+    this.mouseOverActionMap.set(this.areaKey, isMouseOverAction);
+
     const xScale = this.xScale();
     const yScale = this.yScale();
 
-    const areaGenerator = area()
-      .x((d) => xScale(d[0]))
-      .y0(this.yRange[0])
-      .y1((d) => yScale(d[1]));
+    const areaGenerator = area();
 
+    if (areaType === 'full') {
+      areaGenerator
+        .x0((d) => xScale(d[0]))
+        .y0(this.yRange[0])
+        .y1((d) => yScale(d[1]));
+    }
+    if (areaType === 'boundary') {
+      areaGenerator
+        .x1((d) => xScale(d[0]))
+        .y0(this.yRange[0])
+        .y1((d) => yScale(d[1]));
+    }
     if (this.lineType === 'CURVE') {
       areaGenerator.curve(curveBasis);
     }
@@ -335,24 +423,27 @@ export default class D3AxisChart extends D3Common {
       .attr(
         'transform',
         `translate(
-          ${this.margin.left + this.strokeWidth},
+          ${this.margin.left + this.margin.left * 0.4},
           ${this.margin.top}
         )
         `,
       )
-      .attr('class', className)
-      .on('mouseover', (d) => {
+      .attr('class', className);
+
+    if (isMouseOverAction) {
+      path.on('mouseover', (d) => {
         const targetClass = this.replaceLineOrAreaKey(d.target.classList[0]);
         this.onMouseOverAction(targetClass);
-      })
-      .on('mouseout', (d) => {
+      });
+      path.on('mouseout', (d) => {
         const targetClass = this.replaceLineOrAreaKey(d.target.classList[0]);
         this.onMouseOutAction(targetClass);
       });
+    }
 
-    const pathLength = path.node()?.getTotalLength();
+    // const pathLength = path.node()?.getTotalLength();
 
-    if (animate && path && pathLength) {
+    if (animate && path) {
       path
         .attr('fill-opacity', 0)
         .transition()
