@@ -1,5 +1,5 @@
 import { getCustomRepository } from 'typeorm';
-import { dataError, DataRepository } from '.';
+import { DataRepository } from '.';
 import { errorCode, errorService } from '../error';
 
 async function getDataById(id: number) {
@@ -7,7 +7,7 @@ async function getDataById(id: number) {
   const data = await dataRepo.findOne({ id });
   if (!data) {
     throw errorService.createApolloError({
-      message: dataError.errorMessage.NotFoundData,
+      message: 'Not Found Data',
       errorCode: errorCode.NOT_FOUND,
       params: { id },
     });

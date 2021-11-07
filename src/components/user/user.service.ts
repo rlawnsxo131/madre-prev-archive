@@ -1,5 +1,5 @@
 import { getCustomRepository } from 'typeorm';
-import { userError, UserRepository } from '.';
+import { UserRepository } from '.';
 import { errorCode, errorService } from '../error';
 
 async function getUserById(id: number) {
@@ -7,7 +7,7 @@ async function getUserById(id: number) {
   const user = await userRepo.findOne({ id });
   if (!user) {
     throw errorService.createApolloError({
-      message: userError.errorMessage.notFoundUser,
+      message: 'Not Found User',
       errorCode: errorCode.NOT_FOUND,
       params: { id },
     });

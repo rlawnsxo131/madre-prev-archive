@@ -1,9 +1,10 @@
+import { ApolloError } from 'apollo-server-core';
 import 'jest';
 import { Connection } from 'typeorm';
-import { dataError, dataService } from '..';
+import { dataService } from '..';
 import { Database } from '../../../datastore';
 import initializeEnvironment from '../../../lib/initializeEnvironment';
-import { errorCode, errorService } from '../../error';
+import { errorCode } from '../../error';
 
 describe('dataService Test', () => {
   let connection: Connection | null = null;
@@ -23,13 +24,9 @@ describe('dataService Test', () => {
     try {
       await dataService.getDataById(id);
     } catch (e) {
-      expect(e).toStrictEqual(
-        errorService.createApolloError({
-          message: dataError.errorMessage.NotFoundData,
-          errorCode: errorCode.NOT_FOUND,
-          params: { id },
-        }),
-      );
+      const error = e as ApolloError;
+      expect(error.extensions.code).toBe(errorCode.NOT_FOUND);
+      expect(error.extensions.id).toBe(id);
     }
   });
 });
