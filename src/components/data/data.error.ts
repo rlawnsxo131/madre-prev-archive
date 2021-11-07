@@ -1,7 +1,7 @@
-const NotFoundData = 'Not Found Data';
+const errorMessage = {
+  NotFoundData: 'Not Found Data',
+};
 
 export default {
-  errorMessage: {
-    NotFoundData,
-  },
+  errorMessage,
 };
