@@ -4,7 +4,7 @@
 import { useCallback } from 'react';
 import { atom, useRecoilValue, useSetRecoilState } from 'recoil';
 import { MADRE_COLOR_THEME } from '../constants';
-import { storage } from '../lib/storage';
+import { Storage } from '../lib/storage';
 
 export type ColorTheme = 'dark' | 'light';
 interface ColorThemeState {
@@ -28,7 +28,7 @@ export function useColorThemeActions() {
   const handleColorTheme = useCallback(() => {
     set((prev) => {
       const theme = prev.theme === 'dark' ? 'light' : 'dark';
-      storage.setItem(MADRE_COLOR_THEME, theme);
+      Storage.setItem(MADRE_COLOR_THEME, theme);
       return {
         ...prev,
         theme,

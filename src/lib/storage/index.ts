@@ -1,1 +1,1 @@
-export { default as storage } from './Storage';
+export { default as Storage } from './Storage';
