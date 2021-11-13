@@ -20,12 +20,12 @@ import {
   D3DoubleNumberArray,
   D3Selection,
   D3SelectionSVG,
+  D3TickFormat,
 } from '../D3Common/D3CommonTypes';
 import {
   D3AxisChartConstructorParams,
   D3AxisChartCurvType,
   D3AxisChartDrawAreaParams,
-  D3AxisChartDrawAxisParams,
   D3AxisChartDrawCircleParams,
   D3AxisChartDrawLineParams,
   D3AxisChartLineType,
@@ -78,6 +78,7 @@ export default class D3AxisChart extends D3Common {
   /**
    * circle
    */
+  private circleStrokeWidth: number = 2;
 
   /**
    * line area circle
@@ -234,10 +235,10 @@ export default class D3AxisChart extends D3Common {
       .style('font-size', axisFontSize);
   }
 
-  drawAxis({
-    xTickFormat = (d, i) => `${d}`,
-    yTickFormat = (d, i) => `${d}`,
-  }: D3AxisChartDrawAxisParams) {
+  drawAxis(
+    xTickFormat: D3TickFormat = (d, i) => `${d}`,
+    yTickFormat: D3TickFormat = (d, i) => `${d}`,
+  ) {
     if (this.axisXSvg) {
       const axisX = axisBottom(this.xScale())
         .tickSize(this.axisXTickSize)
@@ -471,6 +472,7 @@ export default class D3AxisChart extends D3Common {
     data,
     color = 'black',
     circleRadius = 3,
+    circleStrokeWidth = 2,
     uuid = '',
     isMouseOverAction = false,
   }: D3AxisChartDrawCircleParams) {
@@ -481,6 +483,7 @@ export default class D3AxisChart extends D3Common {
     );
     this.setCommonKeyMap(commonKey, color);
     this.mouseOverActionMap.set(this.circleKey, isMouseOverAction);
+    this.circleStrokeWidth = circleStrokeWidth;
 
     const xScale = this.xScale();
     const yScale = this.yScale();
@@ -492,7 +495,7 @@ export default class D3AxisChart extends D3Common {
       .append('circle')
       .attr('fill', palette.white)
       .attr('stroke', color)
-      .attr('stroke-width', 2)
+      .attr('stroke-width', this.circleStrokeWidth)
       .attr('r', circleRadius)
       .attr('cx', (d) => xScale(d[0]))
       .attr('cy', (d) => yScale(d[1]))

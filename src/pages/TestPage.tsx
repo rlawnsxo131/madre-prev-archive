@@ -65,7 +65,7 @@ function TestPage(props: TestPageProps) {
       // axisBackgroundGridYTicks: 5
     });
 
-    chart.drawAxis({});
+    chart.drawAxis();
     chart.drawGrid();
 
     const colors = getRandomColors(dataList.length);

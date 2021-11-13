@@ -32,11 +32,6 @@ export type D3AxisChartSetAxisParams = Partial<{
   axisFontSize: number;
 }>;
 
-export type D3AxisChartDrawAxisParams = Partial<{
-  xTickFormat: D3TickFormat;
-  yTickFormat: D3TickFormat;
-}>;
-
 export type D3AxisChartSetAxisBackgroundGridParams = {
   axisBackgroundGridDirection: {
     x: boolean;
