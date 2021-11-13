@@ -49,8 +49,6 @@ export default class D3AxisChart extends D3Common {
 
   /**
    * @Axis
-   * axisX: axis draw function
-   * axisY: axis draw function
    */
   private axisXTicks: number = 0;
   private axisYTicks: number = 0;
