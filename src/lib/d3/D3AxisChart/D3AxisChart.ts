@@ -73,6 +73,15 @@ export default class D3AxisChart extends D3Common {
   private lineStrokeWidth: number = 2;
 
   /**
+   * @Area
+   */
+  private areaMouseOverOpacity: number = 0.6;
+
+  /**
+   * @Circle
+   */
+
+  /**
    * @AxisLine @AxisArea @Circle
    */
   private readonly lineKey = 'line';
@@ -81,7 +90,7 @@ export default class D3AxisChart extends D3Common {
   private readonly lineAndAreaKeyRegex = /(line-|area-|circle-)/gi;
   private lineType: D3AxisChartLineType = 'STRAIGHT';
   private lineCurvType: D3AxisChartCurvType = 'curveBasis';
-  private lineCurvTypeMap: Map<
+  private readonly lineCurvTypeMap: Map<
     D3AxisChartCurvType,
     typeof curveBasis | typeof curveMonotoneX | typeof curveMonotoneY
   > = new Map([
@@ -95,11 +104,6 @@ export default class D3AxisChart extends D3Common {
     [this.areaKey, false],
     [this.circleKey, false],
   ]);
-  private areaMouseOverOpacity: number = 0.6;
-
-  /**
-   * @Circle
-   */
 
   constructor({
     container,
