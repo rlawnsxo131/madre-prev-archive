@@ -45,27 +45,27 @@ function TestPage(props: TestPageProps) {
     });
 
     chart.setAxis({
-      xTicks: 2,
-      yTicks: 5,
-      xTickSize: 0,
-      yTickSize: 0,
-      xClass: 'x-axis',
-      yClass: 'y-axis',
+      axisXTicks: 2,
+      axisYTicks: 5,
+      axisXTickSize: 0,
+      axisYTickSize: 0,
+      axisXClass: 'x-axis',
+      axisYClass: 'y-axis',
       axisFontSize: 12,
     });
 
     chart.setAxisBackgroundGrid({
-      direction: {
+      axisBackgroundGridDirection: {
         x: true,
         y: false,
       },
-      xClass: 'x-grid',
-      yClass: 'y-grid',
-      xTicks: 5,
-      // yTicks: 5,
+      axisBackgroundGridXClass: 'x-grid',
+      axisBackgroundGridYClass: 'y-grid',
+      axisBackgroundGridXTicks: 5,
+      // axisBackgroundGridYTicks: 5
     });
 
-    chart.drawAxis();
+    chart.drawAxis({});
     chart.drawGrid();
 
     const colors = getRandomColors(dataList.length);
@@ -75,23 +75,26 @@ function TestPage(props: TestPageProps) {
       chart.drawLine({
         data: v,
         color: colors[i],
-        strokeWidth: 3,
         lineType: 'CURVE',
-        animate: true,
-        uuid,
-        linejoinType: 'round',
-        linecapType: 'round',
+        lineCurvType: 'curveMonotoneX',
+        lineStrokeWidth: 2,
+        linejoinType: 'miter',
+        linecapType: 'butt',
+        lineDrawAnimate: true,
+        lineDrawAnimateDuration: 1500,
         isMouseOverAction: true,
+        uuid,
       });
       chart.drawArea({
         data: v,
         color: colors[i],
-        animate: true,
-        uuid,
-        areaType: 'full',
+        // areaOpacity: 0,
+        areaDrawAnimate: true,
+        areaDrawAnimateDuration: 1500,
+        // areaType: 'full',
         isMouseOverAction: true,
-        mouseOverOpacity: 0.6,
-        // opacity: 0.3,
+        areaMouseOverOpacity: 0.6,
+        uuid,
       });
       chart.drawCircle({
         data: v,

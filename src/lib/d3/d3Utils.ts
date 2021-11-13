@@ -1,4 +1,4 @@
-import { randomInt, randomUniform } from 'd3';
+import { extent, randomInt, randomUniform } from 'd3';
 
 function d3Extent() {}
 

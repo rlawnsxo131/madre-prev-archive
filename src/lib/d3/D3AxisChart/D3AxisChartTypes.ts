@@ -19,73 +19,86 @@ export type D3AxisChartConstructorParams = {
   margin: D3Margin;
 } & AppendSvgParams;
 
+/**
+ * set axis
+ */
 export type D3AxisChartSetAxisParams = Partial<{
-  xTicks: number;
-  yTicks: number;
-  xTickSize: number;
-  yTickSize: number;
-  xClass: string;
-  yClass: string;
+  axisXTicks: number;
+  axisYTicks: number;
+  axisXTickSize: number;
+  axisYTickSize: number;
+  axisXClass: string;
+  axisYClass: string;
   axisFontSize: number;
+}>;
+
+export type D3AxisChartDrawAxisParams = Partial<{
   xTickFormat: D3TickFormat;
   yTickFormat: D3TickFormat;
 }>;
 
 export type D3AxisChartSetAxisBackgroundGridParams = {
-  direction: {
+  axisBackgroundGridDirection: {
     x: boolean;
     y: boolean;
   };
-  xClass?: string;
-  yClass?: string;
-  xTicks?: number;
-  yTicks?: number;
-  xTickFormat?: D3TickFormat;
-  yTickFormat?: D3TickFormat;
+  axisBackgroundGridXTicks?: number;
+  axisBackgroundGridYTicks?: number;
+  axisBackgroundGridXTickFormat?: D3TickFormat;
+  axisBackgroundGridYTickFormat?: D3TickFormat;
+  axisBackgroundGridXClass?: string;
+  axisBackgroundGridYClass?: string;
 };
 
 /**
- * Draw Line And Area
- */
-export type D3AxisDrawLineAndAreaParams = {
-  data: D3Data;
-  color?: string;
-  animate?: boolean;
-  duration?: number;
-  uuid?: string;
-  isMouseOverAction?: boolean;
-};
-
-/**
- * Line
+ * line
  */
 export type D3AxisChartLineType = 'STRAIGHT' | 'CURVE';
-export type LinejoinType = 'round' | 'miter';
-export type LinecapType = 'round' | 'butt';
+export type D3AxisChartCurvType =
+  | 'curveBasis'
+  | 'curveMonotoneX'
+  | 'curveMonotoneY';
+export type D3AxisChartLinejoinType = 'round' | 'miter';
+export type D3AxisChartLinecapType = 'round' | 'butt';
+
 export type D3AxisChartDrawLineParams = {
-  strokeWidth?: number;
+  data: D3Data;
+  color?: string;
   lineType?: D3AxisChartLineType;
-  linejoinType?: LinejoinType;
-  linecapType?: LinecapType;
-} & D3AxisDrawLineAndAreaParams;
+  lineCurvType?: D3AxisChartCurvType;
+  lineStrokeWidth?: number;
+  linejoinType?: D3AxisChartLinejoinType;
+  linecapType?: D3AxisChartLinecapType;
+  lineDrawAnimate?: boolean;
+  lineDrawAnimateDuration?: number;
+  isMouseOverAction?: boolean;
+  uuid?: string;
+};
 
 /**
- * Area
+ * area
  */
 export type AreaType = 'full' | 'boundary';
 export type D3AxisChartDrawAreaParams = {
-  opacity?: number;
+  data: D3Data;
+  color?: string;
+  areaOpacity?: number;
+  areaDrawAnimate?: boolean;
+  areaDrawAnimateDuration?: number;
   areaType?: AreaType;
-  mouseOverOpacity?: number;
-} & D3AxisDrawLineAndAreaParams;
+  isMouseOverAction?: boolean;
+  areaMouseOverOpacity?: number;
+  uuid?: string;
+};
 
 /**
- * Circle
+ * circle
  */
 export type D3AxisChartDrawCircleParams = {
   data: D3Data;
   color?: string;
-  radius?: number;
+  circleRadius?: number;
+  circleStrokeWidth?: number;
   uuid?: string;
   isMouseOverAction?: boolean;
 };
