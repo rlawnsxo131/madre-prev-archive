@@ -36,7 +36,7 @@ import {
 
 export default class D3AxisChart extends D3Common {
   /**
-   * @Initialize
+   * initialize
    */
   private svg: D3SelectionSVG;
   private width: number;
@@ -48,7 +48,7 @@ export default class D3AxisChart extends D3Common {
   private margin: D3Margin;
 
   /**
-   * @Axis
+   * axis
    */
   private axisXTicks: number = 0;
   private axisYTicks: number = 0;
@@ -58,7 +58,7 @@ export default class D3AxisChart extends D3Common {
   private axisYSvg: D3Selection = null;
 
   /**
-   * @AxisGrid
+   * aixsGrid
    */
   private axisGridXSvg: D3Selection = null;
   private axisGridYSvg: D3Selection = null;
@@ -66,21 +66,21 @@ export default class D3AxisChart extends D3Common {
   private axisGridY: D3Axis = null;
 
   /**
-   * @Line
+   * line
    */
   private lineStrokeWidth: number = 2;
 
   /**
-   * @Area
+   * area
    */
   private areaMouseOverOpacity: number = 0.6;
 
   /**
-   * @Circle
+   * circle
    */
 
   /**
-   * @AxisLine @AxisArea @Circle
+   * line area circle
    */
   private readonly lineKey = 'line';
   private readonly areaKey = 'area';
@@ -300,9 +300,6 @@ export default class D3AxisChart extends D3Common {
     }
   }
 
-  /**
-   * @AxisBackground
-   */
   drawGrid() {
     if (this.axisGridXSvg && this.axisGridX) {
       this.axisGridX(this.axisGridXSvg);
