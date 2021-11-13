@@ -20,7 +20,7 @@ export type D3AxisChartConstructorParams = {
 } & AppendSvgParams;
 
 /**
- * set axis
+ * axis
  */
 export type D3AxisChartSetAxisParams = Partial<{
   axisXTicks: number;
@@ -32,6 +32,9 @@ export type D3AxisChartSetAxisParams = Partial<{
   axisFontSize: number;
 }>;
 
+/**
+ * background axis
+ */
 export type D3AxisChartSetAxisBackgroundGridParams = {
   axisBackgroundGridDirection: {
     x: boolean;
