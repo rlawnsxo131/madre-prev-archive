@@ -22,13 +22,13 @@ const block = css`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0 0.5rem;
 `;
 
 const main = css`
   display: flex;
   justify-content: center;
   position: relative;
-  padding: 0 0.5rem;
   ${media.xxxsmall} {
     width: 100%;
   }
@@ -38,7 +38,7 @@ const main = css`
   ${media.medium} {
     width: calc(100% - 4vw);
   }
-  ${mediaQuery(1300)} {
+  ${mediaQuery(1285)} {
     width: 1250px;
   }
 `;

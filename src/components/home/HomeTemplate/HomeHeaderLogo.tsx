@@ -23,7 +23,6 @@ const link = css`
   display: inline-flex;
   flex-flow: row wrap;
   font-size: 1.25rem;
-  padding: 0.5rem;
   h1 {
     margin: 0;
     padding: 0;

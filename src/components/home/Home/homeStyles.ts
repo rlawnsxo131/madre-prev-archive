@@ -3,6 +3,8 @@ import { media, palette } from '../../../styles';
 
 const block = css`
   display: flex;
+  margin-top: 1.5rem;
+
   h1,
   h2,
   h3,
@@ -19,9 +21,7 @@ const block = css`
     font-weight: 600;
     line-height: 2;
   }
-  & + & {
-    margin-top: 2rem;
-  }
+
   ${media.xxxsmall} {
     gap: 0;
     flex-direction: column;

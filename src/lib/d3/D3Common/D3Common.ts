@@ -1,4 +1,4 @@
-import { randomInt, randomUniform, select } from 'd3';
+import { select } from 'd3';
 import {
   AppendSvgParams,
   D3DoubleNumberArray,
@@ -25,14 +25,6 @@ export default class D3Common {
   protected serializedExtent(data: D3ExtentResult): D3DoubleNumberArray {
     if (!data[1]) return [0, 0];
     return data;
-  }
-
-  protected getRandomInt(min: number, max: number) {
-    return randomInt(min, max)();
-  }
-
-  protected getRandomUniform(min: number, max: number) {
-    return randomUniform(min, max)();
   }
 
   protected replaceSharpFromHexColor(hex: string) {

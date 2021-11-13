@@ -75,8 +75,8 @@ function TestPage(props: TestPageProps) {
       chart.drawLine({
         data: v,
         color: colors[i],
-        strokeWidth: 2,
-        // lineType: 'CURVE',
+        strokeWidth: 3,
+        lineType: 'CURVE',
         animate: true,
         uuid,
         linejoinType: 'round',
@@ -88,9 +88,9 @@ function TestPage(props: TestPageProps) {
         color: colors[i],
         animate: true,
         uuid,
-        areaType: 'boundary',
+        areaType: 'full',
         isMouseOverAction: true,
-        mouseOverOpacity: 0.8,
+        mouseOverOpacity: 0.6,
         // opacity: 0.3,
       });
       chart.drawCircle({

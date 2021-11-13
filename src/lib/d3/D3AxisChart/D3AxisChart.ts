@@ -5,6 +5,8 @@ import {
   axisRight,
   axisTop,
   curveBasis,
+  curveMonotoneX,
+  curveMonotoneY,
   easeSinInOut,
   extent,
   line,
@@ -66,12 +68,14 @@ export default class D3AxisChart extends D3Common {
    */
   private readonly lineKey = 'line';
   private readonly areaKey = 'area';
-  private readonly lineAndAreaKeyRegex = /(line-|area-)/gi;
+  private readonly circleKey = 'circle';
+  private readonly lineAndAreaKeyRegex = /(line-|area-|circle-)/gi;
   private lineType: D3AxisChartLineType = 'STRAIGHT';
   private commonKeyMap: Map<string, string> = new Map([]);
   private mouseOverActionMap = new Map([
     [this.lineKey, false],
     [this.areaKey, false],
+    [this.circleKey, false],
   ]);
   private mouseOverOpacity: number = 0.6;
   private strokeWidth: number = 2;
@@ -269,6 +273,9 @@ export default class D3AxisChart extends D3Common {
     }
   }
 
+  /**
+   * need to add animation, fill and stroke-width operations
+   */
   drawCircle({
     data,
     color = 'black',
@@ -278,19 +285,22 @@ export default class D3AxisChart extends D3Common {
   }: D3AxisChartDrawCircleParams) {
     const xScale = this.xScale();
     const yScale = this.yScale();
+
     this.svg
       .selectAll('circles')
       .data(data.d3Position)
       .enter()
       .append('circle')
-      .attr('fill', color)
+      .attr('fill', 'white')
+      .attr('stroke', color)
+      .attr('stroke-width', 2)
       .attr('r', radius)
       .attr('cx', (d) => xScale(d[0]))
       .attr('cy', (d) => yScale(d[1]))
       .attr(
         'transform',
         `translate(
-          ${this.margin.left + this.margin.left * 0.4},
+          ${this.margin.left + this.margin.right * 0.4},
           ${this.margin.top}
         )
         `,
@@ -328,7 +338,7 @@ export default class D3AxisChart extends D3Common {
       .y((d) => yScale(d[1]));
 
     if (this.lineType === 'CURVE') {
-      lineGenerator.curve(curveBasis);
+      lineGenerator.curve(curveMonotoneX);
     }
 
     const path = this.svg
@@ -342,7 +352,7 @@ export default class D3AxisChart extends D3Common {
       .attr(
         'transform',
         `translate(
-          ${this.margin.left + this.margin.left * 0.4},
+          ${this.margin.left + this.margin.right * 0.4},
           ${this.margin.top}
         )
         `,
@@ -411,7 +421,7 @@ export default class D3AxisChart extends D3Common {
         .y1((d) => yScale(d[1]));
     }
     if (this.lineType === 'CURVE') {
-      areaGenerator.curve(curveBasis);
+      areaGenerator.curve(curveMonotoneX);
     }
 
     const path = this.svg
@@ -423,7 +433,7 @@ export default class D3AxisChart extends D3Common {
       .attr(
         'transform',
         `translate(
-          ${this.margin.left + this.margin.left * 0.4},
+          ${this.margin.left + this.margin.right * 0.4},
           ${this.margin.top}
         )
         `,

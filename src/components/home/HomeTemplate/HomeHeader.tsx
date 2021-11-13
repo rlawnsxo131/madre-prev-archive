@@ -25,7 +25,7 @@ const block = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0.25 1rem;
+  padding: 0.25rem 0;
   z-index: ${zIndexes.homeHeader};
 `;
 
@@ -43,7 +43,7 @@ const content = css`
   ${media.medium} {
     width: calc(100% - 4vw);
   }
-  ${mediaQuery(1300)} {
+  ${mediaQuery(1285)} {
     width: 1250px;
   }
 `;
