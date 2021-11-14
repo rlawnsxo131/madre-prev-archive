@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import RealTimeAsyncImage from '../../../image/images/RealTimeAsyncImage';
+import { RealTimeAsyncImage } from '../../../image/images';
 import homeStyles from './homeStyles';
 
 interface HomeSectionThinkAboutProps {}

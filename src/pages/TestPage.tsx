@@ -87,72 +87,72 @@ function TestPage(props: TestPageProps) {
         isMouseOverAction: true,
         uuid,
       });
-      chart.drawArea({
-        data: v,
-        color: colors[i],
-        // areaOpacity: 0,
-        areaDrawAnimate: true,
-        areaDrawAnimateDuration: 1500,
-        // areaType: 'full',
-        isMouseOverAction: true,
-        areaMouseOverOpacity: 0.6,
-        uuid,
-      });
-      chart.drawCircle({
-        data: v,
-        color: colors[i],
-        circleRadius: 3,
-        circleStrokeWidth: 2,
-        uuid,
-      });
+      // chart.drawArea({
+      //   data: v,
+      //   color: colors[i],
+      //   // areaOpacity: 0,
+      //   areaDrawAnimate: true,
+      //   areaDrawAnimateDuration: 1500,
+      //   // areaType: 'full',
+      //   isMouseOverAction: true,
+      //   areaMouseOverOpacity: 0.6,
+      //   uuid,
+      // });
+      // chart.drawCircle({
+      //   data: v,
+      //   color: colors[i],
+      //   circleRadius: 3,
+      //   circleStrokeWidth: 2,
+      //   uuid,
+      // });
     });
 
-    // setTimeout(() => {
-    //   const dataList: D3Data[] = Array.from({ length: 5 }).map((_, i) => ({
-    //     d3Position: Array.from({ length: 11 }).map((v, j) => [
-    //       j * 10,
-    //       getRandomIntInclusive(10, 87),
-    //     ]),
-    //     key: i,
-    //   }));
+    setTimeout(() => {
+      const dataList: D3Data[] = Array.from({ length: 5 }).map((_, i) => ({
+        d3Position: Array.from({ length: 11 }).map((v, j) => [
+          j * 10,
+          getRandomIntInclusive(10, 87),
+        ]),
+        key: i,
+      }));
 
-    //   const colors = getRandomColors(dataList.length);
+      const colors = getRandomColors(dataList.length);
 
-    //   dataList.forEach((v, i) => {
-    //     const uuid = generateUUID();
-    //     chart.drawLine({
-    //       data: v,
-    //       color: colors[i],
-    //       lineType: 'CURVE',
-    //       lineCurvType: 'curveMonotoneX',
-    //       lineStrokeWidth: 4,
-    //       linejoinType: 'miter',
-    //       linecapType: 'butt',
-    //       lineDrawAnimate: true,
-    //       lineDrawAnimateDuration: 1500,
-    //       isMouseOverAction: true,
-    //       uuid,
-    //     });
-    //     chart.drawArea({
-    //       data: v,
-    //       color: colors[i],
-    //       // areaOpacity: 0,
-    //       areaDrawAnimate: true,
-    //       areaDrawAnimateDuration: 1500,
-    //       // areaType: 'full',
-    //       isMouseOverAction: true,
-    //       areaMouseOverOpacity: 0.6,
-    //       uuid,
-    //     });
-    //     chart.drawCircle({
-    //       data: v,
-    //       color: colors[i],
-    //       circleRadius: 3,
-    //       circleStrokeWidth: 2,
-    //       uuid,
-    //     });
-    //   });
-    // }, 1500);
+      dataList.forEach((v, i) => {
+        const uuid = generateUUID();
+        chart.drawLine({
+          data: v,
+          color: colors[i],
+          lineType: 'CURVE',
+          lineCurvType: 'curveMonotoneX',
+          lineStrokeWidth: 4,
+          linejoinType: 'miter',
+          linecapType: 'butt',
+          lineDrawAnimate: true,
+          lineDrawAnimateDuration: 1500,
+          isMouseOverAction: true,
+          uuid,
+        });
+        // chart.drawArea({
+        //   data: v,
+        //   color: colors[i],
+        //   // areaOpacity: 0,
+        //   areaDrawAnimate: true,
+        //   areaDrawAnimateDuration: 1500,
+        //   // areaType: 'full',
+        //   isMouseOverAction: true,
+        //   areaMouseOverOpacity: 0.6,
+        //   uuid,
+        // });
+        // chart.drawCircle({
+        //   data: v,
+        //   color: colors[i],
+        //   circleRadius: 3,
+        //   circleStrokeWidth: 2,
+        //   uuid,
+        // });
+      });
+    }, 1500);
   }, [ref.current]);
 
   return <div css={block} ref={ref}></div>;
