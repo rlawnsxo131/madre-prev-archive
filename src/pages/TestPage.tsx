@@ -13,13 +13,6 @@ interface TestPageProps {}
 
 function TestPage(props: TestPageProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const dataList: D3Data[] = Array.from({ length: 5 }).map((_, i) => ({
-    d3Position: Array.from({ length: 11 }).map((v, j) => [
-      j * 10,
-      getRandomIntInclusive(10, 87),
-    ]),
-    key: i,
-  }));
 
   const width = 460;
   const height = 400;
@@ -34,6 +27,15 @@ function TestPage(props: TestPageProps) {
 
   useEffect(() => {
     if (!ref.current) return;
+
+    const dataList: D3Data[] = Array.from({ length: 5 }).map((_, i) => ({
+      d3Position: Array.from({ length: 11 }).map((v, j) => [
+        j * 10,
+        getRandomIntInclusive(10, 87),
+      ]),
+      key: i,
+    }));
+
     const chart = new D3AxisChart({
       container: ref.current,
       width: width,
@@ -57,12 +59,12 @@ function TestPage(props: TestPageProps) {
     chart.setAxisBackgroundGrid({
       axisBackgroundGridDirection: {
         x: true,
-        y: false,
+        y: true,
       },
-      axisBackgroundGridXClass: 'x-grid',
-      axisBackgroundGridYClass: 'y-grid',
       axisBackgroundGridXTicks: 5,
-      // axisBackgroundGridYTicks: 5
+      // axisBackgroundGridYTicks: 5,
+      axisBackgroundGridXClass: 'x-axis-background-grid',
+      axisBackgroundGridYClass: 'y-axis-background-grid',
     });
 
     chart.drawAxis();
@@ -77,7 +79,7 @@ function TestPage(props: TestPageProps) {
         color: colors[i],
         lineType: 'CURVE',
         lineCurvType: 'curveMonotoneX',
-        lineStrokeWidth: 2,
+        lineStrokeWidth: 4,
         linejoinType: 'miter',
         linecapType: 'butt',
         lineDrawAnimate: true,
@@ -99,9 +101,58 @@ function TestPage(props: TestPageProps) {
       chart.drawCircle({
         data: v,
         color: colors[i],
+        circleRadius: 3,
+        circleStrokeWidth: 2,
         uuid,
       });
     });
+
+    // setTimeout(() => {
+    //   const dataList: D3Data[] = Array.from({ length: 5 }).map((_, i) => ({
+    //     d3Position: Array.from({ length: 11 }).map((v, j) => [
+    //       j * 10,
+    //       getRandomIntInclusive(10, 87),
+    //     ]),
+    //     key: i,
+    //   }));
+
+    //   const colors = getRandomColors(dataList.length);
+
+    //   dataList.forEach((v, i) => {
+    //     const uuid = generateUUID();
+    //     chart.drawLine({
+    //       data: v,
+    //       color: colors[i],
+    //       lineType: 'CURVE',
+    //       lineCurvType: 'curveMonotoneX',
+    //       lineStrokeWidth: 4,
+    //       linejoinType: 'miter',
+    //       linecapType: 'butt',
+    //       lineDrawAnimate: true,
+    //       lineDrawAnimateDuration: 1500,
+    //       isMouseOverAction: true,
+    //       uuid,
+    //     });
+    //     chart.drawArea({
+    //       data: v,
+    //       color: colors[i],
+    //       // areaOpacity: 0,
+    //       areaDrawAnimate: true,
+    //       areaDrawAnimateDuration: 1500,
+    //       // areaType: 'full',
+    //       isMouseOverAction: true,
+    //       areaMouseOverOpacity: 0.6,
+    //       uuid,
+    //     });
+    //     chart.drawCircle({
+    //       data: v,
+    //       color: colors[i],
+    //       circleRadius: 3,
+    //       circleStrokeWidth: 2,
+    //       uuid,
+    //     });
+    //   });
+    // }, 1500);
   }, [ref.current]);
 
   return <div css={block} ref={ref}></div>;
@@ -114,27 +165,18 @@ const block = css`
   justify-content: center;
   align-items: center;
 
-  .x-axis {
-    & path {
-      color: ${palette.gray['200']};
+  /* .x-axis {
+    & {
+      path {
+        color: ${palette.gray['200']};
+      }
     }
   }
-
   .y-axis {
     & path {
       display: none;
     }
-  }
-
-  .y-gird {
-    color: ${palette.gray['200']};
-  }
-  .x-grid {
-    color: ${palette.gray['200']};
-    & path {
-      display: none;
-    }
-  }
+  } */
 `;
 
 export default TestPage;

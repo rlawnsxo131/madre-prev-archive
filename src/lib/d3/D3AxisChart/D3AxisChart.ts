@@ -56,6 +56,8 @@ export default class D3AxisChart extends D3Common {
   private axisYTickSize: number = 0;
   private axisXSvg: D3Selection = null;
   private axisYSvg: D3Selection = null;
+  private axisXClass: string = 'x-axis';
+  private axisYClass: string = 'y-axis';
 
   /**
    * aixsGrid
@@ -68,27 +70,10 @@ export default class D3AxisChart extends D3Common {
   /**
    * line
    */
-  private lineStrokeWidth: number = 2;
-
-  /**
-   * area
-   */
-  private areaMouseOverOpacity: number = 0.6;
-
-  /**
-   * circle
-   */
-  private circleStrokeWidth: number = 2;
-
-  /**
-   * line area circle
-   */
-  private readonly lineKey = 'line';
-  private readonly areaKey = 'area';
-  private readonly circleKey = 'circle';
-  private readonly lineAndAreaKeyRegex = /(line-|area-|circle-)/gi;
+  private lineStrokeWidth: number = 0;
   private lineType: D3AxisChartLineType = 'STRAIGHT';
   private lineCurvType: D3AxisChartCurvType = 'curveBasis';
+  private readonly lineKey = 'line';
   private readonly lineCurvTypeMap: Map<
     D3AxisChartCurvType,
     typeof curveBasis | typeof curveMonotoneX | typeof curveMonotoneY
@@ -97,6 +82,26 @@ export default class D3AxisChart extends D3Common {
     ['curveMonotoneX', curveMonotoneX],
     ['curveMonotoneY', curveMonotoneY],
   ]);
+  private readonly lineClassList: Set<string> = new Set();
+
+  /**
+   * area
+   */
+  private areaMouseOverOpacity: number = 0;
+  private readonly areaKey = 'area';
+  private readonly areaClassList: Set<string> = new Set();
+
+  /**
+   * circle
+   */
+  private circleStrokeWidth: number = 0;
+  private readonly circleKey = 'circle';
+  private readonly circleClassList: Set<string> = new Set();
+
+  /**
+   * line area circle
+   */
+  private readonly lineAndAreaKeyRegex = /(line-|area-|circle-)/gi;
   private commonKeyMap: Map<string, string> = new Map([]);
   private mouseOverActionMap = new Map([
     [this.lineKey, false],
@@ -201,22 +206,24 @@ export default class D3AxisChart extends D3Common {
     axisYTicks = 0,
     axisXTickSize = 0,
     axisYTickSize = 0,
-    axisXClass = '',
-    axisYClass = '',
+    axisXClass = 'x-axis',
+    axisYClass = 'y-axis',
     axisFontSize = 10,
   }: D3AxisChartSetAxisParams) {
     this.axisXTicks = axisXTicks;
     this.axisYTicks = axisYTicks;
     this.axisXTickSize = axisXTickSize;
     this.axisYTickSize = axisYTickSize;
+    this.axisXClass = axisXClass;
+    this.axisYClass = axisYClass;
 
     this.axisXSvg = this.svg
       .append('g')
-      .attr('class', axisXClass)
+      .attr('class', this.axisXClass)
       .attr(
         'transform',
         `translate(
-          ${this.margin.left + this.margin.left * 0.4}, 
+          ${this.margin.left + this.margin.right * 0.4}, 
           ${this.height - this.margin.top}
         )`,
       )
@@ -224,7 +231,7 @@ export default class D3AxisChart extends D3Common {
 
     this.axisYSvg = this.svg
       .append('g')
-      .attr('class', axisYClass)
+      .attr('class', this.axisYClass)
       .attr(
         'transform',
         `translate(
@@ -242,6 +249,7 @@ export default class D3AxisChart extends D3Common {
     if (this.axisXSvg) {
       const axisX = axisBottom(this.xScale())
         .tickSize(this.axisXTickSize)
+        // .tickSizeInner(-this.height)
         .ticks(this.axisXTicks)
         .tickFormat(xTickFormat);
       axisX(this.axisXSvg);
@@ -261,12 +269,15 @@ export default class D3AxisChart extends D3Common {
     axisBackgroundGridYTicks = 5,
     axisBackgroundGridXTickFormat = () => '',
     axisBackgroundGridYTickFormat = () => '',
-    axisBackgroundGridXClass = '',
-    axisBackgroundGridYClass = '',
+    axisBackgroundGridXColor = palette.gray['200'],
+    axisBackgroundGridYColor = palette.gray['200'],
+    axisBackgroundGridXClass = 'x-axis-background-grid',
+    axisBackgroundGridYClass = 'y-axis-background-grid',
   }: D3AxisChartSetAxisBackgroundGridParams) {
     if (axisBackgroundGridDirection.x) {
       this.axisGridXSvg = this.svg
         .append('g')
+        .attr('color', axisBackgroundGridXColor)
         .attr('class', axisBackgroundGridXClass)
         .attr(
           'transform',
@@ -285,6 +296,7 @@ export default class D3AxisChart extends D3Common {
     if (axisBackgroundGridDirection.y) {
       this.axisGridYSvg = this.svg
         .append('g')
+        .attr('color', axisBackgroundGridYColor)
         .attr('class', axisBackgroundGridYClass)
         .attr(
           'transform',
@@ -323,6 +335,10 @@ export default class D3AxisChart extends D3Common {
     isMouseOverAction = false,
     uuid = '',
   }: D3AxisChartDrawLineParams) {
+    this.lineStrokeWidth = lineStrokeWidth;
+    this.lineType = lineType;
+    this.lineCurvType = lineCurvType;
+
     const { commonKey, className } = this.getCommonKeyAndClassName(
       this.lineKey,
       color,
@@ -330,9 +346,7 @@ export default class D3AxisChart extends D3Common {
     );
     this.setCommonKeyMap(commonKey, color);
     this.mouseOverActionMap.set(this.lineKey, isMouseOverAction);
-    this.lineStrokeWidth = lineStrokeWidth;
-    this.lineType = lineType;
-    this.lineCurvType = lineCurvType;
+    this.lineClassList.add(className);
 
     const xScale = this.xScale();
     const yScale = this.yScale();
@@ -360,7 +374,7 @@ export default class D3AxisChart extends D3Common {
           ${this.margin.left + this.margin.right * 0.4},
           ${this.margin.top}
         )
-        `,
+      `,
       );
 
     if (this.mouseOverActionMap.get(this.lineKey)) {
@@ -398,6 +412,8 @@ export default class D3AxisChart extends D3Common {
     areaMouseOverOpacity = 0.6,
     uuid = '',
   }: D3AxisChartDrawAreaParams) {
+    this.areaMouseOverOpacity = areaMouseOverOpacity;
+
     const { commonKey, className } = this.getCommonKeyAndClassName(
       this.areaKey,
       color,
@@ -405,7 +421,7 @@ export default class D3AxisChart extends D3Common {
     );
     this.setCommonKeyMap(commonKey, color);
     this.mouseOverActionMap.set(this.areaKey, isMouseOverAction);
-    this.areaMouseOverOpacity = areaMouseOverOpacity;
+    this.areaClassList.add(className);
 
     const xScale = this.xScale();
     const yScale = this.yScale();
@@ -476,6 +492,8 @@ export default class D3AxisChart extends D3Common {
     uuid = '',
     isMouseOverAction = false,
   }: D3AxisChartDrawCircleParams) {
+    this.circleStrokeWidth = circleStrokeWidth;
+
     const { commonKey, className } = this.getCommonKeyAndClassName(
       this.lineKey,
       color,
@@ -483,7 +501,7 @@ export default class D3AxisChart extends D3Common {
     );
     this.setCommonKeyMap(commonKey, color);
     this.mouseOverActionMap.set(this.circleKey, isMouseOverAction);
-    this.circleStrokeWidth = circleStrokeWidth;
+    this.circleClassList.add(className);
 
     const xScale = this.xScale();
     const yScale = this.yScale();

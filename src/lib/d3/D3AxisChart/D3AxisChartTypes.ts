@@ -22,15 +22,15 @@ export type D3AxisChartConstructorParams = {
 /**
  * axis
  */
-export type D3AxisChartSetAxisParams = Partial<{
-  axisXTicks: number;
-  axisYTicks: number;
-  axisXTickSize: number;
-  axisYTickSize: number;
-  axisXClass: string;
-  axisYClass: string;
-  axisFontSize: number;
-}>;
+export type D3AxisChartSetAxisParams = {
+  axisXTicks?: number;
+  axisYTicks?: number;
+  axisXTickSize?: number;
+  axisYTickSize?: number;
+  axisXClass?: string;
+  axisYClass?: string;
+  axisFontSize?: number;
+};
 
 /**
  * background axis
@@ -44,6 +44,8 @@ export type D3AxisChartSetAxisBackgroundGridParams = {
   axisBackgroundGridYTicks?: number;
   axisBackgroundGridXTickFormat?: D3TickFormat;
   axisBackgroundGridYTickFormat?: D3TickFormat;
+  axisBackgroundGridXColor?: string;
+  axisBackgroundGridYColor?: string;
   axisBackgroundGridXClass?: string;
   axisBackgroundGridYClass?: string;
 };
