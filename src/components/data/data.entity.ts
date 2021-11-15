@@ -33,8 +33,10 @@ export default class Data {
   @UpdateDateColumn({ type: 'timestamp' })
   updated_at!: Date;
 
-  @ManyToOne(() => User, (user) => user.datas)
+  @ManyToOne(() => User, (user) => user.datas, {
+    createForeignKeyConstraints: false,
+  })
   @Index('ix_user_id')
-  @JoinColumn({ name: 'user_id' })
+  @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   user!: User;
 }
