@@ -1,9 +1,6 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { Data } from '..';
 
-/**
- * READ
- */
 @EntityRepository(Data)
 export default class DataQueryRepository extends Repository<Data> {
   findOneById(id: number) {

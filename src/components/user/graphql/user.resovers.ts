@@ -1,16 +1,5 @@
-import { gql } from 'apollo-server-core';
 import { IResolvers } from '@graphql-tools/utils';
-import { userActionService } from '.';
-
-const typeDef = gql`
-  type User {
-    id: Int!
-    name: String!
-  }
-  extend type Query {
-    user(id: Int!): User
-  }
-`;
+import { userActionService } from '..';
 
 const resolvers: IResolvers = {
   User: {},
@@ -24,7 +13,4 @@ const resolvers: IResolvers = {
   Mutation: {},
 };
 
-export default {
-  typeDef,
-  resolvers,
-};
+export default resolvers;

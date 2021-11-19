@@ -1,6 +1,6 @@
-export { default as User } from './user.entity';
-export { default as UserRepository } from './repository/user.repository';
-export { default as UserQueryRepository } from './repository/user.query.repository';
-export { default as userService } from './service/user.service';
-export { default as userActionService } from './service/user.action.service';
-export { default as userGraphQL } from './user.graphql';
+export { User } from './entity';
+export { UserRepository } from './repository';
+export { UserQueryRepository } from './repository';
+export { userService } from './service';
+export { userActionService } from './service';
+export * as userGraphQL from './graphql';

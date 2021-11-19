@@ -5,6 +5,7 @@ import { User } from '..';
 export default class UserQueryRepository extends Repository<User> {
   findOneById(id: number) {
     return this.createQueryBuilder('user')
+      .select('user')
       .where('user.id = :id', { id })
       .getOne();
   }
