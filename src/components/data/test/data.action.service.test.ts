@@ -3,7 +3,7 @@ import { ApolloError } from 'apollo-server-core';
 import { Connection } from 'typeorm';
 import { dataActionService } from '..';
 import { Database } from '../../../datastore';
-import initializeEnvironment from '../../../lib/initializeEnvironment';
+import { initializeEnvironment } from '../../../lib';
 import { errorCode } from '../../error';
 
 describe('dataActionService Test', () => {

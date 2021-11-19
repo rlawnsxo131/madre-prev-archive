@@ -1,5 +1,5 @@
 import { Database } from './datastore';
-import initializeEnvironment from './lib/initializeEnvironment';
+import { initializeEnvironment } from './lib';
 import Application from './application';
 import { Connection } from 'typeorm';
 

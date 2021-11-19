@@ -1,7 +1,7 @@
 import 'jest';
 import { Connection } from 'typeorm';
 import { Database } from '../../../datastore';
-import initializeEnvironment from '../../../lib/initializeEnvironment';
+import { initializeEnvironment } from '../../../lib';
 
 describe('authService Test', () => {
   let connection: Connection | null = null;
