@@ -1,2 +1,3 @@
-export { default as authRoute } from './auth.route';
-export { default as authService } from './auth.service';
+export { authService } from './service';
+export { authActionService } from './service';
+export { authRoute } from './route';
