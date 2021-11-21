@@ -22,7 +22,7 @@
     "isolatedModules": true,
     "noUnusedLocals": true,
     "noEmit": false,
-    "jsxImportSource": "@emotion/react"
+    "jsxImportSource": "@emotion/react",
   },
   "include": [
     "src/**/**/*",

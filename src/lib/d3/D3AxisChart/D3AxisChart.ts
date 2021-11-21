@@ -35,8 +35,7 @@ import {
 } from './D3AxisChartTypes';
 
 export default class D3AxisChart extends D3Common {
-  /**
-   * initialize
+  /**   * initialize
    */
   private svg: D3SelectionSVG;
   private width: number;
