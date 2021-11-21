@@ -1,9 +1,9 @@
 import { config } from 'dotenv';
 import { resolve } from 'path';
-import constant from '../constant';
+import constants from '../constants';
 
 export default function initializeEnvironment() {
   config({
-    path: resolve(process.cwd(), constant.environmentFilename),
+    path: resolve(process.cwd(), constants.environmentFilename),
   });
 }
