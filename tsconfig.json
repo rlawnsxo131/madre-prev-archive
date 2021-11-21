@@ -25,6 +25,7 @@
     "isolatedModules": true,
     "noUnusedLocals": true,
     "noEmit": false,
+    "downlevelIteration": true,
     "jsxImportSource": "@emotion/react",
   },
   "include": [

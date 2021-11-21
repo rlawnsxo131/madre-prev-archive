@@ -1,6 +1,8 @@
 import { extent, randomInt, randomUniform } from 'd3';
 
-function d3Extent() {}
+function d3Extent(iterable: Iterable<string>) {
+  return extent(iterable);
+}
 
 function d3RandomInt(min: number, max: number) {
   return randomInt(min, max)();

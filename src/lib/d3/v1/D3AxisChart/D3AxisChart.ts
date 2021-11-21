@@ -13,10 +13,11 @@ import {
   scaleLinear,
   select,
 } from 'd3';
-import { palette } from '../../../styles';
+import { palette } from '../../../../styles';
 import D3Common from '../D3Common';
 import {
   D3Axis,
+  D3Data,
   D3DoubleNumberArray,
   D3Selection,
   D3SelectionSVG,
@@ -35,7 +36,8 @@ import {
 } from './D3AxisChartTypes';
 
 export default class D3AxisChart extends D3Common {
-  /**   * initialize
+  /**
+   * initialize
    */
   private svg: D3SelectionSVG;
   private width: number;

@@ -1,19 +1,25 @@
 import { css } from '@emotion/react';
 import { useEffect, useRef } from 'react';
 import { D3AxisChart } from '../lib/d3';
-import { D3Data } from '../lib/d3/D3Common/D3CommonTypes';
+import { D3Data } from '../lib/d3/v1/D3Common/D3CommonTypes';
 import {
   generateUUID,
   getRandomColors,
   getRandomIntInclusive,
 } from '../lib/utils';
-import { palette } from '../styles';
 
 interface TestPageProps {}
 
 function TestPage(props: TestPageProps) {
   const ref = useRef<HTMLDivElement>(null);
 
+  const dataList: D3Data[] = Array.from({ length: 5 }).map((_, i) => ({
+    d3Position: Array.from({ length: 11 }).map((v, j) => [
+      j * 10,
+      getRandomIntInclusive(10, 87),
+    ]),
+    key: i,
+  }));
   const width = 460;
   const height = 400;
   const margin = {
@@ -27,14 +33,6 @@ function TestPage(props: TestPageProps) {
 
   useEffect(() => {
     if (!ref.current) return;
-
-    const dataList: D3Data[] = Array.from({ length: 5 }).map((_, i) => ({
-      d3Position: Array.from({ length: 11 }).map((v, j) => [
-        j * 10,
-        getRandomIntInclusive(10, 87),
-      ]),
-      key: i,
-    }));
 
     const chart = new D3AxisChart({
       container: ref.current,
@@ -79,7 +77,7 @@ function TestPage(props: TestPageProps) {
         color: colors[i],
         lineType: 'CURVE',
         lineCurvType: 'curveMonotoneX',
-        lineStrokeWidth: 4,
+        lineStrokeWidth: 2,
         linejoinType: 'miter',
         linecapType: 'butt',
         lineDrawAnimate: true,
@@ -107,7 +105,8 @@ function TestPage(props: TestPageProps) {
       // });
     });
 
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
+      // chart.removeLine();
       const dataList: D3Data[] = Array.from({ length: 5 }).map((_, i) => ({
         d3Position: Array.from({ length: 11 }).map((v, j) => [
           j * 10,
@@ -118,41 +117,46 @@ function TestPage(props: TestPageProps) {
 
       const colors = getRandomColors(dataList.length);
 
-      dataList.forEach((v, i) => {
-        const uuid = generateUUID();
-        chart.drawLine({
-          data: v,
-          color: colors[i],
-          lineType: 'CURVE',
-          lineCurvType: 'curveMonotoneX',
-          lineStrokeWidth: 4,
-          linejoinType: 'miter',
-          linecapType: 'butt',
-          lineDrawAnimate: true,
-          lineDrawAnimateDuration: 1500,
-          isMouseOverAction: true,
-          uuid,
-        });
-        // chart.drawArea({
-        //   data: v,
-        //   color: colors[i],
-        //   // areaOpacity: 0,
-        //   areaDrawAnimate: true,
-        //   areaDrawAnimateDuration: 1500,
-        //   // areaType: 'full',
-        //   isMouseOverAction: true,
-        //   areaMouseOverOpacity: 0.6,
-        //   uuid,
-        // });
-        // chart.drawCircle({
-        //   data: v,
-        //   color: colors[i],
-        //   circleRadius: 3,
-        //   circleStrokeWidth: 2,
-        //   uuid,
-        // });
-      });
+      // dataList.forEach((v, i) => {
+      // const uuid = generateUUID();
+      // chart.drawLine({
+      //   data: v,
+      //   color: colors[i],
+      //   lineType: 'CURVE',
+      //   lineCurvType: 'curveMonotoneX',
+      //   lineStrokeWidth: 2,
+      //   linejoinType: 'miter',
+      //   linecapType: 'butt',
+      //   lineDrawAnimate: true,
+      //   lineDrawAnimateDuration: 1500,
+      //   isMouseOverAction: true,
+      //   uuid,
+      // });
+
+      // chart.drawArea({
+      //   data: v,
+      //   color: colors[i],
+      //   // areaOpacity: 0,
+      //   areaDrawAnimate: true,
+      //   areaDrawAnimateDuration: 1500,
+      //   // areaType: 'full',
+      //   isMouseOverAction: true,
+      //   areaMouseOverOpacity: 0.6,
+      //   uuid,
+      // });
+      // chart.drawCircle({
+      //   data: v,
+      //   color: colors[i],
+      //   circleRadius: 3,
+      //   circleStrokeWidth: 2,
+      //   uuid,
+      // });
+      // });
     }, 1500);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, [ref.current]);
 
   return <div css={block} ref={ref}></div>;
@@ -165,18 +169,22 @@ const block = css`
   justify-content: center;
   align-items: center;
 
-  /* .x-axis {
+  .x-axis {
     & {
-      path {
-        color: ${palette.gray['200']};
+      path,
+      line {
+        display: none;
       }
     }
   }
   .y-axis {
-    & path {
-      display: none;
+    & {
+      path,
+      line {
+        display: none;
+      }
     }
-  } */
+  }
 `;
 
 export default TestPage;
