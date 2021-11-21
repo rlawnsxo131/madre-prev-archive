@@ -41,8 +41,8 @@ export default class D3AxisChart2 extends D3Common2 {
   /**
    * axis svg
    */
-  private xAxisSVG: D3SelectionSVG | null = null;
-  private yAxisSVG: D3SelectionSVG | null = null;
+  private axisXSVG: D3SelectionSVG | null = null;
+  private axisYSVG: D3SelectionSVG | null = null;
 
   constructor({
     container,
@@ -102,7 +102,7 @@ export default class D3AxisChart2 extends D3Common2 {
   }
 
   setAxisSvg() {
-    this.xAxisSVG = null;
-    this.yAxisSVG = null;
+    this.axisXSVG = null;
+    this.axisYSVG = null;
   }
 }
