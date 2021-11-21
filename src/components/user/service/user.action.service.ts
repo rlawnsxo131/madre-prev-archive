@@ -6,7 +6,7 @@ async function getUserAction(id: number) {
   if (!user) {
     throw errorService.createApolloError({
       message: 'Not Found User',
-      errorCode: errorCode.NOT_FOUND,
+      errorCode: errorCode.BAD_REQUEST,
       params: { id },
     });
   }
