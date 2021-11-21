@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { D3AxisChart2 } from '../lib/d3';
 
 interface TestPage2Props {}
 
