@@ -19,9 +19,6 @@ export default class Fastify {
     });
     this.app.register(corsPlugin, {
       origin: (origin, callback) => {
-        if (!origin) {
-          return callback(null, true);
-        }
         const allowedHost = [/^http\:\/\/localhost/];
         const allowed = allowedHost.some((regex) => regex.test(origin));
         callback(null, allowed);
