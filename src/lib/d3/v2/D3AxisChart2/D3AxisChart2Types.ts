@@ -1,4 +1,4 @@
-import { AppendSVGParams, D3Margin } from '../D3Common2/D3Common2Types';
+import { AppendSVGParams, D3Data, D3Margin } from '../D3Common2/D3Common2Types';
 
 export type D3AxisChartConstructorParams = {
   width: number;
@@ -15,3 +15,9 @@ export type D3AxisChartSetAxisOptionsParams = Partial<{
   axisYClass: string;
   axisFontSize: number;
 }>;
+
+export type D3AxisChartSetDataAndDomainParams = {
+  data: D3Data[];
+  xKey: keyof D3Data;
+  yKey: keyof D3Data;
+};

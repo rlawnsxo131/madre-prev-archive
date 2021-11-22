@@ -4,7 +4,7 @@ import ErrorBoundary from './components/error';
 import HomeTemplate from './components/home/HomeTemplate';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
-import TestPage from './pages/TestPage';
+import TestPage2 from './pages/TestPage2';
 
 interface AppProps {}
 
@@ -18,7 +18,7 @@ function App(props: AppProps) {
           <Route path="notice" element={<div>notice</div>} />
           <Route path="policy" element={<div>policy</div>} />
         </Route>
-        <Route path="/test" element={<TestPage />} />
+        <Route path="/test" element={<TestPage2 />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Core />
