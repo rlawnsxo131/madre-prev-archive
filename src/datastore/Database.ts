@@ -7,8 +7,8 @@ import {
 } from 'typeorm';
 
 export default class Database {
-  private connectionManager: ConnectionManager;
-  private connectionOptions: ConnectionOptions;
+  private readonly connectionManager: ConnectionManager;
+  private readonly connectionOptions: ConnectionOptions;
 
   constructor() {
     this.connectionManager = getConnectionManager();
