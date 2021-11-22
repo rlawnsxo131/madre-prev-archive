@@ -7,8 +7,7 @@ interface DataArgs {
 
 const resolvers: IResolvers = {
   Query: {
-    async data(_, args: DataArgs) {
-      const { id } = args;
+    async data(_, { id }: DataArgs) {
       const data = await dataActionService.getDataAction(id);
       return data;
     },

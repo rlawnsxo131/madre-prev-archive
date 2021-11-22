@@ -8,8 +8,7 @@ interface UserArgs {
 const resolvers: IResolvers = {
   User: {},
   Query: {
-    async user(_, args: UserArgs) {
-      const { id } = args;
+    async user(_, { id }: UserArgs) {
       const user = await userActionService.getUserAction(id);
       return user;
     },
