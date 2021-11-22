@@ -25,7 +25,7 @@ describe('userActionService Test', () => {
       await userActionService.getUserAction(id);
     } catch (e) {
       const error = e as ApolloError;
-      expect(error.extensions.code).toBe(errorCode.NOT_FOUND);
+      expect(error.extensions.code).toBe(errorCode.BAD_REQUEST);
       expect(error.extensions.id).toBe(id);
     }
   });
