@@ -8,6 +8,7 @@ import {
   D3Margin,
   D3ScaleType,
   D3SelectionSVG,
+  D3TickFormat,
 } from '../D3Common2/D3Common2Types';
 import {
   D3AxisChartConstructorParams,
@@ -15,7 +16,6 @@ import {
 } from './D3AxisChart2Types';
 import { startOfMonth, endOfMonth } from 'date-fns';
 import { palette } from '../../../../styles';
-import { D3TickFormat } from '../../v1/D3Common/D3CommonTypes';
 
 export default class D3AxisChart2 extends D3Common2 {
   /**
