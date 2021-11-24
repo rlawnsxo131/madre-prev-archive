@@ -17,7 +17,6 @@ import { palette } from '../../../../styles';
 import D3Common from '../D3Common';
 import {
   D3Axis,
-  D3Data,
   D3DoubleNumberArray,
   D3Selection,
   D3SelectionSVG,
