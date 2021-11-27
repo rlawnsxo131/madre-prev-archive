@@ -2,7 +2,7 @@ import { userService } from '..';
 import { errorCode, errorService } from '../../error';
 
 async function getUserAction(id: number) {
-  const user = await userService.getUserById(id);
+  const user = await userService.getOneById(id);
   if (!user) {
     throw errorService.createApolloError({
       message: 'Not Found User',

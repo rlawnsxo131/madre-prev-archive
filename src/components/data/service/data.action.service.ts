@@ -2,7 +2,7 @@ import { dataService } from '..';
 import { errorCode, errorService } from '../../error';
 
 async function getDataAction(id: number) {
-  const data = await dataService.getDataById(id);
+  const data = await dataService.getOneById(id);
   if (!data) {
     throw errorService.createApolloError({
       message: 'Not Found Data',
