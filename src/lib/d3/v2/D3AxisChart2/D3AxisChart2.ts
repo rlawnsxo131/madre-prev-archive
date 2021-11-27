@@ -31,6 +31,8 @@ export default class D3AxisChart2 extends D3Common2 {
    * data
    */
   private data: D3Data[] = [];
+  private xDomainKey: string = 'x';
+  private yDomainKey: string = 'y';
   private xDomain: D3Domain = [0, 0];
   private yDomain: D3Domain = [0, 0];
 
@@ -54,10 +56,14 @@ export default class D3AxisChart2 extends D3Common2 {
   private axisFontSize = 10;
 
   /**
-   * axis svg
+   * axis
    */
   private axisX: D3Axis | null = null;
   private axisY: D3Axis | null = null;
+
+  /**
+   * line options
+   */
 
   constructor({
     container,
@@ -94,17 +100,28 @@ export default class D3AxisChart2 extends D3Common2 {
   /**
    * There may be a lot of data, so write it with a for loop
    */
-  setDomain(xKey: string, yKey: string) {
+  setDomain(xDomainKey?: string, yDomainKey?: string) {
     console.info('event: setDomain');
+
+    // set domain key
+    if (xDomainKey) {
+      this.xDomainKey = xDomainKey;
+    }
+    if (yDomainKey) {
+      this.yDomainKey = yDomainKey;
+    }
+
+    // filter data and calculate min, max domain data
     const xDomainPool = [];
     const yDomainPool = [];
     for (let i = 0; i < this.data.length; i++) {
-      xDomainPool.push(this.data[i][xKey]);
-      yDomainPool.push(this.data[i][yKey]);
+      xDomainPool.push(this.data[i][this.xDomainKey]);
+      yDomainPool.push(this.data[i][this.yDomainKey]);
     }
     const [xMin = 0, xMax = 0] = extent(xDomainPool);
     const [yMin = 0, yMax = 0] = extent(yDomainPool);
 
+    // set domain data
     if (this.xScaleType === 'number') {
       const max = Math.ceil(xMax / 100) * 100;
       this.xDomain = [0, max];
@@ -140,6 +157,9 @@ export default class D3AxisChart2 extends D3Common2 {
     return scaleLinear().domain(this.yDomain).range(this.yRange).nice();
   }
 
+  /**
+   * @working
+   */
   setAxisOptions({
     axisXTicks,
     axisYTicks,
@@ -229,14 +249,11 @@ export default class D3AxisChart2 extends D3Common2 {
 
   /**
    * previously possible actions
-   * @this.setData(data);
-   * @this.setScaleType('number', 'number')
-   * @this.setDomain('x', 'y');
-   * @this.setAxisOptions({
-   *  axisXTickFormat: (d, i) => `${d}`,
-   *  axisYTickFormat: (d, i) => `${d}`
-   * });
-   * @this.setAxis();
+   * @this.setData
+   * @this.setScaleType
+   * @this.setDomain
+   * @this.setAxisOptions;
+   * @this.setAxis;
    */
   updateAxis() {
     console.info('event: updateAxis');

@@ -60,7 +60,7 @@ function TestPage2(props: TestPage2Props) {
       }));
       chart.setData(data);
       chart.setScaleType('number', 'number');
-      chart.setDomain('x', 'y');
+      chart.setDomain();
       chart.setAxisOptions({
         axisXTickFormat: (d, i) => `${d}`,
       });
@@ -74,7 +74,7 @@ function TestPage2(props: TestPage2Props) {
         y: getRandomIntInclusive(0, 100),
       }));
       chart.setData(data);
-      chart.setDomain('x', 'y');
+      chart.setDomain();
       chart.setAxis();
       chart.updateAxis();
     }, 3000);
