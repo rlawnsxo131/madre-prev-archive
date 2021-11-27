@@ -171,9 +171,13 @@ export default class D3AxisChart2 extends D3Common2 {
     if (axisFontSize) {
       this.axisFontSize = axisFontSize;
     }
-    this.axisXTickSize = this.height - (this.margin.bottom + this.margin.top);
-    this.axisYTickSize =
-      this.width - (this.margin.left + this.margin.right * 0.4);
+    if (this.height) {
+      this.axisXTickSize = this.height - (this.margin.bottom + this.margin.top);
+    }
+    if (this.width) {
+      this.axisYTickSize =
+        this.width - (this.margin.left + this.margin.right * 0.4);
+    }
   }
 
   setAxis() {
