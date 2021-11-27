@@ -13,9 +13,9 @@ import {
 import {
   D3AxisChartConstructorParams,
   D3AxisChartSetAxisOptionsParams,
+  D3AxisChartSetAxisTickFormatParams,
 } from './D3AxisChart2Types';
 import { startOfMonth, endOfMonth } from 'date-fns';
-import { palette } from '../../../../styles';
 
 export default class D3AxisChart2 extends D3Common2 {
   /**
@@ -82,10 +82,12 @@ export default class D3AxisChart2 extends D3Common2 {
   }
 
   setData(data: D3Data[]) {
+    console.info('event: setData');
     this.data = data;
   }
 
   setScaleType(xType: D3ScaleType, yType: D3ScaleType) {
+    console.info('event: setScaleType');
     this.xScaleType = xType;
     this.yScaleType = yType;
   }
@@ -94,6 +96,7 @@ export default class D3AxisChart2 extends D3Common2 {
    * There may be a lot of data, so write it with a for loop
    */
   setDomain(xKey: string, yKey: string) {
+    console.info('event: setDomain');
     const xDomainPool = [];
     const yDomainPool = [];
     for (let i = 0; i < this.data.length; i++) {
@@ -149,6 +152,7 @@ export default class D3AxisChart2 extends D3Common2 {
     axisYClass = '',
     axisFontSize = 10,
   }: D3AxisChartSetAxisOptionsParams) {
+    console.info('event: setAxisOptions');
     this.axisXTicks = axisXTicks;
     this.axisYTicks = axisYTicks;
     this.axisXTickSize = axisXTickSize - (this.margin.bottom + this.margin.top);
@@ -161,7 +165,21 @@ export default class D3AxisChart2 extends D3Common2 {
     this.axisFontSize = axisFontSize;
   }
 
+  setAxisTickFormat({
+    axisXTickFormat,
+    axisYTickFormat,
+  }: D3AxisChartSetAxisTickFormatParams) {
+    console.info('event: setAxisTickFormat');
+    if (axisXTickFormat) {
+      this.axisXTickFormat = axisXTickFormat;
+    }
+    if (axisYTickFormat) {
+      this.axisYTickFormat = axisYTickFormat;
+    }
+  }
+
   setAxis() {
+    console.info('event: setAxis');
     this.axisX = axisBottom(this.xScale())
       .tickSize(0)
       .tickSizeInner(-this.axisXTickSize)
@@ -176,6 +194,7 @@ export default class D3AxisChart2 extends D3Common2 {
   }
 
   appendAxis() {
+    console.info('event: appendAxis');
     if (this.axisX) {
       this.svg
         .append('g')
@@ -188,9 +207,7 @@ export default class D3AxisChart2 extends D3Common2 {
           )`,
         )
         .style('font-size', this.axisFontSize)
-        .call(this.axisX)
-        .selectAll('line, path')
-        .style('color', palette.gray['300']);
+        .call(this.axisX);
     }
     if (this.axisY) {
       this.svg
@@ -204,9 +221,36 @@ export default class D3AxisChart2 extends D3Common2 {
           )`,
         )
         .style('font-size', this.axisFontSize)
-        .call(this.axisY)
-        .selectAll('line, path')
-        .style('color', palette.gray['300']);
+        .call(this.axisY);
+    }
+  }
+
+  /**
+   * previously possible actions
+   * @this.setData(data);
+   * @this.setScaleType('number', 'number')
+   * @this.setDomain('x', 'y');
+   * @this.setAxisTickFormat(
+   *  axisXTickFormat: (d, i) => `${d}`,
+   *  axisYTickFormat: (d, i) => `${d}
+   * )
+   * @this.setAxis();
+   */
+  updateAxis() {
+    console.info('event: updateAxis');
+    if (this.axisX) {
+      this.svg
+        .selectAll(`.${this.axisXClass}`)
+        .transition()
+        .duration(750)
+        .call(this.axisX as any);
+    }
+    if (this.axisY) {
+      this.svg
+        .selectAll(`.${this.axisYClass}`)
+        .transition()
+        .duration(750)
+        .call(this.axisY as any);
     }
   }
 }

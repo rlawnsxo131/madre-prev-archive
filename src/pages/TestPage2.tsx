@@ -3,6 +3,7 @@ import { format, add } from 'date-fns';
 import { useEffect, useRef } from 'react';
 import { D3AxisChart2 } from '../lib/d3';
 import { getRandomIntInclusive } from '../lib/utils';
+import { palette } from '../styles';
 
 interface TestPage2Props {}
 
@@ -24,7 +25,6 @@ function TestPage2(props: TestPage2Props) {
       months: i,
     });
     return {
-      // x: i * 100,
       x,
       y: getRandomIntInclusive(0, 10000),
     };
@@ -39,8 +39,8 @@ function TestPage2(props: TestPage2Props) {
       height,
       margin,
     });
-    chart.setScaleType('time', 'number');
     chart.setData(data);
+    chart.setScaleType('time', 'number');
     chart.setDomain('x', 'y');
     chart.setAxisOptions({
       axisXTicks: 5,
@@ -48,12 +48,38 @@ function TestPage2(props: TestPage2Props) {
       axisXTickSize: height,
       axisYTickSize: width,
       axisXTickFormat: (d, i) => format(d as Date, 'yyyy-MM'),
-      axisXClass: '',
-      axisYClass: '',
+      axisXClass: 'axis-x',
+      axisYClass: 'axis-y',
       axisFontSize: 12,
     });
     chart.setAxis();
     chart.appendAxis();
+
+    setTimeout(() => {
+      const data = Array.from({ length: 11 }).map((_, i) => ({
+        x: i * 100,
+        y: getRandomIntInclusive(0, 100),
+      }));
+      chart.setData(data);
+      chart.setScaleType('number', 'number');
+      chart.setDomain('x', 'y');
+      chart.setAxisTickFormat({
+        axisXTickFormat: (d, i) => `${d}`,
+      });
+      chart.setAxis();
+      chart.updateAxis();
+    }, 1500);
+
+    setTimeout(() => {
+      const data = Array.from({ length: 11 }).map((_, i) => ({
+        x: i * 10,
+        y: getRandomIntInclusive(0, 100),
+      }));
+      chart.setData(data);
+      chart.setDomain('x', 'y');
+      chart.setAxis();
+      chart.updateAxis();
+    }, 3000);
   }, [ref.current]);
 
   return <div css={block} ref={ref}></div>;
@@ -66,6 +92,20 @@ const block = css`
   justify-content: center;
   align-items: center;
   overflow-x: scroll;
+
+  .axis-x {
+    line,
+    path {
+      color: ${palette.gray['300']};
+    }
+  }
+
+  .axis-y {
+    line,
+    path {
+      color: ${palette.gray['300']};
+    }
+  }
 `;
 
 export default TestPage2;

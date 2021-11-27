@@ -10,14 +10,19 @@ export type D3AxisChartConstructorParams = {
   margin: D3Margin;
 } & AppendSVGParams;
 
-export type D3AxisChartSetAxisOptionsParams = Partial<{
-  axisXTicks: number;
-  axisYTicks: number;
-  axisXTickSize: number;
-  axisYTickSize: number;
-  axisXTickFormat: D3TickFormat;
-  axisYTickFormat: D3TickFormat;
+export type D3AxisChartSetAxisOptionsParams = {
+  axisXTicks?: number;
+  axisYTicks?: number;
+  axisXTickSize?: number;
+  axisYTickSize?: number;
+  axisXTickFormat?: D3TickFormat;
+  axisYTickFormat?: D3TickFormat;
   axisXClass: string;
   axisYClass: string;
-  axisFontSize: number;
+  axisFontSize?: number;
+};
+
+export type D3AxisChartSetAxisTickFormatParams = Partial<{
+  axisXTickFormat: D3TickFormat;
+  axisYTickFormat: D3TickFormat;
 }>;
