@@ -13,7 +13,6 @@ import {
 import {
   D3AxisChartConstructorParams,
   D3AxisChartSetAxisOptionsParams,
-  D3AxisChartSetAxisTickFormatParams,
 } from './D3AxisChart2Types';
 import { startOfMonth, endOfMonth } from 'date-fns';
 
@@ -142,40 +141,39 @@ export default class D3AxisChart2 extends D3Common2 {
   }
 
   setAxisOptions({
-    axisXTicks = 0,
-    axisYTicks = 0,
-    axisXTickSize = 0,
-    axisYTickSize = 0,
-    axisXTickFormat = (d, i) => `${d}`,
-    axisYTickFormat = (d, i) => `${d}`,
-    axisXClass = '',
-    axisYClass = '',
-    axisFontSize = 10,
-  }: D3AxisChartSetAxisOptionsParams) {
-    console.info('event: setAxisOptions');
-    this.axisXTicks = axisXTicks;
-    this.axisYTicks = axisYTicks;
-    this.axisXTickSize = axisXTickSize - (this.margin.bottom + this.margin.top);
-    this.axisYTickSize =
-      axisYTickSize - (this.margin.left + this.margin.right * 0.4);
-    this.axisXTickFormat = axisXTickFormat;
-    this.axisYTickFormat = axisYTickFormat;
-    this.axisXClass = axisXClass;
-    this.axisYClass = axisYClass;
-    this.axisFontSize = axisFontSize;
-  }
-
-  setAxisTickFormat({
+    axisXTicks,
+    axisYTicks,
     axisXTickFormat,
     axisYTickFormat,
-  }: D3AxisChartSetAxisTickFormatParams) {
-    console.info('event: setAxisTickFormat');
+    axisXClass,
+    axisYClass,
+    axisFontSize,
+  }: D3AxisChartSetAxisOptionsParams) {
+    console.info('event: setAxisOptions');
+    if (axisXTicks) {
+      this.axisXTicks = axisXTicks;
+    }
+    if (axisYTicks) {
+      this.axisYTicks = axisYTicks;
+    }
     if (axisXTickFormat) {
       this.axisXTickFormat = axisXTickFormat;
     }
     if (axisYTickFormat) {
       this.axisYTickFormat = axisYTickFormat;
     }
+    if (axisXClass) {
+      this.axisXClass = axisXClass;
+    }
+    if (axisYClass) {
+      this.axisYClass = axisYClass;
+    }
+    if (axisFontSize) {
+      this.axisFontSize = axisFontSize;
+    }
+    this.axisXTickSize = this.height - (this.margin.bottom + this.margin.top);
+    this.axisYTickSize =
+      this.width - (this.margin.left + this.margin.right * 0.4);
   }
 
   setAxis() {
@@ -230,10 +228,10 @@ export default class D3AxisChart2 extends D3Common2 {
    * @this.setData(data);
    * @this.setScaleType('number', 'number')
    * @this.setDomain('x', 'y');
-   * @this.setAxisTickFormat(
+   * @this.setAxisOptions({
    *  axisXTickFormat: (d, i) => `${d}`,
-   *  axisYTickFormat: (d, i) => `${d}
-   * )
+   *  axisYTickFormat: (d, i) => `${d}`
+   * });
    * @this.setAxis();
    */
   updateAxis() {
@@ -253,4 +251,6 @@ export default class D3AxisChart2 extends D3Common2 {
         .call(this.axisY as any);
     }
   }
+
+  setLineOptions() {}
 }

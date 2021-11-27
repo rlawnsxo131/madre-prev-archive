@@ -45,8 +45,6 @@ function TestPage2(props: TestPage2Props) {
     chart.setAxisOptions({
       axisXTicks: 5,
       axisYTicks: 5,
-      axisXTickSize: height,
-      axisYTickSize: width,
       axisXTickFormat: (d, i) => format(d as Date, 'yyyy-MM'),
       axisXClass: 'axis-x',
       axisYClass: 'axis-y',
@@ -63,7 +61,7 @@ function TestPage2(props: TestPage2Props) {
       chart.setData(data);
       chart.setScaleType('number', 'number');
       chart.setDomain('x', 'y');
-      chart.setAxisTickFormat({
+      chart.setAxisOptions({
         axisXTickFormat: (d, i) => `${d}`,
       });
       chart.setAxis();
