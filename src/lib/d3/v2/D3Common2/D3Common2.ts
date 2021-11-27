@@ -17,4 +17,18 @@ export default class D3Common {
 
     return svg;
   }
+
+  protected calcMaxOfNumber(value: number) {
+    const list = [
+      0, 100, 1000, 5000, 10000, 50000, 100000, 500000, 1000000, 5000000,
+      10000000, 50000000, 100000000, 1000000000, 5000000000, 10000000000,
+      50000000000, 100000000000, 500000000000,
+    ];
+    for (let i = 0; i < list.length; i++) {
+      if (value <= list[i]) {
+        return list[i];
+      }
+    }
+    return 0;
+  }
 }

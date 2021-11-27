@@ -26,7 +26,7 @@ function TestPage2(props: TestPage2Props) {
     });
     return {
       x,
-      y: getRandomIntInclusive(0, 10000),
+      y: getRandomIntInclusive(2000, 10000),
     };
   });
 
@@ -59,7 +59,7 @@ function TestPage2(props: TestPage2Props) {
     setTimeout(() => {
       const data = Array.from({ length: 11 }).map((_, i) => ({
         x: i * 100,
-        y: getRandomIntInclusive(0, 100),
+        y: getRandomIntInclusive(1000, 39020),
       }));
       chart.setData(data);
       chart.setScaleType('number', 'number');

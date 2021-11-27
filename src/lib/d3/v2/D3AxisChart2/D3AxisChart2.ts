@@ -138,7 +138,8 @@ export default class D3AxisChart2 extends D3Common2 {
 
     // set domain data
     if (this.xScaleType === 'number') {
-      const max = Math.ceil(xMax / 100) * 100;
+      // const max = Math.ceil(xMax / 100) * 100;
+      const max = this.calcMaxOfNumber(xMax);
       this.xDomain = [0, max];
     } else {
       const min = startOfMonth(xMin);
@@ -147,7 +148,8 @@ export default class D3AxisChart2 extends D3Common2 {
     }
 
     if (this.yScaleType === 'number') {
-      const max = Math.ceil(yMax / 100) * 100;
+      // const max = Math.ceil(xMax / 100) * 100;
+      const max = this.calcMaxOfNumber(yMax);
       this.yDomain = [0, max];
     } else {
       const min = startOfMonth(yMin);
@@ -228,7 +230,6 @@ export default class D3AxisChart2 extends D3Common2 {
       this.svg
         .append('g')
         .attr('class', this.axisXClass)
-        .attr('font-size', this.axisFontSize)
         .attr(
           'transform',
           `translate(
@@ -236,6 +237,7 @@ export default class D3AxisChart2 extends D3Common2 {
             ${this.height - this.margin.top}
           )`,
         )
+        .style('font-size', this.axisFontSize)
         .call(this.axisX);
     }
 
@@ -243,7 +245,6 @@ export default class D3AxisChart2 extends D3Common2 {
       this.svg
         .append('g')
         .attr('class', this.axisYClass)
-        .attr('font-size', this.axisFontSize)
         .attr(
           'transform',
           `translate(
@@ -251,6 +252,7 @@ export default class D3AxisChart2 extends D3Common2 {
             ${this.margin.top}
           )`,
         )
+        .style('font-size', this.axisFontSize)
         .call(this.axisY);
     }
   }
