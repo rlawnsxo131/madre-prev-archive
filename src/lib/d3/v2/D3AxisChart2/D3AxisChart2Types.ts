@@ -16,18 +16,21 @@ export type D3AxisChartConstructorParams = {
 export type D3AxisChartSetAxisOptionsParams = Partial<{
   axisXTicks: number;
   axisYTicks: number;
+  axisXTickVisible: boolean;
+  axisYTickVisible: boolean;
   axisXTickFormat: D3TickFormat;
   axisYTickFormat: D3TickFormat;
   axisXClass: string;
   axisYClass: string;
   axisFontSize: number;
+  axisTransitionDuration: number;
 }>;
 
 /**
  * line
  */
 export type D3AxisChartLineType = 'STRAIGHT' | 'CURVE';
-export type D3AxisChartCurvType =
+export type D3AxisChartLinecurvType =
   | 'curveBasis'
   | 'curveMonotoneX'
   | 'curveMonotoneY';
@@ -37,11 +40,10 @@ export type D3AxisChartLinejoinType = 'round' | 'miter';
 export type D3AxisChartSetLineOptionsParams = Partial<{
   color: string;
   lineType: D3AxisChartLineType;
-  lineCurvType: D3AxisChartCurvType;
-  lineStrokeWidth: number;
+  linecurvType: D3AxisChartLinecurvType;
   linecapType: D3AxisChartLinecapType;
   linejoinType: D3AxisChartLinejoinType;
-  lineDrawAnimate: boolean;
-  lineDrawAnimateDuration: number;
-  isMouseOverAction: boolean;
+  lineStrokeWidth: number;
+  lineTransition: boolean;
+  lineTransitionDuration: number;
 }>;

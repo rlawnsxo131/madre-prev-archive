@@ -41,10 +41,13 @@ function TestPage2(props: TestPage2Props) {
     });
     chart.setData(data);
     chart.setScaleType('time', 'number');
-    chart.setDomain('x', 'y');
+    chart.setDomainOptions('x', 'y');
+    chart.setDomain();
     chart.setAxisOptions({
       axisXTicks: 5,
       axisYTicks: 5,
+      axisXTickVisible: true,
+      axisYTickVisible: true,
       axisXTickFormat: (d, i) => format(d as Date, 'yyyy-MM'),
       axisXClass: 'axis-x',
       axisYClass: 'axis-y',

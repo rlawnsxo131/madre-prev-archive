@@ -12,6 +12,10 @@ import {
 } from '../D3Common2/D3Common2Types';
 import {
   D3AxisChartConstructorParams,
+  D3AxisChartLinecapType,
+  D3AxisChartLinecurvType,
+  D3AxisChartLinejoinType,
+  D3AxisChartLineType,
   D3AxisChartSetAxisOptionsParams,
 } from './D3AxisChart2Types';
 import { startOfMonth, endOfMonth } from 'date-fns';
@@ -31,8 +35,8 @@ export default class D3AxisChart2 extends D3Common2 {
    * data
    */
   private data: D3Data[] = [];
-  private xDomainKey: string = 'x';
-  private yDomainKey: string = 'y';
+  private xDomainKey = 'x';
+  private yDomainKey = 'y';
   private xDomain: D3Domain = [0, 0];
   private yDomain: D3Domain = [0, 0];
 
@@ -53,7 +57,8 @@ export default class D3AxisChart2 extends D3Common2 {
   private axisYTickFormat: D3TickFormat = (d, i) => `${d}`;
   private axisXClass = '';
   private axisYClass = '';
-  private axisFontSize = 10;
+  private axisFontSize = 12;
+  private axisTransitionDuration = 750;
 
   /**
    * axis
@@ -64,6 +69,14 @@ export default class D3AxisChart2 extends D3Common2 {
   /**
    * line options
    */
+  private color = 'black';
+  private lineType: D3AxisChartLineType = 'CURVE';
+  private linecurvType: D3AxisChartLinecurvType = 'curveBasis';
+  private linecapType: D3AxisChartLinecapType = 'butt';
+  private linejoinType: D3AxisChartLinejoinType = 'miter';
+  private lineStrokeWidth = 2;
+  private lineTransition = true;
+  private lineTransitionDuration = 750;
 
   constructor({
     container,
@@ -73,6 +86,9 @@ export default class D3AxisChart2 extends D3Common2 {
     margin,
   }: D3AxisChartConstructorParams) {
     super();
+
+    console.info('event: initialize');
+
     this.svg = this.appendSvg({
       container,
       width,
@@ -88,28 +104,27 @@ export default class D3AxisChart2 extends D3Common2 {
 
   setData(data: D3Data[]) {
     console.info('event: setData');
+
     this.data = data;
   }
 
   setScaleType(xType: D3ScaleType, yType: D3ScaleType) {
     console.info('event: setScaleType');
+
     this.xScaleType = xType;
     this.yScaleType = yType;
+  }
+
+  setDomainOptions(xDomainKey?: string, yDomainKey?: string) {
+    if (xDomainKey) this.xDomainKey = xDomainKey;
+    if (yDomainKey) this.yDomainKey = yDomainKey;
   }
 
   /**
    * There may be a lot of data, so write it with a for loop
    */
-  setDomain(xDomainKey?: string, yDomainKey?: string) {
+  setDomain() {
     console.info('event: setDomain');
-
-    // set domain key
-    if (xDomainKey) {
-      this.xDomainKey = xDomainKey;
-    }
-    if (yDomainKey) {
-      this.yDomainKey = yDomainKey;
-    }
 
     // filter data and calculate min, max domain data
     const xDomainPool = [];
@@ -157,44 +172,34 @@ export default class D3AxisChart2 extends D3Common2 {
     return scaleLinear().domain(this.yDomain).range(this.yRange).nice();
   }
 
-  /**
-   * @working
-   */
   setAxisOptions({
     axisXTicks,
     axisYTicks,
+    axisXTickVisible,
+    axisYTickVisible,
     axisXTickFormat,
     axisYTickFormat,
     axisXClass,
     axisYClass,
     axisFontSize,
+    axisTransitionDuration,
   }: D3AxisChartSetAxisOptionsParams) {
     console.info('event: setAxisOptions');
-    if (axisXTicks) {
-      this.axisXTicks = axisXTicks;
-    }
-    if (axisYTicks) {
-      this.axisYTicks = axisYTicks;
-    }
-    if (axisXTickFormat) {
-      this.axisXTickFormat = axisXTickFormat;
-    }
-    if (axisYTickFormat) {
-      this.axisYTickFormat = axisYTickFormat;
-    }
-    if (axisXClass) {
-      this.axisXClass = axisXClass;
-    }
-    if (axisYClass) {
-      this.axisYClass = axisYClass;
-    }
-    if (axisFontSize) {
-      this.axisFontSize = axisFontSize;
-    }
-    if (this.height) {
+
+    if (axisXTicks) this.axisXTicks = axisXTicks;
+    if (axisYTicks) this.axisYTicks = axisYTicks;
+    if (axisXTickFormat) this.axisXTickFormat = axisXTickFormat;
+    if (axisYTickFormat) this.axisYTickFormat = axisYTickFormat;
+    if (axisXClass) this.axisXClass = axisXClass;
+    if (axisYClass) this.axisYClass = axisYClass;
+    if (axisFontSize) this.axisFontSize = axisFontSize;
+    if (axisTransitionDuration)
+      this.axisTransitionDuration = axisTransitionDuration;
+
+    if (axisXTickVisible && this.height) {
       this.axisXTickSize = this.height - (this.margin.bottom + this.margin.top);
     }
-    if (this.width) {
+    if (axisYTickVisible && this.width) {
       this.axisYTickSize =
         this.width - (this.margin.left + this.margin.right * 0.4);
     }
@@ -202,6 +207,7 @@ export default class D3AxisChart2 extends D3Common2 {
 
   setAxis() {
     console.info('event: setAxis');
+
     this.axisX = axisBottom(this.xScale())
       .tickSize(0)
       .tickSizeInner(-this.axisXTickSize)
@@ -217,10 +223,12 @@ export default class D3AxisChart2 extends D3Common2 {
 
   appendAxis() {
     console.info('event: appendAxis');
+
     if (this.axisX) {
       this.svg
         .append('g')
         .attr('class', this.axisXClass)
+        .attr('font-size', this.axisFontSize)
         .attr(
           'transform',
           `translate(
@@ -228,13 +236,14 @@ export default class D3AxisChart2 extends D3Common2 {
             ${this.height - this.margin.top}
           )`,
         )
-        .style('font-size', this.axisFontSize)
         .call(this.axisX);
     }
+
     if (this.axisY) {
       this.svg
         .append('g')
         .attr('class', this.axisYClass)
+        .attr('font-size', this.axisFontSize)
         .attr(
           'transform',
           `translate(
@@ -242,7 +251,6 @@ export default class D3AxisChart2 extends D3Common2 {
             ${this.margin.top}
           )`,
         )
-        .style('font-size', this.axisFontSize)
         .call(this.axisY);
     }
   }
@@ -251,24 +259,27 @@ export default class D3AxisChart2 extends D3Common2 {
    * previously possible actions
    * @this.setData
    * @this.setScaleType
+   * @this.setDomainOptions
    * @this.setDomain
-   * @this.setAxisOptions;
-   * @this.setAxis;
+   * @this.setAxisOptions
+   * @this.setAxis
    */
   updateAxis() {
     console.info('event: updateAxis');
+
     if (this.axisX) {
       this.svg
         .selectAll(`.${this.axisXClass}`)
         .transition()
-        .duration(750)
+        .duration(this.axisTransitionDuration)
         .call(this.axisX as any);
     }
+
     if (this.axisY) {
       this.svg
         .selectAll(`.${this.axisYClass}`)
         .transition()
-        .duration(750)
+        .duration(this.axisTransitionDuration)
         .call(this.axisY as any);
     }
   }
