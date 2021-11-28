@@ -19,16 +19,18 @@ function TestPage2(props: TestPage2Props) {
     bottom: 30,
   };
 
-  const data = Array.from({ length: 11 }).map((_, i) => {
-    const date = new Date();
-    const x = add(date, {
-      months: i,
-    });
-    return {
-      x,
-      y: getRandomIntInclusive(2000, 10000),
-    };
-  });
+  const data = Array.from({ length: 5 }).map((_, i) =>
+    Array.from({ length: 11 }).map((_, j) => {
+      const date = new Date();
+      const x = add(date, {
+        months: j,
+      });
+      return {
+        x,
+        y: getRandomIntInclusive(2000, 10000),
+      };
+    }),
+  );
 
   useEffect(() => {
     if (!ref.current) return;
@@ -48,7 +50,7 @@ function TestPage2(props: TestPage2Props) {
       axisYTicks: 5,
       axisXTickVisible: true,
       axisYTickVisible: true,
-      axisXTickFormat: (d, i) => format(d as Date, 'yyyy-MM'),
+      axisXTickFormat: (d, _) => format(d as Date, 'yyyy-MM'),
       axisXClass: 'axis-x',
       axisYClass: 'axis-y',
       axisFontSize: 12,
@@ -57,10 +59,12 @@ function TestPage2(props: TestPage2Props) {
     chart.appendAxis();
 
     setTimeout(() => {
-      const data = Array.from({ length: 11 }).map((_, i) => ({
-        x: i * 100,
-        y: getRandomIntInclusive(1000, 39020),
-      }));
+      const data = Array.from({ length: 5 }).map((_, i) =>
+        Array.from({ length: 11 }).map((_, j) => ({
+          x: j * 100,
+          y: getRandomIntInclusive(0, 29201),
+        })),
+      );
       chart.setData(data);
       chart.setScaleType('number', 'number');
       chart.setDomain();
@@ -72,10 +76,12 @@ function TestPage2(props: TestPage2Props) {
     }, 1500);
 
     setTimeout(() => {
-      const data = Array.from({ length: 11 }).map((_, i) => ({
-        x: i * 10,
-        y: getRandomIntInclusive(0, 100),
-      }));
+      const data = Array.from({ length: 5 }).map((_, i) =>
+        Array.from({ length: 11 }).map((_, j) => ({
+          x: j * 10,
+          y: getRandomIntInclusive(0, 100),
+        })),
+      );
       chart.setData(data);
       chart.setDomain();
       chart.setAxis();

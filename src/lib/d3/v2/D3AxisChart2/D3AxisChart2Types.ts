@@ -38,7 +38,6 @@ export type D3AxisChartLinecapType = 'round' | 'butt';
 export type D3AxisChartLinejoinType = 'round' | 'miter';
 
 export type D3AxisChartSetLineOptionsParams = Partial<{
-  color: string;
   lineType: D3AxisChartLineType;
   linecurvType: D3AxisChartLinecurvType;
   linecapType: D3AxisChartLinecapType;
