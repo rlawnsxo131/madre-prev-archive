@@ -1,4 +1,15 @@
-import { axisBottom, axisLeft, extent, scaleLinear, scaleTime } from 'd3';
+import {
+  axisBottom,
+  axisLeft,
+  curveMonotoneX,
+  easeSinInOut,
+  extent,
+  line,
+  scaleLinear,
+  scaleTime,
+} from 'd3';
+import { startOfMonth, endOfMonth } from 'date-fns';
+import { v4 as uuidv4 } from 'uuid';
 import D3Common2 from '../D3Common2';
 import {
   D3Axis,
@@ -19,7 +30,6 @@ import {
   D3AxisChartSetAxisOptionsParams,
   D3AxisChartSetLineOptionsParams,
 } from './D3AxisChart2Types';
-import { startOfMonth, endOfMonth } from 'date-fns';
 
 export default class D3AxisChart2 extends D3Common2 {
   /**
@@ -70,14 +80,18 @@ export default class D3AxisChart2 extends D3Common2 {
   /**
    * line options
    */
-  private colors: string[] = [];
   private lineType: D3AxisChartLineType = 'CURVE';
-  private linecurvType: D3AxisChartLinecurvType = 'curveBasis';
+  private linecurvType: D3AxisChartLinecurvType = curveMonotoneX;
   private linecapType: D3AxisChartLinecapType = 'butt';
   private linejoinType: D3AxisChartLinejoinType = 'miter';
   private lineStrokeWidth = 2;
   private lineTransition = true;
-  private lineTransitionDuration = 750;
+  private lineTransitionDuration = 1500;
+
+  /**
+   * uniq class and color values
+   */
+  private classAndColorSet: Set<string> = new Set([]);
 
   constructor({
     container,
@@ -101,6 +115,13 @@ export default class D3AxisChart2 extends D3Common2 {
     this.margin = margin;
     this.xRange = [0, width - (margin.left + margin.right)];
     this.yRange = [height - (margin.top + margin.bottom), 0];
+  }
+
+  getAxisClass() {
+    return {
+      axisXClass: this.axisXClass,
+      axisYClass: this.axisYClass,
+    };
   }
 
   setData(data: D3Data[][]) {
@@ -191,8 +212,6 @@ export default class D3AxisChart2 extends D3Common2 {
     axisYTickVisible,
     axisXTickFormat,
     axisYTickFormat,
-    axisXClass,
-    axisYClass,
     axisFontSize,
     axisTransitionDuration,
   }: D3AxisChartSetAxisOptionsParams) {
@@ -202,8 +221,8 @@ export default class D3AxisChart2 extends D3Common2 {
     if (axisYTicks) this.axisYTicks = axisYTicks;
     if (axisXTickFormat) this.axisXTickFormat = axisXTickFormat;
     if (axisYTickFormat) this.axisYTickFormat = axisYTickFormat;
-    if (axisXClass) this.axisXClass = axisXClass;
-    if (axisYClass) this.axisYClass = axisYClass;
+    if (!this.axisXClass) this.axisXClass = `axis-x-${uuidv4()}`;
+    if (!this.axisYClass) this.axisYClass = `axis-x-${uuidv4()}`;
     if (axisFontSize) this.axisFontSize = axisFontSize;
     if (axisTransitionDuration)
       this.axisTransitionDuration = axisTransitionDuration;
@@ -304,5 +323,83 @@ export default class D3AxisChart2 extends D3Common2 {
     lineStrokeWidth,
     lineTransition,
     lineTransitionDuration,
-  }: D3AxisChartSetLineOptionsParams) {}
+  }: D3AxisChartSetLineOptionsParams) {
+    console.info('event: setLineOptions');
+
+    if (lineType) this.lineType = lineType;
+    if (linecurvType) this.linecurvType = linecurvType;
+    if (linecapType) this.linecapType = linecapType;
+    if (linejoinType) this.linejoinType = linejoinType;
+    if (lineStrokeWidth) this.lineStrokeWidth = lineStrokeWidth;
+    if (lineTransition) this.lineTransition = lineTransition;
+    if (lineTransitionDuration)
+      this.lineTransitionDuration = lineTransitionDuration;
+  }
+
+  appendLine() {
+    console.info('event: appendLine');
+
+    const lineGenerator = line()
+      .x((d: D3Data) => this.xScale()(d[this.xDomainKey]))
+      .y((d: D3Data) => this.yScale()(d[this.yDomainKey]));
+
+    if (this.lineType === 'CURVE') {
+      lineGenerator.curve(this.linecurvType);
+    }
+
+    this.data.forEach((data, i) => {
+      const color = 'black';
+      const className = `line-${uuidv4()}-${i}`;
+      console.log(className);
+
+      const path = this.svg
+        .append('path')
+        .attr('fill', 'none')
+        .attr('d', `${lineGenerator(data as any)}`)
+        .attr('stroke-width', this.lineStrokeWidth)
+        .attr('stroke', color)
+        .attr('stroke-linejoin', this.linejoinType)
+        .attr('stroke-linecap', this.linecapType)
+        .attr('class', `a${i}`)
+        .attr(
+          'transform',
+          `translate(
+            ${this.margin.left + this.margin.right * 0.4},
+            ${this.margin.top}
+          )`,
+        );
+
+      const pathLength = path.node()?.getTotalLength();
+
+      if (this.lineTransition && pathLength) {
+        path
+          .attr('stroke-dashoffset', pathLength)
+          .attr('stroke-dasharray', pathLength)
+          .transition()
+          .ease(easeSinInOut)
+          .duration(this.lineTransitionDuration)
+          .attr('stroke-dashoffset', 0); //시작점
+      }
+    });
+  }
+
+  updateLine() {
+    console.info('event: updateLine');
+
+    const lineGenerator = line()
+      .x((d: D3Data) => this.xScale()(d[this.xDomainKey]))
+      .y((d: D3Data) => this.yScale()(d[this.yDomainKey]));
+
+    if (this.lineType === 'CURVE') {
+      lineGenerator.curve(this.linecurvType);
+    }
+
+    this.data.forEach((data, i) => {
+      this.svg
+        .selectAll(`.a${i}`)
+        .transition()
+        .duration(this.lineTransitionDuration)
+        .attr('d', `${lineGenerator(data as any)}`);
+    });
+  }
 }

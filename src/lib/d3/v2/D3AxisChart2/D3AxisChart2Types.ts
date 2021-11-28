@@ -1,3 +1,4 @@
+import { curveBasis, curveMonotoneX, curveMonotoneY } from 'd3';
 import {
   AppendSVGParams,
   D3Margin,
@@ -20,8 +21,6 @@ export type D3AxisChartSetAxisOptionsParams = Partial<{
   axisYTickVisible: boolean;
   axisXTickFormat: D3TickFormat;
   axisYTickFormat: D3TickFormat;
-  axisXClass: string;
-  axisYClass: string;
   axisFontSize: number;
   axisTransitionDuration: number;
 }>;
@@ -31,9 +30,9 @@ export type D3AxisChartSetAxisOptionsParams = Partial<{
  */
 export type D3AxisChartLineType = 'STRAIGHT' | 'CURVE';
 export type D3AxisChartLinecurvType =
-  | 'curveBasis'
-  | 'curveMonotoneX'
-  | 'curveMonotoneY';
+  | typeof curveBasis
+  | typeof curveMonotoneX
+  | typeof curveMonotoneY;
 export type D3AxisChartLinecapType = 'round' | 'butt';
 export type D3AxisChartLinejoinType = 'round' | 'miter';
 
