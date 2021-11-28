@@ -339,9 +339,9 @@ export default class D3AxisChart2 extends D3Common2 {
   appendLine() {
     console.info('event: appendLine');
 
-    const lineGenerator = line()
-      .x((d: D3Data) => this.xScale()(d[this.xDomainKey]))
-      .y((d: D3Data) => this.yScale()(d[this.yDomainKey]));
+    const lineGenerator = line<D3Data>()
+      .x((d) => this.xScale()(d[this.xDomainKey]))
+      .y((d) => this.yScale()(d[this.yDomainKey]));
 
     if (this.lineType === 'CURVE') {
       lineGenerator.curve(this.linecurvType);
@@ -355,7 +355,7 @@ export default class D3AxisChart2 extends D3Common2 {
       const path = this.svg
         .append('path')
         .attr('fill', 'none')
-        .attr('d', `${lineGenerator(data as any)}`)
+        .attr('d', `${lineGenerator(data)}`)
         .attr('stroke-width', this.lineStrokeWidth)
         .attr('stroke', color)
         .attr('stroke-linejoin', this.linejoinType)
@@ -386,9 +386,9 @@ export default class D3AxisChart2 extends D3Common2 {
   updateLine() {
     console.info('event: updateLine');
 
-    const lineGenerator = line()
-      .x((d: D3Data) => this.xScale()(d[this.xDomainKey]))
-      .y((d: D3Data) => this.yScale()(d[this.yDomainKey]));
+    const lineGenerator = line<D3Data>()
+      .x((d) => this.xScale()(d[this.xDomainKey]))
+      .y((d) => this.yScale()(d[this.yDomainKey]));
 
     if (this.lineType === 'CURVE') {
       lineGenerator.curve(this.linecurvType);
@@ -399,7 +399,7 @@ export default class D3AxisChart2 extends D3Common2 {
         .selectAll(`.a${i}`)
         .transition()
         .duration(this.lineTransitionDuration)
-        .attr('d', `${lineGenerator(data as any)}`);
+        .attr('d', `${lineGenerator(data)}`);
     });
   }
 }

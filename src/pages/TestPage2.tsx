@@ -113,6 +113,7 @@ const block = ({
   justify-content: center;
   align-items: center;
   overflow-x: scroll;
+
   .${axisXClass}, .${axisYClass} {
     line,
     path {
