@@ -21,7 +21,8 @@ export type D3AxisChartSetAxisOptionsParams = Partial<{
   axisYTickVisible: boolean;
   axisXTickFormat: D3TickFormat;
   axisYTickFormat: D3TickFormat;
-  axisFontSize: number;
+  axisXClass: string;
+  axisYClass: string;
   axisTransitionDuration: number;
 }>;
 

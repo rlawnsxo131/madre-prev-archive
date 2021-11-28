@@ -10,6 +10,7 @@ import {
 } from 'd3';
 import { startOfMonth, endOfMonth } from 'date-fns';
 import { v4 as uuidv4 } from 'uuid';
+import { getRandomColors } from '../../../utils';
 import D3Common2 from '../D3Common2';
 import {
   D3Axis,
@@ -68,8 +69,7 @@ export default class D3AxisChart2 extends D3Common2 {
   private axisYTickFormat: D3TickFormat = (d, i) => `${d}`;
   private axisXClass = '';
   private axisYClass = '';
-  private axisFontSize = 12;
-  private axisTransitionDuration = 750;
+  private axisTransitionDuration = 850;
 
   /**
    * axis
@@ -84,7 +84,7 @@ export default class D3AxisChart2 extends D3Common2 {
   private linecurvType: D3AxisChartLinecurvType = curveMonotoneX;
   private linecapType: D3AxisChartLinecapType = 'butt';
   private linejoinType: D3AxisChartLinejoinType = 'miter';
-  private lineStrokeWidth = 2;
+  private lineStrokeWidth = 3;
   private lineTransition = true;
   private lineTransitionDuration = 1500;
 
@@ -115,13 +115,6 @@ export default class D3AxisChart2 extends D3Common2 {
     this.margin = margin;
     this.xRange = [0, width - (margin.left + margin.right)];
     this.yRange = [height - (margin.top + margin.bottom), 0];
-  }
-
-  getAxisClass() {
-    return {
-      axisXClass: this.axisXClass,
-      axisYClass: this.axisYClass,
-    };
   }
 
   setData(data: D3Data[][]) {
@@ -212,7 +205,8 @@ export default class D3AxisChart2 extends D3Common2 {
     axisYTickVisible,
     axisXTickFormat,
     axisYTickFormat,
-    axisFontSize,
+    axisXClass,
+    axisYClass,
     axisTransitionDuration,
   }: D3AxisChartSetAxisOptionsParams) {
     console.info('event: setAxisOptions');
@@ -221,9 +215,8 @@ export default class D3AxisChart2 extends D3Common2 {
     if (axisYTicks) this.axisYTicks = axisYTicks;
     if (axisXTickFormat) this.axisXTickFormat = axisXTickFormat;
     if (axisYTickFormat) this.axisYTickFormat = axisYTickFormat;
-    if (!this.axisXClass) this.axisXClass = `axis-x-${uuidv4()}`;
-    if (!this.axisYClass) this.axisYClass = `axis-y-${uuidv4()}`;
-    if (axisFontSize) this.axisFontSize = axisFontSize;
+    if (axisXClass) this.axisXClass = axisXClass;
+    if (axisYClass) this.axisYClass = axisYClass;
     if (axisTransitionDuration)
       this.axisTransitionDuration = axisTransitionDuration;
 
@@ -266,7 +259,6 @@ export default class D3AxisChart2 extends D3Common2 {
             ${this.height - this.margin.top}
           )`,
         )
-        .style('font-size', this.axisFontSize)
         .call(this.axisX);
     }
 
@@ -281,7 +273,6 @@ export default class D3AxisChart2 extends D3Common2 {
             ${this.margin.top}
           )`,
         )
-        .style('font-size', this.axisFontSize)
         .call(this.axisY);
     }
   }
@@ -348,38 +339,40 @@ export default class D3AxisChart2 extends D3Common2 {
     }
 
     this.data.forEach((data, i) => {
-      const color = 'black';
+      const color = getRandomColors(5);
       const className = `line-${uuidv4()}-${i}`;
       console.log(className);
 
       const path = this.svg
         .append('path')
-        .attr('fill', 'none')
-        .attr('d', `${lineGenerator(data)}`)
+        // .attr('fill', 'none')
+        .attr('fill', color[i])
+        .attr('fill-opacity', 0.3)
         .attr('stroke-width', this.lineStrokeWidth)
-        .attr('stroke', color)
+        .attr('stroke', color[i])
         .attr('stroke-linejoin', this.linejoinType)
         .attr('stroke-linecap', this.linecapType)
-        .attr('class', `a${i}`)
+        .attr('class', `path-${i}`)
         .attr(
           'transform',
           `translate(
             ${this.margin.left + this.margin.right * 0.4},
             ${this.margin.top}
           )`,
-        );
+        )
+        .attr('d', `${lineGenerator(data)}`);
 
-      const pathLength = path.node()?.getTotalLength();
+      // const pathLength = path.node()?.getTotalLength() ?? 0;
 
-      if (this.lineTransition && pathLength) {
-        path
-          .attr('stroke-dashoffset', pathLength)
-          .attr('stroke-dasharray', pathLength)
-          .transition()
-          .ease(easeSinInOut)
-          .duration(this.lineTransitionDuration)
-          .attr('stroke-dashoffset', 0); //시작점
-      }
+      // if (this.lineTransition && pathLength) {
+      //   path
+      //     .attr('stroke-dashoffset', pathLength)
+      //     .attr('stroke-dasharray', pathLength)
+      //     .transition()
+      //     .ease(easeSinInOut)
+      //     .duration(this.lineTransitionDuration)
+      //     .attr('stroke-dashoffset', 0);
+      // }
     });
   }
 
@@ -396,10 +389,12 @@ export default class D3AxisChart2 extends D3Common2 {
 
     this.data.forEach((data, i) => {
       this.svg
-        .selectAll(`.a${i}`)
+        .selectAll(`.path-${i}`)
         .transition()
+        .ease(easeSinInOut)
         .duration(this.lineTransitionDuration)
-        .attr('d', `${lineGenerator(data)}`);
+        .attr('d', `${lineGenerator(data)}`)
+        .attr('stroke-dashoffset', 0);
     });
   }
 }

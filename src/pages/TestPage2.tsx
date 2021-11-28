@@ -1,6 +1,7 @@
+import { useEffect, useRef, useState } from 'react';
 import { css } from '@emotion/react';
 import { format, add } from 'date-fns';
-import { useEffect, useRef, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { D3AxisChart2 } from '../lib/d3';
 import { getRandomIntInclusive } from '../lib/utils';
 import { palette } from '../styles';
@@ -10,10 +11,8 @@ interface TestPage2Props {}
 function TestPage2(props: TestPage2Props) {
   const ref = useRef<HTMLDivElement>(null);
   const chartRef = useRef<D3AxisChart2 | null>(null);
-  const [axisClass, setAxisClass] = useState({
-    axisXClass: '',
-    axisYClass: '',
-  });
+  const axisXClassRef = useRef<string>(`axis-x-${uuidv4()}`);
+  const axisYClassRef = useRef<string>(`axis-x-${uuidv4()}`);
 
   const width = 960;
   const height = 460;
@@ -23,19 +22,6 @@ function TestPage2(props: TestPage2Props) {
     top: 30,
     bottom: 30,
   };
-
-  const data = Array.from({ length: 5 }).map((_, i) =>
-    Array.from({ length: 11 }).map((_, j) => {
-      const date = new Date();
-      const x = add(date, {
-        months: j,
-      });
-      return {
-        x,
-        y: getRandomIntInclusive(2000, 10000),
-      };
-    }),
-  );
 
   useEffect(() => {
     if (!ref.current) return;
@@ -47,10 +33,26 @@ function TestPage2(props: TestPage2Props) {
       height,
       margin,
     });
-  }, [ref.current, chartRef.current]);
+  }, [ref.current]);
 
   useEffect(() => {
+    if (!ref.current) return;
     if (!chartRef.current) return;
+
+    console.log('a');
+
+    const data = Array.from({ length: 5 }).map((_, i) =>
+      Array.from({ length: 11 }).map((_, j) => {
+        const date = new Date();
+        const x = add(date, {
+          months: j,
+        });
+        return {
+          x,
+          y: getRandomIntInclusive(2000, 10000),
+        };
+      }),
+    );
 
     chartRef.current.setData(data);
     chartRef.current.setScaleType('time', 'number');
@@ -62,15 +64,9 @@ function TestPage2(props: TestPage2Props) {
       axisXTickVisible: true,
       axisYTickVisible: true,
       axisXTickFormat: (d, _) => format(d as Date, 'yyyy-MM'),
-      axisFontSize: 12,
+      axisXClass: axisXClassRef.current,
+      axisYClass: axisYClassRef.current,
     });
-
-    const { axisXClass, axisYClass } = chartRef.current.getAxisClass();
-    setAxisClass((prev) => ({
-      ...prev,
-      axisXClass,
-      axisYClass,
-    }));
 
     chartRef.current.setAxis();
     chartRef.current.appendAxis();
@@ -78,13 +74,14 @@ function TestPage2(props: TestPage2Props) {
 
     setTimeout(() => {
       if (!chartRef.current) return;
+
       const data = Array.from({ length: 5 }).map((_, i) =>
         Array.from({ length: 11 }).map((_, j) => ({
           x: j * 100,
           y: getRandomIntInclusive(2000, 20000),
         })),
       );
-      console.log(data);
+
       chartRef.current.setData(data);
       chartRef.current.setScaleType('number', 'number');
       chartRef.current.setDomain();
@@ -97,12 +94,20 @@ function TestPage2(props: TestPage2Props) {
     }, 1500);
   }, [chartRef.current]);
 
-  return <div css={block(axisClass)} ref={ref}></div>;
+  return (
+    <div
+      css={block({
+        axisXClass: axisXClassRef.current,
+        axisYClass: axisYClassRef.current,
+      })}
+      ref={ref}
+    ></div>
+  );
 }
 
 const block = ({
-  axisXClass,
-  axisYClass,
+  axisXClass = '',
+  axisYClass = '',
 }: {
   axisXClass: string;
   axisYClass: string;
@@ -119,8 +124,8 @@ const block = ({
     path {
       color: ${palette.gray['300']};
     }
-
     text {
+      font-size: 1rem;
       font-weight: 400;
     }
   }
