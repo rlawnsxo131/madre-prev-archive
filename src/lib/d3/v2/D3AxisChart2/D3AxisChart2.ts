@@ -222,7 +222,7 @@ export default class D3AxisChart2 extends D3Common2 {
     if (axisXTickFormat) this.axisXTickFormat = axisXTickFormat;
     if (axisYTickFormat) this.axisYTickFormat = axisYTickFormat;
     if (!this.axisXClass) this.axisXClass = `axis-x-${uuidv4()}`;
-    if (!this.axisYClass) this.axisYClass = `axis-x-${uuidv4()}`;
+    if (!this.axisYClass) this.axisYClass = `axis-y-${uuidv4()}`;
     if (axisFontSize) this.axisFontSize = axisFontSize;
     if (axisTransitionDuration)
       this.axisTransitionDuration = axisTransitionDuration;
