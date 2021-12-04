@@ -401,7 +401,6 @@ export default class D3AxisChart2 extends D3Common2 {
       // .transition()
       // .ease(easeSinInOut)
       // .duration(this.lineTransitionDuration);
-
       // .attr('stroke-dashoffset', 0);
 
       // const pathLength = path.node()?.getTotalLength();
