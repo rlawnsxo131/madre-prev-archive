@@ -365,7 +365,9 @@ export default class D3AxisChart2 extends D3Common2 {
     if (this.lineType === 'CURVE') {
       lineGenerator.curve(this.linecurvType);
     }
+
     const color = getRandomColors(5);
+
     this.data.forEach((data, i) => {
       const className = `line-${uuidv4()}`;
       console.log(className);
