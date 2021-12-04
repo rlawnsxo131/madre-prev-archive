@@ -84,7 +84,7 @@ export default class D3AxisChart2 extends D3Common2 {
   private linecurvType: D3AxisChartLinecurvType = curveMonotoneX;
   private linecapType: D3AxisChartLinecapType = 'butt';
   private linejoinType: D3AxisChartLinejoinType = 'miter';
-  private lineStrokeWidth = 3;
+  private lineStrokeWidth = 2;
   private lineTransition = true;
   private lineTransitionDuration = 1500;
 
@@ -102,7 +102,7 @@ export default class D3AxisChart2 extends D3Common2 {
   }: D3AxisChartConstructorParams) {
     super();
 
-    console.info('event: initialize');
+    console.log('event: initialize');
 
     this.svg = this.appendSVG({
       container,
@@ -118,20 +118,20 @@ export default class D3AxisChart2 extends D3Common2 {
   }
 
   setData(data: D3Data[][]) {
-    console.info('event: setData');
+    console.log('event: setData');
 
     this.data = data;
   }
 
   setScaleType(xType: D3ScaleType, yType: D3ScaleType) {
-    console.info('event: setScaleType');
+    console.log('event: setScaleType');
 
     this.xScaleType = xType;
     this.yScaleType = yType;
   }
 
   setDomainOptions(xDomainKey?: string, yDomainKey?: string) {
-    console.info('event: setDomainOptions');
+    console.log('event: setDomainOptions');
 
     if (xDomainKey) this.xDomainKey = xDomainKey;
     if (yDomainKey) this.yDomainKey = yDomainKey;
@@ -140,9 +140,8 @@ export default class D3AxisChart2 extends D3Common2 {
   /**
    * There may be a lot of data, so write it with a for loop
    */
-  setDomain() {
-    console.info('event: setDomain');
-
+  private getDomainMinMax() {
+    console.log('event: getDomainMinMax');
     /**
      * flatten the data like this
      * [
@@ -155,31 +154,60 @@ export default class D3AxisChart2 extends D3Common2 {
     // filter data and calculate min, max domain data
     const xDomainPool = [];
     const yDomainPool = [];
+
     for (let i = 0; i < flatData.length; i++) {
       xDomainPool.push(flatData[i][this.xDomainKey]);
       yDomainPool.push(flatData[i][this.yDomainKey]);
     }
+
     const [xMin = 0, xMax = 0] = extent(xDomainPool);
     const [yMin = 0, yMax = 0] = extent(yDomainPool);
 
-    // set domain data
+    return {
+      xMin,
+      xMax,
+      yMin,
+      yMax,
+    };
+  }
+
+  private setDomainData({
+    xMin,
+    xMax,
+    yMin,
+    yMax,
+  }: ReturnType<typeof this.getDomainMinMax>) {
+    console.log('event: setDomainData');
+
+    // xScale
     if (this.xScaleType === 'number') {
       const max = this.calcMaxOfNumber(xMax);
       this.xDomain = [0, max];
-    } else {
+    }
+    if (this.xScaleType === 'time') {
       const min = startOfMonth(xMin);
       const max = endOfMonth(xMax);
       this.xDomain = [min, max];
     }
 
+    // yScale
     if (this.yScaleType === 'number') {
       const max = this.calcMaxOfNumber(yMax);
       this.yDomain = [0, max];
-    } else {
+    }
+    if (this.yScaleType === 'time') {
       const min = startOfMonth(yMin);
       const max = endOfMonth(yMax);
       this.yDomain = [min, max];
     }
+  }
+
+  // set domain data
+  setDomain() {
+    console.log('event: setDomain');
+
+    const domainMinMax = this.getDomainMinMax();
+    this.setDomainData({ ...domainMinMax });
   }
 
   private xScale() {
@@ -209,7 +237,7 @@ export default class D3AxisChart2 extends D3Common2 {
     axisYClass,
     axisTransitionDuration,
   }: D3AxisChartSetAxisOptionsParams) {
-    console.info('event: setAxisOptions');
+    console.log('event: setAxisOptions');
 
     if (axisXTicks) this.axisXTicks = axisXTicks;
     if (axisYTicks) this.axisYTicks = axisYTicks;
@@ -230,7 +258,7 @@ export default class D3AxisChart2 extends D3Common2 {
   }
 
   setAxis() {
-    console.info('event: setAxis');
+    console.log('event: setAxis');
 
     this.axisX = axisBottom(this.xScale())
       .tickSize(0)
@@ -246,7 +274,7 @@ export default class D3AxisChart2 extends D3Common2 {
   }
 
   appendAxis() {
-    console.info('event: appendAxis');
+    console.log('event: appendAxis');
 
     if (this.axisX) {
       this.svg
@@ -287,7 +315,7 @@ export default class D3AxisChart2 extends D3Common2 {
    * @this.setAxis
    */
   updateAxis() {
-    console.info('event: updateAxis');
+    console.log('event: updateAxis');
 
     if (this.axisX) {
       this.svg
@@ -315,7 +343,7 @@ export default class D3AxisChart2 extends D3Common2 {
     lineTransition,
     lineTransitionDuration,
   }: D3AxisChartSetLineOptionsParams) {
-    console.info('event: setLineOptions');
+    console.log('event: setLineOptions');
 
     if (lineType) this.lineType = lineType;
     if (linecurvType) this.linecurvType = linecurvType;
@@ -328,7 +356,7 @@ export default class D3AxisChart2 extends D3Common2 {
   }
 
   appendLine() {
-    console.info('event: appendLine');
+    console.log('event: appendLine');
 
     const lineGenerator = line<D3Data>()
       .x((d) => this.xScale()(d[this.xDomainKey]))
@@ -337,17 +365,16 @@ export default class D3AxisChart2 extends D3Common2 {
     if (this.lineType === 'CURVE') {
       lineGenerator.curve(this.linecurvType);
     }
-
+    const color = getRandomColors(5);
     this.data.forEach((data, i) => {
-      const color = getRandomColors(5);
-      const className = `line-${uuidv4()}-${i}`;
+      const className = `line-${uuidv4()}`;
       console.log(className);
 
-      const path = this.svg
+      this.svg
         .append('path')
         // .attr('fill', 'none')
         .attr('fill', color[i])
-        .attr('fill-opacity', 0.3)
+        .attr('fill-opacity', 0.2)
         .attr('stroke-width', this.lineStrokeWidth)
         .attr('stroke', color[i])
         .attr('stroke-linejoin', this.linejoinType)
@@ -377,7 +404,7 @@ export default class D3AxisChart2 extends D3Common2 {
   }
 
   updateLine() {
-    console.info('event: updateLine');
+    console.log('event: updateLine');
 
     const lineGenerator = line<D3Data>()
       .x((d) => this.xScale()(d[this.xDomainKey]))

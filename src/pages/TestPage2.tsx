@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { css } from '@emotion/react';
 import { format, add } from 'date-fns';
 import { v4 as uuidv4 } from 'uuid';
@@ -14,8 +14,8 @@ function TestPage2(props: TestPage2Props) {
   const axisXClassRef = useRef<string>(`axis-x-${uuidv4()}`);
   const axisYClassRef = useRef<string>(`axis-x-${uuidv4()}`);
 
-  const width = 960;
-  const height = 460;
+  const width = 660;
+  const height = 360;
   const margin = {
     left: 100,
     right: 100,
@@ -76,11 +76,12 @@ function TestPage2(props: TestPage2Props) {
       if (!chartRef.current) return;
 
       const data = Array.from({ length: 5 }).map((_, i) =>
-        Array.from({ length: 11 }).map((_, j) => ({
+        Array.from({ length: 21 }).map((_, j) => ({
           x: j * 100,
           y: getRandomIntInclusive(2000, 20000),
         })),
       );
+      console.log(data);
 
       chartRef.current.setData(data);
       chartRef.current.setScaleType('number', 'number');
@@ -117,7 +118,7 @@ const block = ({
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow-x: scroll;
+  overflow: auto;
 
   .${axisXClass}, .${axisYClass} {
     line,
@@ -125,7 +126,7 @@ const block = ({
       color: ${palette.gray['300']};
     }
     text {
-      font-size: 1rem;
+      font-size: 0.8rem;
       font-weight: 400;
     }
   }

@@ -15,7 +15,8 @@ export default function useTransitionTimeoutEffect({
     let timeoutId: NodeJS.Timeout | null = null;
     if (visible) {
       setClosed(false);
-    } else {
+    }
+    if (!visible) {
       timeoutId = setTimeout(() => {
         setClosed(true);
       }, delay);
