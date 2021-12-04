@@ -30,6 +30,10 @@ export type D3AxisChartSetAxisOptionsParams = Partial<{
  * line
  */
 export type D3AxisChartLineType = 'STRAIGHT' | 'CURVE';
+export type D3AxisChartLinecurvKeys =
+  | 'curveBasis'
+  | 'curveMonotoneX'
+  | 'curveMonotoneY';
 export type D3AxisChartLinecurvType =
   | typeof curveBasis
   | typeof curveMonotoneX

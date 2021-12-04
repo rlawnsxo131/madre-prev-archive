@@ -27,7 +27,7 @@ export default class D3Common {
     );
   }
 
-  protected generateClasses(length: number) {}
+  protected generateClassList(count: number) {}
 
   protected calcMaxOfNumber(value: number) {
     for (let i = 0; i < this.displayMaxNumberArray.length; i++) {

@@ -39,10 +39,8 @@ function TestPage2(props: TestPage2Props) {
     if (!ref.current) return;
     if (!chartRef.current) return;
 
-    console.log('a');
-
     const data = Array.from({ length: 5 }).map((_, i) =>
-      Array.from({ length: 11 }).map((_, j) => {
+      Array.from({ length: 12 }).map((_, j) => {
         const date = new Date();
         const x = add(date, {
           months: j,
@@ -71,17 +69,17 @@ function TestPage2(props: TestPage2Props) {
     chartRef.current.setAxis();
     chartRef.current.appendAxis();
     chartRef.current.appendLine();
+    chartRef.current.resetData();
 
     setTimeout(() => {
       if (!chartRef.current) return;
 
       const data = Array.from({ length: 5 }).map((_, i) =>
-        Array.from({ length: 21 }).map((_, j) => ({
-          x: j * 100,
-          y: getRandomIntInclusive(2000, 20000),
+        Array.from({ length: 101 }).map((_, j) => ({
+          x: j * 50,
+          y: getRandomIntInclusive(10000, 20000),
         })),
       );
-      console.log(data);
 
       chartRef.current.setData(data);
       chartRef.current.setScaleType('number', 'number');
@@ -92,7 +90,26 @@ function TestPage2(props: TestPage2Props) {
       chartRef.current.setAxis();
       chartRef.current.updateAxis();
       chartRef.current.updateLine();
+      chartRef.current.resetData();
     }, 1500);
+
+    setTimeout(() => {
+      if (!chartRef.current) return;
+
+      const data = Array.from({ length: 5 }).map((_, i) =>
+        Array.from({ length: 101 }).map((_, j) => ({
+          x: j * 50,
+          y: getRandomIntInclusive(10000, 20000),
+        })),
+      );
+
+      chartRef.current.setData(data);
+      chartRef.current.setDomain();
+      chartRef.current.setAxis();
+      chartRef.current.updateAxis();
+      chartRef.current.updateLine();
+      chartRef.current.resetData();
+    }, 3500);
   }, [chartRef.current]);
 
   return (
@@ -126,7 +143,7 @@ const block = ({
       color: ${palette.gray['300']};
     }
     text {
-      font-size: 0.8rem;
+      font-size: 0.725rem;
       font-weight: 400;
     }
   }

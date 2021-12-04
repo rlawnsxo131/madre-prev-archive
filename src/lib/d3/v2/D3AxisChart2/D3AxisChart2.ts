@@ -80,18 +80,18 @@ export default class D3AxisChart2 extends D3Common2 {
   /**
    * line options
    */
-  private lineType: D3AxisChartLineType = 'CURVE';
+  private lineType: D3AxisChartLineType = 'STRAIGHT';
   private linecurvType: D3AxisChartLinecurvType = curveMonotoneX;
   private linecapType: D3AxisChartLinecapType = 'butt';
   private linejoinType: D3AxisChartLinejoinType = 'miter';
-  private lineStrokeWidth = 2;
+  private lineStrokeWidth = 1;
   private lineTransition = true;
-  private lineTransitionDuration = 1500;
+  private lineTransitionDuration = 850;
 
   /**
    * uniq class and color values
    */
-  private classAndColorSet: Set<string> = new Set([]);
+  private classAndColorSet: Set<string> = new Set();
 
   constructor({
     container,
@@ -119,8 +119,12 @@ export default class D3AxisChart2 extends D3Common2 {
 
   setData(data: D3Data[][]) {
     console.log('event: setData');
-
     this.data = data;
+  }
+
+  resetData() {
+    console.log('event: resetData');
+    this.data = [];
   }
 
   setScaleType(xType: D3ScaleType, yType: D3ScaleType) {
@@ -374,14 +378,18 @@ export default class D3AxisChart2 extends D3Common2 {
 
       this.svg
         .append('path')
-        // .attr('fill', 'none')
-        .attr('fill', color[i])
-        .attr('fill-opacity', 0.2)
+        .attr('fill', 'none')
         .attr('stroke-width', this.lineStrokeWidth)
         .attr('stroke', color[i])
         .attr('stroke-linejoin', this.linejoinType)
         .attr('stroke-linecap', this.linecapType)
-        .attr('class', `path-${i}`)
+        .attr('class', `line-${i}`)
+        // .attr('stroke-dasharray', function (d) {
+        //   return this.getTotalLength();
+        // })
+        // .attr('stroke-dashoffset', function (d) {
+        //   return this.getTotalLength();
+        // })
         .attr(
           'transform',
           `translate(
@@ -390,10 +398,14 @@ export default class D3AxisChart2 extends D3Common2 {
           )`,
         )
         .attr('d', `${lineGenerator(data)}`);
+      // .transition()
+      // .ease(easeSinInOut)
+      // .duration(this.lineTransitionDuration);
 
-      // const pathLength = path.node()?.getTotalLength() ?? 0;
+      // .attr('stroke-dashoffset', 0);
 
-      // if (this.lineTransition && pathLength) {
+      // const pathLength = path.node()?.getTotalLength();
+      // if (this.lineTransition) {
       //   path
       //     .attr('stroke-dashoffset', pathLength)
       //     .attr('stroke-dasharray', pathLength)
@@ -418,12 +430,11 @@ export default class D3AxisChart2 extends D3Common2 {
 
     this.data.forEach((data, i) => {
       this.svg
-        .selectAll(`.path-${i}`)
+        .selectAll(`.line-${i}`)
         .transition()
         .ease(easeSinInOut)
         .duration(this.lineTransitionDuration)
-        .attr('d', `${lineGenerator(data)}`)
-        .attr('stroke-dashoffset', 0);
+        .attr('d', `${lineGenerator(data)}`);
     });
   }
 }
