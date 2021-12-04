@@ -141,11 +141,10 @@ export default class D3AxisChart2 extends D3Common2 {
     if (yDomainKey) this.yDomainKey = yDomainKey;
   }
 
-  /**
-   * There may be a lot of data, so write it with a for loop
-   */
+  // filter data and calculate min, max domain data
   private getDomainMinMax() {
     console.log('event: getDomainMinMax');
+
     /**
      * flatten the data like this
      * [
@@ -155,10 +154,10 @@ export default class D3AxisChart2 extends D3Common2 {
      */
     const flatData = this.data.flat();
 
-    // filter data and calculate min, max domain data
     const xDomainPool = [];
     const yDomainPool = [];
 
+    // there may be a lot of data, so write it with a for loop
     for (let i = 0; i < flatData.length; i++) {
       xDomainPool.push(flatData[i][this.xDomainKey]);
       yDomainPool.push(flatData[i][this.yDomainKey]);
@@ -209,9 +208,7 @@ export default class D3AxisChart2 extends D3Common2 {
   // set domain data
   setDomain() {
     console.log('event: setDomain');
-
-    const domainMinMax = this.getDomainMinMax();
-    this.setDomainData({ ...domainMinMax });
+    this.setDomainData({ ...this.getDomainMinMax() });
   }
 
   private xScale() {
