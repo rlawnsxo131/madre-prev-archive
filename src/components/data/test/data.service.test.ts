@@ -1,12 +1,12 @@
 import 'jest';
-import { ApolloError } from 'apollo-server-core';
 import { Connection } from 'typeorm';
-import { dataActionService } from '..';
 import { Database } from '../../../datastore';
 import { initializeEnvironment } from '../../../lib';
+import { dataService } from '..';
+import { ApolloError } from 'apollo-server-core';
 import { errorCode } from '../../error';
 
-describe('dataActionService Test', () => {
+describe('dataService Test', () => {
   let connection: Connection | null = null;
 
   beforeAll(async () => {
@@ -19,10 +19,10 @@ describe('dataActionService Test', () => {
     await connection?.close();
   });
 
-  test('getData id to 0', async () => {
+  test('getDataById: id to 0', async () => {
     const id = 0;
     try {
-      await dataActionService.getDataAction(id);
+      await dataService.getDataById(id);
     } catch (e) {
       const error = e as ApolloError;
       expect(error.extensions.code).toBe(errorCode.NOT_FOUND);

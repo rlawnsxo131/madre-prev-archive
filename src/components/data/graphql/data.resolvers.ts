@@ -1,5 +1,5 @@
 import { IResolvers } from '@graphql-tools/utils';
-import { dataActionService } from '..';
+import { dataService } from '..';
 
 interface DataArgs {
   id: number;
@@ -8,7 +8,7 @@ interface DataArgs {
 const resolvers: IResolvers = {
   Query: {
     async data(_, { id }: DataArgs) {
-      const data = await dataActionService.getDataAction(id);
+      const data = await dataService.getDataById(id);
       return data;
     },
   },

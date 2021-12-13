@@ -1,5 +1,5 @@
 import { IResolvers } from '@graphql-tools/utils';
-import { userActionService } from '..';
+import { userService } from '..';
 
 interface UserArgs {
   id: number;
@@ -9,7 +9,7 @@ const resolvers: IResolvers = {
   User: {},
   Query: {
     async user(_, { id }: UserArgs) {
-      const user = await userActionService.getUserAction(id);
+      const user = await userService.getUserById(id);
       return user;
     },
   },
