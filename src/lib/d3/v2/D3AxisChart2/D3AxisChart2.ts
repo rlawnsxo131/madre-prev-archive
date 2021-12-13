@@ -384,17 +384,20 @@ export default class D3AxisChart2 extends D3Common2 {
       lineGenerator.curve(this.linecurvType);
     }
 
-    const color = getRandomColors(5);
+    const colors = getRandomColors(5);
+    const classNames = Array.from({ length: colors.length }).map(
+      (_) => `line-${uuidv4()}`,
+    );
+
+    console.log(colors);
+    console.log(classNames);
 
     this.data.forEach((data, i) => {
-      const className = `line-${uuidv4()}`;
-      console.log(className);
-
       this.svg
         .append('path')
         .attr('fill', 'none')
         .attr('stroke-width', this.lineStrokeWidth)
-        .attr('stroke', color[i])
+        .attr('stroke', colors[i])
         .attr('stroke-linejoin', this.linejoinType)
         .attr('stroke-linecap', this.linecapType)
         .attr('class', `line-${i}`)
@@ -450,4 +453,6 @@ export default class D3AxisChart2 extends D3Common2 {
         .attr('d', `${lineGenerator(data)}`);
     });
   }
+
+  setAreaOptions() {}
 }

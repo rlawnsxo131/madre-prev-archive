@@ -29,7 +29,6 @@ const descriptionBlock = css`
   ${homeStyles.block};
   flex: 1;
   display: flex;
-  align-items: center;
 `;
 
 const description = css`
@@ -43,11 +42,12 @@ const description = css`
 
 const imageBlock = css`
   ${homeStyles.itemCommon};
-  flex: 1.25;
+  flex: 1;
   display: flex;
+  justify-content: center;
   gap: 1.25rem;
   svg {
-    width: 100%;
+    max-width: 35rem;
     height: auto;
   }
 `;

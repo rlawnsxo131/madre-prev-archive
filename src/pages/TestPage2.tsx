@@ -77,7 +77,7 @@ function TestPage2(props: TestPage2Props) {
 
       const data = Array.from({ length: 5 }).map((_, i) =>
         Array.from({ length: 101 }).map((_, j) => ({
-          x: j * 0,
+          x: j * 100,
           y: getRandomIntInclusive(10000, 20000),
         })),
       );

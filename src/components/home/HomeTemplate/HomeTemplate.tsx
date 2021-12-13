@@ -32,7 +32,7 @@ const main = css`
   ${media.xxxsmall} {
     width: 100%;
   }
-  ${media.small} {
+  ${mediaQuery(800)} {
     width: 768px;
   }
   ${media.medium} {
