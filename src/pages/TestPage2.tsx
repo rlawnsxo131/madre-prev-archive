@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { css } from '@emotion/react';
 import { format, add } from 'date-fns';
 import { v4 as uuidv4 } from 'uuid';
-import { D3AxisChart2 } from '../lib/d3';
+import { D3AxisChart2, d3Utils } from '../lib/d3';
 import { getRandomIntInclusive } from '../lib/utils';
 import { palette } from '../styles';
 
@@ -62,6 +62,7 @@ function TestPage2(props: TestPage2Props) {
       axisXTickVisible: true,
       axisYTickVisible: true,
       axisXTickFormat: (d, _) => format(d as Date, 'yyyy-MM'),
+      axisYTickFormat: (d, _) => d3Utils.d3NumberFormat()(d),
       axisXClass: axisXClassRef.current,
       axisYClass: axisYClassRef.current,
     });
@@ -76,7 +77,7 @@ function TestPage2(props: TestPage2Props) {
 
       const data = Array.from({ length: 5 }).map((_, i) =>
         Array.from({ length: 101 }).map((_, j) => ({
-          x: j * 50,
+          x: j * 100,
           y: getRandomIntInclusive(10000, 20000),
         })),
       );
@@ -85,7 +86,7 @@ function TestPage2(props: TestPage2Props) {
       chartRef.current.setScaleType('number', 'number');
       chartRef.current.setDomain();
       chartRef.current.setAxisOptions({
-        axisXTickFormat: (d, i) => `${d}`,
+        axisXTickFormat: (d, _) => d3Utils.d3NumberFormat()(d),
       });
       chartRef.current.setAxis();
       chartRef.current.updateAxis();
@@ -99,7 +100,7 @@ function TestPage2(props: TestPage2Props) {
       const data = Array.from({ length: 5 }).map((_, i) =>
         Array.from({ length: 101 }).map((_, j) => ({
           x: j * 50,
-          y: getRandomIntInclusive(10000, 20000),
+          y: getRandomIntInclusive(5000, 15000),
         })),
       );
 

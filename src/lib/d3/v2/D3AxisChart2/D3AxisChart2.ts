@@ -1,7 +1,9 @@
 import {
   axisBottom,
   axisLeft,
+  curveBasis,
   curveMonotoneX,
+  curveMonotoneY,
   easeSinInOut,
   extent,
   line,
@@ -25,6 +27,7 @@ import {
 import {
   D3AxisChartConstructorParams,
   D3AxisChartLinecapType,
+  D3AxisChartLinecurvKeys,
   D3AxisChartLinecurvType,
   D3AxisChartLinejoinType,
   D3AxisChartLineType,
@@ -80,13 +83,22 @@ export default class D3AxisChart2 extends D3Common2 {
   /**
    * line options
    */
+  private readonly linecurvTypeMap: Map<
+    D3AxisChartLinecurvKeys,
+    typeof curveBasis | typeof curveMonotoneX | typeof curveMonotoneY
+  > = new Map([
+    ['curveBasis', curveBasis],
+    ['curveMonotoneX', curveMonotoneX],
+    ['curveMonotoneY', curveMonotoneY],
+  ]);
+
   private lineType: D3AxisChartLineType = 'STRAIGHT';
   private linecurvType: D3AxisChartLinecurvType = curveMonotoneX;
   private linecapType: D3AxisChartLinecapType = 'butt';
   private linejoinType: D3AxisChartLinejoinType = 'miter';
   private lineStrokeWidth = 1;
   private lineTransition = true;
-  private lineTransitionDuration = 850;
+  private lineTransitionDuration = 550;
 
   /**
    * uniq class and color values
@@ -335,6 +347,11 @@ export default class D3AxisChart2 extends D3Common2 {
     }
   }
 
+  setLinecurvtype(key: D3AxisChartLinecurvKeys) {
+    const curvtype = this.linecurvTypeMap.get(key) ?? curveMonotoneX;
+    this.linecurvType = curvtype;
+  }
+
   setLineOptions({
     lineType,
     linecurvType,
@@ -347,7 +364,7 @@ export default class D3AxisChart2 extends D3Common2 {
     console.log('event: setLineOptions');
 
     if (lineType) this.lineType = lineType;
-    if (linecurvType) this.linecurvType = linecurvType;
+    if (linecurvType) this.setLinecurvtype(linecurvType);
     if (linecapType) this.linecapType = linecapType;
     if (linejoinType) this.linejoinType = linejoinType;
     if (lineStrokeWidth) this.lineStrokeWidth = lineStrokeWidth;
@@ -381,12 +398,12 @@ export default class D3AxisChart2 extends D3Common2 {
         .attr('stroke-linejoin', this.linejoinType)
         .attr('stroke-linecap', this.linecapType)
         .attr('class', `line-${i}`)
-        // .attr('stroke-dasharray', function (d) {
-        //   return this.getTotalLength();
-        // })
-        // .attr('stroke-dashoffset', function (d) {
-        //   return this.getTotalLength();
-        // })
+        .attr('stroke-dasharray', function (d) {
+          return this.getTotalLength();
+        })
+        .attr('stroke-dashoffset', function (d) {
+          return this.getTotalLength();
+        })
         .attr(
           'transform',
           `translate(
@@ -394,11 +411,11 @@ export default class D3AxisChart2 extends D3Common2 {
             ${this.margin.top}
           )`,
         )
-        .attr('d', `${lineGenerator(data)}`);
-      // .transition()
-      // .ease(easeSinInOut)
-      // .duration(this.lineTransitionDuration);
-      // .attr('stroke-dashoffset', 0);
+        .attr('d', `${lineGenerator(data)}`)
+        .transition()
+        .ease(easeSinInOut)
+        .duration(this.lineTransitionDuration)
+        .attr('stroke-dashoffset', 0);
 
       // const pathLength = path.node()?.getTotalLength();
       // if (this.lineTransition) {

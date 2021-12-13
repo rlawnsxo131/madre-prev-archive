@@ -1,12 +1,13 @@
 const path = require('path');
 const paths = require('./paths');
 const { config } = require('dotenv');
+const { NODE_ENV } = process.env;
+
+config({
+  path: path.resolve(paths.rootPath, `.env.${NODE_ENV}`),
+});
 
 function initializeEnvironment() {
-  const { NODE_ENV } = process.env;
-  config({
-    path: path.resolve(paths.rootPath, `.env.${NODE_ENV}`),
-  });
   return {
     'process.env': JSON.stringify(
       Object.keys(process.env)

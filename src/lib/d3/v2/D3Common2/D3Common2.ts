@@ -1,4 +1,4 @@
-import { select } from 'd3';
+import { select, format } from 'd3';
 import { AppendSVGParams } from './D3Common2Types';
 
 export default class D3Common {

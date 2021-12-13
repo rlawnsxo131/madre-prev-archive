@@ -43,7 +43,7 @@ export type D3AxisChartLinejoinType = 'round' | 'miter';
 
 export type D3AxisChartSetLineOptionsParams = Partial<{
   lineType: D3AxisChartLineType;
-  linecurvType: D3AxisChartLinecurvType;
+  linecurvType: D3AxisChartLinecurvKeys;
   linecapType: D3AxisChartLinecapType;
   linejoinType: D3AxisChartLinejoinType;
   lineStrokeWidth: number;
