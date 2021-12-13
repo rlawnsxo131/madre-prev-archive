@@ -1,9 +1,9 @@
 import { format } from 'd3';
 
-function d3NumberFormat() {
+function d3FormatNumberWithComma() {
   return format(',');
 }
 
 export default {
-  d3NumberFormat,
+  d3FormatNumberWithComma,
 };

@@ -62,7 +62,7 @@ function TestPage2(props: TestPage2Props) {
       axisXTickVisible: true,
       axisYTickVisible: true,
       axisXTickFormat: (d, _) => format(d as Date, 'yyyy-MM'),
-      axisYTickFormat: (d, _) => d3Utils.d3NumberFormat()(d),
+      axisYTickFormat: (d, _) => d3Utils.d3FormatNumberWithComma()(d),
       axisXClass: axisXClassRef.current,
       axisYClass: axisYClassRef.current,
     });
@@ -77,7 +77,7 @@ function TestPage2(props: TestPage2Props) {
 
       const data = Array.from({ length: 5 }).map((_, i) =>
         Array.from({ length: 101 }).map((_, j) => ({
-          x: j * 100,
+          x: j * 0,
           y: getRandomIntInclusive(10000, 20000),
         })),
       );
@@ -86,7 +86,7 @@ function TestPage2(props: TestPage2Props) {
       chartRef.current.setScaleType('number', 'number');
       chartRef.current.setDomain();
       chartRef.current.setAxisOptions({
-        axisXTickFormat: (d, _) => d3Utils.d3NumberFormat()(d),
+        axisXTickFormat: (d, _) => d3Utils.d3FormatNumberWithComma()(d),
       });
       chartRef.current.setAxis();
       chartRef.current.updateAxis();
