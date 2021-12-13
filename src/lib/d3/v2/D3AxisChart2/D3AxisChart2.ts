@@ -401,12 +401,6 @@ export default class D3AxisChart2 extends D3Common2 {
         .attr('stroke-linejoin', this.linejoinType)
         .attr('stroke-linecap', this.linecapType)
         .attr('class', `line-${i}`)
-        .attr('stroke-dasharray', function (d) {
-          return this.getTotalLength();
-        })
-        .attr('stroke-dashoffset', function (d) {
-          return this.getTotalLength();
-        })
         .attr(
           'transform',
           `translate(
@@ -414,11 +408,7 @@ export default class D3AxisChart2 extends D3Common2 {
             ${this.margin.top}
           )`,
         )
-        .attr('d', `${lineGenerator(data)}`)
-        .transition()
-        .ease(easeSinInOut)
-        .duration(this.lineTransitionDuration)
-        .attr('stroke-dashoffset', 0);
+        .attr('d', `${lineGenerator(data)}`);
 
       // const pathLength = path.node()?.getTotalLength();
       // if (this.lineTransition) {
