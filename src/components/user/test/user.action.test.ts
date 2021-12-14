@@ -4,7 +4,7 @@ import { Connection } from 'typeorm';
 import { userService } from '..';
 import { Database } from '../../../datastore';
 import { initializeEnvironment } from '../../../lib';
-import { errorCode } from '../../../constants';
+import { ERROR_CODE } from '../../../constants';
 
 describe('userService Test', () => {
   let connection: Connection | null = null;
@@ -25,7 +25,7 @@ describe('userService Test', () => {
       await userService.getUserById(id);
     } catch (e) {
       const error = e as ApolloError;
-      expect(error.extensions.code).toBe(errorCode.BAD_REQUEST);
+      expect(error.extensions.code).toBe(ERROR_CODE.BAD_REQUEST);
       expect(error.extensions.id).toBe(id);
     }
   });

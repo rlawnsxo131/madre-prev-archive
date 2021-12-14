@@ -1,6 +1,13 @@
+/**
+ * about environment config
+ */
 export const isProduction = process.env.NODE_ENV === 'production';
 export const environmentFilename = `.env.${process.env.NODE_ENV}`;
-export const errorCode = {
+
+/**
+ * about logic
+ */
+export const ERROR_CODE = {
   NOT_FOUND: 'NOT_FOUND',
   FORBIDDEN: 'FORBIDDEN',
   UNAUTHENTICATED: 'UNAUTHENTICATED',

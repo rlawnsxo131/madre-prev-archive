@@ -4,7 +4,7 @@ import { Database } from '../../../datastore';
 import { initializeEnvironment } from '../../../lib';
 import { dataService } from '..';
 import { ApolloError } from 'apollo-server-core';
-import { errorCode } from '../../../constants';
+import { ERROR_CODE } from '../../../constants';
 
 describe('dataService Test', () => {
   let connection: Connection | null = null;
@@ -25,7 +25,7 @@ describe('dataService Test', () => {
       await dataService.getDataById(id);
     } catch (e) {
       const error = e as ApolloError;
-      expect(error.extensions.code).toBe(errorCode.NOT_FOUND);
+      expect(error.extensions.code).toBe(ERROR_CODE.NOT_FOUND);
       expect(error.extensions.id).toBe(id);
     }
   });
