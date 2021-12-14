@@ -1,12 +1,12 @@
 import 'jest';
-import { ApolloError } from 'apollo-server-core';
 import { Connection } from 'typeorm';
-import { userService } from '..';
 import { Database } from '../../../datastore';
 import { initializeEnvironment } from '../../../lib';
+import { dataService } from '..';
+import { ApolloError } from 'apollo-server-core';
 import { ERROR_CODE } from '../../../constants';
 
-describe('userService Test', () => {
+describe('data Test', () => {
   let connection: Connection | null = null;
 
   beforeAll(async () => {
@@ -19,13 +19,16 @@ describe('userService Test', () => {
     await connection?.close();
   });
 
-  test('getUserById: id to 0', async () => {
+  test('getData: id to 0 and throw', async () => {
     const id = 0;
     try {
-      await userService.getUserById(id);
+      const data = await dataService.getData(id);
+      if (!data) {
+        throw new ApolloError('Not Found Data', ERROR_CODE.NOT_FOUND, { id });
+      }
     } catch (e) {
       const error = e as ApolloError;
-      expect(error.extensions.code).toBe(ERROR_CODE.BAD_REQUEST);
+      expect(error.extensions.code).toBe(ERROR_CODE.NOT_FOUND);
       expect(error.extensions.id).toBe(id);
     }
   });
