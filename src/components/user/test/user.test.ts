@@ -6,7 +6,7 @@ import { Database } from '../../../datastore';
 import { initializeEnvironment } from '../../../lib';
 import { ERROR_CODE } from '../../../constants';
 
-describe('userService Test', () => {
+describe('user Test', () => {
   let connection: Connection | null = null;
 
   beforeAll(async () => {
