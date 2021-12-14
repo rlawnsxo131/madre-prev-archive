@@ -6,7 +6,7 @@ import {
 } from 'apollo-server-core';
 import { FastifyInstance } from 'fastify';
 import schema from './apollo.schema';
-import { isProduction } from '../../constants';
+import { IS_PRODUCTION } from '../../constants';
 
 export default class Apollo {
   private readonly app: ApolloServer;
@@ -20,11 +20,11 @@ export default class Apollo {
       plugins: [
         this.fastifyAppClosePlugin(fastify),
         ApolloServerPluginDrainHttpServer({ httpServer: fastify.server }),
-        isProduction
+        IS_PRODUCTION
           ? ApolloServerPluginLandingPageDisabled()
           : ApolloServerPluginLandingPageGraphQLPlayground(),
       ],
-      debug: !isProduction,
+      debug: !IS_PRODUCTION,
     });
   }
 
