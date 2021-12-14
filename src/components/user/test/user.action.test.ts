@@ -4,7 +4,7 @@ import { Connection } from 'typeorm';
 import { userService } from '..';
 import { Database } from '../../../datastore';
 import { initializeEnvironment } from '../../../lib';
-import { errorCode } from '../../error';
+import { errorCode } from '../../../constants';
 
 describe('userService Test', () => {
   let connection: Connection | null = null;

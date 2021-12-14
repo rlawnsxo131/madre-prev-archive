@@ -4,7 +4,7 @@ import { Database } from '../../../datastore';
 import { initializeEnvironment } from '../../../lib';
 import { dataService } from '..';
 import { ApolloError } from 'apollo-server-core';
-import { errorCode } from '../../error';
+import { errorCode } from '../../../constants';
 
 describe('dataService Test', () => {
   let connection: Connection | null = null;
