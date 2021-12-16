@@ -13,7 +13,7 @@ interface ThrowApolloErrorParams {
   resolver: () => boolean;
   message: string;
   code: keyof typeof ERROR_CODE;
-  params?: any;
+  params?: Record<string, any>;
 }
 
 function throwApolloError({
