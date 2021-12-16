@@ -19,7 +19,7 @@ describe('data Test', () => {
     await connection?.close();
   });
 
-  test('getData: id to 0 and throw', async () => {
+  test('getData: id to 0 and throwApolloError', async () => {
     const id = 0;
     try {
       const data = await dataService.getData(id);

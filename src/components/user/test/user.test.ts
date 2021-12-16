@@ -19,7 +19,7 @@ describe('user Test', () => {
     await connection?.close();
   });
 
-  test('getUser: id to 0 and throw', async () => {
+  test('getUser: id to 0 and throwApolloError', async () => {
     const id = 0;
     try {
       const user = await userService.getUser(id);
