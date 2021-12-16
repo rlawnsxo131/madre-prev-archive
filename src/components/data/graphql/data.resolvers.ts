@@ -1,6 +1,6 @@
 import { IResolvers } from '@graphql-tools/utils';
 import { dataService } from '..';
-import errorService from '../../error/error.service';
+import { errorService } from '../../error';
 
 interface DataArgs {
   id: number;

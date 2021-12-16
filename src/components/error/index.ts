@@ -1,1 +1,1 @@
-export { default as errorService } from './error.service';
+export { default as errorService } from './service/error.service';
