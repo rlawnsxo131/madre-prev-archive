@@ -4,7 +4,7 @@ import { Database } from '../../../datastore';
 import { initializeEnvironment } from '../../../lib';
 import { dataService } from '..';
 import { ApolloError } from 'apollo-server-core';
-import { ERROR_CODE } from '../../../constants';
+import { errorService } from '../../error';
 
 describe('data Test', () => {
   let connection: Connection | null = null;
@@ -23,12 +23,15 @@ describe('data Test', () => {
     const id = 0;
     try {
       const data = await dataService.getData(id);
-      if (!data) {
-        throw new ApolloError('Not Found Data', ERROR_CODE.NOT_FOUND, { id });
-      }
+      errorService.throwApolloError({
+        resolver: () => !data,
+        message: 'Not Found Data',
+        code: 'NOT_FOUND',
+        params: { id },
+      });
     } catch (e) {
       const error = e as ApolloError;
-      expect(error.extensions.code).toBe(ERROR_CODE.NOT_FOUND);
+      expect(error.extensions.code).toBe(errorService.ERROR_CODE.NOT_FOUND);
       expect(error.extensions.id).toBe(id);
     }
   });

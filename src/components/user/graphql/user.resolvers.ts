@@ -1,7 +1,6 @@
 import { IResolvers } from '@graphql-tools/utils';
-import { ApolloError } from 'apollo-server-core';
 import { userService } from '..';
-import { ERROR_CODE } from '../../../constants';
+import { errorService } from '../../error';
 
 interface UserArgs {
   id: number;
@@ -12,9 +11,12 @@ const resolvers: IResolvers = {
   Query: {
     async user(_, { id }: UserArgs) {
       const user = await userService.getUser(id);
-      if (!user) {
-        throw new ApolloError('Not Found User', ERROR_CODE.BAD_REQUEST, { id });
-      }
+      errorService.throwApolloError({
+        resolver: () => !user,
+        message: 'Not Found Data',
+        code: 'NOT_FOUND',
+        params: { id },
+      });
       return user;
     },
   },
