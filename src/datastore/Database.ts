@@ -6,6 +6,10 @@ import {
   ConnectionOptions,
 } from 'typeorm';
 
+/**
+ * don't know if you want to manage a connection with a different name yet.
+ * should consider editing it later.
+ */
 export default class Database {
   private readonly connectionManager: ConnectionManager;
   private readonly connectionOptions: ConnectionOptions;
