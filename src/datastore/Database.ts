@@ -48,7 +48,9 @@ export default class Database {
         if (connection.isConnected) {
           await connection.close();
         }
-      } catch (e) {}
+      } catch (e) {
+        throw new Error(`connection close error: ${e}`);
+      }
       return connection.connect();
     }
 
