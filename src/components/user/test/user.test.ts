@@ -25,7 +25,7 @@ describe('user Test', () => {
       const user = await userService.getUser(id);
       errorService.throwApolloError({
         resolver: () => !user,
-        message: 'Not Found Data',
+        message: 'Not Found User',
         code: 'BAD_REQUEST',
         params: { id },
       });

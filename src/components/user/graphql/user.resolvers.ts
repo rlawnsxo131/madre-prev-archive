@@ -13,8 +13,8 @@ const resolvers: IResolvers = {
       const user = await userService.getUser(id);
       errorService.throwApolloError({
         resolver: () => !user,
-        message: 'Not Found Data',
-        code: 'NOT_FOUND',
+        message: 'Not Found User',
+        code: 'BAD_REQUEST',
         params: { id },
       });
       return user;
