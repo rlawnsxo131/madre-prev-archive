@@ -25,7 +25,7 @@ export default class Data {
   description?: string;
 
   @Column({ default: false })
-  public_yn!: boolean;
+  is_public!: boolean;
 
   @CreateDateColumn({ type: 'timestamp' })
   created_at!: Date;

@@ -1,10 +1,10 @@
 import 'jest';
-import { ApolloError } from 'apollo-server-core';
+import { initializeEnvironment } from '../../../lib';
+import { Database } from '../../../datastore';
 import { Connection } from 'typeorm';
 import { userService } from '..';
-import { Database } from '../../../datastore';
-import { initializeEnvironment } from '../../../lib';
 import { errorService } from '../../error';
+import { ApolloError } from 'apollo-server-core';
 
 describe('user Test', () => {
   let connection: Connection | null = null;
@@ -19,7 +19,13 @@ describe('user Test', () => {
     await connection?.close();
   });
 
-  test('getUser: id to 0 and throwApolloError', async () => {
+  test('getUser: id to 0', async () => {
+    const id = 0;
+    const user = await userService.getUser(id);
+    expect(user).toBe(undefined);
+  });
+
+  test('getUser: id to 0 with throwApolloError', async () => {
     const id = 0;
     try {
       const user = await userService.getUser(id);

@@ -1,10 +1,10 @@
 import 'jest';
-import { Connection } from 'typeorm';
-import { Database } from '../../../datastore';
 import { initializeEnvironment } from '../../../lib';
+import { Database } from '../../../datastore';
+import { Connection } from 'typeorm';
 import { dataService } from '..';
-import { ApolloError } from 'apollo-server-core';
 import { errorService } from '../../error';
+import { ApolloError } from 'apollo-server-core';
 
 describe('data Test', () => {
   let connection: Connection | null = null;
@@ -17,6 +17,12 @@ describe('data Test', () => {
 
   afterAll(async () => {
     await connection?.close();
+  });
+
+  test('getData: id to 0', async () => {
+    const id = 0;
+    const data = await dataService.getData(id);
+    expect(data).toBe(undefined);
   });
 
   test('getData: id to 0 and throwApolloError', async () => {
