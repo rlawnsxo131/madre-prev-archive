@@ -3,19 +3,19 @@ import { memo } from 'react';
 import { ColorTheme, useColorThemeValue } from '../../../atoms/colorThemeState';
 import { palette } from '../../../styles';
 import {
-  buttonColorMap,
-  ButtonColorType,
-  ButtonShapeType,
+  ButtonColor,
+  ButtonShape,
+  ButtonSize,
   buttonSizeMap,
-  ButtonSizeType,
+  buttonColorMap,
   outlineButtonStyle,
 } from './buttonStyle';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  color?: ButtonColorType;
-  size?: ButtonSizeType;
-  shape?: ButtonShapeType;
+  color?: ButtonColor;
+  size?: ButtonSize;
+  shape?: ButtonShape;
   outline?: boolean;
   icon?: React.ReactNode;
 }
@@ -48,9 +48,9 @@ function Button({
 }
 
 const block = (
-  color: ButtonColorType,
-  size: ButtonSizeType,
-  shape: ButtonShapeType,
+  color: ButtonColor,
+  size: ButtonSize,
+  shape: ButtonShape,
   outline: boolean,
   theme: ColorTheme,
 ) => css`

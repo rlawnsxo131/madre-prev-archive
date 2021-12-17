@@ -1,8 +1,8 @@
 import { palette } from '../../../styles';
 
-export type ButtonShapeType = 'rect' | 'round';
-export type ButtonSizeType = 'small' | 'medium' | 'large' | 'responsive';
-export type ButtonColorType = 'gray' | 'pink';
+export type ButtonShape = 'rect' | 'round';
+export type ButtonSize = 'small' | 'medium' | 'large' | 'responsive';
+export type ButtonColor = 'gray' | 'pink';
 
 export const buttonSizeMap = {
   small: {
