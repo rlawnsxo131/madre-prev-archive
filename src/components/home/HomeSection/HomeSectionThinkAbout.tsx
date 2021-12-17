@@ -1,12 +1,12 @@
 import { css } from '@emotion/react';
 import { RealTimeAsyncImage } from '../../../image/images';
-import homeStyles from './homeStyles';
+import homeSectionStyles from './homeSectionStyles';
 
 interface HomeSectionThinkAboutProps {}
 
 function HomeSectionThinkAbout(props: HomeSectionThinkAboutProps) {
   return (
-    <section css={homeStyles.block}>
+    <section css={homeSectionStyles.block}>
       <div css={descriptionBlock}>
         <div css={description}>
           <h3>Think About</h3>
@@ -26,7 +26,7 @@ function HomeSectionThinkAbout(props: HomeSectionThinkAboutProps) {
 }
 
 const descriptionBlock = css`
-  ${homeStyles.block};
+  ${homeSectionStyles.block};
   flex: 1;
   display: flex;
 `;
@@ -41,7 +41,7 @@ const description = css`
 `;
 
 const imageBlock = css`
-  ${homeStyles.itemCommon};
+  ${homeSectionStyles.itemCommon};
   flex: 1;
   display: flex;
   justify-content: center;
