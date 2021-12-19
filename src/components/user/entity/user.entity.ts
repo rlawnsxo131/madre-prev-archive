@@ -11,7 +11,7 @@ import { Data } from '../../data';
 
 @Entity('user')
 export default class User {
-  @PrimaryGeneratedColumn({ unsigned: true })
+  @PrimaryGeneratedColumn('uuid')
   id!: number;
 
   @Index('ix_email', { unique: true })

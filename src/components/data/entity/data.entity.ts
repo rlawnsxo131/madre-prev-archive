@@ -12,8 +12,8 @@ import { User } from '../../user';
 
 @Entity('data')
 export default class Data {
-  @PrimaryGeneratedColumn({ unsigned: true })
-  id!: number;
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
   @Column({ length: 255 })
   file_url!: string;

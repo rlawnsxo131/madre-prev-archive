@@ -1,8 +1,9 @@
-import { getCustomRepository } from 'typeorm';
+import { getConnection } from 'typeorm';
 import DataQueryRepository from '../repository/data.query.repository';
 
 function getData(id: number) {
-  return getCustomRepository(DataQueryRepository).findOneById(id);
+  const connection = getConnection('default');
+  return connection.getCustomRepository(DataQueryRepository).findOneById(id);
 }
 
 export default {
