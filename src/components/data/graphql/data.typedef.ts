@@ -2,8 +2,8 @@ import { gql } from 'apollo-server-core';
 
 export default gql`
   type Data {
-    id: Int!
-    user_id: Int!
+    id: ID!
+    user_id: ID!
     file_url: String!
     title: String!
     description: String
@@ -13,5 +13,8 @@ export default gql`
   }
   extend type Query {
     data(id: Int!): Data!
+  }
+  extend type Mutation {
+    createData: Data!
   }
 `;

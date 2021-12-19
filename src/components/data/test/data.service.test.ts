@@ -18,7 +18,7 @@ describe('dataService Test', () => {
   });
 
   test('getData: id to 0', async () => {
-    const id = 0;
+    const id = 'undefined';
     const data = await dataService.getData(id);
     expect(data).toBe(undefined);
   });

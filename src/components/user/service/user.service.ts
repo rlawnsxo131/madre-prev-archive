@@ -1,7 +1,7 @@
 import { getCustomRepository } from 'typeorm';
 import { UserQueryRepository } from '..';
 
-function getUser(id: number) {
+function getUser(id: string) {
   return getCustomRepository(UserQueryRepository).findOneById(id);
 }
 

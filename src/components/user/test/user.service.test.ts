@@ -18,7 +18,7 @@ describe('userService Test', () => {
   });
 
   test('getUser: id to 0', async () => {
-    const id = 0;
+    const id = 'undefined';
     const user = await userService.getUser(id);
     expect(user).toBe(undefined);
   });

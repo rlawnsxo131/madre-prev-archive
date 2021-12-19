@@ -3,7 +3,7 @@ import { userService } from '..';
 import { errorService } from '../../error';
 
 interface UserArgs {
-  id: number;
+  id: string;
 }
 
 const resolvers: IResolvers = {

@@ -15,6 +15,9 @@ export default class Data {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
+  @Column({ length: 36 })
+  user_id!: string;
+
   @Column({ length: 255 })
   file_url!: string;
 

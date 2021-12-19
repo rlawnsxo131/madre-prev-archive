@@ -3,7 +3,7 @@ import { dataService } from '..';
 import { errorService } from '../../error';
 
 interface DataArgs {
-  id: number;
+  id: string;
 }
 
 const resolvers: IResolvers = {
@@ -18,6 +18,9 @@ const resolvers: IResolvers = {
       });
       return data;
     },
+  },
+  Mutation: {
+    async createData() {},
   },
 };
 
