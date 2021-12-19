@@ -12,8 +12,8 @@ const resolvers: IResolvers = {
       const data = await dataService.getData(id);
       errorService.throwApolloError({
         resolver: () => !data,
-        code: 'NOT_FOUND',
         message: 'Not Found Data',
+        code: 'NOT_FOUND',
         params: { id },
       });
       return data;

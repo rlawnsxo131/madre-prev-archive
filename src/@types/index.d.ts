@@ -1,0 +1,7 @@
+type ErrorCode =
+  | 'NOT_FOUND'
+  | 'FORBIDDEN'
+  | 'UNAUTHENTICATED'
+  | 'INTERNAL_SERVER_ERROR'
+  | 'BAD_REQUEST'
+  | 'BAD_USER_INPUT';
