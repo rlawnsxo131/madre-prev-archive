@@ -11,10 +11,18 @@ export default gql`
     created_at: Date!
     updated_at: Date!
   }
+
   extend type Query {
     data(id: Int!): Data!
   }
+
   extend type Mutation {
-    createData: Data!
+    createData(
+      user_id: String!
+      file_url: String!
+      title: String!
+      description: String
+      is_public: Boolean!
+    ): Data!
   }
 `;

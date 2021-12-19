@@ -1,14 +1,11 @@
 import { IResolvers } from '@graphql-tools/utils';
 import { dataService } from '..';
 import { errorService } from '../../error';
-
-interface DataArgs {
-  id: string;
-}
+import { CreateDataParams, GetDataParams } from '../interface/data.interface';
 
 const resolvers: IResolvers = {
   Query: {
-    async data(_, { id }: DataArgs) {
+    async data(_, { id }: GetDataParams) {
       const data = await dataService.getData(id);
       errorService.throwApolloError({
         resolver: () => !data,
@@ -20,7 +17,10 @@ const resolvers: IResolvers = {
     },
   },
   Mutation: {
-    async createData() {},
+    async createData(_, args: CreateDataParams) {
+      const data = await dataService.createData(args);
+      return data;
+    },
   },
 };
 

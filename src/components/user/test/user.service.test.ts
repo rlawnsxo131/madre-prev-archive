@@ -17,7 +17,7 @@ describe('userService Test', () => {
     await connection?.close();
   });
 
-  test('getUser: id to 0', async () => {
+  test('getUser: id to undefined', async () => {
     const id = 'undefined';
     const user = await userService.getUser(id);
     expect(user).toBe(undefined);
