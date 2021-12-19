@@ -1,5 +1,13 @@
 import { ApolloError } from 'apollo-server-core';
 
+type ErrorCode =
+  | 'NOT_FOUND'
+  | 'FORBIDDEN'
+  | 'UNAUTHENTICATED'
+  | 'INTERNAL_SERVER_ERROR'
+  | 'BAD_REQUEST'
+  | 'BAD_USER_INPUT';
+
 interface ThrowApolloErrorParams {
   resolver: () => boolean;
   message: string;
