@@ -1,6 +1,6 @@
 import { IResolvers } from '@graphql-tools/utils';
 import { userService } from '..';
-import { errorService } from '../../error';
+import { apolloErrorService } from '../../common';
 import { GetUserParams } from '../interface/user.interface';
 
 const resolvers: IResolvers = {
@@ -8,7 +8,7 @@ const resolvers: IResolvers = {
   Query: {
     async user(_, { id }: GetUserParams) {
       const user = await userService.getUser(id);
-      errorService.throwApolloError({
+      apolloErrorService.throwApolloErrorValidation({
         resolver: () => !user,
         message: 'Not Found User',
         code: 'BAD_REQUEST',

@@ -1,1 +1,1 @@
-export { default as commonService } from './service/common.service';
+export { default as apolloErrorService } from './service/error/apollo.error.service';

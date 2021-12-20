@@ -1,13 +1,13 @@
 import { IResolvers } from '@graphql-tools/utils';
 import { dataService, dataValidationService } from '..';
-import { errorService } from '../../error';
+import { apolloErrorService } from '../../common';
 import { CreateDataParams, GetDataParams } from '../interface/data.interface';
 
 const resolvers: IResolvers = {
   Query: {
     async data(_, { id }: GetDataParams) {
       const data = await dataService.getData(id);
-      errorService.throwApolloError({
+      apolloErrorService.throwApolloErrorValidation({
         resolver: () => !data,
         message: 'Not Found Data',
         code: 'NOT_FOUND',

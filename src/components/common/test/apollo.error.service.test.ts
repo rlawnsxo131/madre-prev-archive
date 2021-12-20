@@ -1,13 +1,13 @@
 import 'jest';
-import { errorService } from '..';
 import { ApolloError } from 'apollo-server-core';
+import { apolloErrorService } from '..';
 
-describe('errorService Test', () => {
-  test('throwApolloError: type NOT_FOUND and id to 1', async () => {
+describe('apolloErrorService Test', () => {
+  test('throwErrorValidation: type NOT_FOUND and id to 1', async () => {
     const id = 1;
     const code = 'NOT_FOUND';
     try {
-      errorService.throwApolloError({
+      apolloErrorService.throwApolloErrorValidation({
         resolver: () => true,
         message: 'Not Found Data',
         code,
