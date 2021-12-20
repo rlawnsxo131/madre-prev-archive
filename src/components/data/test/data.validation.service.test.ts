@@ -5,24 +5,6 @@ import { errorService } from '../../error';
 import { CreateDataParams } from '../interface/data.interface';
 
 describe('dataValidationService Test', () => {
-  test('getDataParamsValidation', async () => {
-    const id = '';
-    const code = 'BAD_USER_INPUT';
-    try {
-      const validation = dataValidationService.getDataParamsValidation(id);
-      errorService.throwApolloError({
-        resolver: () => !validation,
-        message: 'validation test',
-        code,
-        params: { id },
-      });
-    } catch (e) {
-      const error = e as ApolloError;
-      expect(error.extensions.code).toBe(code);
-      expect(error.extensions.id).toBe(id);
-    }
-  });
-
   test('createDataParamsValidation', async () => {
     const createDataParams: CreateDataParams = {
       user_id: '',

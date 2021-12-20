@@ -6,13 +6,6 @@ import { CreateDataParams, GetDataParams } from '../interface/data.interface';
 const resolvers: IResolvers = {
   Query: {
     async data(_, { id }: GetDataParams) {
-      const validation = dataValidationService.getDataParamsValidation(id);
-      errorService.throwApolloError({
-        resolver: () => !validation,
-        message: 'data query validation error',
-        code: 'BAD_USER_INPUT',
-        params: { id },
-      });
       const data = await dataService.getData(id);
       errorService.throwApolloError({
         resolver: () => !data,
