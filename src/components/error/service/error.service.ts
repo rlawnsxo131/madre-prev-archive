@@ -9,7 +9,8 @@ type ApolloErrorCode =
   | 'PERSISTED_QUERY_NOT_FOUND'
   | 'PERSISTED_QUERY_NOT_SUPPORTED'
   | 'INTERNAL_SERVER_ERROR'
-  | 'NOT_FOUND'; // my custom
+  | 'NOT_FOUND' // my custom
+  | 'BAD_REQUEST'; // my custom
 
 interface ThrowApolloErrorParams {
   resolver: () => boolean;
@@ -25,7 +26,7 @@ function throwApolloError({
   params = {},
 }: ThrowApolloErrorParams) {
   if (!resolver()) return;
-  throw new ApolloError(message, code, { ...params });
+  throw new ApolloError(message, code, params);
 }
 
 export default {
