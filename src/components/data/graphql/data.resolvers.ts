@@ -18,14 +18,7 @@ const resolvers: IResolvers = {
   },
   Mutation: {
     async createData(_, params: CreateDataParams) {
-      const validation =
-        dataValidationService.createDataParamsValidation(params);
-      errorService.throwApolloError({
-        resolver: () => !validation,
-        message: 'createData mutation validation error',
-        code: 'BAD_USER_INPUT',
-        params,
-      });
+      dataValidationService.createDataParamsValidation(params);
       const data = await dataService.createData(params);
       return data;
     },

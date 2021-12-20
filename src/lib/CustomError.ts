@@ -1,7 +1,6 @@
 /**
  * let's think a little more
  */
-
 interface CustomErrorParams {
   statusCode: number;
   name: string;
