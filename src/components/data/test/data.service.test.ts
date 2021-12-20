@@ -25,18 +25,18 @@ describe('dataService Test', () => {
   });
 
   test('createData', async () => {
-    const userObj: CreateDataParams = {
+    const createDataParams: CreateDataParams = {
       user_id: 'user_id',
       file_url: 'asdf',
       title: 'title',
       description: undefined,
       is_public: false,
     };
-    const data = await dataService.createData(userObj);
-    expect(data.user_id).toBe(userObj.user_id);
-    expect(data.file_url).toBe(userObj.file_url);
-    expect(data.title).toBe(userObj.title);
+    const data = await dataService.createData(createDataParams);
+    expect(data.user_id).toBe(createDataParams.user_id);
+    expect(data.file_url).toBe(createDataParams.file_url);
+    expect(data.title).toBe(createDataParams.title);
     expect(data.description).toBe(null);
-    expect(data.is_public).toBe(userObj.is_public);
+    expect(data.is_public).toBe(createDataParams.is_public);
   });
 });

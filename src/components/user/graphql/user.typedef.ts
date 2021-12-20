@@ -11,6 +11,6 @@ export default gql`
     updated_at: Date!
   }
   extend type Query {
-    user(id: Int!): User
+    user(id: ID!): User
   }
 `;

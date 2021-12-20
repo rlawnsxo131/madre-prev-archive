@@ -13,7 +13,7 @@ export default gql`
   }
 
   extend type Query {
-    data(id: Int!): Data!
+    data(id: ID!): Data!
   }
 
   extend type Mutation {
