@@ -1,6 +1,13 @@
 import Joi from 'joi';
-import { UserInputError } from 'apollo-server-core';
 import { CreateDataParams } from '../interface/data.interface';
+import { UserInputError } from 'apollo-server-core';
+
+function getDataParamsValidation(id: string) {
+  const schema = Joi.string().guid().required();
+  const { error } = schema.validate(id);
+  if (!error) return;
+  throw new UserInputError(error.message, { id });
+}
 
 function createDataParamsValidation(params: CreateDataParams) {
   const schema = Joi.object<CreateDataParams>({
@@ -16,5 +23,6 @@ function createDataParamsValidation(params: CreateDataParams) {
 }
 
 export default {
+  getDataParamsValidation,
   createDataParamsValidation,
 };

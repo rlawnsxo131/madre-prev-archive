@@ -6,6 +6,7 @@ import { CreateDataParams, GetDataParams } from '../interface/data.interface';
 const resolvers: IResolvers = {
   Query: {
     async data(_, { id }: GetDataParams) {
+      dataValidationService.getDataParamsValidation(id);
       const data = await dataService.getData(id);
       apolloErrorService.throwErrorValidation({
         resolver: () => !data,

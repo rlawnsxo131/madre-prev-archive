@@ -2,11 +2,13 @@ import { IResolvers } from '@graphql-tools/utils';
 import { userService } from '..';
 import { apolloErrorService } from '../../common';
 import { GetUserParams } from '../interface/user.interface';
+import userValidationService from '../service/user.validation.service';
 
 const resolvers: IResolvers = {
   User: {},
   Query: {
     async user(_, { id }: GetUserParams) {
+      userValidationService.getUserParamsValidation(id);
       const user = await userService.getUser(id);
       apolloErrorService.throwErrorValidation({
         resolver: () => !user,

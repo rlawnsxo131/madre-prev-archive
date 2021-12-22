@@ -6,6 +6,7 @@
     "sdk:update": "yarn dlx @yarnpkg/sdks",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
+    "test:target": "jest --coverage -- ",
     "start:dev": "NODE_ENV=development ts-node-dev --respawn --transpile-only ./src/index.ts"
   },
   "devDependencies": {

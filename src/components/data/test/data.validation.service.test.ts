@@ -3,7 +3,17 @@ import { dataValidationService } from '..';
 import { CreateDataParams } from '../interface/data.interface';
 
 describe('dataValidationService Test', () => {
-  test('createDataParamsValidation', async () => {
+  test('getDataParamsValidation', () => {
+    const id = '';
+    try {
+      dataValidationService.getDataParamsValidation(id);
+    } catch (e: any) {
+      expect(e.extensions.code).toBe('BAD_USER_INPUT');
+      expect(e.extensions.id).toBe(id);
+    }
+  });
+
+  test('createDataParamsValidation', () => {
     const createDataParams: CreateDataParams = {
       user_id: '',
       file_url: '',
