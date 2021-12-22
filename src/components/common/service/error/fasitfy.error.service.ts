@@ -6,39 +6,39 @@ type ErrorName =
   | 'ForbiddenError';
 
 interface CustomErrorParams {
-  statusCode: number;
-  name: ErrorName;
   message: string;
+  name: ErrorName;
+  statusCode: number;
 }
 
 class CustomError extends Error {
   statusCode: number;
   name: string;
-  constructor({ statusCode, name, message }: CustomErrorParams) {
+  constructor({ message, name, statusCode }: CustomErrorParams) {
     super(message);
-    this.statusCode = statusCode;
     this.name = name;
+    this.statusCode = statusCode;
   }
 }
 
 interface ThrowErrorValidationParams {
   resolver: (params?: any) => boolean;
-  statusCode: number;
   message: string;
   name: ErrorName;
+  statusCode: number;
 }
 
 function throwErrorValidation({
   resolver,
-  statusCode,
   message,
   name,
+  statusCode,
 }: ThrowErrorValidationParams) {
   if (!resolver()) return;
   throw new CustomError({
-    statusCode,
     message,
     name,
+    statusCode,
   });
 }
 

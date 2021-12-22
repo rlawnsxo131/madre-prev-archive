@@ -1,5 +1,4 @@
 import 'jest';
-import { ApolloError } from 'apollo-server-core';
 import { dataValidationService } from '..';
 import { CreateDataParams } from '../interface/data.interface';
 
@@ -14,14 +13,13 @@ describe('dataValidationService Test', () => {
     };
     try {
       dataValidationService.createDataParamsValidation(createDataParams);
-    } catch (e) {
-      const error = e as ApolloError;
-      expect(error.extensions.code).toBe('BAD_USER_INPUT');
-      expect(error.extensions.user_id).toBe(createDataParams.user_id);
-      expect(error.extensions.file_url).toBe(createDataParams.file_url);
-      expect(error.extensions.is_public).toBe(createDataParams.is_public);
-      expect(error.extensions.title).toBe(createDataParams.title);
-      expect(error.extensions.description).toBe(createDataParams.description);
+    } catch (e: any) {
+      expect(e.extensions.code).toBe('BAD_USER_INPUT');
+      expect(e.extensions.user_id).toBe(createDataParams.user_id);
+      expect(e.extensions.file_url).toBe(createDataParams.file_url);
+      expect(e.extensions.is_public).toBe(createDataParams.is_public);
+      expect(e.extensions.title).toBe(createDataParams.title);
+      expect(e.extensions.description).toBe(createDataParams.description);
     }
   });
 });

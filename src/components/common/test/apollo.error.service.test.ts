@@ -1,9 +1,8 @@
 import 'jest';
-import { ApolloError } from 'apollo-server-core';
-import { apolloErrorService } from '..';
+import { apolloErrorService, fastifyErrorService } from '..';
 
 describe('apolloErrorService Test', () => {
-  test('throwErrorValidation: type NOT_FOUND and id to 1', async () => {
+  test('throwApolloErrorService.throwErrorValidation: type NOT_FOUND and id to 1', () => {
     const id = 1;
     const code = 'NOT_FOUND';
     try {
@@ -13,10 +12,27 @@ describe('apolloErrorService Test', () => {
         code,
         params: { id },
       });
-    } catch (e) {
-      const error = e as ApolloError;
-      expect(error.extensions.code).toBe(code);
-      expect(error.extensions.id).toBe(id);
+    } catch (e: any) {
+      expect(e.extensions.code).toBe(code);
+      expect(e.extensions.id).toBe(id);
+    }
+  });
+
+  test('throwFastifyErrorService.throwErrorValidation', () => {
+    const name = 'NotFoundError';
+    const message = 'Not found User';
+    const statusCode = 404;
+    try {
+      fastifyErrorService.throwErrorValidation({
+        resolver: () => true,
+        message,
+        name,
+        statusCode,
+      });
+    } catch (e: any) {
+      expect(e.name).toBe(name);
+      expect(e.message).toBe(message);
+      expect(e.statusCode).toBe(statusCode);
     }
   });
 });
