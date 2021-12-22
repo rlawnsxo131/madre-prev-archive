@@ -8,7 +8,7 @@ const resolvers: IResolvers = {
   Query: {
     async user(_, { id }: GetUserParams) {
       const user = await userService.getUser(id);
-      apolloErrorService.throwApolloErrorValidation({
+      apolloErrorService.throwErrorValidation({
         resolver: () => !user,
         message: 'Not Found User',
         code: 'BAD_REQUEST',

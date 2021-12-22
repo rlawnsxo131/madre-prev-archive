@@ -21,19 +21,19 @@ class CustomError extends Error {
   }
 }
 
-interface ThrowFastifyErrorValidationParams {
-  resolver: () => boolean;
+interface ThrowErrorValidationParams {
+  resolver: (params?: any) => boolean;
   statusCode: number;
   message: string;
   name: ErrorName;
 }
 
-function throwFastifyErrorValidation({
+function throwErrorValidation({
   resolver,
   statusCode,
   message,
   name,
-}: ThrowFastifyErrorValidationParams) {
+}: ThrowErrorValidationParams) {
   if (!resolver()) return;
   throw new CustomError({
     statusCode,
@@ -43,5 +43,5 @@ function throwFastifyErrorValidation({
 }
 
 export default {
-  throwFastifyErrorValidation,
+  throwErrorValidation,
 };
