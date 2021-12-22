@@ -9,7 +9,9 @@ function getDataParamsValidation(id: string) {
   throw new UserInputError(error.message, { id });
 }
 
-function createDataParamsValidation(params: CreateDataParams) {
+function createDataParamsValidation(
+  params: CreateDataParams | Record<string, any> = {},
+) {
   const schema = Joi.object<CreateDataParams>({
     user_id: Joi.string().guid().required(),
     file_url: Joi.string().uri().required(),
