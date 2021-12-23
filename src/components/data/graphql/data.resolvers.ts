@@ -8,7 +8,7 @@ const resolvers: IResolvers = {
     async data(_, { id }: GetDataParams) {
       dataValidationService.getDataParamsValidation(id);
       const data = await dataService.getData(id);
-      apolloErrorService.throwErrorValidation({
+      apolloErrorService.throwApolloErrorValidation({
         resolver: () => !data,
         message: 'Not Found Data',
         code: 'NOT_FOUND',

@@ -1,41 +1,34 @@
-type ErrorName =
+type FastifyCustomErrorName =
   | 'BadRequestError'
   | 'NotFoundError'
   | 'InternalServerError'
   | 'UnauthorizedError'
   | 'ForbiddenError';
 
-interface CustomErrorParams {
+interface FastifyCustomErrorParams {
   message: string;
-  name: ErrorName;
+  name: FastifyCustomErrorName;
   statusCode: number;
 }
 
-class CustomError extends Error {
+class FastifyCustomError extends Error {
   statusCode: number;
   name: string;
-  constructor({ message, name, statusCode }: CustomErrorParams) {
+  constructor({ message, name, statusCode }: FastifyCustomErrorParams) {
     super(message);
     this.name = name;
     this.statusCode = statusCode;
   }
 }
 
-interface ThrowErrorValidationParams {
-  resolver: (params?: any) => boolean;
-  message: string;
-  name: ErrorName;
-  statusCode: number;
-}
-
-function throwErrorValidation({
+function throwFastifyErrorValidation({
   resolver,
   message,
   name,
   statusCode,
-}: ThrowErrorValidationParams) {
+}: FastifyCustomErrorParams & MadreResolveValidationFunctionInObject) {
   if (!resolver()) return;
-  throw new CustomError({
+  throw new FastifyCustomError({
     message,
     name,
     statusCode,
@@ -43,5 +36,5 @@ function throwErrorValidation({
 }
 
 export default {
-  throwErrorValidation,
+  throwFastifyErrorValidation,
 };

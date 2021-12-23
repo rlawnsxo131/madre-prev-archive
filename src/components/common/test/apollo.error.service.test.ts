@@ -6,7 +6,7 @@ describe('apolloErrorService Test', () => {
     const id = 1;
     const code = 'NOT_FOUND';
     try {
-      apolloErrorService.throwErrorValidation({
+      apolloErrorService.throwApolloErrorValidation({
         resolver: () => true,
         message: 'Not Found Data',
         code,

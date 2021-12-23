@@ -1,1 +1,4 @@
-type TempType = 'TEMP';
+type MadreResolveValidationFunction = (params?: any) => boolean;
+type MadreResolveValidationFunctionInObject = {
+  resolver: MadreResolveValidationFunction;
+};

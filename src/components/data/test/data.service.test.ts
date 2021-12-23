@@ -26,7 +26,7 @@ describe('dataService Test', () => {
 
   test('createData', async () => {
     const createDataParams: CreateDataParams = {
-      user_id: 'user_id',
+      user_id: 'cc950501-63ff-11ec-95c1-0242ac130002',
       file_url: 'asdf',
       title: 'title',
       description: undefined,

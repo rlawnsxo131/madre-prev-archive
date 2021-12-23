@@ -1,6 +1,6 @@
 import { ApolloError } from 'apollo-server-core';
 
-type ErrorCode =
+type ApolloCustomErrorCode =
   | 'GRAPHQL_PARSE_FAILED'
   | 'GRAPHQL_VALIDATION_FAILED'
   | 'BAD_USER_INPUT'
@@ -12,23 +12,23 @@ type ErrorCode =
   | 'NOT_FOUND' // my custom
   | 'BAD_REQUEST'; // my custom
 
-interface ThrowErrorValidationParams {
-  resolver: (params?: any) => boolean;
+interface ThrowApolloErrorValidationParams {
+  resolver: MadreResolveValidationFunction;
   message: string;
-  code: ErrorCode;
+  code: ApolloCustomErrorCode;
   params?: Record<string, any>;
 }
 
-function throwErrorValidation({
+function throwApolloErrorValidation({
   resolver,
   message,
   code,
   params = {},
-}: ThrowErrorValidationParams) {
+}: ThrowApolloErrorValidationParams) {
   if (!resolver()) return;
   throw new ApolloError(message, code, params);
 }
 
 export default {
-  throwErrorValidation,
+  throwApolloErrorValidation,
 };
