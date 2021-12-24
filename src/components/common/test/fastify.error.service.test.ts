@@ -7,8 +7,7 @@ describe('fastifyErrorService Test', () => {
     const message = 'Not found User';
     const statusCode = 404;
     try {
-      fastifyErrorService.throwFastifyErrorValidation({
-        resolver: () => true,
+      fastifyErrorService.throwError({
         message,
         name,
         statusCode,

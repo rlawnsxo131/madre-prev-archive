@@ -21,13 +21,7 @@ class FastifyCustomError extends Error {
   }
 }
 
-function throwFastifyErrorValidation({
-  resolver,
-  message,
-  name,
-  statusCode,
-}: FastifyCustomErrorParams & MadreResolveValidationFunctionInObject) {
-  if (!resolver()) return;
+function throwError({ message, name, statusCode }: FastifyCustomErrorParams) {
   throw new FastifyCustomError({
     message,
     name,
@@ -36,5 +30,5 @@ function throwFastifyErrorValidation({
 }
 
 export default {
-  throwFastifyErrorValidation,
+  throwError,
 };

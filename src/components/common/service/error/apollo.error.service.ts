@@ -12,23 +12,16 @@ type ApolloCustomErrorCode =
   | 'NOT_FOUND' // my custom
   | 'BAD_REQUEST'; // my custom
 
-interface ThrowApolloErrorValidationParams {
-  resolver: MadreResolveValidationFunction;
+interface ThrowErrorParams {
   message: string;
   code: ApolloCustomErrorCode;
   params?: Record<string, any>;
 }
 
-function throwApolloErrorValidation({
-  resolver,
-  message,
-  code,
-  params = {},
-}: ThrowApolloErrorValidationParams) {
-  if (!resolver()) return;
+function throwError({ message, code, params = {} }: ThrowErrorParams) {
   throw new ApolloError(message, code, params);
 }
 
 export default {
-  throwApolloErrorValidation,
+  throwError,
 };

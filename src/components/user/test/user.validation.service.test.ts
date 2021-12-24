@@ -1,5 +1,5 @@
 import 'jest';
-import userValidationService from '../service/user.validation.service';
+import { userValidationService } from '..';
 
 describe('userValidationService Test', () => {
   test('getUserParamsValidation', () => {
