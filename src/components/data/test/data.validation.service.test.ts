@@ -1,14 +1,14 @@
 import 'jest';
-import { dataValidationService } from '..';
+import { DataValidationService } from '..';
 import { CreateDataParams } from '../interface/data.interface';
 
 describe('dataValidationService Test', () => {
   test('getDataParamsValidation', () => {
     const id = '';
     try {
-      dataValidationService.getDataParamsValidation(id);
+      DataValidationService.getDataParamsValidation(id);
     } catch (e: any) {
-      expect(e.extensions.code).toBe('BAD_USER_INPUT');
+      expect(e.extensions.code).toBe('BAD_REQUEST');
       expect(e.extensions.id).toBe(id);
     }
   });
@@ -22,7 +22,7 @@ describe('dataValidationService Test', () => {
       description: '',
     };
     try {
-      dataValidationService.createDataParamsValidation(createDataParams);
+      DataValidationService.createDataParamsValidation(createDataParams);
     } catch (e: any) {
       expect(e.extensions.code).toBe('BAD_USER_INPUT');
       expect(e.extensions.user_id).toBe(createDataParams.user_id);

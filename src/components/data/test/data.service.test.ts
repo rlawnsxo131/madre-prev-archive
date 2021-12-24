@@ -2,7 +2,7 @@ import 'jest';
 import { initializeEnvironment } from '../../../lib';
 import { Database } from '../../../datastore';
 import { Connection } from 'typeorm';
-import { dataService } from '..';
+import { DataService } from '..';
 import { CreateDataParams } from '../interface/data.interface';
 
 describe('dataService Test', () => {
@@ -20,7 +20,7 @@ describe('dataService Test', () => {
 
   test('getData: id to undefined', async () => {
     const id = 'undefined';
-    const data = await dataService.getData(id);
+    const data = await DataService.getData(id);
     expect(data).toBe(undefined);
   });
 
@@ -32,7 +32,7 @@ describe('dataService Test', () => {
       description: undefined,
       is_public: false,
     };
-    const data = await dataService.createData(createDataParams);
+    const data = await DataService.createData(createDataParams);
     expect(data.user_id).toBe(createDataParams.user_id);
     expect(data.file_url).toBe(createDataParams.file_url);
     expect(data.title).toBe(createDataParams.title);

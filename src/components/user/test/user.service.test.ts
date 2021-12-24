@@ -2,9 +2,9 @@ import 'jest';
 import { initializeEnvironment } from '../../../lib';
 import { Database } from '../../../datastore';
 import { Connection } from 'typeorm';
-import { userService } from '..';
+import { UserService } from '..';
 
-describe('userService Test', () => {
+describe('UserService Test', () => {
   let connection: Connection | null = null;
 
   beforeAll(async () => {
@@ -19,7 +19,7 @@ describe('userService Test', () => {
 
   test('getUser: id to undefined', async () => {
     const id = 'undefined';
-    const user = await userService.getUser(id);
+    const user = await UserService.getUser(id);
     expect(user).toBe(undefined);
   });
 });

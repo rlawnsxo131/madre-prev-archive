@@ -1,13 +1,13 @@
 import 'jest';
-import { userValidationService } from '..';
+import { UserValidationService } from '..';
 
 describe('userValidationService Test', () => {
   test('getUserParamsValidation', () => {
     const id = '';
     try {
-      userValidationService.getUserParamsValidation(id);
+      UserValidationService.getUserParamsValidation(id);
     } catch (e: any) {
-      expect(e.extensions.code).toBe('BAD_USER_INPUT');
+      expect(e.extensions.code).toBe('BAD_REQUEST');
       expect(e.extensions.id).toBe(id);
     }
   });

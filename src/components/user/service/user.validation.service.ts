@@ -1,13 +1,15 @@
 import Joi from 'joi';
-import { UserInputError } from 'apollo-server-core';
+import { ApolloErrorUtil } from '../../../utils/ApolloErrorUtil';
 
-function getUserParamsValidation(id: string) {
-  const schema = Joi.string().guid().required();
-  const { error } = schema.validate(id);
-  if (!error) return;
-  throw new UserInputError(error.message, { id });
+export namespace UserValidationService {
+  export function getUserParamsValidation(id: string) {
+    const schema = Joi.string().guid().required();
+    const { error } = schema.validate(id);
+    if (!error) return;
+    ApolloErrorUtil.throwError({
+      message: error.message,
+      code: 'BAD_REQUEST',
+      params: { id },
+    });
+  }
 }
-
-export default {
-  getUserParamsValidation,
-};
