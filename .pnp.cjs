@@ -66,7 +66,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["recoil", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:0.5.2"],
             ["terser-webpack-plugin", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:5.2.5"],
             ["ts-loader", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:9.2.6"],
-            ["typescript", "patch:typescript@npm%3A4.4.4#~builtin<compat/typescript>::version=4.4.4&hash=ddd1e8"],
+            ["typescript", "patch:typescript@npm%3A4.5.4#~builtin<compat/typescript>::version=4.5.4&hash=493e53"],
             ["url-loader", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:4.1.1"],
             ["uuid", "npm:8.3.2"],
             ["webpack", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:5.64.4"],
@@ -4160,7 +4160,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/browserslist-npm-4.16.6-a20cef1ca7-3dffc86892.zip/node_modules/browserslist/",
           "packageDependencies": [
             ["browserslist", "npm:4.16.6"],
-            ["caniuse-lite", "npm:1.0.30001239"],
+            ["caniuse-lite", "npm:1.0.30001292"],
             ["colorette", "npm:1.2.2"],
             ["electron-to-chromium", "npm:1.3.752"],
             ["escalade", "npm:3.1.1"],
@@ -4172,7 +4172,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/browserslist-npm-4.17.0-98801cc7f5-9b45ec283d.zip/node_modules/browserslist/",
           "packageDependencies": [
             ["browserslist", "npm:4.17.0"],
-            ["caniuse-lite", "npm:1.0.30001258"],
+            ["caniuse-lite", "npm:1.0.30001292"],
             ["colorette", "npm:1.4.0"],
             ["electron-to-chromium", "npm:1.3.843"],
             ["escalade", "npm:3.1.1"],
@@ -4184,7 +4184,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/browserslist-npm-4.17.5-52ced5f3ad-0a1d762305.zip/node_modules/browserslist/",
           "packageDependencies": [
             ["browserslist", "npm:4.17.5"],
-            ["caniuse-lite", "npm:1.0.30001274"],
+            ["caniuse-lite", "npm:1.0.30001292"],
             ["electron-to-chromium", "npm:1.3.886"],
             ["escalade", "npm:3.1.1"],
             ["node-releases", "npm:2.0.1"],
@@ -4196,7 +4196,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/browserslist-npm-4.18.1-38eb8a64b9-ae58322dee.zip/node_modules/browserslist/",
           "packageDependencies": [
             ["browserslist", "npm:4.18.1"],
-            ["caniuse-lite", "npm:1.0.30001282"],
+            ["caniuse-lite", "npm:1.0.30001292"],
             ["electron-to-chromium", "npm:1.3.904"],
             ["escalade", "npm:3.1.1"],
             ["node-releases", "npm:2.0.1"],
@@ -4302,7 +4302,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["caniuse-api", "npm:3.0.0"],
             ["browserslist", "npm:4.17.0"],
-            ["caniuse-lite", "npm:1.0.30001258"],
+            ["caniuse-lite", "npm:1.0.30001292"],
             ["lodash.memoize", "npm:4.1.2"],
             ["lodash.uniq", "npm:4.5.0"]
           ],
@@ -4310,31 +4310,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["caniuse-lite", [
-        ["npm:1.0.30001239", {
-          "packageLocation": "./.yarn/cache/caniuse-lite-npm-1.0.30001239-a441a76d4f-f1fbd95a97.zip/node_modules/caniuse-lite/",
+        ["npm:1.0.30001292", {
+          "packageLocation": "./.yarn/cache/caniuse-lite-npm-1.0.30001292-b1bbf4eae9-930d025147.zip/node_modules/caniuse-lite/",
           "packageDependencies": [
-            ["caniuse-lite", "npm:1.0.30001239"]
-          ],
-          "linkType": "HARD",
-        }],
-        ["npm:1.0.30001258", {
-          "packageLocation": "./.yarn/cache/caniuse-lite-npm-1.0.30001258-9014d665ba-2e87875a77.zip/node_modules/caniuse-lite/",
-          "packageDependencies": [
-            ["caniuse-lite", "npm:1.0.30001258"]
-          ],
-          "linkType": "HARD",
-        }],
-        ["npm:1.0.30001274", {
-          "packageLocation": "./.yarn/cache/caniuse-lite-npm-1.0.30001274-9b32e73fc7-75790d021e.zip/node_modules/caniuse-lite/",
-          "packageDependencies": [
-            ["caniuse-lite", "npm:1.0.30001274"]
-          ],
-          "linkType": "HARD",
-        }],
-        ["npm:1.0.30001282", {
-          "packageLocation": "./.yarn/cache/caniuse-lite-npm-1.0.30001282-49173a42dd-62797fd756.zip/node_modules/caniuse-lite/",
-          "packageDependencies": [
-            ["caniuse-lite", "npm:1.0.30001282"]
+            ["caniuse-lite", "npm:1.0.30001292"]
           ],
           "linkType": "HARD",
         }]
@@ -6152,7 +6131,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["schema-utils", "npm:2.7.0"],
             ["semver", "npm:7.3.5"],
             ["tapable", "npm:1.1.3"],
-            ["typescript", "patch:typescript@npm%3A4.4.4#~builtin<compat/typescript>::version=4.4.4&hash=ddd1e8"],
+            ["typescript", "patch:typescript@npm%3A4.5.4#~builtin<compat/typescript>::version=4.5.4&hash=493e53"],
             ["vue-template-compiler", null],
             ["webpack", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:5.64.4"]
           ],
@@ -7341,7 +7320,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["recoil", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:0.5.2"],
             ["terser-webpack-plugin", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:5.2.5"],
             ["ts-loader", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:9.2.6"],
-            ["typescript", "patch:typescript@npm%3A4.4.4#~builtin<compat/typescript>::version=4.4.4&hash=ddd1e8"],
+            ["typescript", "patch:typescript@npm%3A4.5.4#~builtin<compat/typescript>::version=4.5.4&hash=493e53"],
             ["url-loader", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:4.1.1"],
             ["uuid", "npm:8.3.2"],
             ["webpack", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:5.64.4"],
@@ -10261,7 +10240,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["enhanced-resolve", "npm:5.8.2"],
             ["micromatch", "npm:4.0.4"],
             ["semver", "npm:7.3.5"],
-            ["typescript", "patch:typescript@npm%3A4.4.4#~builtin<compat/typescript>::version=4.4.4&hash=ddd1e8"],
+            ["typescript", "patch:typescript@npm%3A4.5.4#~builtin<compat/typescript>::version=4.5.4&hash=493e53"],
             ["webpack", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:5.64.4"]
           ],
           "packagePeers": [
@@ -10316,10 +10295,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["typescript", [
-        ["patch:typescript@npm%3A4.4.4#~builtin<compat/typescript>::version=4.4.4&hash=ddd1e8", {
-          "packageLocation": "./.yarn/cache/typescript-patch-d95d140154-bd629ad0da.zip/node_modules/typescript/",
+        ["patch:typescript@npm%3A4.5.4#~builtin<compat/typescript>::version=4.5.4&hash=493e53", {
+          "packageLocation": "./.yarn/cache/typescript-patch-0b90225f97-2e488dde7d.zip/node_modules/typescript/",
           "packageDependencies": [
-            ["typescript", "patch:typescript@npm%3A4.4.4#~builtin<compat/typescript>::version=4.4.4&hash=ddd1e8"]
+            ["typescript", "patch:typescript@npm%3A4.5.4#~builtin<compat/typescript>::version=4.5.4&hash=493e53"]
           ],
           "linkType": "HARD",
         }]
