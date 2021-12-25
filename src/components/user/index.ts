@@ -3,4 +3,4 @@ export { default as UserRepository } from './repository/user.repository';
 export { default as UserQueryRepository } from './repository/user.query.repository';
 export { UserService } from './service/user.service';
 export { UserValidationService } from './service/user.validation.service';
-export * as userGraphQL from './graphql';
+export * as UserGraphQL from './graphql';
