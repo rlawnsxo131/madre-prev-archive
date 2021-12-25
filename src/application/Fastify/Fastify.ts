@@ -1,8 +1,8 @@
 import fastify, { FastifyInstance } from 'fastify';
-import compress from 'fastify-compress';
 import corsPlugin from 'fastify-cors';
+import compress from 'fastify-compress';
 import cookie from 'fastify-cookie';
-import jwtPlugin from '../../plugins/jwtPlugin';
+import { jwtPlugin } from '../../plugins';
 import routes from './fastify.routes';
 
 export default class Fastify {
