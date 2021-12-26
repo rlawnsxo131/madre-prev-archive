@@ -1,4 +1,5 @@
 import {
+  area,
   axisBottom,
   axisLeft,
   curveBasis,
@@ -26,12 +27,14 @@ import {
 } from '../D3Common2/D3Common2Types';
 import { D3Util } from '../D3Util';
 import {
+  D3AxisChartAreaType,
   D3AxisChartConstructorParams,
   D3AxisChartLinecapType,
   D3AxisChartLinecurvKeys,
   D3AxisChartLinecurvType,
   D3AxisChartLinejoinType,
   D3AxisChartLineType,
+  D3AxisChartSetAreaOptionsParams,
   D3AxisChartSetAxisOptionsParams,
   D3AxisChartSetLineOptionsParams,
 } from './D3AxisChart2Types';
@@ -82,6 +85,12 @@ export default class D3AxisChart2 extends D3Common2 {
   private axisY: D3Axis | null = null;
 
   /**
+   * uniq class and color values
+   */
+  private uniqIdentifierValueMap: Map<number, Record<'key' | 'color', string>> =
+    new Map();
+
+  /**
    * line options
    */
   private readonly linecurvTypeMap: Map<
@@ -102,10 +111,10 @@ export default class D3AxisChart2 extends D3Common2 {
   private lineTransitionDuration = 550;
 
   /**
-   * uniq class and color values
+   * area options
    */
-  private uniqIdentifierValueMap: Map<number, Record<'key' | 'color', string>> =
-    new Map();
+  private areaType: D3AxisChartAreaType = 'full';
+  private areaOpacity = 0.2;
 
   constructor({
     container,
@@ -466,8 +475,11 @@ export default class D3AxisChart2 extends D3Common2 {
     });
   }
 
-  setAreaOptions() {
+  setAreaOptions({ areaType, areaOpacity }: D3AxisChartSetAreaOptionsParams) {
     console.log('event: setAreaOptions');
+
+    if (areaType) this.areaType = areaType;
+    if (areaOpacity) this.areaOpacity = areaOpacity;
   }
 
   appendArea() {
@@ -477,5 +489,69 @@ export default class D3AxisChart2 extends D3Common2 {
       this.uniqIdentifierValueMap,
       'the setUniqIdentifierValueMap function must be executed first before the action to draw the chart.',
     );
+
+    const areaGenerator = area<D3Data>();
+
+    // area
+    if (this.areaType === 'full') {
+      areaGenerator
+        .x0((d) => this.xScale()(d[this.xDomainKey]))
+        .y0(this.yRange[0])
+        .y1((d) => this.yScale()(d[this.yDomainKey]));
+    }
+    if (this.areaType === 'boundary') {
+      areaGenerator
+        .x1((d) => this.xScale()(d[this.xDomainKey]))
+        .y0(this.yRange[0])
+        .y1((d) => this.yScale()(d[this.yDomainKey]));
+    }
+
+    // line curv
+    if (this.lineType === 'CURVE') {
+      areaGenerator.curve(this.linecurvType);
+    }
+
+    this.data.forEach((data, i) => {
+      const map = this.uniqIdentifierValueMap.get(i);
+      const key = map!.key;
+      const color = map!.color;
+      this.svg
+        .append('path')
+        .attr('fill', color)
+        .attr('fill-opacity', this.areaOpacity)
+        .attr('stroke', 'none')
+        .attr('class', `area-${key}`)
+        .attr(
+          'transform',
+          `translate(
+            ${this.margin.left + this.margin.right * 0.4},
+            ${this.margin.top}
+          )`,
+        )
+        .attr('d', `${areaGenerator(data)}`);
+    });
+  }
+
+  updateArea() {
+    const areaGenerator = area<D3Data>();
+
+    // area
+    if (this.areaType === 'full') {
+      areaGenerator
+        .x0((d) => this.xScale()(d[this.xDomainKey]))
+        .y0(this.yRange[0])
+        .y1((d) => this.yScale()(d[this.yDomainKey]));
+    }
+    if (this.areaType === 'boundary') {
+      areaGenerator
+        .x1((d) => this.xScale()(d[this.xDomainKey]))
+        .y0(this.yRange[0])
+        .y1((d) => this.yScale()(d[this.yDomainKey]));
+    }
+
+    // line curv
+    if (this.lineType === 'CURVE') {
+      areaGenerator.curve(this.linecurvType);
+    }
   }
 }

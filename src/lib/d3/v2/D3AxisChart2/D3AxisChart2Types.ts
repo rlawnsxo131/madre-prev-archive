@@ -52,3 +52,12 @@ export type D3AxisChartSetLineOptionsParams = Partial<{
   lineTransition: boolean;
   lineTransitionDuration: number;
 }>;
+
+/**
+ * area
+ */
+export type D3AxisChartAreaType = 'full' | 'boundary';
+export type D3AxisChartSetAreaOptionsParams = Partial<{
+  areaType: D3AxisChartAreaType;
+  areaOpacity: number;
+}>;
