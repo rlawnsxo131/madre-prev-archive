@@ -1,5 +1,5 @@
 class Storage {
-  private fallbackStorage = new Map<string, string>([]);
+  private fallbackStorage = new Map<string, string>();
   private valid: boolean = this.checkStorage();
 
   constructor() {}

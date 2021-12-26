@@ -24,6 +24,7 @@ import {
   D3SelectionSVG,
   D3TickFormat,
 } from '../D3Common2/D3Common2Types';
+import { D3Util } from '../D3Util';
 import {
   D3AxisChartConstructorParams,
   D3AxisChartLinecapType,
@@ -103,7 +104,8 @@ export default class D3AxisChart2 extends D3Common2 {
   /**
    * uniq class and color values
    */
-  private classAndColorSet: Set<string> = new Set();
+  private uniqIdentifierValueMap: Map<number, Record<'key' | 'color', string>> =
+    new Map();
 
   constructor({
     container,
@@ -113,7 +115,6 @@ export default class D3AxisChart2 extends D3Common2 {
     margin,
   }: D3AxisChartConstructorParams) {
     super();
-
     console.log('event: initialize');
 
     this.svg = this.appendSVG({
@@ -129,13 +130,32 @@ export default class D3AxisChart2 extends D3Common2 {
     this.yRange = [height - (margin.top + margin.bottom), 0];
   }
 
+  setUniqIdentifierValueMap() {
+    console.log('event: setUniqIdentifierValueMap');
+
+    const colors = getRandomColors(this.data.length);
+    this.data.forEach((_, i) => {
+      const key = uuidv4();
+      const color = colors[i];
+      this.uniqIdentifierValueMap.set(i, { key, color });
+    });
+  }
+
+  clearUniqIdentifierValueMap() {
+    console.log('event: clearUniqIdentifierValueMap');
+
+    this.uniqIdentifierValueMap.clear();
+  }
+
   setData(data: D3Data[][]) {
     console.log('event: setData');
+
     this.data = data;
   }
 
   resetData() {
     console.log('event: resetData');
+
     this.data = [];
   }
 
@@ -376,6 +396,11 @@ export default class D3AxisChart2 extends D3Common2 {
   appendLine() {
     console.log('event: appendLine');
 
+    D3Util.Validation.isExistMapValidation(
+      this.uniqIdentifierValueMap,
+      'the setUniqIdentifierValueMap function must be executed first before the action to draw the chart.',
+    );
+
     const lineGenerator = line<D3Data>()
       .x((d) => this.xScale()(d[this.xDomainKey]))
       .y((d) => this.yScale()(d[this.yDomainKey]));
@@ -384,23 +409,18 @@ export default class D3AxisChart2 extends D3Common2 {
       lineGenerator.curve(this.linecurvType);
     }
 
-    const colors = getRandomColors(5);
-    const classNames = Array.from({ length: colors.length }).map(
-      (_) => `line-${uuidv4()}`,
-    );
-
-    console.log(colors);
-    console.log(classNames);
-
     this.data.forEach((data, i) => {
+      const map = this.uniqIdentifierValueMap.get(i);
+      const key = map!.key;
+      const color = map!.color;
       this.svg
         .append('path')
         .attr('fill', 'none')
         .attr('stroke-width', this.lineStrokeWidth)
-        .attr('stroke', colors[i])
+        .attr('stroke', color)
         .attr('stroke-linejoin', this.linejoinType)
         .attr('stroke-linecap', this.linecapType)
-        .attr('class', `line-${i}`)
+        .attr('class', `line-${key}`)
         .attr(
           'transform',
           `translate(
@@ -435,8 +455,10 @@ export default class D3AxisChart2 extends D3Common2 {
     }
 
     this.data.forEach((data, i) => {
+      const map = this.uniqIdentifierValueMap.get(i);
+      const key = map!.key;
       this.svg
-        .selectAll(`.line-${i}`)
+        .selectAll(`.line-${key}`)
         .transition()
         .ease(easeSinInOut)
         .duration(this.lineTransitionDuration)
@@ -444,5 +466,16 @@ export default class D3AxisChart2 extends D3Common2 {
     });
   }
 
-  setAreaOptions() {}
+  setAreaOptions() {
+    console.log('event: setAreaOptions');
+  }
+
+  appendArea() {
+    console.log('event: appendArea');
+
+    D3Util.Validation.isExistMapValidation(
+      this.uniqIdentifierValueMap,
+      'the setUniqIdentifierValueMap function must be executed first before the action to draw the chart.',
+    );
+  }
 }
