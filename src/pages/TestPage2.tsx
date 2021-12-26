@@ -63,7 +63,7 @@ function TestPage2(props: TestPage2Props) {
       axisXTickVisible: true,
       axisYTickVisible: true,
       axisXTickFormat: (d, _) => format(d as Date, 'yyyy-MM'),
-      axisYTickFormat: (d, _) => D3Util.Format.formatNumberWithComma()(d),
+      axisYTickFormat: (d, _) => D3Util.formatNumberWithComma()(d),
       axisXClass: axisXClassRef.current,
       axisYClass: axisYClassRef.current,
     });
@@ -88,12 +88,12 @@ function TestPage2(props: TestPage2Props) {
       chartRef.current.setScaleType('number', 'number');
       chartRef.current.setDomain();
       chartRef.current.setAxisOptions({
-        axisXTickFormat: (d, _) => D3Util.Format.formatNumberWithComma()(d),
+        axisXTickFormat: (d, _) => D3Util.formatNumberWithComma()(d),
       });
       chartRef.current.setAxis();
       chartRef.current.updateAxis();
       chartRef.current.updateLine();
-      chartRef.current.appendArea();
+      chartRef.current.updateArea();
       chartRef.current.resetData();
     }, 1500);
 
@@ -112,7 +112,7 @@ function TestPage2(props: TestPage2Props) {
       chartRef.current.setAxis();
       chartRef.current.updateAxis();
       chartRef.current.updateLine();
-      chartRef.current.appendArea();
+      chartRef.current.updateArea();
       chartRef.current.resetData();
     }, 3500);
   }, [chartRef.current]);

@@ -13,6 +13,7 @@ import {
 } from 'd3';
 import { startOfMonth, endOfMonth } from 'date-fns';
 import { v4 as uuidv4 } from 'uuid';
+import { D3Util } from '../..';
 import { getRandomColors } from '../../../utils';
 import D3Common2 from '../D3Common2';
 import {
@@ -25,7 +26,7 @@ import {
   D3SelectionSVG,
   D3TickFormat,
 } from '../D3Common2/D3Common2Types';
-import { D3Util } from '../D3Util';
+
 import {
   D3AxisChartAreaType,
   D3AxisChartConstructorParams,
@@ -115,6 +116,7 @@ export default class D3AxisChart2 extends D3Common2 {
    */
   private areaType: D3AxisChartAreaType = 'full';
   private areaOpacity = 0.2;
+  private areaTransitionDuration = 550;
 
   constructor({
     container,
@@ -405,7 +407,7 @@ export default class D3AxisChart2 extends D3Common2 {
   appendLine() {
     console.log('event: appendLine');
 
-    D3Util.Validation.isExistMapValidation(
+    D3Util.isExistMapValidation(
       this.uniqIdentifierValueMap,
       'the setUniqIdentifierValueMap function must be executed first before the action to draw the chart.',
     );
@@ -475,17 +477,23 @@ export default class D3AxisChart2 extends D3Common2 {
     });
   }
 
-  setAreaOptions({ areaType, areaOpacity }: D3AxisChartSetAreaOptionsParams) {
+  setAreaOptions({
+    areaType,
+    areaOpacity,
+    areaTransitionDuration,
+  }: D3AxisChartSetAreaOptionsParams) {
     console.log('event: setAreaOptions');
 
     if (areaType) this.areaType = areaType;
     if (areaOpacity) this.areaOpacity = areaOpacity;
+    if (areaTransitionDuration)
+      this.areaTransitionDuration = this.areaTransitionDuration;
   }
 
   appendArea() {
     console.log('event: appendArea');
 
-    D3Util.Validation.isExistMapValidation(
+    D3Util.isExistMapValidation(
       this.uniqIdentifierValueMap,
       'the setUniqIdentifierValueMap function must be executed first before the action to draw the chart.',
     );
@@ -553,5 +561,16 @@ export default class D3AxisChart2 extends D3Common2 {
     if (this.lineType === 'CURVE') {
       areaGenerator.curve(this.linecurvType);
     }
+
+    this.data.forEach((data, i) => {
+      const map = this.uniqIdentifierValueMap.get(i);
+      const key = map!.key;
+      this.svg
+        .selectAll(`.area-${key}`)
+        .transition()
+        .ease(easeSinInOut)
+        .duration(this.lineTransitionDuration)
+        .attr('d', `${areaGenerator(data)}`);
+    });
   }
 }
