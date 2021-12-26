@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { ApolloErrorUtil } from '../../../utils/ApolloErrorUtil';
+import { ApolloErrorUtil } from '../../../utils';
 import { CreateDataParams } from '../interface/data.interface';
 
 export namespace DataValidationService {

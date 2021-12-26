@@ -1,1 +1,1 @@
-export { default as initializeEnvironment } from './initializeEnvironment';
+export { Environment } from './Environment';

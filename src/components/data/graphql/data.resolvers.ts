@@ -1,6 +1,6 @@
 import { IResolvers } from '@graphql-tools/utils';
 import { DataService, DataValidationService } from '..';
-import { ApolloErrorUtil } from '../../../utils/ApolloErrorUtil';
+import { ApolloErrorUtil } from '../../../utils';
 import { CreateDataParams, GetDataParams } from '../interface/data.interface';
 
 const resolvers: IResolvers = {

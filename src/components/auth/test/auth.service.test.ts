@@ -1,13 +1,13 @@
 import 'jest';
+import { Environment } from '../../../lib';
 import { Connection } from 'typeorm';
 import { Database } from '../../../datastore';
-import { initializeEnvironment } from '../../../lib';
 
 describe('authService Test', () => {
   let connection: Connection | null = null;
 
   beforeAll(async () => {
-    initializeEnvironment();
+    Environment.initialize();
     const database = new Database();
     connection = await database.getConnection();
   });

@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { ApolloErrorUtil } from '../../../utils/ApolloErrorUtil';
+import { ApolloErrorUtil } from '../../../utils';
 
 export namespace UserValidationService {
   export function getUserParamsValidation(id: string) {
