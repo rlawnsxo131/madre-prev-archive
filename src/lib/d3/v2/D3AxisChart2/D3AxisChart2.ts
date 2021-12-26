@@ -404,13 +404,8 @@ export default class D3AxisChart2 extends D3Common2 {
       this.lineTransitionDuration = lineTransitionDuration;
   }
 
-  appendLine() {
-    console.log('event: appendLine');
-
-    D3Util.isExistMapValidation(
-      this.uniqIdentifierValueMap,
-      'the setUniqIdentifierValueMap function must be executed first before the action to draw the chart.',
-    );
+  private getLineGenerator() {
+    console.log('event: getLineGenerator');
 
     const lineGenerator = line<D3Data>()
       .x((d) => this.xScale()(d[this.xDomainKey]))
@@ -419,6 +414,18 @@ export default class D3AxisChart2 extends D3Common2 {
     if (this.lineType === 'CURVE') {
       lineGenerator.curve(this.linecurvType);
     }
+    return lineGenerator;
+  }
+
+  appendLine() {
+    console.log('event: appendLine');
+
+    D3Util.isExistMapValidation(
+      this.uniqIdentifierValueMap,
+      'the setUniqIdentifierValueMap function must be executed first before the action to draw the chart.',
+    );
+
+    const lineGenerator = this.getLineGenerator();
 
     this.data.forEach((data, i) => {
       const map = this.uniqIdentifierValueMap.get(i);
@@ -457,13 +464,7 @@ export default class D3AxisChart2 extends D3Common2 {
   updateLine() {
     console.log('event: updateLine');
 
-    const lineGenerator = line<D3Data>()
-      .x((d) => this.xScale()(d[this.xDomainKey]))
-      .y((d) => this.yScale()(d[this.yDomainKey]));
-
-    if (this.lineType === 'CURVE') {
-      lineGenerator.curve(this.linecurvType);
-    }
+    const lineGenerator = this.getLineGenerator();
 
     this.data.forEach((data, i) => {
       const map = this.uniqIdentifierValueMap.get(i);
@@ -490,13 +491,8 @@ export default class D3AxisChart2 extends D3Common2 {
       this.areaTransitionDuration = this.areaTransitionDuration;
   }
 
-  appendArea() {
-    console.log('event: appendArea');
-
-    D3Util.isExistMapValidation(
-      this.uniqIdentifierValueMap,
-      'the setUniqIdentifierValueMap function must be executed first before the action to draw the chart.',
-    );
+  private getAreaGenerator() {
+    console.log('event: getAreaGenerator');
 
     const areaGenerator = area<D3Data>();
 
@@ -514,10 +510,23 @@ export default class D3AxisChart2 extends D3Common2 {
         .y1((d) => this.yScale()(d[this.yDomainKey]));
     }
 
-    // line curv
+    // curv
     if (this.lineType === 'CURVE') {
       areaGenerator.curve(this.linecurvType);
     }
+
+    return areaGenerator;
+  }
+
+  appendArea() {
+    console.log('event: appendArea');
+
+    D3Util.isExistMapValidation(
+      this.uniqIdentifierValueMap,
+      'the setUniqIdentifierValueMap function must be executed first before the action to draw the chart.',
+    );
+
+    const areaGenerator = this.getAreaGenerator();
 
     this.data.forEach((data, i) => {
       const map = this.uniqIdentifierValueMap.get(i);
@@ -541,26 +550,7 @@ export default class D3AxisChart2 extends D3Common2 {
   }
 
   updateArea() {
-    const areaGenerator = area<D3Data>();
-
-    // area
-    if (this.areaType === 'full') {
-      areaGenerator
-        .x0((d) => this.xScale()(d[this.xDomainKey]))
-        .y0(this.yRange[0])
-        .y1((d) => this.yScale()(d[this.yDomainKey]));
-    }
-    if (this.areaType === 'boundary') {
-      areaGenerator
-        .x1((d) => this.xScale()(d[this.xDomainKey]))
-        .y0(this.yRange[0])
-        .y1((d) => this.yScale()(d[this.yDomainKey]));
-    }
-
-    // line curv
-    if (this.lineType === 'CURVE') {
-      areaGenerator.curve(this.linecurvType);
-    }
+    const areaGenerator = this.getAreaGenerator();
 
     this.data.forEach((data, i) => {
       const map = this.uniqIdentifierValueMap.get(i);
