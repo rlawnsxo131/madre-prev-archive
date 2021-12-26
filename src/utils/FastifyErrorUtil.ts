@@ -1,14 +1,12 @@
 export namespace FastifyErrorUtil {
-  type ErrorName =
-    | 'BadRequestError'
-    | 'NotFoundError'
-    | 'InternalServerError'
-    | 'UnauthorizedError'
-    | 'ForbiddenError';
-
   interface FastifyCustomErrorParams {
     message: string;
-    name: ErrorName;
+    name:
+      | 'BadRequestError'
+      | 'NotFoundError'
+      | 'InternalServerError'
+      | 'UnauthorizedError'
+      | 'ForbiddenError';
     statusCode: number;
   }
 
