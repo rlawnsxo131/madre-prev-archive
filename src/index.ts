@@ -1,9 +1,9 @@
-import { Environment } from './lib';
+import { environmentManager } from './lib';
 import { Database } from './datastore';
 import Application from './application';
 import { Connection } from 'typeorm';
 
-Environment.initialize();
+environmentManager.initialize();
 const database = new Database();
 const application = new Application();
 

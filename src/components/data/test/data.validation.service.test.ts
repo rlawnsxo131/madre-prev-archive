@@ -1,12 +1,12 @@
 import 'jest';
-import { DataValidationService } from '..';
+import { dataValidationService } from '..';
 import { CreateDataParams } from '../interface/data.interface';
 
 describe('dataValidationService Test', () => {
   test('getDataParamsValidation', () => {
     const id = '';
     try {
-      DataValidationService.getDataParamsValidation(id);
+      dataValidationService.getDataParamsValidation(id);
     } catch (e: any) {
       expect(e.extensions.code).toBe('BAD_REQUEST');
       expect(e.extensions.id).toBe(id);
@@ -22,7 +22,7 @@ describe('dataValidationService Test', () => {
       description: '',
     };
     try {
-      DataValidationService.createDataParamsValidation(createDataParams);
+      dataValidationService.createDataParamsValidation(createDataParams);
     } catch (e: any) {
       expect(e.extensions.code).toBe('BAD_USER_INPUT');
       expect(e.extensions.user_id).toBe(createDataParams.user_id);

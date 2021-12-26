@@ -1,3 +1,5 @@
-export namespace AuthService {
-  export function authFunction() {}
-}
+function authFunction() {}
+
+export default {
+  authFunction,
+};

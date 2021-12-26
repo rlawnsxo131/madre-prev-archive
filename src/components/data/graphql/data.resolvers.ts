@@ -1,15 +1,15 @@
 import { IResolvers } from '@graphql-tools/utils';
-import { DataService, DataValidationService } from '..';
-import { ApolloErrorUtil } from '../../../utils';
+import { dataService, dataValidationService } from '..';
+import { apolloErrorManager } from '../../../lib';
 import { CreateDataParams, GetDataParams } from '../interface/data.interface';
 
 const resolvers: IResolvers = {
   Query: {
     async data(_, { id }: GetDataParams) {
-      DataValidationService.getDataParamsValidation(id);
-      const data = await DataService.getData(id);
+      dataValidationService.getDataParamsValidation(id);
+      const data = await dataService.getData(id);
       if (!data) {
-        ApolloErrorUtil.throwError({
+        apolloErrorManager.throwError({
           message: 'Not Found Data',
           code: 'NOT_FOUND',
           params: { id },
@@ -20,8 +20,8 @@ const resolvers: IResolvers = {
   },
   Mutation: {
     async createData(_, params: CreateDataParams) {
-      DataValidationService.createDataParamsValidation(params);
-      const data = await DataService.createData(params);
+      dataValidationService.createDataParamsValidation(params);
+      const data = await dataService.createData(params);
       return data;
     },
   },

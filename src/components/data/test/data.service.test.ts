@@ -1,15 +1,15 @@
 import 'jest';
-import { Environment } from '../../../lib';
+import { environmentManager } from '../../../lib';
 import { Database } from '../../../datastore';
 import { Connection } from 'typeorm';
-import { DataService } from '..';
+import { dataService } from '..';
 import { CreateDataParams } from '../interface/data.interface';
 
 describe('dataService Test', () => {
   let connection: Connection | null = null;
 
   beforeAll(async () => {
-    Environment.initialize();
+    environmentManager.initialize();
     const database = new Database();
     connection = await database.getConnection();
   });
@@ -20,7 +20,7 @@ describe('dataService Test', () => {
 
   test('getData: id to undefined', async () => {
     const id = 'undefined';
-    const data = await DataService.getData(id);
+    const data = await dataService.getData(id);
     expect(data).toBe(undefined);
   });
 
@@ -32,7 +32,7 @@ describe('dataService Test', () => {
       description: undefined,
       is_public: false,
     };
-    const data = await DataService.createData(createDataParams);
+    const data = await dataService.createData(createDataParams);
     expect(data.user_id).toBe(createDataParams.user_id);
     expect(data.file_url).toBe(createDataParams.file_url);
     expect(data.title).toBe(createDataParams.title);

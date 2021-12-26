@@ -1,14 +1,14 @@
 import 'jest';
-import { Environment } from '../../../lib';
+import { environmentManager } from '../../../lib';
 import { Database } from '../../../datastore';
 import { Connection } from 'typeorm';
-import { UserService } from '..';
+import { userService } from '..';
 
-describe('UserService Test', () => {
+describe('userService Test', () => {
   let connection: Connection | null = null;
 
   beforeAll(async () => {
-    Environment.initialize();
+    environmentManager.initialize();
     const database = new Database();
     connection = await database.getConnection();
   });
@@ -19,7 +19,7 @@ describe('UserService Test', () => {
 
   test('getUser: id to undefined', async () => {
     const id = 'undefined';
-    const user = await UserService.getUser(id);
+    const user = await userService.getUser(id);
     expect(user).toBe(undefined);
   });
 });
