@@ -10,7 +10,7 @@ import {
 import { Data } from '../../data';
 
 @Entity('user')
-export default class User {
+export class User {
   @PrimaryGeneratedColumn('uuid')
   id!: number;
 
