@@ -13,9 +13,9 @@ import {
 } from 'd3';
 import { startOfMonth, endOfMonth } from 'date-fns';
 import { v4 as uuidv4 } from 'uuid';
-import { D3Util } from '../..';
 import { getRandomColors } from '../../../utils';
 import D3Common2 from '../D3Common2';
+import { D3ValidateUtil } from '../D3Util';
 import {
   D3Axis,
   D3Data,
@@ -26,7 +26,6 @@ import {
   D3SelectionSVG,
   D3TickFormat,
 } from '../D3Common2/D3Common2Types';
-
 import {
   D3AxisChartAreaType,
   D3AxisChartConstructorParams,
@@ -420,7 +419,7 @@ export default class D3AxisChart2 extends D3Common2 {
   appendLine() {
     console.log('event: appendLine');
 
-    D3Util.isExistMapValidation(
+    D3ValidateUtil.isExistMapValidation(
       this.uniqIdentifierValueMap,
       'the setUniqIdentifierValueMap function must be executed first before the action to draw the chart.',
     );
@@ -521,7 +520,7 @@ export default class D3AxisChart2 extends D3Common2 {
   appendArea() {
     console.log('event: appendArea');
 
-    D3Util.isExistMapValidation(
+    D3ValidateUtil.isExistMapValidation(
       this.uniqIdentifierValueMap,
       'the setUniqIdentifierValueMap function must be executed first before the action to draw the chart.',
     );

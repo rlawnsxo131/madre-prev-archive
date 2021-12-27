@@ -2,7 +2,8 @@ import { useEffect, useRef } from 'react';
 import { css } from '@emotion/react';
 import { format, add } from 'date-fns';
 import { v4 as uuidv4 } from 'uuid';
-import { D3AxisChart2, D3Util } from '../lib/d3';
+import { D3AxisChart2 } from '../lib/d3';
+import { D3FormatUtil } from '../lib/d3/v2/D3Util';
 import { getRandomIntInclusive } from '../lib/utils';
 import { palette } from '../styles';
 
@@ -62,12 +63,11 @@ function TestPage2(props: TestPage2Props) {
       axisYTicks: 5,
       axisXTickVisible: true,
       axisYTickVisible: true,
-      axisXTickFormat: (d, _) => format(d as Date, 'yyyy-MM'),
-      axisYTickFormat: (d, _) => D3Util.formatNumberWithComma()(d),
+      axisXTickFormat: (d, _) => format(d as Date, 'yyyy-MM-dd'),
+      axisYTickFormat: (d, _) => D3FormatUtil.formatNumberWithComma()(d),
       axisXClass: axisXClassRef.current,
       axisYClass: axisYClassRef.current,
     });
-
     chartRef.current.setAxis();
     chartRef.current.appendAxis();
     chartRef.current.appendLine();
@@ -88,7 +88,7 @@ function TestPage2(props: TestPage2Props) {
       chartRef.current.setScaleType('number', 'number');
       chartRef.current.setDomain();
       chartRef.current.setAxisOptions({
-        axisXTickFormat: (d, _) => D3Util.formatNumberWithComma()(d),
+        axisXTickFormat: (d, _) => D3FormatUtil.formatNumberWithComma()(d),
       });
       chartRef.current.setAxis();
       chartRef.current.updateAxis();
