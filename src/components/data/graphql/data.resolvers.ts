@@ -1,6 +1,6 @@
 import { IResolvers } from '@graphql-tools/utils';
 import { dataService, dataValidationService } from '..';
-import { apolloErrorManager } from '../../../lib';
+import ApolloCustomError from '../../../lib/ApolloCustomError';
 import { CreateDataParams, GetDataParams } from '../interface/data.interface';
 
 const resolvers: IResolvers = {
@@ -9,10 +9,10 @@ const resolvers: IResolvers = {
       dataValidationService.getDataParamsValidation(id);
       const data = await dataService.getData(id);
       if (!data) {
-        apolloErrorManager.throwError({
+        throw new ApolloCustomError({
           message: 'Not Found Data',
           code: 'NOT_FOUND',
-          params: { id },
+          extensions: { id },
         });
       }
       return data;

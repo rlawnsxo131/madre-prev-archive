@@ -1,1 +1,1 @@
-export { default as jwtPlugin } from './jwtPlugin';
+export { jwtPlugin } from './jwtPlugin';

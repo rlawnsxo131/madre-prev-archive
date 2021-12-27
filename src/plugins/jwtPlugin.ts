@@ -8,8 +8,6 @@ const callback: FastifyPluginCallback = async (fastify, opts, done) => {
   });
 };
 
-const jwtPlugin = fp(callback, {
+export const jwtPlugin = fp(callback, {
   name: 'jwtPlugin',
 });
-
-export default jwtPlugin;

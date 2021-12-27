@@ -1,5 +1,5 @@
 import 'jest';
-import { environmentManager } from '../../../lib';
+import { SetupProvider } from '../../../lib/SetupProvider';
 import { Database } from '../../../datastore';
 import { Connection } from 'typeorm';
 import { dataService } from '..';
@@ -9,7 +9,7 @@ describe('dataService Test', () => {
   let connection: Connection | null = null;
 
   beforeAll(async () => {
-    environmentManager.initialize();
+    SetupProvider.initialize();
     const database = new Database();
     connection = await database.getConnection();
   });

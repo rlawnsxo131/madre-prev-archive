@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server-core';
 
-export default gql`
+const typeDef = gql`
   type User {
     id: ID!
     email: String!
@@ -14,3 +14,5 @@ export default gql`
     user(id: ID!): User
   }
 `;
+
+export default typeDef;

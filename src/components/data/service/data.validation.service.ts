@@ -1,15 +1,15 @@
 import Joi from 'joi';
-import { apolloErrorManager } from '../../../lib';
+import ApolloCustomError from '../../../lib/ApolloCustomError';
 import { CreateDataParams } from '../interface/data.interface';
 
 function getDataParamsValidation(id: string) {
   const schema = Joi.string().guid().required();
   const { error } = schema.validate(id);
   if (!error) return;
-  apolloErrorManager.throwError({
+  throw new ApolloCustomError({
     message: error.message,
     code: 'BAD_REQUEST',
-    params: { id },
+    extensions: { id },
   });
 }
 
@@ -25,10 +25,10 @@ function createDataParamsValidation(
   });
   const { error } = schema.validate(params);
   if (!error) return;
-  apolloErrorManager.throwError({
+  throw new ApolloCustomError({
     message: error.message,
     code: 'BAD_USER_INPUT',
-    params,
+    extensions: params,
   });
 }
 

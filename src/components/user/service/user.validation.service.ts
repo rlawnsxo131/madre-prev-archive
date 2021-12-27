@@ -1,14 +1,14 @@
 import Joi from 'joi';
-import { apolloErrorManager } from '../../../lib';
+import ApolloCustomError from '../../../lib/ApolloCustomError';
 
 function getUserParamsValidation(id: string) {
   const schema = Joi.string().guid().required();
   const { error } = schema.validate(id);
   if (!error) return;
-  apolloErrorManager.throwError({
+  throw new ApolloCustomError({
     message: error.message,
     code: 'BAD_REQUEST',
-    params: { id },
+    extensions: { id },
   });
 }
 
