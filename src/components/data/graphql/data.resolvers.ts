@@ -7,7 +7,7 @@ const resolvers: IResolvers = {
   Query: {
     async data(_, { id }: GetDataParams) {
       dataValidationService.getDataParamsValidation(id);
-      const data = await dataService.getData(id);
+      const data = await dataService.findOne(id);
       if (!data) {
         throw new ApolloCustomError({
           message: 'Not Found Data',
@@ -21,7 +21,7 @@ const resolvers: IResolvers = {
   Mutation: {
     async createData(_, params: CreateDataParams) {
       dataValidationService.createDataParamsValidation(params);
-      const data = await dataService.createData(params);
+      const data = await dataService.create(params);
       return data;
     },
   },

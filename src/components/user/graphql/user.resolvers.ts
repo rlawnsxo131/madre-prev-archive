@@ -9,7 +9,7 @@ const resolvers: IResolvers = {
   Query: {
     async user(_, { id }: GetUserParams) {
       userValidationService.getUserParamsValidation(id);
-      const user = await userService.getUser(id);
+      const user = await userService.findOne(id);
       if (!user) {
         throw new ApolloCustomError({
           message: 'Not Found User',

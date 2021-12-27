@@ -18,13 +18,13 @@ describe('dataService Test', () => {
     await connection?.close();
   });
 
-  test('getData: id to undefined', async () => {
+  test('findOne: id to undefined', async () => {
     const id = 'undefined';
-    const data = await dataService.getData(id);
+    const data = await dataService.findOne(id);
     expect(data).toBe(undefined);
   });
 
-  test('createData', async () => {
+  test('create', async () => {
     const createDataParams: CreateDataParams = {
       user_id: 'cc950501-63ff-11ec-95c1-0242ac130002',
       file_url: 'asdf',
@@ -32,7 +32,7 @@ describe('dataService Test', () => {
       description: undefined,
       is_public: false,
     };
-    const data = await dataService.createData(createDataParams);
+    const data = await dataService.create(createDataParams);
     expect(data.user_id).toBe(createDataParams.user_id);
     expect(data.file_url).toBe(createDataParams.file_url);
     expect(data.title).toBe(createDataParams.title);
