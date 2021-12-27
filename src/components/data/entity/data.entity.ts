@@ -11,7 +11,7 @@ import {
 import { User } from '../../user';
 
 @Entity('data')
-export class Data {
+export default class Data {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 

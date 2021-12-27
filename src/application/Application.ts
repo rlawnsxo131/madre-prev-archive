@@ -1,5 +1,5 @@
-import Fastify from './Fastify';
 import Apollo from './Apollo';
+import Fastify from './Fastify';
 
 export default class Application {
   private readonly fastify: Fastify;

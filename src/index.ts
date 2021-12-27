@@ -1,7 +1,7 @@
+import { SetupProvider } from './lib/SetupProvider';
 import { Database } from './datastore';
 import Application from './application';
 import { Connection } from 'typeorm';
-import { SetupProvider } from './lib/SetupProvider';
 
 SetupProvider.initialize();
 const database = new Database();

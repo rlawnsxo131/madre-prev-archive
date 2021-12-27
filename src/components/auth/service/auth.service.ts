@@ -1,5 +1,1 @@
-function authFunction() {}
-
-export default {
-  authFunction,
-};
+export function authFunction() {}

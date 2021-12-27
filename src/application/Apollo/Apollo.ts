@@ -5,7 +5,7 @@ import {
   ApolloServerPluginLandingPageGraphQLPlayground,
 } from 'apollo-server-core';
 import { FastifyInstance } from 'fastify';
-import schema from './apollo.schema';
+import apolloSchema from './apollo.schema';
 import { isProduction } from '../../constants';
 
 export default class Apollo {
@@ -13,7 +13,7 @@ export default class Apollo {
 
   constructor(fastify: FastifyInstance) {
     this.app = new ApolloServer({
-      schema,
+      schema: apolloSchema,
       context: ({ request }) => {
         request.log.info(request.id);
       },

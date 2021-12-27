@@ -2,7 +2,7 @@ import Joi from 'joi';
 import ApolloCustomError from '../../../lib/ApolloCustomError';
 import { CreateDataParams } from '../interface/data.interface';
 
-function getDataParamsValidation(id: string) {
+export function getDataParamsValidation(id: string) {
   const schema = Joi.string().guid().required();
   const { error } = schema.validate(id);
   if (!error) return;
@@ -13,7 +13,7 @@ function getDataParamsValidation(id: string) {
   });
 }
 
-function createDataParamsValidation(
+export function createDataParamsValidation(
   params: CreateDataParams | Record<string, any> = {},
 ) {
   const schema = Joi.object<CreateDataParams>({
@@ -31,8 +31,3 @@ function createDataParamsValidation(
     extensions: params,
   });
 }
-
-export default {
-  getDataParamsValidation,
-  createDataParamsValidation,
-};

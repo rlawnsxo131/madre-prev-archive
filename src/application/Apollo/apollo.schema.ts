@@ -21,7 +21,7 @@ const resolvers = {
   Mutation: {},
 };
 
-const schema = makeExecutableSchema({
+const apolloSchema = makeExecutableSchema({
   typeDefs: [typeDef, userGraphQL.userTypeDef, dataGraphQL.dataTypeDef],
   resolvers: merge(
     resolvers,
@@ -30,4 +30,4 @@ const schema = makeExecutableSchema({
   ),
 });
 
-export default schema;
+export default apolloSchema;

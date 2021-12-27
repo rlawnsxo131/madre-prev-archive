@@ -3,7 +3,8 @@ import corsPlugin from 'fastify-cors';
 import compress from 'fastify-compress';
 import cookie from 'fastify-cookie';
 import { jwtPlugin } from '../../plugins';
-import routes from './fastify.routes';
+import fastifyRoutes from './fastify.routes';
+import fastifyHealthRoute from './fastify.health.route';
 
 export default class Fastify {
   private readonly app: FastifyInstance;
@@ -28,7 +29,8 @@ export default class Fastify {
     this.app.register(cookie);
     this.app.register(compress);
     this.app.register(jwtPlugin);
-    this.app.register(routes, { prefix: '/api' });
+    this.app.register(fastifyHealthRoute, { prefix: '/health' });
+    this.app.register(fastifyRoutes, { prefix: '/api' });
   }
 
   getApp() {
