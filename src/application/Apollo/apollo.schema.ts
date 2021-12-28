@@ -1,8 +1,8 @@
 import { gql } from 'apollo-server-core';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import merge from 'lodash.merge';
-import { userGraphQL } from '../../components/user';
-import { dataGraphQL } from '../../components/data';
+import { userGraphQL } from '../../domain/user';
+import { dataGraphQL } from '../../domain/data';
 
 const typeDef = gql`
   scalar Date

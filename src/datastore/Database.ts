@@ -32,7 +32,7 @@ export default class Database {
         connectionLimit: 10,
       },
       synchronize: false,
-      entities: ['src/components/**/entity/*.entity.ts'],
+      entities: ['src/domain/**/entity/*.entity.ts'],
     };
   }
 
