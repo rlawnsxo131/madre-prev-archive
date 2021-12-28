@@ -12,8 +12,8 @@ interface FastifyCustomErrorParams {
 }
 
 export default class FastifyCustomError extends Error {
+  name: FastifyErrorName;
   statusCode: number;
-  name: string;
   constructor({ message, name, statusCode }: FastifyCustomErrorParams) {
     super(message);
     this.name = name;
