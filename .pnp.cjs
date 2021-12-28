@@ -58,7 +58,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["ts-jest", "virtual:0c9114e0a6c540251b6045286cdc8a2edd6cb1868f3d5f40b071b25310ed34c298aa10c1068c82801dce7e51d985423bc281d63edf68b15382ca4c157421c7b8#npm:27.0.7"],
             ["ts-node-dev", "virtual:0c9114e0a6c540251b6045286cdc8a2edd6cb1868f3d5f40b071b25310ed34c298aa10c1068c82801dce7e51d985423bc281d63edf68b15382ca4c157421c7b8#npm:1.1.8"],
             ["typeorm", "virtual:0c9114e0a6c540251b6045286cdc8a2edd6cb1868f3d5f40b071b25310ed34c298aa10c1068c82801dce7e51d985423bc281d63edf68b15382ca4c157421c7b8#npm:0.2.41"],
-            ["typescript", "patch:typescript@npm%3A4.5.4#~builtin<compat/typescript>::version=4.5.4&hash=493e53"]
+            ["typescript", "patch:typescript@npm%3A4.4.4#~builtin<compat/typescript>::version=4.4.4&hash=493e53"]
           ],
           "linkType": "SOFT",
         }]
@@ -5052,7 +5052,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["ts-jest", "virtual:0c9114e0a6c540251b6045286cdc8a2edd6cb1868f3d5f40b071b25310ed34c298aa10c1068c82801dce7e51d985423bc281d63edf68b15382ca4c157421c7b8#npm:27.0.7"],
             ["ts-node-dev", "virtual:0c9114e0a6c540251b6045286cdc8a2edd6cb1868f3d5f40b071b25310ed34c298aa10c1068c82801dce7e51d985423bc281d63edf68b15382ca4c157421c7b8#npm:1.1.8"],
             ["typeorm", "virtual:0c9114e0a6c540251b6045286cdc8a2edd6cb1868f3d5f40b071b25310ed34c298aa10c1068c82801dce7e51d985423bc281d63edf68b15382ca4c157421c7b8#npm:0.2.41"],
-            ["typescript", "patch:typescript@npm%3A4.5.4#~builtin<compat/typescript>::version=4.5.4&hash=493e53"]
+            ["typescript", "patch:typescript@npm%3A4.4.4#~builtin<compat/typescript>::version=4.4.4&hash=493e53"]
           ],
           "linkType": "SOFT",
         }]
@@ -6749,7 +6749,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["lodash.memoize", "npm:4.1.2"],
             ["make-error", "npm:1.3.6"],
             ["semver", "npm:7.3.5"],
-            ["typescript", "patch:typescript@npm%3A4.5.4#~builtin<compat/typescript>::version=4.5.4&hash=493e53"],
+            ["typescript", "patch:typescript@npm%3A4.4.4#~builtin<compat/typescript>::version=4.4.4&hash=493e53"],
             ["yargs-parser", "npm:20.2.9"]
           ],
           "packagePeers": [
@@ -6783,7 +6783,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["diff", "npm:4.0.2"],
             ["make-error", "npm:1.3.6"],
             ["source-map-support", "npm:0.5.21"],
-            ["typescript", "patch:typescript@npm%3A4.5.4#~builtin<compat/typescript>::version=4.5.4&hash=493e53"],
+            ["typescript", "patch:typescript@npm%3A4.4.4#~builtin<compat/typescript>::version=4.4.4&hash=493e53"],
             ["yn", "npm:3.1.1"]
           ],
           "packagePeers": [
@@ -6818,7 +6818,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["tree-kill", "npm:1.2.2"],
             ["ts-node", "virtual:1f374d68a2c09981b646598558879dd5ef400a3ae9efee371f89f953fcaf14d753f3e5f851248e56a92051d5f382f4ef5c082a529c0627641663a51e9a1ea49d#npm:9.1.1"],
             ["tsconfig", "npm:7.0.0"],
-            ["typescript", "patch:typescript@npm%3A4.5.4#~builtin<compat/typescript>::version=4.5.4&hash=493e53"]
+            ["typescript", "patch:typescript@npm%3A4.4.4#~builtin<compat/typescript>::version=4.4.4&hash=493e53"]
           ],
           "packagePeers": [
             "@types/node-notifier",
@@ -6984,10 +6984,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["typescript", [
-        ["patch:typescript@npm%3A4.5.4#~builtin<compat/typescript>::version=4.5.4&hash=493e53", {
-          "packageLocation": "./.yarn/cache/typescript-patch-0b90225f97-2e488dde7d.zip/node_modules/typescript/",
+        ["patch:typescript@npm%3A4.4.4#~builtin<compat/typescript>::version=4.4.4&hash=493e53", {
+          "packageLocation": "./.yarn/cache/typescript-patch-7a081096b0-bd629ad0da.zip/node_modules/typescript/",
           "packageDependencies": [
-            ["typescript", "patch:typescript@npm%3A4.5.4#~builtin<compat/typescript>::version=4.5.4&hash=493e53"]
+            ["typescript", "patch:typescript@npm%3A4.4.4#~builtin<compat/typescript>::version=4.4.4&hash=493e53"]
           ],
           "linkType": "HARD",
         }]
