@@ -1,2 +1,4 @@
-export { default as authRoute } from './route/auth.route';
-export * as authService from './service/auth.service';
+import authRoute from './route/auth.route';
+import authService from './service/auth.service';
+
+export { authRoute, authService };

@@ -1,6 +1,6 @@
 import { FastifyPluginCallback } from 'fastify';
 
-const route: FastifyPluginCallback = (fastify, _, done) => {
+const authRoute: FastifyPluginCallback = (fastify, _, done) => {
   fastify.get('/', (_, reply) => {
     reply.status(200).send({
       auth: 'auth',
@@ -9,4 +9,4 @@ const route: FastifyPluginCallback = (fastify, _, done) => {
   done();
 };
 
-export default route;
+export default authRoute;

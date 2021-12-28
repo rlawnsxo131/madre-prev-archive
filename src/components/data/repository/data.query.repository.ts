@@ -1,5 +1,5 @@
+import Data from '../entity/data.entity';
 import { EntityRepository, Repository } from 'typeorm';
-import { Data } from '..';
 
 @EntityRepository(Data)
 export default class DataQueryRepository extends Repository<Data> {

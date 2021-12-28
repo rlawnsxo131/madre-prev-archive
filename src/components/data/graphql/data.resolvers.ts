@@ -3,7 +3,7 @@ import { dataService, dataValidationService } from '..';
 import ApolloCustomError from '../../../lib/ApolloCustomError';
 import { CreateDataParams, GetDataParams } from '../interface/data.interface';
 
-const resolvers: IResolvers = {
+const dataResolvers: IResolvers = {
   Query: {
     async data(_, { id }: GetDataParams) {
       dataValidationService.getDataParamsValidation(id);
@@ -27,4 +27,4 @@ const resolvers: IResolvers = {
   },
 };
 
-export default resolvers;
+export default dataResolvers;

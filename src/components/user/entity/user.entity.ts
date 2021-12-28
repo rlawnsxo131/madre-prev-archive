@@ -7,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Data } from '../../data';
+import Data from '../../data/entity/data.entity';
 
 @Entity('user')
 export default class User {

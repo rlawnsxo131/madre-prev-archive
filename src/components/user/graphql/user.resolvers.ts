@@ -1,10 +1,9 @@
 import { IResolvers } from '@graphql-tools/utils';
 import { userService, userValidationService } from '..';
 import ApolloCustomError from '../../../lib/ApolloCustomError';
-
 import { GetUserParams } from '../interface/user.interface';
 
-const resolvers: IResolvers = {
+const userResolvers: IResolvers = {
   User: {},
   Query: {
     async user(_, { id }: GetUserParams) {
@@ -23,4 +22,4 @@ const resolvers: IResolvers = {
   Mutation: {},
 };
 
-export default resolvers;
+export default userResolvers;
