@@ -2,7 +2,7 @@ import { IResolvers } from '@graphql-tools/utils';
 import UserService from '../service/user.service';
 import ApolloCustomError from '../../../lib/ApolloCustomError';
 import { GetUserParams } from '../interface/user.interface';
-import { ApolloValidator } from '../../../lib/ApolloValidator';
+import { ApolloValidator } from '../../../lib/Validator';
 
 const userResolvers: IResolvers = {
   User: {},

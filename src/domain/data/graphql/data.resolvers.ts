@@ -1,7 +1,7 @@
 import { IResolvers } from '@graphql-tools/utils';
 import DataService from '../service/data.service';
 import ApolloCustomError from '../../../lib/ApolloCustomError';
-import { ApolloValidator } from '../../../lib/ApolloValidator';
+import { ApolloValidator } from '../../../lib/Validator';
 import { GetDataParams, CreateDataParams } from '../interface/data.interface';
 import { boolean, object, string } from 'joi';
 
