@@ -1,5 +1,11 @@
 import { format } from 'd3';
 
-export function formatNumberWithComma() {
+function formatNumberWithComma() {
   return format(',');
 }
+
+const D3FormatUtil = {
+  formatNumberWithComma,
+};
+
+export default D3FormatUtil;
