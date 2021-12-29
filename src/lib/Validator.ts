@@ -26,7 +26,7 @@ const fastifyHelper: Helper = (error, params) => {
 };
 
 class Validator {
-  helper: Helper;
+  private helper: Helper;
 
   constructor(helper: Helper) {
     this.helper = helper;
