@@ -1,4 +1,4 @@
-import Data from '../entity/data.entity';
+import Data from './data.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateDataParams } from '../interface/data.interface';
 

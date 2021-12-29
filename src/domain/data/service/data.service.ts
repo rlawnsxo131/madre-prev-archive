@@ -1,5 +1,5 @@
 import { getCustomRepository } from 'typeorm';
-import DataRepository from '../repository/data.repository';
+import DataRepository from '../entity/data.repository';
 import DataQueryRepository from '../repository/data.query.repository';
 import { CreateDataParams } from '../interface/data.interface';
 

@@ -26,7 +26,7 @@ const fastifyHelper: Helper = (error, params) => {
 };
 
 class Validator {
-  private helper: Helper;
+  private readonly helper: Helper;
 
   constructor(helper: Helper) {
     this.helper = helper;
@@ -40,7 +40,6 @@ class Validator {
 
   validateObject(schema: Joi.Schema, params: Record<string, any> = {}) {
     const { error } = schema.validate(params);
-    if (!error) return;
     this.helper(error, params);
   }
 }
