@@ -1,7 +1,7 @@
 function authFunction() {}
 
-const authService = {
+const AuthService = {
   authFunction,
 };
 
-export default authService;
+export default AuthService;

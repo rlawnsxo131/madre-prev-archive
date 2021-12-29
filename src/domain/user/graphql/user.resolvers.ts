@@ -1,14 +1,15 @@
 import { IResolvers } from '@graphql-tools/utils';
-import { userService, userValidationService } from '..';
+import UserService from '../service/user.service';
 import ApolloCustomError from '../../../lib/ApolloCustomError';
 import { GetUserParams } from '../interface/user.interface';
+import { ApolloValidator } from '../../../lib/ApolloValidator';
 
 const userResolvers: IResolvers = {
   User: {},
   Query: {
     async user(_, { id }: GetUserParams) {
-      userValidationService.getUserParamsValidation(id);
-      const user = await userService.findOne(id);
+      ApolloValidator.validateId(id);
+      const user = await UserService.findOne(id);
       if (!user) {
         throw new ApolloCustomError({
           message: 'Not Found User',

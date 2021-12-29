@@ -2,9 +2,9 @@ import 'jest';
 import { SetupProvider } from '../../../lib/SetupProvider';
 import { Database } from '../../../datastore';
 import { Connection } from 'typeorm';
-import { userService } from '..';
+import UserService from '../service/user.service';
 
-describe('userService Test', () => {
+describe('UserService Test', () => {
   let connection: Connection | null = null;
 
   beforeAll(async () => {
@@ -19,7 +19,7 @@ describe('userService Test', () => {
 
   test('findOne: id to undefined', async () => {
     const id = 'undefined';
-    const user = await userService.findOne(id);
+    const user = await UserService.findOne(id);
     expect(user).toBe(undefined);
   });
 });

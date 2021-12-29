@@ -1,8 +1,8 @@
 import { gql } from 'apollo-server-core';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import merge from 'lodash.merge';
-import { userGraphQL } from '../../domain/user';
-import { dataGraphQL } from '../../domain/data';
+import UserGraphQL from '../../domain/user/graphql';
+import DataGraphQL from '../../domain/data/graphql';
 
 const typeDef = gql`
   scalar Date
@@ -22,11 +22,11 @@ const resolvers = {
 };
 
 const apolloSchema = makeExecutableSchema({
-  typeDefs: [typeDef, userGraphQL.userTypeDef, dataGraphQL.dataTypeDef],
+  typeDefs: [typeDef, UserGraphQL.userTypeDef, DataGraphQL.dataTypeDef],
   resolvers: merge(
     resolvers,
-    userGraphQL.userResolvers,
-    dataGraphQL.dataResolvers,
+    UserGraphQL.userResolvers,
+    DataGraphQL.dataResolvers,
   ),
 });
 

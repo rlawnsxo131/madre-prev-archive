@@ -1,5 +1,6 @@
 import { getCustomRepository } from 'typeorm';
-import { DataRepository, DataQueryRepository } from '..';
+import DataRepository from '../repository/data.repository';
+import DataQueryRepository from '../repository/data.query.repository';
 import { CreateDataParams } from '../interface/data.interface';
 
 function findOne(id: string) {
@@ -10,9 +11,9 @@ function create(params: CreateDataParams) {
   return getCustomRepository(DataRepository).createOne(params);
 }
 
-const userService = {
+const DataService = {
   findOne,
   create,
 };
 
-export default userService;
+export default DataService;

@@ -2,10 +2,10 @@ import 'jest';
 import { SetupProvider } from '../../../lib/SetupProvider';
 import { Database } from '../../../datastore';
 import { Connection } from 'typeorm';
-import { dataService } from '..';
+import DataService from '../service/data.service';
 import { CreateDataParams } from '../interface/data.interface';
 
-describe('dataService Test', () => {
+describe('DataService Test', () => {
   let connection: Connection | null = null;
 
   beforeAll(async () => {
@@ -20,7 +20,7 @@ describe('dataService Test', () => {
 
   test('findOne: id to undefined', async () => {
     const id = 'undefined';
-    const data = await dataService.findOne(id);
+    const data = await DataService.findOne(id);
     expect(data).toBe(undefined);
   });
 
@@ -32,7 +32,7 @@ describe('dataService Test', () => {
       description: undefined,
       is_public: false,
     };
-    const data = await dataService.create(createDataParams);
+    const data = await DataService.create(createDataParams);
     expect(data.user_id).toBe(createDataParams.user_id);
     expect(data.file_url).toBe(createDataParams.file_url);
     expect(data.title).toBe(createDataParams.title);

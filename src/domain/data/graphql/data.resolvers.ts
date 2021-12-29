@@ -1,13 +1,15 @@
 import { IResolvers } from '@graphql-tools/utils';
-import { dataService, dataValidationService } from '..';
+import DataService from '../service/data.service';
 import ApolloCustomError from '../../../lib/ApolloCustomError';
-import { CreateDataParams, GetDataParams } from '../interface/data.interface';
+import { ApolloValidator } from '../../../lib/ApolloValidator';
+import { GetDataParams, CreateDataParams } from '../interface/data.interface';
+import { boolean, object, string } from 'joi';
 
 const dataResolvers: IResolvers = {
   Query: {
     async data(_, { id }: GetDataParams) {
-      dataValidationService.getDataParamsValidation(id);
-      const data = await dataService.findOne(id);
+      ApolloValidator.validateId(id);
+      const data = await DataService.findOne(id);
       if (!data) {
         throw new ApolloCustomError({
           message: 'Not Found Data',
@@ -20,8 +22,17 @@ const dataResolvers: IResolvers = {
   },
   Mutation: {
     async createData(_, params: CreateDataParams) {
-      dataValidationService.createDataParamsValidation(params);
-      const data = await dataService.create(params);
+      ApolloValidator.validateObject(
+        object<CreateDataParams>({
+          user_id: string().guid().required(),
+          file_url: string().uri().required(),
+          title: string().min(1).required(),
+          is_public: boolean().required(),
+          description: string().min(1).optional(),
+        }),
+        params,
+      );
+      const data = await DataService.create(params);
       return data;
     },
   },

@@ -1,12 +1,12 @@
 import { getCustomRepository } from 'typeorm';
-import { UserQueryRepository } from '..';
+import UserQueryRepository from '../repository/user.query.repository';
 
 function findOne(id: string) {
   return getCustomRepository(UserQueryRepository, 'default').findOneById(id);
 }
 
-const userService = {
+const UserService = {
   findOne,
 };
 
-export default userService;
+export default UserService;

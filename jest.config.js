@@ -3,5 +3,8 @@ module.exports = {
   testEnvironment: 'node',
   setupFiles: ['dotenv/config'],
   moduleFileExtensions: ['js', 'json', 'jsx', 'ts', 'tsx', 'json'],
-  testMatch: ['<rootDir>/src/domain/**/test/*.test.(ts|tsx)'],
+  testMatch: [
+    '<rootDir>/src/**/test/*.test.(ts|tsx)',
+    '<rootDir>/src/domain/**/test/*.test.(ts|tsx)',
+  ],
 };
