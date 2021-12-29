@@ -5,5 +5,9 @@ describe('global lib Test', () => {
     test('ApolloCustomError', () => {});
     test('FastifyCustomError', () => {});
   });
-  test('ApolloValidator', () => {});
+
+  describe('Validator', () => {
+    test('ApolloValidator', () => {});
+    test('FastifyValidator', () => {});
+  });
 });
