@@ -1,4 +1,4 @@
-import { SetupProvider } from './lib/SetupProvider';
+import SetupProvider from './lib/SetupProvider';
 import { Database } from './datastore';
 import Application from './application';
 import { Connection } from 'typeorm';
