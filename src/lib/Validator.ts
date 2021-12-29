@@ -45,5 +45,7 @@ class Validator {
   }
 }
 
-export const ApolloValidator = new Validator(apolloHelper);
-export const FastifyValidator = new Validator(fastifyHelper);
+const ApolloValidator = new Validator(apolloHelper);
+const FastifyValidator = new Validator(fastifyHelper);
+
+export { ApolloValidator, FastifyValidator };
