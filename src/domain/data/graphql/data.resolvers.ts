@@ -3,7 +3,7 @@ import DataService from '../service/data.service';
 import ApolloCustomError from '../../../lib/ApolloCustomError';
 import { ApolloValidator } from '../../../lib/Validator';
 import { GetDataParams, CreateDataParams } from '../interface/data.interface';
-import { boolean, object, string } from 'joi';
+import Joi from 'joi';
 
 const dataResolvers: IResolvers = {
   Query: {
@@ -23,12 +23,12 @@ const dataResolvers: IResolvers = {
   Mutation: {
     async createData(_, params: CreateDataParams) {
       ApolloValidator.validateObject(
-        object<CreateDataParams>({
-          user_id: string().guid().required(),
-          file_url: string().uri().required(),
-          title: string().min(1).required(),
-          is_public: boolean().required(),
-          description: string().min(1).optional(),
+        Joi.object<CreateDataParams>({
+          user_id: Joi.string().guid().required(),
+          file_url: Joi.string().uri().required(),
+          title: Joi.string().min(1).required(),
+          is_public: Joi.boolean().required(),
+          description: Joi.string().min(1).optional(),
         }),
         params,
       );
