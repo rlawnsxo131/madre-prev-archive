@@ -7,6 +7,7 @@ import {
 import { FastifyInstance } from 'fastify';
 import apolloSchema from './apollo.schema';
 import { isProduction } from '../../constants';
+import apolloFormatError from '../../lib/apolloFormatError';
 
 export default class Apollo {
   private readonly app: ApolloServer;
@@ -14,9 +15,10 @@ export default class Apollo {
   constructor(fastify: FastifyInstance) {
     this.app = new ApolloServer({
       schema: apolloSchema,
-      context: ({ request }) => {
+      context: ({ request, reply }) => {
         request.log.info(request.id);
       },
+      formatError: apolloFormatError,
       plugins: [
         this.fastifyAppClosePlugin(fastify),
         ApolloServerPluginDrainHttpServer({ httpServer: fastify.server }),

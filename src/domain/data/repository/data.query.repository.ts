@@ -3,6 +3,10 @@ import { Data } from '..';
 
 @EntityRepository(Data)
 export default class DataQueryRepository extends Repository<Data> {
+  findAll() {
+    return this.createQueryBuilder('data').select('data').getMany();
+  }
+
   findOneById(id: string) {
     return this.createQueryBuilder('data')
       .select('data')

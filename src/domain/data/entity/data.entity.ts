@@ -30,6 +30,7 @@ export default class Data {
   @Column({ default: false })
   is_public!: boolean;
 
+  @Index('ix_created_at')
   @CreateDateColumn({ type: 'timestamp' })
   created_at!: Date;
 

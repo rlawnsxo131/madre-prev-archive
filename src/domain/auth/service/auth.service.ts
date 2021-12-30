@@ -1,7 +1,5 @@
-function authFunction() {}
-
 const AuthService = {
-  authFunction,
+  authFunction() {},
 };
 
 export default AuthService;
