@@ -442,7 +442,7 @@ export default class D3AxisChart2 extends D3Common2 {
       const map = this.uniqIdentifierValueMap.get(i);
       const key = map!.key;
       const color = map!.color;
-      this.svg
+      const path = this.svg
         .append('path')
         .attr('fill', 'none')
         .attr('stroke-width', this.lineStrokeWidth)
@@ -460,7 +460,7 @@ export default class D3AxisChart2 extends D3Common2 {
         .attr('d', `${lineGenerator(data)}`);
 
       // const pathLength = path.node()?.getTotalLength();
-      // if (this.lineTransition) {
+      // if (this.lineTransition && pathLength) {
       //   path
       //     .attr('stroke-dashoffset', pathLength)
       //     .attr('stroke-dasharray', pathLength)

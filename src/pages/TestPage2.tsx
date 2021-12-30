@@ -70,9 +70,9 @@ function TestPage2(props: TestPage2Props) {
     });
     chartRef.current.setAxis();
     chartRef.current.appendAxis();
-    // chartRef.current.appendLine();
-    // chartRef.current.appendArea();
-    chartRef.current.appendCircle();
+    chartRef.current.appendLine();
+    chartRef.current.appendArea();
+    // chartRef.current.appendCircle();
     chartRef.current.resetData();
 
     setTimeout(() => {
@@ -93,31 +93,11 @@ function TestPage2(props: TestPage2Props) {
       });
       chartRef.current.setAxis();
       chartRef.current.updateAxis();
-      // chartRef.current.updateLine();
-      // chartRef.current.updateArea();
-      chartRef.current.appendCircle();
+      chartRef.current.updateLine();
+      chartRef.current.updateArea();
+      // chartRef.current.appendCircle();
       chartRef.current.resetData();
     }, 1500);
-
-    setTimeout(() => {
-      if (!chartRef.current) return;
-
-      const data = Array.from({ length: 5 }).map((_, i) =>
-        Array.from({ length: 101 }).map((_, j) => ({
-          x: j * 50,
-          y: getRandomIntInclusive(5000, 15000),
-        })),
-      );
-
-      chartRef.current.setData(data);
-      chartRef.current.setDomain();
-      chartRef.current.setAxis();
-      chartRef.current.updateAxis();
-      // chartRef.current.updateLine();
-      // chartRef.current.updateArea();
-      chartRef.current.appendCircle();
-      chartRef.current.resetData();
-    }, 3500);
   }, [chartRef.current]);
 
   return (
