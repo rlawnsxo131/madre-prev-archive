@@ -49,7 +49,6 @@ export type D3AxisChartSetLineOptionsParams = Partial<{
   linecapType: D3AxisChartLinecapType;
   linejoinType: D3AxisChartLinejoinType;
   lineStrokeWidth: number;
-  lineTransition: boolean;
   lineTransitionDuration: number;
 }>;
 

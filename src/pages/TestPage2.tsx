@@ -68,18 +68,22 @@ function TestPage2(props: TestPage2Props) {
       axisXClass: axisXClassRef.current,
       axisYClass: axisYClassRef.current,
     });
+    chartRef.current.setLineOptions({
+      lineStrokeWidth: 2,
+      lineType: 'CURVE',
+    });
     chartRef.current.setAxis();
     chartRef.current.appendAxis();
     chartRef.current.appendLine();
     chartRef.current.appendArea();
-    // chartRef.current.appendCircle();
+    chartRef.current.appendCircle();
     chartRef.current.resetData();
 
     setTimeout(() => {
       if (!chartRef.current) return;
 
       const data = Array.from({ length: 5 }).map((_, i) =>
-        Array.from({ length: 101 }).map((_, j) => ({
+        Array.from({ length: 21 }).map((_, j) => ({
           x: j * 100,
           y: getRandomIntInclusive(10000, 20000),
         })),
@@ -95,9 +99,33 @@ function TestPage2(props: TestPage2Props) {
       chartRef.current.updateAxis();
       chartRef.current.updateLine();
       chartRef.current.updateArea();
-      // chartRef.current.appendCircle();
+      chartRef.current.appendCircle();
       chartRef.current.resetData();
-    }, 1500);
+    }, 2000);
+
+    setTimeout(() => {
+      if (!chartRef.current) return;
+
+      const data = Array.from({ length: 5 }).map((_, i) =>
+        Array.from({ length: 21 }).map((_, j) => ({
+          x: j * 100,
+          y: getRandomIntInclusive(10000, 15000),
+        })),
+      );
+
+      chartRef.current.setData(data);
+      chartRef.current.setScaleType('number', 'number');
+      chartRef.current.setDomain();
+      chartRef.current.setAxisOptions({
+        axisXTickFormat: (d, _) => D3FormatUtil.formatNumberWithComma()(d),
+      });
+      chartRef.current.setAxis();
+      chartRef.current.updateAxis();
+      chartRef.current.updateLine();
+      chartRef.current.updateArea();
+      chartRef.current.appendCircle();
+      chartRef.current.resetData();
+    }, 4000);
   }, [chartRef.current]);
 
   return (

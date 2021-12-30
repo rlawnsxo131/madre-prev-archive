@@ -6,6 +6,12 @@ import { Axis, NumberValue, Selection } from 'd3';
 export type D3SelectionSVG = Selection<SVGSVGElement, unknown, null, undefined>;
 export type D3Selection = Selection<SVGGElement, unknown, null, undefined>;
 export type D3Axis = Axis<NumberValue | Date>;
+export type D3LineSelection = Selection<
+  SVGPathElement,
+  unknown,
+  null,
+  undefined
+>;
 
 /**
  * Types that do not depend on the types defined in d3

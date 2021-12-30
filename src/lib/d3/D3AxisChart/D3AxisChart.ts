@@ -109,8 +109,7 @@ export default class D3AxisChart extends D3Common {
   private linecapType: D3AxisChartLinecapType = 'butt';
   private linejoinType: D3AxisChartLinejoinType = 'miter';
   private lineStrokeWidth = 1;
-  private lineTransition = true;
-  private lineTransitionDuration = 550;
+  private lineTransitionDuration = 850;
 
   /**
    * area options
@@ -398,7 +397,6 @@ export default class D3AxisChart extends D3Common {
     linecapType,
     linejoinType,
     lineStrokeWidth,
-    lineTransition,
     lineTransitionDuration,
   }: D3AxisChartSetLineOptionsParams) {
     console.log('event: setLineOptions');
@@ -408,7 +406,6 @@ export default class D3AxisChart extends D3Common {
     if (linecapType) this.linecapType = linecapType;
     if (linejoinType) this.linejoinType = linejoinType;
     if (lineStrokeWidth) this.lineStrokeWidth = lineStrokeWidth;
-    if (lineTransition) this.lineTransition = lineTransition;
     if (lineTransitionDuration)
       this.lineTransitionDuration = lineTransitionDuration;
   }
@@ -457,16 +454,15 @@ export default class D3AxisChart extends D3Common {
         )
         .attr('d', `${lineGenerator(data)}`);
 
-      // const pathLength = path.node()?.getTotalLength();
-      // if (this.lineTransition && pathLength) {
-      //   path
-      //     .attr('stroke-dashoffset', pathLength)
-      //     .attr('stroke-dasharray', pathLength)
-      //     .transition()
-      //     .ease(easeSinInOut)
-      //     .duration(this.lineTransitionDuration)
-      //     .attr('stroke-dashoffset', 0);
-      // }
+      const pathLength = path.node()?.getTotalLength()!;
+
+      path
+        .attr('stroke-dasharray', `${pathLength} ${pathLength}`)
+        .attr('stroke-dashoffset', pathLength)
+        .transition()
+        .ease(easeSinInOut)
+        .duration(this.lineTransitionDuration)
+        .attr('stroke-dashoffset', 0);
     });
   }
 
@@ -478,12 +474,22 @@ export default class D3AxisChart extends D3Common {
     this.data.forEach((data, i) => {
       const map = this.uniqIdentifierValueMap.get(i);
       const key = map!.key;
-      this.svg
+
+      const path = this.svg
         .selectAll(`.line-${key}`)
+        .attr('d', `${lineGenerator(data)}`);
+
+      const pathLength = (
+        this.svg.select(`.line-${key}`)?.node() as any
+      ).getTotalLength();
+
+      path
+        .attr('stroke-dasharray', `${pathLength} ${pathLength}`)
+        .attr('stroke-dashoffset', pathLength)
         .transition()
         .ease(easeSinInOut)
         .duration(this.lineTransitionDuration)
-        .attr('d', `${lineGenerator(data)}`);
+        .attr('stroke-dashoffset', 0);
     });
   }
 
@@ -598,25 +604,26 @@ export default class D3AxisChart extends D3Common {
     this.data.forEach((data, i) => {
       const map = this.uniqIdentifierValueMap.get(i);
       const color = map!.color;
-
-      this.svg
-        .selectAll('circles')
-        .data(data)
-        .join('circle')
-        .attr('fill', this.circleIsFill ? color : palette.white)
-        .attr('stroke', color)
-        .attr('stroke-width', this.circleStrokeWidth)
-        .attr('r', this.circleRadius)
-        .attr('class', `circle`)
-        .attr(
-          'transform',
-          `translate(
+      setTimeout(() => {
+        this.svg
+          .selectAll('circles')
+          .data(data)
+          .join('circle')
+          .attr('fill', this.circleIsFill ? color : palette.white)
+          .attr('stroke', color)
+          .attr('stroke-width', this.circleStrokeWidth)
+          .attr('r', this.circleRadius)
+          .attr('class', `circle`)
+          .attr(
+            'transform',
+            `translate(
             ${this.margin.left + this.margin.right * 0.4},
             ${this.margin.top}
           )`,
-        )
-        .attr('cx', (d: any) => this.xScale()(d[this.xDomainKey]))
-        .attr('cy', (d: any) => this.yScale()(d[this.yDomainKey]));
+          )
+          .attr('cx', (d: any) => this.xScale()(d[this.xDomainKey]))
+          .attr('cy', (d: any) => this.yScale()(d[this.yDomainKey]));
+      }, 1000);
     });
   }
 }
