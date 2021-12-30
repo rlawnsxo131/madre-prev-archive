@@ -13,10 +13,9 @@ import {
 } from 'd3';
 import { startOfMonth, endOfMonth } from 'date-fns';
 import { v4 as uuidv4 } from 'uuid';
-import { palette } from '../../../../styles';
-import { getRandomColors } from '../../../utils';
-import D3Common2 from '../D3Common2';
-
+import { palette } from '../../../styles';
+import { getRandomColors } from '../../utils';
+import D3Common from '../D3Common';
 import {
   D3Axis,
   D3Data,
@@ -26,9 +25,8 @@ import {
   D3ScaleType,
   D3SelectionSVG,
   D3TickFormat,
-} from '../D3Common2/D3Common2Types';
-import { D3ValidationUtil } from '../D3Util';
-
+} from '../D3Common/D3CommonTypes';
+import { D3ValidationUtil } from '..';
 import {
   D3AxisChartAreaType,
   D3AxisChartConstructorParams,
@@ -41,9 +39,9 @@ import {
   D3AxisChartSetAxisOptionsParams,
   D3AxisChartSetCircleOptionsParams,
   D3AxisChartSetLineOptionsParams,
-} from './D3AxisChart2Types';
+} from './D3AxisChartTypes';
 
-export default class D3AxisChart2 extends D3Common2 {
+export default class D3AxisChart extends D3Common {
   /**
    * constructor
    */

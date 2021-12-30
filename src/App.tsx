@@ -2,9 +2,8 @@ import { Route, Routes } from 'react-router-dom';
 import Core from './components/common/Core';
 import ErrorBoundary from './components/error';
 import HomeTemplate from './components/home/HomeTemplate';
-import HomePage from './pages/HomePage';
-import NotFoundPage from './pages/NotFoundPage';
-import TestPage2 from './pages/TestPage2';
+import { HomePage, NotFoundPage } from './pages';
+import { TestPage2 } from './pages';
 
 interface AppProps {}
 
