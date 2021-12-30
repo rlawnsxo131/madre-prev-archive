@@ -30,18 +30,6 @@ export default class Apollo {
     });
   }
 
-  private fastifyAppClosePlugin(fastify: FastifyInstance) {
-    return {
-      async serverWillStart() {
-        return {
-          async drainServer() {
-            await fastify.close();
-          },
-        };
-      },
-    };
-  }
-
   private formatError(error: GraphQLError) {
     console.error(
       '------------------------------- ERROR INFO -------------------------------',
@@ -52,6 +40,18 @@ export default class Apollo {
       '------------------------------- ERROR INFO -------------------------------',
     );
     return error;
+  }
+
+  private fastifyAppClosePlugin(fastify: FastifyInstance) {
+    return {
+      async serverWillStart() {
+        return {
+          async drainServer() {
+            await fastify.close();
+          },
+        };
+      },
+    };
   }
 
   getApp() {
