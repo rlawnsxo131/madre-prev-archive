@@ -1,3 +1,5 @@
-export { default as getPrefersColorScheme } from './getPrefersColorScheme';
-export { default as getRandomIntInclusive } from './getRandomIntInclusive';
-export { default as getRandomColors } from './getRandomColors';
+import getPrefersColorScheme from './getPrefersColorScheme';
+import getRandomColors from './getRandomColors';
+import getRandomIntInclusive from './getRandomIntInclusive';
+
+export { getPrefersColorScheme, getRandomIntInclusive, getRandomColors };

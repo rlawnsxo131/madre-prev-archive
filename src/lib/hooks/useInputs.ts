@@ -7,7 +7,7 @@ interface UseInputsAction {
 
 function reducer<T>(state: T, action: UseInputsAction | null) {
   if (!action) {
-    const initialState: any = {};
+    const initialState: Record<string, any> = {};
     Object.keys(state).forEach((key) => {
       initialState[key] = '';
     });

@@ -70,8 +70,9 @@ function TestPage2(props: TestPage2Props) {
     });
     chartRef.current.setAxis();
     chartRef.current.appendAxis();
-    chartRef.current.appendLine();
-    chartRef.current.appendArea();
+    // chartRef.current.appendLine();
+    // chartRef.current.appendArea();
+    chartRef.current.appendCircle();
     chartRef.current.resetData();
 
     setTimeout(() => {
@@ -92,8 +93,9 @@ function TestPage2(props: TestPage2Props) {
       });
       chartRef.current.setAxis();
       chartRef.current.updateAxis();
-      chartRef.current.updateLine();
-      chartRef.current.updateArea();
+      // chartRef.current.updateLine();
+      // chartRef.current.updateArea();
+      chartRef.current.appendCircle();
       chartRef.current.resetData();
     }, 1500);
 
@@ -111,8 +113,9 @@ function TestPage2(props: TestPage2Props) {
       chartRef.current.setDomain();
       chartRef.current.setAxis();
       chartRef.current.updateAxis();
-      chartRef.current.updateLine();
-      chartRef.current.updateArea();
+      // chartRef.current.updateLine();
+      // chartRef.current.updateArea();
+      chartRef.current.appendCircle();
       chartRef.current.resetData();
     }, 3500);
   }, [chartRef.current]);

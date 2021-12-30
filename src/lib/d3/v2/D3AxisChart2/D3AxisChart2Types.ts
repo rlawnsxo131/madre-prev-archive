@@ -62,3 +62,12 @@ export type D3AxisChartSetAreaOptionsParams = Partial<{
   areaOpacity: number;
   areaTransitionDuration: number;
 }>;
+
+/**
+ * circle
+ */
+export type D3AxisChartSetCircleOptionsParams = Partial<{
+  circleRadius: number;
+  circleStrokeWidth: number;
+  circleIsFill: boolean;
+}>;

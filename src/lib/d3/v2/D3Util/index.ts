@@ -1,4 +1,12 @@
-import D3FormatUtil from './D3FormatUtil';
-import D3ValidateUtil from './D3ValidateUtil';
+import { formatNumberWithComma } from './D3FormatUtil';
+import { isExistMapValidate } from './D3ValidationUtil';
 
-export { D3FormatUtil, D3ValidateUtil };
+const D3FormatUtil = {
+  formatNumberWithComma,
+};
+
+const D3ValidationUtil = {
+  isExistMapValidate,
+};
+
+export { D3FormatUtil, D3ValidationUtil };

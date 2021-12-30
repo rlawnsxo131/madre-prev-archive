@@ -13,9 +13,10 @@ import {
 } from 'd3';
 import { startOfMonth, endOfMonth } from 'date-fns';
 import { v4 as uuidv4 } from 'uuid';
+import { palette } from '../../../../styles';
 import { getRandomColors } from '../../../utils';
 import D3Common2 from '../D3Common2';
-import { D3ValidateUtil } from '../D3Util';
+
 import {
   D3Axis,
   D3Data,
@@ -26,6 +27,8 @@ import {
   D3SelectionSVG,
   D3TickFormat,
 } from '../D3Common2/D3Common2Types';
+import { D3ValidationUtil } from '../D3Util';
+
 import {
   D3AxisChartAreaType,
   D3AxisChartConstructorParams,
@@ -36,6 +39,7 @@ import {
   D3AxisChartLineType,
   D3AxisChartSetAreaOptionsParams,
   D3AxisChartSetAxisOptionsParams,
+  D3AxisChartSetCircleOptionsParams,
   D3AxisChartSetLineOptionsParams,
 } from './D3AxisChart2Types';
 
@@ -116,6 +120,14 @@ export default class D3AxisChart2 extends D3Common2 {
   private areaType: D3AxisChartAreaType = 'full';
   private areaOpacity = 0.2;
   private areaTransitionDuration = 550;
+
+  /**
+   * circle options
+   */
+  private circleRadius: number = 3;
+  private circleStrokeWidth: number = 2;
+  private circleIsFill: boolean = false;
+  private circleTransitionDuration = 550;
 
   constructor({
     container,
@@ -419,7 +431,7 @@ export default class D3AxisChart2 extends D3Common2 {
   appendLine() {
     console.log('event: appendLine');
 
-    D3ValidateUtil.isExistMapValidation(
+    D3ValidationUtil.isExistMapValidate(
       this.uniqIdentifierValueMap,
       'the setUniqIdentifierValueMap function must be executed first before the action to draw the chart.',
     );
@@ -520,7 +532,7 @@ export default class D3AxisChart2 extends D3Common2 {
   appendArea() {
     console.log('event: appendArea');
 
-    D3ValidateUtil.isExistMapValidation(
+    D3ValidationUtil.isExistMapValidate(
       this.uniqIdentifierValueMap,
       'the setUniqIdentifierValueMap function must be executed first before the action to draw the chart.',
     );
@@ -560,6 +572,53 @@ export default class D3AxisChart2 extends D3Common2 {
         .ease(easeSinInOut)
         .duration(this.lineTransitionDuration)
         .attr('d', `${areaGenerator(data)}`);
+    });
+  }
+
+  setCircleOptions({
+    circleRadius,
+    circleStrokeWidth,
+    circleIsFill,
+  }: D3AxisChartSetCircleOptionsParams) {
+    console.log('event: setCircleOptions');
+
+    if (circleRadius) this.circleRadius = circleRadius;
+    if (circleStrokeWidth) this.circleStrokeWidth = circleStrokeWidth;
+    if (circleIsFill) this.circleIsFill = circleIsFill;
+  }
+
+  appendCircle() {
+    console.log('event: appendArea');
+
+    D3ValidationUtil.isExistMapValidate(
+      this.uniqIdentifierValueMap,
+      'the setUniqIdentifierValueMap function must be executed first before the action to draw the chart.',
+    );
+
+    this.svg.selectAll('.circle').remove();
+
+    this.data.forEach((data, i) => {
+      const map = this.uniqIdentifierValueMap.get(i);
+      const color = map!.color;
+
+      this.svg
+        .selectAll('circles')
+        .data(data)
+        .join('circle')
+        .attr('fill', this.circleIsFill ? color : palette.white)
+        .attr('stroke', color)
+        .attr('stroke-width', this.circleStrokeWidth)
+        .attr('r', this.circleRadius)
+        .attr('class', `circle`)
+        .attr(
+          'transform',
+          `translate(
+            ${this.margin.left + this.margin.right * 0.4},
+            ${this.margin.top}
+          )`,
+        )
+        .attr('cx', (d: any) => this.xScale()(d[this.xDomainKey]))
+        .attr('cy', (d: any) => this.yScale()(d[this.yDomainKey]));
     });
   }
 }

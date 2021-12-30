@@ -1,7 +1,17 @@
-export { default as mediaQuery } from './mediaQuery';
-export { default as media } from './media';
-export { default as palette } from './palette';
-export { default as themeColor } from './themeColor';
-export { default as zIndexes } from './zIndexes';
-export { default as transitions } from './transitions';
-export { default as typography } from './typography';
+import mediaQuery from './mediaQuery';
+import media from './media';
+import palette from './palette';
+import themeColor from './themeColor';
+import transitions from './transitions';
+import typography from './typography';
+import zIndexes from './zIndexes';
+
+export {
+  mediaQuery,
+  media,
+  palette,
+  themeColor,
+  zIndexes,
+  transitions,
+  typography,
+};
