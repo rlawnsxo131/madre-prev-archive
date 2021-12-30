@@ -1,5 +1,5 @@
 import { IResolvers } from '@graphql-tools/utils';
-import UserService from '../service/user.service';
+import { UserService } from '..';
 import ApolloCustomError from '../../../lib/ApolloCustomError';
 import { GetUserParams } from '../interface/user.interface';
 import { ApolloValidator } from '../../../lib/Validator';

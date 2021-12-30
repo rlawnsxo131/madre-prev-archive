@@ -2,7 +2,7 @@ import 'jest';
 import { SetupProvider } from '../../../lib/SetupProvider';
 import { Database } from '../../../datastore';
 import { Connection } from 'typeorm';
-import UserService from '../service/user.service';
+import { UserService } from '..';
 
 describe('UserService Test', () => {
   let connection: Connection | null = null;

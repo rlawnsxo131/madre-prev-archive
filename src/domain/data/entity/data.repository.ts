@@ -1,5 +1,5 @@
-import Data from './data.entity';
 import { EntityRepository, Repository } from 'typeorm';
+import { Data } from '..';
 import { CreateDataParams } from '../interface/data.interface';
 
 @EntityRepository(Data)

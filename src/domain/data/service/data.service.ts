@@ -1,6 +1,5 @@
 import { getCustomRepository } from 'typeorm';
-import DataRepository from '../entity/data.repository';
-import DataQueryRepository from '../repository/data.query.repository';
+import { DataQueryRepository, DataRepository } from '..';
 import { CreateDataParams } from '../interface/data.interface';
 
 function findOne(id: string) {

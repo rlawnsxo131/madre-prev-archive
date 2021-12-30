@@ -2,7 +2,7 @@ import 'jest';
 import { SetupProvider } from '../../../lib/SetupProvider';
 import { Database } from '../../../datastore';
 import { Connection } from 'typeorm';
-import DataService from '../service/data.service';
+import { DataService } from '..';
 import { CreateDataParams } from '../interface/data.interface';
 
 describe('DataService Test', () => {
