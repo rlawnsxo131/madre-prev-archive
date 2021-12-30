@@ -7,7 +7,7 @@ import {
 import { FastifyInstance } from 'fastify';
 import apolloSchema from './apollo.schema';
 import { isProduction } from '../../constants';
-import apolloFormatError from '../../lib/apolloFormatError';
+import { GraphQLError } from 'graphql';
 
 export default class Apollo {
   private readonly app: ApolloServer;
@@ -18,7 +18,7 @@ export default class Apollo {
       context: ({ request, reply }) => {
         request.log.info(request.id);
       },
-      formatError: apolloFormatError,
+      formatError: this.formatError,
       plugins: [
         this.fastifyAppClosePlugin(fastify),
         ApolloServerPluginDrainHttpServer({ httpServer: fastify.server }),
@@ -40,6 +40,18 @@ export default class Apollo {
         };
       },
     };
+  }
+
+  private formatError(error: GraphQLError) {
+    console.error(
+      '------------------------------- ERROR INFO -------------------------------',
+    );
+    console.error(error.toJSON());
+    console.error(error.extensions.exception?.stacktrace);
+    console.error(
+      '------------------------------- ERROR INFO -------------------------------',
+    );
+    return error;
   }
 
   getApp() {
