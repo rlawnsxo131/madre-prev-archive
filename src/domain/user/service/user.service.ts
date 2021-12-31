@@ -1,11 +1,11 @@
 import { Service } from 'typedi';
 import { InjectRepository } from 'typeorm-typedi-extensions';
-import { UserQueryRepository, UserRepository } from '..';
+import { UserQueryRepository } from '..';
 
 @Service()
 export default class UserService {
   constructor(
-    @InjectRepository(UserRepository, 'default')
+    @InjectRepository(UserQueryRepository, 'default')
     private readonly userQueryRepository: UserQueryRepository,
   ) {}
 
