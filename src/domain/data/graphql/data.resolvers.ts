@@ -1,5 +1,6 @@
 import { IResolvers } from '@graphql-tools/utils';
 import Joi from 'joi';
+import { Container } from 'typeorm-typedi-extensions';
 import { DataService } from '..';
 import ApolloCustomError from '../../../lib/ApolloCustomError';
 import { ApolloValidator } from '../../../lib/Validator';
@@ -9,7 +10,7 @@ const dataResolvers: IResolvers = {
   Query: {
     async data(_, { id }: GetDataParams) {
       ApolloValidator.validateId(id);
-      const data = await DataService.findOne(id);
+      const data = await Container.get(DataService).findOne(id);
       if (!data) {
         throw new ApolloCustomError({
           message: 'Not Found Data',
@@ -32,7 +33,7 @@ const dataResolvers: IResolvers = {
         }),
         params,
       );
-      const data = await DataService.create(params);
+      const data = await Container.get(DataService).create(params);
       return data;
     },
   },

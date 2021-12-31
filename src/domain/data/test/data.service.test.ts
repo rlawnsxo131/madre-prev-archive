@@ -4,6 +4,7 @@ import { Database } from '../../../datastore';
 import { Connection } from 'typeorm';
 import { DataService } from '..';
 import { CreateDataParams } from '../interface/data.interface';
+import Container from 'typedi';
 
 describe('DataService Test', () => {
   let connection: Connection | null = null;
@@ -20,7 +21,7 @@ describe('DataService Test', () => {
 
   test('findOne: id to undefined', async () => {
     const id = 'undefined';
-    const data = await DataService.findOne(id);
+    const data = await Container.get(DataService).findOne(id);
     expect(data).toBe(undefined);
   });
 
@@ -32,7 +33,7 @@ describe('DataService Test', () => {
       description: undefined,
       is_public: false,
     };
-    const data = await DataService.create(createDataParams);
+    const data = await Container.get(DataService).create(createDataParams);
     expect(data.user_id).toBe(createDataParams.user_id);
     expect(data.file_url).toBe(createDataParams.file_url);
     expect(data.title).toBe(createDataParams.title);

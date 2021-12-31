@@ -3,6 +3,7 @@ import { SetupProvider } from '../../../lib/SetupProvider';
 import { Database } from '../../../datastore';
 import { Connection } from 'typeorm';
 import { UserService } from '..';
+import Container from 'typedi';
 
 describe('UserService Test', () => {
   let connection: Connection | null = null;
@@ -19,7 +20,7 @@ describe('UserService Test', () => {
 
   test('findOne: id to undefined', async () => {
     const id = 'undefined';
-    const user = await UserService.findOne(id);
+    const user = await Container.get(UserService).findOne(id);
     expect(user).toBe(undefined);
   });
 });

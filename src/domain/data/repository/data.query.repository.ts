@@ -1,6 +1,8 @@
+import { Service } from 'typedi';
 import { EntityRepository, Repository } from 'typeorm';
 import { Data } from '..';
 
+@Service()
 @EntityRepository(Data)
 export default class DataQueryRepository extends Repository<Data> {
   findAll() {

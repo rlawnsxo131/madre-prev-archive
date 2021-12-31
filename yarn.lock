@@ -3938,10 +3938,13 @@ __metadata:
     mysql2: ^2.3.3
     pino-pretty: ^7.2.0
     prettier: ^2.4.1
+    reflect-metadata: ^0.1.13
     ts-jest: ^27.0.7
     ts-node-dev: ^1.1.8
+    typedi: ^0.10.0
     typeorm: ^0.2.41
-    typescript: 4.4.4
+    typeorm-typedi-extensions: ^0.4.1
+    typescript: ^4.4.4
   languageName: unknown
   linkType: soft
 
@@ -5552,6 +5555,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typedi@npm:^0.10.0":
+  version: 0.10.0
+  resolution: "typedi@npm:0.10.0"
+  checksum: d26491e3684677d898f745b2ea5403cad4e03f7ed87b35d0a1cc80cbb4837d50042e100574da77d56dd04e3f0270a6f7df18270171c828bec6b93cefbac059a3
+  languageName: node
+  linkType: hard
+
+"typeorm-typedi-extensions@npm:^0.4.1":
+  version: 0.4.1
+  resolution: "typeorm-typedi-extensions@npm:0.4.1"
+  peerDependencies:
+    typedi: ">=0.10.0"
+    typeorm: ">=0.2.30"
+  checksum: 9e5e042e948fbf936f8e2ea80640eb40da9e6d128cbc8cabaa26e15ea34108964d1ba46eb090ffb70def3a14e4419b42ec397c06f1d8b4e9aef979649343e5bb
+  languageName: node
+  linkType: hard
+
 "typeorm@npm:^0.2.41":
   version: 0.2.41
   resolution: "typeorm@npm:0.2.41"
@@ -5625,23 +5645,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:4.4.4":
-  version: 4.4.4
-  resolution: "typescript@npm:4.4.4"
+"typescript@npm:^4.4.4":
+  version: 4.5.4
+  resolution: "typescript@npm:4.5.4"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 89ecb8436bb48ef5594d49289f5f89103071716b6e4844278f4fb3362856e31203e187a9c76d205c3f0b674d221a058fd28310dbcbcf5d95e9a57229bb5203f1
+  checksum: 59f3243f9cd6fe3161e6150ff6bf795fc843b4234a655dbd938a310515e0d61afd1ac942799e7415e4334255e41c2c49b7dd5d9fd38a17acd25a6779ca7e0961
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@4.4.4#~builtin<compat/typescript>":
-  version: 4.4.4
-  resolution: "typescript@patch:typescript@npm%3A4.4.4#~builtin<compat/typescript>::version=4.4.4&hash=493e53"
+"typescript@patch:typescript@^4.4.4#~builtin<compat/typescript>":
+  version: 4.5.4
+  resolution: "typescript@patch:typescript@npm%3A4.5.4#~builtin<compat/typescript>::version=4.5.4&hash=493e53"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: bd629ad0da4a15d79aaad56baf3ee7d96f6a181760d430ae77f8c5325df7bffd9edee57544a3970e3651e8b796fe03a5838a7eb39c6d46cc3866c0b23d36a0dd
+  checksum: 2e488dde7d2c4a2fa2e79cf2470600f8ce81bc0563c276b72df8ff412d74456ae532ba824650ae936ce207440c79720ddcfaa25e3cb4477572b8534fa4e34d49
   languageName: node
   linkType: hard
 

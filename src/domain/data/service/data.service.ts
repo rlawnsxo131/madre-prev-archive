@@ -1,17 +1,26 @@
-import { getCustomRepository } from 'typeorm';
+import { Service } from 'typedi';
+import { InjectRepository } from 'typeorm-typedi-extensions';
 import { DataQueryRepository, DataRepository } from '..';
 import { CreateDataParams } from '../interface/data.interface';
 
-const DataService = {
-  findAll() {
-    return getCustomRepository(DataQueryRepository).findAll();
-  },
-  findOne(id: string) {
-    return getCustomRepository(DataQueryRepository).findOneById(id);
-  },
-  create(params: CreateDataParams) {
-    return getCustomRepository(DataRepository).createOne(params);
-  },
-};
+@Service()
+export default class DataService {
+  constructor(
+    @InjectRepository(DataRepository)
+    private readonly dataRepository: DataRepository,
+    @InjectRepository(DataQueryRepository)
+    private readonly dataQueryRepository: DataQueryRepository,
+  ) {}
 
-export default DataService;
+  findAll() {
+    return this.dataQueryRepository.findAll();
+  }
+
+  findOne(id: string) {
+    return this.dataQueryRepository.findOneById(id);
+  }
+
+  create(params: CreateDataParams) {
+    return this.dataRepository.createOne(params);
+  }
+}

@@ -1,5 +1,8 @@
-const AuthService = {
-  authFunction() {},
-};
+import { Service } from 'typedi';
 
-export default AuthService;
+@Service()
+export default class AuthService {
+  constructor() {}
+
+  authFunction() {}
+}

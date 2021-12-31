@@ -1,10 +1,15 @@
-import { getCustomRepository } from 'typeorm';
-import UserQueryRepository from '../repository/user.query.repository';
+import { Service } from 'typedi';
+import { InjectRepository } from 'typeorm-typedi-extensions';
+import { UserQueryRepository, UserRepository } from '..';
 
-const UserService = {
+@Service()
+export default class UserService {
+  constructor(
+    @InjectRepository(UserRepository, 'default')
+    private readonly userQueryRepository: UserQueryRepository,
+  ) {}
+
   findOne(id: string) {
-    return getCustomRepository(UserQueryRepository).findOneById(id);
-  },
-};
-
-export default UserService;
+    return this.userQueryRepository.findOneById(id);
+  }
+}

@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { SetupProvider } from './lib/SetupProvider';
 import { Database } from './datastore';
 import Application from './application';
