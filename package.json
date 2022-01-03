@@ -35,9 +35,6 @@
     "lodash.merge": "^4.6.2",
     "mysql2": "^2.3.3",
     "pino-pretty": "^7.2.0",
-    "reflect-metadata": "^0.1.13",
-    "typedi": "^0.10.0",
-    "typeorm": "^0.2.41",
-    "typeorm-typedi-extensions": "^0.4.1"
+    "typeorm": "^0.2.41"
   }
 }

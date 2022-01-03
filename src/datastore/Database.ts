@@ -4,9 +4,7 @@ import {
   Connection,
   createConnection,
   ConnectionOptions,
-  useContainer,
 } from 'typeorm';
-import { Container } from 'typeorm-typedi-extensions';
 
 /**
  * don't know if you want to manage a connection with a different name yet.
@@ -17,7 +15,6 @@ export default class Database {
   private readonly connectionOptions: ConnectionOptions;
 
   constructor() {
-    useContainer(Container);
     this.connectionManager = getConnectionManager();
     this.connectionOptions = {
       name: 'default',

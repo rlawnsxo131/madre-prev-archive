@@ -55,12 +55,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mysql2", "npm:2.3.3"],
             ["pino-pretty", "npm:7.2.0"],
             ["prettier", "npm:2.4.1"],
-            ["reflect-metadata", "npm:0.1.13"],
             ["ts-jest", "virtual:0c9114e0a6c540251b6045286cdc8a2edd6cb1868f3d5f40b071b25310ed34c298aa10c1068c82801dce7e51d985423bc281d63edf68b15382ca4c157421c7b8#npm:27.0.7"],
             ["ts-node-dev", "virtual:0c9114e0a6c540251b6045286cdc8a2edd6cb1868f3d5f40b071b25310ed34c298aa10c1068c82801dce7e51d985423bc281d63edf68b15382ca4c157421c7b8#npm:1.1.8"],
-            ["typedi", "npm:0.10.0"],
             ["typeorm", "virtual:0c9114e0a6c540251b6045286cdc8a2edd6cb1868f3d5f40b071b25310ed34c298aa10c1068c82801dce7e51d985423bc281d63edf68b15382ca4c157421c7b8#npm:0.2.41"],
-            ["typeorm-typedi-extensions", "virtual:0c9114e0a6c540251b6045286cdc8a2edd6cb1868f3d5f40b071b25310ed34c298aa10c1068c82801dce7e51d985423bc281d63edf68b15382ca4c157421c7b8#npm:0.4.1"],
             ["typescript", "patch:typescript@npm%3A4.5.4#~builtin<compat/typescript>::version=4.5.4&hash=493e53"]
           ],
           "linkType": "SOFT",
@@ -5052,12 +5049,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mysql2", "npm:2.3.3"],
             ["pino-pretty", "npm:7.2.0"],
             ["prettier", "npm:2.4.1"],
-            ["reflect-metadata", "npm:0.1.13"],
             ["ts-jest", "virtual:0c9114e0a6c540251b6045286cdc8a2edd6cb1868f3d5f40b071b25310ed34c298aa10c1068c82801dce7e51d985423bc281d63edf68b15382ca4c157421c7b8#npm:27.0.7"],
             ["ts-node-dev", "virtual:0c9114e0a6c540251b6045286cdc8a2edd6cb1868f3d5f40b071b25310ed34c298aa10c1068c82801dce7e51d985423bc281d63edf68b15382ca4c157421c7b8#npm:1.1.8"],
-            ["typedi", "npm:0.10.0"],
             ["typeorm", "virtual:0c9114e0a6c540251b6045286cdc8a2edd6cb1868f3d5f40b071b25310ed34c298aa10c1068c82801dce7e51d985423bc281d63edf68b15382ca4c157421c7b8#npm:0.2.41"],
-            ["typeorm-typedi-extensions", "virtual:0c9114e0a6c540251b6045286cdc8a2edd6cb1868f3d5f40b071b25310ed34c298aa10c1068c82801dce7e51d985423bc281d63edf68b15382ca4c157421c7b8#npm:0.4.1"],
             ["typescript", "patch:typescript@npm%3A4.5.4#~builtin<compat/typescript>::version=4.5.4&hash=493e53"]
           ],
           "linkType": "SOFT",
@@ -6895,15 +6889,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
-      ["typedi", [
-        ["npm:0.10.0", {
-          "packageLocation": "./.yarn/cache/typedi-npm-0.10.0-d5771a2dc0-d26491e368.zip/node_modules/typedi/",
-          "packageDependencies": [
-            ["typedi", "npm:0.10.0"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
       ["typeorm", [
         ["npm:0.2.41", {
           "packageLocation": "./.yarn/cache/typeorm-npm-0.2.41-a6cfe0064b-edae24c359.zip/node_modules/typeorm/",
@@ -6994,32 +6979,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             "sql.js",
             "sqlite3",
             "typeorm-aurora-data-api-driver"
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
-      ["typeorm-typedi-extensions", [
-        ["npm:0.4.1", {
-          "packageLocation": "./.yarn/cache/typeorm-typedi-extensions-npm-0.4.1-7729b02388-9e5e042e94.zip/node_modules/typeorm-typedi-extensions/",
-          "packageDependencies": [
-            ["typeorm-typedi-extensions", "npm:0.4.1"]
-          ],
-          "linkType": "SOFT",
-        }],
-        ["virtual:0c9114e0a6c540251b6045286cdc8a2edd6cb1868f3d5f40b071b25310ed34c298aa10c1068c82801dce7e51d985423bc281d63edf68b15382ca4c157421c7b8#npm:0.4.1", {
-          "packageLocation": "./.yarn/__virtual__/typeorm-typedi-extensions-virtual-069d511773/0/cache/typeorm-typedi-extensions-npm-0.4.1-7729b02388-9e5e042e94.zip/node_modules/typeorm-typedi-extensions/",
-          "packageDependencies": [
-            ["typeorm-typedi-extensions", "virtual:0c9114e0a6c540251b6045286cdc8a2edd6cb1868f3d5f40b071b25310ed34c298aa10c1068c82801dce7e51d985423bc281d63edf68b15382ca4c157421c7b8#npm:0.4.1"],
-            ["@types/typedi", null],
-            ["@types/typeorm", null],
-            ["typedi", "npm:0.10.0"],
-            ["typeorm", "virtual:0c9114e0a6c540251b6045286cdc8a2edd6cb1868f3d5f40b071b25310ed34c298aa10c1068c82801dce7e51d985423bc281d63edf68b15382ca4c157421c7b8#npm:0.2.41"]
-          ],
-          "packagePeers": [
-            "@types/typedi",
-            "@types/typeorm",
-            "typedi",
-            "typeorm"
           ],
           "linkType": "HARD",
         }]

@@ -1,9 +1,7 @@
 import dataTypeDef from './data.typedef';
 import dataResolvers from './data.resolvers';
 
-const DataGraphQL = {
+export default {
   dataTypeDef,
   dataResolvers,
 };
-
-export default DataGraphQL;

@@ -1,9 +1,7 @@
 import userTypeDef from './user.typedef';
 import userResolvers from './user.resolvers';
 
-const UserGraphQL = {
+export default {
   userTypeDef,
   userResolvers,
 };
-
-export default UserGraphQL;

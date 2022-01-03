@@ -2,11 +2,10 @@ import 'jest';
 import { SetupProvider } from '../../../lib/SetupProvider';
 import { Database } from '../../../datastore';
 import { Connection } from 'typeorm';
-import { DataService } from '..';
+import { dataService } from '..';
 import { CreateDataParams } from '../interface/data.interface';
-import Container from 'typedi';
 
-describe('DataService Test', () => {
+describe('dataService Test', () => {
   let connection: Connection | null = null;
 
   beforeAll(async () => {
@@ -21,7 +20,7 @@ describe('DataService Test', () => {
 
   test('findOne: id to undefined', async () => {
     const id = 'undefined';
-    const data = await Container.get(DataService).findOne(id);
+    const data = await dataService.findOne(id);
     expect(data).toBe(undefined);
   });
 
@@ -33,7 +32,7 @@ describe('DataService Test', () => {
       description: undefined,
       is_public: false,
     };
-    const data = await Container.get(DataService).create(createDataParams);
+    const data = await dataService.create(createDataParams);
     expect(data.user_id).toBe(createDataParams.user_id);
     expect(data.file_url).toBe(createDataParams.file_url);
     expect(data.title).toBe(createDataParams.title);

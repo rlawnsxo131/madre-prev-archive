@@ -3938,12 +3938,9 @@ __metadata:
     mysql2: ^2.3.3
     pino-pretty: ^7.2.0
     prettier: ^2.4.1
-    reflect-metadata: ^0.1.13
     ts-jest: ^27.0.7
     ts-node-dev: ^1.1.8
-    typedi: ^0.10.0
     typeorm: ^0.2.41
-    typeorm-typedi-extensions: ^0.4.1
     typescript: ^4.4.4
   languageName: unknown
   linkType: soft
@@ -5552,23 +5549,6 @@ __metadata:
   dependencies:
     is-typedarray: ^1.0.0
   checksum: 99c11aaa8f45189fcfba6b8a4825fd684a321caa9bd7a76a27cf0c7732c174d198b99f449c52c3818107430b5f41c0ccbbfb75cb2ee3ca4a9451710986d61a60
-  languageName: node
-  linkType: hard
-
-"typedi@npm:^0.10.0":
-  version: 0.10.0
-  resolution: "typedi@npm:0.10.0"
-  checksum: d26491e3684677d898f745b2ea5403cad4e03f7ed87b35d0a1cc80cbb4837d50042e100574da77d56dd04e3f0270a6f7df18270171c828bec6b93cefbac059a3
-  languageName: node
-  linkType: hard
-
-"typeorm-typedi-extensions@npm:^0.4.1":
-  version: 0.4.1
-  resolution: "typeorm-typedi-extensions@npm:0.4.1"
-  peerDependencies:
-    typedi: ">=0.10.0"
-    typeorm: ">=0.2.30"
-  checksum: 9e5e042e948fbf936f8e2ea80640eb40da9e6d128cbc8cabaa26e15ea34108964d1ba46eb090ffb70def3a14e4419b42ec397c06f1d8b4e9aef979649343e5bb
   languageName: node
   linkType: hard
 
