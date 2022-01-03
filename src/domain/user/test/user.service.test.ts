@@ -1,5 +1,5 @@
 import 'jest';
-import { SetupProvider } from '../../../lib/SetupProvider';
+import initializeEnvironment from '../../../lib/initializeEnvironment';
 import { Database } from '../../../datastore';
 import { Connection } from 'typeorm';
 import { userService } from '..';
@@ -8,7 +8,7 @@ describe('userService Test', () => {
   let connection: Connection | null = null;
 
   beforeAll(async () => {
-    SetupProvider.initialize();
+    initializeEnvironment();
     const database = new Database();
     connection = await database.getConnection();
   });
