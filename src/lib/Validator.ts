@@ -32,7 +32,7 @@ class Validator {
     this.helper = helper;
   }
 
-  validateId(id: string = '') {
+  validateId(id: string) {
     const schema = Joi.string().guid().required();
     const { error } = schema.validate(id);
     this.helper(error, { id });
