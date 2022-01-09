@@ -30,10 +30,10 @@ export function usePopupCommonActions() {
   const reset = useResetRecoilState(popupCommonState);
 
   const showPopup = useCallback(
-    ({ title, message }: { title?: string; message: string }) => {
+    ({ title = '', message }: { title?: string; message: string }) => {
       set((prev) => ({
         ...prev,
-        title: title ?? '',
+        title,
         message,
         visible: true,
       }));

@@ -13,13 +13,13 @@ function HomeHeaderItems(props: HomeHeaderItemsProps) {
 
   return (
     <div css={block}>
-      <div css={itemWrapperStyle}>
+      <div css={itemWrapper}>
         <Button size="medium" icon={<GoogleIcon />} outline>
           Sign in with Google
         </Button>
       </div>
-      <div css={itemWrapperStyle}>
-        <button css={buttonStyle} onClick={handleNavigation}>
+      <div css={itemWrapper}>
+        <button css={button} onClick={handleNavigation}>
           <MenuIcon />
         </button>
         <HomeNavigation visible={visible} />
@@ -34,16 +34,22 @@ const block = css`
   align-items: center;
 `;
 
-const itemWrapperStyle = css`
+const itemWrapper = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  &:not(:nth-of-type(3)) {
+  /* &:not(:nth-of-type(3)) {
     padding: 0 0.5rem;
+  } */
+  &:nth-of-type(1) {
+    padding: 0 0.5rem;
+  }
+  &:nth-of-type(2) {
+    padding-left: 0.5rem;
   }
 `;
 
-const buttonStyle = css`
+const button = css`
   background: inherit;
   border: none;
   box-shadow: none;

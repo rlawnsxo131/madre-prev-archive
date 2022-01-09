@@ -41,7 +41,7 @@ const content = css`
     width: 768px;
   }
   ${media.medium} {
-    width: calc(100% - 4vw);
+    width: 96%;
   }
   ${mediaQuery(1285)} {
     width: 1250px;
