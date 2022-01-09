@@ -1,3 +1,5 @@
 export default {
-  authFunction() {},
+  authFunction() {
+    console.log('hello auth service');
+  },
 };

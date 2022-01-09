@@ -1,5 +1,6 @@
 import 'jest';
 import { Connection } from 'typeorm';
+import { authService } from '..';
 import { Database } from '../../../datastore';
 import initializeEnvironment from '../../../lib/initializeEnvironment';
 
@@ -17,6 +18,6 @@ describe('authService Test', () => {
   });
 
   test('auth', () => {
-    console.log('hello');
+    authService.authFunction();
   });
 });

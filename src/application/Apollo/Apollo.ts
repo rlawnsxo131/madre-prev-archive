@@ -3,11 +3,12 @@ import {
   ApolloServerPluginDrainHttpServer,
   ApolloServerPluginLandingPageDisabled,
   ApolloServerPluginLandingPageGraphQLPlayground,
+  GraphQLRequestContext,
 } from 'apollo-server-core';
 import { FastifyInstance } from 'fastify';
 import apolloSchema from './apollo.schema';
 import { isProduction } from '../../constants';
-import { GraphQLError } from 'graphql';
+import { GraphQLError, print } from 'graphql';
 
 export default class Apollo {
   private readonly app: ApolloServer;
@@ -22,6 +23,22 @@ export default class Apollo {
       plugins: [
         this.fastifyAppClosePlugin(fastify),
         ApolloServerPluginDrainHttpServer({ httpServer: fastify.server }),
+        {
+          async requestDidStart(_) {
+            console.log('GraphQL requestDidStart');
+            return {
+              async parsingDidStart(_) {
+                console.log('GraphQL parsingDidStart');
+              },
+              async validationDidStart(requestContext) {
+                console.log(
+                  'GraphQL validationDidStart: ',
+                  requestContext.document.loc?.source,
+                );
+              },
+            };
+          },
+        },
         isProduction
           ? ApolloServerPluginLandingPageDisabled()
           : ApolloServerPluginLandingPageGraphQLPlayground(),
