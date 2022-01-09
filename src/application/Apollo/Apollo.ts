@@ -3,12 +3,11 @@ import {
   ApolloServerPluginDrainHttpServer,
   ApolloServerPluginLandingPageDisabled,
   ApolloServerPluginLandingPageGraphQLPlayground,
-  GraphQLRequestContext,
 } from 'apollo-server-core';
 import { FastifyInstance } from 'fastify';
 import apolloSchema from './apollo.schema';
 import { isProduction } from '../../constants';
-import { GraphQLError, print } from 'graphql';
+import { GraphQLError } from 'graphql';
 
 export default class Apollo {
   private readonly app: ApolloServer;
