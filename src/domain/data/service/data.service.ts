@@ -11,7 +11,7 @@ export default {
     return getCustomRepository(DataQueryRepository).findOneById(id);
   },
 
-  create(params: CreateDataParams) {
+  createOne(params: CreateDataParams) {
     return getCustomRepository(DataRepository).createOne(params);
   },
 };

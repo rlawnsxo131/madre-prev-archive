@@ -32,7 +32,7 @@ const dataResolvers: IResolvers = {
         }),
         params,
       );
-      const data = await dataService.create(params);
+      const data = await dataService.createOne(params);
       return data;
     },
   },

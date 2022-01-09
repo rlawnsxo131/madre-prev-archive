@@ -32,7 +32,7 @@ describe('dataService Test', () => {
       description: undefined,
       is_public: false,
     };
-    const data = await dataService.create(createDataParams);
+    const data = await dataService.createOne(createDataParams);
     expect(data.user_id).toBe(createDataParams.user_id);
     expect(data.file_url).toBe(createDataParams.file_url);
     expect(data.title).toBe(createDataParams.title);
