@@ -72,11 +72,14 @@ function TestPage2(props: TestPage2Props) {
       lineStrokeWidth: 2,
       lineType: 'CURVE',
     });
+    chartRef.current.setCircleOptions({
+      circleDrawDelay: 1000,
+    });
     chartRef.current.setAxis();
     chartRef.current.appendAxis();
     chartRef.current.appendLine();
     chartRef.current.appendArea();
-    chartRef.current.appendCircle();
+    chartRef.current.removeAndAppendCircle();
     chartRef.current.resetData();
 
     setTimeout(() => {
@@ -99,7 +102,7 @@ function TestPage2(props: TestPage2Props) {
       chartRef.current.updateAxis();
       chartRef.current.updateLine();
       chartRef.current.updateArea();
-      chartRef.current.appendCircle();
+      chartRef.current.removeAndAppendCircle();
       chartRef.current.resetData();
     }, 2000);
 
@@ -123,7 +126,7 @@ function TestPage2(props: TestPage2Props) {
       chartRef.current.updateAxis();
       chartRef.current.updateLine();
       chartRef.current.updateArea();
-      chartRef.current.appendCircle();
+      chartRef.current.removeAndAppendCircle();
       chartRef.current.resetData();
     }, 4000);
   }, [chartRef.current]);

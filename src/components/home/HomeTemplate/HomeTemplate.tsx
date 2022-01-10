@@ -36,7 +36,6 @@ const main = css`
     width: 768px;
   }
   ${media.medium} {
-    /* width: calc(100% - 4vw); */
     width: 96%;
   }
   ${mediaQuery(1285)} {

@@ -69,4 +69,5 @@ export type D3AxisChartSetCircleOptionsParams = Partial<{
   circleRadius: number;
   circleStrokeWidth: number;
   circleIsFill: boolean;
+  circleDrawDelay: number;
 }>;

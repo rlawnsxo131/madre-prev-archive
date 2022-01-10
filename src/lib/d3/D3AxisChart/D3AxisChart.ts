@@ -124,7 +124,7 @@ export default class D3AxisChart extends D3Common {
   private circleRadius: number = 3;
   private circleStrokeWidth: number = 2;
   private circleIsFill: boolean = false;
-  private circleTransitionDuration = 550;
+  private circleDrawDelay = 550;
 
   constructor({
     container,
@@ -583,15 +583,17 @@ export default class D3AxisChart extends D3Common {
     circleRadius,
     circleStrokeWidth,
     circleIsFill,
+    circleDrawDelay,
   }: D3AxisChartSetCircleOptionsParams) {
     console.log('event: setCircleOptions');
 
     if (circleRadius) this.circleRadius = circleRadius;
     if (circleStrokeWidth) this.circleStrokeWidth = circleStrokeWidth;
     if (circleIsFill) this.circleIsFill = circleIsFill;
+    if (circleDrawDelay) this.circleDrawDelay = circleDrawDelay;
   }
 
-  appendCircle() {
+  removeAndAppendCircle() {
     console.log('event: appendArea');
 
     D3ValidationUtil.isExistMapValidate(
@@ -602,9 +604,9 @@ export default class D3AxisChart extends D3Common {
     this.svg.selectAll('.circle').remove();
 
     this.data.forEach((data, i) => {
-      const map = this.uniqIdentifierValueMap.get(i);
-      const color = map!.color;
       setTimeout(() => {
+        const map = this.uniqIdentifierValueMap.get(i);
+        const color = map!.color;
         this.svg
           .selectAll('circles')
           .data(data)
@@ -617,13 +619,13 @@ export default class D3AxisChart extends D3Common {
           .attr(
             'transform',
             `translate(
-            ${this.margin.left + this.margin.right * 0.4},
-            ${this.margin.top}
-          )`,
+                  ${this.margin.left + this.margin.right * 0.4},
+                  ${this.margin.top}
+                )`,
           )
           .attr('cx', (d: any) => this.xScale()(d[this.xDomainKey]))
           .attr('cy', (d: any) => this.yScale()(d[this.yDomainKey]));
-      }, 1000);
+      }, this.circleDrawDelay);
     });
   }
 }
