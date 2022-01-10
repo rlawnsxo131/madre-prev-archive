@@ -1,5 +1,5 @@
 import 'jest';
-import initializeEnvironment from '../../../lib/initializeEnvironment';
+import initializeEnvironment from '../../../config/initializeEnvironment';
 import { Database } from '../../../datastore';
 import { Connection } from 'typeorm';
 import { dataService } from '..';
