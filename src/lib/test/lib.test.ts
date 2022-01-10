@@ -7,7 +7,7 @@ describe('global lib Test', () => {
   });
 
   describe('Validator', () => {
-    test('ApolloValidator', () => {});
-    test('FastifyValidator', () => {});
+    test('apolloValidator', () => {});
+    test('fastifyValidator', () => {});
   });
 });

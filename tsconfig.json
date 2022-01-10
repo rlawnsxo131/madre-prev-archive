@@ -23,6 +23,7 @@
     "isolatedModules": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "forceConsistentCasingInFileNames": false,
     "outDir": "./dist",
   }
 }
