@@ -9,7 +9,7 @@ export interface Validator {
   validateId: (id: string) => ReturnType<typeof validateId>;
   validateObject: (
     schema: Joi.Schema,
-    params: Record<string, any>,
+    params?: Record<string, any>,
   ) => ReturnType<typeof validateObject>;
 }
 
