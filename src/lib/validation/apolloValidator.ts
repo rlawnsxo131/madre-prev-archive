@@ -16,9 +16,9 @@ const helper: ValidatorHelper = (error, params) => {
 };
 
 const apolloValidator: Validator = {
-  validateId: (id) => validateId(id, helper),
+  validateId: (id) => validateId(id)(helper),
   validateObject: (schema, params = {}) =>
-    validateObject(schema, params, helper),
+    validateObject(schema, params)(helper),
 };
 
 export default apolloValidator;
