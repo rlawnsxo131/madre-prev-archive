@@ -9,6 +9,7 @@ import { FastifyInstance } from 'fastify';
 import apolloSchema from './apollo.schema';
 import { isProduction } from '../../constants';
 import { GraphQLError } from 'graphql';
+import logger from '../../lib/logger';
 
 export default class Apollo {
   private readonly app: ApolloServer;
@@ -17,7 +18,7 @@ export default class Apollo {
     this.app = new ApolloServer({
       schema: apolloSchema,
       context: ({ request, reply }) => {
-        request.log.info(request.id);
+        request.log.info('context');
       },
       formatError: this.formatError,
       plugins: [
@@ -33,14 +34,7 @@ export default class Apollo {
   }
 
   private formatError(error: GraphQLError) {
-    console.error(
-      '------------------------------- ERROR INFO -------------------------------',
-    );
-    console.error(error.toJSON());
-    console.error(error.extensions.exception?.stacktrace);
-    console.error(
-      '------------------------------- ERROR INFO -------------------------------',
-    );
+    logger.error(`${error}\n${error.extensions.exception?.stacktrace}`);
     return error;
   }
 
@@ -58,19 +52,9 @@ export default class Apollo {
 
   private apolloRequestDidStartPlugin() {
     return {
-      async requestDidStart(_: GraphQLRequestContext) {
-        console.log('GraphQL requestDidStart');
-        return {
-          async parsingDidStart(_: any) {
-            console.log('GraphQL parsingDidStart');
-          },
-          async validationDidStart(requestContext: any) {
-            console.log(
-              'GraphQL validationDidStart: ',
-              requestContext.document.loc?.source,
-            );
-          },
-        };
+      async requestDidStart(requestContext: GraphQLRequestContext) {
+        logger.info('GraphQL requestDidStart');
+        logger.info(`${requestContext.request.query}`);
       },
     };
   }
