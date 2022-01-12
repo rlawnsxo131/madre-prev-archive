@@ -1,10 +1,6 @@
-import {
-  validateId,
-  validateObject,
-  Validator,
-  ValidatorHelper,
-} from './validator';
+import { validateId, validateObject } from './validator';
 import ApolloCustomError from '../ApolloCustomError';
+import { Validator, ValidatorHelper } from './validation';
 
 const helper: ValidatorHelper = (error, params) => {
   if (!error) return;
