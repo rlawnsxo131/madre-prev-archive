@@ -44,6 +44,8 @@ export default class Fastify {
     request: FastifyRequest,
     reply: FastifyReply,
   ) {
+    const rawStatusCode = error.statusCode;
+    const replyStatusCode = error.statusCode ?? 500;
     request.log.error(
       JSON.stringify({
         request: {
@@ -55,13 +57,12 @@ export default class Fastify {
           params: request.params,
         },
         info: {
-          statusCode: error.statusCode,
+          statusCode: rawStatusCode,
           name: error.name,
           message: error.message,
         },
       }),
     );
-    const replyStatusCode = error.statusCode ?? 500;
     reply.status(replyStatusCode);
     reply.send({
       statusCode: replyStatusCode,
