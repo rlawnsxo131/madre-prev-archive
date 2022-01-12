@@ -1,4 +1,4 @@
-import initializeEnvironment from './config/initializeEnvironment';
+import initializeEnvironment from './setup/initializeEnvironment';
 import { Database } from './datastore';
 import Application from './application';
 import { Connection } from 'typeorm';

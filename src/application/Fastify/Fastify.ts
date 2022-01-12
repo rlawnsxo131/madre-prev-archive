@@ -1,4 +1,9 @@
-import fastify, { FastifyInstance } from 'fastify';
+import fastify, {
+  FastifyError,
+  FastifyInstance,
+  FastifyReply,
+  FastifyRequest,
+} from 'fastify';
 import corsPlugin from 'fastify-cors';
 import compress from 'fastify-compress';
 import cookie from 'fastify-cookie';
@@ -18,6 +23,7 @@ export default class Fastify {
         },
       },
     });
+    this.app.setErrorHandler(this.errorHandler);
     this.app.register(corsPlugin, {
       origin: (origin, callback) => {
         const allowedHost = [/^http\:\/\/localhost/];
@@ -31,6 +37,20 @@ export default class Fastify {
     this.app.register(jwtPlugin);
     this.app.register(fastifyHealthRoute, { prefix: '/health' });
     this.app.register(fastifyRoutes, { prefix: '/api' });
+  }
+
+  private errorHandler(
+    error: FastifyError,
+    _: FastifyRequest,
+    reply: FastifyReply,
+  ) {
+    const statusCode = error.statusCode || 500;
+    reply.status(statusCode);
+    reply.send({
+      statusCode: statusCode,
+      name: error.name,
+      message: error.message,
+    });
   }
 
   getApp() {
