@@ -41,13 +41,30 @@ export default class Fastify {
 
   private errorHandler(
     error: FastifyError,
-    _: FastifyRequest,
+    request: FastifyRequest,
     reply: FastifyReply,
   ) {
-    const statusCode = error.statusCode || 500;
-    reply.status(statusCode);
+    request.log.error(
+      JSON.stringify({
+        request: {
+          ip: request.ip,
+          host: request.hostname,
+          method: request.method,
+          path: request.url,
+          query: request.query,
+          params: request.params,
+        },
+        info: {
+          statusCode: error.statusCode,
+          name: error.name,
+          message: error.message,
+        },
+      }),
+    );
+    const replyStatusCode = error.statusCode ?? 500;
+    reply.status(replyStatusCode);
     reply.send({
-      statusCode: statusCode,
+      statusCode: replyStatusCode,
       name: error.name,
       message: error.message,
     });
