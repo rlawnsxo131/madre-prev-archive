@@ -548,7 +548,7 @@ export default class D3AxisChart extends D3Common {
       this.svg
         .append('path')
         .attr('fill', color)
-        .attr('fill-opacity', this.areaOpacity)
+        .attr('fill-opacity', 0)
         .attr('stroke', 'none')
         .attr('class', `area-${key}`)
         .attr(
@@ -558,7 +558,10 @@ export default class D3AxisChart extends D3Common {
             ${this.margin.top}
           )`,
         )
-        .attr('d', `${areaGenerator(data)}`);
+        .attr('d', `${areaGenerator(data)}`)
+        .transition()
+        .duration(this.areaTransitionDuration)
+        .attr('fill-opacity', this.areaOpacity);
     });
   }
 
