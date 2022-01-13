@@ -25,7 +25,7 @@ import {
   D3ScaleType,
   D3SelectionSVG,
   D3TickFormat,
-} from '../D3Common/D3CommonTypes';
+} from '../D3Common/types/d3Common';
 import { D3ValidationUtil } from '..';
 import {
   D3AxisChartAreaType,
@@ -39,7 +39,7 @@ import {
   D3AxisChartSetAxisOptionsParams,
   D3AxisChartSetCircleOptionsParams,
   D3AxisChartSetLineOptionsParams,
-} from './D3AxisChartTypes';
+} from './types/d3AxisChart';
 
 export default class D3AxisChart extends D3Common {
   /**

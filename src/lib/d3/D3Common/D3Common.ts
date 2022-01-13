@@ -1,5 +1,5 @@
 import { select } from 'd3';
-import { AppendSVGParams } from './D3CommonTypes';
+import { AppendSVGParams } from './types/d3Common';
 
 export default class D3Common {
   private readonly displayMaxNumberArray = [

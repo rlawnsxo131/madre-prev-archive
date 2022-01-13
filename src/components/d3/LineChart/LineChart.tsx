@@ -32,20 +32,13 @@ function LineChart<T>({
   useEffect(() => {
     if (!containerRef.current) return;
     if (chartRef.current) return;
+    if (!data) return;
     chartRef.current = new D3AxisChart({
       container: containerRef.current,
       width,
       height,
       margin,
     });
-  }, [containerRef.current]);
-
-  // draw chart
-  useEffect(() => {
-    if (!containerRef.current) return;
-    if (!chartRef.current) return;
-    if (loading) return;
-    if (!data) return;
     chartRef.current.setData(data);
     chartRef.current.setUniqIdentifierValueMap();
     chartRef.current.setScaleType('time', 'number');
@@ -74,7 +67,27 @@ function LineChart<T>({
     chartRef.current.appendArea();
     chartRef.current.removeAndAppendCircle();
     chartRef.current.resetData();
-  }, [chartRef.current, loading, data]);
+  }, [containerRef.current, chartRef.current, data]);
+
+  // update chart
+  useEffect(() => {
+    if (!containerRef.current) return;
+    if (!chartRef.current) return;
+    if (loading) return;
+    if (!data) return;
+    chartRef.current.setData(data);
+    chartRef.current.setScaleType('number', 'number');
+    chartRef.current.setDomain();
+    chartRef.current.setAxisOptions({
+      axisXTickFormat: (d, _) => D3FormatUtil.formatNumberWithComma()(d),
+    });
+    chartRef.current.setAxis();
+    chartRef.current.updateAxis();
+    chartRef.current.updateLine();
+    chartRef.current.updateArea();
+    chartRef.current.removeAndAppendCircle();
+    chartRef.current.resetData();
+  }, [containerRef.current, chartRef.current, loading, data]);
 
   return <div ref={containerRef}></div>;
 }
