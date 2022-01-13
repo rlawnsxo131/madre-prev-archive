@@ -31,7 +31,7 @@ export type D3TickFormat = (domainValue: NumberValue, index: number) => string;
 /**
  * function params
  */
-export type AppendSVGParams = {
+export type D3CommonAppendSVGParams = {
   container: HTMLElement;
   width: number;
   height: number;

@@ -13,12 +13,12 @@ function HomeHeaderItems(props: HomeHeaderItemsProps) {
 
   return (
     <div css={block}>
-      <div css={itemWrapper}>
+      <div css={itemBlock}>
         <Button size="medium" icon={<GoogleIcon />} outline>
           Sign in with Google
         </Button>
       </div>
-      <div css={itemWrapper}>
+      <div css={itemBlock}>
         <button css={button} onClick={handleNavigation}>
           <MenuIcon />
         </button>
@@ -34,7 +34,7 @@ const block = css`
   align-items: center;
 `;
 
-const itemWrapper = css`
+const itemBlock = css`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -65,6 +65,11 @@ const button = css`
     width: 1.125rem;
     height: 1.125rem;
     fill: ${themeColor.fill['light']};
+  }
+  &:hover {
+    svg {
+      opacity: 0.5;
+    }
   }
 `;
 

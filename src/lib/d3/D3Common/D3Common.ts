@@ -1,5 +1,5 @@
 import { select } from 'd3';
-import { AppendSVGParams } from '../types/d3Common.type';
+import { D3CommonAppendSVGParams } from '../types/d3Common.type';
 
 export default class D3Common {
   private readonly displayMaxNumberArray = [
@@ -14,7 +14,7 @@ export default class D3Common {
     width,
     height,
     className = '',
-  }: AppendSVGParams) {
+  }: D3CommonAppendSVGParams) {
     return (
       select(container)
         .append('svg')
