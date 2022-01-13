@@ -2,7 +2,7 @@ import { IResolvers } from '@graphql-tools/utils';
 import Joi from 'joi';
 import { dataService } from '..';
 import ApolloCustomError from '../../../lib/ApolloCustomError';
-import apolloValidator from '../../../lib/validation/apolloValidator';
+import { apolloValidator } from '../../../lib/validator';
 import { GetDataParams, CreateDataParams } from '../interface/data.interface';
 
 const dataResolvers: IResolvers = {
