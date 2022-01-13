@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import { v4 } from 'uuid';
 import { D3AxisChart, D3FormatUtil } from '../../../lib/d3';
 
-interface LineChartProps<T> {
+interface D3LineChartProps<T> {
   width: number;
   height: number;
   margin: {
@@ -16,13 +16,13 @@ interface LineChartProps<T> {
   data: Record<keyof T, any>[][];
 }
 
-function LineChart<T>({
+function D3LineChart<T>({
   width,
   height,
   margin,
   loading,
   data,
-}: LineChartProps<T>) {
+}: D3LineChartProps<T>) {
   const containerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<D3AxisChart | null>(null);
   const axisXClassRef = useRef<string>(`axis-x-${v4()}`);
@@ -92,4 +92,4 @@ function LineChart<T>({
   return <div ref={containerRef}></div>;
 }
 
-export default LineChart;
+export default D3LineChart;
