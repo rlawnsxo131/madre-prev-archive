@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { css } from '@emotion/react';
 import { format, add } from 'date-fns';
-import { v4 as uuidv4 } from 'uuid';
+import { v4 } from 'uuid';
 import { D3AxisChart } from '../lib/d3';
 import { D3FormatUtil } from '../lib/d3';
 import { getRandomIntInclusive } from '../lib/utils';
@@ -12,8 +12,8 @@ interface TestPage2Props {}
 function TestPage2(props: TestPage2Props) {
   const ref = useRef<HTMLDivElement>(null);
   const chartRef = useRef<D3AxisChart | null>(null);
-  const axisXClassRef = useRef<string>(`axis-x-${uuidv4()}`);
-  const axisYClassRef = useRef<string>(`axis-x-${uuidv4()}`);
+  const axisXClassRef = useRef<string>(`axis-x-${v4()}`);
+  const axisYClassRef = useRef<string>(`axis-x-${v4()}`);
 
   const width = 660;
   const height = 360;

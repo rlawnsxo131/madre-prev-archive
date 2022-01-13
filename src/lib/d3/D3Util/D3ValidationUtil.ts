@@ -1,6 +1,6 @@
 export function isExistMapValidate(
   map: Map<any, any>,
-  message: string = 'unknown error',
+  message: string = 'isExistMapValidate error',
 ) {
   if (map.size) return;
   throw new Error(message);

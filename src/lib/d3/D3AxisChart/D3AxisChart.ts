@@ -12,9 +12,7 @@ import {
   scaleTime,
 } from 'd3';
 import { startOfMonth, endOfMonth } from 'date-fns';
-import { v4 as uuidv4 } from 'uuid';
 import { palette } from '../../../styles';
-import { getRandomColors } from '../../utils';
 import D3Common from '../D3Common';
 import {
   D3Axis,
@@ -26,7 +24,7 @@ import {
   D3SelectionSVG,
   D3TickFormat,
 } from '../D3Common/types/d3Common';
-import { D3ValidationUtil } from '..';
+import { D3GenerateUtil, D3ValidationUtil } from '..';
 import {
   D3AxisChartAreaType,
   D3AxisChartConstructorParams,
@@ -152,11 +150,11 @@ export default class D3AxisChart extends D3Common {
   setUniqIdentifierValueMap() {
     console.log('event: setUniqIdentifierValueMap');
 
-    const colors = getRandomColors(this.data.length);
-    this.data.forEach((_, i) => {
-      const key = uuidv4();
-      const color = colors[i];
-      this.uniqIdentifierValueMap.set(i, { key, color });
+    const uniqArray = D3GenerateUtil.generateUniqIdentifierValueAndColorArray(
+      this.data.length,
+    );
+    uniqArray.forEach((v, i) => {
+      this.uniqIdentifierValueMap.set(i, { key: v.key, color: v.color });
     });
   }
 
