@@ -1,9 +1,5 @@
 import { curveBasis, curveMonotoneX, curveMonotoneY } from 'd3';
-import {
-  AppendSVGParams,
-  D3Margin,
-  D3TickFormat,
-} from '../../D3Common/types/D3Common';
+import { AppendSVGParams, D3Margin, D3TickFormat } from './d3Common.type';
 
 export type D3AxisChartConstructorParams = {
   width: number;
