@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import { useEffect, useRef } from 'react';
 import { v4 } from 'uuid';
-import { D3AxisChart, D3FormatUtil } from '../../../lib/d3';
+import { D3AxisChart, D3FormatUtil, D3GenerateUtil } from '../../../lib/d3';
 
 interface D3LineChartProps<T> {
   width: number;
@@ -40,7 +40,9 @@ function D3LineChart<T>({
       margin,
     });
     chartRef.current.setData(data);
-    chartRef.current.setUniqIdentifierValueMap();
+    chartRef.current.setUniqIdentifierValueMap(
+      D3GenerateUtil.generateUniqIdentifierValueAndColorArray(data.length),
+    );
     chartRef.current.setScaleType('time', 'number');
     chartRef.current.setDomainOptions('x', 'y');
     chartRef.current.setDomain();

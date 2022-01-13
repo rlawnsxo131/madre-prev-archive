@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { css } from '@emotion/react';
 import { format, add } from 'date-fns';
 import { v4 } from 'uuid';
-import { D3AxisChart } from '../lib/d3';
+import { D3AxisChart, D3GenerateUtil } from '../lib/d3';
 import { D3FormatUtil } from '../lib/d3';
 import { getRandomIntInclusive } from '../lib/utils';
 import { palette } from '../styles';
@@ -54,7 +54,9 @@ function TestPage2(props: TestPage2Props) {
     );
 
     chartRef.current.setData(data);
-    chartRef.current.setUniqIdentifierValueMap();
+    chartRef.current.setUniqIdentifierValueMap(
+      D3GenerateUtil.generateUniqIdentifierValueAndColorArray(data.length),
+    );
     chartRef.current.setScaleType('time', 'number');
     chartRef.current.setDomainOptions('x', 'y');
     chartRef.current.setDomain();

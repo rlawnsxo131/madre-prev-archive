@@ -24,7 +24,7 @@ import {
   D3SelectionSVG,
   D3TickFormat,
 } from '../D3Common/types/d3Common';
-import { D3GenerateUtil, D3ValidationUtil } from '..';
+import { D3ValidationUtil } from '..';
 import {
   D3AxisChartAreaType,
   D3AxisChartConstructorParams,
@@ -38,6 +38,7 @@ import {
   D3AxisChartSetCircleOptionsParams,
   D3AxisChartSetLineOptionsParams,
 } from './types/d3AxisChart';
+import { D3UniqIdentifierValueAndColorArray } from '../D3Util/D3GenerateUtil';
 
 export default class D3AxisChart extends D3Common {
   /**
@@ -147,13 +148,12 @@ export default class D3AxisChart extends D3Common {
     this.yRange = [height - (margin.top + margin.bottom), 0];
   }
 
-  setUniqIdentifierValueMap() {
+  setUniqIdentifierValueMap(
+    uniqIdentifierValueAndColorArray: D3UniqIdentifierValueAndColorArray,
+  ) {
     console.log('event: setUniqIdentifierValueMap');
 
-    const uniqArray = D3GenerateUtil.generateUniqIdentifierValueAndColorArray(
-      this.data.length,
-    );
-    uniqArray.forEach((v, i) => {
+    uniqIdentifierValueAndColorArray.forEach((v, i) => {
       this.uniqIdentifierValueMap.set(i, { key: v.key, color: v.color });
     });
   }
