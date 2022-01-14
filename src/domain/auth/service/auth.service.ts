@@ -1,5 +1,3 @@
 export default {
-  authFunction() {
-    console.log('hello auth service');
-  },
+  async checkGoogleRegistered(token: string) {},
 };
