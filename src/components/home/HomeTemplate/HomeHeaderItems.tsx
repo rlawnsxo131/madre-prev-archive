@@ -1,9 +1,9 @@
 import { css } from '@emotion/react';
-import Button from '../../common/Button';
-import { GoogleIcon, MenuIcon } from '../../../image/icons';
+import { MenuIcon } from '../../../image/icons';
 import HomeNavigation from './HomeNavigation';
 import { useHomeValue, useHomeActions } from '../../../atoms/homeState';
 import { palette, themeColor } from '../../../styles';
+import AuthGoogleButton from '../../auth/AuthGoogleButton/AuthGoogleButton';
 
 interface HomeHeaderItemsProps {}
 
@@ -14,9 +14,7 @@ function HomeHeaderItems(props: HomeHeaderItemsProps) {
   return (
     <div css={block}>
       <div css={itemBlock}>
-        <Button size="medium" icon={<GoogleIcon />} outline>
-          Sign in with Google
-        </Button>
+        <AuthGoogleButton />
       </div>
       <div css={itemBlock}>
         <button css={button} onClick={handleNavigation}>

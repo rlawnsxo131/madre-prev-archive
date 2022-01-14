@@ -18,6 +18,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   shape?: ButtonShape;
   outline?: boolean;
   icon?: React.ReactNode;
+  buttonRef?: React.RefObject<HTMLButtonElement>;
 }
 
 function Button({
@@ -27,11 +28,13 @@ function Button({
   shape = 'rect',
   outline = false,
   icon,
+  buttonRef,
   ...rest
 }: ButtonProps) {
   const { theme } = useColorThemeValue();
   return (
     <button
+      ref={buttonRef}
       css={block(color, size, shape, outline, theme)}
       onClick={(e) => {
         if (rest.onClick) {

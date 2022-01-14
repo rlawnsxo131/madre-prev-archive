@@ -7,9 +7,9 @@ import {
 import { LightIcon, NightIcon } from '../../../image/icons';
 import { themeColor } from '../../../styles';
 
-interface ThemTriggerProps {}
+interface ThemeButtonProps {}
 
-function ThemeTrigger(props: ThemTriggerProps) {
+function ThemeButton(props: ThemeButtonProps) {
   const { theme } = useColorThemeValue();
   const { handleColorTheme } = useColorThemeActions();
 
@@ -39,4 +39,4 @@ const block = (theme: ColorTheme) => css`
   padding: 0.5rem;
 `;
 
-export default ThemeTrigger;
+export default ThemeButton;

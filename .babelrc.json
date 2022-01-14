@@ -11,8 +11,8 @@
         "@babel/preset-typescript"
     ],
     "plugins": [
-        "@emotion",
         "@babel/plugin-syntax-dynamic-import"
+        // "@emotion" <- @emotion/babel-plugin
         // "@loadable/babel-plugin"
     ]
 }
