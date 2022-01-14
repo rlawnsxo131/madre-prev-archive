@@ -47,7 +47,37 @@ const itemCommon = css`
   }
 `;
 
+const descriptionBlock = css`
+  ${itemCommon};
+  flex: 1;
+  display: flex;
+`;
+
+const description = css`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1.25rem;
+`;
+
+const imageBlock = css`
+  ${itemCommon};
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  svg {
+    max-width: 35rem;
+    height: auto;
+  }
+`;
+
 export default {
   section,
   itemCommon,
+  descriptionBlock,
+  description,
+  imageBlock,
 };
