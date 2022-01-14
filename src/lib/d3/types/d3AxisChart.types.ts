@@ -3,7 +3,7 @@ import {
   D3CommonAppendSVGParams,
   D3Margin,
   D3TickFormat,
-} from './d3Common.type';
+} from './d3Common.types';
 
 export type D3AxisChartConstructorParams = {
   width: number;

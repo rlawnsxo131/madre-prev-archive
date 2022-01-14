@@ -2,7 +2,7 @@ import { format } from 'date-fns';
 import { useEffect, useRef } from 'react';
 import { v4 } from 'uuid';
 import { D3AxisChart, D3FormatUtil } from '../../../lib/d3';
-import { D3UniqIdentifierValueAndColorArray } from '../../../lib/d3/types/d3Util.type';
+import { D3UniqIdentifierValueAndColorArray } from '../../../lib/d3/types/d3Util.types';
 
 interface D3LineChartProps<T> {
   width: number;
