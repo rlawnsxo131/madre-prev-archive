@@ -9,7 +9,7 @@ import {
   buttonSizeMap,
   buttonColorMap,
   outlineButtonStyle,
-} from './buttonStyle';
+} from './Button.styles';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
