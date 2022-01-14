@@ -24,6 +24,11 @@ const Navigation: React.FC<{ visible: boolean }> = memo(({ visible }) => {
           </NavLink>
         </li>
         <li>
+          <NavLink css={link} to="/demo">
+            미리보기
+          </NavLink>
+        </li>
+        <li>
           <NavLink css={link} to="/guides">
             가이드 및 튜토리얼
           </NavLink>
