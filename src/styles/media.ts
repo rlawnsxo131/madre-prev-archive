@@ -1,6 +1,8 @@
-import { mediaQuery } from '.';
+export function mediaQuery(minWidth: number) {
+  return `@media(min-width: ${minWidth}px)`;
+}
 
-const media = {
+export const media = {
   xxxsmall: mediaQuery(0),
   xxsmall: mediaQuery(320),
   xsmall: mediaQuery(375),
@@ -10,5 +12,3 @@ const media = {
   xlarge: mediaQuery(1440),
   xxlarge: mediaQuery(1920),
 };
-
-export default media;
