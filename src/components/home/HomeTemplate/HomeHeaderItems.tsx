@@ -8,7 +8,9 @@ import AuthGoogleButton from '../../auth/AuthGoogleButton/AuthGoogleButton';
 interface HomeHeaderItemsProps {}
 
 function HomeHeaderItems(props: HomeHeaderItemsProps) {
-  const { visible } = useHomeValue();
+  const {
+    navigation: { visible },
+  } = useHomeValue();
   const { handleNavigation } = useHomeActions();
 
   return (

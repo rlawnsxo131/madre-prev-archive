@@ -22,7 +22,6 @@ const block = css`
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* padding: 0 0.5rem; */
 `;
 
 const main = css`

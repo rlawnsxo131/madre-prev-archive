@@ -1,42 +1,35 @@
 import { useCallback } from 'react';
-import { atom, selector, useRecoilValue, useSetRecoilState } from 'recoil';
-
-interface HomeNavigationState {
-  visible: boolean;
-}
-
-const homeNavigationState = atom<HomeNavigationState>({
-  key: 'navigationState',
-  default: {
-    visible: false,
-  },
-});
+import { atom, useRecoilValue, useSetRecoilState } from 'recoil';
 
 interface HomeState {
-  visible: boolean;
+  navigation: {
+    visible: boolean;
+  };
 }
 
-const homeStateSelector = selector<HomeState>({
-  key: 'homeStateSelector',
-  get: ({ get }) => {
-    const { visible } = get(homeNavigationState);
-    return {
-      visible,
-    };
+const homeState = atom<HomeState>({
+  key: 'homeState',
+  default: {
+    navigation: {
+      visible: false,
+    },
   },
 });
 
 export function useHomeValue() {
-  return useRecoilValue(homeStateSelector);
+  return useRecoilValue(homeState);
 }
 
 export function useHomeActions() {
-  const set = useSetRecoilState(homeNavigationState);
+  const set = useSetRecoilState(homeState);
 
   const handleNavigation = useCallback(() => {
     set((prev) => ({
       ...prev,
-      visible: !prev.visible,
+      navigation: {
+        ...prev.navigation,
+        visible: !prev.navigation.visible,
+      },
     }));
   }, [set]);
 
