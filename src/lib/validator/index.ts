@@ -1,7 +1,7 @@
 import ApolloCustomError from '../ApolloCustomError';
 import FastifyCustomError from '../FastifyCustomError';
 import { validateId, validateObject } from './validator';
-import { Validator, ValidatorHelper } from './validator.type';
+import { Validator, ValidatorHelper } from './validator.types';
 
 /**
  * apollo

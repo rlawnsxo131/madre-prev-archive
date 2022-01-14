@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { ValidateId, ValidateObject } from './validator.type';
+import { ValidateId, ValidateObject } from './validator.types';
 
 export const validateId: ValidateId = (id) => (helper) => {
   const schema = Joi.string().guid().required();
