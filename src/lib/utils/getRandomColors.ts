@@ -1,4 +1,4 @@
-import { getRandomIntInclusive } from '.';
+import getRandomIntInclusive from './getRandomIntInclusive';
 
 export default function getRandomColors(maxLength: number) {
   const result: string[] = [];

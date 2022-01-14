@@ -4,7 +4,7 @@ import { format, add } from 'date-fns';
 import { v4 } from 'uuid';
 import { D3AxisChart, D3GenerateUtil } from '../lib/d3';
 import { D3FormatUtil } from '../lib/d3';
-import { getRandomIntInclusive } from '../lib/utils';
+import getRandomIntInclusive from '../lib/utils/getRandomIntInclusive';
 import { palette } from '../styles';
 
 interface TestPage2Props {}

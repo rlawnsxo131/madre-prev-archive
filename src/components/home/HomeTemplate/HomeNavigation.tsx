@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { memo } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useTransitionTimeoutEffect } from '../../../lib/hooks';
+import useTransitionTimeoutEffect from '../../../lib/hooks/useTransitionTimeoutEffect';
 import { themeColor, transitions, zIndexes } from '../../../styles';
 
 interface HomeNavigationProps {

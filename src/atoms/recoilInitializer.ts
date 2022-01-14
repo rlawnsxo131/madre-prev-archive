@@ -1,7 +1,7 @@
 import { MutableSnapshot } from 'recoil';
 import { MADRE_COLOR_THEME } from '../constants';
 import { Storage } from '../lib/storage';
-import { getPrefersColorScheme } from '../lib/utils';
+import getPrefersColorScheme from '../lib/utils/getPrefersColorScheme';
 import { colorThemeState } from './colorThemeState';
 
 export default function recoilInitializer({ set }: MutableSnapshot) {

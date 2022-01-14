@@ -1,5 +1,5 @@
 import { v4 } from 'uuid';
-import { getRandomColors } from '../../utils';
+import getRandomColors from '../../utils/getRandomColors';
 import { D3UniqIdentifierValueAndColorArray } from '../types/d3Util.types';
 
 export function generateUniqIdentifierValueAndColorArray(
