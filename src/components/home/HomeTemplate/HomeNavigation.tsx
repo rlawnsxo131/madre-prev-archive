@@ -8,7 +8,6 @@ import {
 import { MenuIcon } from '../../../image/icons';
 import useTransitionTimeoutEffect from '../../../lib/hooks/useTransitionTimeoutEffect';
 import { palette, themeColor, transitions, zIndexes } from '../../../styles';
-import homeTemplateStyles from './homeTemplateStyles';
 
 const Navigation: React.FC<{ visible: boolean }> = memo(({ visible }) => {
   const closed = useTransitionTimeoutEffect({ visible, delay: 125 });
@@ -16,7 +15,7 @@ const Navigation: React.FC<{ visible: boolean }> = memo(({ visible }) => {
   if (!visible && closed) return null;
 
   return (
-    <nav css={block(visible)}>
+    <nav css={navigationBlock(visible)}>
       <ul>
         <li>
           <NavLink css={link} to="/">
@@ -48,7 +47,7 @@ const Navigation: React.FC<{ visible: boolean }> = memo(({ visible }) => {
   );
 });
 
-const block = (visible: boolean) => css`
+const navigationBlock = (visible: boolean) => css`
   position: absolute;
   top: 3.25rem;
   left: 0.5rem;
@@ -98,7 +97,7 @@ function HomeNavigation(props: HomeNavigationProps) {
   const { handleNavigation } = useHomeNavigationActions();
 
   return (
-    <div css={homeTemplateStyles.itemBlock}>
+    <div css={block}>
       <button css={button} onClick={handleNavigation}>
         <MenuIcon />
       </button>
@@ -106,6 +105,21 @@ function HomeNavigation(props: HomeNavigationProps) {
     </div>
   );
 }
+
+const block = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* &:not(:nth-of-type(3)) {
+    padding: 0 0.5rem;
+  } */
+  &:nth-of-type(1) {
+    padding: 0 0.5rem;
+  }
+  &:nth-of-type(2) {
+    padding-left: 0.5rem;
+  }
+`;
 
 const button = css`
   background: inherit;
