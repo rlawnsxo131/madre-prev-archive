@@ -1,12 +1,12 @@
 import { TestPage2 } from '../../../pages';
-import homeSectionStyles from './homeSectionStyles';
+import HomeSectionStyles from './HomeSection.styles';
 
 interface HomeSectionGraphProps {}
 
 function HomeSectionGraph(props: HomeSectionGraphProps) {
   return (
-    <section css={homeSectionStyles.block}>
-      <div css={homeSectionStyles.itemCommon}>
+    <section css={HomeSectionStyles.section}>
+      <div css={HomeSectionStyles.itemCommon}>
         <TestPage2 />
       </div>
     </section>

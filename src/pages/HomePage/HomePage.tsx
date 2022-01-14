@@ -1,23 +1,14 @@
-import { css } from '@emotion/react';
-import {
-  HomeSectionGraph,
-  HomeSectionThinkAbout,
-} from '../../components/home/HomeSection';
+import HomeSection from '../../components/home/HomeSection';
 
 interface HomePageProps {}
 
 function HomePage(props: HomePageProps) {
   return (
-    <div css={block}>
-      <HomeSectionThinkAbout />
-      <HomeSectionGraph />
-    </div>
+    <HomeSection>
+      <HomeSection.ThinkAbout />
+      <HomeSection.Graph />
+    </HomeSection>
   );
 }
-
-const block = css`
-  display: flex;
-  flex-direction: column;
-`;
 
 export default HomePage;

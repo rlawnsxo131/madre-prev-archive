@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { media, palette } from '../../../styles';
 
-const block = css`
+const section = css`
   display: flex;
   margin-top: 1.5rem;
 
@@ -48,6 +48,6 @@ const itemCommon = css`
 `;
 
 export default {
-  block,
+  section,
   itemCommon,
 };
