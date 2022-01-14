@@ -35,16 +35,13 @@ const content = css`
   align-items: center;
   height: 4rem;
   ${media.xxxsmall} {
-    width: 100%;
-  }
-  ${media.small} {
-    width: 768px;
+    width: 93%;
   }
   ${media.medium} {
     width: 96%;
   }
   ${mediaQuery(1285)} {
-    width: 1250px;
+    max-width: 1250px;
   }
 `;
 

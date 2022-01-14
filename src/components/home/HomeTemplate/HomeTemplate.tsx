@@ -22,7 +22,7 @@ const block = css`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 0.5rem;
+  /* padding: 0 0.5rem; */
 `;
 
 const main = css`
@@ -30,16 +30,13 @@ const main = css`
   justify-content: center;
   position: relative;
   ${media.xxxsmall} {
-    width: 100%;
-  }
-  ${mediaQuery(800)} {
-    width: 768px;
+    width: 93%;
   }
   ${media.medium} {
     width: 96%;
   }
   ${mediaQuery(1285)} {
-    width: 1250px;
+    max-width: 1250px;
   }
 `;
 
