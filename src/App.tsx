@@ -15,7 +15,7 @@ function App(props: AppProps) {
           <Route path="guides" element={<div>guides</div>} />
           <Route path="notice" element={<div>notice</div>} />
           <Route path="policy" element={<div>policy</div>} />
-          <Route path="demo" element={<div>demo</div>} />
+          <Route path="preview" element={<div>preview</div>} />
         </Route>
         <Route path="/test" element={<TestPage2 />} />
         <Route path="*" element={<NotFoundPage />} />
