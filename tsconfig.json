@@ -5,7 +5,6 @@
     "jsx": "react-jsx",
     "strict": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": false,
     "lib": [
       "DOM",
       "DOM.Iterable",
@@ -26,6 +25,7 @@
     "noUnusedLocals": true,
     "noEmit": false,
     "downlevelIteration": true,
+    "forceConsistentCasingInFileNames": false,
     "jsxImportSource": "@emotion/react",
   },
   "include": [
