@@ -1,14 +1,16 @@
 import { css } from '@emotion/react';
 import { memo } from 'react';
 import { NavLink } from 'react-router-dom';
+import {
+  useHomeNavigationActions,
+  useHomeNavigationValue,
+} from '../../../atoms/homeNavigationState';
+import { MenuIcon } from '../../../image/icons';
 import useTransitionTimeoutEffect from '../../../lib/hooks/useTransitionTimeoutEffect';
-import { themeColor, transitions, zIndexes } from '../../../styles';
+import { palette, themeColor, transitions, zIndexes } from '../../../styles';
+import homeTemplateStyles from './homeTemplateStyles';
 
-interface HomeNavigationProps {
-  visible: boolean;
-}
-
-function HomeNavigation({ visible }: HomeNavigationProps) {
+const Navigation: React.FC<{ visible: boolean }> = memo(({ visible }) => {
   const closed = useTransitionTimeoutEffect({ visible, delay: 125 });
 
   if (!visible && closed) return null;
@@ -39,7 +41,7 @@ function HomeNavigation({ visible }: HomeNavigationProps) {
       </ul>
     </nav>
   );
-}
+});
 
 const block = (visible: boolean) => css`
   position: absolute;
@@ -84,4 +86,44 @@ const link = css`
   }
 `;
 
-export default memo(HomeNavigation);
+interface HomeNavigationProps {}
+
+function HomeNavigation(props: HomeNavigationProps) {
+  const { visible } = useHomeNavigationValue();
+  const { handleNavigation } = useHomeNavigationActions();
+
+  return (
+    <div css={homeTemplateStyles.itemBlock}>
+      <button css={button} onClick={handleNavigation}>
+        <MenuIcon />
+      </button>
+      <Navigation visible={visible} />
+    </div>
+  );
+}
+
+const button = css`
+  background: inherit;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  overflow: visible;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 3px;
+  color: ${palette.gray['500']};
+  svg {
+    width: 1.125rem;
+    height: 1.125rem;
+    fill: ${themeColor.fill['light']};
+  }
+  &:hover {
+    svg {
+      opacity: 0.5;
+    }
+  }
+`;
+
+export default HomeNavigation;
