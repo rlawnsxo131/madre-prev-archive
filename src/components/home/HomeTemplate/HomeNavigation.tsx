@@ -9,6 +9,30 @@ import { MenuIcon } from '../../../image/icons';
 import useTransitionTimeoutEffect from '../../../lib/hooks/useTransitionTimeoutEffect';
 import { palette, themeColor, transitions, zIndexes } from '../../../styles';
 
+const NavigationLink: React.FC<{ to: string; text: string }> = ({
+  to,
+  text,
+}) => {
+  return (
+    <li css={listBlock}>
+      <NavLink css={link} to={to}>
+        {text}
+      </NavLink>
+    </li>
+  );
+};
+
+const link = css`
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  font-size: 1rem;
+  padding: 0.5rem 0.25rem 0.5rem 0.25rem;
+  &.active {
+    font-weight: bold;
+  }
+`;
+
 const Navigation: React.FC<{ visible: boolean }> = memo(({ visible }) => {
   const closed = useTransitionTimeoutEffect({ visible, delay: 125 });
 
@@ -16,32 +40,12 @@ const Navigation: React.FC<{ visible: boolean }> = memo(({ visible }) => {
 
   return (
     <nav css={navigationBlock(visible)}>
-      <ul>
-        <li>
-          <NavLink css={link} to="/">
-            홈
-          </NavLink>
-        </li>
-        <li>
-          <NavLink css={link} to="/preview">
-            미리보기
-          </NavLink>
-        </li>
-        <li>
-          <NavLink css={link} to="/guides">
-            가이드 및 튜토리얼
-          </NavLink>
-        </li>
-        <li>
-          <NavLink css={link} to="/notice">
-            공지사항
-          </NavLink>
-        </li>
-        <li>
-          <NavLink css={link} to="/policy">
-            서비스 정책
-          </NavLink>
-        </li>
+      <ul css={listBlock}>
+        <NavigationLink to="/" text="홈" />
+        <NavigationLink to="/preview" text="미리보기" />
+        <NavigationLink to="/guides" text="가이드 및 튜토리얼" />
+        <NavigationLink to="/notice" text="공지사항" />
+        <NavigationLink to="/policy" text="서비스 정책" />
       </ul>
     </nav>
   );
@@ -61,15 +65,6 @@ const navigationBlock = (visible: boolean) => css`
   background: ${themeColor.navigation['light']};
   box-shadow: ${themeColor.shadow['light']};
   transform-origin: top;
-  ul,
-  li {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
   ${visible
     ? css`
         animation: ${transitions.scaleUp} 0.125s forwards ease-in-out;
@@ -79,15 +74,13 @@ const navigationBlock = (visible: boolean) => css`
       `};
 `;
 
-const link = css`
+const listBlock = css`
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-  font-size: 1rem;
-  padding: 0.5rem 0.25rem 0.5rem 0.25rem;
-  &.active {
-    font-weight: bold;
-  }
+  flex-direction: column;
+  justify-content: center;
 `;
 
 interface HomeNavigationProps {}
@@ -110,9 +103,6 @@ const block = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* &:not(:nth-of-type(3)) {
-    padding: 0 0.5rem;
-  } */
   &:nth-of-type(1) {
     padding: 0 0.5rem;
   }
