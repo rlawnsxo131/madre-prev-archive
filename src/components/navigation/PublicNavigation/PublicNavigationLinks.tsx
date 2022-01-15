@@ -3,12 +3,17 @@ import { css } from '@emotion/react';
 import PublicNavigationLink from './PublicNavigationLink';
 import PublicNavigationStyles from './PublicNavigation.styles';
 import { themeColor, transitions, zIndexes } from '../../../styles';
+import useTransitionTimeoutEffect from '../../../lib/hooks/useTransitionTimeoutEffect';
 
 interface PublicNavigationProps {
   visible: boolean;
 }
 
 function PublicNavigation({ visible }: PublicNavigationProps) {
+  const closed = useTransitionTimeoutEffect({ visible });
+
+  if (!visible && closed) return null;
+
   return (
     <nav css={block(visible)}>
       <ul css={PublicNavigationStyles.listBlock}>
@@ -25,8 +30,8 @@ function PublicNavigation({ visible }: PublicNavigationProps) {
 const block = (visible: boolean) => css`
   position: absolute;
   top: 3.25rem;
-  left: 0.5rem;
-  width: 15.15rem;
+  left: calc((12rem - (1.125rem * 2)) * -1);
+  width: 12rem;
   height: auto;
   padding: 0.25rem 0.5rem;
   display: flex;
@@ -35,13 +40,13 @@ const block = (visible: boolean) => css`
   border-radius: 0.25rem;
   background: ${themeColor.navigation['light']};
   box-shadow: ${themeColor.shadow['light']};
-  transform-origin: top;
+  transform-origin: top right;
   ${visible
     ? css`
-        animation: ${transitions.scaleUp} 0.125s forwards ease-in-out;
+        animation: ${transitions.scaleUp} 0.25s forwards ease-in-out;
       `
     : css`
-        animation: ${transitions.scaleDown} 0.125s forwards ease-in-out;
+        animation: ${transitions.scaleDown} 0.25s forwards ease-in-out;
       `};
 `;
 

@@ -45,22 +45,22 @@ const popOutToBottom = keyframes`
 const scaleUp = keyframes`
   0% {
     opacity: 0;
-    transform: scaleY(0);
+    transform: scale(0, 0);
   }
   100% {
     opacity: 1;
-    transform: scaleY(1);
+    transform: scale(1, 1);
   }
 `;
 
 const scaleDown = keyframes`
   0% {
     opacity: 1;
-    transform: scaleY(1);
+    transform: scale(1, 1);
   }
   100% {
     opacity: 0;
-    transform: scaleY(0);
+    transform: scale(0, 0);
   }
 `;
 

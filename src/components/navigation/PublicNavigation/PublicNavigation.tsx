@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { css } from '@emotion/react';
 import { usePublicNavigationValue } from '../../../atoms/publicNavigationState';
 import PublicNavigationButton from './PublicNavigationButton';
@@ -18,6 +17,7 @@ function PublicNavigation(props: PublicNavigationProps) {
 }
 
 const block = css`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,4 +29,4 @@ const block = css`
   }
 `;
 
-export default memo(PublicNavigation);
+export default PublicNavigation;

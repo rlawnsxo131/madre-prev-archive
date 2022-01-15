@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-export default function useAuthGoogleButton() {
+export default function useGoogleAuthButton() {
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {

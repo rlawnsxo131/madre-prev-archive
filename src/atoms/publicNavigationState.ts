@@ -19,6 +19,13 @@ export function usePublicNavigationValue() {
 export function usePublicNavigationActions() {
   const set = useSetRecoilState(publicNavigationState);
 
+  const onClose = useCallback(() => {
+    set((prev) => ({
+      ...prev,
+      visible: false,
+    }));
+  }, [set]);
+
   const handleNavigation = useCallback(() => {
     set((prev) => ({
       ...prev,
@@ -27,6 +34,7 @@ export function usePublicNavigationActions() {
   }, [set]);
 
   return {
+    onClose,
     handleNavigation,
   };
 }

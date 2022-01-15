@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import Core from './components/common/Core';
-import ErrorBoundary from './components/error';
+import ErrorBoundary from './components/error/ErrorBoundary';
 import HomeTemplate from './components/home/HomeTemplate';
 import { HomePage, NotFoundPage, TestPage2 } from './pages';
 
