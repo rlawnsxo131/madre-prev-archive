@@ -1,6 +1,5 @@
 import { css } from '@emotion/react';
 import { NavLink } from 'react-router-dom';
-import { palette } from '../../../styles';
 import { navigationActiveColor } from '../navigation.styles';
 
 interface PublicNavigationLinksProps {}
