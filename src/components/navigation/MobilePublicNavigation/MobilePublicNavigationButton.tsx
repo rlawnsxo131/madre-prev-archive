@@ -1,12 +1,14 @@
 import { css } from '@emotion/react';
-import { usePublicNavigationActions } from '../../../atoms/publicNavigationState';
+import { useMobilePublicNavigationActions } from '../../../atoms/mobilePublicNavigationState';
 import { MenuIcon } from '../../../image/icons';
 import { palette, themeColor } from '../../../styles';
 
-interface PublicNavigationButtonProps {}
+interface MobilePublicNavigationButtonProps {}
 
-function PublicNavigationButton(props: PublicNavigationButtonProps) {
-  const { handleNavigation } = usePublicNavigationActions();
+function MobilePublicNavigationButton(
+  props: MobilePublicNavigationButtonProps,
+) {
+  const { handleNavigation } = useMobilePublicNavigationActions();
 
   return (
     <button css={block} onClick={handleNavigation}>
@@ -39,4 +41,4 @@ const block = css`
   }
 `;
 
-export default PublicNavigationButton;
+export default MobilePublicNavigationButton;

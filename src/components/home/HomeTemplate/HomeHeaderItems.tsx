@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import MobilePublicNavigation from '../../navigation/MobilePublicNavigation';
 import PublicNavigation from '../../navigation/PublicNavigation';
 import UserPersonalMenu from '../../user/UserPersonalMenu';
 
@@ -9,6 +10,8 @@ function HomeHeaderItems(props: HomeHeaderItemsProps) {
     <div css={block}>
       <PublicNavigation />
       <UserPersonalMenu />
+
+      <MobilePublicNavigation />
     </div>
   );
 }

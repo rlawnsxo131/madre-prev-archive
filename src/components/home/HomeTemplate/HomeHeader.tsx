@@ -23,6 +23,7 @@ const block = css`
   left: 0;
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 0.25rem 0;
