@@ -8,10 +8,12 @@ interface HomeHeaderItemsProps {}
 function HomeHeaderItems(props: HomeHeaderItemsProps) {
   return (
     <div css={block}>
+      {/* navigation */}
       <PublicNavigation />
-      <UserPersonalMenu />
-
       <MobilePublicNavigation />
+
+      {/* user menu */}
+      <UserPersonalMenu />
     </div>
   );
 }

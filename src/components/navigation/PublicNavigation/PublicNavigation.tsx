@@ -15,7 +15,7 @@ function PublicNavigation(props: PublicNavigationProps) {
 const block = css`
   display: flex;
   justify-content: space-between;
-  padding: 0 0.5rem;
+  padding: 0 1rem;
   ${navigationDisplay};
 `;
 
