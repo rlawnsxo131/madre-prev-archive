@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
-import HomeNavigation from './HomeNavigation';
 import AuthGoogleButton from '../../auth/AuthGoogleButton/AuthGoogleButton';
+import PublicNavigation from '../../navigation/PublicNavigation';
 
 interface HomeHeaderItemsProps {}
 
@@ -10,7 +10,7 @@ function HomeHeaderItems(props: HomeHeaderItemsProps) {
       <div css={authBlock}>
         <AuthGoogleButton />
       </div>
-      <HomeNavigation />
+      <PublicNavigation />
     </div>
   );
 }

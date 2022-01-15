@@ -1,15 +1,15 @@
 import { css } from '@emotion/react';
 import { NavLink } from 'react-router-dom';
-import HomeTemplateStyles from './HomeTemplate.styles';
+import AppNavigationStyles from './PublicNavigation.styles';
 
-interface HomeNavigationLinkProps {
-  text: string;
+interface AppNavigationLinkProps {
   to: string;
+  text: string;
 }
 
-function HomeNavigationLink({ text, to }: HomeNavigationLinkProps) {
+function AppNavigationLink({ to, text }: AppNavigationLinkProps) {
   return (
-    <li css={HomeTemplateStyles.listBlock}>
+    <li css={AppNavigationStyles.listBlock}>
       <NavLink css={link} to={to}>
         {text}
       </NavLink>
@@ -28,4 +28,4 @@ const link = css`
   }
 `;
 
-export default HomeNavigationLink;
+export default AppNavigationLink;
