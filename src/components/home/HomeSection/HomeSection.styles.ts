@@ -63,7 +63,7 @@ const description = css`
   h2,
   h3,
   p {
-    letter-spacing: 0.125rem;
+    letter-spacing: 0.1rem;
     ::selection {
       color: ${palette.white};
       background: ${palette.pink['600']};
