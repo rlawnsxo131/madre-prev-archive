@@ -60,6 +60,15 @@ const description = css`
   justify-content: center;
   align-items: flex-start;
   gap: 1.25rem;
+  h2,
+  h3,
+  p {
+    letter-spacing: 0.125rem;
+    ::selection {
+      color: ${palette.white};
+      background: ${palette.pink['600']};
+    }
+  }
 `;
 
 const imageBlock = css`

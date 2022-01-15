@@ -1,23 +1,23 @@
 import { useCallback } from 'react';
 import { atom, useRecoilValue, useSetRecoilState } from 'recoil';
 
-interface AppNavigationState {
+interface PublicNavigationState {
   visible: boolean;
 }
 
-const appNavigationState = atom<AppNavigationState>({
-  key: 'appNavigationState',
+const publicNavigationState = atom<PublicNavigationState>({
+  key: 'publicNavigationState',
   default: {
     visible: false,
   },
 });
 
-export function useAppNavigationValue() {
-  return useRecoilValue(appNavigationState);
+export function usePublicNavigationValue() {
+  return useRecoilValue(publicNavigationState);
 }
 
-export function useAppNavigationActions() {
-  const set = useSetRecoilState(appNavigationState);
+export function usePublicNavigationActions() {
+  const set = useSetRecoilState(publicNavigationState);
 
   const handleNavigation = useCallback(() => {
     set((prev) => ({

@@ -1,15 +1,15 @@
 import { css } from '@emotion/react';
 import { NavLink } from 'react-router-dom';
-import AppNavigationStyles from './PublicNavigation.styles';
+import PublicNavigationStyles from './PublicNavigation.styles';
 
-interface AppNavigationLinkProps {
+interface PublicNavigationLinkProps {
   to: string;
   text: string;
 }
 
-function AppNavigationLink({ to, text }: AppNavigationLinkProps) {
+function PublicNavigationLink({ to, text }: PublicNavigationLinkProps) {
   return (
-    <li css={AppNavigationStyles.listBlock}>
+    <li css={PublicNavigationStyles.listBlock}>
       <NavLink css={link} to={to}>
         {text}
       </NavLink>
@@ -28,4 +28,4 @@ const link = css`
   }
 `;
 
-export default AppNavigationLink;
+export default PublicNavigationLink;

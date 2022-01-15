@@ -1,12 +1,12 @@
 import { css } from '@emotion/react';
-import { useAppNavigationActions } from '../../../atoms/appNavigationState';
+import { usePublicNavigationActions } from '../../../atoms/publicNavigationState';
 import { MenuIcon } from '../../../image/icons';
 import { palette, themeColor } from '../../../styles';
 
-interface AppNavigationButtonProps {}
+interface PublicNavigationButtonProps {}
 
-function AppNavigationButton(props: AppNavigationButtonProps) {
-  const { handleNavigation } = useAppNavigationActions();
+function PublicNavigationButton(props: PublicNavigationButtonProps) {
+  const { handleNavigation } = usePublicNavigationActions();
 
   return (
     <button css={block} onClick={handleNavigation}>
@@ -39,4 +39,4 @@ const block = css`
   }
 `;
 
-export default AppNavigationButton;
+export default PublicNavigationButton;

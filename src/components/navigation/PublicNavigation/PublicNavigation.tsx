@@ -1,18 +1,18 @@
 import { memo } from 'react';
 import { css } from '@emotion/react';
-import { useAppNavigationValue } from '../../../atoms/appNavigationState';
-import AppNavigationButton from './PublicNavigationButton';
-import AppNavigationLinks from './PublicNavigationLinks';
+import { usePublicNavigationValue } from '../../../atoms/publicNavigationState';
+import PublicNavigationButton from './PublicNavigationButton';
+import PublicNavigationLinks from './PublicNavigationLinks';
 
-interface AppNavigationProps {}
+interface PublicNavigationProps {}
 
-function PublicNavigation(props: AppNavigationProps) {
-  const { visible } = useAppNavigationValue();
+function PublicNavigation(props: PublicNavigationProps) {
+  const { visible } = usePublicNavigationValue();
 
   return (
     <div css={block}>
-      <AppNavigationButton />
-      <AppNavigationLinks visible={visible} />
+      <PublicNavigationButton />
+      <PublicNavigationLinks visible={visible} />
     </div>
   );
 }

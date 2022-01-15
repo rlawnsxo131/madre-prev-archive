@@ -1,22 +1,22 @@
 import { memo } from 'react';
 import { css } from '@emotion/react';
-import AppNavigationLink from './PublicNavigationLink';
-import AppNavigationStyles from './PublicNavigation.styles';
+import PublicNavigationLink from './PublicNavigationLink';
+import PublicNavigationStyles from './PublicNavigation.styles';
 import { themeColor, transitions, zIndexes } from '../../../styles';
 
-interface AppNavigationLinksProps {
+interface PublicNavigationProps {
   visible: boolean;
 }
 
-function AppNavigationLinks({ visible }: AppNavigationLinksProps) {
+function PublicNavigation({ visible }: PublicNavigationProps) {
   return (
     <nav css={block(visible)}>
-      <ul css={AppNavigationStyles.listBlock}>
-        <AppNavigationLink to="/" text="홈" />
-        <AppNavigationLink to="/preview" text="미리보기" />
-        <AppNavigationLink to="/guides" text="가이드 및 튜토리얼" />
-        <AppNavigationLink to="/notice" text="공지사항" />
-        <AppNavigationLink to="/policy" text="서비스 정책" />
+      <ul css={PublicNavigationStyles.listBlock}>
+        <PublicNavigationLink to="/" text="홈" />
+        <PublicNavigationLink to="/preview" text="미리보기" />
+        <PublicNavigationLink to="/guides" text="가이드 및 튜토리얼" />
+        <PublicNavigationLink to="/notice" text="공지사항" />
+        <PublicNavigationLink to="/policy" text="서비스 정책" />
       </ul>
     </nav>
   );
@@ -45,4 +45,4 @@ const block = (visible: boolean) => css`
       `};
 `;
 
-export default memo(AppNavigationLinks);
+export default memo(PublicNavigation);
