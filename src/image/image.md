@@ -6,5 +6,6 @@
 - [night](https://material.io/resources/icons/?search=moon&icon=mode_night&style=outline)
 
 # icon monster
-- [drop-arrow](https://iconmonstr.com/arrow-65-svg/)
 - [menu](https://iconmonstr.com/menu-11-svg/)
+- [user](https://iconmonstr.com/user-20-svg/)
+- [drop-arrow](https://iconmonstr.com/arrow-80-svg/)
