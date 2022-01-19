@@ -5,7 +5,7 @@ interface HomeHeaderMobileNavigationState {
   visible: boolean;
 }
 
-const mobilePublicNavigationState = atom<HomeHeaderMobileNavigationState>({
+const homeHeaderMobileNavigationState = atom<HomeHeaderMobileNavigationState>({
   key: 'mobilePublicNavigationState',
   default: {
     visible: false,
@@ -13,11 +13,11 @@ const mobilePublicNavigationState = atom<HomeHeaderMobileNavigationState>({
 });
 
 export function useHomeHeaderMobileNavigationValue() {
-  return useRecoilValue(mobilePublicNavigationState);
+  return useRecoilValue(homeHeaderMobileNavigationState);
 }
 
 export function useHomeHeaderMobileNavigationActions() {
-  const set = useSetRecoilState(mobilePublicNavigationState);
+  const set = useSetRecoilState(homeHeaderMobileNavigationState);
 
   const onClose = useCallback(() => {
     set((prev) => ({
