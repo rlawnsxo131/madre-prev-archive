@@ -19,7 +19,7 @@ function HomeHeaderNavigation(props: HomeHeaderNavigationProps) {
           </NavLink>
         </li>
         <li>
-          <NavLink css={link} to="/guides">
+          <NavLink css={link} to="/guide">
             가이드 및 튜토리얼
           </NavLink>
         </li>
