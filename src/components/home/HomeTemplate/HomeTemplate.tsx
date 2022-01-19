@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { Outlet } from 'react-router-dom';
-import { media, mediaQuery } from '../../../styles';
-import HomeHeader from './HomeHeader';
+import homeStyles from '../home.styles';
+import HomeHeader from '../HomeHeader';
 
 interface HomeTemplateProps {}
 
@@ -28,15 +28,7 @@ const main = css`
   display: flex;
   justify-content: center;
   position: relative;
-  ${media.xxxsmall} {
-    width: 93%;
-  }
-  ${media.medium} {
-    width: 96%;
-  }
-  ${mediaQuery(1285)} {
-    max-width: 1250px;
-  }
+  ${homeStyles.responsive}
 `;
 
 const content = css`

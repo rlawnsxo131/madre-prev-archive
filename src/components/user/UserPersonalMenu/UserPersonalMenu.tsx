@@ -37,10 +37,10 @@ const block = css`
   gap: 0.5rem;
   cursor: pointer;
   svg {
-    fill: ${palette.gray['900']};
+    fill: ${palette.gray['700']};
     &:nth-of-type(1) {
-      width: 1.875rem;
-      height: 1.875rem;
+      width: 1.9rem;
+      height: 1.9rem;
     }
     &:nth-of-type(2) {
       width: 0.5rem;

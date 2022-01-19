@@ -1,10 +1,10 @@
 import { css } from '@emotion/react';
 import { NavLink } from 'react-router-dom';
-import { navigationActiveColor, navigationDisplay } from '../navigation.styles';
+import { standardColor } from '../../../styles';
 
-interface PublicNavigationProps {}
+interface HomeHeaderNavigationProps {}
 
-function PublicNavigation(props: PublicNavigationProps) {
+function HomeHeaderNavigation(props: HomeHeaderNavigationProps) {
   return (
     <nav css={block}>
       <ul css={ul}>
@@ -32,7 +32,6 @@ const block = css`
   display: flex;
   justify-content: space-between;
   padding: 0 1rem;
-  ${navigationDisplay};
 `;
 
 const ul = css`
@@ -51,8 +50,8 @@ const link = css`
   font-weight: bold;
   padding: 0 1rem;
   &.active {
-    color: ${navigationActiveColor};
+    color: ${standardColor.navigation.active};
   }
 `;
 
-export default PublicNavigation;
+export default HomeHeaderNavigation;

@@ -1,15 +1,15 @@
+import { memo } from 'react';
 import { css } from '@emotion/react';
-import { useMobilePublicNavigationActions } from '../../../atoms/mobilePublicNavigationState';
 import { MenuIcon } from '../../../image/icons';
 import { palette, themeColor } from '../../../styles';
 
-interface MobilePublicNavigationButtonProps {}
+interface HomeHeaderMobileNavigationButtonProps {
+  handleNavigation: () => void;
+}
 
-function MobilePublicNavigationButton(
-  props: MobilePublicNavigationButtonProps,
-) {
-  const { handleNavigation } = useMobilePublicNavigationActions();
-
+function HomeHeaderMobileNavigationButton({
+  handleNavigation,
+}: HomeHeaderMobileNavigationButtonProps) {
   return (
     <button css={block} onClick={handleNavigation}>
       <MenuIcon />
@@ -26,7 +26,7 @@ const block = css`
   cursor: pointer;
   display: flex;
   align-items: center;
-  padding: 0.5rem;
+  padding: 0.5rem 0;
   border-radius: 3px;
   color: ${palette.gray['500']};
   svg {
@@ -41,4 +41,4 @@ const block = css`
   }
 `;
 
-export default MobilePublicNavigationButton;
+export default memo(HomeHeaderMobileNavigationButton);

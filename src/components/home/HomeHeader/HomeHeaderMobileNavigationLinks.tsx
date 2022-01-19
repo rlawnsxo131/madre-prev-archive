@@ -1,15 +1,21 @@
 import { memo } from 'react';
 import { css } from '@emotion/react';
-import { themeColor, transitions, zIndexes } from '../../../styles';
-import useTransitionTimeoutEffect from '../../../lib/hooks/useTransitionTimeoutEffect';
 import { NavLink } from 'react-router-dom';
-import { navigationActiveColor } from '../navigation.styles';
+import useTransitionTimeoutEffect from '../../../lib/hooks/useTransitionTimeoutEffect';
+import {
+  standardColor,
+  themeColor,
+  transitions,
+  zIndexes,
+} from '../../../styles';
 
-interface MobilePublicNavigationProps {
+interface HomeHeaderMobileNavigationLinksProps {
   visible: boolean;
 }
 
-function MobilePublicNavigation({ visible }: MobilePublicNavigationProps) {
+function HomeHeaderMobileNavigationLinks({
+  visible,
+}: HomeHeaderMobileNavigationLinksProps) {
   const closed = useTransitionTimeoutEffect({ visible });
 
   if (!visible && closed) return null;
@@ -45,7 +51,7 @@ function MobilePublicNavigation({ visible }: MobilePublicNavigationProps) {
 const block = (visible: boolean) => css`
   position: absolute;
   top: 3.25rem;
-  left: calc((12rem - (1.125rem * 2)) * -1);
+  left: 0;
   width: 12rem;
   height: auto;
   padding: 0.25rem 0.5rem;
@@ -55,7 +61,7 @@ const block = (visible: boolean) => css`
   border-radius: 0.25rem;
   background: ${themeColor.navigation['light']};
   box-shadow: ${themeColor.shadow['light']};
-  transform-origin: top right;
+  transform-origin: top;
   ${visible
     ? css`
         animation: ${transitions.scaleUp} 0.25s forwards ease-in-out;
@@ -82,8 +88,8 @@ const link = css`
   font-weight: bold;
   padding: 0.5rem 0.25rem 0.5rem 0.25rem;
   &.active {
-    color: ${navigationActiveColor};
+    color: ${standardColor.navigation.active};
   }
 `;
 
-export default memo(MobilePublicNavigation);
+export default memo(HomeHeaderMobileNavigationLinks);
