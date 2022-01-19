@@ -8,7 +8,6 @@ function HomeFooter(props: HomeFooterProps) {
 }
 
 const block = css`
-  width: 100%;
   ${homeStyles.responsive}
 `;
 
