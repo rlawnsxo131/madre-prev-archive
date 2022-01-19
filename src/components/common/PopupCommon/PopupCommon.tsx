@@ -31,6 +31,7 @@ const block = css`
   display: flex;
   flex-direction: column;
   padding: 1.725rem 1.5rem;
+
   h3 {
     margin: 0;
   }
@@ -41,6 +42,7 @@ const block = css`
     overflow-wrap: break-word;
     display: -webkit-box;
   }
+
   ${media.xxxsmall} {
     width: 100vw;
   }

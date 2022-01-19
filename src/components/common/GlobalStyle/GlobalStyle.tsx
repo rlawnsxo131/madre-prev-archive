@@ -18,6 +18,7 @@ const globalStyle = (theme: ColorTheme) => css`
     height: 100%;
     background: ${themeColor.body[theme]};
   }
+
   header {
     background: ${themeColor.header[theme]};
   }

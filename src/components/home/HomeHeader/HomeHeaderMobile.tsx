@@ -1,8 +1,6 @@
 import { css } from '@emotion/react';
 import { media } from '../../../styles';
 import UserPersonalMenu from '../../user/UserPersonalMenu';
-import homeStyles from '../home.styles';
-import HomeHeaderStyles from './HomeHeader.styles';
 import HomeHeaderLogo from './HomeHeaderLogo';
 import HomeHeaderMobileNavigation from './HomeHeaderMobileNavigation';
 
@@ -24,6 +22,7 @@ const block = css`
   justify-content: center;
   align-items: center;
   height: 3rem;
+
   div:nth-of-type(1) {
     position: absolute;
     left: 0;
@@ -32,9 +31,7 @@ const block = css`
     position: absolute;
     right: 0;
   }
-  /* div:nth-of-type(2) {
-    transform: translateX(25%);
-  } */
+
   ${media.xxxsmall} {
     width: 93%;
   }

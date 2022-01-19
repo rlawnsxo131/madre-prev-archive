@@ -17,12 +17,12 @@ function PopupBase({ children, visible }: PopupBaseProps) {
 
   return (
     <OpaqueLayer visible={visible}>
-      <div css={popup(visible, theme)}>{children}</div>
+      <div css={block(visible, theme)}>{children}</div>
     </OpaqueLayer>
   );
 }
 
-const popup = (visible: boolean, theme: ColorTheme) => css`
+const block = (visible: boolean, theme: ColorTheme) => css`
   position: relative;
   display: flex;
   justify-content: center;
