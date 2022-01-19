@@ -1,22 +1,22 @@
 import { useCallback } from 'react';
 import { atom, useRecoilValue, useSetRecoilState } from 'recoil';
 
-interface MobilePublicNavigationState {
+interface HomeHeaderMobileNavigationState {
   visible: boolean;
 }
 
-const mobilePublicNavigationState = atom<MobilePublicNavigationState>({
+const mobilePublicNavigationState = atom<HomeHeaderMobileNavigationState>({
   key: 'mobilePublicNavigationState',
   default: {
     visible: false,
   },
 });
 
-export function useMobilePublicNavigationValue() {
+export function useHomeHeaderMobileNavigationValue() {
   return useRecoilValue(mobilePublicNavigationState);
 }
 
-export function useMobilePublicNavigationActions() {
+export function useHomeHeaderMobileNavigationActions() {
   const set = useSetRecoilState(mobilePublicNavigationState);
 
   const onClose = useCallback(() => {
