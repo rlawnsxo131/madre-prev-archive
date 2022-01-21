@@ -1,21 +1,14 @@
 import { css } from '@emotion/react';
 import HomeHeaderMobileNavigationButton from './HomeHeaderMobileNavigationButton';
 import HomeHeaderMobileNavigationLinks from './HomeHeaderMobileNavigationLinks';
-import {
-  useHomeHeaderMobileNavigationValue,
-  useHomeHeaderMobileNavigationActions,
-} from '../../../atoms/homeHeaderMobileNavigationState';
 
 interface HomeHeaderMobileNavigationProps {}
 
 function HomeHeaderMobileNavigation(props: HomeHeaderMobileNavigationProps) {
-  const { visible } = useHomeHeaderMobileNavigationValue();
-  const { handleNavigation } = useHomeHeaderMobileNavigationActions();
-
   return (
     <div css={block}>
-      <HomeHeaderMobileNavigationButton handleNavigation={handleNavigation} />
-      <HomeHeaderMobileNavigationLinks visible={visible} />
+      <HomeHeaderMobileNavigationButton />
+      <HomeHeaderMobileNavigationLinks />
     </div>
   );
 }

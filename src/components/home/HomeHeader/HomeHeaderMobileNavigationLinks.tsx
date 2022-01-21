@@ -8,14 +8,14 @@ import {
   transitions,
   zIndexes,
 } from '../../../styles';
+import { useHomeHeaderMobileNavigationValue } from '../../../atoms/homeHeaderMobileNavigationState';
 
-interface HomeHeaderMobileNavigationLinksProps {
-  visible: boolean;
-}
+interface HomeHeaderMobileNavigationLinksProps {}
 
-function HomeHeaderMobileNavigationLinks({
-  visible,
-}: HomeHeaderMobileNavigationLinksProps) {
+function HomeHeaderMobileNavigationLinks(
+  props: HomeHeaderMobileNavigationLinksProps,
+) {
+  const { visible } = useHomeHeaderMobileNavigationValue();
   const closed = useTransitionTimeoutEffect({ visible });
 
   if (!visible && closed) return null;

@@ -2,14 +2,14 @@ import { memo } from 'react';
 import { css } from '@emotion/react';
 import { MenuIcon } from '../../../image/icons';
 import { palette, themeColor } from '../../../styles';
+import { useHomeHeaderMobileNavigationActions } from '../../../atoms/homeHeaderMobileNavigationState';
 
-interface HomeHeaderMobileNavigationButtonProps {
-  handleNavigation: () => void;
-}
+interface HomeHeaderMobileNavigationButtonProps {}
 
-function HomeHeaderMobileNavigationButton({
-  handleNavigation,
-}: HomeHeaderMobileNavigationButtonProps) {
+function HomeHeaderMobileNavigationButton(
+  props: HomeHeaderMobileNavigationButtonProps,
+) {
+  const { handleNavigation } = useHomeHeaderMobileNavigationActions();
   return (
     <button css={block} onClick={handleNavigation}>
       <MenuIcon />
