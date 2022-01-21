@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { css } from '@emotion/react';
 import { NavLink } from 'react-router-dom';
 import useTransitionTimeoutEffect from '../../../lib/hooks/useTransitionTimeoutEffect';
@@ -92,4 +91,4 @@ const link = css`
   }
 `;
 
-export default memo(HomeHeaderMobileNavigationLinks);
+export default HomeHeaderMobileNavigationLinks;

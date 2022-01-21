@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { css } from '@emotion/react';
 import { MenuIcon } from '../../../image/icons';
 import { palette, themeColor } from '../../../styles';
@@ -41,4 +40,4 @@ const block = css`
   }
 `;
 
-export default memo(HomeHeaderMobileNavigationButton);
+export default HomeHeaderMobileNavigationButton;
