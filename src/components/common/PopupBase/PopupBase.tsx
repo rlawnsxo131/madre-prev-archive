@@ -1,6 +1,8 @@
 import { css } from '@emotion/react';
-import { ColorTheme, useColorThemeValue } from '../../../atoms/colorThemeState';
+import { useSelector } from 'react-redux';
 import useTransitionTimeoutEffect from '../../../lib/hooks/useTransitionTimeoutEffect';
+import { RootState } from '../../../store';
+import { Theme } from '../../../store/theme';
 import { themeColor, transitions } from '../../../styles';
 import OpaqueLayer from '../OpaqueLayer';
 
@@ -10,7 +12,7 @@ interface PopupBaseProps {
 }
 
 function PopupBase({ children, visible }: PopupBaseProps) {
-  const { theme } = useColorThemeValue();
+  const theme = useSelector((state: RootState) => state.theme.theme);
   const closed = useTransitionTimeoutEffect({ visible });
 
   if (!visible && closed) return null;
@@ -22,7 +24,7 @@ function PopupBase({ children, visible }: PopupBaseProps) {
   );
 }
 
-const block = (visible: boolean, theme: ColorTheme) => css`
+const block = (visible: boolean, theme: Theme) => css`
   position: relative;
   display: flex;
   justify-content: center;

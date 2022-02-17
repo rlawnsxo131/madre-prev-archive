@@ -1,16 +1,16 @@
 import { css } from '@emotion/react';
 import { MenuIcon } from '../../../image/icons';
 import { palette, themeColor } from '../../../styles';
-import { useHomeHeaderMobileNavigationActions } from '../../../atoms/homeHeaderMobileNavigationState';
+import useHome from '../../../lib/hooks/useHome';
 
 interface HomeHeaderMobileNavigationButtonProps {}
 
 function HomeHeaderMobileNavigationButton(
   props: HomeHeaderMobileNavigationButtonProps,
 ) {
-  const { handleNavigation } = useHomeHeaderMobileNavigationActions();
+  const { handleMobileNavigation } = useHome();
   return (
-    <button css={block} onClick={handleNavigation}>
+    <button css={block} onClick={handleMobileNavigation}>
       <MenuIcon />
     </button>
   );

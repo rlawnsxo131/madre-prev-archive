@@ -1,8 +1,7 @@
 import { css } from '@emotion/react';
-import {
-  usePopupCommonActions,
-  usePopupCommonValue,
-} from '../../../atoms/popupCommonState';
+import { useSelector } from 'react-redux';
+import usePopupCommon from '../../../lib/hooks/usePopupCommon';
+import { RootState } from '../../../store';
 import { media, mediaQuery } from '../../../styles';
 import Button from '../Button';
 import PopupBase from '../PopupBase';
@@ -10,8 +9,11 @@ import PopupBase from '../PopupBase';
 interface PopupCommonProps {}
 
 function PopupCommon(props: PopupCommonProps) {
-  const { visible, title, message } = usePopupCommonValue();
-  const { closePopup } = usePopupCommonActions();
+  const { visible, title, message } = useSelector(
+    (state: RootState) => state.core.popupCommon,
+  );
+  const { closePopup } = usePopupCommon();
+
   return (
     <PopupBase visible={visible}>
       <div css={block}>

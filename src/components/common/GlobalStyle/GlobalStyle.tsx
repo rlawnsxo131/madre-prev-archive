@@ -1,15 +1,17 @@
 import { css, Global } from '@emotion/react';
-import { ColorTheme, useColorThemeValue } from '../../../atoms/colorThemeState';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
+import { Theme } from '../../../store/theme';
 import { themeColor } from '../../../styles';
 
 interface GlobalStyleProps {}
 
 function GlobalStyle(props: GlobalStyleProps) {
-  const { theme } = useColorThemeValue();
+  const theme = useSelector((state: RootState) => state.theme.theme);
   return <Global styles={globalStyle(theme)} />;
 }
 
-const globalStyle = (theme: ColorTheme) => css`
+const globalStyle = (theme: Theme) => css`
   html,
   body,
   #root {

@@ -6,6 +6,6 @@
 * React
 * React Router
 * TypeScript
-* Recoil
+* Redux Toolkit
 * D3
 * Emotion

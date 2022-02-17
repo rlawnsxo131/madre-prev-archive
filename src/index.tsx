@@ -1,17 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import { RecoilRoot } from 'recoil';
+import { Provider } from 'react-redux';
+import { store } from './store';
 import App from './App';
-import recoilInitializer from './atoms/recoilInitializer';
 
 ReactDOM.render(
   <React.StrictMode>
-    <RecoilRoot initializeState={recoilInitializer}>
+    <Provider store={store}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </RecoilRoot>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root'),
 );

@@ -7,14 +7,17 @@ import {
   transitions,
   zIndexes,
 } from '../../../styles';
-import { useHomeHeaderMobileNavigationValue } from '../../../atoms/homeHeaderMobileNavigationState';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
 
 interface HomeHeaderMobileNavigationLinksProps {}
 
 function HomeHeaderMobileNavigationLinks(
   props: HomeHeaderMobileNavigationLinksProps,
 ) {
-  const { visible } = useHomeHeaderMobileNavigationValue();
+  const visible = useSelector(
+    (state: RootState) => state.home.mobileNavigationState.visible,
+  );
   const closed = useTransitionTimeoutEffect({ visible });
 
   if (!visible && closed) return null;

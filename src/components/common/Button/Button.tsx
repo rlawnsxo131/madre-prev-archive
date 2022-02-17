@@ -1,6 +1,8 @@
 import { css } from '@emotion/react';
 import { memo } from 'react';
-import { ColorTheme, useColorThemeValue } from '../../../atoms/colorThemeState';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
+import { Theme } from '../../../store/theme';
 import { palette } from '../../../styles';
 import {
   ButtonColor,
@@ -31,7 +33,8 @@ function Button({
   buttonRef,
   ...rest
 }: ButtonProps) {
-  const { theme } = useColorThemeValue();
+  const theme = useSelector((state: RootState) => state.theme.theme);
+
   return (
     <button
       ref={buttonRef}
@@ -55,7 +58,7 @@ const block = (
   size: ButtonSize,
   shape: ButtonShape,
   outline: boolean,
-  theme: ColorTheme,
+  theme: Theme,
 ) => css`
   display: inline-flex;
   align-items: center;
