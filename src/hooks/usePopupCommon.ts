@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { setPopupCommon } from '../../store/core';
+import { setPopupCommon } from '../store/core';
 
 export default function usePopupCommon() {
   const dispatch = useDispatch();

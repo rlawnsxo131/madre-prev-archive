@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { MenuIcon } from '../../../image/icons';
 import { palette, themeColor } from '../../../styles';
-import useHome from '../../../lib/hooks/useHome';
+import useHome from '../../../hooks/useHome';
 
 interface HomeHeaderMobileNavigationButtonProps {}
 

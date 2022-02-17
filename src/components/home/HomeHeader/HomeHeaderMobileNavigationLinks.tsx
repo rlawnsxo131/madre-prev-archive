@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { NavLink } from 'react-router-dom';
-import useTransitionTimeoutEffect from '../../../lib/hooks/useTransitionTimeoutEffect';
+import useTransitionTimeoutEffect from '../../../hooks/useTransitionTimeoutEffect';
 import {
   standardColor,
   themeColor,

@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { setTheme } from '../../store/theme';
+import { setTheme } from '../store/theme';
 
 export default function useTheme() {
   const dispatch = useDispatch();

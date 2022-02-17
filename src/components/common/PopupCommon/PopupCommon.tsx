@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { useSelector } from 'react-redux';
-import usePopupCommon from '../../../lib/hooks/usePopupCommon';
+import usePopupCommon from '../../../hooks/usePopupCommon';
 import { RootState } from '../../../store';
 import { media, mediaQuery } from '../../../styles';
 import Button from '../Button';

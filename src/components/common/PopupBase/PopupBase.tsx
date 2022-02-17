@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { useSelector } from 'react-redux';
-import useTransitionTimeoutEffect from '../../../lib/hooks/useTransitionTimeoutEffect';
+import useTransitionTimeoutEffect from '../../../hooks/useTransitionTimeoutEffect';
 import { RootState } from '../../../store';
 import { Theme } from '../../../store/theme';
 import { themeColor, transitions } from '../../../styles';

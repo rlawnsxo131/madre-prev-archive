@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { setMobileNavigation } from '../../store/home';
+import { setMobileNavigation } from '../store/home';
 
 export default function useHome() {
   const dispatch = useDispatch();

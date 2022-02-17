@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { useSelector } from 'react-redux';
 import { LightIcon, NightIcon } from '../../../image/icons';
-import useTheme from '../../../lib/hooks/useTheme';
+import useTheme from '../../../hooks/useTheme';
 import { RootState } from '../../../store';
 import { Theme } from '../../../store/theme';
 import { themeColor } from '../../../styles';
