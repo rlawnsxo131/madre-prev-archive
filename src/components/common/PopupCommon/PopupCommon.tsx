@@ -1,16 +1,15 @@
 import { css } from '@emotion/react';
-import useClosePopupCommon from '../../../hooks/core/useClosePopupCommon';
-import usePopupCommonState from '../../../hooks/core/usePopupCommonState';
 import { media, mediaQuery } from '../../../styles';
 import Button from '../Button';
 import PopupBase from '../PopupBase';
+import usePopupCommonClose from '../../../hooks/core/usePopupCommonClose';
+import usePopupCommonState from '../../../hooks/core/usePopupCommonState';
 
 interface PopupCommonProps {}
 
 function PopupCommon(props: PopupCommonProps) {
-  const onClick = useClosePopupCommon();
+  const onClick = usePopupCommonClose();
   const { visible, title, message } = usePopupCommonState();
-
   return (
     <PopupBase visible={visible}>
       <div css={block}>
