@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 interface HomeState {
   mobileNavigationState: {
@@ -16,13 +16,13 @@ const homeSlice = createSlice({
   name: 'home',
   initialState,
   reducers: {
-    setMobileNavigation(state, action: PayloadAction) {
+    setHomeMobileNavigation(state) {
       const { visible } = state.mobileNavigationState;
       state.mobileNavigationState.visible = !visible;
     },
   },
 });
 
-export const { setMobileNavigation } = homeSlice.actions;
+export const { setHomeMobileNavigation } = homeSlice.actions;
 
 export default homeSlice.reducer;

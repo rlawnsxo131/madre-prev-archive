@@ -1,7 +1,6 @@
 import { css } from '@emotion/react';
-import { useSelector } from 'react-redux';
-import usePopupCommon from '../../../hooks/usePopupCommon';
-import { RootState } from '../../../store';
+import useClosePopupCommon from '../../../hooks/core/useClosePopupCommon';
+import usePopupCommonState from '../../../hooks/core/usePopupCommonState';
 import { media, mediaQuery } from '../../../styles';
 import Button from '../Button';
 import PopupBase from '../PopupBase';
@@ -9,10 +8,8 @@ import PopupBase from '../PopupBase';
 interface PopupCommonProps {}
 
 function PopupCommon(props: PopupCommonProps) {
-  const { visible, title, message } = useSelector(
-    (state: RootState) => state.core.popupCommon,
-  );
-  const { closePopup } = usePopupCommon();
+  const onClick = useClosePopupCommon();
+  const { visible, title, message } = usePopupCommonState();
 
   return (
     <PopupBase visible={visible}>
@@ -20,7 +17,7 @@ function PopupCommon(props: PopupCommonProps) {
         {title && <h3>{title}</h3>}
         <p>{message}</p>
         <div css={buttonBlock}>
-          <Button color="pink" onClick={closePopup}>
+          <Button color="pink" onClick={onClick}>
             확인
           </Button>
         </div>

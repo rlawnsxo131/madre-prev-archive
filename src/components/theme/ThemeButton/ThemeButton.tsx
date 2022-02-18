@@ -1,19 +1,19 @@
 import { css } from '@emotion/react';
 import { useSelector } from 'react-redux';
 import { LightIcon, NightIcon } from '../../../image/icons';
-import useTheme from '../../../hooks/useTheme';
 import { RootState } from '../../../store';
 import { Theme } from '../../../store/theme';
 import { themeColor } from '../../../styles';
+import useSetTheme from '../../../hooks/theme/useSetTheme';
 
 interface ThemeButtonProps {}
 
 function ThemeButton(props: ThemeButtonProps) {
   const theme = useSelector((state: RootState) => state.theme.theme);
-  const { handleColorTheme } = useTheme();
+  const onClick = useSetTheme();
 
   return (
-    <button css={block(theme)} onClick={handleColorTheme}>
+    <button css={block(theme)} onClick={onClick}>
       {theme === 'light' && <LightIcon />}
       {theme === 'dark' && <NightIcon />}
     </button>

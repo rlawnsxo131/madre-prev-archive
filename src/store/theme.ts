@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { MADRE_COLOR_THEME } from '../constants';
 import { Storage } from '../lib/storage';
 
@@ -16,7 +16,7 @@ const themeSlice = createSlice({
   name: 'theme',
   initialState,
   reducers: {
-    setTheme(state, action: PayloadAction) {
+    setTheme(state) {
       const theme = state.theme === 'light' ? 'dark' : 'light';
       Storage.setItem(MADRE_COLOR_THEME, theme);
       state.theme = theme;

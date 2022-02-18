@@ -1,23 +1,20 @@
 import { css } from '@emotion/react';
 import { NavLink } from 'react-router-dom';
-import useTransitionTimeoutEffect from '../../../hooks/useTransitionTimeoutEffect';
 import {
   standardColor,
   themeColor,
   transitions,
   zIndexes,
 } from '../../../styles';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../store';
+import useHomeMobileNavigationState from '../../../hooks/home/useHomeMobileNavigationState';
+import useTransitionTimeoutEffect from '../../../hooks/useTransitionTimeoutEffect';
 
 interface HomeHeaderMobileNavigationLinksProps {}
 
 function HomeHeaderMobileNavigationLinks(
   props: HomeHeaderMobileNavigationLinksProps,
 ) {
-  const visible = useSelector(
-    (state: RootState) => state.home.mobileNavigationState.visible,
-  );
+  const { visible } = useHomeMobileNavigationState();
   const closed = useTransitionTimeoutEffect({ visible });
 
   if (!visible && closed) return null;
