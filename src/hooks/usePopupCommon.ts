@@ -1,8 +1,9 @@
 import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../store';
 import { setPopupCommon } from '../store/core';
 
 export default function usePopupCommon() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const showPopup = ({
     visible,
