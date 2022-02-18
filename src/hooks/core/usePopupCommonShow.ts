@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../store';
-import { setPopupCommon } from '../../store/core';
+import { AppDispatch } from '../../redux';
+import { setPopupCommon } from '../../redux/core';
 
 interface UsePopupCommonShowParams {
   title?: string;

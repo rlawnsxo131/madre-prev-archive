@@ -1,7 +1,7 @@
 import { css, Global } from '@emotion/react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../../store';
-import { Theme } from '../../../store/theme';
+import { RootState } from '../../../redux';
+import { Theme } from '../../../redux/theme';
 import { themeColor } from '../../../styles';
 
 interface GlobalStyleProps {}

@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import useThemeState from '../../../hooks/theme/useThemeState';
 import useTransitionTimeoutEffect from '../../../hooks/useTransitionTimeoutEffect';
-import { Theme } from '../../../store/theme';
+import { Theme } from '../../../redux/theme';
 import { themeColor, transitions } from '../../../styles';
 import OpaqueLayer from '../OpaqueLayer';
 
