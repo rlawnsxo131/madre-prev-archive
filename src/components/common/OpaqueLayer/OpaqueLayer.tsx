@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { transitions, zIndexes } from '../../../styles';
+import { palette, transitions, zIndexes } from '../../../styles';
 
 interface OpaqueLayerProps {
   children: React.ReactNode;
@@ -20,7 +20,7 @@ const block = (visible: boolean) => css`
   justify-content: center;
   align-items: center;
   z-index: ${zIndexes.opaqueLayer};
-  background: rgba(100, 100, 100, 0.5);
+  background: ${palette.opaque[50]};
   ${visible
     ? css`
         animation: ${transitions.fadeIn} 0.25s forwards;

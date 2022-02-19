@@ -36,6 +36,10 @@ const themeColor = {
     light: darkmodeColor.light['100'],
     dark: darkmodeColor.deep['100'],
   },
+  screen: {
+    light: darkmodeColor.light['200'],
+    dark: darkmodeColor.deep['200'],
+  },
   navigation: {
     light: darkmodeColor.light['100'],
     dark: darkmodeColor.deep['100'],

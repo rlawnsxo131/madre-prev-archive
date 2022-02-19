@@ -62,6 +62,7 @@ const block = (
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   outline: none;
@@ -138,6 +139,11 @@ const iconStyle = css`
   justify-content: center;
   align-items: center;
   margin-right: 0.4rem;
+  img,
+  svg {
+    width: 1rem;
+    height: 1rem;
+  }
 `;
 
 export default memo(Button);

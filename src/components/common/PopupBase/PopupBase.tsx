@@ -28,7 +28,7 @@ const block = (visible: boolean, theme: Theme) => css`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 3px;
+  border-radius: 0.25rem;
   background: ${themeColor.popup[theme]};
   ${visible
     ? css`

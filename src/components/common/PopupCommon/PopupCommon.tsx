@@ -2,13 +2,13 @@ import { css } from '@emotion/react';
 import { media, mediaQuery } from '../../../styles';
 import Button from '../Button';
 import PopupBase from '../PopupBase';
-import usePopupCommonClose from '../../../hooks/core/usePopupCommonClose';
 import usePopupCommonState from '../../../hooks/core/usePopupCommonState';
+import usePopupCommonActions from '../../../hooks/core/usePopupCommonActions';
 
 interface PopupCommonProps {}
 
 function PopupCommon(props: PopupCommonProps) {
-  const onClick = usePopupCommonClose();
+  const { onClose } = usePopupCommonActions();
   const { visible, title, message } = usePopupCommonState();
   return (
     <PopupBase visible={visible}>
@@ -16,7 +16,7 @@ function PopupCommon(props: PopupCommonProps) {
         {title && <h3>{title}</h3>}
         <p>{message}</p>
         <div css={buttonBlock}>
-          <Button color="pink" onClick={onClick}>
+          <Button color="pink" onClick={onClose}>
             확인
           </Button>
         </div>

@@ -1,6 +1,9 @@
 const palette = {
   white: '#FFFF',
   black: '#000000',
+  opaque: {
+    50: 'rgba(100, 100, 100, 0.5)',
+  },
   gray: {
     50: '#f8f9fa',
     100: '#f1f3f5',

@@ -1,30 +1,18 @@
 import { css } from '@emotion/react';
-import { useState } from 'react';
 import { DropArrowIcon, UserIcon } from '../../../image/icons';
 import { palette } from '../../../styles';
-import Button from '../../common/Button';
+import UserPersonalMenuAuthButton from './UserPersonalMenuAuthButton';
 
 interface UserPersonalMenuProps {}
 
 function UserPersonalMenu(props: UserPersonalMenuProps) {
-  const [temp, setTemp] = useState(false);
   return (
     <div css={block}>
-      {!temp && (
-        <Button
-          shape="round"
-          color="pink"
-          onClick={() => setTemp((prev) => !prev)}
-        >
-          로그인
-        </Button>
-      )}
-      {temp && (
-        <>
-          <UserIcon />
+      <UserPersonalMenuAuthButton />
+
+      {/* <UserIcon />
           <DropArrowIcon />
-        </>
-      )}
+         */}
     </div>
   );
 }

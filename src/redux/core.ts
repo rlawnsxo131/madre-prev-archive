@@ -6,8 +6,13 @@ interface PopupCommonState {
   message: string;
 }
 
+interface PopupLoginState {
+  visible: boolean;
+}
+
 interface CoreState {
   popupCommon: PopupCommonState;
+  popupLogin: PopupLoginState;
 }
 
 const initialState: CoreState = {
@@ -15,6 +20,9 @@ const initialState: CoreState = {
     visible: false,
     title: '',
     message: '',
+  },
+  popupLogin: {
+    visible: false,
   },
 };
 
@@ -28,9 +36,13 @@ const coreSlice = createSlice({
       state.popupCommon.title = title;
       state.popupCommon.message = message;
     },
+    setPopupLogin(state, action: PayloadAction<PopupLoginState>) {
+      const { visible } = action.payload;
+      state.popupLogin.visible = visible;
+    },
   },
 });
 
-export const { setPopupCommon } = coreSlice.actions;
+export const { setPopupCommon, setPopupLogin } = coreSlice.actions;
 
 export default coreSlice.reducer;

@@ -64,6 +64,42 @@ const scaleDown = keyframes`
   }
 `;
 
+const slideUp = keyframes`
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0%);
+  };
+`;
+
+const slideDown = keyframes`
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(100%);
+  };
+`;
+
+const shake = keyframes`
+  0% {
+      transform: translate(-15px);
+  }
+  25% {
+      transform: translate(15px);
+  }
+  50% {
+      transform: translate(-10px);
+  }
+  75% {
+      transform: translate(5px);
+  }
+  100% {
+      transform: translate(0px);
+  }
+`;
+
 const transitions = {
   fadeIn,
   fadeOut,
@@ -71,6 +107,9 @@ const transitions = {
   popOutToBottom,
   scaleUp,
   scaleDown,
+  slideUp,
+  slideDown,
+  shake,
 };
 
 export default transitions;
