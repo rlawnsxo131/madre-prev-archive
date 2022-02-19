@@ -2,7 +2,12 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../redux';
 import { setTheme } from '../../redux/theme';
 
-export default function useSetTheme() {
+export default function useThemeActions() {
   const dispatch = useDispatch<AppDispatch>();
-  return () => dispatch(setTheme());
+
+  const handleTheme = () => dispatch(setTheme());
+
+  return {
+    handleTheme,
+  };
 }

@@ -6,15 +6,17 @@ import {
   transitions,
   zIndexes,
 } from '../../../styles';
-import useHomeMobileNavigationState from '../../../hooks/home/useHomeMobileNavigationState';
 import useTransitionTimeoutEffect from '../../../hooks/useTransitionTimeoutEffect';
+import useHomeHeaderState from '../../../hooks/home/useHomeHeaderState';
 
 interface HomeHeaderMobileNavigationLinksProps {}
 
 function HomeHeaderMobileNavigationLinks(
   props: HomeHeaderMobileNavigationLinksProps,
 ) {
-  const { visible } = useHomeMobileNavigationState();
+  const {
+    navigation: { visible },
+  } = useHomeHeaderState();
   const closed = useTransitionTimeoutEffect({ visible });
 
   if (!visible && closed) return null;

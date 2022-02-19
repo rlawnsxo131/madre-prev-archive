@@ -1,7 +1,5 @@
 import { css } from '@emotion/react';
 import { memo } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../redux';
 import { Theme } from '../../../redux/theme';
 import { palette } from '../../../styles';
 import {
@@ -12,6 +10,7 @@ import {
   buttonColorMap,
   outlineButtonStyle,
 } from './Button.styles';
+import useThemeState from '../../../hooks/theme/useThemeState';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
@@ -33,7 +32,7 @@ function Button({
   buttonRef,
   ...rest
 }: ButtonProps) {
-  const theme = useSelector((state: RootState) => state.theme.theme);
+  const { theme } = useThemeState();
 
   return (
     <button

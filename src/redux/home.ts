@@ -1,14 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 interface HomeState {
-  mobileNavigationState: {
-    visible: boolean;
+  header: {
+    navigation: {
+      visible: boolean;
+    };
   };
 }
 
 const initialState: HomeState = {
-  mobileNavigationState: {
-    visible: false,
+  header: {
+    navigation: {
+      visible: false,
+    },
   },
 };
 
@@ -17,8 +21,8 @@ const homeSlice = createSlice({
   initialState,
   reducers: {
     setHomeMobileNavigation(state) {
-      const { visible } = state.mobileNavigationState;
-      state.mobileNavigationState.visible = !visible;
+      const { visible } = state.header.navigation;
+      state.header.navigation.visible = !visible;
     },
   },
 });

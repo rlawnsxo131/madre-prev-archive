@@ -1,13 +1,12 @@
 import { css, Global } from '@emotion/react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../redux';
 import { Theme } from '../../../redux/theme';
 import { themeColor } from '../../../styles';
+import useThemeState from '../../../hooks/theme/useThemeState';
 
 interface GlobalStyleProps {}
 
 function GlobalStyle(props: GlobalStyleProps) {
-  const theme = useSelector((state: RootState) => state.theme.theme);
+  const { theme } = useThemeState();
   return <Global styles={globalStyle(theme)} />;
 }
 

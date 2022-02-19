@@ -6,12 +6,13 @@ interface HomePageProps {}
 
 function HomePage(props: HomePageProps) {
   const { isLoading, isError, data } = useGetAuthCheckGoogleQuery({});
+
+  if (isLoading) return <div>loading</div>;
+
   console.log(isLoading);
   console.log(isError);
   console.log(data);
 
-  if (isLoading) return <div>loading</div>;
-  console.log(data);
   return (
     <HomeSection>
       <HomeSection.ThinkAbout />
