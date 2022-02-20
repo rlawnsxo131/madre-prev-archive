@@ -3,6 +3,7 @@ import usePopupLoginActions from '../../../hooks/core/usePopupLoginActions';
 import usePopupLoginState from '../../../hooks/core/usePopupLoginState';
 import CloseIcon from '../../../image/icons/CloseIcon';
 import { MobileUserImage } from '../../../image/images';
+import InspirationImage from '../../../image/images/InspirationImage';
 import { mediaQuery, palette } from '../../../styles';
 import GoogleAuthButton from '../../auth/GoogleAuthButton';
 import PopupBase from '../PopupBase';
@@ -22,6 +23,10 @@ function PopupLogin(props: PopupLoginProps) {
         <div css={rightBlock}>
           <div css={rightBlockHeader}>
             <CloseIcon onClick={onClose} />
+            <h1>Welcome To Madre</h1>
+          </div>
+          <div css={rightBlockBody}>
+            <InspirationImage />
           </div>
           <GoogleAuthButton />
         </div>
@@ -62,13 +67,28 @@ const rightBlock = css`
 
 const rightBlockHeader = css`
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+
+  h1 {
+    margin: 0;
+  }
   svg {
+    align-self: flex-end;
     width: 1.25rem;
     height: 1.25rem;
     color: ${palette.gray['600']};
     cursor: pointer;
+  }
+`;
+
+const rightBlockBody = css`
+  display: flex;
+  flex-direction: column;
+  svg {
+    width: 100%;
+    height: auto;
   }
 `;
 

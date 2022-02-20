@@ -10,7 +10,6 @@ function Core(props: CoreProps) {
       <GlobalStyle />
       <PopupCommon />
       <PopupLogin />
-      {/* <div>toast</div> */}
     </>
   );
 }

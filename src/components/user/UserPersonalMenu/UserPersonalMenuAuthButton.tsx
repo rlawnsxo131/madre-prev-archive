@@ -1,4 +1,3 @@
-import { css } from '@emotion/react';
 import usePopupLoginActions from '../../../hooks/core/usePopupLoginActions';
 import Button from '../../common/Button';
 
@@ -13,7 +12,5 @@ function UserPersonalMenuAuthButton(props: UserPersonalMenuAuthButtonProps) {
     </Button>
   );
 }
-
-const block = css``;
 
 export default UserPersonalMenuAuthButton;

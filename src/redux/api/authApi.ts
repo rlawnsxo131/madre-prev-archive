@@ -6,7 +6,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.REACT_APP_API_URI}/api/v1/auth/`,
+    baseUrl: `${process.env.REACT_APP_API_URI}/api/v1/auth`,
     prepareHeaders(headers) {
       return headers;
     },
@@ -14,7 +14,7 @@ const authApi = createApi({
   }),
   endpoints: (build) => ({
     getAuthCheckGoogle: build.query<string, any>({
-      query: () => 'google',
+      query: () => '/google',
     }),
   }),
 });
