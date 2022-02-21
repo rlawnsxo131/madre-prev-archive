@@ -1,8 +1,6 @@
 import { css } from '@emotion/react';
-import useThemeState from '../../../hooks/theme/useThemeState';
 import useTransitionTimeoutEffect from '../../../hooks/useTransitionTimeoutEffect';
-import { Theme } from '../../../redux/theme';
-import { palette, themeColor, transitions, zIndexes } from '../../../styles';
+import { palette, transitions, zIndexes } from '../../../styles';
 
 interface ScreenBaseProps {
   children: React.ReactNode;
@@ -10,15 +8,14 @@ interface ScreenBaseProps {
 }
 
 function ScreenBase({ children, visible }: ScreenBaseProps) {
-  const { theme } = useThemeState();
   const closed = useTransitionTimeoutEffect({ visible });
 
   if (!visible && closed) return null;
 
-  return <div css={block(theme, visible)}>{children}</div>;
+  return <div css={block(visible)}>{children}</div>;
 }
 
-const block = (theme: Theme, visible: boolean) => css`
+const block = (visible: boolean) => css`
   position: fixed;
   top: 0;
   left: 0;

@@ -2,8 +2,6 @@ class Storage {
   private fallbackStorage = new Map<string, string>();
   private valid: boolean = this.checkStorage();
 
-  constructor() {}
-
   private checkStorage() {
     try {
       localStorage.setItem('check', 'check');

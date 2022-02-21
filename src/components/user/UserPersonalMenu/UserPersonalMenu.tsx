@@ -9,10 +9,8 @@ function UserPersonalMenu(props: UserPersonalMenuProps) {
   return (
     <div css={block}>
       <UserPersonalMenuAuthButton />
-
       {/* <UserIcon />
-          <DropArrowIcon />
-         */}
+      <DropArrowIcon /> */}
     </div>
   );
 }

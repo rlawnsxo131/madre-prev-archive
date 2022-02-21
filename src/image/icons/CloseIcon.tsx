@@ -5,7 +5,7 @@ function CloseIcon({ onClick }: CloseIconProps) {
     <svg
       stroke="currentColor"
       fill="currentColor"
-      stroke-width="0"
+      strokeWidth="0"
       viewBox="0 0 24 24"
       tabIndex={1}
       height="1em"
