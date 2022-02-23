@@ -1,6 +1,6 @@
 import GlobalStyle from '../GlobalStyle';
 import PopupCommon from '../PopupCommon';
-import PopupLogin from '../PopupLogin';
+import PopupAuth from '../PopupAuth';
 
 interface CoreProps {}
 
@@ -9,7 +9,7 @@ function Core(props: CoreProps) {
     <>
       <GlobalStyle />
       <PopupCommon />
-      <PopupLogin />
+      <PopupAuth />
     </>
   );
 }

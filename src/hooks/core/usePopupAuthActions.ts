@@ -1,27 +1,27 @@
 import { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../redux';
-import { setPopupLogin } from '../../redux/core';
+import { setPopupAuth } from '../../redux/core';
 
-export default function usePopupLoginActions() {
+export default function usePopupAuthActions() {
   const dispatch = useDispatch<AppDispatch>();
   return useMemo(
     () => ({
       onShow() {
         dispatch(
-          setPopupLogin({
+          setPopupAuth({
             visible: true,
           }),
         );
       },
       onClose() {
         dispatch(
-          setPopupLogin({
+          setPopupAuth({
             visible: false,
           }),
         );
       },
     }),
-    [],
+    [dispatch],
   );
 }

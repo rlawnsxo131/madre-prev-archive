@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import postAuthCheckGoogleRegisterd from '../../../../api/auth/postAuthCheckGoogleRegisterd';
 
 export default function useGoogleAuthButton() {
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -14,10 +15,17 @@ export default function useGoogleAuthButton() {
         cookiepolicy: 'single_host_origin',
       });
 
-      auth2.attachClickHandler(buttonRef.current, {}, (googleUser: any) => {
-        const authToken = googleUser?.getAuthResponse(true).access_token;
-        console.log(authToken);
-      });
+      auth2.attachClickHandler(
+        buttonRef.current,
+        {},
+        async (googleUser: any) => {
+          const authToken = googleUser?.getAuthResponse(true).access_token;
+          console.log(authToken);
+          const exists = await postAuthCheckGoogleRegisterd({
+            accessToken: authToken,
+          });
+        },
+      );
     });
   }, [window.gapi, buttonRef.current]);
 

@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
-import usePopupLoginActions from '../../../hooks/core/usePopupLoginActions';
-import usePopupLoginState from '../../../hooks/core/usePopupLoginState';
+import usePopupAuthActions from '../../../hooks/core/usePopupAuthActions';
+import usePopupAuthState from '../../../hooks/core/usePopupAuthState';
 import CloseIcon from '../../../image/icons/CloseIcon';
 import { MobileUserImage } from '../../../image/images';
 import InspirationImage from '../../../image/images/InspirationImage';
@@ -8,11 +8,11 @@ import { mediaQuery, palette } from '../../../styles';
 import GoogleAuthButton from '../../auth/GoogleAuthButton';
 import PopupBase from '../PopupBase';
 
-interface PopupLoginProps {}
+interface PopupAuthProps {}
 
-function PopupLogin(props: PopupLoginProps) {
-  const { visible } = usePopupLoginState();
-  const { onClose } = usePopupLoginActions();
+function PopupAuth(props: PopupAuthProps) {
+  const { visible } = usePopupAuthState();
+  const { onClose } = usePopupAuthActions();
 
   return (
     <PopupBase visible={visible}>
@@ -92,4 +92,4 @@ const rightBlockBody = css`
   }
 `;
 
-export default PopupLogin;
+export default PopupAuth;

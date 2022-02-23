@@ -1,10 +1,10 @@
-import usePopupLoginActions from '../../../hooks/core/usePopupLoginActions';
+import usePopupAuthActions from '../../../hooks/core/usePopupAuthActions';
 import Button from '../../common/Button';
 
 interface UserPersonalMenuAuthButtonProps {}
 
 function UserPersonalMenuAuthButton(props: UserPersonalMenuAuthButtonProps) {
-  const { onShow } = usePopupLoginActions();
+  const { onShow } = usePopupAuthActions();
 
   return (
     <Button shape="round" color="pink" onClick={onShow}>

@@ -12,7 +12,7 @@ export default async function postAuthCheckGoogleRegisterd({
   accessToken,
 }: PostAuthCheckGoogleRegisterdParams) {
   const response = await apiClient.post<PostAuthCheckGoogleRegisterdResult>(
-    `/auth/google/check`,
+    `/auth/google/check/registerd`,
     {
       access_token: accessToken,
     },
