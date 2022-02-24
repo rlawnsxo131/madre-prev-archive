@@ -31,10 +31,8 @@ func postGoogleRegisterd() http.HandlerFunc {
 		if err != nil {
 			lib.ResponseErrorWriter(rw, err)
 		}
-		profile, err := lib.GetGoogleProfile(params.AccessToken)
-		if err != nil {
-			lib.ResponseErrorWriter(rw, err)
-		}
+		googleProfileApi := lib.NewGooglePeopleApi(params.AccessToken)
+		profile := googleProfileApi.GetGoogleProfile()
 		log.Println(profile)
 		lib.ResponseJsonCompressWriter(rw, r, map[string]bool{"exist": false})
 	}
