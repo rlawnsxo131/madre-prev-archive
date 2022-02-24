@@ -160,11 +160,11 @@ func (g *googlePeopleApi) convertToRawGoogleProfile(res *http.Response) *RawGoog
 		panic(err)
 	}
 
-	var rawGoogleProfile RawGoogleProfile
-	if err := json.Unmarshal(body, &rawGoogleProfile); err != nil {
+	var rawProfile RawGoogleProfile
+	if err := json.Unmarshal(body, &rawProfile); err != nil {
 		panic(err)
 	}
-	return &rawGoogleProfile
+	return &rawProfile
 }
 
 func (g *googlePeopleApi) convertToGoogleProfile(rawProfile *RawGoogleProfile) *GoogleProfile {
@@ -175,7 +175,6 @@ func (g *googlePeopleApi) convertToGoogleProfile(rawProfile *RawGoogleProfile) *
 
 	var socialId string
 	var email string
-
 	var photoUrl string
 	var displayName string
 
