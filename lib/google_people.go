@@ -74,7 +74,7 @@ type RawGoogleProfile struct {
 		GivenName            string `json:"givenName"`
 		DisplayNameLastFirst string `json:"displayNameLastFirst"`
 		UnstructuredName     string `json:"unstructuredName"`
-	}
+	} `json:"names"`
 	Photos []struct {
 		MetaData struct {
 			Primary bool `json:"primary"`
@@ -85,7 +85,7 @@ type RawGoogleProfile struct {
 		} `json:"metadata"`
 		Url     string `json:"url"`
 		Default bool   `json:"default"`
-	}
+	} `json:"photos"`
 	EmailAddresses []struct {
 		Metadata struct {
 			Primary  bool `json:"primary"`
@@ -175,6 +175,7 @@ func (g *googlePeopleApi) convertToGoogleProfile(rawProfile *RawGoogleProfile) *
 
 	var socialId string
 	var email string
+
 	var photoUrl string
 	var displayName string
 
