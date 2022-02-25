@@ -29,6 +29,7 @@ func GetDB() (db *sqlx.DB, err error) {
 		if err != nil {
 			return nil, errors.Wrap(err, "[db ping fail]")
 		}
+
 		db.SetMaxOpenConns(10)
 		db.SetMaxIdleConns(10)
 		db.SetConnMaxLifetime(time.Minute)
@@ -42,9 +43,11 @@ func GetDBConn(ctx context.Context) (db *sqlx.DB, err error) {
 	if v == nil {
 		return nil, ErrdbIsNotExist
 	}
+
 	if sqlxDb, ok := v.(*sqlx.DB); ok {
 		return sqlxDb, nil
 	}
+
 	return nil, ErrdbIsNotExist
 }
 
@@ -53,6 +56,7 @@ func ExcuteInitSQL(db *sqlx.DB) {
 	if err != nil {
 		panic(err)
 	}
+
 	queries := strings.Split(string(file), "\n\n")
 	for _, query := range queries {
 		sqlxDb.MustExec(query)
