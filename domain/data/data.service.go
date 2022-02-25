@@ -4,13 +4,13 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-type service struct {
-	db *sqlx.DB
-}
-
 type DataService interface {
 	FindAll(limit int) ([]Data, error)
 	FindOne(id string) (Data, error)
+}
+
+type service struct {
+	db *sqlx.DB
 }
 
 func NewDataService(db *sqlx.DB) DataService {

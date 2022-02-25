@@ -1,6 +1,7 @@
 package data
 
 import (
+	"log"
 	"net/http"
 	"strconv"
 
@@ -17,14 +18,25 @@ func SetupRoute(v1 *mux.Router) {
 
 func getAll() http.HandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
-		limit, _ := strconv.Atoi(r.URL.Query().Get("limit"))
+		limit, err := strconv.Atoi(r.URL.Query().Get("limit"))
+		if err != nil {
+			log.Printf("dataRoute: limit Atoi wrong: %v", err)
+		}
 		limit = lib.IfIsNotExistGetDefaultIntValue(limit, 50)
-		db := database.GetDBConn(r.Context())
+
+		db, err := database.GetDBConn(r.Context())
+		if err != nil {
+			lib.ResponseErrorWriter(rw, err)
+			return
+		}
+
 		dataService := NewDataService(db)
 		dataList, err := dataService.FindAll(limit)
 		if err != nil {
 			lib.ResponseErrorWriter(rw, err)
+			return
 		}
+
 		lib.ResponseJsonCompressWriter(rw, r, dataList)
 	}
 }
@@ -33,12 +45,20 @@ func getOne() http.HandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 		id := vars["id"]
-		db := database.GetDBConn(r.Context())
+
+		db, err := database.GetDBConn(r.Context())
+		if err != nil {
+			lib.ResponseErrorWriter(rw, err)
+			return
+		}
+
 		dataService := NewDataService(db)
 		data, err := dataService.FindOne(id)
 		if err != nil {
 			lib.ResponseErrorWriter(rw, err)
+			return
 		}
+
 		lib.ResponseJsonCompressWriter(rw, r, data)
 	}
 }

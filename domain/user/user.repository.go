@@ -2,14 +2,15 @@ package user
 
 import (
 	"github.com/jmoiron/sqlx"
+	"github.com/pkg/errors"
 )
-
-type repository struct {
-	db *sqlx.DB
-}
 
 type UserRepository interface {
 	FindOneById(id string) (User, error)
+}
+
+type repository struct {
+	db *sqlx.DB
 }
 
 func NewUserRepository(db *sqlx.DB) UserRepository {
@@ -20,6 +21,12 @@ func NewUserRepository(db *sqlx.DB) UserRepository {
 
 func (r *repository) FindOneById(id string) (User, error) {
 	var user User
-	err := r.db.QueryRowx("SELECT * FROM user WHERE id = ?", id).StructScan(&user)
+
+	sql := "SELECT * FROM user WHERE id = ?"
+	err := r.db.QueryRowx(sql, id).StructScan(&user)
+	if err != nil {
+		err = errors.Wrap(err, "UserRepository: FindOneById sql error")
+	}
+
 	return user, err
 }

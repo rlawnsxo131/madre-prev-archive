@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v2/lib"
 )
 
@@ -27,12 +28,21 @@ func getGoogle() http.HandlerFunc {
 func postGoogleRegisterd() http.HandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
 		var params postGoogleRegisterdParams
+
 		err := json.NewDecoder(r.Body).Decode(&params)
 		if err != nil {
+			err = errors.Wrap(err, "postGoogleRegistered: decode params error")
 			lib.ResponseErrorWriter(rw, err)
+			return
 		}
+
 		googleProfileApi := lib.NewGooglePeopleApi(params.AccessToken)
-		profile := googleProfileApi.GetGoogleProfile()
+		profile, err := googleProfileApi.GetGoogleProfile()
+		if err != nil {
+			lib.ResponseErrorWriter(rw, err)
+			return
+		}
+
 		log.Println(profile)
 		lib.ResponseJsonCompressWriter(rw, r, map[string]bool{"exist": false})
 	}

@@ -4,12 +4,12 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-type service struct {
-	db *sqlx.DB
-}
-
 type UserService interface {
 	FindOne(id string) (User, error)
+}
+
+type service struct {
+	db *sqlx.DB
 }
 
 func NewUserService(db *sqlx.DB) UserService {

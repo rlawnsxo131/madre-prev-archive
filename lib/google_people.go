@@ -5,12 +5,11 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strings"
+
+	"github.com/pkg/errors"
 )
 
-const (
-	googlePeopleUrl = "https://people.googleapis.com/v1/people/me?personFields=names,emailAddresses,photos"
-)
-
+// Google people api Response
 // {
 // 	"resourceName": "",
 // 	"etag": "",
@@ -58,6 +57,7 @@ const (
 // 	  }
 // 	]
 // }
+
 type RawGoogleProfile struct {
 	ResourceName string `json:"resourceName"`
 	Etag         string `json:"etag"`
@@ -107,16 +107,16 @@ type GoogleProfile struct {
 	DisplayName string
 }
 
-type googlePeopleApi struct {
-	accessToken string
+type GooglePeopleApi interface {
+	GetGoogleProfile() (googleProfile *GoogleProfile, err error)
+	createRequest() (request *http.Request, err error)
+	excuteRequest(req *http.Request) (response *http.Response, err error)
+	convertToRawGoogleProfile(res *http.Response) (rawGoogleProfile *RawGoogleProfile, err error)
+	convertToGoogleProfile(rawProfile *RawGoogleProfile) *GoogleProfile
 }
 
-type GooglePeopleApi interface {
-	GetGoogleProfile() *GoogleProfile
-	createRequest() *http.Request
-	excuteRequest(req *http.Request) *http.Response
-	convertToRawGoogleProfile(res *http.Response) *RawGoogleProfile
-	convertToGoogleProfile(rawProfile *RawGoogleProfile) *GoogleProfile
+type googlePeopleApi struct {
+	accessToken string
 }
 
 func NewGooglePeopleApi(accessToken string) GooglePeopleApi {
@@ -126,45 +126,60 @@ func NewGooglePeopleApi(accessToken string) GooglePeopleApi {
 	return api
 }
 
-func (g *googlePeopleApi) GetGoogleProfile() *GoogleProfile {
-	req := g.createRequest()
-	res := g.excuteRequest(req)
-	defer res.Body.Close()
-	rawProfile := g.convertToRawGoogleProfile(res)
+func (g *googlePeopleApi) GetGoogleProfile() (googleProfile *GoogleProfile, err error) {
+	req, err := g.createRequest()
+	if err != nil {
+		err = errors.Wrap(err, "GetGoogleProfile: createRequest error")
+		return nil, err
+	}
+
+	res, err := g.excuteRequest(req)
+	if err != nil {
+		err = errors.Wrap(err, "GetGoogleProfile: excuteRequest error")
+		return nil, err
+	}
+
+	rawProfile, err := g.convertToRawGoogleProfile(res)
+	if err != nil {
+		err = errors.Wrap(err, "GetGoogleProfile: convertToRawGoogleProfile error")
+		return nil, err
+	}
+
 	profile := g.convertToGoogleProfile(rawProfile)
 
-	return profile
+	return profile, nil
 }
 
-func (g *googlePeopleApi) createRequest() *http.Request {
-	req, err := http.NewRequest("GET", googlePeopleUrl, nil)
+func (g *googlePeopleApi) createRequest() (request *http.Request, err error) {
+	req, err := http.NewRequest("GET", "https://people.googleapis.com/v1/people/me?personFields=names,emailAddresses,photos", nil)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 	req.Header.Add("Authorization", "Bearer "+g.accessToken)
-	return req
+	return req, nil
 }
 
-func (g *googlePeopleApi) excuteRequest(req *http.Request) *http.Response {
+func (g *googlePeopleApi) excuteRequest(req *http.Request) (response *http.Response, err error) {
 	client := &http.Client{}
 	res, err := client.Do(req)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
-	return res
+	return res, nil
 }
 
-func (g *googlePeopleApi) convertToRawGoogleProfile(res *http.Response) *RawGoogleProfile {
+func (g *googlePeopleApi) convertToRawGoogleProfile(res *http.Response) (rawGoogleProfile *RawGoogleProfile, err error) {
+	defer res.Body.Close()
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
-	var rawProfile RawGoogleProfile
-	if err := json.Unmarshal(body, &rawProfile); err != nil {
-		panic(err)
+	var profileRaw RawGoogleProfile
+	if err := json.Unmarshal(body, &profileRaw); err != nil {
+		return nil, err
 	}
-	return &rawProfile
+	return &profileRaw, nil
 }
 
 func (g *googlePeopleApi) convertToGoogleProfile(rawProfile *RawGoogleProfile) *GoogleProfile {

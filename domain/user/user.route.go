@@ -17,12 +17,20 @@ func getOne() http.HandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 		id := vars["id"]
-		db := database.GetDBConn(r.Context())
+
+		db, err := database.GetDBConn(r.Context())
+		if err != nil {
+			lib.ResponseErrorWriter(rw, err)
+			return
+		}
+
 		userService := NewUserService(db)
 		user, err := userService.FindOne(id)
 		if err != nil {
 			lib.ResponseErrorWriter(rw, err)
+			return
 		}
+
 		lib.ResponseJsonCompressWriter(rw, r, user)
 	}
 }
