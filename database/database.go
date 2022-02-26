@@ -12,22 +12,22 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/constants"
 )
 
-var sqlxDb *sqlx.DB
-
 var (
-	ErrdbIsNotExist = errors.New("DB is not exist")
+	ErrDBIsNotExist = errors.New("DB is not exist")
 )
+
+var sqlxDb *sqlx.DB
 
 func GetDB() (db *sqlx.DB, err error) {
 	if sqlxDb == nil {
 		db, err := sqlx.Connect("mysql", "root:1234@/madre?charset=utf8mb4&collation=utf8mb4_unicode_ci&parseTime=true")
 		if err != nil {
-			return nil, errors.Wrap(err, "[sqlx connect fail]")
+			return nil, errors.Wrap(err, "sqlx: connect fail")
 		}
 
 		err = db.Ping()
 		if err != nil {
-			return nil, errors.Wrap(err, "[db ping fail]")
+			return nil, errors.Wrap(err, "sqlx: ping fail")
 		}
 
 		db.SetMaxOpenConns(10)
@@ -38,17 +38,17 @@ func GetDB() (db *sqlx.DB, err error) {
 	return sqlxDb, nil
 }
 
-func GetDBConn(ctx context.Context) (db *sqlx.DB, err error) {
+func GetDBConn(ctx context.Context) (*sqlx.DB, error) {
 	v := ctx.Value(constants.DBContextKey)
 	if v == nil {
-		return nil, ErrdbIsNotExist
+		return nil, ErrDBIsNotExist
 	}
 
 	if sqlxDb, ok := v.(*sqlx.DB); ok {
 		return sqlxDb, nil
 	}
 
-	return nil, ErrdbIsNotExist
+	return nil, ErrDBIsNotExist
 }
 
 func ExcuteInitSQL(db *sqlx.DB) {

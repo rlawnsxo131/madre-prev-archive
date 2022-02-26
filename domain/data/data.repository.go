@@ -6,7 +6,7 @@ import (
 )
 
 type DataRepository interface {
-	FindAll(limit int) (list []Data, err error)
+	FindAll(limit int) ([]Data, error)
 	FindOneById(id string) (Data, error)
 }
 
@@ -20,22 +20,20 @@ func NewDataRepository(db *sqlx.DB) DataRepository {
 	}
 }
 
-func (r *repository) FindAll(limit int) (list []Data, err error) {
+func (r *repository) FindAll(limit int) ([]Data, error) {
 	var dataList []Data
 
 	sql := "SELECT * FROM data Limit ?"
 	rows, err := r.db.Queryx(sql, limit)
 	if err != nil {
-		err = errors.Wrap(err, "DataRepository: FindAll sql error")
-		return nil, err
+		return nil, errors.Wrap(err, "DataRepository: FindAll sql error")
 	}
 
 	for rows.Next() {
 		var d Data
 		err := rows.StructScan(&d)
 		if err != nil {
-			err = errors.Wrap(err, "DataRepository: FindAll StructScan error")
-			return nil, err
+			return nil, errors.Wrap(err, "DataRepository: FindAll StructScan error")
 		}
 		dataList = append(dataList, d)
 	}

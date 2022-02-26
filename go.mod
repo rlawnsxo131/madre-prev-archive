@@ -9,3 +9,5 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/urfave/negroni v1.0.0
 )
+
+require github.com/lib/pq v1.10.4 // indirect
