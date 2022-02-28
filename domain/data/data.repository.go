@@ -7,20 +7,21 @@ import (
 
 type DataRepository interface {
 	FindAll(limit int) ([]Data, error)
-	FindOneById(id string) (Data, error)
+	FindOneById(id uint) (Data, error)
+	FindOneByUUID(uuid string) (Data, error)
 }
 
-type repository struct {
+type dataRepository struct {
 	db *sqlx.DB
 }
 
 func NewDataRepository(db *sqlx.DB) DataRepository {
-	return &repository{
+	return &dataRepository{
 		db: db,
 	}
 }
 
-func (r *repository) FindAll(limit int) ([]Data, error) {
+func (r *dataRepository) FindAll(limit int) ([]Data, error) {
 	var dataList []Data
 
 	sql := "SELECT * FROM data Limit ?"
@@ -41,13 +42,25 @@ func (r *repository) FindAll(limit int) ([]Data, error) {
 	return dataList, nil
 }
 
-func (r *repository) FindOneById(id string) (Data, error) {
+func (r *dataRepository) FindOneById(id uint) (Data, error) {
 	var data Data
 
 	sql := "SELECT * FROM data WHERE id = ?"
 	err := r.db.QueryRowx(sql, id).StructScan(&data)
 	if err != nil {
 		err = errors.Wrap(err, "DataRepository: FindOneById error")
+	}
+
+	return data, err
+}
+
+func (r *dataRepository) FindOneByUUID(uuid string) (Data, error) {
+	var data Data
+
+	sql := "SELECT * FROM data WHERE uuid = ?"
+	err := r.db.QueryRowx(sql, uuid).StructScan(&data)
+	if err != nil {
+		err = errors.Wrap(err, "DataRepository: FindOneByUUID error")
 	}
 
 	return data, err

@@ -10,13 +10,13 @@ import (
 
 func SetupRoute(v1 *mux.Router) {
 	userRouter := v1.NewRoute().PathPrefix("/user").Subrouter()
-	userRouter.HandleFunc("/{id}", getOne()).Methods("GET")
+	userRouter.HandleFunc("/{uuid}", getOne()).Methods("GET")
 }
 
 func getOne() http.HandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
-		id := vars["id"]
+		uuid := vars["uuid"]
 
 		db, err := database.GetDBConn(r.Context())
 		if err != nil {
@@ -25,7 +25,7 @@ func getOne() http.HandlerFunc {
 		}
 
 		userService := NewUserService(db)
-		user, err := userService.FindOne(id)
+		user, err := userService.FindOneByUUID(uuid)
 		if err != nil {
 			lib.ResponseErrorWriter(rw, err)
 			return

@@ -10,4 +10,7 @@ require (
 	github.com/urfave/negroni v1.0.0
 )
 
-require github.com/lib/pq v1.10.4 // indirect
+require (
+	github.com/lib/pq v1.10.4 // indirect
+	github.com/satori/go.uuid v1.2.0 // indirect
+)

@@ -6,26 +6,39 @@ import (
 )
 
 type UserRepository interface {
-	FindOneById(id string) (User, error)
+	FindOneById(id uint) (User, error)
+	FindOneByUUID(uuid string) (User, error)
 }
 
-type repository struct {
+type userRepository struct {
 	db *sqlx.DB
 }
 
 func NewUserRepository(db *sqlx.DB) UserRepository {
-	return &repository{
+	return &userRepository{
 		db: db,
 	}
 }
 
-func (r *repository) FindOneById(id string) (User, error) {
+func (r *userRepository) FindOneById(id uint) (User, error) {
 	var user User
 
 	sql := "SELECT * FROM user WHERE id = ?"
 	err := r.db.QueryRowx(sql, id).StructScan(&user)
 	if err != nil {
 		err = errors.Wrap(err, "UserRepository: FindOneById sql error")
+	}
+
+	return user, err
+}
+
+func (r *userRepository) FindOneByUUID(uuid string) (User, error) {
+	var user User
+
+	sql := "SELECT * FROM user WHERE uuid = ?"
+	err := r.db.QueryRowx(sql, uuid).StructScan(&user)
+	if err != nil {
+		err = errors.Wrap(err, "UserRepository: FindOneByUUID sql error")
 	}
 
 	return user, err

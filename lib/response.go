@@ -38,6 +38,7 @@ func ResponseJsonCompressWriter(rw http.ResponseWriter, r *http.Request, data in
 		return
 	}
 
+	// When an error occurs in the compress process, should I change it to return uncompressed json?
 	if len(json) >= 2048 {
 		if strings.Contains(r.Header.Get("Accept-Encoding"), "gzip") {
 			gz, err := gzip.NewWriterLevel(rw, gzip.DefaultCompression)
@@ -66,5 +67,6 @@ func ResponseJsonCompressWriter(rw http.ResponseWriter, r *http.Request, data in
 			return
 		}
 	}
+
 	rw.Write(json)
 }

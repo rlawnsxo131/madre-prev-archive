@@ -5,21 +5,28 @@ import (
 )
 
 type UserService interface {
-	FindOne(id string) (User, error)
+	FindOneById(id uint) (User, error)
+	FindOneByUUID(uuid string) (User, error)
 }
 
-type service struct {
+type userService struct {
 	db *sqlx.DB
 }
 
 func NewUserService(db *sqlx.DB) UserService {
-	return &service{
+	return &userService{
 		db: db,
 	}
 }
 
-func (s *service) FindOne(id string) (User, error) {
+func (s *userService) FindOneById(id uint) (User, error) {
 	userRepo := NewUserRepository(s.db)
 	user, err := userRepo.FindOneById(id)
+	return user, err
+}
+
+func (s *userService) FindOneByUUID(uuid string) (User, error) {
+	userRepo := NewUserRepository(s.db)
+	user, err := userRepo.FindOneByUUID(uuid)
 	return user, err
 }

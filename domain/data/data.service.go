@@ -6,27 +6,34 @@ import (
 
 type DataService interface {
 	FindAll(limit int) ([]Data, error)
-	FindOne(id string) (Data, error)
+	FindOneById(id uint) (Data, error)
+	FindOneByUUID(uuid string) (Data, error)
 }
 
-type service struct {
+type dataService struct {
 	db *sqlx.DB
 }
 
 func NewDataService(db *sqlx.DB) DataService {
-	return &service{
+	return &dataService{
 		db: db,
 	}
 }
 
-func (s *service) FindAll(limit int) ([]Data, error) {
+func (s *dataService) FindAll(limit int) ([]Data, error) {
 	dataRepo := NewDataRepository(s.db)
 	dataList, err := dataRepo.FindAll(limit)
 	return dataList, err
 }
 
-func (s *service) FindOne(id string) (Data, error) {
+func (s *dataService) FindOneById(id uint) (Data, error) {
 	dataRepo := NewDataRepository(s.db)
 	data, err := dataRepo.FindOneById(id)
+	return data, err
+}
+
+func (s *dataService) FindOneByUUID(uuid string) (Data, error) {
+	dataRepo := NewDataRepository(s.db)
+	data, err := dataRepo.FindOneByUUID(uuid)
 	return data, err
 }

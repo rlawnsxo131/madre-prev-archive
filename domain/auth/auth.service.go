@@ -1,27 +1,33 @@
 package auth
 
-import "github.com/jmoiron/sqlx"
+import (
+	"database/sql"
+)
 
 type AuthService interface {
-	FindOne(id string, uuid string) (Auth, error)
+	GetIsExistSocialAccountMap(socialAccount SocialAccount, err error) (map[string]bool, error)
 }
 
-type service struct {
-	db *sqlx.DB
+type authService struct {
 }
 
-func NewAuthService(db *sqlx.DB) AuthService {
-	return &service{
-		db: db,
+func NewAuthService() AuthService {
+	return &authService{}
+}
+
+func (s *authService) GetIsExistSocialAccountMap(socialAccount SocialAccount, err error) (map[string]bool, error) {
+	exist := false
+
+	if err != nil {
+		if err != sql.ErrNoRows {
+			exist = false
+		} else {
+			return nil, err
+		}
 	}
-}
-
-func (s *service) FindOne(id string, uuid string) (Auth, error) {
-	key := id
-	if key == "" {
-		key = uuid
+	if socialAccount.ID != 0 {
+		exist = true
 	}
-	authRepo := NewAuthRepository(s.db)
-	auth, err := authRepo.FindOneById(key)
-	return auth, err
+
+	return map[string]bool{"exist": exist}, nil
 }

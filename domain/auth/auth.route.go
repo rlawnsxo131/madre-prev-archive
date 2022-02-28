@@ -2,18 +2,18 @@ package auth
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
 	"github.com/pkg/errors"
+	"github.com/rlawnsxo131/madre-server-v2/database"
 	"github.com/rlawnsxo131/madre-server-v2/lib"
 )
 
 func SetupRoute(v1 *mux.Router) {
 	authRouter := v1.NewRoute().PathPrefix("/auth").Subrouter()
 	authRouter.HandleFunc("/google", getGoogle()).Methods("GET")
-	authRouter.HandleFunc("/google/check/registerd", postGoogleRegisterd()).Methods("POST")
+	authRouter.HandleFunc("/google/check", postGoogleCheck()).Methods("POST")
 }
 
 func getGoogle() http.HandlerFunc {
@@ -25,7 +25,7 @@ func getGoogle() http.HandlerFunc {
 	}
 }
 
-func postGoogleRegisterd() http.HandlerFunc {
+func postGoogleCheck() http.HandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
 		type params struct {
 			AccessToken string `json:"access_token"`
@@ -39,11 +39,11 @@ func postGoogleRegisterd() http.HandlerFunc {
 			return
 		}
 
-		// db, err := database.GetDBConn(r.Context())
-		// if err != nil {
-		// 	lib.ResponseErrorWriter(rw, err)
-		// 	return
-		// }
+		db, err := database.GetDBConn(r.Context())
+		if err != nil {
+			lib.ResponseErrorWriter(rw, err)
+			return
+		}
 
 		googleProfileApi := lib.NewGooglePeopleApi(p.AccessToken)
 		profile, err := googleProfileApi.GetGoogleProfile()
@@ -52,8 +52,16 @@ func postGoogleRegisterd() http.HandlerFunc {
 			return
 		}
 
-		log.Println(profile)
+		socialAccountService := NewSocialAccountService(db)
+		socialAccount, err := socialAccountService.FindOneBySocialId(profile.SocialId)
 
-		lib.ResponseJsonCompressWriter(rw, r, map[string]bool{"exist": false})
+		authService := NewAuthService()
+		isExistSocialAccountMap, err := authService.GetIsExistSocialAccountMap(socialAccount, err)
+		if err != nil {
+			lib.ResponseErrorWriter(rw, err)
+			return
+		}
+
+		lib.ResponseJsonCompressWriter(rw, r, isExistSocialAccountMap)
 	}
 }
