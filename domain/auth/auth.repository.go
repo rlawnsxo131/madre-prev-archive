@@ -20,7 +20,7 @@ func NewAuthRepository(db *sqlx.DB) *repository {
 func (r *repository) FindOneById(key string) (Auth, error) {
 	var auth Auth
 
-	sql := "SELECT * FROM data WHERE id = ?"
+	sql := "SELECT * FROM auth WHERE id = ?"
 	err := r.db.QueryRowx(sql, key).StructScan(&auth)
 	if err != nil {
 		err = errors.Wrap(err, "AuthRepository: FindOneById error")

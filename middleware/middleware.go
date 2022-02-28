@@ -26,7 +26,7 @@ func CorsMiddleware(rw http.ResponseWriter, r *http.Request, next http.HandlerFu
 				rw.Header().Set("Access-Control-Allow-Credentials", "true")
 				if method == "OPTIONS" {
 					rw.Header().Set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, Cookie, X-CSRF-Token")
-					rw.Header().Set("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS")
+					rw.Header().Set("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS,HEAD")
 					return
 				}
 				break

@@ -33,7 +33,7 @@ func ResponseErrorWriter(rw http.ResponseWriter, err error) {
 func ResponseJsonCompressWriter(rw http.ResponseWriter, r *http.Request, data interface{}) {
 	json, err := json.Marshal(data)
 	if err != nil {
-		err = errors.Wrap(err, "ResponseErrorWriter: json parse error")
+		err = errors.Wrap(err, "ResponseJsonCompressWriter: json parse error")
 		ResponseErrorWriter(rw, err)
 		return
 	}
@@ -42,7 +42,7 @@ func ResponseJsonCompressWriter(rw http.ResponseWriter, r *http.Request, data in
 		if strings.Contains(r.Header.Get("Accept-Encoding"), "gzip") {
 			gz, err := gzip.NewWriterLevel(rw, gzip.DefaultCompression)
 			if err != nil {
-				err = errors.Wrap(err, "ResponseErrorWriter: gzip compress error")
+				err = errors.Wrap(err, "ResponseJsonCompressWriter: gzip compress error")
 				ResponseErrorWriter(rw, err)
 				return
 			}
@@ -55,7 +55,7 @@ func ResponseJsonCompressWriter(rw http.ResponseWriter, r *http.Request, data in
 		if strings.Contains(r.Header.Get("Accept-Encoding"), "deflate") {
 			df, err := flate.NewWriter(rw, flate.DefaultCompression)
 			if err != nil {
-				err = errors.Wrap(err, "ResponseErrorWriter: dfalte compress error")
+				err = errors.Wrap(err, "ResponseJsonCompressWriter: dfalte compress error")
 				ResponseErrorWriter(rw, err)
 				return
 			}

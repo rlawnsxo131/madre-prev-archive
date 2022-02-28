@@ -13,7 +13,7 @@ import (
 func SetupRoute(v1 *mux.Router) {
 	authRouter := v1.NewRoute().PathPrefix("/auth").Subrouter()
 	authRouter.HandleFunc("/google", getGoogle()).Methods("GET")
-	authRouter.HandleFunc("/google/check/registerd", postGoogleRegisterd()).Methods("POST", "OPTIONS")
+	authRouter.HandleFunc("/google/check/registerd", postGoogleRegisterd()).Methods("POST")
 }
 
 func getGoogle() http.HandlerFunc {
@@ -27,9 +27,12 @@ func getGoogle() http.HandlerFunc {
 
 func postGoogleRegisterd() http.HandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
-		var params postGoogleRegisterdParams
+		type params struct {
+			AccessToken string `json:"access_token"`
+		}
+		var p params
 
-		err := json.NewDecoder(r.Body).Decode(&params)
+		err := json.NewDecoder(r.Body).Decode(&p)
 		if err != nil {
 			err = errors.Wrap(err, "postGoogleRegistered: decode params error")
 			lib.ResponseErrorWriter(rw, err)
@@ -42,7 +45,7 @@ func postGoogleRegisterd() http.HandlerFunc {
 		// 	return
 		// }
 
-		googleProfileApi := lib.NewGooglePeopleApi(params.AccessToken)
+		googleProfileApi := lib.NewGooglePeopleApi(p.AccessToken)
 		profile, err := googleProfileApi.GetGoogleProfile()
 		if err != nil {
 			lib.ResponseErrorWriter(rw, err)
