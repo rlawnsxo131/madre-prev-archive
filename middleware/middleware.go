@@ -12,17 +12,17 @@ import (
 
 func CorsMiddleware(rw http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 	allowHosts := []string{"http://localhost:8080", "http://localhost:5000"}
-	originHeader := r.Header.Get("Origin")
+	origin := r.Header.Get("Origin")
 	validation := false
 	for _, host := range allowHosts {
-		if originHeader == host {
+		if origin == host {
 			validation = true
 		}
 	}
 	if validation {
 		for _, method := range []string{"OPTIONS", "GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"} {
 			if method == r.Method {
-				rw.Header().Set("Access-Control-Allow-Origin", originHeader)
+				rw.Header().Set("Access-Control-Allow-Origin", origin)
 				rw.Header().Set("Access-Control-Allow-Credentials", "true")
 				if method == "OPTIONS" {
 					rw.Header().Set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, Cookie, X-CSRF-Token")
