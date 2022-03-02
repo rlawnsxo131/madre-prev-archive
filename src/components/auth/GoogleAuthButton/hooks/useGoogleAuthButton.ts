@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import postAuthCheckGoogleRegisterd from '../../../../api/auth/postAuthCheckGoogleRegisterd';
+import postAuthGoogleCheck from '../../../../api/auth/postAuthGoogleCheck';
 
 export default function useGoogleAuthButton() {
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -20,10 +20,10 @@ export default function useGoogleAuthButton() {
         {},
         async (googleUser: any) => {
           const authToken = googleUser?.getAuthResponse(true).access_token;
-          console.log(authToken);
-          const exists = await postAuthCheckGoogleRegisterd({
+          const { exist } = await postAuthGoogleCheck({
             accessToken: authToken,
           });
+          console.log('exist:', exist);
         },
       );
     });
