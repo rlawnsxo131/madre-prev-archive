@@ -14,6 +14,8 @@ func SetupRoute(v1 *mux.Router) {
 	authRouter := v1.NewRoute().PathPrefix("/auth").Subrouter()
 	authRouter.HandleFunc("/google", getGoogle()).Methods("GET")
 	authRouter.HandleFunc("/google/check", postGoogleCheck()).Methods("POST")
+	authRouter.HandleFunc("/google/signin", postGoogleSignin()).Methods("POST")
+	authRouter.HandleFunc("/google/signup", postGoogleSignup()).Methods("POST")
 }
 
 func getGoogle() http.HandlerFunc {
@@ -34,7 +36,7 @@ func postGoogleCheck() http.HandlerFunc {
 
 		err := json.NewDecoder(r.Body).Decode(&p)
 		if err != nil {
-			err = errors.Wrap(err, "postGoogleRegistered: decode params error")
+			err = errors.Wrap(err, "post /auth/google/check: decode params error")
 			lib.ResponseErrorWriter(rw, err)
 			return
 		}
@@ -64,4 +66,12 @@ func postGoogleCheck() http.HandlerFunc {
 
 		lib.ResponseJsonCompressWriter(rw, r, isExistSocialAccountMap)
 	}
+}
+
+func postGoogleSignin() http.HandlerFunc {
+	return func(rw http.ResponseWriter, r *http.Request) {}
+}
+
+func postGoogleSignup() http.HandlerFunc {
+	return func(rw http.ResponseWriter, r *http.Request) {}
 }

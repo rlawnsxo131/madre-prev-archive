@@ -10,10 +10,11 @@ import (
 
 func SetupRoute(v1 *mux.Router) {
 	userRouter := v1.NewRoute().PathPrefix("/user").Subrouter()
-	userRouter.HandleFunc("/{uuid}", getOne()).Methods("GET")
+	userRouter.HandleFunc("/{uuid}", get()).Methods("GET")
+	userRouter.HandleFunc("/{uuid}", put()).Methods("PUT")
 }
 
-func getOne() http.HandlerFunc {
+func get() http.HandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 		uuid := vars["uuid"]
@@ -33,4 +34,8 @@ func getOne() http.HandlerFunc {
 
 		lib.ResponseJsonCompressWriter(rw, r, user)
 	}
+}
+
+func put() http.HandlerFunc {
+	return func(rw http.ResponseWriter, r *http.Request) {}
 }

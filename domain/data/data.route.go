@@ -13,7 +13,7 @@ import (
 func SetupRoute(v1 *mux.Router) {
 	dataRouter := v1.NewRoute().PathPrefix("/data").Subrouter()
 	dataRouter.HandleFunc("", getAll()).Methods("GET")
-	dataRouter.HandleFunc("/{uuid}", getOne()).Methods("GET")
+	dataRouter.HandleFunc("/{uuid}", get()).Methods("GET")
 }
 
 func getAll() http.HandlerFunc {
@@ -41,7 +41,7 @@ func getAll() http.HandlerFunc {
 	}
 }
 
-func getOne() http.HandlerFunc {
+func get() http.HandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 		uuid := vars["uuid"]

@@ -6,15 +6,28 @@ import (
 	"database/sql"
 	"encoding/json"
 	"log"
-
 	"net/http"
 	"strings"
 
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v2/constants"
+	uuid "github.com/satori/go.uuid"
 )
 
-// http response error
+/**
+ * http
+ */
+// func httpLogger(next http.Handler) http.Handler {
+// 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+// 		len := r.ContentLength
+// 		body := make([]byte, len)
+// 		r.Body.Read(body)
+// 		log.Printf("query: %v", r.URL.RawQuery)
+// 		log.Printf("body: %v", string(body))
+// 		next.ServeHTTP(w, r)
+// 	})
+// }
+
 func ResponseErrorWriter(rw http.ResponseWriter, err error) {
 	status := http.StatusInternalServerError
 	message := constants.InternalServerErrorMessage
@@ -29,9 +42,8 @@ func ResponseErrorWriter(rw http.ResponseWriter, err error) {
 	log.Printf("%+v", err)
 }
 
-// http response compress
 func ResponseJsonCompressWriter(rw http.ResponseWriter, r *http.Request, data interface{}) {
-	json, err := json.Marshal(data)
+	jsonData, err := json.Marshal(data)
 	if err != nil {
 		err = errors.Wrap(err, "ResponseJsonCompressWriter: json parse error")
 		ResponseErrorWriter(rw, err)
@@ -39,7 +51,7 @@ func ResponseJsonCompressWriter(rw http.ResponseWriter, r *http.Request, data in
 	}
 
 	// When an error occurs in the compress process, should I change it to return uncompressed json?
-	if len(json) >= 2048 {
+	if len(jsonData) >= 2048 {
 		if strings.Contains(r.Header.Get("Accept-Encoding"), "gzip") {
 			gz, err := gzip.NewWriterLevel(rw, gzip.DefaultCompression)
 			if err != nil {
@@ -50,7 +62,7 @@ func ResponseJsonCompressWriter(rw http.ResponseWriter, r *http.Request, data in
 			defer gz.Close()
 			rw.Header().Set("Content-Encoding", "gzip")
 			rw.WriteHeader(http.StatusOK)
-			gz.Write(json)
+			gz.Write(jsonData)
 			return
 		}
 		if strings.Contains(r.Header.Get("Accept-Encoding"), "deflate") {
@@ -63,10 +75,29 @@ func ResponseJsonCompressWriter(rw http.ResponseWriter, r *http.Request, data in
 			defer df.Close()
 			rw.Header().Set("Content-Encoding", "deflate")
 			rw.WriteHeader(http.StatusOK)
-			df.Write(json)
+			df.Write(jsonData)
 			return
 		}
 	}
 
-	rw.Write(json)
+	rw.Write(jsonData)
+}
+
+/**
+ * uuid
+ * github.com/satori/go.uuid
+ */
+func GenerateUUID() string {
+	uuid := uuid.NewV4()
+	return uuid.String()
+}
+
+/**
+ * default value
+ */
+func IfIsNotExistGetDefaultIntValue(value int, defaultValue int) int {
+	if value == 0 {
+		value = defaultValue
+	}
+	return value
 }
