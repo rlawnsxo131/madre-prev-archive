@@ -29,28 +29,27 @@ func getGoogle() http.HandlerFunc {
 
 func postGoogleCheck() http.HandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
-		type params struct {
-			AccessToken string `json:"access_token"`
-		}
-		var p params
-
-		err := json.NewDecoder(r.Body).Decode(&p)
-		if err != nil {
-			err = errors.Wrap(err, "post /auth/google/check: decode params error")
-			lib.ResponseErrorWriter(rw, err)
-			return
-		}
-
+		writer := lib.NewHttpWriter(rw, r)
 		db, err := database.GetDBConn(r.Context())
 		if err != nil {
-			lib.ResponseErrorWriter(rw, err)
+			writer.ErrorWriter(err)
 			return
 		}
 
-		googleProfileApi := lib.NewGooglePeopleApi(p.AccessToken)
+		var params struct {
+			AccessToken string `json:"access_token"`
+		}
+		err = json.NewDecoder(r.Body).Decode(&params)
+		if err != nil {
+			err = errors.Wrap(err, "post /auth/google/check: decode params error")
+			writer.ErrorWriter(err)
+			return
+		}
+
+		googleProfileApi := lib.NewGooglePeopleApi(params.AccessToken)
 		profile, err := googleProfileApi.GetGoogleProfile()
 		if err != nil {
-			lib.ResponseErrorWriter(rw, err)
+			writer.ErrorWriter(err)
 			return
 		}
 
@@ -60,11 +59,11 @@ func postGoogleCheck() http.HandlerFunc {
 		authService := NewAuthService()
 		isExistSocialAccountMap, err := authService.GetIsExistSocialAccountMap(socialAccount, err)
 		if err != nil {
-			lib.ResponseErrorWriter(rw, err)
+			writer.ErrorWriter(err)
 			return
 		}
 
-		lib.ResponseJsonCompressWriter(rw, r, isExistSocialAccountMap)
+		writer.CompressWriter(isExistSocialAccountMap)
 	}
 }
 

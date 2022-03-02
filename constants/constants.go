@@ -9,6 +9,6 @@ const (
 
 // http status
 const (
-	NotFoundErrorMessage       = "NOT_FOUND"             // 404
-	InternalServerErrorMessage = "INTERNAL_SERVER_ERROR" // 500
+	ErrNotFoundMessage       = "NOT_FOUND"             // 404
+	ErrInternalServerMessage = "INTERNAL_SERVER_ERROR" // 500
 )
