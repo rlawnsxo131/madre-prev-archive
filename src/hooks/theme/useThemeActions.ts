@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../redux';
-import { setTheme } from '../../redux/theme';
+import { AppDispatch } from '../../store';
+import { setTheme } from '../../store/theme';
 
 export default function useThemeActions() {
   const dispatch = useDispatch<AppDispatch>();

@@ -1,5 +1,5 @@
 import { css, Global } from '@emotion/react';
-import { Theme } from '../../../redux/theme';
+import { Theme } from '../../../store/theme';
 import { themeColor } from '../../../styles';
 import useThemeState from '../../../hooks/theme/useThemeState';
 

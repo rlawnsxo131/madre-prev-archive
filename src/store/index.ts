@@ -3,11 +3,13 @@ import authApi from './api/authApi';
 import core from './core';
 import home from './home';
 import theme from './theme';
+import user from './user';
 
 const rootReducer = combineReducers({
   home,
   theme,
   core,
+  user,
   [authApi.reducerPath]: authApi.reducer,
 });
 

@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { MADRE_COLOR_THEME } from '../constants';
 import { Storage } from '../lib/storage';
 
-export type Theme = 'dark' | 'light';
+export type Theme = 'light' | 'dark';
 
 interface ThemeState {
   theme: Theme;

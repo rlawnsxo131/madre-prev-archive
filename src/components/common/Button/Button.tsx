@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { memo } from 'react';
-import { Theme } from '../../../redux/theme';
+import { Theme } from '../../../store/theme';
 import { palette } from '../../../styles';
 import {
   ButtonColor,

@@ -5,8 +5,8 @@ import CloseIcon from '../../../image/icons/CloseIcon';
 import { MobileUserImage } from '../../../image/images';
 import InspirationImage from '../../../image/images/InspirationImage';
 import { mediaQuery, palette } from '../../../styles';
-import GoogleAuthButton from '../../auth/GoogleAuthButton';
 import PopupBase from '../PopupBase';
+import ButtonGoogleSignin from '../ButtonGoogleSignin';
 
 interface PopupAuthProps {}
 
@@ -28,7 +28,7 @@ function PopupAuth(props: PopupAuthProps) {
           <div css={rightBlockBody}>
             <InspirationImage />
           </div>
-          <GoogleAuthButton />
+          <ButtonGoogleSignin />
         </div>
       </div>
     </PopupBase>

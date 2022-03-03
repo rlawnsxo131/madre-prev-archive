@@ -10,9 +10,19 @@ interface PopupAuthState {
   visible: boolean;
 }
 
+interface ScreenSignupState {
+  visible: boolean;
+}
+
+interface LoadingState {
+  visible: boolean;
+}
+
 interface CoreState {
   popupCommon: PopupCommonState;
   popupAuth: PopupAuthState;
+  screenSignup: ScreenSignupState;
+  loading: LoadingState;
 }
 
 const initialState: CoreState = {
@@ -22,6 +32,12 @@ const initialState: CoreState = {
     message: '',
   },
   popupAuth: {
+    visible: false,
+  },
+  screenSignup: {
+    visible: false,
+  },
+  loading: {
     visible: false,
   },
 };
@@ -40,9 +56,18 @@ const coreSlice = createSlice({
       const { visible } = action.payload;
       state.popupAuth.visible = visible;
     },
+    setScreenSignup(state, action: PayloadAction<ScreenSignupState>) {
+      const { visible } = action.payload;
+      state.screenSignup.visible = visible;
+    },
+    setLoading(state, action: PayloadAction<LoadingState>) {
+      const { visible } = action.payload;
+      state.loading.visible = visible;
+    },
   },
 });
 
-export const { setPopupCommon, setPopupAuth } = coreSlice.actions;
+export const { setPopupCommon, setPopupAuth, setScreenSignup, setLoading } =
+  coreSlice.actions;
 
 export default coreSlice.reducer;

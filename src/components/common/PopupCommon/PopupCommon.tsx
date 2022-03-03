@@ -10,6 +10,7 @@ interface PopupCommonProps {}
 function PopupCommon(props: PopupCommonProps) {
   const { onClose } = usePopupCommonActions();
   const { visible, title, message } = usePopupCommonState();
+
   return (
     <PopupBase visible={visible}>
       <div css={block}>

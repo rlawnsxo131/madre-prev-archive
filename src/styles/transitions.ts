@@ -100,6 +100,15 @@ const shake = keyframes`
   }
 `;
 
+const rotation = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+`;
+
 const transitions = {
   fadeIn,
   fadeOut,
@@ -110,6 +119,7 @@ const transitions = {
   slideUp,
   slideDown,
   shake,
+  rotation,
 };
 
 export default transitions;

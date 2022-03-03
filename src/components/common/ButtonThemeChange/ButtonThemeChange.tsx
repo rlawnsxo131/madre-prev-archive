@@ -2,14 +2,15 @@ import { css } from '@emotion/react';
 import useThemeActions from '../../../hooks/theme/useThemeActions';
 import useThemeState from '../../../hooks/theme/useThemeState';
 import { LightIcon, NightIcon } from '../../../image/icons';
-import { Theme } from '../../../redux/theme';
+import { Theme } from '../../../store/theme';
 import { themeColor } from '../../../styles';
 
-interface ThemeButtonProps {}
+interface ButtonThemeChangeProps {}
 
-function ThemeButton(props: ThemeButtonProps) {
+function ButtonThemeChange(props: ButtonThemeChangeProps) {
   const { theme } = useThemeState();
   const { handleTheme } = useThemeActions();
+
   return (
     <button css={block(theme)} onClick={handleTheme}>
       {theme === 'light' && <LightIcon />}
@@ -36,4 +37,4 @@ const block = (theme: Theme) => css`
   padding: 0.5rem;
 `;
 
-export default ThemeButton;
+export default ButtonThemeChange;

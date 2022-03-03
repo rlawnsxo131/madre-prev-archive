@@ -1,25 +1,20 @@
 import HomeSection from '../../components/home/HomeSection';
 import HomeFooter from '../../components/home/HomeFooter';
-import { useGetAuthCheckGoogleQuery } from '../../redux/api/authApi';
-import { Suspense } from 'react';
+import { useGetAuthCheckGoogleQuery } from '../../store/api/authApi';
 
 interface HomePageProps {}
 
 function HomePage(props: HomePageProps) {
-  const { isLoading, isError, data } = useGetAuthCheckGoogleQuery({});
+  const { data } = useGetAuthCheckGoogleQuery({});
 
-  console.log(isLoading);
-  console.log(isError);
-  console.log(data);
+  console.log('data: ', data);
 
   return (
-    <Suspense fallback={<div>loading</div>}>
-      <HomeSection>
-        <HomeSection.ThinkAbout />
-        <HomeSection.Graph />
-        <HomeFooter />
-      </HomeSection>
-    </Suspense>
+    <HomeSection>
+      <HomeSection.ThinkAbout />
+      <HomeSection.Graph />
+      <HomeFooter />
+    </HomeSection>
   );
 }
 
