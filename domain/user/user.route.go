@@ -16,23 +16,24 @@ func SetupRoute(v1 *mux.Router) {
 
 func get() http.HandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
+		writer := lib.NewHttpWriter(rw, r)
 		vars := mux.Vars(r)
 		uuid := vars["uuid"]
 
 		db, err := database.GetDBConn(r.Context())
 		if err != nil {
-			lib.ResponseErrorWriter(rw, err)
+			writer.WriteError(err)
 			return
 		}
 
 		userService := NewUserService(db)
 		user, err := userService.FindOneByUUID(uuid)
 		if err != nil {
-			lib.ResponseErrorWriter(rw, err)
+			writer.WriteError(err)
 			return
 		}
 
-		lib.ResponseJsonCompressWriter(rw, r, user)
+		writer.WriteCompress(user)
 	}
 }
 

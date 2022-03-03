@@ -14,8 +14,8 @@ import (
 )
 
 type HttpWriter interface {
-	ErrorWriter(err error)
-	CompressWriter(data interface{})
+	WriteError(err error)
+	WriteCompress(data interface{})
 }
 
 type httpWriter struct {
@@ -30,7 +30,7 @@ func NewHttpWriter(rw http.ResponseWriter, r *http.Request) HttpWriter {
 	}
 }
 
-func (writer *httpWriter) ErrorWriter(err error) {
+func (writer *httpWriter) WriteError(err error) {
 	status := http.StatusInternalServerError
 	message := constants.ErrInternalServerMessage
 
@@ -44,19 +44,20 @@ func (writer *httpWriter) ErrorWriter(err error) {
 	log.Printf("%+v", err)
 }
 
-func (writer *httpWriter) CompressWriter(data interface{}) {
+func (writer *httpWriter) WriteCompress(data interface{}) {
 	jsonData, err := json.Marshal(data)
 	if err != nil {
-		err = errors.Wrap(err, "ResponseJsonCompressWriter: json parse error")
-		writer.ErrorWriter(err)
+		err = errors.Wrap(err, "ResponseJsonWriteCompress: json parse error")
+		writer.WriteError(err)
 	}
 
+	// When an error occurs in the compress process, should I change it to return uncompressed json?
 	if len(jsonData) >= 2048 {
 		if strings.Contains(writer.r.Header.Get("Accept-Encoding"), "gzip") {
 			gz, err := gzip.NewWriterLevel(writer.rw, gzip.DefaultCompression)
 			if err != nil {
-				err = errors.Wrap(err, "ResponseJsonCompressWriter: gzip compress error")
-				writer.ErrorWriter(err)
+				err = errors.Wrap(err, "ResponseJsonWriteCompress: gzip compress error")
+				writer.WriteError(err)
 				return
 			}
 			defer gz.Close()
@@ -68,8 +69,8 @@ func (writer *httpWriter) CompressWriter(data interface{}) {
 		if strings.Contains(writer.r.Header.Get("Accept-Encoding"), "deflate") {
 			df, err := flate.NewWriter(writer.rw, flate.DefaultCompression)
 			if err != nil {
-				err = errors.Wrap(err, "ResponseJsonCompressWriter: dfalte compress error")
-				writer.ErrorWriter(err)
+				err = errors.Wrap(err, "ResponseJsonWriteCompress: dfalte compress error")
+				writer.WriteError(err)
 				return
 			}
 			defer df.Close()

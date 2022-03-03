@@ -20,10 +20,11 @@ func SetupRoute(v1 *mux.Router) {
 
 func getGoogle() http.HandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
+		writer := lib.NewHttpWriter(rw, r)
 		auth := map[string]string{
 			"google": "google",
 		}
-		lib.ResponseJsonCompressWriter(rw, r, auth)
+		writer.WriteCompress(auth)
 	}
 }
 
@@ -32,7 +33,7 @@ func postGoogleCheck() http.HandlerFunc {
 		writer := lib.NewHttpWriter(rw, r)
 		db, err := database.GetDBConn(r.Context())
 		if err != nil {
-			writer.ErrorWriter(err)
+			writer.WriteError(err)
 			return
 		}
 
@@ -42,28 +43,28 @@ func postGoogleCheck() http.HandlerFunc {
 		err = json.NewDecoder(r.Body).Decode(&params)
 		if err != nil {
 			err = errors.Wrap(err, "post /auth/google/check: decode params error")
-			writer.ErrorWriter(err)
+			writer.WriteError(err)
 			return
 		}
 
 		googleProfileApi := lib.NewGooglePeopleApi(params.AccessToken)
 		profile, err := googleProfileApi.GetGoogleProfile()
 		if err != nil {
-			writer.ErrorWriter(err)
+			writer.WriteError(err)
 			return
 		}
 
+		// if no rows in result set err -> { exist: false }
 		socialAccountService := NewSocialAccountService(db)
 		socialAccount, err := socialAccountService.FindOneBySocialId(profile.SocialId)
-
 		authService := NewAuthService()
 		isExistSocialAccountMap, err := authService.GetIsExistSocialAccountMap(socialAccount, err)
 		if err != nil {
-			writer.ErrorWriter(err)
+			writer.WriteError(err)
 			return
 		}
 
-		writer.CompressWriter(isExistSocialAccountMap)
+		writer.WriteCompress(isExistSocialAccountMap)
 	}
 }
 

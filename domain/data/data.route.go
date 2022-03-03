@@ -18,6 +18,7 @@ func SetupRoute(v1 *mux.Router) {
 
 func getAll() http.HandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
+		writer := lib.NewHttpWriter(rw, r)
 		limit, err := strconv.Atoi(r.URL.Query().Get("limit"))
 		if err != nil {
 			log.Printf("dataRoute: limit Atoi wrong: %v", err)
@@ -26,39 +27,40 @@ func getAll() http.HandlerFunc {
 
 		db, err := database.GetDBConn(r.Context())
 		if err != nil {
-			lib.ResponseErrorWriter(rw, err)
+			writer.WriteError(err)
 			return
 		}
 
 		dataService := NewDataService(db)
 		dataList, err := dataService.FindAll(limit)
 		if err != nil {
-			lib.ResponseErrorWriter(rw, err)
+			writer.WriteError(err)
 			return
 		}
 
-		lib.ResponseJsonCompressWriter(rw, r, dataList)
+		writer.WriteCompress(dataList)
 	}
 }
 
 func get() http.HandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
+		writer := lib.NewHttpWriter(rw, r)
 		vars := mux.Vars(r)
 		uuid := vars["uuid"]
 
 		db, err := database.GetDBConn(r.Context())
 		if err != nil {
-			lib.ResponseErrorWriter(rw, err)
+			writer.WriteError(err)
 			return
 		}
 
 		dataService := NewDataService(db)
 		data, err := dataService.FindOneByUUID(uuid)
 		if err != nil {
-			lib.ResponseErrorWriter(rw, err)
+			writer.WriteError(err)
 			return
 		}
 
-		lib.ResponseJsonCompressWriter(rw, r, data)
+		writer.WriteCompress(data)
 	}
 }
