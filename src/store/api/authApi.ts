@@ -39,6 +39,7 @@ const authApi = createApi({
         { accessToken },
         { dispatch, queryFulfilled, getCacheEntry },
       ) {
+        // check google registered
         dispatch(
           setLoading({
             visible: true,
@@ -52,6 +53,7 @@ const authApi = createApi({
           }),
         );
 
+        // excute signin or sinup action
         const { data } = getCacheEntry();
         if (data?.exist) {
           const {} = await postAuthGoogleSignin({ accessToken });
