@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
-import useGoogleSignin from '../../../../hooks/auth/useGoogleSignin';
+import { usePostAuthGoogleSininMutation } from '../../../../store/api/authApi';
 
 export default function useButtonGoogleSignin() {
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const { googleSignin } = useGoogleSignin();
+  const [googleAuthSignin, _] = usePostAuthGoogleSininMutation();
 
   useEffect(() => {
     if (!buttonRef.current) return;
@@ -21,7 +21,7 @@ export default function useButtonGoogleSignin() {
         {},
         async (googleUser: any) => {
           const accessToken = googleUser?.getAuthResponse(true).access_token;
-          await googleSignin(accessToken);
+          await googleAuthSignin({ accessToken });
         },
       );
     });

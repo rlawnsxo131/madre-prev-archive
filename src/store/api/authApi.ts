@@ -23,7 +23,7 @@ const authApi = createApi({
     //     console.log('end');
     //   },
     // }),
-    postAuthCheckGoogle: build.mutation<
+    postAuthGoogleSinin: build.mutation<
       { exist: boolean },
       { accessToken: string }
     >({
@@ -42,6 +42,12 @@ const authApi = createApi({
         );
         await queryFulfilled;
         dispatch(setPopupAuth({ visible: false }));
+        dispatch(
+          setLoading({
+            visible: false,
+          }),
+        );
+
         const { data } = getCacheEntry();
         if (data?.exist) {
           console.log('exist');
@@ -49,16 +55,11 @@ const authApi = createApi({
         if (!data?.exist) {
           dispatch(setScreenSignup({ visible: true }));
         }
-        dispatch(
-          setLoading({
-            visible: false,
-          }),
-        );
       },
     }),
   }),
 });
 
-export const { usePostAuthCheckGoogleMutation } = authApi;
+export const { usePostAuthGoogleSininMutation } = authApi;
 
 export default authApi;
