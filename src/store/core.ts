@@ -18,11 +18,14 @@ interface LoadingState {
   visible: boolean;
 }
 
+interface ErrorState {}
+
 interface CoreState {
   popupCommon: PopupCommonState;
   popupAuth: PopupAuthState;
   screenSignup: ScreenSignupState;
   loading: LoadingState;
+  error: ErrorState;
 }
 
 const initialState: CoreState = {
@@ -40,6 +43,7 @@ const initialState: CoreState = {
   loading: {
     visible: false,
   },
+  error: {},
 };
 
 const coreSlice = createSlice({

@@ -39,27 +39,31 @@ const authApi = createApi({
         { accessToken },
         { dispatch, queryFulfilled, getCacheEntry },
       ) {
-        // check google registered
-        dispatch(
-          setLoading({
-            visible: true,
-          }),
-        );
-        await queryFulfilled;
-        dispatch(setPopupAuth({ visible: false }));
-        dispatch(
-          setLoading({
-            visible: false,
-          }),
-        );
+        try {
+          // check google registered
+          dispatch(
+            setLoading({
+              visible: true,
+            }),
+          );
+          await queryFulfilled;
 
-        // excute signin or sinup action
-        const { data } = getCacheEntry();
-        if (data?.exist) {
-          const {} = await postAuthGoogleSignin({ accessToken });
-        }
-        if (!data?.exist) {
+          // excute signin or sinup action
+          const { data } = getCacheEntry();
+          if (data?.exist) {
+            const {} = await postAuthGoogleSignin({ accessToken });
+            return;
+          }
           dispatch(setScreenSignup({ visible: true }));
+        } catch (e) {
+          console.log(e);
+        } finally {
+          dispatch(setPopupAuth({ visible: false }));
+          dispatch(
+            setLoading({
+              visible: false,
+            }),
+          );
         }
       },
     }),
