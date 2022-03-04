@@ -29,7 +29,7 @@ function PopupCommon(props: PopupCommonProps) {
 const block = css`
   display: flex;
   flex-direction: column;
-  padding: 1.7rem 1.5rem;
+  padding: 2rem 1.5rem;
 
   h3 {
     margin: 0;
@@ -47,7 +47,7 @@ const block = css`
     width: 100vw;
   }
   ${mediaQuery(400)} {
-    width: 400px;
+    width: 25rem;
   }
 `;
 

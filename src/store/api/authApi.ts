@@ -58,12 +58,12 @@ const authApi = createApi({
           if (!data?.exist) {
             dispatch(setScreenSignup({ visible: true }));
           }
+          dispatch(setPopupAuth({ visible: false }));
           dispatch(
             setLoading({
               visible: false,
             }),
           );
-          dispatch(setPopupAuth({ visible: false }));
         } catch (e) {
           dispatch(
             setLoading({

@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import useThemeState from '../../../hooks/theme/useThemeState';
 import useTransitionTimeoutEffect from '../../../hooks/useTransitionTimeoutEffect';
 import { Theme } from '../../../store/theme';
-import { themeColor, transitions } from '../../../styles';
+import { themeColor, transitions, zIndexes } from '../../../styles';
 import OpaqueLayer from '../OpaqueLayer';
 
 interface PopupBaseProps {
@@ -30,6 +30,8 @@ const block = (visible: boolean, theme: Theme) => css`
   align-items: center;
   border-radius: 0.25rem;
   background: ${themeColor.popup[theme]};
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.09);
+  z-index: ${zIndexes.popup};
   ${visible
     ? css`
         animation: ${transitions.popInFromBottom} 0.4s forwards ease-in-out;

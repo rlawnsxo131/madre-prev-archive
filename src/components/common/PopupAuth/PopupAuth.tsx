@@ -61,7 +61,7 @@ const rightBlock = css`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 1rem;
+  padding: 1rem 1rem 1.5rem 1rem;
   border-radius: 0.25rem;
 `;
 
