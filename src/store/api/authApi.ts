@@ -14,7 +14,7 @@ const authApi = createApi({
     },
     credentials: 'include',
   }),
-  tagTypes: ['User'],
+  tagTypes: ['Auth'],
   endpoints: (build) => ({
     // getAuthCheckGoogle: build.query<string, any>({
     //   query: () => '/google',
