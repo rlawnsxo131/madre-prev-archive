@@ -16,6 +16,13 @@ import (
 	"github.com/urfave/negroni"
 )
 
+const (
+	port         = "5000"
+	writeTimeout = time.Second * 15
+	readTimeout  = time.Second * 15
+	idleTimeout  = time.Second * 60
+)
+
 type server struct {
 	router     *mux.Router
 	rootRouter *mux.Router
@@ -23,13 +30,6 @@ type server struct {
 	httpServer *http.Server
 	db         *sqlx.DB
 }
-
-const (
-	port         = "5000"
-	writeTimeout = time.Second * 15
-	readTimeout  = time.Second * 15
-	idleTimeout  = time.Second * 60
-)
 
 func New(db *sqlx.DB) *server {
 	s := &server{

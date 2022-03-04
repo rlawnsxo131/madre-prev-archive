@@ -10,7 +10,11 @@ import (
 	"strings"
 
 	"github.com/pkg/errors"
-	"github.com/rlawnsxo131/madre-server-v2/constants"
+)
+
+const (
+	ErrNotFoundMessage       = "NOT_FOUND"             // 404
+	ErrInternalServerMessage = "INTERNAL_SERVER_ERROR" // 500
 )
 
 type HttpWriter interface {
@@ -32,11 +36,11 @@ func NewHttpWriter(rw http.ResponseWriter, r *http.Request) HttpWriter {
 
 func (writer *httpWriter) WriteError(err error) {
 	status := http.StatusInternalServerError
-	message := constants.ErrInternalServerMessage
+	message := ErrInternalServerMessage
 
 	if err == sql.ErrNoRows {
 		status = http.StatusNotFound
-		message = constants.ErrNotFoundMessage
+		message = ErrNotFoundMessage
 	}
 
 	writer.rw.WriteHeader(status)

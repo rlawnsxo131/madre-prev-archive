@@ -5,22 +5,22 @@ import (
 	"github.com/pkg/errors"
 )
 
-type UserRepository interface {
+type UserReadRepository interface {
 	FindOneById(id uint) (User, error)
 	FindOneByUUID(uuid string) (User, error)
 }
 
-type userRepository struct {
+type userReadRepository struct {
 	db *sqlx.DB
 }
 
-func NewUserRepository(db *sqlx.DB) UserRepository {
-	return &userRepository{
+func NewUserReadRepository(db *sqlx.DB) UserReadRepository {
+	return &userReadRepository{
 		db: db,
 	}
 }
 
-func (r *userRepository) FindOneById(id uint) (User, error) {
+func (r *userReadRepository) FindOneById(id uint) (User, error) {
 	var user User
 
 	sql := "SELECT * FROM user WHERE id = ?"
@@ -32,7 +32,7 @@ func (r *userRepository) FindOneById(id uint) (User, error) {
 	return user, err
 }
 
-func (r *userRepository) FindOneByUUID(uuid string) (User, error) {
+func (r *userReadRepository) FindOneByUUID(uuid string) (User, error) {
 	var user User
 
 	sql := "SELECT * FROM user WHERE uuid = ?"

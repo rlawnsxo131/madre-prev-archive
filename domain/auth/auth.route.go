@@ -12,20 +12,9 @@ import (
 
 func SetupRoute(v1 *mux.Router) {
 	authRouter := v1.NewRoute().PathPrefix("/auth").Subrouter()
-	authRouter.HandleFunc("/google", getGoogle()).Methods("GET")
 	authRouter.HandleFunc("/google/check", postGoogleCheck()).Methods("POST")
 	authRouter.HandleFunc("/google/signin", postGoogleSignin()).Methods("POST")
 	authRouter.HandleFunc("/google/signup", postGoogleSignup()).Methods("POST")
-}
-
-func getGoogle() http.HandlerFunc {
-	return func(rw http.ResponseWriter, r *http.Request) {
-		writer := lib.NewHttpWriter(rw, r)
-		auth := map[string]string{
-			"google": "google",
-		}
-		writer.WriteCompress(auth)
-	}
 }
 
 func postGoogleCheck() http.HandlerFunc {
@@ -73,5 +62,22 @@ func postGoogleSignin() http.HandlerFunc {
 }
 
 func postGoogleSignup() http.HandlerFunc {
-	return func(rw http.ResponseWriter, r *http.Request) {}
+	return func(rw http.ResponseWriter, r *http.Request) {
+		// writer := lib.NewHttpWriter(rw, r)
+		// db, err := database.GetDBConn(r.Context())
+		// if err != nil {
+		// 	writer.WriteError(err)
+		// 	return
+		// }
+
+		// var params struct {
+		// 	AccessToken string `json:"access_token"`
+		// }
+		// err = json.NewDecoder(r.Body).Decode(&params)
+		// if err != nil {
+		// 	err = errors.Wrap(err, "post /auth/google/signup: decode params error")
+		// 	writer.WriteError(err)
+		// 	return
+		// }
+	}
 }

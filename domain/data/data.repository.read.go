@@ -5,23 +5,23 @@ import (
 	"github.com/pkg/errors"
 )
 
-type DataRepository interface {
+type DataReadRepository interface {
 	FindAll(limit int) ([]Data, error)
 	FindOneById(id uint) (Data, error)
 	FindOneByUUID(uuid string) (Data, error)
 }
 
-type dataRepository struct {
+type dataReadRepository struct {
 	db *sqlx.DB
 }
 
-func NewDataRepository(db *sqlx.DB) DataRepository {
-	return &dataRepository{
+func NewDataReadRepository(db *sqlx.DB) DataReadRepository {
+	return &dataReadRepository{
 		db: db,
 	}
 }
 
-func (r *dataRepository) FindAll(limit int) ([]Data, error) {
+func (r *dataReadRepository) FindAll(limit int) ([]Data, error) {
 	var dataList []Data
 
 	sql := "SELECT * FROM data Limit ?"
@@ -42,7 +42,7 @@ func (r *dataRepository) FindAll(limit int) ([]Data, error) {
 	return dataList, nil
 }
 
-func (r *dataRepository) FindOneById(id uint) (Data, error) {
+func (r *dataReadRepository) FindOneById(id uint) (Data, error) {
 	var data Data
 
 	sql := "SELECT * FROM data WHERE id = ?"
@@ -54,7 +54,7 @@ func (r *dataRepository) FindOneById(id uint) (Data, error) {
 	return data, err
 }
 
-func (r *dataRepository) FindOneByUUID(uuid string) (Data, error) {
+func (r *dataReadRepository) FindOneByUUID(uuid string) (Data, error) {
 	var data Data
 
 	sql := "SELECT * FROM data WHERE uuid = ?"

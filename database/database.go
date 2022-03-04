@@ -13,10 +13,9 @@ import (
 )
 
 var (
+	sqlxDb          *sqlx.DB
 	ErrDBIsNotExist = errors.New("DB is not exist")
 )
-
-var sqlxDb *sqlx.DB
 
 func GetDB() (db *sqlx.DB, err error) {
 	if sqlxDb == nil {

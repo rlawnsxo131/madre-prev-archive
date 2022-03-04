@@ -5,21 +5,21 @@ import (
 	"github.com/pkg/errors"
 )
 
-type SocialAccountRepository interface {
+type SocialAccountReadRepository interface {
 	FindOneBySocialId(socialId string) (SocialAccount, error)
 }
 
-type socialAccountRepository struct {
+type socialAccountReadRepository struct {
 	db *sqlx.DB
 }
 
-func NewSocialAccountRepository(db *sqlx.DB) *socialAccountRepository {
-	return &socialAccountRepository{
+func NewSocialAccountReadRepository(db *sqlx.DB) SocialAccountReadRepository {
+	return &socialAccountReadRepository{
 		db: db,
 	}
 }
 
-func (r *socialAccountRepository) FindOneBySocialId(socialId string) (SocialAccount, error) {
+func (r *socialAccountReadRepository) FindOneBySocialId(socialId string) (SocialAccount, error) {
 	var socialAccount SocialAccount
 
 	sql := "SELECT * FROM social_account WHERE social_id = ?"

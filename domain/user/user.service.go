@@ -20,13 +20,13 @@ func NewUserService(db *sqlx.DB) UserService {
 }
 
 func (s *userService) FindOneById(id uint) (User, error) {
-	userRepo := NewUserRepository(s.db)
-	user, err := userRepo.FindOneById(id)
+	userReadRepo := NewUserReadRepository(s.db)
+	user, err := userReadRepo.FindOneById(id)
 	return user, err
 }
 
 func (s *userService) FindOneByUUID(uuid string) (User, error) {
-	userRepo := NewUserRepository(s.db)
-	user, err := userRepo.FindOneByUUID(uuid)
+	userReadRepo := NewUserReadRepository(s.db)
+	user, err := userReadRepo.FindOneByUUID(uuid)
 	return user, err
 }

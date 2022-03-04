@@ -21,19 +21,19 @@ func NewDataService(db *sqlx.DB) DataService {
 }
 
 func (s *dataService) FindAll(limit int) ([]Data, error) {
-	dataRepo := NewDataRepository(s.db)
-	dataList, err := dataRepo.FindAll(limit)
+	dataReadRepo := NewDataReadRepository(s.db)
+	dataList, err := dataReadRepo.FindAll(limit)
 	return dataList, err
 }
 
 func (s *dataService) FindOneById(id uint) (Data, error) {
-	dataRepo := NewDataRepository(s.db)
-	data, err := dataRepo.FindOneById(id)
+	dataReadRepo := NewDataReadRepository(s.db)
+	data, err := dataReadRepo.FindOneById(id)
 	return data, err
 }
 
 func (s *dataService) FindOneByUUID(uuid string) (Data, error) {
-	dataRepo := NewDataRepository(s.db)
-	data, err := dataRepo.FindOneByUUID(uuid)
+	dataReadRepo := NewDataReadRepository(s.db)
+	data, err := dataReadRepo.FindOneByUUID(uuid)
 	return data, err
 }

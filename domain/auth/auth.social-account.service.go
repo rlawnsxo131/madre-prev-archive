@@ -17,7 +17,7 @@ func NewSocialAccountService(db *sqlx.DB) SocialAccountService {
 }
 
 func (s *socialAccountService) FindOneBySocialId(socialId string) (SocialAccount, error) {
-	socialAccountRepo := NewSocialAccountRepository(s.db)
-	socialAccount, err := socialAccountRepo.FindOneBySocialId(socialId)
+	socialAccountReadRepo := NewSocialAccountReadRepository(s.db)
+	socialAccount, err := socialAccountReadRepo.FindOneBySocialId(socialId)
 	return socialAccount, err
 }
