@@ -7,14 +7,14 @@ export default function useLoadingActions() {
   const dispatch = useDispatch<AppDispatch>();
   return useMemo(
     () => ({
-      onShow() {
+      show() {
         dispatch(
           setLoading({
             visible: true,
           }),
         );
       },
-      onClose() {
+      close() {
         dispatch(
           setLoading({
             visible: false,

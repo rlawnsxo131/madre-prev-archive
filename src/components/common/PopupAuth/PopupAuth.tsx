@@ -12,7 +12,7 @@ interface PopupAuthProps {}
 
 function PopupAuth(props: PopupAuthProps) {
   const { visible } = usePopupAuthState();
-  const { onClose } = usePopupAuthActions();
+  const { close } = usePopupAuthActions();
 
   return (
     <PopupBase visible={visible}>
@@ -22,7 +22,7 @@ function PopupAuth(props: PopupAuthProps) {
         </div>
         <div css={rightBlock}>
           <div css={rightBlockHeader}>
-            <CloseIcon onClick={onClose} />
+            <CloseIcon onClick={close} />
             <h1>Welcome To Madre</h1>
           </div>
           <div css={rightBlockBody}>

@@ -4,10 +4,10 @@ import Button from '../../common/Button';
 interface UserPersonalMenuAuthButtonProps {}
 
 function UserPersonalMenuAuthButton(props: UserPersonalMenuAuthButtonProps) {
-  const { onShow } = usePopupAuthActions();
+  const { show } = usePopupAuthActions();
 
   return (
-    <Button shape="round" color="pink" onClick={onShow}>
+    <Button shape="round" color="pink" onClick={show}>
       로그인
     </Button>
   );

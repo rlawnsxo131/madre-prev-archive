@@ -7,10 +7,10 @@ export default function useScreenSignupActions() {
   const dispatch = useDispatch<AppDispatch>();
   return useMemo(
     () => ({
-      onShow() {
+      show() {
         dispatch(setScreenSignup({ visible: true }));
       },
-      onClose() {
+      close() {
         dispatch(setScreenSignup({ visible: false }));
       },
     }),

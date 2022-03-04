@@ -1,17 +1,9 @@
 import { useEffect, useRef } from 'react';
-import postAuthGoogleCheck from '../../../../api/auth/postAuthGoogleCheck';
-import useLoadingActions from '../../../../hooks/core/useLoadingActions';
-import usePopupAuthActions from '../../../../hooks/core/usePopupAuthActions';
-import useScreenSignupActions from '../../../../hooks/core/useScreenSignupActions';
-import { usePostAuthCheckGoogleMutation } from '../../../../store/api/authApi';
+import useGoogleSignin from '../../../../hooks/auth/useGoogleSignin';
 
 export default function useButtonGoogleSignin() {
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const { onClose: onClosePopupAuth } = usePopupAuthActions();
-  const { onShow: onShowSignupScreen } = useScreenSignupActions();
-  const { onShow: onShowLoading, onClose: onCloseLoading } =
-    useLoadingActions();
-  // const [postAuthCheckGoogle, exist] = usePostAuthCheckGoogleMutation();
+  const { googleSignin } = useGoogleSignin();
 
   useEffect(() => {
     if (!buttonRef.current) return;
@@ -29,19 +21,7 @@ export default function useButtonGoogleSignin() {
         {},
         async (googleUser: any) => {
           const accessToken = googleUser?.getAuthResponse(true).access_token;
-          // postAuthCheckGoogle({ accessToken });
-
-          onShowLoading();
-          const { exist } = await postAuthGoogleCheck({
-            accessToken,
-          });
-          onCloseLoading();
-          if (exist) {
-            // signin
-            return;
-          }
-          onClosePopupAuth();
-          onShowSignupScreen();
+          await googleSignin(accessToken);
         },
       );
     });

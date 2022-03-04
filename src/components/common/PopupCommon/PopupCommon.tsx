@@ -8,7 +8,7 @@ import usePopupCommonActions from '../../../hooks/core/usePopupCommonActions';
 interface PopupCommonProps {}
 
 function PopupCommon(props: PopupCommonProps) {
-  const { onClose } = usePopupCommonActions();
+  const { close } = usePopupCommonActions();
   const { visible, title, message } = usePopupCommonState();
 
   return (
@@ -17,7 +17,7 @@ function PopupCommon(props: PopupCommonProps) {
         {title && <h3>{title}</h3>}
         <p>{message}</p>
         <div css={buttonBlock}>
-          <Button color="pink" onClick={onClose}>
+          <Button color="pink" onClick={close}>
             확인
           </Button>
         </div>

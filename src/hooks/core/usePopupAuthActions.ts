@@ -7,14 +7,14 @@ export default function usePopupAuthActions() {
   const dispatch = useDispatch<AppDispatch>();
   return useMemo(
     () => ({
-      onShow() {
+      show() {
         dispatch(
           setPopupAuth({
             visible: true,
           }),
         );
       },
-      onClose() {
+      close() {
         dispatch(
           setPopupAuth({
             visible: false,

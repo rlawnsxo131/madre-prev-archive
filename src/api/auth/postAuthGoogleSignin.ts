@@ -1,5 +1,19 @@
-interface PostAuthGoogleSigninParams {}
+import apiClient from '../apiClient';
+
+interface PostAuthGoogleSigninParams {
+  accessToken: string;
+}
+
+interface PostAuthGoogleSigninResponse {}
 
 export default async function postAuthGoogleSignin(
-  params: PostAuthGoogleSigninParams,
-) {}
+  accessToken: PostAuthGoogleSigninParams,
+) {
+  const { data } = await apiClient.post<PostAuthGoogleSigninResponse>(
+    `/auth/google/signin`,
+    {
+      access_token: accessToken,
+    },
+  );
+  return data;
+}
