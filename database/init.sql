@@ -23,12 +23,12 @@ CREATE TABLE IF NOT EXISTS madre.user (
 -- auth
 CREATE TABLE IF NOT EXISTS madre.social_account (
   `id` int(10) unsigned COLLATE utf8mb4_general_ci NOT NULL AUTO_INCREMENT,
-	`uuid` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-	`user_id` int(10) unsigned COLLATE utf8mb4_general_ci NOT NULL,
-	`provider` enum("GOOGLE") COLLATE utf8mb4_general_ci NOT NULL DEFAULT "GOOGLE",
-	`social_id` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-	`created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `uuid` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
+  `user_id` int(10) unsigned COLLATE utf8mb4_general_ci NOT NULL,
+  `provider` enum("GOOGLE") COLLATE utf8mb4_general_ci NOT NULL DEFAULT "GOOGLE",
+  `social_id` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ix_uuid` (`uuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
