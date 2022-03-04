@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import postAuthGoogleSignin from '../../api/auth/postAuthGoogleSignin';
 import { setLoading, setPopupAuth, setScreenSignup } from '../core';
 
 /**
@@ -23,7 +24,7 @@ const authApi = createApi({
     //     console.log('end');
     //   },
     // }),
-    postAuthGoogleSinin: build.mutation<
+    postGoogleSinin: build.mutation<
       { exist: boolean },
       { accessToken: string }
     >({
@@ -34,7 +35,10 @@ const authApi = createApi({
           access_token: accessToken,
         },
       }),
-      async onQueryStarted(_, { dispatch, queryFulfilled, getCacheEntry }) {
+      async onQueryStarted(
+        { accessToken },
+        { dispatch, queryFulfilled, getCacheEntry },
+      ) {
         dispatch(
           setLoading({
             visible: true,
@@ -50,7 +54,7 @@ const authApi = createApi({
 
         const { data } = getCacheEntry();
         if (data?.exist) {
-          console.log('exist');
+          const {} = await postAuthGoogleSignin({ accessToken });
         }
         if (!data?.exist) {
           dispatch(setScreenSignup({ visible: true }));
@@ -60,6 +64,6 @@ const authApi = createApi({
   }),
 });
 
-export const { usePostAuthGoogleSininMutation } = authApi;
+export const { usePostGoogleSininMutation } = authApi;
 
 export default authApi;

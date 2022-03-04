@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
-import { usePostAuthGoogleSininMutation } from '../../../../store/api/authApi';
+import { usePostGoogleSininMutation } from '../../../../store/api/authApi';
 
 export default function useButtonGoogleSignin() {
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const [googleAuthSignin, _] = usePostAuthGoogleSininMutation();
+  const [googleSignin, _] = usePostGoogleSininMutation();
 
   useEffect(() => {
     if (!buttonRef.current) return;
@@ -21,7 +21,7 @@ export default function useButtonGoogleSignin() {
         {},
         async (googleUser: any) => {
           const accessToken = googleUser?.getAuthResponse(true).access_token;
-          await googleAuthSignin({ accessToken });
+          await googleSignin({ accessToken });
         },
       );
     });

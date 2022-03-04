@@ -6,9 +6,9 @@ interface PostAuthGoogleSigninParams {
 
 interface PostAuthGoogleSigninResponse {}
 
-export default async function postAuthGoogleSignin(
-  accessToken: PostAuthGoogleSigninParams,
-) {
+export default async function postAuthGoogleSignin({
+  accessToken,
+}: PostAuthGoogleSigninParams) {
   const { data } = await apiClient.post<PostAuthGoogleSigninResponse>(
     `/auth/google/signin`,
     {
