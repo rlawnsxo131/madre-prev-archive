@@ -47,13 +47,12 @@ func postGoogleCheck() http.HandlerFunc {
 		socialAccountService := NewSocialAccountService(db)
 		socialAccount, err := socialAccountService.FindOneBySocialId(profile.SocialId)
 		authService := NewAuthService()
-		isExistSocialAccountMap, err := authService.GetIsExistSocialAccountMap(socialAccount, err)
+		existSocialAccountMap, err := authService.GetExistSocialAccountMap(socialAccount, err)
 		if err != nil {
 			writer.WriteError(err)
 			return
 		}
-
-		writer.WriteCompress(isExistSocialAccountMap)
+		writer.WriteCompress(existSocialAccountMap)
 	}
 }
 

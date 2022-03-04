@@ -5,7 +5,7 @@ import (
 )
 
 type AuthService interface {
-	GetIsExistSocialAccountMap(socialAccount SocialAccount, err error) (map[string]bool, error)
+	GetExistSocialAccountMap(socialAccount SocialAccount, err error) (map[string]bool, error)
 }
 
 type authService struct {
@@ -15,7 +15,7 @@ func NewAuthService() AuthService {
 	return &authService{}
 }
 
-func (s *authService) GetIsExistSocialAccountMap(socialAccount SocialAccount, err error) (map[string]bool, error) {
+func (s *authService) GetExistSocialAccountMap(socialAccount SocialAccount, err error) (map[string]bool, error) {
 	exist := false
 
 	if err != nil {
