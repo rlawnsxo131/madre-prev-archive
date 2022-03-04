@@ -2,9 +2,6 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import postAuthGoogleSignin from '../../api/auth/postAuthGoogleSignin';
 import { setLoading, setPopupAuth, setScreenSignup } from '../core';
 
-/**
- * https://redux-toolkit.js.org/rtk-query/usage-with-typescript
- */
 const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({
