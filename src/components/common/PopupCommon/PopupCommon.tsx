@@ -29,12 +29,13 @@ function PopupCommon(props: PopupCommonProps) {
 const block = css`
   display: flex;
   flex-direction: column;
-  padding: 1.725rem 1.5rem;
+  padding: 1.7rem 1.5rem;
 
   h3 {
     margin: 0;
   }
   p {
+    margin: 0;
     padding: 1rem 0;
     line-height: 1.75;
     word-break: break-word;

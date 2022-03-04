@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import usePopupAuthActions from '../../../hooks/core/usePopupAuthActions';
 import usePopupAuthState from '../../../hooks/core/usePopupAuthState';
-import CloseIcon from '../../../image/icons/CloseIcon';
+import { CloseIcon } from '../../../image/icons';
 import { MobileUserImage } from '../../../image/images';
 import InspirationImage from '../../../image/images/InspirationImage';
 import { mediaQuery, palette } from '../../../styles';

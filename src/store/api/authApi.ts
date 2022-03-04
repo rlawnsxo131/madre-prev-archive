@@ -1,6 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import postAuthGoogleSignin from '../../api/auth/postAuthGoogleSignin';
-import { setLoading, setPopupAuth, setScreenSignup } from '../core';
+import {
+  setLoading,
+  setPopupAuth,
+  setPopupCommon,
+  setScreenSignup,
+} from '../core';
 
 const authApi = createApi({
   reducerPath: 'authApi',
@@ -49,16 +54,28 @@ const authApi = createApi({
           const { data } = getCacheEntry();
           if (data?.exist) {
             const {} = await postAuthGoogleSignin({ accessToken });
-            return;
           }
-          dispatch(setScreenSignup({ visible: true }));
-        } catch (e) {
-          console.log(e);
-        } finally {
-          dispatch(setPopupAuth({ visible: false }));
+          if (!data?.exist) {
+            dispatch(setScreenSignup({ visible: true }));
+          }
           dispatch(
             setLoading({
               visible: false,
+            }),
+          );
+          dispatch(setPopupAuth({ visible: false }));
+        } catch (e) {
+          dispatch(
+            setLoading({
+              visible: false,
+            }),
+          );
+          dispatch(setPopupAuth({ visible: false }));
+          dispatch(
+            setPopupCommon({
+              title: '에러 발생',
+              message: '잠시후 다시 시도해 주세요.',
+              visible: true,
             }),
           );
         }
