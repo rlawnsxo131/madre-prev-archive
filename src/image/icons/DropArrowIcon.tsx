@@ -1,4 +1,4 @@
-interface DropArrowIconProps {}
+interface DropArrowIconProps extends React.SVGProps<HTMLOrSVGElement> {}
 
 function DropArrowIcon(props: DropArrowIconProps) {
   return (

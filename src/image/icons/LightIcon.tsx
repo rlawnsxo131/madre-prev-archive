@@ -1,4 +1,4 @@
-interface LightIconProps {}
+interface LightIconProps extends React.SVGProps<HTMLOrSVGElement> {}
 
 function LightIcon(props: LightIconProps) {
   return (

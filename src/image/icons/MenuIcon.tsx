@@ -1,4 +1,4 @@
-interface MenuIconProps {}
+interface MenuIconProps extends React.SVGProps<HTMLOrSVGElement> {}
 
 function MenuIcon(props: MenuIconProps) {
   return (

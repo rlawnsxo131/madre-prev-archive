@@ -1,4 +1,4 @@
-interface UserIconProps {}
+interface UserIconProps extends React.SVGProps<HTMLOrSVGElement> {}
 
 function UserIcon(props: UserIconProps) {
   return (

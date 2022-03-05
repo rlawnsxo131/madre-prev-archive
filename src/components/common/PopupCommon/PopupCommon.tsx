@@ -2,8 +2,8 @@ import { css } from '@emotion/react';
 import { media, mediaQuery } from '../../../styles';
 import Button from '../Button';
 import PopupBase from '../PopupBase';
-import usePopupCommonState from '../../../hooks/core/usePopupCommonState';
-import usePopupCommonActions from '../../../hooks/core/usePopupCommonActions';
+import usePopupCommonState from '../../../hooks/common/usePopupCommonState';
+import usePopupCommonActions from '../../../hooks/common/usePopupCommonActions';
 
 interface PopupCommonProps {}
 

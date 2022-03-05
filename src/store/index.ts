@@ -1,15 +1,21 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import authApi from './api/authApi';
-import core from './core';
+import common from './common';
 import home from './home';
+import popupAuth from './popupAuth';
+import screenSignup from './screenSignup';
 import theme from './theme';
 import user from './user';
 
 const rootReducer = combineReducers({
+  common,
   home,
   theme,
-  core,
   user,
+  // in core component
+  popupAuth,
+  screenSignup,
+  // rtk queries
   [authApi.reducerPath]: authApi.reducer,
 });
 

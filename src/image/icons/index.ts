@@ -6,3 +6,4 @@ export { default as MenuIcon } from './MenuIcon';
 export { default as UserIcon } from './UserIcon';
 export { default as DropArrowIcon } from './DropArrowIcon';
 export { default as LoadingIcon } from './LoadingIcon';
+export { default as WarningIcon } from './WarningIcon';

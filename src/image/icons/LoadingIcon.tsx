@@ -1,7 +1,6 @@
-import { css } from '@emotion/react';
 import { palette } from '../../styles';
 
-interface LoadingIconProps {}
+interface LoadingIconProps extends React.SVGProps<HTMLOrSVGElement> {}
 
 function LoadingIcon(props: LoadingIconProps) {
   return (
@@ -21,7 +20,5 @@ function LoadingIcon(props: LoadingIconProps) {
     </svg>
   );
 }
-
-const block = css``;
 
 export default LoadingIcon;

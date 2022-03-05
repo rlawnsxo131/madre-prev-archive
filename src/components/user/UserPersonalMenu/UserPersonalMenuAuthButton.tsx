@@ -1,4 +1,4 @@
-import usePopupAuthActions from '../../../hooks/core/usePopupAuthActions';
+import usePopupAuthActions from '../../../hooks/popupAuth/usePopupAuthActions';
 import Button from '../../common/Button';
 
 interface UserPersonalMenuAuthButtonProps {}

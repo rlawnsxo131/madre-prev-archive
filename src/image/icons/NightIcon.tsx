@@ -1,4 +1,4 @@
-interface NightIconProps {}
+interface NightIconProps extends React.SVGProps<HTMLOrSVGElement> {}
 
 function NightIcon(props: NightIconProps) {
   return (

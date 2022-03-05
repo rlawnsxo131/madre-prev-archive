@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store';
-import { setPopupCommon } from '../../store/core';
+import { setPopupCommon } from '../../store/common';
 
 interface PopupCommshowParams {
   title?: string;

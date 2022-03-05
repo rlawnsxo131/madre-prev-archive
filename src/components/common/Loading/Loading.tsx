@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import useLoadingState from '../../../hooks/core/useLoadingState';
+import useLoadingState from '../../../hooks/common/useLoadingState';
 import useTransitionTimeoutEffect from '../../../hooks/useTransitionTimeoutEffect';
 import { LoadingIcon } from '../../../image/icons';
 import { transitions } from '../../../styles';

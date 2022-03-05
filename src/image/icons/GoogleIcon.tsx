@@ -1,4 +1,4 @@
-interface GoogleIconProps {}
+interface GoogleIconProps extends React.SVGProps<HTMLOrSVGElement> {}
 
 function GoogleIcon(props: GoogleIconProps) {
   return (

@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import useScreenSignupState from '../../../hooks/core/useScreenSignupState';
+import useScreenSignupState from '../../../hooks/screenSignup/useScreenSignupState';
 import ScreenBase from '../ScreenBase';
 
 interface ScreenSignupProps {}

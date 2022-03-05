@@ -9,3 +9,4 @@
 - [menu](https://iconmonstr.com/menu-11-svg/)
 - [user](https://iconmonstr.com/user-20-svg/)
 - [drop-arrow](https://iconmonstr.com/arrow-80-svg/)
+- [warning](https://iconmonstr.com/warning-6-svg/)
