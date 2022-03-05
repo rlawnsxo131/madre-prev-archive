@@ -26,7 +26,7 @@ const authApi = createApi({
     //     console.log('end');
     //   },
     // }),
-    postGoogleSinin: build.mutation<
+    postGoogleSignin: build.mutation<
       { exist: boolean },
       { accessToken: string }
     >({
@@ -84,6 +84,6 @@ const authApi = createApi({
   }),
 });
 
-export const { usePostGoogleSininMutation } = authApi;
+export const { usePostGoogleSigninMutation } = authApi;
 
 export default authApi;
