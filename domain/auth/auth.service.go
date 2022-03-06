@@ -19,7 +19,7 @@ func (s *authService) GetExistSocialAccountMap(socialAccount SocialAccount, err 
 	exist := false
 
 	if err != nil {
-		if err != sql.ErrNoRows {
+		if err == sql.ErrNoRows {
 			exist = false
 		} else {
 			return nil, err
