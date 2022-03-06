@@ -1,16 +1,27 @@
-import { useCallback } from 'react';
+import { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store';
-import { setHomeMobileNavigation } from '../../store/home';
+import {
+  handleHomeMobileNavigation,
+  setHomeMobileNavigation,
+} from '../../store/home';
 
 export default function useHomeHeaderActions() {
   const dispatch = useDispatch<AppDispatch>();
 
-  const handleMobileNavigation = useCallback(() => {
-    dispatch(setHomeMobileNavigation());
-  }, [dispatch]);
-
-  return {
-    handleMobileNavigation,
-  };
+  return useMemo(
+    () => ({
+      handleMobileNavigation() {
+        dispatch(handleHomeMobileNavigation());
+      },
+      closeMobileNavigation() {
+        dispatch(
+          setHomeMobileNavigation({
+            visible: false,
+          }),
+        );
+      },
+    }),
+    [dispatch],
+  );
 }

@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface HomeState {
   header: {
@@ -20,13 +20,21 @@ const homeSlice = createSlice({
   name: 'home',
   initialState,
   reducers: {
-    setHomeMobileNavigation(state) {
+    handleHomeMobileNavigation(state) {
       const { visible } = state.header.navigation;
       state.header.navigation.visible = !visible;
+    },
+    setHomeMobileNavigation(
+      state,
+      action: PayloadAction<{ visible: boolean }>,
+    ) {
+      const { visible } = action.payload;
+      state.header.navigation.visible = visible;
     },
   },
 });
 
-export const { setHomeMobileNavigation } = homeSlice.actions;
+export const { setHomeMobileNavigation, handleHomeMobileNavigation } =
+  homeSlice.actions;
 
 export default homeSlice.reducer;
