@@ -1,9 +1,9 @@
 import { css } from '@emotion/react';
-import { CloseIcon, WarningIcon } from '../../../../image/icons';
-import { CancelImage } from '../../../../image/images';
-import { palette } from '../../../../styles';
-import Button from '../../Button';
-import PopupAuthStyles from '../PopupAuth.styles';
+import { CloseIcon, WarningIcon } from '../../../image/icons';
+import { CancelImage } from '../../../image/images';
+import { palette } from '../../../styles';
+import Button from '../Button';
+import PopupAuthStyles from './PopupAuth.styles';
 
 interface PopupAuthRightBlockIsErrorProps {
   close: () => void;

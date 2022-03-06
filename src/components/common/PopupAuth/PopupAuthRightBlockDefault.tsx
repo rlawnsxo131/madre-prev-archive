@@ -1,7 +1,7 @@
-import { CloseIcon } from '../../../../image/icons';
-import { InspirationImage } from '../../../../image/images';
-import ButtonGoogleSignin from '../../ButtonGoogleSignin';
-import PopupAuthStyles from '../PopupAuth.styles';
+import { CloseIcon } from '../../../image/icons';
+import { InspirationImage } from '../../../image/images';
+import ButtonGoogleSignin from '../ButtonGoogleSignin';
+import PopupAuthStyles from './PopupAuth.styles';
 
 interface PopupAuthRightBlockDefaultProps {
   close: () => void;

@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
-import { MobileUserImage } from '../../../../image/images';
-import { palette } from '../../../../styles';
+import { MobileUserImage } from '../../../image/images';
+import { palette } from '../../../styles';
 
 interface PopupAuthLeftBlockProps {}
 
