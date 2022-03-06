@@ -81,6 +81,7 @@ func (writer *httpWriter) WriteCompress(data interface{}) {
 			writer.rw.Header().Set("Content-Encoding", "deflate")
 			writer.rw.WriteHeader(http.StatusOK)
 			df.Write(jsonData)
+			return
 		}
 	}
 
