@@ -1,18 +1,9 @@
 package lib
 
-var utilManager *utils
-
-type Utils interface {
-	IfIsNotExistGetDefaultIntValue(value int, defaultValue int) int
-}
-
 type utils struct{}
 
-func GetUtils() Utils {
-	once.Do(func() {
-		utilManager = &utils{}
-	})
-	return utilManager
+func NewUtils() *utils {
+	return &utils{}
 }
 
 // default value

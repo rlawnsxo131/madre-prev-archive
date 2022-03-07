@@ -6,7 +6,7 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/lib"
 )
 
-var sqlxManager = lib.GetSqlxManager()
+var sqlxManager = lib.NewSqlxManager()
 
 type SocialAccountReadRepository interface {
 	FindOneById(id int64) (SocialAccount, error)

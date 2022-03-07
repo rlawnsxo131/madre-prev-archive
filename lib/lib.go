@@ -1,5 +1,7 @@
 package lib
 
-import "sync"
+import (
+	"github.com/go-playground/validator/v10"
+)
 
-var once sync.Once
+var ValidateManager *validator.Validate = validator.New()

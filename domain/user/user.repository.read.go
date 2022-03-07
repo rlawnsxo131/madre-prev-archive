@@ -6,7 +6,7 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/lib"
 )
 
-var sqlxManager = lib.GetSqlxManager()
+var sqlxManager = lib.NewSqlxManager()
 
 type UserReadRepository interface {
 	FindOneById(id int64) (User, error)
@@ -30,7 +30,7 @@ func (r *userReadRepository) FindOneById(id int64) (User, error) {
 	err := r.db.QueryRowx(query, id).StructScan(&user)
 	if err != nil {
 		customError := errors.Wrap(err, "UserRepository: FindOneById error")
-		sqlxManager.ErrNoRowsReturnRawError(err, customError)
+		err = sqlxManager.ErrNoRowsReturnRawError(err, customError)
 	}
 
 	return user, err
@@ -43,7 +43,7 @@ func (r *userReadRepository) FindOneByUUID(uuid string) (User, error) {
 	err := r.db.QueryRowx(query, uuid).StructScan(&user)
 	if err != nil {
 		customError := errors.Wrap(err, "UserRepository: FindOneByUUID error")
-		sqlxManager.ErrNoRowsReturnRawError(err, customError)
+		err = sqlxManager.ErrNoRowsReturnRawError(err, customError)
 	}
 
 	return user, err
