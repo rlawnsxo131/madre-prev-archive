@@ -4,17 +4,11 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-type DataService interface {
-	FindAll(limit int) ([]Data, error)
-	FindOneById(id int64) (Data, error)
-	FindOneByUUID(uuid string) (Data, error)
-}
-
 type dataService struct {
 	db *sqlx.DB
 }
 
-func NewDataService(db *sqlx.DB) DataService {
+func NewDataService(db *sqlx.DB) *dataService {
 	return &dataService{
 		db: db,
 	}

@@ -10,17 +10,11 @@ import (
 
 var sqlxManager = lib.NewSqlxManager()
 
-type DataReadRepository interface {
-	FindAll(limit int) ([]Data, error)
-	FindOneById(id int64) (Data, error)
-	FindOneByUUID(uuid string) (Data, error)
-}
-
 type dataReadRepository struct {
 	db *sqlx.DB
 }
 
-func NewDataReadRepository(db *sqlx.DB) DataReadRepository {
+func NewDataReadRepository(db *sqlx.DB) *dataReadRepository {
 	return &dataReadRepository{
 		db: db,
 	}

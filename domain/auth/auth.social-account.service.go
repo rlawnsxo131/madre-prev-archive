@@ -2,17 +2,11 @@ package auth
 
 import "github.com/jmoiron/sqlx"
 
-type SocialAccountService interface {
-	Create(params CreateSocialAccountParams) (int64, error)
-	FindOneById(id int64) (SocialAccount, error)
-	FindOneBySocialId(socialId string) (SocialAccount, error)
-}
-
 type socialAccountService struct {
 	db *sqlx.DB
 }
 
-func NewSocialAccountService(db *sqlx.DB) SocialAccountService {
+func NewSocialAccountService(db *sqlx.DB) *socialAccountService {
 	return &socialAccountService{
 		db: db,
 	}

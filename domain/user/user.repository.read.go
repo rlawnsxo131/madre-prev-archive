@@ -8,16 +8,11 @@ import (
 
 var sqlxManager = lib.NewSqlxManager()
 
-type UserReadRepository interface {
-	FindOneById(id int64) (User, error)
-	FindOneByUUID(uuid string) (User, error)
-}
-
 type userReadRepository struct {
 	db *sqlx.DB
 }
 
-func NewUserReadRepository(db *sqlx.DB) UserReadRepository {
+func NewUserReadRepository(db *sqlx.DB) *userReadRepository {
 	return &userReadRepository{
 		db: db,
 	}

@@ -8,16 +8,11 @@ import (
 
 var sqlxManager = lib.NewSqlxManager()
 
-type SocialAccountReadRepository interface {
-	FindOneById(id int64) (SocialAccount, error)
-	FindOneBySocialId(socialId string) (SocialAccount, error)
-}
-
 type socialAccountReadRepository struct {
 	db *sqlx.DB
 }
 
-func NewSocialAccountReadRepository(db *sqlx.DB) SocialAccountReadRepository {
+func NewSocialAccountReadRepository(db *sqlx.DB) *socialAccountReadRepository {
 	return &socialAccountReadRepository{
 		db: db,
 	}

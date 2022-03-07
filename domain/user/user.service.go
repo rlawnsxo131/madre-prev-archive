@@ -4,16 +4,11 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-type UserService interface {
-	FindOneById(id int64) (User, error)
-	FindOneByUUID(uuid string) (User, error)
-}
-
 type userService struct {
 	db *sqlx.DB
 }
 
-func NewUserService(db *sqlx.DB) UserService {
+func NewUserService(db *sqlx.DB) *userService {
 	return &userService{
 		db: db,
 	}
