@@ -13,13 +13,15 @@ import (
 )
 
 const (
+	ErrBadRequestMessage     = "BAD_REQUEST"           // 400
 	ErrNotFoundMessage       = "NOT_FOUND"             // 404
 	ErrInternalServerMessage = "INTERNAL_SERVER_ERROR" // 500
 )
 
 type HttpWriter interface {
-	WriteError(err error)
 	WriteCompress(data interface{})
+	WriteError(err error)
+	WriteErrorBadRequest(message string, data interface{})
 }
 
 type httpWriter struct {
@@ -32,20 +34,6 @@ func NewHttpWriter(rw http.ResponseWriter, r *http.Request) HttpWriter {
 		rw: rw,
 		r:  r,
 	}
-}
-
-func (writer *httpWriter) WriteError(err error) {
-	status := http.StatusInternalServerError
-	message := ErrInternalServerMessage
-
-	if err == sql.ErrNoRows {
-		status = http.StatusNotFound
-		message = ErrNotFoundMessage
-	}
-
-	writer.rw.WriteHeader(status)
-	json.NewEncoder(writer.rw).Encode(map[string]interface{}{"status": status, "message": message})
-	log.Printf("%+v", err)
 }
 
 func (writer *httpWriter) WriteCompress(data interface{}) {
@@ -86,4 +74,25 @@ func (writer *httpWriter) WriteCompress(data interface{}) {
 	}
 
 	writer.rw.Write(jsonData)
+}
+
+func (writer *httpWriter) WriteError(err error) {
+	status := http.StatusInternalServerError
+	message := ErrInternalServerMessage
+
+	if err == sql.ErrNoRows {
+		status = http.StatusNotFound
+		message = ErrNotFoundMessage
+	}
+
+	writer.rw.WriteHeader(status)
+	json.NewEncoder(writer.rw).Encode(map[string]interface{}{"status": status, "message": message})
+	log.Printf("%+v", err)
+}
+
+func (writer *httpWriter) WriteErrorBadRequest(message string, data interface{}) {
+	status := http.StatusBadRequest
+	writer.rw.WriteHeader(status)
+	json.NewEncoder(writer.rw).Encode(map[string]interface{}{"status": status, "message": ErrBadRequestMessage})
+	log.Printf("ErrorBadRequest: %s\n%+v", message, data)
 }

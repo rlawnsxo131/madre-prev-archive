@@ -2,17 +2,22 @@ package lib
 
 import "database/sql"
 
-type SqlxLib interface {
+type SqlxManager interface {
 	ErrNoRowsReturnRawError(err error, customError error) error
 }
 
-type sqlxLib struct{}
+type sqlxManager struct{}
 
-func NewSqlxLib() SqlxLib {
-	return &sqlxLib{}
+var sm *sqlxManager
+
+func NewSqlxManager() SqlxManager {
+	if sm == nil {
+		sm = &sqlxManager{}
+	}
+	return sm
 }
 
-func (s *sqlxLib) ErrNoRowsReturnRawError(err error, customError error) error {
+func (s *sqlxManager) ErrNoRowsReturnRawError(err error, customError error) error {
 	if err == sql.ErrNoRows {
 		return err
 	}

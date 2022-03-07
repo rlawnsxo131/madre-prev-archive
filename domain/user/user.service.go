@@ -5,7 +5,7 @@ import (
 )
 
 type UserService interface {
-	FindOneById(id uint) (User, error)
+	FindOneById(id int64) (User, error)
 	FindOneByUUID(uuid string) (User, error)
 }
 
@@ -19,7 +19,7 @@ func NewUserService(db *sqlx.DB) UserService {
 	}
 }
 
-func (s *userService) FindOneById(id uint) (User, error) {
+func (s *userService) FindOneById(id int64) (User, error) {
 	userReadRepo := NewUserReadRepository(s.db)
 	user, err := userReadRepo.FindOneById(id)
 	return user, err

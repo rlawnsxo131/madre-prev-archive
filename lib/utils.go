@@ -1,24 +1,18 @@
 package lib
 
-import (
-	uuid "github.com/satori/go.uuid"
-)
-
 type Utils interface {
-	GenerateUUID() string
 	IfIsNotExistGetDefaultIntValue(value int, defaultValue int) int
 }
 
 type utils struct{}
 
-func NewUtils() Utils {
-	return &utils{}
-}
+var utilManager *utils
 
-// uuid
-func (u *utils) GenerateUUID() string {
-	uuid := uuid.NewV4()
-	return uuid.String()
+func NewUtils() Utils {
+	if utilManager == nil {
+		utilManager = &utils{}
+	}
+	return utilManager
 }
 
 // default value

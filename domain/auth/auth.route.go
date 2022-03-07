@@ -10,6 +10,8 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/lib"
 )
 
+var uuidManager = lib.NewUUIDManager()
+
 func SetupRoute(v1 *mux.Router) {
 	authRouter := v1.NewRoute().PathPrefix("/auth").Subrouter()
 	authRouter.HandleFunc("/google/check", postGoogleCheck()).Methods("POST")
@@ -27,12 +29,19 @@ func postGoogleCheck() http.HandlerFunc {
 		}
 
 		var params struct {
-			AccessToken string `json:"access_token"`
+			AccessToken string `json:"access_token" validate:"required,min=50"`
 		}
+
 		err = json.NewDecoder(r.Body).Decode(&params)
 		if err != nil {
 			err = errors.Wrap(err, "post /auth/google/check: decode params error")
 			writer.WriteError(err)
+			return
+		}
+
+		err = lib.ValidateManager.Struct(&params)
+		if err != nil {
+			writer.WriteErrorBadRequest("post /auth/google/check: params validation error", &params)
 			return
 		}
 
@@ -62,21 +71,60 @@ func postGoogleSignin() http.HandlerFunc {
 
 func postGoogleSignup() http.HandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
-		// writer := lib.NewHttpWriter(rw, r)
-		// db, err := database.GetDBConn(r.Context())
-		// if err != nil {
-		// 	writer.WriteError(err)
-		// 	return
-		// }
+		writer := lib.NewHttpWriter(rw, r)
+		db, err := database.GetDBConn(r.Context())
+		if err != nil {
+			writer.WriteError(err)
+			return
+		}
 
-		// var params struct {
-		// 	AccessToken string `json:"access_token"`
-		// }
-		// err = json.NewDecoder(r.Body).Decode(&params)
-		// if err != nil {
-		// 	err = errors.Wrap(err, "post /auth/google/signup: decode params error")
-		// 	writer.WriteError(err)
-		// 	return
-		// }
+		var params struct {
+			AccessToken string `json:"access_token" validate:"requried,min=50"`
+			Username    string `json:"username" validate:"required,min=1,max=16"`
+		}
+
+		err = json.NewDecoder(r.Body).Decode(&params)
+		if err != nil {
+			err = errors.Wrap(err, "post /auth/google/signup: decode params error")
+			writer.WriteError(err)
+			return
+		}
+
+		err = lib.ValidateManager.Struct(&params)
+		if err != nil {
+			writer.WriteErrorBadRequest("post /auth/google/signup: params validation error", &params)
+			return
+		}
+
+		authService := NewAuthService()
+		valid, err := authService.ValidateUserName(params.Username)
+		if err != nil {
+			writer.WriteError(err)
+			return
+		}
+		if !valid {
+			writer.WriteErrorBadRequest("post /auth/google/signup: username validate error", &params)
+			return
+		}
+
+		socialAccountService := NewSocialAccountService(db)
+		lastInsertId, err := socialAccountService.Create(CreateSocialAccountParams{
+			UUID:        uuidManager.GenerateUUIDString(),
+			AccessToken: params.AccessToken,
+			UserName:    params.Username,
+			Provider:    "GOOGLE",
+		})
+		if err != nil {
+			writer.WriteError(err)
+			return
+		}
+
+		socialAccount, err := socialAccountService.FindOneById(lastInsertId)
+		if err != nil {
+			writer.WriteError(err)
+			return
+		}
+
+		writer.WriteCompress(socialAccount)
 	}
 }

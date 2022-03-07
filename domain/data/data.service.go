@@ -6,7 +6,7 @@ import (
 
 type DataService interface {
 	FindAll(limit int) ([]Data, error)
-	FindOneById(id uint) (Data, error)
+	FindOneById(id int64) (Data, error)
 	FindOneByUUID(uuid string) (Data, error)
 }
 
@@ -26,7 +26,7 @@ func (s *dataService) FindAll(limit int) ([]Data, error) {
 	return dataList, err
 }
 
-func (s *dataService) FindOneById(id uint) (Data, error) {
+func (s *dataService) FindOneById(id int64) (Data, error) {
 	dataReadRepo := NewDataReadRepository(s.db)
 	data, err := dataReadRepo.FindOneById(id)
 	return data, err

@@ -8,11 +8,11 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/lib"
 )
 
-var sqlxLib = lib.NewSqlxLib()
+var sqlxManager = lib.NewSqlxManager()
 
 type DataReadRepository interface {
 	FindAll(limit int) ([]Data, error)
-	FindOneById(id uint) (Data, error)
+	FindOneById(id int64) (Data, error)
 	FindOneByUUID(uuid string) (Data, error)
 }
 
@@ -33,7 +33,7 @@ func (r *dataReadRepository) FindAll(limit int) ([]Data, error) {
 	rows, err := r.db.Queryx(query, limit)
 	if err != nil {
 		customError := errors.Wrap(err, "DataRepository: FindAll query error")
-		return nil, sqlxLib.ErrNoRowsReturnRawError(err, customError)
+		return nil, sqlxManager.ErrNoRowsReturnRawError(err, customError)
 	}
 
 	for rows.Next() {
@@ -48,14 +48,14 @@ func (r *dataReadRepository) FindAll(limit int) ([]Data, error) {
 	return dataList, nil
 }
 
-func (r *dataReadRepository) FindOneById(id uint) (Data, error) {
+func (r *dataReadRepository) FindOneById(id int64) (Data, error) {
 	var data Data
 
 	query := "SELECT * FROM data WHERE id = ?"
 	err := r.db.QueryRowx(query, id).StructScan(&data)
 	if err != nil {
 		customError := errors.Wrap(err, "DataRepository: FindOneById error")
-		err = sqlxLib.ErrNoRowsReturnRawError(err, customError)
+		err = sqlxManager.ErrNoRowsReturnRawError(err, customError)
 	}
 
 	return data, err
@@ -69,7 +69,7 @@ func (r *dataReadRepository) FindOneByUUID(uuid string) (Data, error) {
 	if err != nil {
 		if err != sql.ErrNoRows {
 			customError := errors.Wrap(err, "DataRepository: FindOneByUUID error")
-			err = sqlxLib.ErrNoRowsReturnRawError(err, customError)
+			err = sqlxManager.ErrNoRowsReturnRawError(err, customError)
 		}
 	}
 

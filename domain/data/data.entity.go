@@ -3,9 +3,9 @@ package data
 import "time"
 
 type Data struct {
-	ID          uint      `json:"id" db:"id"`
+	ID          int64     `json:"id" db:"id"`
 	UUID        string    `json:"uuid" db:"uuid"`
-	UserId      uint      `json:"user_id" db:"user_id"`
+	UserId      int64     `json:"user_id" db:"user_id"`
 	FileUrl     string    `json:"file_url" db:"file_url"`
 	Title       string    `json:"title" db:"title"`
 	Description string    `json:"description" db:"description"`

@@ -5,9 +5,9 @@ import (
 )
 
 type User struct {
-	ID          uint      `json:"id" db:"id"`
+	ID          int64     `json:"id" db:"id"`
 	UUID        string    `json:"uuid" db:"uuid"`
-	AuthId      uint      `json:"auth_id" db:"auth_id"`
+	AuthId      int64     `json:"auth_id" db:"auth_id"`
 	Email       string    `json:"email" db:"email"`
 	Username    string    `json:"username" db:"username"`
 	DisplayName string    `json:"display_name" db:"display_name"`
