@@ -8,9 +8,9 @@ type HttpLogger interface{}
 
 type httpLogger struct{}
 
-func NewHttpLogger() *httpLogger {
-	if logger == nil {
+func GetHttpLogger() *httpLogger {
+	once.Do(func() {
 		logger = &httpLogger{}
-	}
+	})
 	return logger
 }

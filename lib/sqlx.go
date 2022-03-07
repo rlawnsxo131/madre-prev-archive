@@ -10,10 +10,10 @@ type SqlxManager interface {
 
 type sqlxManager struct{}
 
-func NewSqlxManager() SqlxManager {
-	if s == nil {
+func GetSqlxManager() SqlxManager {
+	once.Do(func() {
 		s = &sqlxManager{}
-	}
+	})
 	return s
 }
 

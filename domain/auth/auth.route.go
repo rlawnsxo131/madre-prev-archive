@@ -10,7 +10,7 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/lib"
 )
 
-var uuidManager = lib.NewUUIDManager()
+var uuidManager = lib.GetUUIDManager()
 
 func SetupRoute(v1 *mux.Router) {
 	authRouter := v1.NewRoute().PathPrefix("/auth").Subrouter()

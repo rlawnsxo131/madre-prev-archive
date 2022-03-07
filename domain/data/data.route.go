@@ -10,7 +10,7 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/lib"
 )
 
-var utils = lib.NewUtils()
+var utils = lib.GetUtils()
 
 func SetupRoute(v1 *mux.Router) {
 	dataRouter := v1.NewRoute().PathPrefix("/data").Subrouter()

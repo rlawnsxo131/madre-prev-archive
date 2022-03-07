@@ -17,7 +17,7 @@ var (
 	ErrDBIsNotExist = errors.New("DB is not exist")
 )
 
-func GetDB() (db *sqlx.DB, err error) {
+func GetDB() (*sqlx.DB, error) {
 	if sqlxDb == nil {
 		db, err := sqlx.Connect("mysql", "root:1234@/madre?charset=utf8mb4&collation=utf8mb4_unicode_ci&parseTime=true")
 		if err != nil {

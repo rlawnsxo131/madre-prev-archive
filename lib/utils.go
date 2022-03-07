@@ -8,10 +8,10 @@ type Utils interface {
 
 type utils struct{}
 
-func NewUtils() Utils {
-	if utilManager == nil {
+func GetUtils() Utils {
+	once.Do(func() {
 		utilManager = &utils{}
-	}
+	})
 	return utilManager
 }
 

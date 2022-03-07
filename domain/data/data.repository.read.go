@@ -8,7 +8,7 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/lib"
 )
 
-var sqlxManager = lib.NewSqlxManager()
+var sqlxManager = lib.GetSqlxManager()
 
 type DataReadRepository interface {
 	FindAll(limit int) ([]Data, error)
