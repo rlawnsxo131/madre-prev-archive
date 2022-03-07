@@ -10,6 +10,7 @@ interface PopupCommshowParams {
 
 export default function usePopupCommonActions() {
   const dispatch = useDispatch<AppDispatch>();
+
   return useMemo(
     () => ({
       show({ title = '', message = '' }: PopupCommshowParams) {

@@ -8,6 +8,7 @@ import {
 
 export default function usePopupAuthActions() {
   const dispatch = useDispatch<AppDispatch>();
+
   return useMemo(
     () => ({
       show() {

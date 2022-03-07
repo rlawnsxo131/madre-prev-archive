@@ -5,6 +5,7 @@ import { setScreenSignup } from '../../store/screenSignup';
 
 export default function useScreenSignupActions() {
   const dispatch = useDispatch<AppDispatch>();
+
   return useMemo(
     () => ({
       show() {

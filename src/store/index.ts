@@ -12,10 +12,8 @@ const rootReducer = combineReducers({
   home,
   theme,
   user,
-  // in core component
   popupAuth,
   screenSignup,
-  // rtk queries
   [authApi.reducerPath]: authApi.reducer,
 });
 

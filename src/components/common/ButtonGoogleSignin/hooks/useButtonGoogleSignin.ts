@@ -3,7 +3,7 @@ import { usePostGoogleSigninMutation } from '../../../../store/api/authApi';
 
 export default function useButtonGoogleSignin() {
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const [googleSignin, _] = usePostGoogleSigninMutation();
+  const [googleSignin] = usePostGoogleSigninMutation();
 
   useEffect(() => {
     if (!buttonRef.current) return;
