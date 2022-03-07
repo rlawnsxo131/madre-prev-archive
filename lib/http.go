@@ -92,6 +92,7 @@ func (writer *httpWriter) WriteError(err error) {
 
 func (writer *httpWriter) WriteErrorBadRequest(message string, data interface{}) {
 	status := http.StatusBadRequest
+
 	writer.rw.WriteHeader(status)
 	json.NewEncoder(writer.rw).Encode(map[string]interface{}{"status": status, "message": ErrBadRequestMessage})
 	log.Printf("ErrorBadRequest: %s\n%+v", message, data)

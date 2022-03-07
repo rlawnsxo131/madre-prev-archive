@@ -2,13 +2,13 @@ package lib
 
 import uuid "github.com/satori/go.uuid"
 
+var u *uuidManager
+
 type UUIDManager interface {
 	GenerateUUIDString() string
 }
 
 type uuidManager struct{}
-
-var u *uuidManager
 
 func NewUUIDManager() UUIDManager {
 	if u == nil {

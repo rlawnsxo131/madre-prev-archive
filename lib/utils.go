@@ -1,12 +1,12 @@
 package lib
 
+var utilManager *utils
+
 type Utils interface {
 	IfIsNotExistGetDefaultIntValue(value int, defaultValue int) int
 }
 
 type utils struct{}
-
-var utilManager *utils
 
 func NewUtils() Utils {
 	if utilManager == nil {

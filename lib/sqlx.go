@@ -2,19 +2,19 @@ package lib
 
 import "database/sql"
 
+var s *sqlxManager
+
 type SqlxManager interface {
 	ErrNoRowsReturnRawError(err error, customError error) error
 }
 
 type sqlxManager struct{}
 
-var sm *sqlxManager
-
 func NewSqlxManager() SqlxManager {
-	if sm == nil {
-		sm = &sqlxManager{}
+	if s == nil {
+		s = &sqlxManager{}
 	}
-	return sm
+	return s
 }
 
 func (s *sqlxManager) ErrNoRowsReturnRawError(err error, customError error) error {
