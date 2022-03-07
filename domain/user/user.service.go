@@ -4,6 +4,11 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
+type UserService interface {
+	UserReadRepository
+	UserWriteRepository
+}
+
 type userService struct {
 	db *sqlx.DB
 }

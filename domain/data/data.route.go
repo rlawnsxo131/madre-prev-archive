@@ -8,6 +8,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/rlawnsxo131/madre-server-v2/database"
 	"github.com/rlawnsxo131/madre-server-v2/lib"
+	"github.com/rlawnsxo131/madre-server-v2/utils"
 )
 
 func SetupRoute(v1 *mux.Router) {
@@ -23,7 +24,7 @@ func getAll() http.HandlerFunc {
 		if err != nil {
 			log.Printf("dataRoute: limit Atoi wrong: %v", err)
 		}
-		limit = lib.NewUtils().IfIsNotExistGetDefaultIntValue(limit, 50)
+		limit = utils.IfIsNotExistGetDefaultIntValue(limit, 50)
 
 		db, err := database.GetDBConn(r.Context())
 		if err != nil {

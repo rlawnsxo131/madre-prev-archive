@@ -2,11 +2,16 @@ package auth
 
 import "github.com/jmoiron/sqlx"
 
+type SocialAccountService interface {
+	SocialAccountReadRepository
+	SocialAccountWriteRepository
+}
+
 type socialAccountService struct {
 	db *sqlx.DB
 }
 
-func NewSocialAccountService(db *sqlx.DB) *socialAccountService {
+func NewSocialAccountService(db *sqlx.DB) SocialAccountService {
 	return &socialAccountService{
 		db: db,
 	}

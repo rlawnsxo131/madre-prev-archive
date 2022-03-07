@@ -4,6 +4,11 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
+type DataService interface {
+	DataReadRepository
+	DataReadRepository
+}
+
 type dataService struct {
 	db *sqlx.DB
 }

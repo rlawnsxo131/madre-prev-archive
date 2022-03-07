@@ -5,9 +5,14 @@ import (
 	"regexp"
 )
 
+type AuthService interface {
+	GetExistSocialAccountMap(socialAccount SocialAccount, err error) (map[string]bool, error)
+	ValidateUserName(userName string) (bool, error)
+}
+
 type authService struct{}
 
-func NewAuthService() *authService {
+func NewAuthService() AuthService {
 	return &authService{}
 }
 

@@ -5,11 +5,15 @@ import (
 	"github.com/pkg/errors"
 )
 
+type SocialAccountWriteRepository interface {
+	Create(params CreateSocialAccountParams) (int64, error)
+}
+
 type socialAccountWriteRepository struct {
 	db *sqlx.DB
 }
 
-func NewSocialAccountWriteRepository(db *sqlx.DB) *socialAccountWriteRepository {
+func NewSocialAccountWriteRepository(db *sqlx.DB) SocialAccountWriteRepository {
 	return &socialAccountWriteRepository{
 		db: db,
 	}

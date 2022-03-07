@@ -8,9 +8,8 @@ import (
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v2/database"
 	"github.com/rlawnsxo131/madre-server-v2/lib"
+	"github.com/rlawnsxo131/madre-server-v2/utils"
 )
-
-var uuidManager = lib.NewUUIDManager()
 
 func SetupRoute(v1 *mux.Router) {
 	authRouter := v1.NewRoute().PathPrefix("/auth").Subrouter()
@@ -39,7 +38,7 @@ func postGoogleCheck() http.HandlerFunc {
 			return
 		}
 
-		err = lib.ValidateManager.Struct(&params)
+		err = utils.ValidateManager.Struct(&params)
 		if err != nil {
 			writer.WriteErrorBadRequest("post /auth/google/check: params validation error", &params)
 			return
@@ -90,7 +89,7 @@ func postGoogleSignup() http.HandlerFunc {
 			return
 		}
 
-		err = lib.ValidateManager.Struct(&params)
+		err = utils.ValidateManager.Struct(&params)
 		if err != nil {
 			writer.WriteErrorBadRequest("post /auth/google/signup: params validation error", &params)
 			return
@@ -109,7 +108,7 @@ func postGoogleSignup() http.HandlerFunc {
 
 		socialAccountService := NewSocialAccountService(db)
 		lastInsertId, err := socialAccountService.Create(CreateSocialAccountParams{
-			UUID:        uuidManager.GenerateUUIDString(),
+			UUID:        utils.GenerateUUIDString(),
 			AccessToken: params.AccessToken,
 			UserName:    params.Username,
 			Provider:    "GOOGLE",
