@@ -50,7 +50,8 @@ const authApi = createApi({
           // excute signin or sinup action
           const { data } = getCacheEntry();
           if (data?.exist) {
-            const {} = await postAuthGoogleSignin({ accessToken });
+            const data = await postAuthGoogleSignin({ accessToken });
+            console.log(data);
           }
           if (!data?.exist) {
             dispatch(setScreenSignup({ visible: true }));
@@ -71,9 +72,30 @@ const authApi = createApi({
         }
       },
     }),
+    postGoogleSignup: build.mutation<
+      { access_token: string; username: string },
+      any
+    >({
+      query: ({ accessToken, username }) => ({
+        url: '/google/signup',
+        method: 'POST',
+        body: {
+          access_token: accessToken,
+          username,
+        },
+      }),
+      async onQueryStarted(_, { dispatch, queryFulfilled, getCacheEntry }) {
+        dispatch(setLoading({ visible: true }));
+        await queryFulfilled;
+
+        const { data } = getCacheEntry();
+        console.log(data);
+      },
+    }),
   }),
 });
 
-export const { usePostGoogleSigninMutation } = authApi;
+export const { usePostGoogleSigninMutation, usePostGoogleSignupMutation } =
+  authApi;
 
 export default authApi;
