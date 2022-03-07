@@ -120,10 +120,9 @@ type googlePeopleApi struct {
 }
 
 func NewGooglePeopleApi(accessToken string) GooglePeopleApi {
-	api := &googlePeopleApi{
+	return &googlePeopleApi{
 		accessToken: accessToken,
 	}
-	return api
 }
 
 func (g *googlePeopleApi) GetGoogleProfile() (*GoogleProfile, error) {

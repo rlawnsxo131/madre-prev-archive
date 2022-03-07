@@ -17,6 +17,7 @@ func CorsMiddleware(rw http.ResponseWriter, r *http.Request, next http.HandlerFu
 	for _, host := range allowHosts {
 		if origin == host {
 			validation = true
+			break
 		}
 	}
 	if validation {

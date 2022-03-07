@@ -30,7 +30,8 @@ CREATE TABLE IF NOT EXISTS madre.social_account (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `ix_uuid` (`uuid`)
+  UNIQUE KEY `ix_uuid` (`uuid`),
+  UNIQUE KEY `ix_provider_social_id` (`provider`, `social_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- data

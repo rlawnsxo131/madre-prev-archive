@@ -10,6 +10,8 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/lib"
 )
 
+var utils = lib.NewUtils()
+
 func SetupRoute(v1 *mux.Router) {
 	dataRouter := v1.NewRoute().PathPrefix("/data").Subrouter()
 	dataRouter.HandleFunc("", getAll()).Methods("GET")
@@ -23,7 +25,7 @@ func getAll() http.HandlerFunc {
 		if err != nil {
 			log.Printf("dataRoute: limit Atoi wrong: %v", err)
 		}
-		limit = lib.IfIsNotExistGetDefaultIntValue(limit, 50)
+		limit = utils.IfIsNotExistGetDefaultIntValue(limit, 50)
 
 		db, err := database.GetDBConn(r.Context())
 		if err != nil {

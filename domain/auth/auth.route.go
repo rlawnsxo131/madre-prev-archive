@@ -2,6 +2,7 @@ package auth
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -48,6 +49,7 @@ func postGoogleCheck() http.HandlerFunc {
 		socialAccount, err := socialAccountService.FindOneBySocialId(profile.SocialId)
 		authService := NewAuthService()
 		existSocialAccountMap, err := authService.GetExistSocialAccountMap(socialAccount, err)
+		log.Println(err)
 		if err != nil {
 			writer.WriteError(err)
 			return

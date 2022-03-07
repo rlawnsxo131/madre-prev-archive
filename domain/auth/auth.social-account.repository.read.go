@@ -3,7 +3,10 @@ package auth
 import (
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
+	"github.com/rlawnsxo131/madre-server-v2/lib"
 )
+
+var sqlxLib = lib.NewSqlxLib()
 
 type SocialAccountReadRepository interface {
 	FindOneBySocialId(socialId string) (SocialAccount, error)
@@ -22,10 +25,11 @@ func NewSocialAccountReadRepository(db *sqlx.DB) SocialAccountReadRepository {
 func (r *socialAccountReadRepository) FindOneBySocialId(socialId string) (SocialAccount, error) {
 	var socialAccount SocialAccount
 
-	sql := "SELECT * FROM social_account WHERE social_id = ?"
-	err := r.db.QueryRowx(sql, socialId).StructScan(&socialAccount)
+	query := "SELECT * FROM social_account WHERE social_id = ?"
+	err := r.db.QueryRowx(query, socialId).StructScan(&socialAccount)
 	if err != nil {
-		err = errors.Wrap(err, "SocialAccountRepository: FindOneBySocialId sql error")
+		customError := errors.Wrap(err, "SocialAccountRepository: FindOneBySocialId error")
+		err = sqlxLib.ErrNoRowsReturnRawError(err, customError)
 	}
 
 	return socialAccount, err
