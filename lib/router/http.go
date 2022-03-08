@@ -1,4 +1,4 @@
-package lib
+package router
 
 import (
 	"compress/flate"

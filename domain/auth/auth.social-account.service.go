@@ -19,8 +19,8 @@ func NewSocialAccountService(db *sqlx.DB) SocialAccountService {
 
 func (s *socialAccountService) Create(params CreateSocialAccountParams) (int64, error) {
 	socialAccountWriteRepo := NewSocialAccountWriteRepository(s.db)
-	socialAccount, err := socialAccountWriteRepo.Create(params)
-	return socialAccount, err
+	lastInsertId, err := socialAccountWriteRepo.Create(params)
+	return lastInsertId, err
 }
 
 func (s *socialAccountService) FindOneById(id int64) (SocialAccount, error) {

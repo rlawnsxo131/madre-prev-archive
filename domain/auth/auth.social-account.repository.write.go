@@ -20,13 +20,17 @@ func NewSocialAccountWriteRepository(db *sqlx.DB) SocialAccountWriteRepository {
 }
 
 func (r *socialAccountWriteRepository) Create(params CreateSocialAccountParams) (int64, error) {
-	query := "INSERT INTO social_account(uuid, user_id, provider, social_id) VALUES(?, ?, ?, ?)"
-	result := r.db.MustExec(query, params)
-	lastInsertId, err := result.LastInsertId()
+	query := "INSERT INTO social_account(uuid, user_id, provider, social_id) VALUES(:uuid, :user_id, :provider, :social_id)"
 
+	result, err := r.db.NamedExec(query, params)
 	if err != nil {
-		err = errors.Wrap(err, "SocialAccountRepository: create error")
+		return 0, errors.Wrap(err, "SocialAccountRepository: create error")
 	}
 
-	return lastInsertId, err
+	lastInsertId, err := result.LastInsertId()
+	if err != nil {
+		return 0, errors.Wrap(err, "SocialAccountRepository: create error")
+	}
+
+	return lastInsertId, nil
 }

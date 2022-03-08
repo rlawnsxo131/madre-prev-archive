@@ -35,7 +35,7 @@ func New(db *sqlx.DB) *server {
 	s := &server{
 		router:     mux.NewRouter(),
 		rootRouter: mux.NewRouter().PathPrefix("/").Subrouter(),
-		handler:    negroni.Classic(),
+		handler:    negroni.New(negroni.NewRecovery()),
 		db:         db,
 	}
 	s.setupRouteAndMiddleware()

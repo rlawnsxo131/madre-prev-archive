@@ -7,6 +7,7 @@ import (
 
 	"github.com/jmoiron/sqlx"
 	"github.com/rlawnsxo131/madre-server-v2/constants"
+	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
 	"github.com/urfave/negroni"
 )
 
@@ -44,10 +45,11 @@ func SetResponseContentTypeMiddleware(rw http.ResponseWriter, r *http.Request, n
 
 func SetDatabaseContextMiddleware(db *sqlx.DB) negroni.HandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+		httpLogger := logger.NewHttpLogger()
 		ctx := context.WithValue(r.Context(), constants.DBContextKey, db)
-		connectionCount := db.Stats().OpenConnections
 		r.Context().Value(ctx)
-		log.Println("connection count:", connectionCount)
 		next(rw, r.WithContext(ctx))
+		httpLogger.Logging(r)
+		log.Println("open connections:", db.Stats().OpenConnections)
 	}
 }

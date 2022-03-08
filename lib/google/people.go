@@ -1,4 +1,4 @@
-package lib
+package google
 
 import (
 	"encoding/json"

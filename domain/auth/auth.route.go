@@ -7,7 +7,8 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v2/database"
-	"github.com/rlawnsxo131/madre-server-v2/lib"
+	"github.com/rlawnsxo131/madre-server-v2/lib/google"
+	"github.com/rlawnsxo131/madre-server-v2/lib/router"
 	"github.com/rlawnsxo131/madre-server-v2/utils"
 )
 
@@ -20,7 +21,7 @@ func SetupRoute(v1 *mux.Router) {
 
 func postGoogleCheck() http.HandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
-		writer := lib.NewHttpWriter(rw, r)
+		writer := router.NewHttpWriter(rw, r)
 		db, err := database.GetDBConn(r.Context())
 		if err != nil {
 			writer.WriteError(err)
@@ -44,7 +45,7 @@ func postGoogleCheck() http.HandlerFunc {
 			return
 		}
 
-		googleProfileApi := lib.NewGooglePeopleApi(params.AccessToken)
+		googleProfileApi := google.NewGooglePeopleApi(params.AccessToken)
 		profile, err := googleProfileApi.GetGoogleProfile()
 		if err != nil {
 			writer.WriteError(err)
@@ -70,7 +71,7 @@ func postGoogleSignin() http.HandlerFunc {
 
 func postGoogleSignup() http.HandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
-		writer := lib.NewHttpWriter(rw, r)
+		writer := router.NewHttpWriter(rw, r)
 		db, err := database.GetDBConn(r.Context())
 		if err != nil {
 			writer.WriteError(err)

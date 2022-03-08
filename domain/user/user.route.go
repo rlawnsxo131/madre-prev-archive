@@ -5,7 +5,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/rlawnsxo131/madre-server-v2/database"
-	"github.com/rlawnsxo131/madre-server-v2/lib"
+	"github.com/rlawnsxo131/madre-server-v2/lib/router"
 )
 
 func SetupRoute(v1 *mux.Router) {
@@ -16,7 +16,7 @@ func SetupRoute(v1 *mux.Router) {
 
 func get() http.HandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
-		writer := lib.NewHttpWriter(rw, r)
+		writer := router.NewHttpWriter(rw, r)
 		vars := mux.Vars(r)
 		uuid := vars["uuid"]
 

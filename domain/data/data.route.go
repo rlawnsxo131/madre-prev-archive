@@ -7,7 +7,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/rlawnsxo131/madre-server-v2/database"
-	"github.com/rlawnsxo131/madre-server-v2/lib"
+	"github.com/rlawnsxo131/madre-server-v2/lib/router"
 	"github.com/rlawnsxo131/madre-server-v2/utils"
 )
 
@@ -19,7 +19,7 @@ func SetupRoute(v1 *mux.Router) {
 
 func getAll() http.HandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
-		writer := lib.NewHttpWriter(rw, r)
+		writer := router.NewHttpWriter(rw, r)
 		limit, err := strconv.Atoi(r.URL.Query().Get("limit"))
 		if err != nil {
 			log.Printf("dataRoute: limit Atoi wrong: %v", err)
@@ -45,7 +45,7 @@ func getAll() http.HandlerFunc {
 
 func get() http.HandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
-		writer := lib.NewHttpWriter(rw, r)
+		writer := router.NewHttpWriter(rw, r)
 		vars := mux.Vars(r)
 		uuid := vars["uuid"]
 
