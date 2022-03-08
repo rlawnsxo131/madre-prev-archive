@@ -6,7 +6,7 @@ import (
 
 type DataService interface {
 	DataReadRepository
-	DataReadRepository
+	DataWriteRepository
 }
 
 type dataService struct {

@@ -1,8 +1,6 @@
 package data
 
 import (
-	"database/sql"
-
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v2/utils"
@@ -65,10 +63,8 @@ func (r *dataReadRepository) FindOneByUUID(uuid string) (Data, error) {
 	query := "SELECT * FROM data WHERE uuid = ?"
 	err := r.db.QueryRowx(query, uuid).StructScan(&data)
 	if err != nil {
-		if err != sql.ErrNoRows {
-			customError := errors.Wrap(err, "DataRepository: FindOneByUUID error")
-			err = utils.ErrNoRowsReturnRawError(err, customError)
-		}
+		customError := errors.Wrap(err, "DataRepository: FindOneByUUID error")
+		err = utils.ErrNoRowsReturnRawError(err, customError)
 	}
 
 	return data, err

@@ -41,6 +41,7 @@ func (writer *httpWriter) WriteCompress(data interface{}) {
 	if err != nil {
 		err = errors.Wrap(err, "ResponseJsonWriteCompress: json parse error")
 		writer.WriteError(err)
+		return
 	}
 
 	// When an error occurs in the compress process, should I change it to return uncompressed json?
