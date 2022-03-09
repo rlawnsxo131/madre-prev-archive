@@ -14,13 +14,13 @@ import (
 )
 
 var (
-	sqlxDb                        *sqlx.DB
+	sqlxDB                        *sqlx.DB
 	ErrDBIsNotExist               = errors.New("DB is not exist")
 	ErrHttpContextValueIsNotExist = errors.New("Http context value is not exist")
 )
 
 func GetDB() (*sqlx.DB, error) {
-	if sqlxDb == nil {
+	if sqlxDB == nil {
 		db, err := sqlx.Connect("mysql", "root:1234@/madre?charset=utf8mb4&collation=utf8mb4_unicode_ci&parseTime=true")
 		if err != nil {
 			return nil, errors.Wrap(err, "sqlx: connect fail")
@@ -34,9 +34,9 @@ func GetDB() (*sqlx.DB, error) {
 		db.SetMaxOpenConns(10)
 		db.SetMaxIdleConns(10)
 		db.SetConnMaxLifetime(time.Minute)
-		sqlxDb = db
+		sqlxDB = db
 	}
-	return sqlxDb, nil
+	return sqlxDB, nil
 }
 
 func GetDBConn(ctx context.Context) (*sqlx.DB, error) {
@@ -61,6 +61,6 @@ func ExcuteInitSQL(db *sqlx.DB) {
 
 	queries := strings.Split(string(file), "\n\n")
 	for _, query := range queries {
-		sqlxDb.MustExec(query)
+		sqlxDB.MustExec(query)
 	}
 }
