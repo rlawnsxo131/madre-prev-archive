@@ -3,9 +3,9 @@
 ### Project Stack
 
 - Go
-- Gorilla/Mux
-- Urfave/Negroni
-- Jmoiron/Sqlx
+- gorilla/mux
+- jmoiron/sqlx
+- rs/zerolog
 - MySQL
 
 ### V1 Repository
