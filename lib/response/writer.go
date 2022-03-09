@@ -40,7 +40,11 @@ func NewHttpWriter(w http.ResponseWriter, r *http.Request) HttpWriter {
 func (writer *httpWriter) WriteCompress(data interface{}) {
 	jsonData, err := json.Marshal(data)
 	if err != nil {
-		writer.WriteError(errors.WithStack(err), "ResponseJsonWriteCompress: json parse error")
+		writer.WriteError(
+			errors.WithStack(err),
+			"ResponseJsonWriteCompress",
+			"json parse error",
+		)
 		return
 	}
 
@@ -49,7 +53,11 @@ func (writer *httpWriter) WriteCompress(data interface{}) {
 		if strings.Contains(writer.r.Header.Get("Accept-Encoding"), "gzip") {
 			gz, err := gzip.NewWriterLevel(writer.w, gzip.DefaultCompression)
 			if err != nil {
-				writer.WriteError(errors.WithStack(err), "ResponseJsonWriteCompress: gzip compress error")
+				writer.WriteError(
+					errors.WithStack(err),
+					"ResponseJsonWriteCompress",
+					"gzip compress error",
+				)
 				return
 			}
 			defer gz.Close()
@@ -61,8 +69,11 @@ func (writer *httpWriter) WriteCompress(data interface{}) {
 		if strings.Contains(writer.r.Header.Get("Accept-Encoding"), "deflate") {
 			df, err := flate.NewWriter(writer.w, flate.DefaultCompression)
 			if err != nil {
-				err = errors.Wrap(err, "ResponseJsonWriteCompress: dfalte compress error")
-				writer.WriteError(errors.WithStack(err), "ResponseJsonWriteCompress: dfalte compress error")
+				writer.WriteError(
+					errors.WithStack(err),
+					"ResponseJsonWriteCompress",
+					"dfalte compress error",
+				)
 				return
 			}
 			defer df.Close()
