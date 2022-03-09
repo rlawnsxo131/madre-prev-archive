@@ -5,7 +5,6 @@ import (
 	"errors"
 	"runtime/debug"
 
-	"log"
 	"net/http"
 
 	"sync"
@@ -22,8 +21,10 @@ func Recovery(next http.Handler) http.Handler {
 		defer func() {
 			if err := recover(); err != nil {
 				http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
-				log.Printf("recovery middleware: %+v", errors.New(string(debug.Stack())))
-
+				err := errors.New(string(debug.Stack()))
+				logger.Logger.
+					Err(err).
+					Str("Action", "Recovery")
 			}
 		}()
 		next.ServeHTTP(w, r)
