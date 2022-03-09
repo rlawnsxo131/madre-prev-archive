@@ -150,7 +150,6 @@ func postGoogleSignup() http.HandlerFunc {
 			writer.WriteError(
 				err,
 				"post /auth/google/signup",
-				"params validation error",
 			)
 			return
 		}
