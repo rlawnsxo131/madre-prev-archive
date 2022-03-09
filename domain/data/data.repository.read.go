@@ -63,7 +63,7 @@ func (r *dataReadRepository) FindOneByUUID(uuid string) (Data, error) {
 	query := "SELECT * FROM data WHERE uuid = ?"
 	err := r.db.QueryRowx(query, uuid).StructScan(&data)
 	if err != nil {
-		customError := errors.Wrap(err, "DataRepository: FindOneByUUID error")
+		customError := errors.Wrap(err, "DataRepository: FindOneByUUID")
 		err = utils.ErrNoRowsReturnRawError(err, customError)
 	}
 

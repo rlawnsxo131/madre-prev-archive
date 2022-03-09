@@ -2,54 +2,87 @@ package middleware
 
 import (
 	"context"
+	"errors"
+	"runtime/debug"
+
 	"log"
 	"net/http"
 
+	"sync"
+	"time"
+
+	"github.com/gorilla/mux"
 	"github.com/jmoiron/sqlx"
 	"github.com/rlawnsxo131/madre-server-v2/constants"
 	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
-	"github.com/urfave/negroni"
 )
 
-func CorsMiddleware(rw http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-	allowHosts := []string{"http://localhost:8080", "http://localhost:5000"}
-	origin := r.Header.Get("Origin")
-	validation := false
-	for _, host := range allowHosts {
-		if origin == host {
-			validation = true
-			break
-		}
-	}
-	if validation {
-		for _, method := range []string{"OPTIONS", "GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"} {
-			if method == r.Method {
-				rw.Header().Set("Access-Control-Allow-Origin", origin)
-				rw.Header().Set("Access-Control-Allow-Credentials", "true")
-				if method == "OPTIONS" {
-					rw.Header().Set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, Cookie, X-CSRF-Token")
-					rw.Header().Set("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS,HEAD")
-					return
-				}
+func Recovery(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer func() {
+			if err := recover(); err != nil {
+				http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+				log.Printf("recovery middleware: %+v", errors.New(string(debug.Stack())))
+
+			}
+		}()
+		next.ServeHTTP(w, r)
+	})
+}
+
+func HttpLogger(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		httpLogger := logger.NewHttpLogger()
+		httpLogger.RequestLog(r)
+		next.ServeHTTP(w, r)
+	})
+}
+
+func Cors(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		allowHosts := []string{"http://localhost:8080", "http://localhost:5000"}
+		origin := r.Header.Get("Origin")
+		validation := false
+		for _, host := range allowHosts {
+			if origin == host {
+				validation = true
 				break
 			}
 		}
-	}
-	next(rw, r)
+		if validation {
+			for _, method := range []string{"OPTIONS", "GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"} {
+				if method == r.Method {
+					w.Header().Set("Access-Control-Allow-Origin", origin)
+					w.Header().Set("Access-Control-Allow-Credentials", "true")
+					if method == "OPTIONS" {
+						w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, Cookie, X-CSRF-Token")
+						w.Header().Set("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS,HEAD")
+						return
+					}
+					break
+				}
+			}
+		}
+		next.ServeHTTP(w, r)
+	})
 }
 
-func SetResponseContentTypeMiddleware(rw http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-	rw.Header().Set("Content-Type", "application/json; charset=utf-8")
-	next(rw, r)
+func SetHttpContextValues(db *sqlx.DB) mux.MiddlewareFunc {
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			syncMap := sync.Map{}
+			syncMap.Store(constants.HttpContextDBKey, db)
+			syncMap.Store(constants.HttpContextTimeKey, time.Now())
+			ctx := context.WithValue(r.Context(), constants.HttpContextKey, syncMap)
+			r.Context().Value(ctx)
+			next.ServeHTTP(w, r.WithContext(ctx))
+		})
+	}
 }
 
-func SetDatabaseContextMiddleware(db *sqlx.DB) negroni.HandlerFunc {
-	return func(rw http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-		httpLogger := logger.NewHttpLogger()
-		ctx := context.WithValue(r.Context(), constants.DBContextKey, db)
-		r.Context().Value(ctx)
-		next(rw, r.WithContext(ctx))
-		httpLogger.Logging(r)
-		log.Println("open connections:", db.Stats().OpenConnections)
-	}
+func SetResponseContentTypeJson(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
+		next.ServeHTTP(w, r)
+	})
 }

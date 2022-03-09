@@ -1,8 +1,9 @@
 package logger
 
-type Logger interface{}
-type logger struct{}
+import (
+	"os"
 
-func NewLogger() Logger {
-	return &logger{}
-}
+	"github.com/rs/zerolog"
+)
+
+var Logger = zerolog.New(os.Stderr).With().Timestamp().Logger()

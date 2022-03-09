@@ -27,7 +27,7 @@ func (r *socialAccountReadRepository) FindOneById(id int64) (SocialAccount, erro
 	query := "SELECT * FROM social_account WHERE id = ?"
 	err := r.db.QueryRowx(query, id).StructScan(&socialAccount)
 	if err != nil {
-		customError := errors.Wrap(err, "SocialAccountRepository: FindOneById error")
+		customError := errors.Wrap(err, "SocialAccountRepository: FindOneById")
 		err = utils.ErrNoRowsReturnRawError(err, customError)
 	}
 
@@ -40,7 +40,7 @@ func (r *socialAccountReadRepository) FindOneBySocialId(socialId string) (Social
 	query := "SELECT * FROM social_account WHERE social_id = ?"
 	err := r.db.QueryRowx(query, socialId).StructScan(&socialAccount)
 	if err != nil {
-		customError := errors.Wrap(err, "SocialAccountRepository: FindOneBySocialId error")
+		customError := errors.Wrap(err, "SocialAccountRepository: FindOneBySocialId")
 		err = utils.ErrNoRowsReturnRawError(err, customError)
 	}
 

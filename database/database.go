@@ -4,6 +4,7 @@ import (
 	"context"
 	"io/ioutil"
 	"strings"
+	"sync"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -13,8 +14,9 @@ import (
 )
 
 var (
-	sqlxDb          *sqlx.DB
-	ErrDBIsNotExist = errors.New("DB is not exist")
+	sqlxDb                        *sqlx.DB
+	ErrDBIsNotExist               = errors.New("DB is not exist")
+	ErrHttpContextValueIsNotExist = errors.New("Http context value is not exist")
 )
 
 func GetDB() (*sqlx.DB, error) {
@@ -38,16 +40,17 @@ func GetDB() (*sqlx.DB, error) {
 }
 
 func GetDBConn(ctx context.Context) (*sqlx.DB, error) {
-	v := ctx.Value(constants.DBContextKey)
-	if v == nil {
+	v := ctx.Value(constants.HttpContextKey)
+	syncMap, ok := v.(sync.Map)
+	if ok {
+		if sqlxDB, ok := syncMap.Load(constants.HttpContextDBKey); ok {
+			if sqlxDB, ok := sqlxDB.(*sqlx.DB); ok {
+				return sqlxDB, nil
+			}
+		}
 		return nil, ErrDBIsNotExist
 	}
-
-	if sqlxDb, ok := v.(*sqlx.DB); ok {
-		return sqlxDb, nil
-	}
-
-	return nil, ErrDBIsNotExist
+	return nil, ErrHttpContextValueIsNotExist
 }
 
 func ExcuteInitSQL(db *sqlx.DB) {

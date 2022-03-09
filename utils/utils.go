@@ -7,7 +7,7 @@ import (
 	uuid "github.com/satori/go.uuid"
 )
 
-var ValidateManager *validator.Validate = validator.New()
+var Validator *validator.Validate = validator.New()
 
 func GenerateUUIDString() string {
 	return uuid.NewV4().String()

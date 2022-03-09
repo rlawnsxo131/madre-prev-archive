@@ -27,7 +27,7 @@ func (r *userReadRepository) FindOneById(id int64) (User, error) {
 	query := "SELECT * FROM user WHERE id = ?"
 	err := r.db.QueryRowx(query, id).StructScan(&user)
 	if err != nil {
-		customError := errors.Wrap(err, "UserRepository: FindOneById error")
+		customError := errors.Wrap(err, "UserRepository: FindOneById")
 		err = utils.ErrNoRowsReturnRawError(err, customError)
 	}
 
@@ -40,7 +40,7 @@ func (r *userReadRepository) FindOneByUUID(uuid string) (User, error) {
 	query := "SELECT * FROM user WHERE uuid = ?"
 	err := r.db.QueryRowx(query, uuid).StructScan(&user)
 	if err != nil {
-		customError := errors.Wrap(err, "UserRepository: FindOneByUUID error")
+		customError := errors.Wrap(err, "UserRepository: FindOneByUUID")
 		err = utils.ErrNoRowsReturnRawError(err, customError)
 	}
 

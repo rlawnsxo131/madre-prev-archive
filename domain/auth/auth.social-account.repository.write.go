@@ -24,12 +24,12 @@ func (r *socialAccountWriteRepository) Create(params CreateSocialAccountParams) 
 
 	result, err := r.db.NamedExec(query, params)
 	if err != nil {
-		return 0, errors.Wrap(err, "SocialAccountRepository: create error")
+		return 0, errors.Wrap(err, "SocialAccountRepository: create")
 	}
 
 	lastInsertId, err := result.LastInsertId()
 	if err != nil {
-		return 0, errors.Wrap(err, "SocialAccountRepository: create error")
+		return 0, errors.Wrap(err, "SocialAccountRepository: create")
 	}
 
 	return lastInsertId, nil

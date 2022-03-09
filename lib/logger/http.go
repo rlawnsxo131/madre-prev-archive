@@ -4,31 +4,69 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/rs/zerolog"
 )
 
 // go get -u github.com/rs/zerolog/log
 
-type HttpLogger interface{}
+type HttpLogger interface {
+	RequestLog(r *http.Request)
+	ResponseLog(status int, data interface{})
+}
 
 type httpLogger struct {
 	z *zerolog.Logger
 }
 
-func NewHttpLogger() *httpLogger {
-	z := zerolog.New(os.Stderr)
+type logEntry struct {
+	ReceivedTime       time.Time
+	RequestMethod      string
+	RequestURL         string
+	RequestHeaderSize  int64
+	RequestBodySize    int64
+	UserAgent          string
+	Referer            string
+	Proto              string
+	RemoteIP           string
+	ServerIP           string
+	Status             int
+	ResponseHeaderSize int64
+	ResponseBodySize   int64
+	Latency            time.Duration
+}
+
+func NewHttpLogger() HttpLogger {
+	z := zerolog.New(os.Stderr).With().Timestamp().Logger()
 	return &httpLogger{
 		z: &z,
 	}
 }
 
-func (l *httpLogger) Logging(r *http.Request) {
+func (hl *httpLogger) RequestLog(r *http.Request) {
+	// start := time.Now()
+	// le := &logEntry{
+	// 	ReceivedTime:      start,
+	//     RequestMethod:     r.Method,
+	//     RequestURL:        r.URL.String(),
+	//     RequestHeaderSize: headerSize(r.Header),
+	//     UserAgent:         r.UserAgent(),
+	//     Referer:           r.Referer(),
+	//     Proto:             r.Proto,
+	//     RemoteIP:          ipFromHostPort(r.RemoteAddr),
+	// }
 	clientIp := clientIP(r.Header)
-	l.z.Info().
-		Str("clientIp", clientIp).
+	hl.z.Info().
+		Str("Protocol", r.Proto).
+		Str("Origin", r.Header.Get("Origin")).
+		Str("Method", r.Method).
+		Str("Path", r.URL.Path).
+		Str("ClientIp", clientIp).
 		Msg("")
 }
+
+func (hl *httpLogger) ResponseLog(status int, data interface{}) {}
 
 var (
 	trueClientIP          = http.CanonicalHeaderKey("True-Client-IP")
