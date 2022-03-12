@@ -22,18 +22,19 @@ type HttpLogger interface {
 }
 
 type httpLogger struct {
-	z *zerolog.Logger
+	z     *zerolog.Logger
+	start time.Time
 }
 
 func NewHttpLogger() HttpLogger {
 	z := zerolog.New(os.Stderr).With().Timestamp().Logger()
 	return &httpLogger{
-		z: &z,
+		z:     &z,
+		start: time.Now(),
 	}
 }
 
 func (hl *httpLogger) LogEntry(r *http.Request) {
-	start := time.Now()
 	bodyBuf, reader, err := readBody(r.Body)
 	if err != nil {
 		Logger.
@@ -44,7 +45,7 @@ func (hl *httpLogger) LogEntry(r *http.Request) {
 	r.Body = reader
 
 	hl.z.Info().
-		Dur("Laytancy", time.Since(start)).
+		Dur("Laytancy", time.Since(hl.start)).
 		Str("Protocol", r.Proto).
 		Str("RequestId", utils.GenerateUUIDString()).
 		Str("RequestMethod", r.Method).
