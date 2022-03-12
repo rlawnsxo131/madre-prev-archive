@@ -3,7 +3,6 @@ package middleware
 import (
 	"context"
 	"errors"
-	"log"
 	"runtime/debug"
 
 	"net/http"
@@ -20,7 +19,6 @@ import (
 func Recovery(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer func() {
-			log.Println("recover")
 			if err := recover(); err != nil {
 				http.Error(
 					w,
