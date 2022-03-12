@@ -19,6 +19,10 @@ import (
 func Recovery(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer func() {
+			logger.Logger.
+				Info().
+				Str("Action", "Recovery").
+				Msg("")
 			if err := recover(); err != nil {
 				http.Error(
 					w,
@@ -39,6 +43,10 @@ func HttpLogger(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		httpLogger := logger.NewHttpLogger()
 		defer func() {
+			logger.Logger.
+				Info().
+				Str("Action", "HttpLogger").
+				Msg("")
 			httpLogger.LogEntry(r)
 		}()
 		next.ServeHTTP(w, r)
@@ -47,6 +55,10 @@ func HttpLogger(next http.Handler) http.Handler {
 
 func Cors(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		logger.Logger.
+			Info().
+			Str("Action", "Cors").
+			Msg("")
 		allowHosts := []string{"http://localhost:8080", "http://localhost:5000"}
 		origin := r.Header.Get("Origin")
 		validation := false
@@ -83,6 +95,10 @@ func Cors(next http.Handler) http.Handler {
 func SetHttpContextValues(db *sqlx.DB) mux.MiddlewareFunc {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			logger.Logger.
+				Info().
+				Str("Action", "SetHttpContextValues").
+				Msg("")
 			syncMap := sync.Map{}
 			syncMap.Store(constants.HttpContextDBKey, db)
 			syncMap.Store(constants.HttpContextTimeKey, time.Now())
@@ -99,6 +115,10 @@ func SetHttpContextValues(db *sqlx.DB) mux.MiddlewareFunc {
 
 func SetResponseContentTypeJson(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		logger.Logger.
+			Info().
+			Str("Action", "SetResponseContentTypeJson").
+			Msg("")
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		next.ServeHTTP(w, r)
 	})
