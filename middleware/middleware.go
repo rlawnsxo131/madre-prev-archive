@@ -20,7 +20,11 @@ func Recovery(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer func() {
 			if err := recover(); err != nil {
-				http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+				http.Error(
+					w,
+					http.StatusText(http.StatusInternalServerError),
+					http.StatusInternalServerError,
+				)
 				err := errors.New(string(debug.Stack()))
 				logger.Logger.
 					Err(err).
@@ -34,7 +38,7 @@ func Recovery(next http.Handler) http.Handler {
 func HttpLogger(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		httpLogger := logger.NewHttpLogger()
-		httpLogger.RequestLog(r)
+		httpLogger.LogEntry(r)
 		next.ServeHTTP(w, r)
 	})
 }
@@ -56,8 +60,14 @@ func Cors(next http.Handler) http.Handler {
 					w.Header().Set("Access-Control-Allow-Origin", origin)
 					w.Header().Set("Access-Control-Allow-Credentials", "true")
 					if method == "OPTIONS" {
-						w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, Cookie, X-CSRF-Token")
-						w.Header().Set("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS,HEAD")
+						w.Header().Set(
+							"Access-Control-Allow-Headers",
+							"Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, Cookie, X-CSRF-Token",
+						)
+						w.Header().Set(
+							"Access-Control-Allow-Methods",
+							"GET,POST,PUT,PATCH,DELETE,OPTIONS,HEAD",
+						)
 						return
 					}
 					break
@@ -74,7 +84,11 @@ func SetHttpContextValues(db *sqlx.DB) mux.MiddlewareFunc {
 			syncMap := sync.Map{}
 			syncMap.Store(constants.HttpContextDBKey, db)
 			syncMap.Store(constants.HttpContextTimeKey, time.Now())
-			ctx := context.WithValue(r.Context(), constants.HttpContextKey, syncMap)
+			ctx := context.WithValue(
+				r.Context(),
+				constants.HttpContextKey,
+				syncMap,
+			)
 			r.Context().Value(ctx)
 			next.ServeHTTP(w, r.WithContext(ctx))
 		})

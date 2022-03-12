@@ -128,19 +128,28 @@ func NewGooglePeopleApi(accessToken string) GooglePeopleApi {
 func (g *googlePeopleApi) GetGoogleProfile() (*GoogleProfile, error) {
 	req, err := g.createRequest()
 	if err != nil {
-		err = errors.Wrap(err, "GetGoogleProfile: createRequest error")
+		err = errors.Wrap(
+			err,
+			"GetGoogleProfile: createRequest error",
+		)
 		return nil, err
 	}
 
 	res, err := g.excuteRequest(req)
 	if err != nil {
-		err = errors.Wrap(err, "GetGoogleProfile: excuteRequest error")
+		err = errors.Wrap(
+			err,
+			"GetGoogleProfile: excuteRequest error",
+		)
 		return nil, err
 	}
 
 	rawProfile, err := g.convertToRawGoogleProfile(res)
 	if err != nil {
-		err = errors.Wrap(err, "GetGoogleProfile: convertToRawGoogleProfile error")
+		err = errors.Wrap(
+			err,
+			"GetGoogleProfile: convertToRawGoogleProfile error",
+		)
 		return nil, err
 	}
 

@@ -1,40 +1,26 @@
 package logger
 
 import (
+	"bytes"
+	"io"
+	"io/ioutil"
 	"net/http"
 	"os"
 	"strings"
-	"time"
 
+	"github.com/pkg/errors"
+	"github.com/rlawnsxo131/madre-server-v2/utils"
 	"github.com/rs/zerolog"
 )
 
-// go get -u github.com/rs/zerolog/log
+// https://learning-cloud-native-go.github.io/docs/a6.adding_zerolog_logger/
 
 type HttpLogger interface {
-	RequestLog(r *http.Request)
-	ResponseLog(status int, data interface{})
+	LogEntry(r *http.Request)
 }
 
 type httpLogger struct {
 	z *zerolog.Logger
-}
-
-type logEntry struct {
-	ReceivedTime       time.Time
-	RequestMethod      string
-	RequestURL         string
-	RequestHeaderSize  int64
-	RequestBodySize    int64
-	UserAgent          string
-	Referer            string
-	Proto              string
-	RemoteIP           string
-	ServerIP           string
-	Status             int
-	ResponseHeaderSize int64
-	ResponseBodySize   int64
-	Latency            time.Duration
 }
 
 func NewHttpLogger() HttpLogger {
@@ -44,29 +30,29 @@ func NewHttpLogger() HttpLogger {
 	}
 }
 
-func (hl *httpLogger) RequestLog(r *http.Request) {
-	// start := time.Now()
-	// le := &logEntry{
-	// 	ReceivedTime:      start,
-	//     RequestMethod:     r.Method,
-	//     RequestURL:        r.URL.String(),
-	//     RequestHeaderSize: headerSize(r.Header),
-	//     UserAgent:         r.UserAgent(),
-	//     Referer:           r.Referer(),
-	//     Proto:             r.Proto,
-	//     RemoteIP:          ipFromHostPort(r.RemoteAddr),
-	// }
-	clientIp := clientIP(r.Header)
+func (hl *httpLogger) LogEntry(r *http.Request) {
+	bodyBuf, reader, err := readBody(r)
+	if err != nil {
+		Logger.
+			Err(err).
+			Str("Action", "RequestLog Read Body").
+			Msgf("Params: %+v", r.Body)
+	}
+	r.Body = reader
+
 	hl.z.Info().
 		Str("Protocol", r.Proto).
-		Str("Origin", r.Header.Get("Origin")).
-		Str("Method", r.Method).
+		Str("RequestId", utils.GenerateUUIDString()).
+		Str("RequestMethod", r.Method).
 		Str("Path", r.URL.Path).
-		Str("ClientIp", clientIp).
+		Str("RequestURL", r.URL.String()).
+		Str("Body", string(bodyBuf)).
+		Str("Origin", r.Header.Get("Origin")).
+		Str("UserAgent", r.UserAgent()).
+		Str("Referer", r.Referer()).
+		Str("ClientIp", clientIP(r.Header)).
 		Msg("")
 }
-
-func (hl *httpLogger) ResponseLog(status int, data interface{}) {}
 
 var (
 	trueClientIP          = http.CanonicalHeaderKey("True-Client-IP")
@@ -74,6 +60,18 @@ var (
 	xRealIP               = http.CanonicalHeaderKey("X-Real-IP")
 	xEnvoyExternalAddress = http.CanonicalHeaderKey("X-Envoy-External-Address")
 )
+
+func readBody(r *http.Request) ([]byte, io.ReadCloser, error) {
+	bodyBuf, err := ioutil.ReadAll(r.Body)
+
+	if err != nil {
+		return nil, nil, errors.WithStack(err)
+	}
+
+	reader := ioutil.NopCloser(bytes.NewBuffer(bodyBuf))
+
+	return bodyBuf, reader, nil
+}
 
 // clientIP returns the IP of the client.
 // If a header identifying the real IP exists, the value of the header will be used.

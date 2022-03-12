@@ -98,7 +98,12 @@ func (writer *httpWriter) WriteError(err error, action string, msg ...string) {
 	}
 
 	writer.w.WriteHeader(status)
-	json.NewEncoder(writer.w).Encode(map[string]interface{}{"status": status, "message": message})
+	json.NewEncoder(writer.w).Encode(
+		map[string]interface{}{
+			"status":  status,
+			"message": message,
+		},
+	)
 
 	var b bytes.Buffer
 	if len(msg) > 0 {
@@ -117,10 +122,15 @@ func (writer *httpWriter) WriteErrorBadRequest(err error, action string, params 
 	status := http.StatusBadRequest
 
 	writer.w.WriteHeader(status)
-	json.NewEncoder(writer.w).Encode(map[string]interface{}{"status": status, "message": ErrBadRequestMessage})
+	json.NewEncoder(writer.w).Encode(
+		map[string]interface{}{
+			"status":  status,
+			"message": ErrBadRequestMessage,
+		},
+	)
 
 	logger.Logger.
 		Err(err).
 		Str("Action", action).
-		Msgf("params: %+v", params)
+		Msgf("Params: %+v", params)
 }

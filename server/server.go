@@ -1,7 +1,6 @@
 package server
 
 import (
-	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -13,6 +12,7 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/domain/data"
 	"github.com/rlawnsxo131/madre-server-v2/domain/temp"
 	"github.com/rlawnsxo131/madre-server-v2/domain/user"
+	"github.com/rlawnsxo131/madre-server-v2/lib/response"
 	"github.com/rlawnsxo131/madre-server-v2/middleware"
 )
 
@@ -51,6 +51,7 @@ func (s *server) applyHealthSettings() {
 		middleware.HttpLogger,
 	)
 	s.router.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+		writer := response.NewHttpWriter(w, r)
 		data := map[string]string{
 			"Method":  r.Method,
 			"Host":    r.Host,
@@ -58,7 +59,7 @@ func (s *server) applyHealthSettings() {
 			"Referer": r.Header.Get("Referer"),
 			"Cookies": fmt.Sprint(r.Cookies()),
 		}
-		json.NewEncoder(w).Encode(data)
+		writer.WriteCompress(data)
 	})
 }
 

@@ -106,7 +106,11 @@ func postGoogleSignup() http.HandlerFunc {
 
 		err = json.NewDecoder(r.Body).Decode(&params)
 		if err != nil {
-			writer.WriteError(err, "post /auth/google/signup", "decode params error")
+			writer.WriteError(
+				err,
+				"post /auth/google/signup",
+				"decode params error",
+			)
 			return
 		}
 
