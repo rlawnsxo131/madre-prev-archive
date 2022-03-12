@@ -47,8 +47,8 @@ func (s *server) Start() {
 
 func (s *server) applyHealthSettings() {
 	s.router.Use(
-		middleware.Recovery,
 		middleware.HttpLogger,
+		middleware.Recovery,
 	)
 	s.router.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
 		writer := response.NewHttpWriter(w, r)

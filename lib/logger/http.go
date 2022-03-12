@@ -2,11 +2,13 @@ package logger
 
 import (
 	"bytes"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v2/utils"
@@ -31,7 +33,8 @@ func NewHttpLogger() HttpLogger {
 }
 
 func (hl *httpLogger) LogEntry(r *http.Request) {
-	bodyBuf, reader, err := readBody(r)
+	start := time.Now()
+	bodyBuf, reader, err := readBody(r.Body)
 	if err != nil {
 		Logger.
 			Err(err).
@@ -41,12 +44,15 @@ func (hl *httpLogger) LogEntry(r *http.Request) {
 	r.Body = reader
 
 	hl.z.Info().
+		Dur("Laytancy", time.Since(start)).
 		Str("Protocol", r.Proto).
 		Str("RequestId", utils.GenerateUUIDString()).
 		Str("RequestMethod", r.Method).
 		Str("Path", r.URL.Path).
 		Str("RequestURL", r.URL.String()).
+		Str("Query", r.URL.RawQuery).
 		Str("Body", string(bodyBuf)).
+		Str("Cookies", fmt.Sprint(r.Cookies())).
 		Str("Origin", r.Header.Get("Origin")).
 		Str("UserAgent", r.UserAgent()).
 		Str("Referer", r.Referer()).
@@ -61,8 +67,8 @@ var (
 	xEnvoyExternalAddress = http.CanonicalHeaderKey("X-Envoy-External-Address")
 )
 
-func readBody(r *http.Request) ([]byte, io.ReadCloser, error) {
-	bodyBuf, err := ioutil.ReadAll(r.Body)
+func readBody(body io.ReadCloser) ([]byte, io.ReadCloser, error) {
+	bodyBuf, err := ioutil.ReadAll(body)
 
 	if err != nil {
 		return nil, nil, errors.WithStack(err)
