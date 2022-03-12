@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import useScreenSignupState from '../../../hooks/screenSignup/useScreenSignupState';
+import Input from '../Input';
 import ScreenBase from '../ScreenBase';
 
 interface ScreenSignupProps {}
@@ -9,7 +10,9 @@ function ScreenSignup(props: ScreenSignupProps) {
 
   return (
     <ScreenBase visible={visible}>
-      <div css={block}>signup</div>
+      <div css={block}>
+        <Input />
+      </div>
     </ScreenBase>
   );
 }
