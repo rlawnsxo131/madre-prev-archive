@@ -79,6 +79,7 @@ func postGoogleCheck() http.HandlerFunc {
 			)
 			return
 		}
+
 		writer.WriteCompress(existSocialAccountMap)
 	}
 }
