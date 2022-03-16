@@ -6,7 +6,6 @@ type (
 
 // http context
 const (
-	HttpContextKey     httpContextKey = "httpContextKey"
-	HttpContextDBKey   string         = "DB"
-	HttpContextTimeKey string         = "Time"
+	HttpContextKey   httpContextKey = "httpContextKey"
+	HttpContextDBKey string         = "DB"
 )
