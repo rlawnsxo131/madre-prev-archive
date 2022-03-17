@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
-import { usePostGoogleSigninMutation } from '../../../../store/api/authApi';
+import authApi from '../../../../store/api/authApi';
 
 export default function useButtonGoogleSignin() {
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const [googleSignin] = usePostGoogleSigninMutation();
+  const [googleSignin] = authApi.usePostGoogleCheckWithSigninMutation();
 
   useEffect(() => {
     if (!buttonRef.current) return;

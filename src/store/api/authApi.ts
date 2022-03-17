@@ -5,6 +5,7 @@ import {
   PostAuthGoogleSignupParams,
   PostAuthGoogleSignupResponse,
 } from '../../@types/api/auth.type';
+import postAuthGoogleSignin from '../../api/auth/postAuthGoogleSignin';
 
 import common from '../common';
 import popupAuth from '../popupAuth';
@@ -29,7 +30,7 @@ const authApi = createApi({
     //     console.log('end');
     //   },
     // }),
-    postGoogleSignin: build.mutation<
+    postGoogleCheckWithSignin: build.mutation<
       PostAuthGoogleSigninResponse,
       PostAuthGoogleSigninParams
     >({
@@ -101,10 +102,4 @@ const authApi = createApi({
   }),
 });
 
-export const { usePostGoogleSigninMutation, usePostGoogleSignupMutation } =
-  authApi;
-
 export default authApi;
-function postAuthGoogleSignin(arg0: { accessToken: string }) {
-  throw new Error('Function not implemented.');
-}
