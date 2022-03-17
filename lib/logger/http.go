@@ -18,7 +18,8 @@ import (
 // https://learning-cloud-native-go.github.io/docs/a6.adding_zerolog_logger/
 
 type HttpLogger interface {
-	LogEntry(r *http.Request, start time.Time)
+	ReadBody(body io.ReadCloser) ([]byte, io.ReadCloser, error)
+	LogEntry(r *http.Request, start time.Time, body string)
 }
 
 type httpLogger struct {
@@ -32,25 +33,29 @@ func NewHttpLogger() HttpLogger {
 	}
 }
 
-func (hl *httpLogger) LogEntry(r *http.Request, start time.Time) {
-	bodyBuf, reader, err := readBody(r.Body)
+func (hl *httpLogger) ReadBody(body io.ReadCloser) ([]byte, io.ReadCloser, error) {
+	bodyBuf, err := ioutil.ReadAll(body)
+
 	if err != nil {
-		Logger.
-			Err(err).
-			Str("Action", "RequestLog Read Body").
-			Msgf("Params: %+v", r.Body)
+		return nil, nil, errors.WithStack(err)
 	}
-	r.Body = reader
+
+	reader := ioutil.NopCloser(bytes.NewBuffer(bodyBuf))
+
+	return bodyBuf, reader, nil
+}
+
+func (hl *httpLogger) LogEntry(r *http.Request, start time.Time, body string) {
 
 	hl.z.Info().
+		Str("RequestId", utils.GenerateUUIDString()).
 		Dur("Laytancy", time.Since(start)).
 		Str("Protocol", r.Proto).
-		Str("RequestId", utils.GenerateUUIDString()).
 		Str("RequestMethod", r.Method).
 		Str("Path", r.URL.Path).
 		Str("RequestURL", r.URL.String()).
 		Str("Query", r.URL.RawQuery).
-		Str("Body", string(bodyBuf)).
+		Str("Body", body).
 		Str("Cookies", fmt.Sprint(r.Cookies())).
 		Str("Origin", r.Header.Get("Origin")).
 		Str("UserAgent", r.UserAgent()).
@@ -65,18 +70,6 @@ var (
 	xRealIP               = http.CanonicalHeaderKey("X-Real-IP")
 	xEnvoyExternalAddress = http.CanonicalHeaderKey("X-Envoy-External-Address")
 )
-
-func readBody(body io.ReadCloser) ([]byte, io.ReadCloser, error) {
-	bodyBuf, err := ioutil.ReadAll(body)
-
-	if err != nil {
-		return nil, nil, errors.WithStack(err)
-	}
-
-	reader := ioutil.NopCloser(bytes.NewBuffer(bodyBuf))
-
-	return bodyBuf, reader, nil
-}
 
 // clientIP returns the IP of the client.
 // If a header identifying the real IP exists, the value of the header will be used.

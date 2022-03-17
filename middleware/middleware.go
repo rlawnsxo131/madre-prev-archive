@@ -39,9 +39,20 @@ func HttpLogger(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
 		httpLogger := logger.NewHttpLogger()
+
+		bodyBuf, reader, err := httpLogger.ReadBody(r.Body)
+		if err != nil {
+			logger.Logger.
+				Err(err).
+				Str("Action", "HttpLogger ReadBody").
+				Msgf("Params: %+v", r.Body)
+		}
+		r.Body = reader
+
 		defer func() {
-			httpLogger.LogEntry(r, start)
+			httpLogger.LogEntry(r, start, string(bodyBuf))
 		}()
+
 		next.ServeHTTP(w, r)
 	})
 }
