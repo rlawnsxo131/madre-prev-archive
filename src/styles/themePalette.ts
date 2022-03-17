@@ -24,6 +24,10 @@ type Theme = 'light' | 'dark';
 type VariableKey = keyof ThemeVariables;
 type ThemedPalette = Record<VariableKey, string>;
 
+/**
+ * bg_element1: PopupBase, PopupAuth, HomeHeaderMobileNavigationLinks
+ * shadow1: HomeHeaderMobileNavigationLinks
+ */
 const themeVariableSets: Record<Theme, ThemeVariables> = {
   light: {
     bg1: '#FFFF',
