@@ -1,12 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import postAuthGoogleSignin, {
+import {
   PostAuthGoogleSigninParams,
   PostAuthGoogleSigninResponse,
-} from '../../api/auth/postAuthGoogleSignin';
-import {
   PostAuthGoogleSignupParams,
   PostAuthGoogleSignupResponse,
-} from '../../api/auth/postAuthGoogleSignup';
+} from '../../@types/api/auth.type';
+
 import common from '../common';
 import popupAuth from '../popupAuth';
 import screenSignup from '../screenSignup';
@@ -106,3 +105,6 @@ export const { usePostGoogleSigninMutation, usePostGoogleSignupMutation } =
   authApi;
 
 export default authApi;
+function postAuthGoogleSignin(arg0: { accessToken: string }) {
+  throw new Error('Function not implemented.');
+}
