@@ -8,7 +8,7 @@ const initialState: UserState = {
   token: '',
 };
 
-const userSlice = createSlice({
+const user = createSlice({
   name: 'user',
   initialState,
   reducers: {
@@ -19,4 +19,4 @@ const userSlice = createSlice({
   },
 });
 
-export default userSlice.reducer;
+export default user;

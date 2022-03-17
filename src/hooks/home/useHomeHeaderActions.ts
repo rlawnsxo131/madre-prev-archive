@@ -1,10 +1,7 @@
 import { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store';
-import {
-  handleHomeMobileNavigation,
-  setHomeMobileNavigation,
-} from '../../store/home';
+import home from '../../store/home';
 
 export default function useHomeHeaderActions() {
   const dispatch = useDispatch<AppDispatch>();
@@ -12,11 +9,11 @@ export default function useHomeHeaderActions() {
   return useMemo(
     () => ({
       handleMobileNavigation() {
-        dispatch(handleHomeMobileNavigation());
+        dispatch(home.actions.handleMobileNavigation());
       },
       closeMobileNavigation() {
         dispatch(
-          setHomeMobileNavigation({
+          home.actions.setMobileNavigation({
             visible: false,
           }),
         );

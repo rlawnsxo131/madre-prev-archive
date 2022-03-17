@@ -8,17 +8,15 @@ const initialState: ScreenSignupState = {
   visible: false,
 };
 
-const screenSignupSlice = createSlice({
+const screenSignup = createSlice({
   name: 'screenSignup',
   initialState,
   reducers: {
-    setScreenSignup(state, action: PayloadAction<ScreenSignupState>) {
+    setVisible(state, action: PayloadAction<ScreenSignupState>) {
       const { visible } = action.payload;
       state.visible = visible;
     },
   },
 });
 
-export const { setScreenSignup } = screenSignupSlice.actions;
-
-export default screenSignupSlice.reducer;
+export default screenSignup;

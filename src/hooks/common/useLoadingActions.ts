@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store';
-import { setLoading } from '../../store/common';
+import common from '../../store/common';
 
 export default function useLoadingActions() {
   const dispatch = useDispatch<AppDispatch>();
@@ -10,14 +10,14 @@ export default function useLoadingActions() {
     () => ({
       show() {
         dispatch(
-          setLoading({
+          common.actions.setLoading({
             visible: true,
           }),
         );
       },
       close() {
         dispatch(
-          setLoading({
+          common.actions.setLoading({
             visible: false,
           }),
         );

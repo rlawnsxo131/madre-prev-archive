@@ -1,27 +1,25 @@
 import { css, Global } from '@emotion/react';
-import { Theme } from '../../../store/theme';
-import { themeColor } from '../../../styles';
-import useThemeState from '../../../hooks/theme/useThemeState';
+import { themePalette, themes } from '../../../styles/themePalette';
 
 interface GlobalStyleProps {}
 
 function GlobalStyle(props: GlobalStyleProps) {
-  const { theme } = useThemeState();
-  return <Global styles={globalStyle(theme)} />;
+  return <Global styles={globalStyle} />;
 }
 
-const globalStyle = (theme: Theme) => css`
+const globalStyle = css`
   html,
   body,
   #root {
     margin: 0;
     padding: 0;
     height: 100%;
-    background: ${themeColor.body[theme]};
+    color: ${themePalette.text1};
+    background: ${themePalette.bg4};
   }
 
   header {
-    background: ${themeColor.header[theme]};
+    background: ${themePalette.bg3};
   }
 
   html {
@@ -39,6 +37,24 @@ const globalStyle = (theme: Theme) => css`
     }
   }
 
+  body {
+    ${themes.light}
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      ${themes.dark}
+    }
+  }
+
+  body[data-theme='light'] {
+    ${themes.light};
+  }
+
+  body[data-theme='dark'] {
+    ${themes.dark};
+  }
+
   h1,
   h2,
   h3,
@@ -48,7 +64,7 @@ const globalStyle = (theme: Theme) => css`
   p,
   span,
   a {
-    color: ${themeColor.font[theme]};
+    color: ${themePalette.text1};
   }
   a {
     text-decoration: none;

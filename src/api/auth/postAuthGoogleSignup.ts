@@ -1,10 +1,11 @@
 import apiClient from '../apiClient';
 
-interface PostAuthGoogleSignupParams {
+export interface PostAuthGoogleSignupParams {
   accessToken: string;
+  username: string;
 }
 
-interface PostAuthGoogleSignupResponse {}
+export interface PostAuthGoogleSignupResponse {}
 
 export default async function postAuthGoogleSignup({
   accessToken,

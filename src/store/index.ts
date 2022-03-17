@@ -8,12 +8,12 @@ import theme from './theme';
 import user from './user';
 
 const rootReducer = combineReducers({
-  common,
-  home,
-  theme,
-  user,
-  popupAuth,
-  screenSignup,
+  common: common.reducer,
+  home: home.reducer,
+  theme: theme.reducer,
+  user: user.reducer,
+  popupAuth: popupAuth.reducer,
+  screenSignup: screenSignup.reducer,
   [authApi.reducerPath]: authApi.reducer,
 });
 

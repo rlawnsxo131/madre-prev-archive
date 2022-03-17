@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 import usePopupAuthActions from '../../../hooks/popupAuth/usePopupAuthActions';
 import usePopupAuthState from '../../../hooks/popupAuth/usePopupAuthState';
 import { mediaQuery } from '../../../styles';
+import { themePalette } from '../../../styles/themePalette';
 import PopupBase from '../PopupBase';
 import PopupAuthStyles from './PopupAuth.styles';
 import PopupAuthLeftBlock from './PopupAuthLeftBlock';
@@ -30,7 +31,7 @@ function PopupAuth(props: PopupAuthProps) {
 const block = (isError: boolean) => css`
   display: flex;
   border-radius: 1rem;
-  background: white;
+  background: ${themePalette.bg_element1};
   ${mediaQuery(512)} {
     width: 30rem;
   }

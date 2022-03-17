@@ -3,6 +3,7 @@ import { media, mediaQuery } from '../../../styles';
 import HomeHeaderLogo from './HomeHeaderLogo';
 import HomeHeaderNavigation from './HomeHeaderNavigation';
 import UserPersonalMenu from '../../user/UserPersonalMenu';
+import ButtonThemeChange from '../../common/ButtonThemeChange';
 
 interface HomeHeaderWebProps {}
 
@@ -13,6 +14,9 @@ function HomeHeaderWeb(props: HomeHeaderWebProps) {
       <div css={itemBlock}>
         <HomeHeaderNavigation />
         <UserPersonalMenu />
+        <div css={themeChangeButtonBlock}>
+          <ButtonThemeChange />
+        </div>
       </div>
     </div>
   );
@@ -41,6 +45,10 @@ const block = css`
 const itemBlock = css`
   display: flex;
   justify-content: center;
+`;
+
+const themeChangeButtonBlock = css`
+  padding-left: 1.5rem;
 `;
 
 export default HomeHeaderWeb;

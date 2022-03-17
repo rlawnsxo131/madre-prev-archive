@@ -1,7 +1,8 @@
 import { css } from '@emotion/react';
 import useHomeHeaderActions from '../../../hooks/home/useHomeHeaderActions';
 import { MenuIcon } from '../../../image/icons';
-import { palette, themeColor } from '../../../styles';
+import { palette } from '../../../styles';
+import { themePalette } from '../../../styles/themePalette';
 
 interface HomeHeaderMobileNavigationButtonProps {}
 
@@ -32,7 +33,7 @@ const block = css`
   svg {
     width: 1.125rem;
     height: 1.125rem;
-    fill: ${themeColor.fill['light']};
+    fill: ${themePalette.fill1};
   }
   &:hover {
     svg {

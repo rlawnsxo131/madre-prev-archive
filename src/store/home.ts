@@ -16,25 +16,19 @@ const initialState: HomeState = {
   },
 };
 
-const homeSlice = createSlice({
+const home = createSlice({
   name: 'home',
   initialState,
   reducers: {
-    handleHomeMobileNavigation(state) {
+    handleMobileNavigation(state) {
       const { visible } = state.header.navigation;
       state.header.navigation.visible = !visible;
     },
-    setHomeMobileNavigation(
-      state,
-      action: PayloadAction<{ visible: boolean }>,
-    ) {
+    setMobileNavigation(state, action: PayloadAction<{ visible: boolean }>) {
       const { visible } = action.payload;
       state.header.navigation.visible = visible;
     },
   },
 });
 
-export const { setHomeMobileNavigation, handleHomeMobileNavigation } =
-  homeSlice.actions;
-
-export default homeSlice.reducer;
+export default home;

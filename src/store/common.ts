@@ -26,7 +26,7 @@ const initialState: CommonState = {
   },
 };
 
-const commonSlice = createSlice({
+const common = createSlice({
   name: 'common',
   initialState,
   reducers: {
@@ -43,6 +43,4 @@ const commonSlice = createSlice({
   },
 });
 
-export const { setPopupCommon, setLoading } = commonSlice.actions;
-
-export default commonSlice.reducer;
+export default common;

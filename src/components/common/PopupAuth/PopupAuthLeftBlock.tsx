@@ -18,7 +18,7 @@ const block = css`
   flex-direction: column;
   justify-content: center;
   background: ${palette.gray['100']};
-  border-radius: 0.25rem;
+  border-radius: 0.25rem 0 0 0.25rem;
   svg {
     width: 100%;
   }

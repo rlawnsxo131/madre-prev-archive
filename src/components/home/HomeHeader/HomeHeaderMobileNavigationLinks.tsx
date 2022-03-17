@@ -1,13 +1,9 @@
 import { css } from '@emotion/react';
 import { NavLink } from 'react-router-dom';
-import {
-  standardColor,
-  themeColor,
-  transitions,
-  zIndexes,
-} from '../../../styles';
+import { standardColor, transitions, zIndexes } from '../../../styles';
 import useTransitionTimeoutEffect from '../../../hooks/useTransitionTimeoutEffect';
 import useHomeHeaderState from '../../../hooks/home/useHomeHeaderState';
+import { themePalette } from '../../../styles/themePalette';
 
 interface HomeHeaderMobileNavigationLinksProps {}
 
@@ -60,8 +56,8 @@ const block = (visible: boolean) => css`
   flex-direction: column;
   z-index: ${zIndexes.dropdownItem};
   border-radius: 0.25rem;
-  background: ${themeColor.navigation['light']};
-  box-shadow: ${themeColor.shadow['light']};
+  background: ${themePalette.bg_element1};
+  box-shadow: ${themePalette.shadow1};
   transform-origin: top;
   ${visible
     ? css`

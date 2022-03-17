@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store';
-import { setScreenSignup } from '../../store/screenSignup';
+import screenSignup from '../../store/screenSignup';
 
 export default function useScreenSignupActions() {
   const dispatch = useDispatch<AppDispatch>();
@@ -9,10 +9,10 @@ export default function useScreenSignupActions() {
   return useMemo(
     () => ({
       show() {
-        dispatch(setScreenSignup({ visible: true }));
+        dispatch(screenSignup.actions.setVisible({ visible: true }));
       },
       close() {
-        dispatch(setScreenSignup({ visible: false }));
+        dispatch(screenSignup.actions.setVisible({ visible: false }));
       },
     }),
     [dispatch],

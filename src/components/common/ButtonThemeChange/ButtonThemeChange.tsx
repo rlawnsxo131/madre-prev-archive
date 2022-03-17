@@ -2,24 +2,24 @@ import { css } from '@emotion/react';
 import useThemeActions from '../../../hooks/theme/useThemeActions';
 import useThemeState from '../../../hooks/theme/useThemeState';
 import { LightIcon, NightIcon } from '../../../image/icons';
-import { Theme } from '../../../store/theme';
-import { themeColor } from '../../../styles';
+import { themePalette } from '../../../styles/themePalette';
 
-interface ButtonThemeChangeProps {}
+interface ButtonThemeChangeProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
 function ButtonThemeChange(props: ButtonThemeChangeProps) {
   const { theme } = useThemeState();
   const { handleTheme } = useThemeActions();
 
   return (
-    <button css={block(theme)} onClick={handleTheme}>
+    <button css={block} onClick={handleTheme}>
       {theme === 'light' && <LightIcon />}
       {theme === 'dark' && <NightIcon />}
     </button>
   );
 }
 
-const block = (theme: Theme) => css`
+const block = css`
   background: inherit;
   border: none;
   box-shadow: none;
@@ -32,7 +32,7 @@ const block = (theme: Theme) => css`
   align-items: center;
   cursor: pointer;
   svg {
-    fill: ${themeColor.fill[theme]};
+    fill: ${themePalette.fill1};
   }
   padding: 0.5rem;
 `;

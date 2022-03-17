@@ -1,6 +1,5 @@
 import { css } from '@emotion/react';
 import { memo } from 'react';
-import { Theme } from '../../../store/theme';
 import { palette } from '../../../styles';
 import {
   ButtonColor,
@@ -10,7 +9,6 @@ import {
   buttonColorMap,
   outlineButtonStyle,
 } from './Button.styles';
-import useThemeState from '../../../hooks/theme/useThemeState';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
@@ -32,12 +30,10 @@ function Button({
   buttonRef,
   ...rest
 }: ButtonProps) {
-  const { theme } = useThemeState();
-
   return (
     <button
       ref={buttonRef}
-      css={block(color, size, shape, outline, theme)}
+      css={block(color, size, shape, outline)}
       onClick={(e) => {
         if (rest.onClick) {
           rest.onClick(e);
@@ -57,7 +53,6 @@ const block = (
   size: ButtonSize,
   shape: ButtonShape,
   outline: boolean,
-  theme: Theme,
 ) => css`
   display: inline-flex;
   align-items: center;
@@ -75,11 +70,11 @@ const block = (
   ${outline &&
   css`
     color: ${buttonColorMap[color].background};
-    background: ${outlineButtonStyle[theme].background};
+    background: ${outlineButtonStyle.background};
     &:hover {
       color: ${buttonColorMap[color].hoverBackground};
       border: 1px solid ${buttonColorMap[color].hoverBackground};
-      opacity: ${outlineButtonStyle[theme].opacity};
+      opacity: ${outlineButtonStyle.opacity};
     }
   `}
   ${!outline &&
@@ -98,9 +93,9 @@ const block = (
     color: ${palette.gray['500']};
     ${outline &&
     css`
-      background: ${outlineButtonStyle[theme].background};
+      background: ${outlineButtonStyle.background};
       &:hover {
-        background: ${outlineButtonStyle[theme].background};
+        background: ${outlineButtonStyle.background};
       }
     `}
     ${!outline &&

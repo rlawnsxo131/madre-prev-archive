@@ -1,8 +1,15 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import postAuthGoogleSignin from '../../api/auth/postAuthGoogleSignin';
-import { setLoading } from '../common';
-import { setPopupAuthIsError, setPopupAuthVisible } from '../popupAuth';
-import { setScreenSignup } from '../screenSignup';
+import postAuthGoogleSignin, {
+  PostAuthGoogleSigninParams,
+  PostAuthGoogleSigninResponse,
+} from '../../api/auth/postAuthGoogleSignin';
+import {
+  PostAuthGoogleSignupParams,
+  PostAuthGoogleSignupResponse,
+} from '../../api/auth/postAuthGoogleSignup';
+import common from '../common';
+import popupAuth from '../popupAuth';
+import screenSignup from '../screenSignup';
 
 const authApi = createApi({
   reducerPath: 'authApi',
@@ -24,8 +31,8 @@ const authApi = createApi({
     //   },
     // }),
     postGoogleSignin: build.mutation<
-      { exist: boolean },
-      { accessToken: string }
+      PostAuthGoogleSigninResponse,
+      PostAuthGoogleSigninParams
     >({
       query: ({ accessToken }) => ({
         url: '/google/check',
@@ -41,7 +48,7 @@ const authApi = createApi({
         try {
           // check google registered
           dispatch(
-            setLoading({
+            common.actions.setLoading({
               visible: true,
             }),
           );
@@ -54,27 +61,27 @@ const authApi = createApi({
             console.log(data);
           }
           if (!data?.exist) {
-            dispatch(setScreenSignup({ visible: true }));
+            dispatch(screenSignup.actions.setVisible({ visible: true }));
           }
-          dispatch(setPopupAuthVisible({ visible: false }));
+          dispatch(popupAuth.actions.setVisible({ visible: false }));
           dispatch(
-            setLoading({
+            common.actions.setLoading({
               visible: false,
             }),
           );
         } catch (e) {
           dispatch(
-            setLoading({
+            common.actions.setLoading({
               visible: false,
             }),
           );
-          dispatch(setPopupAuthIsError({ isError: true }));
+          dispatch(popupAuth.actions.setIsError({ isError: true }));
         }
       },
     }),
     postGoogleSignup: build.mutation<
-      { access_token: string; username: string },
-      any
+      PostAuthGoogleSignupResponse,
+      PostAuthGoogleSignupParams
     >({
       query: ({ accessToken, username }) => ({
         url: '/google/signup',
@@ -85,7 +92,7 @@ const authApi = createApi({
         },
       }),
       async onQueryStarted(_, { dispatch, queryFulfilled, getCacheEntry }) {
-        dispatch(setLoading({ visible: true }));
+        dispatch(common.actions.setLoading({ visible: true }));
         await queryFulfilled;
 
         const { data } = getCacheEntry();

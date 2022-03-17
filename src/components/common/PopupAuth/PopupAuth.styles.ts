@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import { palette, transitions } from '../../../styles';
+import { themePalette } from '../../../styles/themePalette';
 
 const shakeAnimation = css`
   animation: ${transitions.shake} 0.5s 0.25s ease-in-out;
@@ -32,7 +33,7 @@ const rightBlockHeader = css`
     align-self: flex-end;
     width: 1.25rem;
     height: 1.25rem;
-    color: ${palette.gray['600']};
+    color: ${themePalette.fill1};
     cursor: pointer;
   }
 `;

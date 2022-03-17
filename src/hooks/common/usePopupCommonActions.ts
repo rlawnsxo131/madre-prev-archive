@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store';
-import { setPopupCommon } from '../../store/common';
+import common from '../../store/common';
 
 interface PopupCommshowParams {
   title?: string;
@@ -15,7 +15,7 @@ export default function usePopupCommonActions() {
     () => ({
       show({ title = '', message = '' }: PopupCommshowParams) {
         dispatch(
-          setPopupCommon({
+          common.actions.setPopupCommon({
             visible: true,
             title,
             message,
@@ -24,7 +24,7 @@ export default function usePopupCommonActions() {
       },
       close() {
         dispatch(
-          setPopupCommon({
+          common.actions.setPopupCommon({
             visible: false,
             title: '',
             message: '',

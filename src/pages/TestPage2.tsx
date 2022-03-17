@@ -6,6 +6,7 @@ import { D3AxisChart, D3GenerateUtil } from '../lib/d3';
 import { D3FormatUtil } from '../lib/d3';
 import getRandomIntInclusive from '../lib/utils/getRandomIntInclusive';
 import { palette } from '../styles';
+import Input from '../components/common/Input';
 
 interface TestPage2Props {}
 
@@ -110,13 +111,17 @@ function TestPage2(props: TestPage2Props) {
   }, [chartRef.current]);
 
   return (
-    <div
-      css={block({
-        axisXClass: axisXClassRef.current,
-        axisYClass: axisYClassRef.current,
-      })}
-      ref={ref}
-    ></div>
+    <>
+      <div
+        css={block({
+          axisXClass: axisXClassRef.current,
+          axisYClass: axisYClassRef.current,
+        })}
+        ref={ref}
+      >
+        <Input />
+      </div>
+    </>
   );
 }
 

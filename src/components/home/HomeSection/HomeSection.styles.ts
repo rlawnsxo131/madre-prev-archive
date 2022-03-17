@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import { media, palette } from '../../../styles';
+import { themePalette } from '../../../styles/themePalette';
 
 const section = css`
   display: flex;
@@ -17,7 +18,7 @@ const section = css`
   }
   p {
     font-size: 1.125rem;
-    color: ${palette.gray['700']};
+    color: ${themePalette.text2};
     font-weight: 600;
     line-height: 2;
   }

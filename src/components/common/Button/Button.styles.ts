@@ -1,4 +1,5 @@
 import { palette } from '../../../styles';
+import { themePalette } from '../../../styles/themePalette';
 
 export type ButtonShape = 'rect' | 'round';
 export type ButtonSize = 'small' | 'medium' | 'large' | 'responsive';
@@ -34,12 +35,6 @@ export const buttonColorMap = {
 };
 
 export const outlineButtonStyle = {
-  light: {
-    background: 'rgba(255, 255, 255, 0)',
-    opacity: '0.7',
-  },
-  dark: {
-    background: palette.white,
-    opacity: '1',
-  },
+  background: themePalette.bg_button1,
+  opacity: themePalette.opacity_button1,
 };

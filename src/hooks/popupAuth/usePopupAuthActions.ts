@@ -1,10 +1,7 @@
 import { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store';
-import {
-  setPopupAuthIsError,
-  setPopupAuthVisible,
-} from '../../store/popupAuth';
+import popupAuth from '../../store/popupAuth';
 
 export default function usePopupAuthActions() {
   const dispatch = useDispatch<AppDispatch>();
@@ -13,28 +10,28 @@ export default function usePopupAuthActions() {
     () => ({
       show() {
         dispatch(
-          setPopupAuthVisible({
+          popupAuth.actions.setVisible({
             visible: true,
           }),
         );
       },
       close() {
         dispatch(
-          setPopupAuthVisible({
+          popupAuth.actions.setVisible({
             visible: false,
           }),
         );
       },
       setError() {
         dispatch(
-          setPopupAuthIsError({
+          popupAuth.actions.setIsError({
             isError: true,
           }),
         );
       },
       resetError() {
         dispatch(
-          setPopupAuthIsError({
+          popupAuth.actions.setIsError({
             isError: false,
           }),
         );
