@@ -28,7 +28,8 @@ func Recovery(next http.Handler) http.Handler {
 				err := errors.New(string(debug.Stack()))
 				logger.Logger.
 					Err(err).
-					Str("Action", "Recovery")
+					Str("Action", "Recovery").
+					Msg("")
 			}
 		}()
 		next.ServeHTTP(w, r)
@@ -40,7 +41,7 @@ func HttpLogger(next http.Handler) http.Handler {
 		start := time.Now()
 		httpLogger := logger.NewHttpLogger()
 
-		bodyBuf, reader, err := httpLogger.ReadBody(r.Body)
+		bodyBytes, reader, err := httpLogger.ReadBody(r.Body)
 		if err != nil {
 			logger.Logger.
 				Err(err).
@@ -50,7 +51,7 @@ func HttpLogger(next http.Handler) http.Handler {
 		r.Body = reader
 
 		defer func() {
-			httpLogger.LogEntry(r, start, string(bodyBuf))
+			httpLogger.LogEntry(r, start, string(bodyBytes))
 		}()
 
 		next.ServeHTTP(w, r)

@@ -7,6 +7,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v2/database"
+	"github.com/rlawnsxo131/madre-server-v2/domain/user"
 	"github.com/rlawnsxo131/madre-server-v2/lib/google"
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"
 
@@ -85,7 +86,73 @@ func postGoogleCheck() http.HandlerFunc {
 }
 
 func postGoogleSignin() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {}
+	return func(w http.ResponseWriter, r *http.Request) {
+		writer := response.NewHttpWriter(w, r)
+		db, err := database.GetDBConn(r.Context())
+		if err != nil {
+			writer.WriteError(
+				err,
+				"post /auth/google/signup",
+			)
+			return
+		}
+
+		var params struct {
+			AccessToken string `json:"access_token" validate:"required,min=50"`
+		}
+
+		err = json.NewDecoder(r.Body).Decode(&params)
+		if err != nil {
+			writer.WriteError(
+				errors.WithStack(err),
+				"post /auth/google/check",
+				"decode params error",
+			)
+			return
+		}
+
+		err = utils.Validator.Struct(&params)
+		if err != nil {
+			writer.WriteErrorBadRequest(
+				err,
+				"post /auth/google/check",
+				&params,
+			)
+			return
+		}
+
+		googleProfileApi := google.NewGooglePeopleApi(params.AccessToken)
+		profile, err := googleProfileApi.GetGoogleProfile()
+		if err != nil {
+			writer.WriteError(
+				err,
+				"post /auth/google/check",
+			)
+			return
+		}
+
+		socialAccountService := NewSocialAccountService(db)
+		socialAccount, err := socialAccountService.FindOneBySocialId(profile.SocialId)
+		if err != nil {
+			writer.WriteError(
+				err,
+				"post /auth/google/check",
+			)
+			return
+		}
+
+		userSerivce := user.NewUserService(db)
+		user, err := userSerivce.FindOneById(socialAccount.UserId)
+		if err != nil {
+			writer.WriteError(
+				err,
+				"post /auth/google/check",
+			)
+			return
+		}
+
+		writer.WriteCompress(user)
+	}
 }
 
 func postGoogleSignup() http.HandlerFunc {
@@ -101,8 +168,8 @@ func postGoogleSignup() http.HandlerFunc {
 		}
 
 		var params struct {
-			AccessToken string `json:"access_token" validate:"requried,min=50"`
-			Username    string `json:"username" validate:"required,min=1,max=16"`
+			AccessToken string `json:"access_token" validate:"required,min=50"`
+			Username    string `json:"username" validate:"required,max=16,min=1"`
 		}
 
 		err = json.NewDecoder(r.Body).Decode(&params)
@@ -144,12 +211,32 @@ func postGoogleSignup() http.HandlerFunc {
 			return
 		}
 
-		socialAccountService := NewSocialAccountService(db)
-		lastInsertId, err := socialAccountService.Create(CreateSocialAccountParams{
+		if err != nil {
+			writer.WriteError(
+				err,
+				"post /auth/google/signup",
+				"start transaction error",
+			)
+			return
+		}
+
+		googleProfileApi := google.NewGooglePeopleApi(params.AccessToken)
+		profile, err := googleProfileApi.GetGoogleProfile()
+		if err != nil {
+			writer.WriteError(
+				err,
+				"post /auth/google/check",
+			)
+			return
+		}
+
+		userService := user.NewUserService(db)
+		lastInsertUserId, err := userService.Create(user.CreateUserParams{
 			UUID:        utils.GenerateUUIDString(),
-			AccessToken: params.AccessToken,
-			UserName:    params.Username,
-			Provider:    "GOOGLE",
+			Email:       profile.Email,
+			Username:    profile.DisplayName,
+			DisplayName: params.Username,
+			PhotoUrl:    profile.PhotoUrl,
 		})
 		if err != nil {
 			writer.WriteError(
@@ -159,7 +246,33 @@ func postGoogleSignup() http.HandlerFunc {
 			return
 		}
 
-		socialAccount, err := socialAccountService.FindOneById(lastInsertId)
+		user, err := userService.FindOneById(lastInsertUserId)
+		if err != nil {
+			writer.WriteError(
+				err,
+				"post /auth/google/signup",
+			)
+			return
+		}
+
+		socialAccountService := NewSocialAccountService(db)
+		lastInsertSocialAccountId, err := socialAccountService.Create(CreateSocialAccountParams{
+			UserId:      user.ID,
+			UUID:        utils.GenerateUUIDString(),
+			AccessToken: params.AccessToken,
+			UserName:    params.Username,
+			Provider:    "GOOGLE",
+			SocialId:    profile.SocialId,
+		})
+		if err != nil {
+			writer.WriteError(
+				err,
+				"post /auth/google/signup",
+			)
+			return
+		}
+
+		socialAccount, err := socialAccountService.FindOneById(lastInsertSocialAccountId)
 		if err != nil {
 			writer.WriteError(
 				err,

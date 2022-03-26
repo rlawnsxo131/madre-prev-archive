@@ -46,7 +46,6 @@ func (hl *httpLogger) ReadBody(body io.ReadCloser) ([]byte, io.ReadCloser, error
 }
 
 func (hl *httpLogger) LogEntry(r *http.Request, start time.Time, body string) {
-
 	hl.z.Info().
 		Str("RequestId", utils.GenerateUUIDString()).
 		Dur("Laytancy", time.Since(start)).

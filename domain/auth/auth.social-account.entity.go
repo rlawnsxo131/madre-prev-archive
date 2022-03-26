@@ -1,6 +1,8 @@
 package auth
 
-import "time"
+import (
+	"time"
+)
 
 type SocialAccount struct {
 	ID        int64     `json:"id" db:"id"`

@@ -19,6 +19,12 @@ func NewUserService(db *sqlx.DB) *userService {
 	}
 }
 
+func (s *userService) Create(params CreateUserParams) (int64, error) {
+	userWriteRepo := NewUserWriteRepository(s.db)
+	lastInsertId, err := userWriteRepo.Create(params)
+	return lastInsertId, err
+}
+
 func (s *userService) FindOneById(id int64) (User, error) {
 	userReadRepo := NewUserReadRepository(s.db)
 	user, err := userReadRepo.FindOneById(id)

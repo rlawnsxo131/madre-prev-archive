@@ -35,7 +35,7 @@ func (s *authService) GetExistSocialAccountMap(socialAccount SocialAccount, err 
 }
 
 func (s *authService) ValidateUserName(userName string) (bool, error) {
-	match, err := regexp.MatchString("^[a-zA-Z0-9]{4,16}$", userName)
+	match, err := regexp.MatchString("^[a-zA-Z0-9가-힣]{1,16}$", userName)
 	if err != nil {
 		return false, err
 	}
