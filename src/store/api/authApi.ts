@@ -57,7 +57,7 @@ const authApi = createApi({
           const { data } = getCacheEntry();
           if (data?.exist) {
             const data = await postAuthGoogleSignin({ accessToken });
-            console.log(data);
+            console.log('signin: ', data);
           } else {
             dispatch(screenSignup.actions.show());
             dispatch(
@@ -100,7 +100,7 @@ const authApi = createApi({
           await queryFulfilled;
 
           const { data } = getCacheEntry();
-          console.log(data);
+          console.log('signup', data);
           dispatch(common.actions.setLoading({ visible: false }));
           dispatch(screenSignup.actions.close());
         } catch (e) {
