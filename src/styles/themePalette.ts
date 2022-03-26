@@ -13,6 +13,8 @@ interface ThemeVariables {
 
   opacity_button1: string;
 
+  border_element1: string;
+
   fill1: string;
 
   shadow1: string;
@@ -31,7 +33,7 @@ type ThemedPalette = Record<VariableKey, string>;
 const themeVariableSets: Record<Theme, ThemeVariables> = {
   light: {
     bg1: '#FFFF',
-    bg2: '',
+    bg2: '#f8f9fa',
     bg3: '#FFFF',
     bg4: '#FFFF',
 
@@ -43,6 +45,8 @@ const themeVariableSets: Record<Theme, ThemeVariables> = {
     text2: '#495057',
 
     opacity_button1: '0.7',
+
+    border_element1: '#e9ecef',
 
     fill1: '#242526',
 
@@ -64,6 +68,8 @@ const themeVariableSets: Record<Theme, ThemeVariables> = {
     text2: '#adb5bd',
 
     opacity_button1: '1',
+
+    border_element1: '#868e96',
 
     fill1: '#FFFF',
 

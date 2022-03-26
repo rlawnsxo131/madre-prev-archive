@@ -9,6 +9,7 @@ interface CoreProps {}
 
 function Core(props: CoreProps) {
   useThemeEffect();
+
   return (
     <>
       <GlobalStyle />

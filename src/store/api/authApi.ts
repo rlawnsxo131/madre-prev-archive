@@ -6,7 +6,6 @@ import {
   PostAuthGoogleSignupResponse,
 } from '../../@types/api/auth.type';
 import postAuthGoogleSignin from '../../api/auth/postAuthGoogleSignin';
-
 import common from '../common';
 import popupAuth from '../popupAuth';
 import screenSignup from '../screenSignup';
@@ -59,9 +58,13 @@ const authApi = createApi({
           if (data?.exist) {
             const data = await postAuthGoogleSignin({ accessToken });
             console.log(data);
-          }
-          if (!data?.exist) {
-            dispatch(screenSignup.actions.setVisible({ visible: true }));
+          } else {
+            dispatch(screenSignup.actions.show());
+            dispatch(
+              screenSignup.actions.setAccessToken({
+                accessToken,
+              }),
+            );
           }
           dispatch(popupAuth.actions.setVisible({ visible: false }));
           dispatch(
@@ -92,11 +95,17 @@ const authApi = createApi({
         },
       }),
       async onQueryStarted(_, { dispatch, queryFulfilled, getCacheEntry }) {
-        dispatch(common.actions.setLoading({ visible: true }));
-        await queryFulfilled;
+        try {
+          dispatch(common.actions.setLoading({ visible: true }));
+          await queryFulfilled;
 
-        const { data } = getCacheEntry();
-        console.log(data);
+          const { data } = getCacheEntry();
+          console.log(data);
+          dispatch(common.actions.setLoading({ visible: false }));
+          dispatch(screenSignup.actions.close());
+        } catch (e) {
+          dispatch(common.actions.setLoading({ visible: false }));
+        }
       },
     }),
   }),

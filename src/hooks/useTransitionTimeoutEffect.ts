@@ -13,14 +13,15 @@ export default function useTransitionTimeoutEffect({
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout | null = null;
+
     if (visible) {
       setClosed(false);
-    }
-    if (!visible) {
+    } else {
       timeoutId = setTimeout(() => {
         setClosed(true);
       }, delay);
     }
+
     return () => {
       if (timeoutId) {
         clearTimeout(timeoutId);

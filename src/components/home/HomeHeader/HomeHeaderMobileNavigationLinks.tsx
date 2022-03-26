@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { standardColor, transitions, zIndexes } from '../../../styles';
 import useTransitionTimeoutEffect from '../../../hooks/useTransitionTimeoutEffect';
 import useHomeHeaderState from '../../../hooks/home/useHomeHeaderState';
-import { themePalette } from '../../../styles/themePalette';
+import { themePalette } from '../../../styles';
 
 interface HomeHeaderMobileNavigationLinksProps {}
 

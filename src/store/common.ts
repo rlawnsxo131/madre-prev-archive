@@ -37,8 +37,7 @@ const common = createSlice({
       state.popupCommon.message = message;
     },
     setLoading(state, action: PayloadAction<LoadingState>) {
-      const { visible } = action.payload;
-      state.loading.visible = visible;
+      state.loading.visible = action.payload.visible;
     },
   },
 });

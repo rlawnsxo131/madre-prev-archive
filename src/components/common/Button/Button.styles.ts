@@ -1,5 +1,5 @@
 import { palette } from '../../../styles';
-import { themePalette } from '../../../styles/themePalette';
+import { themePalette } from '../../../styles';
 
 export type ButtonShape = 'rect' | 'round';
 export type ButtonSize = 'small' | 'medium' | 'large' | 'responsive';

@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
-import { palette } from '../../../styles';
-import { InputSize } from './Input.styles';
+import { palette, themePalette } from '../../../styles';
+import { InputSize, inputSizeMap } from './Input.styles';
 
 interface InputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
@@ -14,9 +14,10 @@ function Input({ size = 'medium', ...props }: InputProps) {
 const block = (size: InputSize) => css`
   all: unset;
   outline: none;
-  padding: 0.3rem;
+  width: ${inputSizeMap[size].width};
+  padding: ${inputSizeMap[size].padding};
   background: inherit;
-  border: 1px solid ${palette.pink['500']};
+  border: 2px solid ${themePalette.border_element1};
   border-radius: 3px;
   caret-color: ${palette.pink['500']};
 
@@ -24,21 +25,6 @@ const block = (size: InputSize) => css`
   &:focus {
     border: 2px solid ${palette.pink['500']};
   }
-
-  ${size === 'small' &&
-  css`
-    width: 7.5rem;
-  `}
-
-  ${size === 'medium' &&
-  css`
-    width: 18.75rem;
-  `}
-
-  ${size === 'responsive' &&
-  css`
-    width: 100%;
-  `}
 `;
 
 export default Input;

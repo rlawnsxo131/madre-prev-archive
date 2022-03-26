@@ -1,5 +1,5 @@
 import { css, Global } from '@emotion/react';
-import { themePalette, themes } from '../../../styles/themePalette';
+import { themePalette, themes } from '../../../styles';
 
 interface GlobalStyleProps {}
 

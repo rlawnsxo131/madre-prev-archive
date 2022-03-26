@@ -10,7 +10,7 @@ export default async function postAuthGoogleSignin({
   const { data } = await apiClient.post<PostAuthGoogleSigninResponse>(
     `/auth/google/signin`,
     {
-      accessToken,
+      access_token: accessToken,
     },
   );
   return data;

@@ -25,8 +25,7 @@ const home = createSlice({
       state.header.navigation.visible = !visible;
     },
     setMobileNavigation(state, action: PayloadAction<{ visible: boolean }>) {
-      const { visible } = action.payload;
-      state.header.navigation.visible = visible;
+      state.header.navigation.visible = action.payload.visible;
     },
   },
 });

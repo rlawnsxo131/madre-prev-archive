@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { media, palette } from '../../../styles';
-import { themePalette } from '../../../styles/themePalette';
+import { themePalette } from '../../../styles';
 
 const section = css`
   display: flex;

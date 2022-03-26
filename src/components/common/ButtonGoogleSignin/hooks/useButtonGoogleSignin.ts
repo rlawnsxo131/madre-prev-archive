@@ -3,7 +3,8 @@ import authApi from '../../../../store/api/authApi';
 
 export default function useButtonGoogleSignin() {
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const [googleSignin] = authApi.usePostGoogleCheckWithSigninMutation();
+  const [googleCheckWithSignin] =
+    authApi.usePostGoogleCheckWithSigninMutation();
 
   useEffect(() => {
     if (!buttonRef.current) return;
@@ -21,7 +22,7 @@ export default function useButtonGoogleSignin() {
         {},
         async (googleUser: any) => {
           const accessToken = googleUser?.getAuthResponse(true).access_token;
-          await googleSignin({ accessToken });
+          await googleCheckWithSignin({ accessToken });
         },
       );
     });

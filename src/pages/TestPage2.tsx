@@ -119,7 +119,12 @@ function TestPage2(props: TestPage2Props) {
         })}
         ref={ref}
       >
-        <Input />
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <Input size="small" />
+          <Input size="medium" />
+          <Input size="large" />
+          <Input size="responsive" />
+        </div>
       </div>
     </>
   );

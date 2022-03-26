@@ -9,10 +9,10 @@ export default function useScreenSignupActions() {
   return useMemo(
     () => ({
       show() {
-        dispatch(screenSignup.actions.setVisible({ visible: true }));
+        dispatch(screenSignup.actions.show());
       },
       close() {
-        dispatch(screenSignup.actions.setVisible({ visible: false }));
+        dispatch(screenSignup.actions.close());
       },
     }),
     [dispatch],

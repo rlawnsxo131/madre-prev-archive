@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import useThemeActions from '../../../hooks/theme/useThemeActions';
 import useThemeState from '../../../hooks/theme/useThemeState';
 import { LightIcon, NightIcon } from '../../../image/icons';
-import { themePalette } from '../../../styles/themePalette';
+import { themePalette } from '../../../styles';
 
 interface ButtonThemeChangeProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {}

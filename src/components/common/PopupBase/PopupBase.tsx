@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import useTransitionTimeoutEffect from '../../../hooks/useTransitionTimeoutEffect';
 import { transitions, zIndexes } from '../../../styles';
-import { themePalette } from '../../../styles/themePalette';
+import { themePalette } from '../../../styles';
 import OpaqueLayer from '../OpaqueLayer';
 
 interface PopupBaseProps {

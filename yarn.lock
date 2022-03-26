@@ -2746,6 +2746,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"add@npm:^2.0.6":
+  version: 2.0.6
+  resolution: "add@npm:2.0.6"
+  checksum: e2d23d40494565dfed4acd65e478570c444db5ac6c053551ed429c39ea0f2c99d83df63e7befec936df601827d2254d06a2fb6f7dcfd2022e810b25eab818b8c
+  languageName: node
+  linkType: hard
+
 "agent-base@npm:6":
   version: 6.0.2
   resolution: "agent-base@npm:6.0.2"
@@ -5839,6 +5846,7 @@ fsevents@~2.3.2:
     "@types/react-redux": ^7.1.23
     "@types/react-router-dom": ^5.3.3
     "@types/uuid": ^8.3.4
+    add: ^2.0.6
     axios: ^0.26.0
     babel-loader: ^8.2.3
     clean-webpack-plugin: ^4.0.0
@@ -5856,15 +5864,17 @@ fsevents@~2.3.2:
     react-dom: ^17.0.2
     react-redux: ^7.2.6
     react-router-dom: ^6.2.2
+    react-snowfall: ^1.1.2
     terser-webpack-plugin: ^5.3.1
     ts-loader: ^9.2.7
-    typescript: 4.5.5
+    typescript: ^4.5.5
     url-loader: ^4.1.1
     uuid: ^8.3.2
     webpack: ^5.70.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.7.4
     webpack-manifest-plugin: ^4.1.1
+    yarn: ^1.22.18
   languageName: unknown
   linkType: soft
 
@@ -7111,6 +7121,13 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
+"react-fast-compare@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "react-fast-compare@npm:3.2.0"
+  checksum: 8ef272c825ae329f61633ce4ce7f15aa5b84e5214d88bc0823880236e03e985a13195befa2c7a4eda7db3b017dc7985729152d88445823f652403cf36c2b86aa
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.13.1, react-is@npm:^16.7.0":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
@@ -7167,6 +7184,18 @@ fsevents@~2.3.2:
   peerDependencies:
     react: ">=16.8"
   checksum: 1a2e7006d4d56bfae8ff11dd5ec15e8049578864dfb2764652510eb0ce4af26a8949790a3732c4f7beb14bcb6500469ea18841b8cfc953e09828e4e4113922f0
+  languageName: node
+  linkType: hard
+
+"react-snowfall@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "react-snowfall@npm:1.1.2"
+  dependencies:
+    react-fast-compare: ^3.2.0
+  peerDependencies:
+    react: ^16.8 || 17.x
+    react-dom: ^16.8 || 17.x
+  checksum: 6cf8ab0b300b228a205d066282aee2d3def8fa9fef02b37c2e317926c20058840e81129941aae0081f27458fe2f42368dabdd2d57bfc365d55751696f4dec36d
   languageName: node
   linkType: hard
 
@@ -8206,23 +8235,23 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"typescript@npm:4.5.5":
-  version: 4.5.5
-  resolution: "typescript@npm:4.5.5"
+"typescript@npm:^4.5.5":
+  version: 4.6.3
+  resolution: "typescript@npm:4.6.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 506f4c919dc8aeaafa92068c997f1d213b9df4d9756d0fae1a1e7ab66b585ab3498050e236113a1c9e57ee08c21ec6814ca7a7f61378c058d79af50a4b1f5a5e
+  checksum: 255bb26c8cb846ca689dd1c3a56587af4f69055907aa2c154796ea28ee0dea871535b1c78f85a6212c77f2657843a269c3a742d09d81495b97b914bf7920415b
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@4.5.5#~builtin<compat/typescript>":
-  version: 4.5.5
-  resolution: "typescript@patch:typescript@npm%3A4.5.5#~builtin<compat/typescript>::version=4.5.5&hash=493e53"
+"typescript@patch:typescript@^4.5.5#~builtin<compat/typescript>":
+  version: 4.6.3
+  resolution: "typescript@patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=493e53"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: c05c318d79c690f101d7ffb34cd6c7d6bbd884d3af9cefe7749ad0cd6be43c7082f098280982ca945dcba23fde34a08fed9602bb26540936baf8c0520727d3ba
+  checksum: fe6bdc1afb2f145ddb7b0a3a31f96352209f6a5704d97f038414ea22ff9d8dd42f32cfb6652e30458d7d958d2d4e85de2df11c574899c6f750a6b3c0e90a3a76
   languageName: node
   linkType: hard
 
@@ -8641,6 +8670,16 @@ fsevents@~2.3.2:
   version: 1.10.2
   resolution: "yaml@npm:1.10.2"
   checksum: ce4ada136e8a78a0b08dc10b4b900936912d15de59905b2bf415b4d33c63df1d555d23acb2a41b23cf9fb5da41c256441afca3d6509de7247daa062fd2c5ea5f
+  languageName: node
+  linkType: hard
+
+"yarn@npm:^1.22.18":
+  version: 1.22.18
+  resolution: "yarn@npm:1.22.18"
+  bin:
+    yarn: bin/yarn.js
+    yarnpkg: bin/yarn.js
+  checksum: ffd9a4872caa5fce83e914592dd6a40bb978bf992d3dca839bc3853b9e6de951d7596f7e8c4a88bec3af3a049e46097f9139a51740d9074582fd923af8762f7a
   languageName: node
   linkType: hard
 

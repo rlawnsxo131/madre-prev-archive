@@ -1,21 +1,24 @@
 import { css } from '@emotion/react';
 import useTransitionTimeoutEffect from '../../../hooks/useTransitionTimeoutEffect';
-import { palette, transitions, zIndexes } from '../../../styles';
+import { palette, themePalette, transitions, zIndexes } from '../../../styles';
+
+type ScreenBaseType = 'default' | 'opaque';
 
 interface ScreenBaseProps {
   children: React.ReactNode;
   visible: boolean;
+  type?: ScreenBaseType;
 }
 
-function ScreenBase({ children, visible }: ScreenBaseProps) {
+function ScreenBase({ children, visible, type = 'default' }: ScreenBaseProps) {
   const closed = useTransitionTimeoutEffect({ visible });
 
   if (!visible && closed) return null;
 
-  return <div css={block(visible)}>{children}</div>;
+  return <div css={block(visible, type)}>{children}</div>;
 }
 
-const block = (visible: boolean) => css`
+const block = (visible: boolean, type: ScreenBaseType) => css`
   position: fixed;
   top: 0;
   left: 0;
@@ -25,7 +28,7 @@ const block = (visible: boolean) => css`
   justify-content: center;
   align-items: center;
   z-index: ${zIndexes.sliderBase};
-  background: ${palette.opaque[50]};
+  background: ${type === 'default' ? themePalette.bg4 : palette.opaque['50']};
   ${visible
     ? css`
         animation: ${transitions.slideUp} 0.4s forwards ease-in-out;
