@@ -14,11 +14,17 @@ const popupAuth = createSlice({
   name: 'popupAuth',
   initialState,
   reducers: {
-    setVisible(state, action: PayloadAction<Pick<PopupAuthState, 'visible'>>) {
-      state.visible = action.payload.visible;
+    show(state) {
+      state.visible = true;
     },
-    setIsError(state, action: PayloadAction<Pick<PopupAuthState, 'isError'>>) {
-      state.isError = action.payload.isError;
+    close(state) {
+      state.visible = false;
+    },
+    setIsError(state) {
+      state.isError = true;
+    },
+    resetIsError(state) {
+      state.isError = false;
     },
   },
 });

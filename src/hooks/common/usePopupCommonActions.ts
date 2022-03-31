@@ -15,21 +15,14 @@ export default function usePopupCommonActions() {
     () => ({
       show({ title = '', message = '' }: PopupCommshowParams) {
         dispatch(
-          common.actions.setPopupCommon({
-            visible: true,
+          common.actions.showPopupCommon({
             title,
             message,
           }),
         );
       },
       close() {
-        dispatch(
-          common.actions.setPopupCommon({
-            visible: false,
-            title: '',
-            message: '',
-          }),
-        );
+        dispatch(common.actions.closePopupCommon());
       },
     }),
     [dispatch],

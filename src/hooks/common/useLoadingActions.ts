@@ -9,18 +9,10 @@ export default function useLoadingActions() {
   return useMemo(
     () => ({
       show() {
-        dispatch(
-          common.actions.setLoading({
-            visible: true,
-          }),
-        );
+        dispatch(common.actions.showLoading());
       },
       close() {
-        dispatch(
-          common.actions.setLoading({
-            visible: false,
-          }),
-        );
+        dispatch(common.actions.closeLoading());
       },
     }),
     [dispatch],

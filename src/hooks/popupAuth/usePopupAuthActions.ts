@@ -9,32 +9,16 @@ export default function usePopupAuthActions() {
   return useMemo(
     () => ({
       show() {
-        dispatch(
-          popupAuth.actions.setVisible({
-            visible: true,
-          }),
-        );
+        dispatch(popupAuth.actions.show());
       },
       close() {
-        dispatch(
-          popupAuth.actions.setVisible({
-            visible: false,
-          }),
-        );
+        dispatch(popupAuth.actions.close());
       },
       setError() {
-        dispatch(
-          popupAuth.actions.setIsError({
-            isError: true,
-          }),
-        );
+        dispatch(popupAuth.actions.setIsError());
       },
       resetError() {
-        dispatch(
-          popupAuth.actions.setIsError({
-            isError: false,
-          }),
-        );
+        dispatch(popupAuth.actions.resetIsError());
       },
     }),
     [dispatch],

@@ -12,11 +12,7 @@ export default function useHomeHeaderActions() {
         dispatch(home.actions.handleMobileNavigation());
       },
       closeMobileNavigation() {
-        dispatch(
-          home.actions.setMobileNavigation({
-            visible: false,
-          }),
-        );
+        dispatch(home.actions.closeMobileNavigation());
       },
     }),
     [dispatch],

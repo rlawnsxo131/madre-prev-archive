@@ -30,14 +30,25 @@ const common = createSlice({
   name: 'common',
   initialState,
   reducers: {
-    setPopupCommon(state, action: PayloadAction<PopupCommonState>) {
-      const { visible, title, message } = action.payload;
-      state.popupCommon.visible = visible;
+    showPopupCommon(
+      state,
+      action: PayloadAction<Pick<PopupCommonState, 'title' | 'message'>>,
+    ) {
+      const { title, message } = action.payload;
+      state.popupCommon.visible = true;
       state.popupCommon.title = title;
       state.popupCommon.message = message;
     },
-    setLoading(state, action: PayloadAction<LoadingState>) {
-      state.loading.visible = action.payload.visible;
+    closePopupCommon(state) {
+      state.popupCommon.visible = false;
+      state.popupCommon.title = '';
+      state.popupCommon.message = '';
+    },
+    showLoading(state) {
+      state.loading.visible = true;
+    },
+    closeLoading(state) {
+      state.loading.visible = false;
     },
   },
 });

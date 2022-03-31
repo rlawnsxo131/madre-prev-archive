@@ -46,11 +46,7 @@ const authApi = createApi({
       ) {
         try {
           // check google registered
-          dispatch(
-            common.actions.setLoading({
-              visible: true,
-            }),
-          );
+          dispatch(common.actions.showLoading());
           await queryFulfilled;
 
           // excute signin or sinup action
@@ -66,19 +62,11 @@ const authApi = createApi({
               }),
             );
           }
-          dispatch(popupAuth.actions.setVisible({ visible: false }));
-          dispatch(
-            common.actions.setLoading({
-              visible: false,
-            }),
-          );
+          dispatch(popupAuth.actions.close());
+          dispatch(common.actions.closeLoading());
         } catch (e) {
-          dispatch(
-            common.actions.setLoading({
-              visible: false,
-            }),
-          );
-          dispatch(popupAuth.actions.setIsError({ isError: true }));
+          dispatch(common.actions.closeLoading());
+          dispatch(popupAuth.actions.setIsError());
         }
       },
     }),
@@ -96,15 +84,15 @@ const authApi = createApi({
       }),
       async onQueryStarted(_, { dispatch, queryFulfilled, getCacheEntry }) {
         try {
-          dispatch(common.actions.setLoading({ visible: true }));
+          dispatch(common.actions.showLoading());
           await queryFulfilled;
 
           const { data } = getCacheEntry();
           console.log('signup', data);
-          dispatch(common.actions.setLoading({ visible: false }));
+          dispatch(common.actions.closeLoading());
           dispatch(screenSignup.actions.close());
         } catch (e) {
-          dispatch(common.actions.setLoading({ visible: false }));
+          dispatch(common.actions.closeLoading());
         }
       },
     }),
