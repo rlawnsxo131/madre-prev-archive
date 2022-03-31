@@ -13,6 +13,16 @@ func GenerateUUIDString() string {
 	return uuid.NewV4().String()
 }
 
+func NewNullString(s string) sql.NullString {
+	if len(s) == 0 {
+		return sql.NullString{}
+	}
+	return sql.NullString{
+		String: s,
+		Valid:  true,
+	}
+}
+
 func ErrNoRowsReturnRawError(err error, customError error) error {
 	if err == sql.ErrNoRows {
 		return err

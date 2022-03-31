@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS madre.user (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `uuid` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `username` varchar(16) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `origin_name` varchar(16) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `display_name` varchar(48) COLLATE utf8mb4_general_ci NOT NULL,
   `photo_url` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,

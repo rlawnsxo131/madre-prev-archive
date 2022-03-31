@@ -13,15 +13,15 @@ type userService struct {
 	db *sqlx.DB
 }
 
-func NewUserService(db *sqlx.DB) *userService {
+func NewUserService(db *sqlx.DB) UserService {
 	return &userService{
 		db: db,
 	}
 }
 
-func (s *userService) Create(params CreateUserParams) (int64, error) {
+func (s *userService) Create(u User) (int64, error) {
 	userWriteRepo := NewUserWriteRepository(s.db)
-	lastInsertId, err := userWriteRepo.Create(params)
+	lastInsertId, err := userWriteRepo.Create(u)
 	return lastInsertId, err
 }
 

@@ -14,22 +14,18 @@ import (
 	"github.com/jmoiron/sqlx"
 	"github.com/rlawnsxo131/madre-server-v2/constants"
 	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
+	"github.com/rlawnsxo131/madre-server-v2/lib/response"
 )
 
 func Recovery(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer func() {
 			if err := recover(); err != nil {
-				http.Error(
-					w,
-					http.StatusText(http.StatusInternalServerError),
-					http.StatusInternalServerError,
+				writer := response.NewHttpWriter(w, r)
+				writer.WriteError(
+					errors.New(string(debug.Stack())),
+					"Recovery",
 				)
-				err := errors.New(string(debug.Stack()))
-				logger.Logger.
-					Err(err).
-					Str("Action", "Recovery").
-					Msg("")
 			}
 		}()
 		next.ServeHTTP(w, r)
@@ -43,17 +39,18 @@ func HttpLogger(next http.Handler) http.Handler {
 
 		bodyBytes, reader, err := httpLogger.ReadBody(r.Body)
 		if err != nil {
-			logger.Logger.
-				Err(err).
-				Str("Action", "HttpLogger ReadBody").
-				Msgf("Params: %+v", r.Body)
+			writer := response.NewHttpWriter(w, r)
+			writer.WriteError(
+				err,
+				"HttpLogger",
+			)
+			return
 		}
 		r.Body = reader
 
 		defer func() {
 			httpLogger.LogEntry(r, start, string(bodyBytes))
 		}()
-
 		next.ServeHTTP(w, r)
 	})
 }

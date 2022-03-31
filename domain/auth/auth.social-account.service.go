@@ -17,9 +17,9 @@ func NewSocialAccountService(db *sqlx.DB) SocialAccountService {
 	}
 }
 
-func (s *socialAccountService) Create(params CreateSocialAccountParams) (int64, error) {
+func (s *socialAccountService) Create(socialAccount SocialAccount) (int64, error) {
 	socialAccountWriteRepo := NewSocialAccountWriteRepository(s.db)
-	lastInsertId, err := socialAccountWriteRepo.Create(params)
+	lastInsertId, err := socialAccountWriteRepo.Create(socialAccount)
 	return lastInsertId, err
 }
 

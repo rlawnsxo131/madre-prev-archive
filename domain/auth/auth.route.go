@@ -211,15 +211,6 @@ func postGoogleSignup() http.HandlerFunc {
 			return
 		}
 
-		if err != nil {
-			writer.WriteError(
-				err,
-				"post /auth/google/signup",
-				"start transaction error",
-			)
-			return
-		}
-
 		googleProfileApi := google.NewGooglePeopleApi(params.AccessToken)
 		profile, err := googleProfileApi.GetGoogleProfile()
 		if err != nil {
@@ -231,12 +222,12 @@ func postGoogleSignup() http.HandlerFunc {
 		}
 
 		userService := user.NewUserService(db)
-		lastInsertUserId, err := userService.Create(user.CreateUserParams{
+		lastInsertUserId, err := userService.Create(user.User{
 			UUID:        utils.GenerateUUIDString(),
 			Email:       profile.Email,
-			Username:    profile.DisplayName,
+			OriginName:  utils.NewNullString(profile.DisplayName),
 			DisplayName: params.Username,
-			PhotoUrl:    profile.PhotoUrl,
+			PhotoUrl:    utils.NewNullString(profile.PhotoUrl),
 		})
 		if err != nil {
 			writer.WriteError(
@@ -256,13 +247,11 @@ func postGoogleSignup() http.HandlerFunc {
 		}
 
 		socialAccountService := NewSocialAccountService(db)
-		lastInsertSocialAccountId, err := socialAccountService.Create(CreateSocialAccountParams{
-			UserId:      user.ID,
-			UUID:        utils.GenerateUUIDString(),
-			AccessToken: params.AccessToken,
-			UserName:    params.Username,
-			Provider:    "GOOGLE",
-			SocialId:    profile.SocialId,
+		lastInsertSocialAccountId, err := socialAccountService.Create(SocialAccount{
+			UserId:   user.ID,
+			UUID:     utils.GenerateUUIDString(),
+			Provider: "GOOGLE",
+			SocialId: profile.SocialId,
 		})
 		if err != nil {
 			writer.WriteError(

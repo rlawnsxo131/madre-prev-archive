@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/pkg/errors"
+	"github.com/rlawnsxo131/madre-server-v2/utils"
 )
 
 // Google people api Response
@@ -203,11 +204,16 @@ func (g *googlePeopleApi) convertToGoogleProfile(rawProfile *RawGoogleProfile) *
 	var photoUrl string
 	var displayName string
 
+	// must not be null
 	if rawProfile.ResourceName != "" {
 		replaceResourceName := strings.ReplaceAll(rawProfile.ResourceName, "people/", "")
 		if replaceResourceName != "" {
 			socialId = replaceResourceName
+		} else {
+			socialId = utils.GenerateUUIDString()
 		}
+	} else {
+		socialId = utils.GenerateUUIDString()
 	}
 
 	if len(rawProfile.EmailAddresses) > 0 {
@@ -219,13 +225,15 @@ func (g *googlePeopleApi) convertToGoogleProfile(rawProfile *RawGoogleProfile) *
 
 	if len(rawProfile.Photos) > 0 {
 		url := rawProfile.Photos[0].Url
-		if url != "" {
+		if len(url) != 0 {
 			photoUrl = url
 		}
+
 	}
 
 	if len(rawProfile.Names) > 0 {
-		name := strings.Split(rawProfile.Names[0].DisplayName, " ")[0]
+		name := strings.Split(
+			rawProfile.Names[0].DisplayName, " ")[0]
 		if name != "" {
 			displayName = name
 		}

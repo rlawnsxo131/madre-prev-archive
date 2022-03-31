@@ -6,7 +6,7 @@ import (
 )
 
 type UserWriteRepository interface {
-	Create(params CreateUserParams) (int64, error)
+	Create(u User) (int64, error)
 }
 
 type userWriteRepository struct {
@@ -19,10 +19,10 @@ func NewUserWriteRepository(db *sqlx.DB) UserWriteRepository {
 	}
 }
 
-func (r *userWriteRepository) Create(params CreateUserParams) (int64, error) {
-	query := "INSERT INTO user(uuid, email, username, display_name, photo_url) VALUES(:uuid, :email, :username, :display_name, :photo_url)"
+func (r *userWriteRepository) Create(u User) (int64, error) {
+	query := "INSERT INTO user(uuid, email, origin_name, display_name, photo_url) VALUES(:uuid, :email, :origin_name, :display_name, :photo_url)"
 
-	result, err := r.db.NamedExec(query, params)
+	result, err := r.db.NamedExec(query, u)
 	if err != nil {
 		return 0, errors.Wrap(err, "SocialAccountRepository: create")
 	}

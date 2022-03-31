@@ -6,7 +6,7 @@ import (
 )
 
 type SocialAccountWriteRepository interface {
-	Create(params CreateSocialAccountParams) (int64, error)
+	Create(socialAccount SocialAccount) (int64, error)
 }
 
 type socialAccountWriteRepository struct {
@@ -19,10 +19,10 @@ func NewSocialAccountWriteRepository(db *sqlx.DB) SocialAccountWriteRepository {
 	}
 }
 
-func (r *socialAccountWriteRepository) Create(params CreateSocialAccountParams) (int64, error) {
+func (r *socialAccountWriteRepository) Create(socialAccount SocialAccount) (int64, error) {
 	query := "INSERT INTO social_account(uuid, user_id, provider, social_id) VALUES(:uuid, :user_id, :provider, :social_id)"
 
-	result, err := r.db.NamedExec(query, params)
+	result, err := r.db.NamedExec(query, socialAccount)
 	if err != nil {
 		return 0, errors.Wrap(err, "SocialAccountRepository: create")
 	}
