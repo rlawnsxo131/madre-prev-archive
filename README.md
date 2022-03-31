@@ -18,3 +18,7 @@ $ docker compose up -d
 ```shell
 $ yarn start:dev
 ```
+
+### V2 Repository
+
+<https://github.com/rlawnsxo131/madre-server-v2>
