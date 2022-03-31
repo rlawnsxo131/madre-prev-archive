@@ -5,7 +5,7 @@ const zIndexes = {
   popup: 12,
   loading: 12,
   sliderBase: 12,
-  patalBackground: 12,
+  snowBackground: 12,
   screenSignupItems: 15,
 };
 

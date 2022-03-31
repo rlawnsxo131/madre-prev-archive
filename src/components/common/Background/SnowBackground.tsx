@@ -25,7 +25,7 @@ const block = css`
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: ${zIndexes.patalBackground};
+  z-index: ${zIndexes.snowBackground};
   h1 {
     position: absolute;
     left: 5%;
