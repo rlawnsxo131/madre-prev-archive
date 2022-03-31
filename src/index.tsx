@@ -17,8 +17,8 @@ const loadTheme = () => {
 
 loadTheme();
 
-const contaier = document.getElementById('root')!;
-const root = createRoot(contaier);
+const container = document.getElementById('root')!;
+const root = createRoot(container);
 
 root.render(
   <StrictMode>
