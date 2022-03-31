@@ -19,6 +19,7 @@ loadTheme();
 
 const contaier = document.getElementById('root')!;
 const root = createRoot(contaier);
+
 root.render(
   <StrictMode>
     <Provider store={store}>

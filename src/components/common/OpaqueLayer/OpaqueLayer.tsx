@@ -36,7 +36,7 @@ function OpaqueLayer({ visible }: OpaqueLayerProps) {
       if (!timeoutId.current) return;
       clearTimeout(timeoutId.current);
     };
-  }, []);
+  }, [visible]);
 
   useEffect(() => {
     return () => {
