@@ -99,7 +99,7 @@ func postGoogleSignin() http.HandlerFunc {
 		if err != nil {
 			writer.WriteError(
 				err,
-				"post /auth/google/signin",
+				"post /auth/google/sign-in",
 			)
 			return
 		}
@@ -112,7 +112,7 @@ func postGoogleSignin() http.HandlerFunc {
 		if err != nil {
 			writer.WriteError(
 				errors.WithStack(err),
-				"post /auth/google/signin",
+				"post /auth/google/sign-in",
 				"decode params error",
 			)
 			return
@@ -122,7 +122,7 @@ func postGoogleSignin() http.HandlerFunc {
 		if err != nil {
 			writer.WriteErrorBadRequest(
 				err,
-				"post /auth/google/signin",
+				"post /auth/google/sign-in",
 				&params,
 			)
 			return
@@ -133,7 +133,7 @@ func postGoogleSignin() http.HandlerFunc {
 		if err != nil {
 			writer.WriteError(
 				err,
-				"post /auth/google/signin",
+				"post /auth/google/sign-in",
 			)
 			return
 		}
@@ -143,7 +143,7 @@ func postGoogleSignin() http.HandlerFunc {
 		if err != nil {
 			writer.WriteError(
 				err,
-				"post /auth/google/signin",
+				"post /auth/google/sign-in",
 			)
 			return
 		}
@@ -153,7 +153,7 @@ func postGoogleSignin() http.HandlerFunc {
 		if err != nil {
 			writer.WriteError(
 				err,
-				"post /auth/google/signin",
+				"post /auth/google/sign-in",
 			)
 			return
 		}
@@ -168,7 +168,7 @@ func postGoogleSignin() http.HandlerFunc {
 		if err != nil {
 			writer.WriteError(
 				err,
-				"post /auth/google/signin",
+				"post /auth/google/sign-in",
 			)
 			return
 		}
@@ -190,7 +190,7 @@ func postGoogleSignup() http.HandlerFunc {
 		if err != nil {
 			writer.WriteError(
 				err,
-				"post /auth/google/signup",
+				"post /auth/google/sign-up",
 			)
 			return
 		}
@@ -204,7 +204,7 @@ func postGoogleSignup() http.HandlerFunc {
 		if err != nil {
 			writer.WriteError(
 				err,
-				"post /auth/google/signup",
+				"post /auth/google/sign-up",
 				"decode params error",
 			)
 			return
@@ -214,7 +214,7 @@ func postGoogleSignup() http.HandlerFunc {
 		if err != nil {
 			writer.WriteErrorBadRequest(
 				err,
-				"post /auth/google/signup",
+				"post /auth/google/sign-up",
 				&params,
 			)
 			return
@@ -225,7 +225,7 @@ func postGoogleSignup() http.HandlerFunc {
 		if err != nil {
 			writer.WriteError(
 				err,
-				"post /auth/google/signup",
+				"post /auth/google/sign-up",
 				"username validate error",
 			)
 			return
@@ -233,7 +233,7 @@ func postGoogleSignup() http.HandlerFunc {
 		if !valid {
 			writer.WriteErrorBadRequest(
 				errors.New("username validation error"),
-				"post /auth/google/signup",
+				"post /auth/google/sign-up",
 				&params,
 			)
 			return
@@ -244,7 +244,7 @@ func postGoogleSignup() http.HandlerFunc {
 		if err != nil {
 			writer.WriteError(
 				err,
-				"post /auth/google/signup",
+				"post /auth/google/sign-up",
 			)
 			return
 		}
@@ -260,7 +260,7 @@ func postGoogleSignup() http.HandlerFunc {
 		if err != nil {
 			writer.WriteError(
 				err,
-				"post /auth/google/signup",
+				"post /auth/google/sign-up",
 			)
 			return
 		}
@@ -269,7 +269,7 @@ func postGoogleSignup() http.HandlerFunc {
 		if err != nil {
 			writer.WriteError(
 				err,
-				"post /auth/google/signup",
+				"post /auth/google/sign-up",
 			)
 			return
 		}
@@ -284,7 +284,7 @@ func postGoogleSignup() http.HandlerFunc {
 		if err != nil {
 			writer.WriteError(
 				err,
-				"post /auth/google/signup",
+				"post /auth/google/sign-up",
 			)
 			return
 		}
@@ -293,7 +293,7 @@ func postGoogleSignup() http.HandlerFunc {
 		if err != nil {
 			writer.WriteError(
 				err,
-				"post /auth/google/signup",
+				"post /auth/google/sign-up",
 			)
 			return
 		}
