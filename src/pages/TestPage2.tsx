@@ -6,7 +6,6 @@ import { D3AxisChart, D3GenerateUtil } from '../lib/d3';
 import { D3FormatUtil } from '../lib/d3';
 import getRandomIntInclusive from '../lib/utils/getRandomIntInclusive';
 import { palette } from '../styles';
-import Input from '../components/common/Input';
 
 interface TestPage2Props {}
 
@@ -28,7 +27,6 @@ function TestPage2(props: TestPage2Props) {
   useEffect(() => {
     if (!ref.current) return;
     if (chartRef.current) return;
-
     chartRef.current = new D3AxisChart({
       container: ref.current,
       width,
@@ -85,7 +83,7 @@ function TestPage2(props: TestPage2Props) {
     chartRef.current.removeAndAppendCircle();
     chartRef.current.resetData();
 
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       if (!chartRef.current) return;
 
       const data = Array.from({ length: 5 }).map((_, i) =>
@@ -108,25 +106,22 @@ function TestPage2(props: TestPage2Props) {
       chartRef.current.removeAndAppendCircle();
       chartRef.current.resetData();
     }, 2000);
-  }, [chartRef.current]);
+
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [ref.current, chartRef.current]);
 
   return (
-    <>
-      <div
-        css={block({
-          axisXClass: axisXClassRef.current,
-          axisYClass: axisYClassRef.current,
-        })}
-        ref={ref}
-      >
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <Input size="small" />
-          <Input size="medium" />
-          <Input size="large" />
-          <Input size="responsive" />
-        </div>
-      </div>
-    </>
+    <div
+      css={block({
+        axisXClass: axisXClassRef.current,
+        axisYClass: axisYClassRef.current,
+      })}
+      ref={ref}
+    ></div>
   );
 }
 
