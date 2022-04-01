@@ -228,7 +228,6 @@ func (g *googlePeopleApi) convertToGoogleProfile(rawProfile *RawGoogleProfile) *
 		if len(url) != 0 {
 			photoUrl = url
 		}
-
 	}
 
 	if len(rawProfile.Names) > 0 {

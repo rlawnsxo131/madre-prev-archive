@@ -1,6 +1,7 @@
 package temp
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -11,6 +12,7 @@ func ApplyRoutes(v1 *mux.Router) {
 	temp := v1.NewRoute().PathPrefix("/temp").Subrouter()
 
 	temp.HandleFunc("/get", func(w http.ResponseWriter, r *http.Request) {
+		log.Println(r.Cookie("Access_token"))
 		writer := response.NewHttpWriter(w, r)
 		data := map[string]string{
 			"data": "data",

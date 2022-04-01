@@ -3,6 +3,7 @@ package auth
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 
 	"github.com/gorilla/mux"
 	"github.com/pkg/errors"
@@ -10,6 +11,7 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/domain/user"
 	"github.com/rlawnsxo131/madre-server-v2/lib/google"
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"
+	"github.com/rlawnsxo131/madre-server-v2/lib/token"
 
 	"github.com/rlawnsxo131/madre-server-v2/utils"
 )
@@ -92,7 +94,7 @@ func postGoogleSignin() http.HandlerFunc {
 		if err != nil {
 			writer.WriteError(
 				err,
-				"post /auth/google/signup",
+				"post /auth/google/signin",
 			)
 			return
 		}
@@ -105,7 +107,7 @@ func postGoogleSignin() http.HandlerFunc {
 		if err != nil {
 			writer.WriteError(
 				errors.WithStack(err),
-				"post /auth/google/check",
+				"post /auth/google/signin",
 				"decode params error",
 			)
 			return
@@ -115,7 +117,7 @@ func postGoogleSignin() http.HandlerFunc {
 		if err != nil {
 			writer.WriteErrorBadRequest(
 				err,
-				"post /auth/google/check",
+				"post /auth/google/signin",
 				&params,
 			)
 			return
@@ -126,7 +128,7 @@ func postGoogleSignin() http.HandlerFunc {
 		if err != nil {
 			writer.WriteError(
 				err,
-				"post /auth/google/check",
+				"post /auth/google/signin",
 			)
 			return
 		}
@@ -136,7 +138,7 @@ func postGoogleSignin() http.HandlerFunc {
 		if err != nil {
 			writer.WriteError(
 				err,
-				"post /auth/google/check",
+				"post /auth/google/signin",
 			)
 			return
 		}
@@ -146,12 +148,33 @@ func postGoogleSignin() http.HandlerFunc {
 		if err != nil {
 			writer.WriteError(
 				err,
-				"post /auth/google/check",
+				"post /auth/google/signin",
 			)
 			return
 		}
 
-		writer.WriteCompress(user)
+		tokenManager := token.NewTokenManager()
+		err = tokenManager.GenerateToken(token.GenerateTokenParams{
+			UserID:      strconv.Itoa(int(user.ID)),
+			UserUUID:    user.UUID,
+			DisplayName: user.DisplayName,
+			Email:       user.Email,
+		})
+		if err != nil {
+			writer.WriteError(
+				err,
+				"post /auth/google/signin",
+			)
+			return
+		}
+		tokenManager.SetTokenCookie(w)
+
+		writer.WriteCompress(map[string]interface{}{
+			"uuid":         user.ID,
+			"email":        user.Email,
+			"display_name": user.DisplayName,
+			"token":        tokenManager.GetToken(),
+		})
 	}
 }
 
