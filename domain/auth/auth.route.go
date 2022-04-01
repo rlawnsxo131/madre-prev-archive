@@ -2,6 +2,7 @@ package auth
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 	"strconv"
 
@@ -173,12 +174,14 @@ func postGoogleSignin() http.HandlerFunc {
 			return
 		}
 		tokenManager.SetTokenCookie(w)
+		accessToken, refreshToken := tokenManager.GetTokens()
+		log.Println(refreshToken)
 
 		writer.WriteCompress(map[string]interface{}{
 			"uuid":         user.ID,
 			"email":        user.Email,
 			"display_name": user.DisplayName,
-			"token":        tokenManager.GetToken(),
+			"access_token": accessToken,
 		})
 	}
 }
@@ -275,7 +278,7 @@ func postGoogleSignup() http.HandlerFunc {
 		}
 
 		socialAccountService := NewSocialAccountService(db)
-		lastInsertSocialAccountId, err := socialAccountService.Create(SocialAccount{
+		_, err = socialAccountService.Create(SocialAccount{
 			UserId:   user.ID,
 			UUID:     utils.GenerateUUIDString(),
 			Provider: "GOOGLE",
@@ -289,15 +292,29 @@ func postGoogleSignup() http.HandlerFunc {
 			return
 		}
 
-		socialAccount, err := socialAccountService.FindOneById(lastInsertSocialAccountId)
+		tokenManager := token.NewTokenManager()
+		err = tokenManager.GenerateToken(token.GenerateTokenParams{
+			UserID:      strconv.Itoa(int(user.ID)),
+			UserUUID:    user.UUID,
+			DisplayName: user.DisplayName,
+			Email:       user.Email,
+		})
 		if err != nil {
 			writer.WriteError(
 				err,
-				"post /auth/google/sign-up",
+				"post /auth/google/sign-in",
 			)
 			return
 		}
+		tokenManager.SetTokenCookie(w)
+		accessToken, refreshToken := tokenManager.GetTokens()
 
-		writer.WriteCompress(socialAccount)
+		log.Println(refreshToken)
+		writer.WriteCompress(map[string]interface{}{
+			"uuid":         user.ID,
+			"email":        user.Email,
+			"display_name": user.DisplayName,
+			"access_token": accessToken,
+		})
 	}
 }
