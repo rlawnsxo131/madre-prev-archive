@@ -239,7 +239,7 @@ func postGoogleSignup() http.HandlerFunc {
 		if err != nil {
 			writer.WriteError(
 				err,
-				"post /auth/google/check",
+				"post /auth/google/signup",
 			)
 			return
 		}
