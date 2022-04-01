@@ -1,14 +1,14 @@
-export interface PostAuthGoogleSigninParams {
+export interface PostAuthGoogleSignInParams {
   accessToken: string;
 }
 
-export interface PostAuthGoogleSigninResponse {
+export interface PostAuthGoogleSigInResponse {
   exist: boolean;
 }
 
-export interface PostAuthGoogleSignupParams {
+export interface PostAuthGoogleSignUpParams {
   accessToken: string;
   username: string;
 }
 
-export interface PostAuthGoogleSignupResponse {}
+export interface PostAuthGoogleSignUpResponse {}

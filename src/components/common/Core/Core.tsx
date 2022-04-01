@@ -1,7 +1,7 @@
 import GlobalStyle from '../GlobalStyle';
 import PopupCommon from '../PopupCommon';
 import PopupAuth from '../PopupAuth';
-import ScreenSignup from '../ScreenSignup';
+import ScreenSignUp from '../ScreenSignUp';
 import Loading from '../Loading';
 import useThemeEffect from '../../../hooks/theme/useThemeEffect';
 
@@ -15,7 +15,7 @@ function Core(props: CoreProps) {
       <GlobalStyle />
       <PopupCommon />
       <PopupAuth />
-      <ScreenSignup />
+      <ScreenSignUp />
       <Loading />
     </>
   );

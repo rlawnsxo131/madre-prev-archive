@@ -1,6 +1,6 @@
 import { CloseIcon } from '../../../image/icons';
 import { InspirationImage } from '../../../image/images';
-import ButtonGoogleSignin from '../ButtonGoogleSignin';
+import ButtonGoogleSignIn from '../ButtonGoogleSignIn';
 import PopupAuthStyles from './PopupAuth.styles';
 
 interface PopupAuthRightBlockDefaultProps {
@@ -19,7 +19,7 @@ function PopupAuthRightBlockDefault({
       <div css={PopupAuthStyles.rightBlockBody}>
         <InspirationImage />
       </div>
-      <ButtonGoogleSignin />
+      <ButtonGoogleSignIn />
     </div>
   );
 }

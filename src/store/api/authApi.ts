@@ -1,14 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
-  PostAuthGoogleSigninParams,
-  PostAuthGoogleSigninResponse,
-  PostAuthGoogleSignupParams,
-  PostAuthGoogleSignupResponse,
+  PostAuthGoogleSignInParams,
+  PostAuthGoogleSigInResponse,
+  PostAuthGoogleSignUpParams,
+  PostAuthGoogleSignUpResponse,
 } from '../../@types/api/auth.type';
-import postAuthGoogleSignin from '../../api/auth/postAuthGoogleSignin';
+import postAuthGoogleSignIn from '../../api/auth/postAuthGoogleSignIn';
 import common from '../common';
 import popupAuth from '../popupAuth';
-import screenSignup from '../screenSignup';
+import screenSignUp from '../screenSignUp';
 
 const authApi = createApi({
   reducerPath: 'authApi',
@@ -29,9 +29,9 @@ const authApi = createApi({
     //     console.log('end');
     //   },
     // }),
-    postGoogleCheckWithSignin: build.mutation<
-      PostAuthGoogleSigninResponse,
-      PostAuthGoogleSigninParams
+    postGoogleCheckWithSignIn: build.mutation<
+      PostAuthGoogleSigInResponse,
+      PostAuthGoogleSignInParams
     >({
       query: ({ accessToken }) => ({
         url: '/google/check',
@@ -49,15 +49,15 @@ const authApi = createApi({
           dispatch(common.actions.showLoading());
           await queryFulfilled;
 
-          // excute signin or sinup action
+          // excute sign-in or sign-up action
           const { data } = getCacheEntry();
           if (data?.exist) {
-            const data = await postAuthGoogleSignin({ accessToken });
+            const data = await postAuthGoogleSignIn({ accessToken });
             console.log('signin: ', data);
           } else {
-            dispatch(screenSignup.actions.show());
+            dispatch(screenSignUp.actions.show());
             dispatch(
-              screenSignup.actions.setAccessToken({
+              screenSignUp.actions.setAccessToken({
                 accessToken,
               }),
             );
@@ -70,12 +70,12 @@ const authApi = createApi({
         }
       },
     }),
-    postGoogleSignup: build.mutation<
-      PostAuthGoogleSignupResponse,
-      PostAuthGoogleSignupParams
+    postGoogleSignUp: build.mutation<
+      PostAuthGoogleSignUpResponse,
+      PostAuthGoogleSignUpParams
     >({
       query: ({ accessToken, username }) => ({
-        url: '/google/signup',
+        url: '/google/sign-up',
         method: 'POST',
         body: {
           access_token: accessToken,
@@ -90,7 +90,7 @@ const authApi = createApi({
           const { data } = getCacheEntry();
           console.log('signup', data);
           dispatch(common.actions.closeLoading());
-          dispatch(screenSignup.actions.close());
+          dispatch(screenSignUp.actions.close());
         } catch (e) {
           dispatch(common.actions.closeLoading());
         }

@@ -3,7 +3,7 @@ import authApi from './api/authApi';
 import common from './common';
 import home from './home';
 import popupAuth from './popupAuth';
-import screenSignup from './screenSignup';
+import screenSignUp from './screenSignUp';
 import theme from './theme';
 import user from './user';
 
@@ -13,7 +13,7 @@ const rootReducer = combineReducers({
   theme: theme.reducer,
   user: user.reducer,
   popupAuth: popupAuth.reducer,
-  screenSignup: screenSignup.reducer,
+  screenSignUp: screenSignUp.reducer,
   [authApi.reducerPath]: authApi.reducer,
 });
 

@@ -6,7 +6,7 @@ const zIndexes = {
   loading: 12,
   sliderBase: 12,
   snowBackground: 12,
-  screenSignupItems: 15,
+  screenSignUpItems: 15,
 };
 
 export default zIndexes;
