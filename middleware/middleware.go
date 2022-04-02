@@ -116,7 +116,7 @@ func SetResponseContentTypeJson(next http.Handler) http.Handler {
 	})
 }
 
-func JwtMiddleware(next http.Handler) http.Handler {
+func JWT(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		accessToken, err := r.Cookie("Access_token")
 		if err != nil {
