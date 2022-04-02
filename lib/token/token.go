@@ -19,7 +19,6 @@ type authTokenClaims struct {
 }
 
 type GenerateTokenParams struct {
-	UserID      string `json:"id"`
 	UserUUID    string `json:"uuid"`
 	DisplayName string `json:"display_name"`
 	Email       string `json:"email"`
@@ -28,6 +27,7 @@ type GenerateTokenParams struct {
 type TokenManager interface {
 	GetTokens() (string, string)
 	GenerateToken(params GenerateTokenParams) error
+	DecodeToken(token string) (*authTokenClaims, error)
 	SetTokenCookie(w http.ResponseWriter)
 }
 
@@ -35,6 +35,16 @@ type tokenManager struct {
 	accessToken  string
 	refreshToken string
 }
+
+const (
+	AccessToken  = "Access_token"
+	RefreshToken = "Refresh_token"
+)
+
+var (
+	signKey    = []byte("madre base")
+	tokenTypes = []string{AccessToken, RefreshToken}
+)
 
 func NewTokenManager() TokenManager {
 	return &tokenManager{}
@@ -44,34 +54,36 @@ func (tm *tokenManager) GetTokens() (string, string) {
 	return tm.accessToken, tm.refreshToken
 }
 
-const (
-	AccessToken  = "Access_token"
-	RefreshToken = "Refresh_token"
-)
-
 func (tm *tokenManager) GenerateToken(params GenerateTokenParams) error {
-	signKey := []byte("madre base")
-	// tokenTypes := []string{AccessToken, RefreshToken}
+	for _, tokenType := range tokenTypes {
+		var claims authTokenClaims
+		now := time.Now()
 
-	for i := 0; i < 2; i++ {
-		var expiresAt int64
-		if i == 0 {
-			expiresAt = 60 * 60 * 24 * 7
-		} else {
-			expiresAt = 60 * 60 * 24 * 30
+		if tokenType == AccessToken {
+			claims = authTokenClaims{
+				TokenUUID:   utils.GenerateUUIDString(),
+				UserUUID:    params.UserUUID,
+				DisplayName: params.DisplayName,
+				Email:       params.Email,
+				StandardClaims: jwt.StandardClaims{
+					ExpiresAt: now.Add(time.Hour * 24).Unix(),
+					Issuer:    "madre",
+					IssuedAt:  now.Unix(),
+				},
+			}
 		}
-		claims := authTokenClaims{
-			TokenUUID:   utils.GenerateUUIDString(),
-			UserID:      params.UserID,
-			UserUUID:    params.UserUUID,
-			DisplayName: params.DisplayName,
-			Email:       params.Email,
-			StandardClaims: jwt.StandardClaims{
-				ExpiresAt: expiresAt,
-				Issuer:    "madre",
-				IssuedAt:  time.Now().Unix(),
-			},
+		if tokenType == RefreshToken {
+			claims = authTokenClaims{
+				TokenUUID: utils.GenerateUUIDString(),
+				UserUUID:  params.UserUUID,
+				StandardClaims: jwt.StandardClaims{
+					ExpiresAt: now.AddDate(0, 0, 30).Unix(),
+					Issuer:    "madre",
+					IssuedAt:  now.Unix(),
+				},
+			}
 		}
+
 		token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 		ss, err := token.SignedString(signKey)
 
@@ -79,14 +91,34 @@ func (tm *tokenManager) GenerateToken(params GenerateTokenParams) error {
 			return errors.Wrap(err, "GenerateToken")
 		}
 
-		if i == 0 {
+		if tokenType == AccessToken {
 			tm.accessToken = ss
-		} else {
-			tm.refreshToken = ss
+			continue
 		}
+		tm.refreshToken = ss
 	}
 
 	return nil
+}
+
+func (tm *tokenManager) DecodeToken(token string) (*authTokenClaims, error) {
+	claims := authTokenClaims{}
+	t, err := jwt.ParseWithClaims(token, &claims, func(t *jwt.Token) (interface{}, error) {
+		if _, ok := t.Method.(*jwt.SigningMethodHMAC); ok {
+			return signKey, nil
+		}
+		return nil, errors.New("ParseWithClaims error")
+	})
+
+	if err != nil {
+		return nil, errors.Wrap(err, "DecodeToken")
+	}
+
+	if t.Valid {
+		return &claims, nil
+	}
+
+	return nil, errors.New("DecodeToken: token is not valid")
 }
 
 func (tm *tokenManager) SetTokenCookie(w http.ResponseWriter) {

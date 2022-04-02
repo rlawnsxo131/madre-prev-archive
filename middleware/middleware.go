@@ -3,6 +3,7 @@ package middleware
 import (
 	"context"
 	"errors"
+	"log"
 	"runtime/debug"
 	"time"
 
@@ -15,6 +16,7 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/constants"
 	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"
+	"github.com/rlawnsxo131/madre-server-v2/lib/token"
 )
 
 func Recovery(next http.Handler) http.Handler {
@@ -90,6 +92,7 @@ func Cors(next http.Handler) http.Handler {
 	})
 }
 
+// TODO: need to separate the func that sets the context and the function that puts the context value.
 func SetHttpContextValues(db *sqlx.DB) mux.MiddlewareFunc {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -109,6 +112,54 @@ func SetHttpContextValues(db *sqlx.DB) mux.MiddlewareFunc {
 func SetResponseContentTypeJson(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
+		next.ServeHTTP(w, r)
+	})
+}
+
+func JwtMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		accessToken, err := r.Cookie("Access_token")
+		if err != nil {
+			if err != http.ErrNoCookie {
+				writer := response.NewHttpWriter(w, r)
+				writer.WriteError(
+					err,
+					"JwtMiddleware",
+					"get Access_token error",
+				)
+			}
+			return
+		}
+
+		if accessToken != nil {
+			tokenManager := token.NewTokenManager()
+			claims, err := tokenManager.DecodeToken(accessToken.Value)
+			if err != nil {
+				refreshToken, err := r.Cookie("Refresh_token")
+				if err != nil {
+					if err != http.ErrNoCookie {
+						writer := response.NewHttpWriter(w, r)
+						writer.WriteError(
+							err,
+							"JwtMiddleware",
+							"get Refresh_token error",
+						)
+						return
+					}
+				}
+
+				if refreshToken != nil {
+					claims, err := tokenManager.DecodeToken(refreshToken.Value)
+					if err == nil {
+						log.Println("refresh_token:", claims)
+					} else {
+						log.Println("err:", err)
+					}
+				}
+			}
+			log.Println("access_token:", claims)
+		}
+
 		next.ServeHTTP(w, r)
 	})
 }

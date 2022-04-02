@@ -14,8 +14,9 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/constants"
 )
 
+var sqlxDB *sqlx.DB
+
 var (
-	sqlxDB                        *sqlx.DB
 	ErrDBIsNotExist               = errors.New("DB is not exist")
 	ErrHttpContextValueIsNotExist = errors.New("Http context value is not exist")
 )
@@ -49,7 +50,7 @@ func GetDBConn(ctx context.Context) (*sqlx.DB, error) {
 				return sqlxDB, nil
 			}
 		}
-		return nil, ErrDBIsNotExist
+		return nil, errors.New("DB is not exist")
 	}
 	return nil, ErrHttpContextValueIsNotExist
 }

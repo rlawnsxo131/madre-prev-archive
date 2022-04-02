@@ -50,6 +50,7 @@ func (s *server) applyHealthSettings() {
 		middleware.HttpLogger,
 		middleware.Recovery,
 		middleware.Cors,
+		middleware.JwtMiddleware,
 	)
 	s.router.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
 		writer := response.NewHttpWriter(w, r)

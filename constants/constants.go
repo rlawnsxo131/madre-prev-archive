@@ -1,11 +1,12 @@
 package constants
 
 type (
-	httpContextKey string
+	httpContextKey   string
+	httpContextDBKey string
 )
 
 // http context
 const (
-	HttpContextKey   httpContextKey = "httpContextKey"
-	HttpContextDBKey string         = "DB"
+	HttpContextKey   httpContextKey   = "HttpContextKey"
+	HttpContextDBKey httpContextDBKey = "HttpContextDBKey"
 )

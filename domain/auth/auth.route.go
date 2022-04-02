@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-	"strconv"
 
 	"github.com/gorilla/mux"
 	"github.com/pkg/errors"
@@ -89,6 +88,8 @@ func postGoogleCheck() http.HandlerFunc {
 			return
 		}
 
+		log.Println(existSocialAccountMap)
+
 		writer.WriteCompress(existSocialAccountMap)
 	}
 }
@@ -161,7 +162,6 @@ func postGoogleSignin() http.HandlerFunc {
 
 		tokenManager := token.NewTokenManager()
 		err = tokenManager.GenerateToken(token.GenerateTokenParams{
-			UserID:      strconv.Itoa(int(user.ID)),
 			UserUUID:    user.UUID,
 			DisplayName: user.DisplayName,
 			Email:       user.Email,
@@ -294,7 +294,6 @@ func postGoogleSignup() http.HandlerFunc {
 
 		tokenManager := token.NewTokenManager()
 		err = tokenManager.GenerateToken(token.GenerateTokenParams{
-			UserID:      strconv.Itoa(int(user.ID)),
 			UserUUID:    user.UUID,
 			DisplayName: user.DisplayName,
 			Email:       user.Email,
