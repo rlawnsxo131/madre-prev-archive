@@ -2,14 +2,16 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface ScreenSignUpState {
   visible: boolean;
-  accessToken: string;
-  username: string;
+  isError: boolean;
+  access_token: string;
+  display_name: string;
 }
 
 const initialState: ScreenSignUpState = {
   visible: false,
-  accessToken: '',
-  username: '',
+  isError: false,
+  access_token: '',
+  display_name: '',
 };
 
 const screenSignUp = createSlice({
@@ -21,20 +23,27 @@ const screenSignUp = createSlice({
     },
     close(state) {
       state.visible = false;
-      state.accessToken = '';
-      state.username = '';
+      state.isError = false;
+      state.access_token = '';
+      state.display_name = '';
     },
-    setAccessToken(
-      state,
-      action: PayloadAction<Pick<ScreenSignUpState, 'accessToken'>>,
-    ) {
-      state.accessToken = action.payload.accessToken;
+    setIsError(state) {
+      state.isError = true;
     },
-    setUsername(
+    resetIsError(state) {
+      state.isError = false;
+    },
+    setaccess_token(
       state,
-      action: PayloadAction<Pick<ScreenSignUpState, 'username'>>,
+      action: PayloadAction<Pick<ScreenSignUpState, 'access_token'>>,
     ) {
-      state.username = action.payload.username;
+      state.access_token = action.payload.access_token;
+    },
+    setdisplay_name(
+      state,
+      action: PayloadAction<Pick<ScreenSignUpState, 'display_name'>>,
+    ) {
+      state.display_name = action.payload.display_name;
     },
   },
 });

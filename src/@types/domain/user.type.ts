@@ -3,7 +3,7 @@ export interface User {
   uuid: string;
   authId: number;
   email: string;
-  username?: string;
+  origin_name?: string;
   display_name: string;
   photo_url?: string;
   created_at: string;

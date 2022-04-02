@@ -21,8 +21,8 @@ export default function useButtonGoogleSignIn() {
         buttonRef.current,
         {},
         async (googleUser: any) => {
-          const accessToken = googleUser?.getAuthResponse(true).access_token;
-          await googleCheckWithSignIn({ accessToken });
+          const access_token = googleUser?.getAuthResponse(true).access_token;
+          await googleCheckWithSignIn({ access_token });
         },
       );
     });

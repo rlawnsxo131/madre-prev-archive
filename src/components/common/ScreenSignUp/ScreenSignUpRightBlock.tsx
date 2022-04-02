@@ -19,8 +19,8 @@ function ScreenSignUpRightBlock(props: ScreenSignUpRightBlockProps) {
         <h3>닉네임을 입력해 주세요</h3>
         <Input
           size="responsive"
-          name="username"
-          value={state.username}
+          name="display_name"
+          value={state.display_name}
           onChange={onChange}
           minLength={1}
           maxLength={16}

@@ -33,15 +33,15 @@ const authApi = createApi({
       PostAuthGoogleSigInResponse,
       PostAuthGoogleSignInParams
     >({
-      query: ({ accessToken }) => ({
+      query: ({ access_token }) => ({
         url: '/google/check',
         method: 'POST',
         body: {
-          access_token: accessToken,
+          access_token: access_token,
         },
       }),
       async onQueryStarted(
-        { accessToken },
+        { access_token },
         { dispatch, queryFulfilled, getCacheEntry },
       ) {
         try {
@@ -52,13 +52,13 @@ const authApi = createApi({
           // excute sign-in or sign-up action
           const { data } = getCacheEntry();
           if (data?.exist) {
-            const data = await postAuthGoogleSignIn({ accessToken });
+            const data = await postAuthGoogleSignIn({ access_token });
             console.log('signin: ', data);
           } else {
             dispatch(screenSignUp.actions.show());
             dispatch(
-              screenSignUp.actions.setAccessToken({
-                accessToken,
+              screenSignUp.actions.setaccess_token({
+                access_token,
               }),
             );
           }
@@ -74,12 +74,12 @@ const authApi = createApi({
       PostAuthGoogleSignUpResponse,
       PostAuthGoogleSignUpParams
     >({
-      query: ({ accessToken, username }) => ({
+      query: ({ access_token, display_name }) => ({
         url: '/google/sign-up',
         method: 'POST',
         body: {
-          access_token: accessToken,
-          username,
+          access_token: access_token,
+          display_name,
         },
       }),
       async onQueryStarted(_, { dispatch, queryFulfilled, getCacheEntry }) {
@@ -93,6 +93,7 @@ const authApi = createApi({
           dispatch(screenSignUp.actions.close());
         } catch (e) {
           dispatch(common.actions.closeLoading());
+          dispatch(screenSignUp.actions.setIsError());
         }
       },
     }),

@@ -5,12 +5,12 @@ import {
 import apiClient from '../apiClient';
 
 export default async function postAuthGoogleSignIn({
-  accessToken,
+  access_token,
 }: PostAuthGoogleSignInParams) {
   const { data } = await apiClient.post<PostAuthGoogleSigInResponse>(
     `/auth/google/sign-in`,
     {
-      access_token: accessToken,
+      access_token: access_token,
     },
   );
   return data;

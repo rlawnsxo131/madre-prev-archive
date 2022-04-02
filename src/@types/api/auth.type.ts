@@ -1,5 +1,5 @@
 export interface PostAuthGoogleSignInParams {
-  accessToken: string;
+  access_token: string;
 }
 
 export interface PostAuthGoogleSigInResponse {
@@ -7,8 +7,8 @@ export interface PostAuthGoogleSigInResponse {
 }
 
 export interface PostAuthGoogleSignUpParams {
-  accessToken: string;
-  username: string;
+  access_token: string;
+  display_name: string;
 }
 
 export interface PostAuthGoogleSignUpResponse {}

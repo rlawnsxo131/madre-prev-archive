@@ -5,28 +5,27 @@ import { normalizedString } from '../../../../lib/utils';
 import authApi from '../../../../store/api/authApi';
 
 export default function useScreenSignUpRightBlock() {
-  const { accessToken } = useScreenSignUpState();
+  const { access_token } = useScreenSignUpState();
   const [googleSignUp] = authApi.usePostGoogleSignUpMutation();
   const { close } = useScreenSignUpActions();
   const { state, onChange } = useInputs({
-    username: '',
+    display_name: '',
   });
 
   const onSignUp = async () => {
-    const normalAccessToken = normalizedString(accessToken);
-    const normalUsername = normalizedString(state.username);
+    const normalaccess_token = normalizedString(access_token);
+    const normalDisplayName = normalizedString(state.display_name);
 
-    if (!normalAccessToken || !normalUsername) {
-      if (!normalAccessToken) {
+    if (!normalaccess_token || !normalDisplayName) {
+      if (!normalaccess_token) {
         console.log('시스템 에러');
         return;
       }
       return;
     }
-
     await googleSignUp({
-      accessToken: normalAccessToken,
-      username: normalUsername,
+      access_token: normalaccess_token,
+      display_name: normalDisplayName,
     });
   };
 

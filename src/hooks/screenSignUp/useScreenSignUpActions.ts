@@ -14,6 +14,12 @@ export default function useScreenSignUpActions() {
       close() {
         dispatch(screenSignUp.actions.close());
       },
+      setError() {
+        dispatch(screenSignUp.actions.setIsError());
+      },
+      resetError() {
+        dispatch(screenSignUp.actions.resetIsError());
+      },
     }),
     [dispatch],
   );
