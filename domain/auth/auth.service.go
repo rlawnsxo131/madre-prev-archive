@@ -7,7 +7,7 @@ import (
 
 type AuthService interface {
 	GetExistSocialAccountMap(socialAccount SocialAccount, err error) (map[string]bool, error)
-	ValidateUserName(userName string) (bool, error)
+	ValidateDisplayName(userName string) (bool, error)
 }
 
 type authService struct{}
@@ -34,7 +34,7 @@ func (s *authService) GetExistSocialAccountMap(socialAccount SocialAccount, err 
 	return map[string]bool{"exist": exist}, nil
 }
 
-func (s *authService) ValidateUserName(userName string) (bool, error) {
+func (s *authService) ValidateDisplayName(userName string) (bool, error) {
 	match, err := regexp.MatchString("^[a-zA-Z0-9가-힣]{1,16}$", userName)
 	if err != nil {
 		return false, err

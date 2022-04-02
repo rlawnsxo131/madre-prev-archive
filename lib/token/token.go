@@ -44,10 +44,22 @@ func (tm *tokenManager) GetTokens() (string, string) {
 	return tm.accessToken, tm.refreshToken
 }
 
+const (
+	AccessToken  = "Access_token"
+	RefreshToken = "Refresh_token"
+)
+
 func (tm *tokenManager) GenerateToken(params GenerateTokenParams) error {
 	signKey := []byte("madre base")
+	// tokenTypes := []string{AccessToken, RefreshToken}
 
 	for i := 0; i < 2; i++ {
+		var expiresAt int64
+		if i == 0 {
+			expiresAt = 60 * 60 * 24 * 7
+		} else {
+			expiresAt = 60 * 60 * 24 * 30
+		}
 		claims := authTokenClaims{
 			TokenUUID:   utils.GenerateUUIDString(),
 			UserID:      params.UserID,
@@ -55,7 +67,7 @@ func (tm *tokenManager) GenerateToken(params GenerateTokenParams) error {
 			DisplayName: params.DisplayName,
 			Email:       params.Email,
 			StandardClaims: jwt.StandardClaims{
-				ExpiresAt: 60 * 60 * 24 * 7,
+				ExpiresAt: expiresAt,
 				Issuer:    "madre",
 				IssuedAt:  time.Now().Unix(),
 			},
@@ -80,21 +92,21 @@ func (tm *tokenManager) GenerateToken(params GenerateTokenParams) error {
 func (tm *tokenManager) SetTokenCookie(w http.ResponseWriter) {
 	now := time.Now()
 	http.SetCookie(w, &http.Cookie{
-		Name:  "Refresh_token",
-		Value: tm.refreshToken,
+		Name:  AccessToken,
+		Value: tm.accessToken,
 		Path:  "/",
 		// Domain:   ".juntae.kim",
-		Expires:  now.AddDate(0, 0, 30),
+		Expires:  now.AddDate(0, 0, 7),
 		Secure:   true,
 		HttpOnly: true,
 		SameSite: 2,
 	})
 	http.SetCookie(w, &http.Cookie{
-		Name:  "Access_token",
-		Value: tm.accessToken,
+		Name:  RefreshToken,
+		Value: tm.refreshToken,
 		Path:  "/",
 		// Domain:   ".juntae.kim",
-		Expires:  now.AddDate(0, 0, 7),
+		Expires:  now.AddDate(0, 0, 30),
 		Secure:   true,
 		HttpOnly: true,
 		SameSite: 2,

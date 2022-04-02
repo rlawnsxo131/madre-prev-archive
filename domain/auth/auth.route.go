@@ -149,8 +149,8 @@ func postGoogleSignin() http.HandlerFunc {
 			return
 		}
 
-		userSerivce := user.NewUserService(db)
-		user, err := userSerivce.FindOneById(socialAccount.UserId)
+		userService := user.NewUserService(db)
+		user, err := userService.FindOneById(socialAccount.UserId)
 		if err != nil {
 			writer.WriteError(
 				err,
@@ -200,7 +200,7 @@ func postGoogleSignup() http.HandlerFunc {
 
 		var params struct {
 			AccessToken string `json:"access_token" validate:"required,min=50"`
-			Username    string `json:"username" validate:"required,max=16,min=1"`
+			DisplayName string `json:"display_name" validate:"required,max=16,min=1"`
 		}
 
 		err = json.NewDecoder(r.Body).Decode(&params)
@@ -224,7 +224,7 @@ func postGoogleSignup() http.HandlerFunc {
 		}
 
 		authService := NewAuthService()
-		valid, err := authService.ValidateUserName(params.Username)
+		valid, err := authService.ValidateDisplayName(params.DisplayName)
 		if err != nil {
 			writer.WriteError(
 				err,
@@ -257,7 +257,7 @@ func postGoogleSignup() http.HandlerFunc {
 			UUID:        utils.GenerateUUIDString(),
 			Email:       profile.Email,
 			OriginName:  utils.NewNullString(profile.DisplayName),
-			DisplayName: params.Username,
+			DisplayName: params.DisplayName,
 			PhotoUrl:    utils.NewNullString(profile.PhotoUrl),
 		})
 		if err != nil {

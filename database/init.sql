@@ -34,18 +34,6 @@ CREATE TABLE IF NOT EXISTS madre.social_account (
   UNIQUE KEY `ix_provider_social_id` (`provider`, `social_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- auth_token
-CREATE TABLE IF NOT EXISTS madre.auth_token (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `uuid` varchar(36) NOT NULL,
-  `user_id` int(10) unsigned NOT NULL,
-  `refresh_token` varchar(500) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `ix_uuid` (`uuid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 -- data
 CREATE TABLE IF NOT EXISTS madre.data (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
