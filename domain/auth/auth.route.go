@@ -88,8 +88,6 @@ func postGoogleCheck() http.HandlerFunc {
 			return
 		}
 
-		log.Println(existSocialAccountMap)
-
 		writer.WriteCompress(existSocialAccountMap)
 	}
 }
