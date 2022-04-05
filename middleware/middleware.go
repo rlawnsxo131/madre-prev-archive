@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"errors"
-	"log"
 	"runtime/debug"
 	"time"
 
@@ -158,30 +157,52 @@ func JWT(next http.Handler) http.Handler {
 
 					if refreshToken != nil {
 						claims, err := token.DecodeToken(refreshToken.Value)
-						if err == nil {
-							log.Println("refresh_token:", claims)
+						if err != nil {
+							// remove cookies
 						} else {
-							log.Println("err:", err)
+							// generate access token and set cookie
+							accessToken, err := token.GenerateAccessToken(token.GenerateTokenParams{
+								UserUUID:    claims.UserUUID,
+								DisplayName: claims.DisplayName,
+								Email:       claims.Email,
+							})
+							token.SetTokenCookieAccessToken(w, accessToken)
+
+							// set context value
+							ctx, err := syncmap.SetNewValueFromHttpContext(
+								r.Context(),
+								constants.Key_UserUUID,
+								claims.UserUUID,
+							)
+							if err != nil {
+								writer := response.NewHttpWriter(w, r)
+								writer.WriteError(
+									err,
+									"JWT",
+								)
+								return
+							}
+							r.Context().Value(ctx)
 						}
 					}
 				}
+			} else {
+				// set context value
+				ctx, err := syncmap.SetNewValueFromHttpContext(
+					r.Context(),
+					constants.Key_UserUUID,
+					claims.UserUUID,
+				)
+				if err != nil {
+					writer := response.NewHttpWriter(w, r)
+					writer.WriteError(
+						err,
+						"JWT",
+					)
+					return
+				}
+				r.Context().Value(ctx)
 			}
-			log.Println(claims)
-
-			// ctx, err := syncmap.SetNewValueFromHttpContext(
-			// 	r.Context(),
-			// 	constants.Key_UserUUID,
-			// 	claims.UserUUID,
-			// )
-			// if err != nil {
-			// 	writer := response.NewHttpWriter(w, r)
-			// 	writer.WriteError(
-			// 		err,
-			// 		"JWT",
-			// 	)
-			// 	return
-			// }
-			// r.Context().Value(ctx)
 		}
 
 		next.ServeHTTP(w, r)

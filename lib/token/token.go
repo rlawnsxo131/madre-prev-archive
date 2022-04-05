@@ -33,6 +33,30 @@ var (
 	tokenTypes = []string{AccessToken, RefreshToken}
 )
 
+func GenerateAccessToken(params GenerateTokenParams) (string, error) {
+	now := time.Now()
+
+	claims := authTokenClaims{
+		TokenUUID:   utils.GenerateUUIDString(),
+		UserUUID:    params.UserUUID,
+		DisplayName: params.DisplayName,
+		Email:       params.Email,
+		StandardClaims: jwt.StandardClaims{
+			ExpiresAt: now.Add(time.Hour * 24).Unix(),
+			Issuer:    "madre",
+			IssuedAt:  now.Unix(),
+		},
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	ss, err := token.SignedString(signKey)
+	if err != nil {
+		return "", errors.Wrap(err, "GenerateToken")
+	}
+
+	return ss, nil
+}
+
 func GenerateTokens(params GenerateTokenParams) (string, string, error) {
 	now := time.Now()
 	var accessToken string
@@ -56,8 +80,10 @@ func GenerateTokens(params GenerateTokenParams) (string, string, error) {
 		}
 		if tokenType == RefreshToken {
 			claims = authTokenClaims{
-				TokenUUID: utils.GenerateUUIDString(),
-				UserUUID:  params.UserUUID,
+				TokenUUID:   utils.GenerateUUIDString(),
+				UserUUID:    params.UserUUID,
+				DisplayName: params.DisplayName,
+				Email:       params.Email,
 				StandardClaims: jwt.StandardClaims{
 					ExpiresAt: now.AddDate(0, 0, 30).Unix(),
 					Issuer:    "madre",
@@ -68,7 +94,6 @@ func GenerateTokens(params GenerateTokenParams) (string, string, error) {
 
 		token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 		ss, err := token.SignedString(signKey)
-
 		if err != nil {
 			return "", "", errors.Wrap(err, "GenerateToken")
 		}
@@ -101,6 +126,21 @@ func DecodeToken(token string) (*authTokenClaims, error) {
 	}
 
 	return nil, errors.New("DecodeToken: token is not valid")
+}
+
+func SetTokenCookieAccessToken(w http.ResponseWriter, accessToken string) {
+	now := time.Now()
+
+	http.SetCookie(w, &http.Cookie{
+		Name:  AccessToken,
+		Value: accessToken,
+		Path:  "/",
+		// Domain:   ".juntae.kim",
+		Expires:  now.AddDate(0, 0, 7),
+		Secure:   true,
+		HttpOnly: true,
+		SameSite: 2,
+	})
 }
 
 func SetTokenCookies(w http.ResponseWriter, accessToken string, refreshToken string) {
