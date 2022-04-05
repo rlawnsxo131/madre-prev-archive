@@ -37,7 +37,7 @@ const authApi = createApi({
         url: '/google/check',
         method: 'POST',
         body: {
-          access_token: access_token,
+          access_token,
         },
       }),
       async onQueryStarted(
@@ -78,7 +78,7 @@ const authApi = createApi({
         url: '/google/sign-up',
         method: 'POST',
         body: {
-          access_token: access_token,
+          access_token,
           display_name,
         },
       }),
