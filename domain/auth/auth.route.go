@@ -21,8 +21,8 @@ func ApplyRoutes(v1 *mux.Router) {
 
 	authRoute.HandleFunc("/sign-out", postSignOut()).Methods("POST", "OPTIONS")
 	authRoute.HandleFunc("/google/check", postGoogleCheck()).Methods("POST", "OPTIONS")
-	authRoute.HandleFunc("/google/sign-in", postGoogleSignin()).Methods("POST", "OPTIONS")
-	authRoute.HandleFunc("/google/sign-up", postGoogleSignup()).Methods("POST", "OPTIONS")
+	authRoute.HandleFunc("/google/sign-in", postGoogleSignIn()).Methods("POST", "OPTIONS")
+	authRoute.HandleFunc("/google/sign-up", postGoogleSignUp()).Methods("POST", "OPTIONS")
 }
 
 func postSignOut() http.HandlerFunc {
@@ -65,8 +65,7 @@ func postGoogleCheck() http.HandlerFunc {
 			return
 		}
 
-		googleProfileApi := google.NewGooglePeopleApi(params.AccessToken)
-		profile, err := googleProfileApi.GetGoogleProfile()
+		profile, err := google.GetPeopleProfile(params.AccessToken)
 		if err != nil {
 			writer.WriteError(
 				err,
@@ -92,7 +91,7 @@ func postGoogleCheck() http.HandlerFunc {
 	}
 }
 
-func postGoogleSignin() http.HandlerFunc {
+func postGoogleSignIn() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		writer := response.NewHttpWriter(w, r)
 		db, err := database.GetDBConn(r.Context())
@@ -128,8 +127,7 @@ func postGoogleSignin() http.HandlerFunc {
 			return
 		}
 
-		googleProfileApi := google.NewGooglePeopleApi(params.AccessToken)
-		profile, err := googleProfileApi.GetGoogleProfile()
+		profile, err := google.GetPeopleProfile(params.AccessToken)
 		if err != nil {
 			writer.WriteError(
 				err,
@@ -158,8 +156,7 @@ func postGoogleSignin() http.HandlerFunc {
 			return
 		}
 
-		tokenManager := token.NewTokenManager()
-		err = tokenManager.GenerateToken(token.GenerateTokenParams{
+		accessToken, refreshToken, err := token.GenerateTokens(token.GenerateTokenParams{
 			UserUUID:    user.UUID,
 			DisplayName: user.DisplayName,
 			Email:       user.Email,
@@ -171,20 +168,17 @@ func postGoogleSignin() http.HandlerFunc {
 			)
 			return
 		}
-		tokenManager.SetTokenCookie(w)
-		accessToken, refreshToken := tokenManager.GetTokens()
+		token.SetTokenCookies(w, accessToken, refreshToken)
 		log.Println(refreshToken)
 
 		writer.WriteCompress(map[string]interface{}{
-			"uuid":         user.ID,
-			"email":        user.Email,
-			"display_name": user.DisplayName,
 			"access_token": accessToken,
+			"display_name": user.DisplayName,
 		})
 	}
 }
 
-func postGoogleSignup() http.HandlerFunc {
+func postGoogleSignUp() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		writer := response.NewHttpWriter(w, r)
 		db, err := database.GetDBConn(r.Context())
@@ -240,8 +234,7 @@ func postGoogleSignup() http.HandlerFunc {
 			return
 		}
 
-		googleProfileApi := google.NewGooglePeopleApi(params.AccessToken)
-		profile, err := googleProfileApi.GetGoogleProfile()
+		profile, err := google.GetPeopleProfile(params.AccessToken)
 		if err != nil {
 			writer.WriteError(
 				err,
@@ -290,8 +283,7 @@ func postGoogleSignup() http.HandlerFunc {
 			return
 		}
 
-		tokenManager := token.NewTokenManager()
-		err = tokenManager.GenerateToken(token.GenerateTokenParams{
+		accessToken, refreshToken, err := token.GenerateTokens(token.GenerateTokenParams{
 			UserUUID:    user.UUID,
 			DisplayName: user.DisplayName,
 			Email:       user.Email,
@@ -303,15 +295,12 @@ func postGoogleSignup() http.HandlerFunc {
 			)
 			return
 		}
-		tokenManager.SetTokenCookie(w)
-		accessToken, refreshToken := tokenManager.GetTokens()
+		token.SetTokenCookies(w, accessToken, refreshToken)
 
 		log.Println(refreshToken)
 		writer.WriteCompress(map[string]interface{}{
-			"uuid":         user.ID,
-			"email":        user.Email,
-			"display_name": user.DisplayName,
 			"access_token": accessToken,
+			"display_name": user.DisplayName,
 		})
 	}
 }

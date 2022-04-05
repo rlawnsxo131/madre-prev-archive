@@ -11,7 +11,6 @@ import (
 
 type authTokenClaims struct {
 	TokenUUID   string `json:"token_uuid"`
-	UserID      string `json:"id"`
 	UserUUID    string `json:"uuid"`
 	DisplayName string `json:"display_name"`
 	Email       string `json:"email"`
@@ -24,18 +23,6 @@ type GenerateTokenParams struct {
 	Email       string `json:"email"`
 }
 
-type TokenManager interface {
-	GetTokens() (string, string)
-	GenerateToken(params GenerateTokenParams) error
-	DecodeToken(token string) (*authTokenClaims, error)
-	SetTokenCookie(w http.ResponseWriter)
-}
-
-type tokenManager struct {
-	accessToken  string
-	refreshToken string
-}
-
 const (
 	AccessToken  = "Access_token"
 	RefreshToken = "Refresh_token"
@@ -46,18 +33,13 @@ var (
 	tokenTypes = []string{AccessToken, RefreshToken}
 )
 
-func NewTokenManager() TokenManager {
-	return &tokenManager{}
-}
+func GenerateTokens(params GenerateTokenParams) (string, string, error) {
+	now := time.Now()
+	var accessToken string
+	var refreshToken string
 
-func (tm *tokenManager) GetTokens() (string, string) {
-	return tm.accessToken, tm.refreshToken
-}
-
-func (tm *tokenManager) GenerateToken(params GenerateTokenParams) error {
 	for _, tokenType := range tokenTypes {
 		var claims authTokenClaims
-		now := time.Now()
 
 		if tokenType == AccessToken {
 			claims = authTokenClaims{
@@ -88,20 +70,20 @@ func (tm *tokenManager) GenerateToken(params GenerateTokenParams) error {
 		ss, err := token.SignedString(signKey)
 
 		if err != nil {
-			return errors.Wrap(err, "GenerateToken")
+			return "", "", errors.Wrap(err, "GenerateToken")
 		}
 
 		if tokenType == AccessToken {
-			tm.accessToken = ss
+			accessToken = ss
 			continue
 		}
-		tm.refreshToken = ss
+		refreshToken = ss
 	}
 
-	return nil
+	return accessToken, refreshToken, nil
 }
 
-func (tm *tokenManager) DecodeToken(token string) (*authTokenClaims, error) {
+func DecodeToken(token string) (*authTokenClaims, error) {
 	claims := authTokenClaims{}
 	t, err := jwt.ParseWithClaims(token, &claims, func(t *jwt.Token) (interface{}, error) {
 		if _, ok := t.Method.(*jwt.SigningMethodHMAC); ok {
@@ -121,11 +103,12 @@ func (tm *tokenManager) DecodeToken(token string) (*authTokenClaims, error) {
 	return nil, errors.New("DecodeToken: token is not valid")
 }
 
-func (tm *tokenManager) SetTokenCookie(w http.ResponseWriter) {
+func SetTokenCookies(w http.ResponseWriter, accessToken string, refreshToken string) {
 	now := time.Now()
+
 	http.SetCookie(w, &http.Cookie{
 		Name:  AccessToken,
-		Value: tm.accessToken,
+		Value: accessToken,
 		Path:  "/",
 		// Domain:   ".juntae.kim",
 		Expires:  now.AddDate(0, 0, 7),
@@ -135,7 +118,7 @@ func (tm *tokenManager) SetTokenCookie(w http.ResponseWriter) {
 	})
 	http.SetCookie(w, &http.Cookie{
 		Name:  RefreshToken,
-		Value: tm.refreshToken,
+		Value: refreshToken,
 		Path:  "/",
 		// Domain:   ".juntae.kim",
 		Expires:  now.AddDate(0, 0, 30),

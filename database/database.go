@@ -42,10 +42,10 @@ func GetDB() (*sqlx.DB, error) {
 }
 
 func GetDBConn(ctx context.Context) (*sqlx.DB, error) {
-	v := ctx.Value(constants.HttpContextKey)
+	v := ctx.Value(constants.Key_HttpContext)
 	syncMap, ok := v.(sync.Map)
 	if ok {
-		if sqlxDB, ok := syncMap.Load(constants.HttpContextDBKey); ok {
+		if sqlxDB, ok := syncMap.Load(constants.Key_HttpContextDB); ok {
 			if sqlxDB, ok := sqlxDB.(*sqlx.DB); ok {
 				return sqlxDB, nil
 			}

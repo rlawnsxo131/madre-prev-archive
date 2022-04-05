@@ -97,10 +97,10 @@ func SetHttpContextValues(db *sqlx.DB) mux.MiddlewareFunc {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			syncMap := sync.Map{}
-			syncMap.Store(constants.HttpContextDBKey, db)
+			syncMap.Store(constants.Key_HttpContextDB, db)
 			ctx := context.WithValue(
 				r.Context(),
-				constants.HttpContextKey,
+				constants.Key_HttpContext,
 				syncMap,
 			)
 			r.Context().Value(ctx)
@@ -127,13 +127,12 @@ func JWT(next http.Handler) http.Handler {
 					"JwtMiddleware",
 					"get Access_token error",
 				)
+				return
 			}
-			return
 		}
 
 		if accessToken != nil {
-			tokenManager := token.NewTokenManager()
-			claims, err := tokenManager.DecodeToken(accessToken.Value)
+			claims, err := token.DecodeToken(accessToken.Value)
 			if err != nil {
 				refreshToken, err := r.Cookie("Refresh_token")
 				if err != nil {
@@ -149,7 +148,7 @@ func JWT(next http.Handler) http.Handler {
 				}
 
 				if refreshToken != nil {
-					claims, err := tokenManager.DecodeToken(refreshToken.Value)
+					claims, err := token.DecodeToken(refreshToken.Value)
 					if err == nil {
 						log.Println("refresh_token:", claims)
 					} else {
