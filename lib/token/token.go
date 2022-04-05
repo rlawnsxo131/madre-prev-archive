@@ -9,20 +9,6 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/utils"
 )
 
-type authTokenClaims struct {
-	TokenUUID   string `json:"token_uuid"`
-	UserUUID    string `json:"uuid"`
-	DisplayName string `json:"display_name"`
-	Email       string `json:"email"`
-	jwt.StandardClaims
-}
-
-type GenerateTokenParams struct {
-	UserUUID    string `json:"uuid"`
-	DisplayName string `json:"display_name"`
-	Email       string `json:"email"`
-}
-
 const (
 	AccessToken  = "Access_token"
 	RefreshToken = "Refresh_token"
@@ -32,6 +18,20 @@ var (
 	signKey    = []byte("madre base")
 	tokenTypes = []string{AccessToken, RefreshToken}
 )
+
+type GenerateTokenParams struct {
+	UserUUID    string `json:"uuid"`
+	DisplayName string `json:"display_name"`
+	Email       string `json:"email"`
+}
+
+type authTokenClaims struct {
+	TokenUUID   string `json:"token_uuid"`
+	UserUUID    string `json:"uuid"`
+	DisplayName string `json:"display_name"`
+	Email       string `json:"email"`
+	jwt.StandardClaims
+}
 
 func GenerateTokens(params GenerateTokenParams) (string, string, error) {
 	now := time.Now()
