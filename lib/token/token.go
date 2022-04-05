@@ -33,30 +33,6 @@ var (
 	tokenTypes = []string{AccessToken, RefreshToken}
 )
 
-func GenerateAccessToken(params GenerateTokenParams) (string, error) {
-	now := time.Now()
-
-	claims := authTokenClaims{
-		TokenUUID:   utils.GenerateUUIDString(),
-		UserUUID:    params.UserUUID,
-		DisplayName: params.DisplayName,
-		Email:       params.Email,
-		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: now.Add(time.Hour * 24).Unix(),
-			Issuer:    "madre",
-			IssuedAt:  now.Unix(),
-		},
-	}
-
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	ss, err := token.SignedString(signKey)
-	if err != nil {
-		return "", errors.Wrap(err, "GenerateToken")
-	}
-
-	return ss, nil
-}
-
 func GenerateTokens(params GenerateTokenParams) (string, string, error) {
 	now := time.Now()
 	var accessToken string
@@ -128,21 +104,6 @@ func DecodeToken(token string) (*authTokenClaims, error) {
 	return nil, errors.New("DecodeToken: token is not valid")
 }
 
-func SetTokenCookieAccessToken(w http.ResponseWriter, accessToken string) {
-	now := time.Now()
-
-	http.SetCookie(w, &http.Cookie{
-		Name:  AccessToken,
-		Value: accessToken,
-		Path:  "/",
-		// Domain:   ".juntae.kim",
-		Expires:  now.AddDate(0, 0, 7),
-		Secure:   true,
-		HttpOnly: true,
-		SameSite: 2,
-	})
-}
-
 func SetTokenCookies(w http.ResponseWriter, accessToken string, refreshToken string) {
 	now := time.Now()
 
@@ -162,6 +123,32 @@ func SetTokenCookies(w http.ResponseWriter, accessToken string, refreshToken str
 		Path:  "/",
 		// Domain:   ".juntae.kim",
 		Expires:  now.AddDate(0, 0, 30),
+		Secure:   true,
+		HttpOnly: true,
+		SameSite: 2,
+	})
+}
+
+func ResetTokenCookies(w http.ResponseWriter) {
+	now := time.Now()
+	expires := now.AddDate(0, 0, -1)
+
+	http.SetCookie(w, &http.Cookie{
+		Name:  AccessToken,
+		Value: "",
+		Path:  "/",
+		// Domain:   ".juntae.kim",
+		Expires:  expires,
+		Secure:   true,
+		HttpOnly: true,
+		SameSite: 2,
+	})
+	http.SetCookie(w, &http.Cookie{
+		Name:  RefreshToken,
+		Value: "",
+		Path:  "/",
+		// Domain:   ".juntae.kim",
+		Expires:  expires,
 		Secure:   true,
 		HttpOnly: true,
 		SameSite: 2,

@@ -159,14 +159,15 @@ func JWT(next http.Handler) http.Handler {
 						claims, err := token.DecodeToken(refreshToken.Value)
 						if err != nil {
 							// remove cookies
+							token.ResetTokenCookies(w)
 						} else {
-							// generate access token and set cookie
-							accessToken, err := token.GenerateAccessToken(token.GenerateTokenParams{
+							// generate tokens and set cookie
+							accessToken, refreshToken, err := token.GenerateTokens(token.GenerateTokenParams{
 								UserUUID:    claims.UserUUID,
 								DisplayName: claims.DisplayName,
 								Email:       claims.Email,
 							})
-							token.SetTokenCookieAccessToken(w, accessToken)
+							token.SetTokenCookies(w, accessToken, refreshToken)
 
 							// set context value
 							ctx, err := syncmap.SetNewValueFromHttpContext(
