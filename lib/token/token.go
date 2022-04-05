@@ -48,7 +48,7 @@ func GenerateTokens(params GenerateTokenParams) (string, string, error) {
 				DisplayName: params.DisplayName,
 				Email:       params.Email,
 				StandardClaims: jwt.StandardClaims{
-					ExpiresAt: now.Add(time.Hour * 24 * -1).Unix(),
+					ExpiresAt: now.Add(time.Hour * 24).Unix(),
 					Issuer:    "madre",
 					IssuedAt:  now.Unix(),
 				},
