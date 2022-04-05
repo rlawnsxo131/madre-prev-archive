@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"context"
 	"errors"
 	"log"
 	"runtime/debug"
@@ -9,13 +8,13 @@ import (
 
 	"net/http"
 
-	"sync"
-
+	"github.com/golang-jwt/jwt"
 	"github.com/gorilla/mux"
 	"github.com/jmoiron/sqlx"
 	"github.com/rlawnsxo131/madre-server-v2/constants"
 	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"
+	"github.com/rlawnsxo131/madre-server-v2/lib/syncmap"
 	"github.com/rlawnsxo131/madre-server-v2/lib/token"
 )
 
@@ -92,28 +91,36 @@ func Cors(next http.Handler) http.Handler {
 	})
 }
 
-// TODO: need to separate the func that sets the context and the function that puts the context value.
-func SetHttpContextValues(db *sqlx.DB) mux.MiddlewareFunc {
-	return func(next http.Handler) http.Handler {
-		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			syncMap := sync.Map{}
-			syncMap.Store(constants.Key_HttpContextDB, db)
-			ctx := context.WithValue(
-				r.Context(),
-				constants.Key_HttpContext,
-				syncMap,
-			)
-			r.Context().Value(ctx)
-			next.ServeHTTP(w, r.WithContext(ctx))
-		})
-	}
+func SetSyncMapContext(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		ctx := syncmap.GenerateHttpContext(r.Context())
+		r.Context().Value(ctx)
+		next.ServeHTTP(w, r.WithContext(ctx))
+	})
 }
 
-func SetResponseContentTypeJson(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json; charset=utf-8")
-		next.ServeHTTP(w, r)
-	})
+func SetDBContext(db *sqlx.DB) mux.MiddlewareFunc {
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			ctx, err := syncmap.SetNewValueFromHttpContext(
+				r.Context(),
+				constants.Key_HttpContextDB,
+				db,
+			)
+			if err != nil {
+				writer := response.NewHttpWriter(w, r)
+				writer.WriteError(
+					err,
+					"SetDBContext",
+					"context set error",
+				)
+				return
+			}
+
+			r.Context().Value(ctx)
+			next.ServeHTTP(w, r)
+		})
+	}
 }
 
 func JWT(next http.Handler) http.Handler {
@@ -134,31 +141,56 @@ func JWT(next http.Handler) http.Handler {
 		if accessToken != nil {
 			claims, err := token.DecodeToken(accessToken.Value)
 			if err != nil {
-				refreshToken, err := r.Cookie("Refresh_token")
-				if err != nil {
-					if err != http.ErrNoCookie {
-						writer := response.NewHttpWriter(w, r)
-						writer.WriteError(
-							err,
-							"JwtMiddleware",
-							"get Refresh_token error",
-						)
-						return
+				_, ok := err.(*jwt.ValidationError)
+				if ok {
+					refreshToken, err := r.Cookie("Refresh_token")
+					if err != nil {
+						if err != http.ErrNoCookie {
+							writer := response.NewHttpWriter(w, r)
+							writer.WriteError(
+								err,
+								"JwtMiddleware",
+								"get Refresh_token error",
+							)
+							return
+						}
 					}
-				}
 
-				if refreshToken != nil {
-					claims, err := token.DecodeToken(refreshToken.Value)
-					if err == nil {
-						log.Println("refresh_token:", claims)
-					} else {
-						log.Println("err:", err)
+					if refreshToken != nil {
+						claims, err := token.DecodeToken(refreshToken.Value)
+						if err == nil {
+							log.Println("refresh_token:", claims)
+						} else {
+							log.Println("err:", err)
+						}
 					}
 				}
 			}
-			log.Println("access_token:", claims)
+			log.Println(claims)
+
+			// ctx, err := syncmap.SetNewValueFromHttpContext(
+			// 	r.Context(),
+			// 	constants.Key_UserUUID,
+			// 	claims.UserUUID,
+			// )
+			// if err != nil {
+			// 	writer := response.NewHttpWriter(w, r)
+			// 	writer.WriteError(
+			// 		err,
+			// 		"JWT",
+			// 	)
+			// 	return
+			// }
+			// r.Context().Value(ctx)
 		}
 
+		next.ServeHTTP(w, r)
+	})
+}
+
+func SetResponseContentTypeJson(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		next.ServeHTTP(w, r)
 	})
 }

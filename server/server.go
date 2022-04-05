@@ -83,6 +83,7 @@ func (s *server) applyHealthSettings() {
 		middleware.HttpLogger,
 		middleware.Recovery,
 		middleware.Cors,
+		middleware.SetSyncMapContext,
 		middleware.JWT,
 	)
 	s.router.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
@@ -101,7 +102,7 @@ func (s *server) applyHealthSettings() {
 func (s *server) applyRoutesAndMiddlewares() {
 	api := s.router.NewRoute().PathPrefix("/api").Subrouter()
 	api.Use(
-		middleware.SetHttpContextValues(s.db),
+		middleware.SetDBContext(s.db),
 		middleware.SetResponseContentTypeJson,
 	)
 	v1 := api.NewRoute().PathPrefix("/v1").Subrouter()

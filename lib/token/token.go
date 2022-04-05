@@ -48,7 +48,7 @@ func GenerateTokens(params GenerateTokenParams) (string, string, error) {
 				DisplayName: params.DisplayName,
 				Email:       params.Email,
 				StandardClaims: jwt.StandardClaims{
-					ExpiresAt: now.Add(time.Hour * 24).Unix(),
+					ExpiresAt: now.Add(time.Hour * 24 * -1).Unix(),
 					Issuer:    "madre",
 					IssuedAt:  now.Unix(),
 				},
@@ -93,7 +93,7 @@ func DecodeToken(token string) (*authTokenClaims, error) {
 	})
 
 	if err != nil {
-		return nil, errors.Wrap(err, "DecodeToken")
+		return nil, err
 	}
 
 	if t.Valid {

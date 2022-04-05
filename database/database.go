@@ -4,7 +4,6 @@ import (
 	"context"
 	"io/ioutil"
 	"strings"
-	"sync"
 
 	"time"
 
@@ -12,14 +11,10 @@ import (
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v2/constants"
+	"github.com/rlawnsxo131/madre-server-v2/lib/syncmap"
 )
 
 var sqlxDB *sqlx.DB
-
-var (
-	ErrDBIsNotExist               = errors.New("DB is not exist")
-	ErrHttpContextValueIsNotExist = errors.New("Http context value is not exist")
-)
 
 func GetDB() (*sqlx.DB, error) {
 	if sqlxDB == nil {
@@ -42,17 +37,17 @@ func GetDB() (*sqlx.DB, error) {
 }
 
 func GetDBConn(ctx context.Context) (*sqlx.DB, error) {
-	v := ctx.Value(constants.Key_HttpContext)
-	syncMap, ok := v.(sync.Map)
-	if ok {
-		if sqlxDB, ok := syncMap.Load(constants.Key_HttpContextDB); ok {
-			if sqlxDB, ok := sqlxDB.(*sqlx.DB); ok {
-				return sqlxDB, nil
-			}
-		}
-		return nil, errors.New("DB is not exist")
+	syncMap, err := syncmap.GetFromHttpContext(ctx)
+	if err != nil {
+		return nil, err
 	}
-	return nil, ErrHttpContextValueIsNotExist
+
+	if sqlxDB, ok := syncMap.Load(constants.Key_HttpContextDB); ok {
+		if sqlxDB, ok := sqlxDB.(*sqlx.DB); ok {
+			return sqlxDB, nil
+		}
+	}
+	return nil, errors.New("DB is not exist")
 }
 
 func ExcuteInitSQL(db *sqlx.DB) {
