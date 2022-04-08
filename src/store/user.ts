@@ -7,7 +7,7 @@ interface UserState {
 
 const initialState: UserState = {
   access_token: '',
-  display_name: ''
+  display_name: '',
 };
 
 const user = createSlice({
@@ -15,7 +15,7 @@ const user = createSlice({
   initialState,
   reducers: {
     setUser(state, action: PayloadAction<UserState>) {
-      const {access_token, display_name} = action.payload;
+      const { access_token, display_name } = action.payload;
       state.access_token = access_token;
       state.display_name = display_name;
     },
