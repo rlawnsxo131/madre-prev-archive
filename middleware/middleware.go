@@ -124,7 +124,7 @@ func SetDBContext(db *sqlx.DB) mux.MiddlewareFunc {
 
 func JWT(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		accessToken, err := r.Cookie("Access_token")
+		accessToken, err := r.Cookie(token.Key_AccessToken)
 		if err != nil {
 			if err != http.ErrNoCookie {
 				writer := response.NewHttpWriter(w, r)
@@ -142,7 +142,7 @@ func JWT(next http.Handler) http.Handler {
 			if err != nil {
 				_, ok := err.(*jwt.ValidationError)
 				if ok {
-					refreshToken, err := r.Cookie("Refresh_token")
+					refreshToken, err := r.Cookie(token.Key_RefreshToken)
 					if err != nil {
 						if err != http.ErrNoCookie {
 							writer := response.NewHttpWriter(w, r)

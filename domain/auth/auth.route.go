@@ -2,7 +2,6 @@ package auth
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -76,7 +75,10 @@ func postGoogleCheck() http.HandlerFunc {
 
 		// if no rows in result set err -> { exist: false }
 		socialAccountService := NewSocialAccountService(db)
-		socialAccount, err := socialAccountService.FindOneBySocialId(profile.SocialId)
+		socialAccount, err := socialAccountService.FindOneBySocialIdWithProvider(
+			profile.SocialId,
+			Key_Provider_GOOGLE,
+		)
 		authService := NewAuthService()
 		existSocialAccountMap, err := authService.GetExistSocialAccountMap(socialAccount, err)
 		if err != nil {
@@ -137,7 +139,10 @@ func postGoogleSignIn() http.HandlerFunc {
 		}
 
 		socialAccountService := NewSocialAccountService(db)
-		socialAccount, err := socialAccountService.FindOneBySocialId(profile.SocialId)
+		socialAccount, err := socialAccountService.FindOneBySocialIdWithProvider(
+			profile.SocialId,
+			Key_Provider_GOOGLE,
+		)
 		if err != nil {
 			writer.WriteError(
 				err,
@@ -169,7 +174,6 @@ func postGoogleSignIn() http.HandlerFunc {
 			return
 		}
 		token.SetTokenCookies(w, accessToken, refreshToken)
-		log.Println(refreshToken)
 
 		writer.WriteCompress(map[string]interface{}{
 			"access_token": accessToken,
@@ -297,7 +301,6 @@ func postGoogleSignUp() http.HandlerFunc {
 		}
 		token.SetTokenCookies(w, accessToken, refreshToken)
 
-		log.Println(refreshToken)
 		writer.WriteCompress(map[string]interface{}{
 			"access_token": accessToken,
 			"display_name": user.DisplayName,

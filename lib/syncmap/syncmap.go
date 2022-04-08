@@ -8,10 +8,6 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/constants"
 )
 
-var (
-	ErrSyncMapIsNotExist = errors.New("GetFromHttpContext: syncMap is not exist")
-)
-
 func GenerateHttpContext(parent context.Context) context.Context {
 	ctx := context.WithValue(
 		parent,
@@ -29,7 +25,7 @@ func GetFromHttpContext(ctx context.Context) (*sync.Map, error) {
 		return syncMap, nil
 	}
 
-	return syncMap, ErrSyncMapIsNotExist
+	return syncMap, errors.New("GetFromHttpcontext: syncMap is not exist")
 }
 
 func SetNewValueFromHttpContext(parent context.Context, key string, value interface{}) (context.Context, error) {
@@ -49,7 +45,7 @@ func SetNewValueFromHttpContext(parent context.Context, key string, value interf
 	return nil, errors.New("SetNewValueFromHttpContext: syncMap is not exist")
 }
 
-func LoadUserUUID(ctx context.Context) (string, error) {
+func LoadUserUUIDFromHttpContext(ctx context.Context) (string, error) {
 	v := ctx.Value(constants.Key_HttpSyncMap)
 	syncMap, ok := v.(*sync.Map)
 
@@ -58,10 +54,10 @@ func LoadUserUUID(ctx context.Context) (string, error) {
 			if userUUID, ok := userUUID.(string); ok {
 				return userUUID, nil
 			} else {
-				return "", errors.New("LoadUserUUID: userUUID type is not string")
+				return "", errors.New("LoadUserUUIDFromHttpContext: userUUID type is not string")
 			}
 		}
 	}
 
-	return "", ErrSyncMapIsNotExist
+	return "", errors.New("LoadUserUUIDFromHttpContext: syncMap is not exist")
 }

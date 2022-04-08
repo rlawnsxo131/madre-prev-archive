@@ -10,13 +10,13 @@ import (
 )
 
 const (
-	AccessToken  = "Access_token"
-	RefreshToken = "Refresh_token"
+	Key_AccessToken  = "Access_token"
+	Key_RefreshToken = "Refresh_token"
 )
 
 var (
 	signKey    = []byte("madre base")
-	tokenTypes = []string{AccessToken, RefreshToken}
+	tokenTypes = []string{Key_AccessToken, Key_RefreshToken}
 )
 
 type GenerateTokenParams struct {
@@ -41,20 +41,20 @@ func GenerateTokens(params GenerateTokenParams) (string, string, error) {
 	for _, tokenType := range tokenTypes {
 		var claims authTokenClaims
 
-		if tokenType == AccessToken {
+		if tokenType == Key_AccessToken {
 			claims = authTokenClaims{
 				TokenUUID:   utils.GenerateUUIDString(),
 				UserUUID:    params.UserUUID,
 				DisplayName: params.DisplayName,
 				Email:       params.Email,
 				StandardClaims: jwt.StandardClaims{
-					ExpiresAt: now.Add(time.Hour * 24).Unix(),
+					ExpiresAt: now.AddDate(0, 0, 1).Unix(),
 					Issuer:    "madre",
 					IssuedAt:  now.Unix(),
 				},
 			}
 		}
-		if tokenType == RefreshToken {
+		if tokenType == Key_RefreshToken {
 			claims = authTokenClaims{
 				TokenUUID:   utils.GenerateUUIDString(),
 				UserUUID:    params.UserUUID,
@@ -74,7 +74,7 @@ func GenerateTokens(params GenerateTokenParams) (string, string, error) {
 			return "", "", errors.Wrap(err, "GenerateToken")
 		}
 
-		if tokenType == AccessToken {
+		if tokenType == Key_AccessToken {
 			accessToken = ss
 			continue
 		}
@@ -108,17 +108,17 @@ func SetTokenCookies(w http.ResponseWriter, accessToken string, refreshToken str
 	now := time.Now()
 
 	http.SetCookie(w, &http.Cookie{
-		Name:  AccessToken,
+		Name:  Key_AccessToken,
 		Value: accessToken,
 		Path:  "/",
 		// Domain:   ".juntae.kim",
-		Expires:  now.AddDate(0, 0, 7),
+		Expires:  now.AddDate(0, 0, 1),
 		Secure:   true,
 		HttpOnly: true,
 		SameSite: 2,
 	})
 	http.SetCookie(w, &http.Cookie{
-		Name:  RefreshToken,
+		Name:  Key_RefreshToken,
 		Value: refreshToken,
 		Path:  "/",
 		// Domain:   ".juntae.kim",
@@ -134,7 +134,7 @@ func ResetTokenCookies(w http.ResponseWriter) {
 	expires := now.AddDate(0, 0, -1)
 
 	http.SetCookie(w, &http.Cookie{
-		Name:  AccessToken,
+		Name:  Key_AccessToken,
 		Value: "",
 		Path:  "/",
 		// Domain:   ".juntae.kim",
@@ -144,7 +144,7 @@ func ResetTokenCookies(w http.ResponseWriter) {
 		SameSite: 2,
 	})
 	http.SetCookie(w, &http.Cookie{
-		Name:  RefreshToken,
+		Name:  Key_RefreshToken,
 		Value: "",
 		Path:  "/",
 		// Domain:   ".juntae.kim",

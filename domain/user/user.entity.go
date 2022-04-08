@@ -38,7 +38,6 @@ func (u *User) Filter(keys []string) map[string]interface{} {
 		result["created_at"] = u.CreatedAt
 		result["updated_at"] = u.UpdatedAt
 
-		// nullable values
 		if u.OriginName.Valid {
 			result["origin_name"] = u.OriginName.String
 		} else {
@@ -59,7 +58,6 @@ func (u *User) Filter(keys []string) map[string]interface{} {
 			} else if key == Key_Email {
 				result["email"] = u.Email
 			} else if key == Key_OriginName {
-				// nullable values
 				if u.OriginName.Valid {
 					result["origin_name"] = u.OriginName.String
 				} else {
@@ -68,7 +66,6 @@ func (u *User) Filter(keys []string) map[string]interface{} {
 			} else if key == Key_DisplayName {
 				result["display_name"] = u.DisplayName
 			} else if key == Key_PhotoUrl {
-				// nullable values
 				if u.PhotoUrl.Valid {
 					result["photo_url"] = u.PhotoUrl.String
 				} else {
