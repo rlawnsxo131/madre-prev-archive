@@ -33,7 +33,7 @@ const screenSignUp = createSlice({
     resetIsError(state) {
       state.isError = false;
     },
-    setaccess_token(
+    setAccessToken(
       state,
       action: PayloadAction<Pick<ScreenSignUpState, 'access_token'>>,
     ) {

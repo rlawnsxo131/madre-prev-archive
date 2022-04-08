@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
-  PostAuthGoogleSignInParams,
-  PostAuthGoogleSigInResponse,
+  PostAuthGoogleCheckParams,
+  PostAuthGoogleCheckResponse,
   PostAuthGoogleSignUpParams,
   PostAuthGoogleSignUpResponse,
 } from '../../@types/api/auth.type';
@@ -9,6 +9,7 @@ import postAuthGoogleSignIn from '../../api/auth/postAuthGoogleSignIn';
 import common from '../common';
 import popupAuth from '../popupAuth';
 import screenSignUp from '../screenSignUp';
+import user from '../user';
 
 const authApi = createApi({
   reducerPath: 'authApi',
@@ -30,8 +31,8 @@ const authApi = createApi({
     //   },
     // }),
     postGoogleCheckWithSignIn: build.mutation<
-      PostAuthGoogleSigInResponse,
-      PostAuthGoogleSignInParams
+      PostAuthGoogleCheckResponse,
+      PostAuthGoogleCheckParams
     >({
       query: ({ access_token }) => ({
         url: '/google/check',
@@ -57,7 +58,7 @@ const authApi = createApi({
           } else {
             dispatch(screenSignUp.actions.show());
             dispatch(
-              screenSignUp.actions.setaccess_token({
+              screenSignUp.actions.setAccessToken({
                 access_token,
               }),
             );
@@ -88,7 +89,16 @@ const authApi = createApi({
           await queryFulfilled;
 
           const { data } = getCacheEntry();
-          console.log('signup', data);
+          if (!data) {
+            dispatch(screenSignUp.actions.setIsError());
+          } else {
+            dispatch(
+              user.actions.setUser({
+                access_token: data.access_token,
+                display_name: data.display_name,
+              }),
+            );
+          }
           dispatch(common.actions.closeLoading());
           dispatch(screenSignUp.actions.close());
         } catch (e) {

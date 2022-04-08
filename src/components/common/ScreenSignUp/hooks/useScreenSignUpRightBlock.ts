@@ -13,18 +13,18 @@ export default function useScreenSignUpRightBlock() {
   });
 
   const onSignUp = async () => {
-    const normalaccess_token = normalizedString(access_token);
+    const normalAccessToken = normalizedString(access_token);
     const normalDisplayName = normalizedString(state.display_name);
 
-    if (!normalaccess_token || !normalDisplayName) {
-      if (!normalaccess_token) {
+    if (!normalAccessToken || !normalDisplayName) {
+      if (!normalAccessToken) {
         console.log('시스템 에러');
         return;
       }
       return;
     }
     await googleSignUp({
-      access_token: normalaccess_token,
+      access_token: normalAccessToken,
       display_name: normalDisplayName,
     });
   };

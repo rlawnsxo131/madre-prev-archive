@@ -10,7 +10,7 @@ export default async function postAuthGoogleSignUp({
   const { data } = await apiClient.post<PostAuthGoogleSignUpResponse>(
     `/auth/google/sign-up`,
     {
-      access_token: access_token,
+      access_token,
     },
   );
   return data;

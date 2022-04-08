@@ -1,9 +1,18 @@
+export interface PostAuthGoogleCheckParams {
+  access_token: string;
+}
+
+export interface PostAuthGoogleCheckResponse {
+  exist: boolean;
+}
+
 export interface PostAuthGoogleSignInParams {
   access_token: string;
 }
 
-export interface PostAuthGoogleSigInResponse {
-  exist: boolean;
+export interface PostAuthGoogleSigninResponse {
+  access_token: string;
+  display_name: string;
 }
 
 export interface PostAuthGoogleSignUpParams {
@@ -11,4 +20,7 @@ export interface PostAuthGoogleSignUpParams {
   display_name: string;
 }
 
-export interface PostAuthGoogleSignUpResponse {}
+export interface PostAuthGoogleSignUpResponse {
+  access_token: string;
+  display_name: string;
+}

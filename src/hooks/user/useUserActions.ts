@@ -1,13 +1,27 @@
-import { useCallback } from 'react';
+import { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store';
+import user from '../../store/user';
+
+interface SetUserParams {
+  access_token: string;
+  display_name: string;
+}
 
 export default function useUserActions() {
   const dispatch = useDispatch<AppDispatch>();
 
-  const setUser = useCallback(() => {}, [dispatch]);
-
-  return {
-    setUser,
-  };
+  return useMemo(
+    () => ({
+      setUser({ access_token, display_name }: SetUserParams) {
+        dispatch(
+          user.actions.setUser({
+            access_token,
+            display_name,
+          }),
+        );
+      },
+    }),
+    [dispatch],
+  );
 }

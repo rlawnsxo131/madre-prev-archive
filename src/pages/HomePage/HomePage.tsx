@@ -11,6 +11,7 @@ function HomePage(props: HomePageProps) {
       console.log(res);
     });
   }, []);
+
   return (
     <HomeSection>
       <HomeSection.ThinkAbout />
