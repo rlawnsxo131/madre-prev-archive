@@ -6,6 +6,7 @@ import (
 	"sync"
 
 	"github.com/rlawnsxo131/madre-server-v2/constants"
+	"github.com/rlawnsxo131/madre-server-v2/lib/token"
 )
 
 func GenerateHttpContext(parent context.Context) context.Context {
@@ -45,19 +46,19 @@ func SetNewValueFromHttpContext(parent context.Context, key string, value interf
 	return nil, errors.New("SetNewValueFromHttpContext: syncMap is not exist")
 }
 
-func LoadUserUUIDFromHttpContext(ctx context.Context) (string, error) {
+func LoadUserTokenProfileFromHttpContext(ctx context.Context) (*token.UserTokenProfile, error) {
 	v := ctx.Value(constants.Key_HttpSyncMap)
 	syncMap, ok := v.(*sync.Map)
 
 	if ok {
-		if userUUID, ok := syncMap.Load(constants.Key_UserUUID); ok {
-			if userUUID, ok := userUUID.(string); ok {
-				return userUUID, nil
+		if profile, ok := syncMap.Load(constants.Key_UserTokenProfile); ok {
+			if profile, ok := profile.(*token.UserTokenProfile); ok {
+				return profile, nil
 			} else {
-				return "", errors.New("LoadUserUUIDFromHttpContext: userUUID type is not string")
+				return nil, errors.New("LoadUserUUIDFromHttpContext: userUUID type is not string")
 			}
 		}
 	}
 
-	return "", errors.New("LoadUserUUIDFromHttpContext: syncMap is not exist")
+	return nil, errors.New("LoadUserUUIDFromHttpContext: syncMap is not exist")
 }

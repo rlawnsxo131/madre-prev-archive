@@ -23,6 +23,13 @@ func NewNullString(s string) sql.NullString {
 	}
 }
 
+func NomalizeNullString(sn sql.NullString) string {
+	if sn.Valid {
+		return sn.String
+	}
+	return ""
+}
+
 func ErrNoRowsReturnRawError(err error, customError error) error {
 	if err == sql.ErrNoRows {
 		return err

@@ -23,6 +23,13 @@ type GenerateTokenParams struct {
 	UserUUID    string `json:"uuid"`
 	DisplayName string `json:"display_name"`
 	Email       string `json:"email"`
+	PhotoUrl    string `json:"photo_url"`
+}
+
+type UserTokenProfile struct {
+	DisplayName string `json:"display_name"`
+	Email       string `json:"email"`
+	PhotoUrl    string `json:"photo_url"`
 }
 
 type authTokenClaims struct {
@@ -30,6 +37,7 @@ type authTokenClaims struct {
 	UserUUID    string `json:"uuid"`
 	DisplayName string `json:"display_name"`
 	Email       string `json:"email"`
+	PhotoUrl    string `json:"photo_url"`
 	jwt.StandardClaims
 }
 
@@ -47,6 +55,7 @@ func GenerateTokens(params GenerateTokenParams) (string, string, error) {
 				UserUUID:    params.UserUUID,
 				DisplayName: params.DisplayName,
 				Email:       params.Email,
+				PhotoUrl:    params.PhotoUrl,
 				StandardClaims: jwt.StandardClaims{
 					ExpiresAt: now.AddDate(0, 0, 1).Unix(),
 					Issuer:    "madre",
@@ -60,6 +69,7 @@ func GenerateTokens(params GenerateTokenParams) (string, string, error) {
 				UserUUID:    params.UserUUID,
 				DisplayName: params.DisplayName,
 				Email:       params.Email,
+				PhotoUrl:    params.PhotoUrl,
 				StandardClaims: jwt.StandardClaims{
 					ExpiresAt: now.AddDate(0, 0, 30).Unix(),
 					Issuer:    "madre",

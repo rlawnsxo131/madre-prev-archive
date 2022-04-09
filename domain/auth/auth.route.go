@@ -2,6 +2,7 @@ package auth
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -10,6 +11,7 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/domain/user"
 	"github.com/rlawnsxo131/madre-server-v2/lib/google"
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"
+	"github.com/rlawnsxo131/madre-server-v2/lib/syncmap"
 	"github.com/rlawnsxo131/madre-server-v2/lib/token"
 
 	"github.com/rlawnsxo131/madre-server-v2/utils"
@@ -18,10 +20,33 @@ import (
 func ApplyRoutes(v1 *mux.Router) {
 	authRoute := v1.NewRoute().PathPrefix("/auth").Subrouter()
 
+	authRoute.HandleFunc("", get()).Methods("GET")
 	authRoute.HandleFunc("/sign-out", postSignOut()).Methods("POST", "OPTIONS")
 	authRoute.HandleFunc("/google/check", postGoogleCheck()).Methods("POST", "OPTIONS")
 	authRoute.HandleFunc("/google/sign-in", postGoogleSignIn()).Methods("POST", "OPTIONS")
 	authRoute.HandleFunc("/google/sign-up", postGoogleSignUp()).Methods("POST", "OPTIONS")
+}
+
+func get() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		writer := response.NewHttpWriter(w, r)
+		profile, err := syncmap.LoadUserTokenProfileFromHttpContext(r.Context())
+		if err != nil {
+			writer.WriteError(
+				err,
+				"get /auth",
+			)
+			return
+		}
+
+		check := false
+		if profile != nil {
+			log.Println("profile:", profile)
+			check = true
+		}
+
+		writer.WriteCompress(map[string]bool{"check": check})
+	}
 }
 
 func postSignOut() http.HandlerFunc {
@@ -165,6 +190,7 @@ func postGoogleSignIn() http.HandlerFunc {
 			UserUUID:    user.UUID,
 			DisplayName: user.DisplayName,
 			Email:       user.Email,
+			PhotoUrl:    utils.NomalizeNullString(user.PhotoUrl),
 		})
 		if err != nil {
 			writer.WriteError(
@@ -178,6 +204,7 @@ func postGoogleSignIn() http.HandlerFunc {
 		writer.WriteCompress(map[string]interface{}{
 			"access_token": accessToken,
 			"display_name": user.DisplayName,
+			"photo_url":    profile.PhotoUrl,
 		})
 	}
 }
@@ -291,6 +318,7 @@ func postGoogleSignUp() http.HandlerFunc {
 			UserUUID:    user.UUID,
 			DisplayName: user.DisplayName,
 			Email:       user.Email,
+			PhotoUrl:    utils.NomalizeNullString(user.PhotoUrl),
 		})
 		if err != nil {
 			writer.WriteError(
@@ -304,6 +332,7 @@ func postGoogleSignUp() http.HandlerFunc {
 		writer.WriteCompress(map[string]interface{}{
 			"access_token": accessToken,
 			"display_name": user.DisplayName,
+			"photo_url":    profile.PhotoUrl,
 		})
 	}
 }

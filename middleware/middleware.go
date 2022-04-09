@@ -166,14 +166,19 @@ func JWT(next http.Handler) http.Handler {
 								UserUUID:    claims.UserUUID,
 								DisplayName: claims.DisplayName,
 								Email:       claims.Email,
+								PhotoUrl:    claims.PhotoUrl,
 							})
 							token.SetTokenCookies(w, accessToken, refreshToken)
 
 							// set context value
 							ctx, err := syncmap.SetNewValueFromHttpContext(
 								r.Context(),
-								constants.Key_UserUUID,
-								claims.UserUUID,
+								constants.Key_UserTokenProfile,
+								&token.UserTokenProfile{
+									DisplayName: claims.DisplayName,
+									Email:       claims.Email,
+									PhotoUrl:    claims.PhotoUrl,
+								},
 							)
 							if err != nil {
 								writer := response.NewHttpWriter(w, r)
@@ -191,8 +196,12 @@ func JWT(next http.Handler) http.Handler {
 				// set context value
 				ctx, err := syncmap.SetNewValueFromHttpContext(
 					r.Context(),
-					constants.Key_UserUUID,
-					claims.UserUUID,
+					constants.Key_UserTokenProfile,
+					&token.UserTokenProfile{
+						DisplayName: claims.DisplayName,
+						Email:       claims.Email,
+						PhotoUrl:    claims.PhotoUrl,
+					},
 				)
 				if err != nil {
 					writer := response.NewHttpWriter(w, r)
