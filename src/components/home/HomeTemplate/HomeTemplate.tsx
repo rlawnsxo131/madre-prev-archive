@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import { Outlet } from 'react-router-dom';
 import homeStyles from '../home.styles';
+import HomeFooter from '../HomeFooter';
 import HomeHeader from '../HomeHeader';
 
 interface HomeTemplateProps {}
@@ -14,6 +15,7 @@ function HomeTemplate(props: HomeTemplateProps) {
           <Outlet />
         </div>
       </main>
+      <HomeFooter />
     </div>
   );
 }

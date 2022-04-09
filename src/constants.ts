@@ -1,4 +1,5 @@
 // object keys
+export const MADRE_USER = 'MADRE_USER';
 export const MADRE_COLOR_THEME = 'MADRE_COLOR_THEME';
 
 // variables

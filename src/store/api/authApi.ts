@@ -30,6 +30,14 @@ const authApi = createApi({
     //     console.log('end');
     //   },
     // }),
+    get: build.query<any, any>({
+      query: () => '',
+      async onQueryStarted(_, { queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (e) {}
+      },
+    }),
     postGoogleCheckWithSignIn: build.mutation<
       PostAuthGoogleCheckResponse,
       PostAuthGoogleCheckParams
@@ -53,8 +61,15 @@ const authApi = createApi({
           // excute sign-in or sign-up action
           const { data } = getCacheEntry();
           if (data?.exist) {
-            const data = await postAuthGoogleSignIn({ access_token });
-            console.log('signin: ', data);
+            const data = await postAuthGoogleSignIn({
+              access_token,
+            });
+            dispatch(
+              user.actions.setUser({
+                access_token: data.access_token,
+                display_name: data.display_name,
+              }),
+            );
           } else {
             dispatch(screenSignUp.actions.show());
             dispatch(

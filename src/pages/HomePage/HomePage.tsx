@@ -1,5 +1,4 @@
 import HomeSection from '../../components/home/HomeSection';
-import HomeFooter from '../../components/home/HomeFooter';
 import { useEffect } from 'react';
 import apiClient from '../../api/apiClient';
 
@@ -16,7 +15,6 @@ function HomePage(props: HomePageProps) {
     <HomeSection>
       <HomeSection.ThinkAbout />
       <HomeSection.Graph />
-      <HomeFooter />
     </HomeSection>
   );
 }

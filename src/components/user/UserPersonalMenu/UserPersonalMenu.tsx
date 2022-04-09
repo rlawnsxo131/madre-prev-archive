@@ -1,16 +1,30 @@
 import { css } from '@emotion/react';
+import useUserState from '../../../hooks/user/useUserState';
 import { DropArrowIcon, UserIcon } from '../../../image/icons';
-import { palette } from '../../../styles';
+import { themePalette } from '../../../styles';
 import UserPersonalMenuAuthButton from './UserPersonalMenuAuthButton';
 
 interface UserPersonalMenuProps {}
 
 function UserPersonalMenu(props: UserPersonalMenuProps) {
+  const { isPending, display_name } = useUserState();
+
+  if (isPending) {
+    return <div>pending</div>;
+  }
+
+  if (!display_name) {
+    return (
+      <div css={block}>
+        <UserPersonalMenuAuthButton />
+      </div>
+    );
+  }
+
   return (
     <div css={block}>
-      <UserPersonalMenuAuthButton />
-      {/* <UserIcon />
-      <DropArrowIcon /> */}
+      <UserIcon />
+      <DropArrowIcon />
     </div>
   );
 }
@@ -22,8 +36,9 @@ const block = css`
   align-items: center;
   gap: 0.5rem;
   cursor: pointer;
+
   svg {
-    fill: ${palette.gray['700']};
+    fill: ${themePalette.fill1};
     &:nth-of-type(1) {
       width: 1.9rem;
       height: 1.9rem;
@@ -31,11 +46,6 @@ const block = css`
     &:nth-of-type(2) {
       width: 0.5rem;
       height: 0.5rem;
-    }
-  }
-  &:hover {
-    svg {
-      fill: ${palette.gray['600']};
     }
   }
 `;

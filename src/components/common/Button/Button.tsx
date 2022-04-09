@@ -38,7 +38,7 @@ function Button({
         if (rest.onClick) {
           rest.onClick(e);
         }
-        (e.target as HTMLButtonElement).blur();
+        e.currentTarget.blur();
       }}
       {...rest}
     >

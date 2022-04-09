@@ -21,6 +21,9 @@ export default function useUserActions() {
           }),
         );
       },
+      setIsPending(isPending: boolean) {
+        dispatch(user.actions.setIsPending({ isPending }));
+      },
     }),
     [dispatch],
   );

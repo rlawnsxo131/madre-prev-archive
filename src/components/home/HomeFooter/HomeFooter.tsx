@@ -4,7 +4,7 @@ import homeStyles from '../home.styles';
 interface HomeFooterProps {}
 
 function HomeFooter(props: HomeFooterProps) {
-  return <div css={block}>home footer</div>;
+  return <footer css={block}>home footer</footer>;
 }
 
 const block = css`
