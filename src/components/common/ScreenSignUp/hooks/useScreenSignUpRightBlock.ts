@@ -1,7 +1,7 @@
 import useScreenSignUpActions from '../../../../hooks/screenSignUp/useScreenSignUpActions';
 import useScreenSignUpState from '../../../../hooks/screenSignUp/useScreenSignUpState';
 import useInputs from '../../../../hooks/useInputs';
-import { normalizedString } from '../../../../lib/utils';
+import { normalizeString } from '../../../../lib/utils';
 import authApi from '../../../../store/api/authApi';
 
 export default function useScreenSignUpRightBlock() {
@@ -13,8 +13,8 @@ export default function useScreenSignUpRightBlock() {
   });
 
   const onSignUp = async () => {
-    const normalAccessToken = normalizedString(access_token);
-    const normalDisplayName = normalizedString(state.display_name);
+    const normalAccessToken = normalizeString(access_token);
+    const normalDisplayName = normalizeString(state.display_name);
 
     if (!normalAccessToken || !normalDisplayName) {
       if (!normalAccessToken) {
