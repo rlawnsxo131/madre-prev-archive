@@ -55,10 +55,10 @@ func LoadUserTokenProfileFromHttpContext(ctx context.Context) (*token.UserTokenP
 			if profile, ok := profile.(*token.UserTokenProfile); ok {
 				return profile, nil
 			} else {
-				return nil, errors.New("LoadUserUUIDFromHttpContext: userUUID type is not string")
+				return nil, errors.New("LoadUserTokenProfileFromHttpContext: profile type is not UserTokenProfile")
 			}
 		}
 	}
 
-	return nil, errors.New("LoadUserUUIDFromHttpContext: syncMap is not exist")
+	return nil, errors.New("LoadUserTokenProfileFromHttpContext: syncMap is not exist")
 }
