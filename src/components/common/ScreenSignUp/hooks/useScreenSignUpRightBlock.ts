@@ -21,6 +21,7 @@ export default function useScreenSignUpRightBlock() {
         console.log('시스템 에러');
         return;
       }
+      console.log('displayName 에러');
       return;
     }
     await googleSignUp({

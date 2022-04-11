@@ -12,7 +12,7 @@ export default function useUserLoadEffect() {
   const prevUser = useSelector((state: RootState) => state.user);
   const [isPending, startTransition] = useTransition();
 
-  const { isFetching, isError, data } = authApi.useGetQuery({});
+  const { data } = authApi.useGetQuery(null);
 
   console.log(data);
 

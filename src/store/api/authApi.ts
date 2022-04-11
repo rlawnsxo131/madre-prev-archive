@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
+  GetAuthResponse,
   PostAuthGoogleCheckParams,
   PostAuthGoogleCheckResponse,
   PostAuthGoogleSignUpParams,
@@ -30,12 +31,14 @@ const authApi = createApi({
     //     console.log('end');
     //   },
     // }),
-    get: build.query<any, any>({
+    get: build.query<GetAuthResponse | null, null>({
       query: () => '',
-      async onQueryStarted(_, { queryFulfilled }) {
+      async onQueryStarted(_, { dispatch, queryFulfilled, getCacheEntry }) {
         try {
           await queryFulfilled;
-        } catch (e) {}
+        } catch (e) {
+          console.log('error: ', e);
+        }
       },
     }),
     postGoogleCheckWithSignIn: build.mutation<
