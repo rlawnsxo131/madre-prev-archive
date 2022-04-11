@@ -178,6 +178,7 @@ func JWT(next http.Handler) http.Handler {
 									DisplayName: claims.DisplayName,
 									Email:       claims.Email,
 									PhotoUrl:    claims.PhotoUrl,
+									AccessToken: accessToken,
 								},
 							)
 							if err != nil {
@@ -201,6 +202,7 @@ func JWT(next http.Handler) http.Handler {
 						DisplayName: claims.DisplayName,
 						Email:       claims.Email,
 						PhotoUrl:    claims.PhotoUrl,
+						AccessToken: accessToken.Value,
 					},
 				)
 				if err != nil {

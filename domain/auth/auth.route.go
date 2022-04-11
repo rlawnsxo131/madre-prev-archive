@@ -2,7 +2,6 @@ package auth
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -10,6 +9,7 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/database"
 	"github.com/rlawnsxo131/madre-server-v2/domain/user"
 	"github.com/rlawnsxo131/madre-server-v2/lib/google"
+	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"
 	"github.com/rlawnsxo131/madre-server-v2/lib/syncmap"
 	"github.com/rlawnsxo131/madre-server-v2/lib/token"
@@ -32,20 +32,18 @@ func get() http.HandlerFunc {
 		writer := response.NewHttpWriter(w, r)
 		profile, err := syncmap.LoadUserTokenProfileFromHttpContext(r.Context())
 		if err != nil {
-			writer.WriteError(
-				err,
-				"get /auth",
-			)
-			return
+			profile = nil
+			logger.Logger.Err(err).
+				Str("Action", "get /auth").
+				Msg("get /auth profile load fail")
+
 		}
 
-		check := false
-		if profile != nil {
-			log.Println("profile:", profile)
-			check = true
-		}
-
-		writer.WriteCompress(map[string]bool{"check": check})
+		writer.WriteCompress(
+			map[string]interface{}{
+				"profile": profile,
+			},
+		)
 	}
 }
 

@@ -30,6 +30,7 @@ type UserTokenProfile struct {
 	DisplayName string `json:"display_name"`
 	Email       string `json:"email"`
 	PhotoUrl    string `json:"photo_url"`
+	AccessToken string `json:"access_token"`
 }
 
 type authTokenClaims struct {
