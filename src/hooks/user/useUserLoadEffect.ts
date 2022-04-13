@@ -1,4 +1,4 @@
-import { useEffect, useTransition } from 'react';
+import { useEffect, useMemo, useTransition } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { MADRE_USER } from '../../constants';
@@ -11,10 +11,7 @@ export default function useUserLoadEffect() {
   const dispatch = useDispatch<AppDispatch>();
   const prevUser = useSelector((state: RootState) => state.user);
   const [isPending, startTransition] = useTransition();
-
   const { data } = authApi.useGetQuery(null);
-
-  console.log(data);
 
   useEffect(() => {
     startTransition(() => {
@@ -22,14 +19,17 @@ export default function useUserLoadEffect() {
       if (!userData) return;
       dispatch(
         user.actions.setUser({
-          access_token: userData.access_token,
-          display_name: userData.display_name,
+          userProfile: userData,
         }),
       );
     });
   }, [dispatch]);
 
   useEffect(() => {
+    console.log(data);
+  }, [data]);
+
+  useEffect(() => {
     dispatch(user.actions.setIsPending({ isPending }));
-  }, [dispatch, isPending]);
+  }, [dispatch]);
 }

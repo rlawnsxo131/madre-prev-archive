@@ -1,10 +1,7 @@
+import { UserTokenProfile } from '../domain/auth.type';
+
 export interface GetAuthResponse {
-  profile: {
-    display_name: string;
-    email: string;
-    photo_url?: string;
-    access_token: string;
-  };
+  user_token_profile: UserTokenProfile | null;
 }
 
 export interface PostAuthGoogleCheckParams {
@@ -20,9 +17,7 @@ export interface PostAuthGoogleSignInParams {
 }
 
 export interface PostAuthGoogleSigninResponse {
-  access_token: string;
-  display_name: string;
-  photo_url?: string;
+  user_token_profile: UserTokenProfile;
 }
 
 export interface PostAuthGoogleSignUpParams {
@@ -31,7 +26,5 @@ export interface PostAuthGoogleSignUpParams {
 }
 
 export interface PostAuthGoogleSignUpResponse {
-  access_token: string;
-  display_name: string;
-  photo_url?: string;
+  user_token_profile: UserTokenProfile;
 }

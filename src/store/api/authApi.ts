@@ -23,15 +23,7 @@ const authApi = createApi({
   }),
   tagTypes: ['Auth'],
   endpoints: (build) => ({
-    // getAuthCheckGoogle: build.query<string, any>({
-    //   query: () => '/google',
-    //   async onQueryStarted(_, { queryFulfilled }) {
-    //     console.log('started');
-    //     await queryFulfilled;
-    //     console.log('end');
-    //   },
-    // }),
-    get: build.query<GetAuthResponse | null, null>({
+    get: build.query<GetAuthResponse, null>({
       query: () => '',
       async onQueryStarted(_, { dispatch, queryFulfilled, getCacheEntry }) {
         try {
@@ -69,8 +61,7 @@ const authApi = createApi({
             });
             dispatch(
               user.actions.setUser({
-                access_token: data.access_token,
-                display_name: data.display_name,
+                userProfile: data.user_token_profile,
               }),
             );
           } else {
@@ -112,8 +103,7 @@ const authApi = createApi({
           } else {
             dispatch(
               user.actions.setUser({
-                access_token: data.access_token,
-                display_name: data.display_name,
+                userProfile: data.user_token_profile,
               }),
             );
           }

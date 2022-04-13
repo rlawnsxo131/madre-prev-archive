@@ -39,7 +39,7 @@ const screenSignUp = createSlice({
     ) {
       state.access_token = action.payload.access_token;
     },
-    setdisplay_name(
+    setDisplayName(
       state,
       action: PayloadAction<Pick<ScreenSignUpState, 'display_name'>>,
     ) {
