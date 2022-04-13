@@ -60,15 +60,13 @@ const block = (visible: boolean) => css`
   align-items: center;
   z-index: ${zIndexes.opaqueLayer};
   background: ${palette.opaque[50]};
-  ${
-    visible
-      ? css`
+  ${visible
+    ? css`
         animation: ${transitions.fadeIn} 0.25s forwards;
       `
-      : css`
+    : css`
         animation: ${transitions.fadeOut} 0.25s forwards;
-      `
-  }
+      `}
 `;
 
 export default OpaqueLayer;
