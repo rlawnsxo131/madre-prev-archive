@@ -46,19 +46,21 @@ func SetNewValueFromHttpContext(parent context.Context, key string, value interf
 	return nil, errors.New("SetNewValueFromHttpContext: syncMap is not exist")
 }
 
-func LoadUserTokenProfileFromHttpContext(ctx context.Context) (*token.UserTokenProfile, error) {
+func LoadUserTokenProfileFromHttpContext(ctx context.Context) *token.UserTokenProfile {
 	v := ctx.Value(constants.Key_HttpSyncMap)
 	syncMap, ok := v.(*sync.Map)
 
 	if ok {
 		if profile, ok := syncMap.Load(constants.Key_UserTokenProfile); ok {
 			if profile, ok := profile.(*token.UserTokenProfile); ok {
-				return profile, nil
+				return profile
 			} else {
-				return nil, errors.New("LoadUserTokenProfileFromHttpContext: profile type is not UserTokenProfile")
+				return nil
 			}
+		} else {
+			return nil
 		}
 	}
 
-	return nil, errors.New("LoadUserTokenProfileFromHttpContext: syncMap is not exist")
+	return nil
 }

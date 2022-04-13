@@ -160,6 +160,22 @@ func JWT(next http.Handler) http.Handler {
 						if err != nil {
 							// remove cookies
 							token.ResetTokenCookies(w)
+
+							// set context value
+							ctx, err := syncmap.SetNewValueFromHttpContext(
+								r.Context(),
+								constants.Key_UserTokenProfile,
+								nil,
+							)
+							if err != nil {
+								writer := response.NewHttpWriter(w, r)
+								writer.WriteError(
+									err,
+									"JWT",
+								)
+								return
+							}
+							r.Context().Value(ctx)
 						} else {
 							// generate tokens and set cookie
 							accessToken, refreshToken, err := token.GenerateTokens(token.GenerateTokenParams{
@@ -214,6 +230,75 @@ func JWT(next http.Handler) http.Handler {
 					return
 				}
 				r.Context().Value(ctx)
+			}
+		}
+
+		if accessToken == nil {
+			refreshToken, err := r.Cookie(token.Key_RefreshToken)
+			if err != nil {
+				if err != http.ErrNoCookie {
+					writer := response.NewHttpWriter(w, r)
+					writer.WriteError(
+						err,
+						"JwtMiddleware",
+						"get Refresh_token error",
+					)
+					return
+				}
+			}
+
+			if refreshToken != nil {
+				claims, err := token.DecodeToken(refreshToken.Value)
+				if err != nil {
+					// remove cookies
+					token.ResetTokenCookies(w)
+
+					// set context value
+					ctx, err := syncmap.SetNewValueFromHttpContext(
+						r.Context(),
+						constants.Key_UserTokenProfile,
+						nil,
+					)
+					if err != nil {
+						writer := response.NewHttpWriter(w, r)
+						writer.WriteError(
+							err,
+							"JWT",
+						)
+						return
+					}
+					r.Context().Value(ctx)
+				} else {
+					// generate tokens and set cookie
+					accessToken, refreshToken, err := token.GenerateTokens(token.GenerateTokenParams{
+						UserUUID:    claims.UserUUID,
+						DisplayName: claims.DisplayName,
+						Email:       claims.Email,
+						PhotoUrl:    claims.PhotoUrl,
+					})
+					token.SetTokenCookies(w, accessToken, refreshToken)
+
+					// set context value
+					ctx, err := syncmap.SetNewValueFromHttpContext(
+						r.Context(),
+						constants.Key_UserTokenProfile,
+						&token.UserTokenProfile{
+							DisplayName: claims.DisplayName,
+							Email:       claims.Email,
+							PhotoUrl:    claims.PhotoUrl,
+							AccessToken: accessToken,
+						},
+					)
+					if err != nil {
+						writer := response.NewHttpWriter(w, r)
+						writer.WriteError(
+							err,
+							"JWT",
+						)
+						return
+					}
+					r.Context().Value(ctx)
+				}
 			}
 		}
 

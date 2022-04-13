@@ -9,7 +9,6 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/database"
 	"github.com/rlawnsxo131/madre-server-v2/domain/user"
 	"github.com/rlawnsxo131/madre-server-v2/lib/google"
-	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"
 	"github.com/rlawnsxo131/madre-server-v2/lib/syncmap"
 	"github.com/rlawnsxo131/madre-server-v2/lib/token"
@@ -30,18 +29,11 @@ func ApplyRoutes(v1 *mux.Router) {
 func get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		writer := response.NewHttpWriter(w, r)
-		profile, err := syncmap.LoadUserTokenProfileFromHttpContext(r.Context())
-		if err != nil {
-			profile = nil
-			logger.Logger.Err(err).
-				Str("Action", "get /auth").
-				Msg("get /auth profile load fail")
-
-		}
+		profile := syncmap.LoadUserTokenProfileFromHttpContext(r.Context())
 
 		writer.WriteCompress(
 			map[string]interface{}{
-				"profile": profile,
+				"user_token_profile": profile,
 			},
 		)
 	}
@@ -98,9 +90,9 @@ func postGoogleCheck() http.HandlerFunc {
 
 		// if no rows in result set err -> { exist: false }
 		socialAccountService := NewSocialAccountService(db)
-		socialAccount, err := socialAccountService.FindOneBySocialIdWithProvider(
-			profile.SocialId,
+		socialAccount, err := socialAccountService.FindOneByProviderWithSocialId(
 			Key_Provider_GOOGLE,
+			profile.SocialId,
 		)
 		authService := NewAuthService()
 		existSocialAccountMap, err := authService.GetExistSocialAccountMap(socialAccount, err)
@@ -162,9 +154,9 @@ func postGoogleSignIn() http.HandlerFunc {
 		}
 
 		socialAccountService := NewSocialAccountService(db)
-		socialAccount, err := socialAccountService.FindOneBySocialIdWithProvider(
-			profile.SocialId,
+		socialAccount, err := socialAccountService.FindOneByProviderWithSocialId(
 			Key_Provider_GOOGLE,
+			profile.SocialId,
 		)
 		if err != nil {
 			writer.WriteError(
@@ -188,7 +180,7 @@ func postGoogleSignIn() http.HandlerFunc {
 			UserUUID:    user.UUID,
 			DisplayName: user.DisplayName,
 			Email:       user.Email,
-			PhotoUrl:    utils.NomalizeNullString(user.PhotoUrl),
+			PhotoUrl:    utils.NormalizeNullString(user.PhotoUrl),
 		})
 		if err != nil {
 			writer.WriteError(
@@ -200,9 +192,12 @@ func postGoogleSignIn() http.HandlerFunc {
 		token.SetTokenCookies(w, accessToken, refreshToken)
 
 		writer.WriteCompress(map[string]interface{}{
-			"access_token": accessToken,
-			"display_name": user.DisplayName,
-			"photo_url":    profile.PhotoUrl,
+			"user_token_profile": token.UserTokenProfile{
+				DisplayName: user.DisplayName,
+				Email:       user.Email,
+				PhotoUrl:    utils.NormalizeNullString(user.PhotoUrl),
+				AccessToken: accessToken,
+			},
 		})
 	}
 }
@@ -316,7 +311,7 @@ func postGoogleSignUp() http.HandlerFunc {
 			UserUUID:    user.UUID,
 			DisplayName: user.DisplayName,
 			Email:       user.Email,
-			PhotoUrl:    utils.NomalizeNullString(user.PhotoUrl),
+			PhotoUrl:    utils.NormalizeNullString(user.PhotoUrl),
 		})
 		if err != nil {
 			writer.WriteError(
@@ -328,9 +323,12 @@ func postGoogleSignUp() http.HandlerFunc {
 		token.SetTokenCookies(w, accessToken, refreshToken)
 
 		writer.WriteCompress(map[string]interface{}{
-			"access_token": accessToken,
-			"display_name": user.DisplayName,
-			"photo_url":    profile.PhotoUrl,
+			"user_token_profile": token.UserTokenProfile{
+				DisplayName: user.DisplayName,
+				Email:       user.Email,
+				PhotoUrl:    utils.NormalizeNullString(user.PhotoUrl),
+				AccessToken: accessToken,
+			},
 		})
 	}
 }

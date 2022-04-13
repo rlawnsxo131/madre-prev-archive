@@ -8,7 +8,7 @@ import (
 
 type SocialAccountReadRepository interface {
 	FindOneById(id int64) (SocialAccount, error)
-	FindOneBySocialIdWithProvider(socialId string, provider string) (SocialAccount, error)
+	FindOneByProviderWithSocialId(provider string, socialId string) (SocialAccount, error)
 }
 
 type socialAccountReadRepository struct {
@@ -34,10 +34,10 @@ func (r *socialAccountReadRepository) FindOneById(id int64) (SocialAccount, erro
 	return socialAccount, err
 }
 
-func (r *socialAccountReadRepository) FindOneBySocialIdWithProvider(socialId string, provider string) (SocialAccount, error) {
+func (r *socialAccountReadRepository) FindOneByProviderWithSocialId(provider string, socialId string) (SocialAccount, error) {
 	var socialAccount SocialAccount
 
-	query := "SELECT * FROM social_account WHERE social_id = ? AND provider = ?"
+	query := "SELECT * FROM social_account WHERE provider = ? AND social_id = ?"
 	err := r.db.QueryRowx(query, socialId, provider).StructScan(&socialAccount)
 	if err != nil {
 		customError := errors.Wrap(err, "SocialAccountRepository: FindOneBySocialId")

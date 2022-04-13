@@ -23,7 +23,7 @@ func NewNullString(s string) sql.NullString {
 	}
 }
 
-func NomalizeNullString(sn sql.NullString) string {
+func NormalizeNullString(sn sql.NullString) string {
 	if sn.Valid {
 		return sn.String
 	}
