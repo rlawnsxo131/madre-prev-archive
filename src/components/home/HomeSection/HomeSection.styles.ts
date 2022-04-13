@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { media, palette } from '../../../styles';
+import { media } from '../../../styles';
 import { themePalette } from '../../../styles';
 
 const section = css`
@@ -65,10 +65,6 @@ const description = css`
   h3,
   p {
     letter-spacing: 0.1rem;
-    ::selection {
-      color: ${palette.white};
-      background: ${palette.pink['600']};
-    }
   }
 `;
 

@@ -1,5 +1,5 @@
 import { css, Global } from '@emotion/react';
-import { themePalette, themes } from '../../../styles';
+import { palette, themePalette, themes } from '../../../styles';
 
 interface GlobalStyleProps {}
 
@@ -65,6 +65,10 @@ const globalStyle = css`
   span,
   a {
     color: ${themePalette.text1};
+    ::selection {
+      color: ${palette.white};
+      background: ${palette.pink['600']};
+    }
   }
   a {
     text-decoration: none;
