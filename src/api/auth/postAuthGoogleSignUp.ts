@@ -1,7 +1,7 @@
 import {
   PostAuthGoogleSignUpParams,
   PostAuthGoogleSignUpResponse,
-} from '../../@types/api/auth.type';
+} from '../../@types/api/auth.types';
 import apiClient from '../apiClient';
 
 export default async function postAuthGoogleSignUp({

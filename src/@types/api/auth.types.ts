@@ -1,4 +1,4 @@
-import { UserTokenProfile } from '../domain/auth.type';
+import { UserTokenProfile } from '../domain/auth.types';
 
 export interface GetAuthResponse {
   user_token_profile: UserTokenProfile | null;

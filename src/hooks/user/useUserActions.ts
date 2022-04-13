@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import { UserTokenProfile } from '../../@types/domain/auth.type';
+import { UserTokenProfile } from '../../@types/domain/auth.types';
 import { AppDispatch } from '../../store';
 import user from '../../store/user';
 

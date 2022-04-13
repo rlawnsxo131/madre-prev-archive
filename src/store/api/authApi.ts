@@ -5,7 +5,7 @@ import {
   PostAuthGoogleCheckResponse,
   PostAuthGoogleSignUpParams,
   PostAuthGoogleSignUpResponse,
-} from '../../@types/api/auth.type';
+} from '../../@types/api/auth.types';
 import postAuthGoogleSignIn from '../../api/auth/postAuthGoogleSignIn';
 import common from '../common';
 import popupAuth from '../popupAuth';
