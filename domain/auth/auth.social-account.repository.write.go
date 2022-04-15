@@ -3,6 +3,7 @@ package auth
 import (
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
+	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
 )
 
 type SocialAccountWriteRepository interface {
@@ -10,19 +11,19 @@ type SocialAccountWriteRepository interface {
 }
 
 type socialAccountWriteRepository struct {
-	db *sqlx.DB
+	ql logger.QueryLogger
 }
 
 func NewSocialAccountWriteRepository(db *sqlx.DB) SocialAccountWriteRepository {
 	return &socialAccountWriteRepository{
-		db: db,
+		ql: logger.NewQueryLogger(db),
 	}
 }
 
 func (r *socialAccountWriteRepository) Create(socialAccount SocialAccount) (int64, error) {
 	query := "INSERT INTO social_account(uuid, user_id, provider, social_id) VALUES(:uuid, :user_id, :provider, :social_id)"
 
-	result, err := r.db.NamedExec(query, socialAccount)
+	result, err := r.ql.NamedExec(query, socialAccount)
 	if err != nil {
 		return 0, errors.Wrap(err, "SocialAccountRepository: create")
 	}
