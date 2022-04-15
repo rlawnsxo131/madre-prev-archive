@@ -29,16 +29,11 @@ func NewQueryLogger(db *sqlx.DB) QueryLogger {
 }
 
 func (q *queryLogger) NamedExec(query string, args ...interface{}) (sql.Result, error) {
-	logging(query, args)
+	q.logger.Debug().Msgf("sql: %s,%+v", query, args)
 	return q.db.NamedExec(query, args)
 }
 
 func (q *queryLogger) QueryRowx(query string, args ...interface{}) *sqlx.Row {
-	logging(query, args)
+	q.logger.Debug().Msgf("sql: %s,%+v", query, args)
 	return q.queryer.QueryRowx(query, args...)
-}
-
-func logging(query string, args ...interface{}) {
-	logger := zerolog.New(os.Stderr).With().Timestamp().Logger()
-	logger.Debug().Msgf("sql: %s,%+v", query, args)
 }
