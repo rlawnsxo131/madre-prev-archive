@@ -34,8 +34,8 @@ func (s *authService) GetExistSocialAccountMap(socialAccount SocialAccount, err 
 	return map[string]bool{"exist": exist}, nil
 }
 
-func (s *authService) ValidateDisplayName(userName string) (bool, error) {
-	match, err := regexp.MatchString("^[a-zA-Z0-9가-힣]{1,16}$", userName)
+func (s *authService) ValidateDisplayName(displayName string) (bool, error) {
+	match, err := regexp.MatchString("^[a-zA-Z0-9가-힣]{1,16}$", displayName)
 	if err != nil {
 		return false, err
 	}
