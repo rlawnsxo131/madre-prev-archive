@@ -38,7 +38,6 @@ func (q *queryLogger) QueryRowx(query string, args ...interface{}) *sqlx.Row {
 	return q.queryer.QueryRowx(query, args...)
 }
 
-// only used queryLogger
 func logging(query string, args ...interface{}) {
 	logger := zerolog.New(os.Stderr).With().Timestamp().Logger()
 	logger.Debug().Msgf("sql: %s,%+v", query, args)
