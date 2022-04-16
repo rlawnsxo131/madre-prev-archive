@@ -1,9 +1,8 @@
 import { useEffect, useMemo, useTransition } from 'react';
-import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { MADRE_USER } from '../../constants';
 import { Storage } from '../../lib/storage';
-import { AppDispatch, RootState } from '../../store';
+import { AppDispatch } from '../../store';
 import authApi from '../../store/api/authApi';
 import user from '../../store/user';
 
