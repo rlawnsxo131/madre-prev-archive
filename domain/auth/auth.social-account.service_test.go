@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_SocialAccountService_Create_Success(t *testing.T) {
+func Test_SocialAccountService_Create_IsSuccess(t *testing.T) {
 	assert := assert.New(t)
 
 	db, _ := database.GetDB()
@@ -28,7 +28,7 @@ func Test_SocialAccountService_Create_Success(t *testing.T) {
 	assert.NotZero(lastInsertId)
 }
 
-func Test_SocialAccountService_Create_Fail(t *testing.T) {
+func Test_SocialAccountService_Create_IsFail(t *testing.T) {
 	assert := assert.New(t)
 
 	db, _ := database.GetDB()
