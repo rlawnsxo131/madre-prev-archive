@@ -1,15 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { UserTokenProfile } from '../@types/domain/auth.types';
 import { MADRE_USER } from '../constants';
 import { Storage } from '../lib/storage';
 
 interface UserState {
   isPending: boolean;
-  userProfile: {
-    display_name: string;
-    email: string;
-    photo_url?: string;
-    access_token: string;
-  } | null;
+  userProfile: UserTokenProfile | null;
 }
 
 const initialState: UserState = {
