@@ -48,7 +48,7 @@ const itemBlock = css`
 `;
 
 const themeChangeButtonBlock = css`
-  padding-left: 1.5rem;
+  padding-left: 0.5rem;
 `;
 
 export default HomeHeaderWeb;

@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import { media } from '../../../styles';
+import ButtonThemeChange from '../../common/ButtonThemeChange';
 import UserPersonalMenu from '../../user/UserPersonalMenu';
 import HomeHeaderLogo from './HomeHeaderLogo';
 import HomeHeaderMobileNavigation from './HomeHeaderMobileNavigation';
@@ -9,9 +10,12 @@ interface HomeHeaderMobileProps {}
 function HomeHeaderMobile(props: HomeHeaderMobileProps) {
   return (
     <div css={block}>
-      <HomeHeaderMobileNavigation />
       <HomeHeaderLogo />
-      <UserPersonalMenu />
+      <div css={right}>
+        <UserPersonalMenu />
+        <ButtonThemeChange />
+        <HomeHeaderMobileNavigation />
+      </div>
     </div>
   );
 }
@@ -19,18 +23,9 @@ function HomeHeaderMobile(props: HomeHeaderMobileProps) {
 const block = css`
   position: relative;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   height: 3rem;
-
-  div:nth-of-type(1) {
-    position: absolute;
-    left: 0;
-  }
-  div:nth-of-type(3) {
-    position: absolute;
-    right: 0;
-  }
 
   ${media.xxxsmall} {
     width: 93%;
@@ -38,6 +33,13 @@ const block = css`
   ${media.small} {
     display: none;
   }
+`;
+
+const right = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 `;
 
 export default HomeHeaderMobile;

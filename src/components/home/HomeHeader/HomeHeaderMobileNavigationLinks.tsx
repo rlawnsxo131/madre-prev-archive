@@ -48,7 +48,7 @@ function HomeHeaderMobileNavigationLinks(
 const block = (visible: boolean) => css`
   position: absolute;
   top: 3.25rem;
-  left: 0;
+  right: 0;
   width: 12rem;
   height: auto;
   padding: 0.25rem 0.5rem;
