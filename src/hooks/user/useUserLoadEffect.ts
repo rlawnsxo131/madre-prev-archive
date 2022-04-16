@@ -1,4 +1,4 @@
-import { useEffect, useTransition } from 'react';
+import { useEffect, useMemo, useTransition } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { MADRE_USER } from '../../constants';
@@ -9,9 +9,12 @@ import user from '../../store/user';
 
 export default function useUserLoadEffect() {
   const dispatch = useDispatch<AppDispatch>();
-  const prevUser = useSelector((state: RootState) => state.user);
   const [isPending, startTransition] = useTransition();
-  const { data } = authApi.useGetQuery(null);
+  const { isFetching, data } = authApi.useGetQuery(null);
+
+  const isPendingVisible = useMemo(() => {
+    return isFetching || isPending;
+  }, [isFetching, isPending]);
 
   useEffect(() => {
     startTransition(() => {
@@ -26,10 +29,16 @@ export default function useUserLoadEffect() {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log(data);
-  }, [data]);
+    if (!data) return;
+    if (!data.user_token_profile) return;
+    dispatch(
+      user.actions.setUser({
+        userProfile: data.user_token_profile,
+      }),
+    );
+  }, [dispatch, data]);
 
   useEffect(() => {
-    dispatch(user.actions.setIsPending({ isPending }));
-  }, [dispatch]);
+    dispatch(user.actions.setIsPending({ isPending: isPendingVisible }));
+  }, [dispatch, isPendingVisible]);
 }

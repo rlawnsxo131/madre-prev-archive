@@ -25,6 +25,7 @@ function UserPersonalMenu(props: UserPersonalMenuProps) {
     <div css={block}>
       <UserIcon />
       <DropArrowIcon />
+      {/* <img src={userProfile.photo_url} /> */}
     </div>
   );
 }
