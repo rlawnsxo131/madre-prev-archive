@@ -16,14 +16,14 @@ type QueryLogger interface {
 
 type queryLogger struct {
 	db     *sqlx.DB
-	logger zerolog.Logger
+	logger *zerolog.Logger
 }
 
 func NewQueryLogger(db *sqlx.DB) QueryLogger {
 	logger := zerolog.New(os.Stderr).With().Timestamp().Logger()
 	return &queryLogger{
 		db:     db,
-		logger: logger,
+		logger: &logger,
 	}
 }
 
