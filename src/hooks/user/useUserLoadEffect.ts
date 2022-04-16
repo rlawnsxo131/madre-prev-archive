@@ -39,6 +39,10 @@ export default function useUserLoadEffect() {
   }, [dispatch, data]);
 
   useEffect(() => {
-    dispatch(user.actions.setIsPending({ isPending: isPendingVisible }));
+    dispatch(
+      user.actions.setIsPending({
+        isPending: isPendingVisible,
+      }),
+    );
   }, [dispatch, isPendingVisible]);
 }
