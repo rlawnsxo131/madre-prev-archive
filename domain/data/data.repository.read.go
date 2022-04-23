@@ -25,7 +25,7 @@ func NewDataReadRepository(db *sqlx.DB) DataReadRepository {
 func (r *dataReadRepository) FindAll(limit int) ([]Data, error) {
 	var dataList []Data
 
-	query := "SELECT * FROM data Limit $1"
+	query := "SELECT * FROM data LIMIT $1"
 	rows, err := r.ql.Queryx(query, limit)
 	if err != nil {
 		customError := errors.Wrap(err, "DataRepository: FindAll query error")

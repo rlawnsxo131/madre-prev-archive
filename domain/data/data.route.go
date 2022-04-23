@@ -1,12 +1,12 @@
 package data
 
 import (
-	"log"
 	"net/http"
 	"strconv"
 
 	"github.com/gorilla/mux"
 	"github.com/rlawnsxo131/madre-server-v2/database"
+	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"
 	"github.com/rlawnsxo131/madre-server-v2/utils"
 )
@@ -23,7 +23,9 @@ func getAll() http.HandlerFunc {
 		writer := response.NewHttpWriter(w, r)
 		limit, err := strconv.Atoi(r.URL.Query().Get("limit"))
 		if err != nil {
-			log.Printf("dataRoute: limit Atoi wrong: %v", err)
+			logger.Logger.
+				Warn().
+				Msgf("dataRoute: limit Atoi wrong: %v", err)
 		}
 		limit = utils.IfIsNotExistGetDefaultIntValue(limit, 50)
 

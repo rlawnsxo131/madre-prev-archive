@@ -28,7 +28,7 @@ func NewQueryLogger(db *sqlx.DB) QueryLogger {
 
 func (q *queryLogger) Queryx(query string, args ...interface{}) (*sqlx.Rows, error) {
 	q.logger.Debug().Msgf("sql: %s,%+v", query, args)
-	return q.db.Queryx(query, args)
+	return q.db.Queryx(query, args...)
 }
 
 func (q *queryLogger) QueryRowx(query string, args ...interface{}) *sqlx.Row {
