@@ -1,7 +1,5 @@
 export interface User {
   id: number;
-  uuid: string;
-  authId: number;
   email: string;
   origin_name?: string;
   display_name: string;

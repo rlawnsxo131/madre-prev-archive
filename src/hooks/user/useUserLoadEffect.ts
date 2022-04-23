@@ -6,7 +6,6 @@ import { AppDispatch } from '../../store';
 import authApi from '../../store/api/authApi';
 import user from '../../store/user';
 
-// TODO: 여기 prevUser 처리 필요한지 고민해보기
 export default function useUserLoadEffect() {
   const dispatch = useDispatch<AppDispatch>();
   const [isPending, startTransition] = useTransition();
@@ -18,11 +17,11 @@ export default function useUserLoadEffect() {
 
   useEffect(() => {
     startTransition(() => {
-      const userData = Storage.getItem(MADRE_USER_TOKEN_PROFILE);
-      if (!userData) return;
+      const userTokenProfile = Storage.getItem(MADRE_USER_TOKEN_PROFILE);
+      if (!userTokenProfile) return;
       dispatch(
         user.actions.setUser({
-          userTokenProfile: userData,
+          userTokenProfile,
         }),
       );
     });

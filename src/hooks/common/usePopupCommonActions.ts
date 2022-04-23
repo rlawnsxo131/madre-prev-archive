@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store';
 import common from '../../store/common';
 
-interface PopupCommshowParams {
+interface PopupCommonshowParams {
   title?: string;
   message?: string;
 }
@@ -13,7 +13,7 @@ export default function usePopupCommonActions() {
 
   return useMemo(
     () => ({
-      show({ title = '', message = '' }: PopupCommshowParams) {
+      show({ title = '', message = '' }: PopupCommonshowParams) {
         dispatch(
           common.actions.showPopupCommon({
             title,
