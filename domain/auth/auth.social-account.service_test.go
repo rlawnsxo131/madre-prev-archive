@@ -24,7 +24,7 @@ func Test_SocialAccountService_Create_IsSuccess(t *testing.T) {
 	socialAccountService := auth.NewSocialAccountService(db)
 	lastInsertId, err := socialAccountService.Create(socialAccount)
 
-	assert.Nil(err, nil)
+	assert.Nil(err)
 	assert.NotZero(lastInsertId)
 }
 

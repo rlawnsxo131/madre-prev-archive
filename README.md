@@ -2,11 +2,12 @@
 
 ### Project Stack
 
+- MySQL
 - Go
 - gorilla/mux
 - jmoiron/sqlx
 - rs/zerolog
-- MySQL
+- stretchr/testify
 
 ### V1 Repository
 

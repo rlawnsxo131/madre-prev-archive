@@ -19,7 +19,7 @@ import (
 func ApplyRoutes(v1 *mux.Router) {
 	authRoute := v1.NewRoute().PathPrefix("/auth").Subrouter()
 
-	authRoute.HandleFunc("", get()).Methods("GET")
+	authRoute.HandleFunc("/", get()).Methods("GET")
 	authRoute.HandleFunc("/sign-out", postSignOut()).Methods("POST", "OPTIONS")
 	authRoute.HandleFunc("/google/check", postGoogleCheck()).Methods("POST", "OPTIONS")
 	authRoute.HandleFunc("/google/sign-in", postGoogleSignIn()).Methods("POST", "OPTIONS")
@@ -189,6 +189,7 @@ func postGoogleSignIn() http.HandlerFunc {
 			)
 			return
 		}
+
 		token.SetTokenCookies(w, accessToken, refreshToken)
 
 		writer.WriteCompress(map[string]interface{}{
@@ -320,6 +321,7 @@ func postGoogleSignUp() http.HandlerFunc {
 			)
 			return
 		}
+
 		token.SetTokenCookies(w, accessToken, refreshToken)
 
 		writer.WriteCompress(map[string]interface{}{

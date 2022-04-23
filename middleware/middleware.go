@@ -184,28 +184,35 @@ func JWT(next http.Handler) http.Handler {
 								Email:       claims.Email,
 								PhotoUrl:    claims.PhotoUrl,
 							})
-							token.SetTokenCookies(w, accessToken, refreshToken)
-
-							// set context value
-							ctx, err := syncmap.SetNewValueFromHttpContext(
-								r.Context(),
-								constants.Key_UserTokenProfile,
-								&token.UserTokenProfile{
-									DisplayName: claims.DisplayName,
-									Email:       claims.Email,
-									PhotoUrl:    claims.PhotoUrl,
-									AccessToken: accessToken,
-								},
-							)
 							if err != nil {
-								writer := response.NewHttpWriter(w, r)
-								writer.WriteError(
-									err,
-									"JWT",
+								logger.Logger.
+									Err(err).
+									Str("Action", "JWT").
+									Msg("")
+							} else {
+								token.SetTokenCookies(w, accessToken, refreshToken)
+
+								// set context value
+								ctx, err := syncmap.SetNewValueFromHttpContext(
+									r.Context(),
+									constants.Key_UserTokenProfile,
+									&token.UserTokenProfile{
+										DisplayName: claims.DisplayName,
+										Email:       claims.Email,
+										PhotoUrl:    claims.PhotoUrl,
+										AccessToken: accessToken,
+									},
 								)
-								return
+								if err != nil {
+									writer := response.NewHttpWriter(w, r)
+									writer.WriteError(
+										err,
+										"JWT",
+									)
+									return
+								}
+								r.Context().Value(ctx)
 							}
-							r.Context().Value(ctx)
 						}
 					}
 				}
@@ -276,28 +283,35 @@ func JWT(next http.Handler) http.Handler {
 						Email:       claims.Email,
 						PhotoUrl:    claims.PhotoUrl,
 					})
-					token.SetTokenCookies(w, accessToken, refreshToken)
-
-					// set context value
-					ctx, err := syncmap.SetNewValueFromHttpContext(
-						r.Context(),
-						constants.Key_UserTokenProfile,
-						&token.UserTokenProfile{
-							DisplayName: claims.DisplayName,
-							Email:       claims.Email,
-							PhotoUrl:    claims.PhotoUrl,
-							AccessToken: accessToken,
-						},
-					)
 					if err != nil {
-						writer := response.NewHttpWriter(w, r)
-						writer.WriteError(
-							err,
-							"JWT",
+						logger.Logger.
+							Err(err).
+							Str("Action", "JWT").
+							Msg("")
+					} else {
+						token.SetTokenCookies(w, accessToken, refreshToken)
+
+						// set context value
+						ctx, err := syncmap.SetNewValueFromHttpContext(
+							r.Context(),
+							constants.Key_UserTokenProfile,
+							&token.UserTokenProfile{
+								DisplayName: claims.DisplayName,
+								Email:       claims.Email,
+								PhotoUrl:    claims.PhotoUrl,
+								AccessToken: accessToken,
+							},
 						)
-						return
+						if err != nil {
+							writer := response.NewHttpWriter(w, r)
+							writer.WriteError(
+								err,
+								"JWT",
+							)
+							return
+						}
+						r.Context().Value(ctx)
 					}
-					r.Context().Value(ctx)
 				}
 			}
 		}

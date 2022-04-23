@@ -38,8 +38,9 @@ func New(db *sqlx.DB) *server {
 		router: mux.NewRouter(),
 		db:     db,
 	}
+	s.applyBaseMiddleware()
 	s.applyHealthSettings()
-	s.applyRoutesAndMiddlewares()
+	s.applyApiRoutesAndMiddleware()
 	s.applyHttpServer()
 	return s
 }
@@ -56,10 +57,11 @@ func (s *server) Start() {
 
 	// Run our server in a goroutine so that it doesn't block.
 	go func() {
-		if err := s.httpServer.ListenAndServe(); err != nil {
+		log.Println("Going to listen on port", port)
+		err := s.httpServer.ListenAndServe()
+		if err != nil {
 			log.Println(err)
 		}
-		log.Println("Going to listen on port", port)
 	}()
 
 	c := make(chan os.Signal, 1)
@@ -83,7 +85,7 @@ func (s *server) Start() {
 	os.Exit(0)
 }
 
-func (s *server) applyHealthSettings() {
+func (s *server) applyBaseMiddleware() {
 	s.router.Use(
 		middleware.HttpLogger,
 		middleware.Recovery,
@@ -91,6 +93,9 @@ func (s *server) applyHealthSettings() {
 		middleware.SetSyncMapContext,
 		middleware.JWT,
 	)
+}
+
+func (s *server) applyHealthSettings() {
 	s.router.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
 		writer := response.NewHttpWriter(w, r)
 		data := map[string]string{
@@ -104,7 +109,7 @@ func (s *server) applyHealthSettings() {
 	})
 }
 
-func (s *server) applyRoutesAndMiddlewares() {
+func (s *server) applyApiRoutesAndMiddleware() {
 	api := s.router.NewRoute().PathPrefix("/api").Subrouter()
 	api.Use(
 		middleware.SetDBContext(s.db),

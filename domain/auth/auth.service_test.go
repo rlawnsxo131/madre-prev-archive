@@ -20,7 +20,7 @@ func Test_AuthService_GetExistSocialAccountMap_ExistIsFalse(t *testing.T) {
 	authService := auth.NewAuthService()
 	existSocialAccountMap, err := authService.GetExistSocialAccountMap(socialAccount, err)
 
-	assert.Equal(err, nil)
+	assert.Nil(err)
 	assert.False(existSocialAccountMap["exist"])
 }
 
@@ -35,7 +35,7 @@ func Test_AuthService_GetExistSocialAccountMap_ExistIsTrue(t *testing.T) {
 	authService := auth.NewAuthService()
 	existSocialAccountMap, err := authService.GetExistSocialAccountMap(socialAccount, nil)
 
-	assert.Equal(err, nil)
+	assert.Nil(err)
 	assert.True(existSocialAccountMap["exist"])
 }
 
