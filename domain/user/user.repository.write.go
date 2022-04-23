@@ -21,10 +21,10 @@ func NewUserWriteRepository(db *sqlx.DB) UserWriteRepository {
 }
 
 func (r *userWriteRepository) Create(u User) (string, error) {
-	query := "INSERT INTO public.user(email, origin_name, display_name, photo_url) VALUES(:email, :origin_name, :display_name, :photo_url) RETURNING id"
-
 	var id string
-	err := r.ql.PrepareNamedGet(query, &id, u)
+	var query = "INSERT INTO public.user(email, origin_name, display_name, photo_url) VALUES(:email, :origin_name, :display_name, :photo_url) RETURNING id"
+
+	err := r.ql.PrepareNamedGet(&id, query, u)
 	if err != nil {
 		return "", errors.Wrap(err, "UserWriteRepository: create")
 	}

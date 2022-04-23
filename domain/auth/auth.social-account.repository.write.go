@@ -21,10 +21,10 @@ func NewSocialAccountWriteRepository(db *sqlx.DB) SocialAccountWriteRepository {
 }
 
 func (r *socialAccountWriteRepository) Create(socialAccount SocialAccount) (string, error) {
-	query := "INSERT INTO social_account(user_id, provider, social_id) VALUES(:user_id, :provider, :social_id) RETURNING id"
-
 	var id string
-	err := r.ql.PrepareNamedGet(query, &id, socialAccount)
+	var query = "INSERT INTO social_account(user_id, provider, social_id) VALUES(:user_id, :provider, :social_id) RETURNING id"
+
+	err := r.ql.PrepareNamedGet(&id, query, socialAccount)
 	if err != nil {
 		return "", errors.Wrap(err, "SocialAccountWriteRepository: create")
 	}

@@ -1,7 +1,6 @@
 package logger
 
 import (
-	"database/sql"
 	"os"
 
 	"github.com/jmoiron/sqlx"
@@ -9,10 +8,9 @@ import (
 )
 
 type QueryLogger interface {
-	NamedExec(query string, args interface{}) (sql.Result, error)
 	Queryx(query string, args ...interface{}) (*sqlx.Rows, error)
 	QueryRowx(query string, args ...interface{}) *sqlx.Row
-	PrepareNamedGet(query string, id *string, args interface{}) error
+	PrepareNamedGet(id *string, query string, args interface{}) error
 }
 
 type queryLogger struct {
@@ -28,11 +26,6 @@ func NewQueryLogger(db *sqlx.DB) QueryLogger {
 	}
 }
 
-func (q *queryLogger) NamedExec(query string, args interface{}) (sql.Result, error) {
-	q.logger.Debug().Msgf("sql: %s,%+v", query, args)
-	return q.db.NamedExec(query, args)
-}
-
 func (q *queryLogger) Queryx(query string, args ...interface{}) (*sqlx.Rows, error) {
 	q.logger.Debug().Msgf("sql: %s,%+v", query, args)
 	return q.db.Queryx(query, args)
@@ -43,7 +36,8 @@ func (q *queryLogger) QueryRowx(query string, args ...interface{}) *sqlx.Row {
 	return q.db.QueryRowx(query, args...)
 }
 
-func (q *queryLogger) PrepareNamedGet(query string, id *string, args interface{}) error {
+func (q *queryLogger) PrepareNamedGet(id *string, query string, args interface{}) error {
+	q.logger.Debug().Msgf("sql: %s,%+v", query, args)
 	stmt, err := q.db.PrepareNamed(query)
 	if err != nil {
 		return err
