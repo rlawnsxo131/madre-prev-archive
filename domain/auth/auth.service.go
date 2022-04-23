@@ -27,7 +27,7 @@ func (s *authService) GetExistSocialAccountMap(socialAccount SocialAccount, err 
 		}
 	}
 
-	if socialAccount.ID != 0 {
+	if socialAccount.ID != "" {
 		exist = true
 	}
 

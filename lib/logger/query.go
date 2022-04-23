@@ -12,6 +12,7 @@ type QueryLogger interface {
 	NamedExec(query string, args interface{}) (sql.Result, error)
 	Queryx(query string, args ...interface{}) (*sqlx.Rows, error)
 	QueryRowx(query string, args ...interface{}) *sqlx.Row
+	PrepareNamedGet(query string, id *string, args interface{}) error
 }
 
 type queryLogger struct {
@@ -40,4 +41,12 @@ func (q *queryLogger) Queryx(query string, args ...interface{}) (*sqlx.Rows, err
 func (q *queryLogger) QueryRowx(query string, args ...interface{}) *sqlx.Row {
 	q.logger.Debug().Msgf("sql: %s,%+v", query, args)
 	return q.db.QueryRowx(query, args...)
+}
+
+func (q *queryLogger) PrepareNamedGet(query string, id *string, args interface{}) error {
+	stmt, err := q.db.PrepareNamed(query)
+	if err != nil {
+		return err
+	}
+	return stmt.Get(id, args)
 }

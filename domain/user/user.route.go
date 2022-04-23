@@ -19,7 +19,7 @@ func get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		writer := response.NewHttpWriter(w, r)
 		vars := mux.Vars(r)
-		uuid := vars["uuid"]
+		id := vars["id"]
 
 		db, err := database.GetDBConn(r.Context())
 		if err != nil {
@@ -28,7 +28,7 @@ func get() http.HandlerFunc {
 		}
 
 		userService := NewUserService(db)
-		user, err := userService.FindOneByUUID(uuid)
+		user, err := userService.FindOneById(id)
 		if err != nil {
 			writer.WriteError(err, "get /user/{uuid}")
 			return

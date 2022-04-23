@@ -2,23 +2,36 @@ package database
 
 import (
 	"context"
+	"fmt"
 	"io/ioutil"
 	"strings"
 
 	"time"
 
-	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq"
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v2/constants"
 	"github.com/rlawnsxo131/madre-server-v2/lib/syncmap"
+)
+
+const (
+	host     = "localhost"
+	port     = 5432
+	user     = "madre"
+	password = "1234"
+	dbname   = "madre"
 )
 
 var sqlxDB *sqlx.DB
 
 func GetDB() (*sqlx.DB, error) {
 	if sqlxDB == nil {
-		db, err := sqlx.Connect("mysql", "root:1234@/madre?charset=utf8mb4&collation=utf8mb4_unicode_ci&parseTime=true")
+		psqlInfo := fmt.Sprintf(
+			"host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
+			host, port, user, password, dbname,
+		)
+		db, err := sqlx.Connect("postgres", psqlInfo)
 		if err != nil {
 			return nil, errors.Wrap(err, "sqlx: connect fail")
 		}

@@ -8,8 +8,7 @@ import (
 )
 
 type UserReadRepository interface {
-	FindOneById(id int64) (User, error)
-	FindOneByUUID(uuid string) (User, error)
+	FindOneById(id string) (User, error)
 }
 
 type userReadRepository struct {
@@ -22,26 +21,13 @@ func NewUserReadRepository(db *sqlx.DB) UserReadRepository {
 	}
 }
 
-func (r *userReadRepository) FindOneById(id int64) (User, error) {
+func (r *userReadRepository) FindOneById(id string) (User, error) {
 	var user User
 
-	query := "SELECT * FROM user WHERE id = ?"
+	query := "SELECT * FROM public.user WHERE id = $1"
 	err := r.ql.QueryRowx(query, id).StructScan(&user)
 	if err != nil {
-		customError := errors.Wrap(err, "UserRepository: FindOneById")
-		err = utils.ErrNoRowsReturnRawError(err, customError)
-	}
-
-	return user, err
-}
-
-func (r *userReadRepository) FindOneByUUID(uuid string) (User, error) {
-	var user User
-
-	query := "SELECT * FROM user WHERE uuid = ?"
-	err := r.ql.QueryRowx(query, uuid).StructScan(&user)
-	if err != nil {
-		customError := errors.Wrap(err, "UserRepository: FindOneByUUID")
+		customError := errors.Wrap(err, "UserReadRepository: FindOneById")
 		err = utils.ErrNoRowsReturnRawError(err, customError)
 	}
 

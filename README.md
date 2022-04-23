@@ -2,7 +2,7 @@
 
 ### Project Stack
 
-- MySQL
+- PostgreSQL
 - Go
 - gorilla/mux
 - jmoiron/sqlx

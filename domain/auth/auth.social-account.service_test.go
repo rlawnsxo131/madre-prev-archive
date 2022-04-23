@@ -15,8 +15,7 @@ func Test_SocialAccountService_Create_IsSuccess(t *testing.T) {
 	db, _ := database.GetDB()
 
 	socialAccount := auth.SocialAccount{
-		UserId:   1,
-		UUID:     utils.GenerateUUIDString(),
+		UserID:   utils.GenerateUUIDString(),
 		Provider: "GOOGLE",
 		SocialId: utils.GenerateUUIDString(),
 	}
@@ -34,8 +33,7 @@ func Test_SocialAccountService_Create_IsFail(t *testing.T) {
 	db, _ := database.GetDB()
 
 	socialAccount := auth.SocialAccount{
-		UserId:   1,
-		UUID:     utils.GenerateUUIDString(),
+		UserID:   utils.GenerateUUIDString(),
 		Provider: "",
 		SocialId: utils.GenerateUUIDString(),
 	}

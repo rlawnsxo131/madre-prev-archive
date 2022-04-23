@@ -6,8 +6,7 @@ import (
 )
 
 type User struct {
-	ID          int64          `json:"id" db:"id"`
-	UUID        string         `json:"uuid" db:"uuid"`
+	ID          string         `json:"id" db:"id"`
 	Email       string         `json:"email" db:"email"`
 	OriginName  sql.NullString `json:"origin_name" db:"origin_name"`
 	DisplayName string         `json:"display_name" db:"display_name"`
@@ -18,7 +17,6 @@ type User struct {
 
 const (
 	Key_ID          = "ID"
-	Key_UUID        = "UUID"
 	Key_Email       = "Email"
 	Key_OriginName  = "OriginName"
 	Key_DisplayName = "DisplayName"
@@ -32,7 +30,6 @@ func (u *User) Filter(keys []string) map[string]interface{} {
 
 	if keys == nil {
 		result["id"] = u.ID
-		result["uuid"] = u.UUID
 		result["email"] = u.Email
 		result["display_name"] = u.DisplayName
 		result["created_at"] = u.CreatedAt
@@ -53,8 +50,6 @@ func (u *User) Filter(keys []string) map[string]interface{} {
 		for _, key := range keys {
 			if key == Key_ID {
 				result["id"] = u.ID
-			} else if key == Key_UUID {
-				result["uuid"] = u.UUID
 			} else if key == Key_Email {
 				result["email"] = u.Email
 			} else if key == Key_OriginName {

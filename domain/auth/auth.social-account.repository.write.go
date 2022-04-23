@@ -7,7 +7,7 @@ import (
 )
 
 type SocialAccountWriteRepository interface {
-	Create(socialAccount SocialAccount) (int64, error)
+	Create(socialAccount SocialAccount) (string, error)
 }
 
 type socialAccountWriteRepository struct {
@@ -20,18 +20,14 @@ func NewSocialAccountWriteRepository(db *sqlx.DB) SocialAccountWriteRepository {
 	}
 }
 
-func (r *socialAccountWriteRepository) Create(socialAccount SocialAccount) (int64, error) {
-	query := "INSERT INTO social_account(uuid, user_id, provider, social_id) VALUES(:uuid, :user_id, :provider, :social_id)"
+func (r *socialAccountWriteRepository) Create(socialAccount SocialAccount) (string, error) {
+	query := "INSERT INTO social_account(user_id, provider, social_id) VALUES(:user_id, :provider, :social_id) RETURNING id"
 
-	result, err := r.ql.NamedExec(query, socialAccount)
+	var id string
+	err := r.ql.PrepareNamedGet(query, &id, socialAccount)
 	if err != nil {
-		return 0, errors.Wrap(err, "SocialAccountRepository: create")
+		return "", errors.Wrap(err, "SocialAccountWriteRepository: create")
 	}
 
-	lastInsertId, err := result.LastInsertId()
-	if err != nil {
-		return 0, errors.Wrap(err, "SocialAccountRepository: create")
-	}
-
-	return lastInsertId, nil
+	return id, err
 }

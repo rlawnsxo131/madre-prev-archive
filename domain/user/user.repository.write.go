@@ -7,7 +7,7 @@ import (
 )
 
 type UserWriteRepository interface {
-	Create(u User) (int64, error)
+	Create(u User) (string, error)
 }
 
 type userWriteRepository struct {
@@ -20,18 +20,14 @@ func NewUserWriteRepository(db *sqlx.DB) UserWriteRepository {
 	}
 }
 
-func (r *userWriteRepository) Create(u User) (int64, error) {
-	query := "INSERT INTO user(uuid, email, origin_name, display_name, photo_url) VALUES(:uuid, :email, :origin_name, :display_name, :photo_url)"
+func (r *userWriteRepository) Create(u User) (string, error) {
+	query := "INSERT INTO public.user(email, origin_name, display_name, photo_url) VALUES(:email, :origin_name, :display_name, :photo_url) RETURNING id"
 
-	result, err := r.ql.NamedExec(query, u)
+	var id string
+	err := r.ql.PrepareNamedGet(query, &id, u)
 	if err != nil {
-		return 0, errors.Wrap(err, "SocialAccountRepository: create")
+		return "", errors.Wrap(err, "UserWriteRepository: create")
 	}
 
-	lastInsertId, err := result.LastInsertId()
-	if err != nil {
-		return 0, errors.Wrap(err, "SocialAccountRepository: create")
-	}
-
-	return lastInsertId, nil
+	return id, nil
 }

@@ -20,7 +20,7 @@ var (
 )
 
 type GenerateTokenParams struct {
-	UserUUID    string `json:"uuid"`
+	UserID      string `json:"user_id"`
 	DisplayName string `json:"display_name"`
 	Email       string `json:"email"`
 	PhotoUrl    string `json:"photo_url"`
@@ -35,7 +35,7 @@ type UserTokenProfile struct {
 
 type authTokenClaims struct {
 	TokenUUID   string `json:"token_uuid"`
-	UserUUID    string `json:"uuid"`
+	UserID      string `json:"user_id"`
 	DisplayName string `json:"display_name"`
 	Email       string `json:"email"`
 	PhotoUrl    string `json:"photo_url"`
@@ -53,7 +53,7 @@ func GenerateTokens(params GenerateTokenParams) (string, string, error) {
 		if tokenType == Key_AccessToken {
 			claims = authTokenClaims{
 				TokenUUID:   utils.GenerateUUIDString(),
-				UserUUID:    params.UserUUID,
+				UserID:      params.UserID,
 				DisplayName: params.DisplayName,
 				Email:       params.Email,
 				PhotoUrl:    params.PhotoUrl,
@@ -67,7 +67,7 @@ func GenerateTokens(params GenerateTokenParams) (string, string, error) {
 		if tokenType == Key_RefreshToken {
 			claims = authTokenClaims{
 				TokenUUID:   utils.GenerateUUIDString(),
-				UserUUID:    params.UserUUID,
+				UserID:      params.UserID,
 				DisplayName: params.DisplayName,
 				Email:       params.Email,
 				PhotoUrl:    params.PhotoUrl,
