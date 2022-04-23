@@ -15,7 +15,7 @@ func ApplyRoutes(v1 *mux.Router) {
 	dataRoute := v1.NewRoute().PathPrefix("/data").Subrouter()
 
 	dataRoute.HandleFunc("", getAll()).Methods("GET")
-	dataRoute.HandleFunc("/{uuid}", get()).Methods("GET")
+	dataRoute.HandleFunc("/{id}", get()).Methods("GET")
 }
 
 func getAll() http.HandlerFunc {
@@ -48,18 +48,18 @@ func get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		writer := response.NewHttpWriter(w, r)
 		vars := mux.Vars(r)
-		uuid := vars["uuid"]
+		id := vars["id"]
 
 		db, err := database.GetDBConn(r.Context())
 		if err != nil {
-			writer.WriteError(err, "get /data/{uuid}")
+			writer.WriteError(err, "get /data/{id}")
 			return
 		}
 
 		dataService := NewDataService(db)
-		data, err := dataService.FindOneByUUID(uuid)
+		data, err := dataService.FindOneById(id)
 		if err != nil {
-			writer.WriteError(err, "get /data/{uuid}")
+			writer.WriteError(err, "get /data/{id}")
 			return
 		}
 

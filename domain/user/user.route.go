@@ -11,8 +11,8 @@ import (
 func ApplyRoutes(v1 *mux.Router) {
 	userRoute := v1.NewRoute().PathPrefix("/user").Subrouter()
 
-	userRoute.HandleFunc("/{uuid}", get()).Methods("GET")
-	userRoute.HandleFunc("/{uuid}", put()).Methods("PUT", "OPTIONS")
+	userRoute.HandleFunc("/{id}", get()).Methods("GET")
+	userRoute.HandleFunc("/{id}", put()).Methods("PUT", "OPTIONS")
 }
 
 func get() http.HandlerFunc {
@@ -23,14 +23,14 @@ func get() http.HandlerFunc {
 
 		db, err := database.GetDBConn(r.Context())
 		if err != nil {
-			writer.WriteError(err, "get /user/{uuid}")
+			writer.WriteError(err, "get /user/{id}")
 			return
 		}
 
 		userService := NewUserService(db)
 		user, err := userService.FindOneById(id)
 		if err != nil {
-			writer.WriteError(err, "get /user/{uuid}")
+			writer.WriteError(err, "get /user/{id}")
 			return
 		}
 

@@ -269,7 +269,7 @@ func postGoogleSignUp() http.HandlerFunc {
 		}
 
 		userService := user.NewUserService(db)
-		lastInsertUserId, err := userService.Create(user.User{
+		userId, err := userService.Create(user.User{
 			Email:       profile.Email,
 			OriginName:  utils.NewNullString(profile.DisplayName),
 			DisplayName: params.DisplayName,
@@ -283,7 +283,7 @@ func postGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		user, err := userService.FindOneById(lastInsertUserId)
+		user, err := userService.FindOneById(userId)
 		if err != nil {
 			writer.WriteError(
 				err,

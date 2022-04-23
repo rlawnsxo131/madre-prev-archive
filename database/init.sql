@@ -86,6 +86,7 @@ CREATE TABLE IF NOT EXISTS public.data (
 );
 
 CREATE INDEX IF NOT EXISTS data_ix_user_id ON public.data USING btree (user_id);
+CREATE INDEX IF NOT EXISTS data_ix_created_at ON public.data USING btree(created_at);
 
 -- ALTER TABLE public.data OWNER TO madre;
 

@@ -9,8 +9,7 @@ import (
 
 type DataReadRepository interface {
 	FindAll(limit int) ([]Data, error)
-	FindOneById(id int64) (Data, error)
-	FindOneByUUID(uuid string) (Data, error)
+	FindOneById(id string) (Data, error)
 }
 
 type dataReadRepository struct {
@@ -45,26 +44,13 @@ func (r *dataReadRepository) FindAll(limit int) ([]Data, error) {
 	return dataList, nil
 }
 
-func (r *dataReadRepository) FindOneById(id int64) (Data, error) {
+func (r *dataReadRepository) FindOneById(id string) (Data, error) {
 	var data Data
 
 	query := "SELECT * FROM data WHERE id = ?"
 	err := r.ql.QueryRowx(query, id).StructScan(&data)
 	if err != nil {
 		customError := errors.Wrap(err, "DataRepository: FindOneById error")
-		err = utils.ErrNoRowsReturnRawError(err, customError)
-	}
-
-	return data, err
-}
-
-func (r *dataReadRepository) FindOneByUUID(uuid string) (Data, error) {
-	var data Data
-
-	query := "SELECT * FROM data WHERE uuid = ?"
-	err := r.ql.QueryRowx(query, uuid).StructScan(&data)
-	if err != nil {
-		customError := errors.Wrap(err, "DataRepository: FindOneByUUID")
 		err = utils.ErrNoRowsReturnRawError(err, customError)
 	}
 
