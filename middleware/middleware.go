@@ -122,6 +122,9 @@ func SetDBContext(db *sqlx.DB) mux.MiddlewareFunc {
 	}
 }
 
+// When the token already exists,
+// if an error occurs when reissuing the token,
+// only logging is processed so that other functions can be used.
 func JWT(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		accessToken, err := r.Cookie(token.Key_AccessToken)
