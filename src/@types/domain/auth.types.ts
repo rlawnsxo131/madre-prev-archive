@@ -1,7 +1,7 @@
 export type SocialAccountProvider = 'GOOGLE';
 export interface SocialAccount {
-  id: number;
-  user_id: number;
+  id: string;
+  user_id: string;
   provider: SocialAccountProvider;
   social_id: string;
   created_at: string;
