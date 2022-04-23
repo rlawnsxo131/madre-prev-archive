@@ -5,25 +5,25 @@ import { Storage } from '../lib/storage';
 
 interface UserState {
   isPending: boolean;
-  userProfile: UserTokenProfile | null;
+  userTokenProfile: UserTokenProfile | null;
 }
 
 const initialState: UserState = {
   isPending: true,
-  userProfile: null,
+  userTokenProfile: null,
 };
 
 const user = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser(state, action: PayloadAction<Pick<UserState, 'userProfile'>>) {
-      Storage.setItem(MADRE_USER, action.payload.userProfile);
-      state.userProfile = action.payload.userProfile;
+    setUser(state, action: PayloadAction<Pick<UserState, 'userTokenProfile'>>) {
+      Storage.setItem(MADRE_USER, action.payload.userTokenProfile);
+      state.userTokenProfile = action.payload.userTokenProfile;
     },
     resetUser(state) {
       Storage.removeItem(MADRE_USER);
-      state.userProfile = null;
+      state.userTokenProfile = null;
     },
     setIsPending(state, action: PayloadAction<Pick<UserState, 'isPending'>>) {
       state.isPending = action.payload.isPending;

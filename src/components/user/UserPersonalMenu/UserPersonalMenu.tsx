@@ -7,13 +7,13 @@ import UserPersonalMenuAuthButton from './UserPersonalMenuAuthButton';
 interface UserPersonalMenuProps {}
 
 function UserPersonalMenu(props: UserPersonalMenuProps) {
-  const { isPending, userProfile } = useUserState();
+  const { isPending, userTokenProfile } = useUserState();
 
   if (isPending) {
     return <div>pending</div>;
   }
 
-  if (!userProfile) {
+  if (!userTokenProfile) {
     return (
       <div css={block}>
         <UserPersonalMenuAuthButton />

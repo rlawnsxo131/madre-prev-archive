@@ -10,7 +10,7 @@ import user from '../../store/user';
 export default function useUserLoadEffect() {
   const dispatch = useDispatch<AppDispatch>();
   const [isPending, startTransition] = useTransition();
-  const { isFetching, data } = authApi.useGetQuery(null);
+  const { isFetching, data } = authApi.useGetQuery(undefined);
 
   const isPendingVisible = useMemo(() => {
     return isFetching || isPending;
@@ -22,7 +22,7 @@ export default function useUserLoadEffect() {
       if (!userData) return;
       dispatch(
         user.actions.setUser({
-          userProfile: userData,
+          userTokenProfile: userData,
         }),
       );
     });
@@ -33,7 +33,7 @@ export default function useUserLoadEffect() {
     if (!data.user_token_profile) return;
     dispatch(
       user.actions.setUser({
-        userProfile: data.user_token_profile,
+        userTokenProfile: data.user_token_profile,
       }),
     );
   }, [dispatch, data]);

@@ -9,8 +9,8 @@ export default function useUserActions() {
 
   return useMemo(
     () => ({
-      setUser(userProfile: UserTokenProfile) {
-        dispatch(user.actions.setUser({ userProfile }));
+      setUser(userTokenProfile: UserTokenProfile) {
+        dispatch(user.actions.setUser({ userTokenProfile }));
       },
       setIsPending(isPending: boolean) {
         dispatch(user.actions.setIsPending({ isPending }));

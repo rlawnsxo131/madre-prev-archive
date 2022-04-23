@@ -23,8 +23,8 @@ const authApi = createApi({
   }),
   tagTypes: ['Auth'],
   endpoints: (build) => ({
-    get: build.query<GetAuthResponse, null>({
-      query: () => '',
+    get: build.query<GetAuthResponse, undefined>({
+      query: () => '/',
       async onQueryStarted(_, { dispatch, queryFulfilled, getCacheEntry }) {
         try {
           await queryFulfilled;
@@ -61,7 +61,7 @@ const authApi = createApi({
             });
             dispatch(
               user.actions.setUser({
-                userProfile: data.user_token_profile,
+                userTokenProfile: data.user_token_profile,
               }),
             );
           } else {
@@ -103,7 +103,7 @@ const authApi = createApi({
           } else {
             dispatch(
               user.actions.setUser({
-                userProfile: data.user_token_profile,
+                userTokenProfile: data.user_token_profile,
               }),
             );
           }
