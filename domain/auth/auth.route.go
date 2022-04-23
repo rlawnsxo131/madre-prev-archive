@@ -40,7 +40,17 @@ func get() http.HandlerFunc {
 }
 
 func delete() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {}
+	return func(w http.ResponseWriter, r *http.Request) {
+		writer := response.NewHttpWriter(w, r)
+
+		token.ResetTokenCookies(w)
+
+		writer.WriteCompress(
+			map[string]interface{}{
+				"is_success": true,
+			},
+		)
+	}
 }
 
 func postGoogleCheck() http.HandlerFunc {
