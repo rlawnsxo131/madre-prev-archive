@@ -14,7 +14,7 @@ func Test_AuthService_GetExistSocialAccountMap_ExistIsFalse(t *testing.T) {
 
 	err := sql.ErrNoRows
 	socialAccount := auth.SocialAccount{
-		ID: utils.GenerateUUIDString(),
+		ID: "",
 	}
 
 	authService := auth.NewAuthService()
