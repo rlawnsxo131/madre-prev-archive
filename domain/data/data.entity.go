@@ -2,17 +2,6 @@ package data
 
 import "time"
 
-type Data struct {
-	ID          int64     `json:"id" db:"id"`
-	UserID      int64     `json:"user_id" db:"user_id"`
-	FileUrl     string    `json:"file_url" db:"file_url"`
-	Title       string    `json:"title" db:"title"`
-	Description string    `json:"description" db:"description"`
-	IsPublic    bool      `json:"is_public" db:"is_public"`
-	CreatedAt   time.Time `json:"created_at" db:"created_at"`
-	UpdatedAt   time.Time `json:"updated_at" db:"updated_at"`
-}
-
 const (
 	Key_ID          = "Key_ID"
 	Key_UserID      = "Key_UserID"
@@ -23,6 +12,17 @@ const (
 	Key_CreatedAt   = "Key_CreatedAt"
 	Key_UpdatedAt   = "Key_UpdatedAt"
 )
+
+type Data struct {
+	ID          int64     `json:"id" db:"id"`
+	UserID      int64     `json:"user_id" db:"user_id"`
+	FileUrl     string    `json:"file_url" db:"file_url"`
+	Title       string    `json:"title" db:"title"`
+	Description string    `json:"description" db:"description"`
+	IsPublic    bool      `json:"is_public" db:"is_public"`
+	CreatedAt   time.Time `json:"created_at" db:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at" db:"updated_at"`
+}
 
 func (d *Data) Filter(keys []string) map[string]interface{} {
 	result := make(map[string]interface{})

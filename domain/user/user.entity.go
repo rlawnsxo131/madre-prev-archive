@@ -5,16 +5,6 @@ import (
 	"time"
 )
 
-type User struct {
-	ID          string         `json:"id" db:"id"`
-	Email       string         `json:"email" db:"email"`
-	OriginName  sql.NullString `json:"origin_name" db:"origin_name"`
-	DisplayName string         `json:"display_name" db:"display_name"`
-	PhotoUrl    sql.NullString `json:"photo_url" db:"photo_url"`
-	CreatedAt   time.Time      `json:"created_at" db:"created_at"`
-	UpdatedAt   time.Time      `json:"updated_at" db:"updated_at"`
-}
-
 const (
 	Key_ID          = "ID"
 	Key_Email       = "Email"
@@ -24,6 +14,16 @@ const (
 	Key_CreatedAt   = "CreatedAt"
 	Key_UpdatedAt   = "UpdatedAt"
 )
+
+type User struct {
+	ID          string         `json:"id" db:"id"`
+	Email       string         `json:"email" db:"email"`
+	OriginName  sql.NullString `json:"origin_name" db:"origin_name"`
+	DisplayName string         `json:"display_name" db:"display_name"`
+	PhotoUrl    sql.NullString `json:"photo_url" db:"photo_url"`
+	CreatedAt   time.Time      `json:"created_at" db:"created_at"`
+	UpdatedAt   time.Time      `json:"updated_at" db:"updated_at"`
+}
 
 func (u *User) Filter(keys []string) map[string]interface{} {
 	result := make(map[string]interface{})
