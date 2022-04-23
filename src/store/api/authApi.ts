@@ -24,7 +24,7 @@ const authApi = createApi({
   tagTypes: ['Auth'],
   endpoints: (build) => ({
     get: build.query<GetAuthResponse, undefined>({
-      query: () => '/',
+      query: () => '',
       async onQueryStarted(_, { dispatch, queryFulfilled, getCacheEntry }) {
         try {
           await queryFulfilled;
