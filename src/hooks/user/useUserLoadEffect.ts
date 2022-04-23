@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useTransition } from 'react';
 import { useDispatch } from 'react-redux';
-import { MADRE_USER } from '../../constants';
+import { MADRE_USER_TOKEN_PROFILE } from '../../constants';
 import { Storage } from '../../lib/storage';
 import { AppDispatch } from '../../store';
 import authApi from '../../store/api/authApi';
@@ -18,7 +18,7 @@ export default function useUserLoadEffect() {
 
   useEffect(() => {
     startTransition(() => {
-      const userData = Storage.getItem(MADRE_USER);
+      const userData = Storage.getItem(MADRE_USER_TOKEN_PROFILE);
       if (!userData) return;
       dispatch(
         user.actions.setUser({

@@ -1,5 +1,5 @@
 // object keys
-export const MADRE_USER = 'MADRE_USER';
+export const MADRE_USER_TOKEN_PROFILE = 'MADRE_USER_TOKEN_PROFILE';
 export const MADRE_COLOR_THEME = 'MADRE_COLOR_THEME';
 
 // variables
