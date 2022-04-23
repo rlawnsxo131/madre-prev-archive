@@ -25,7 +25,7 @@ func NewDataReadRepository(db *sqlx.DB) DataReadRepository {
 func (r *dataReadRepository) FindAll(limit int) ([]Data, error) {
 	var dataList []Data
 
-	query := "SELECT * FROM data Limit ?"
+	query := "SELECT * FROM data Limit $1"
 	rows, err := r.ql.Queryx(query, limit)
 	if err != nil {
 		customError := errors.Wrap(err, "DataRepository: FindAll query error")
@@ -47,7 +47,7 @@ func (r *dataReadRepository) FindAll(limit int) ([]Data, error) {
 func (r *dataReadRepository) FindOneById(id string) (Data, error) {
 	var data Data
 
-	query := "SELECT * FROM data WHERE id = ?"
+	query := "SELECT * FROM data WHERE id = $1"
 	err := r.ql.QueryRowx(query, id).StructScan(&data)
 	if err != nil {
 		customError := errors.Wrap(err, "DataRepository: FindOneById error")
