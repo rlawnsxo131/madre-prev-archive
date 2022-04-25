@@ -2,9 +2,9 @@ import { css } from '@emotion/react';
 import { NavLink } from 'react-router-dom';
 import { standardColor } from '../../../styles';
 
-interface HomeHeaderNavigationProps {}
+interface HeaderNavigationProps {}
 
-function HomeHeaderNavigation(props: HomeHeaderNavigationProps) {
+function HeaderNavigation(props: HeaderNavigationProps) {
   return (
     <nav css={block}>
       <ul css={ul}>
@@ -54,4 +54,4 @@ const link = css`
   }
 `;
 
-export default HomeHeaderNavigation;
+export default HeaderNavigation;

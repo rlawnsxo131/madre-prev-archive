@@ -10,7 +10,6 @@ export interface SocialAccount {
 
 export interface UserTokenProfile {
   display_name: string;
-  email: string;
   photo_url?: string;
   access_token: string;
 }

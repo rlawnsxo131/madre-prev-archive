@@ -2,17 +2,15 @@ import { css } from '@emotion/react';
 import { NavLink } from 'react-router-dom';
 import { standardColor, transitions, zIndexes } from '../../../styles';
 import useTransitionTimeoutEffect from '../../../hooks/useTransitionTimeoutEffect';
-import useHomeHeaderState from '../../../hooks/home/useHomeHeaderState';
+import useHeaderState from '../../../hooks/layout/useLayoutHeaderState';
 import { themePalette } from '../../../styles';
 
-interface HomeHeaderMobileNavigationLinksProps {}
+interface HeaderMobileNavigationLinksProps {}
 
-function HomeHeaderMobileNavigationLinks(
-  props: HomeHeaderMobileNavigationLinksProps,
-) {
+function HeaderMobileNavigationLinks(props: HeaderMobileNavigationLinksProps) {
   const {
     navigation: { visible },
-  } = useHomeHeaderState();
+  } = useHeaderState();
   const closed = useTransitionTimeoutEffect({ visible });
 
   if (!visible && closed) return null;
@@ -89,4 +87,4 @@ const link = css`
   }
 `;
 
-export default HomeHeaderMobileNavigationLinks;
+export default HeaderMobileNavigationLinks;

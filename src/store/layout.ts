@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-interface HomeState {
+interface LayoutState {
   header: {
     navigation: {
       visible: boolean;
@@ -8,7 +8,7 @@ interface HomeState {
   };
 }
 
-const initialState: HomeState = {
+const initialState: LayoutState = {
   header: {
     navigation: {
       visible: false,
@@ -16,8 +16,8 @@ const initialState: HomeState = {
   },
 };
 
-const home = createSlice({
-  name: 'home',
+const layout = createSlice({
+  name: 'layout',
   initialState,
   reducers: {
     handleMobileNavigation(state) {
@@ -30,4 +30,4 @@ const home = createSlice({
   },
 });
 
-export default home;
+export default layout;

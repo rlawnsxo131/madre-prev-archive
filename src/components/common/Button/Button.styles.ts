@@ -34,7 +34,7 @@ export const buttonColorMap = {
   },
 };
 
-export const outlineButtonStyle = {
+export const buttonOutlineStyle = {
   background: themePalette.bg_button1,
   opacity: themePalette.opacity_button1,
 };

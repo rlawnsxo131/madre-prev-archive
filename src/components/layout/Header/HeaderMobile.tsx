@@ -2,19 +2,19 @@ import { css } from '@emotion/react';
 import { media } from '../../../styles';
 import ButtonThemeChange from '../../common/ButtonThemeChange';
 import UserPersonalMenu from '../../user/UserPersonalMenu';
-import HomeHeaderLogo from './HomeHeaderLogo';
-import HomeHeaderMobileNavigation from './HomeHeaderMobileNavigation';
+import HeaderLogo from './HeaderLogo';
+import HeaderMobileNavigation from './HeaderMobileNavigation';
 
-interface HomeHeaderMobileProps {}
+interface HeaderMobileProps {}
 
-function HomeHeaderMobile(props: HomeHeaderMobileProps) {
+function HeaderMobile(props: HeaderMobileProps) {
   return (
     <div css={block}>
-      <HomeHeaderLogo />
+      <HeaderLogo />
       <div css={right}>
         <UserPersonalMenu />
         <ButtonThemeChange />
-        <HomeHeaderMobileNavigation />
+        <HeaderMobileNavigation />
       </div>
     </div>
   );
@@ -42,4 +42,4 @@ const right = css`
   gap: 1rem;
 `;
 
-export default HomeHeaderMobile;
+export default HeaderMobile;

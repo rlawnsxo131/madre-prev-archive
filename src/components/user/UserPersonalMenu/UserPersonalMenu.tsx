@@ -35,7 +35,7 @@ const block = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
   cursor: pointer;
 
   svg {

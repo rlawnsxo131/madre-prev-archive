@@ -1,9 +1,9 @@
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 
-interface HomeHeaderLogoProps {}
+interface HeaderLogoProps {}
 
-function HomeHeaderLogo(props: HomeHeaderLogoProps) {
+function HeaderLogo(props: HeaderLogoProps) {
   return (
     <div css={block}>
       <Link css={link} to="/">
@@ -31,4 +31,4 @@ const link = css`
   }
 `;
 
-export default HomeHeaderLogo;
+export default HeaderLogo;

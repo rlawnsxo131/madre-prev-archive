@@ -1,15 +1,15 @@
 import { css } from '@emotion/react';
 import { zIndexes } from '../../../styles';
-import HomeHeaderWeb from './HomeHeaderWeb';
-import HomeHeaderMobile from './HomeHeaderMobile';
+import HeaderWeb from './HeaderWeb';
+import HeaderMobile from './HeaderMobile';
 
-interface HomeHeaderProps {}
+interface HeaderProps {}
 
-function HomeHeader(props: HomeHeaderProps) {
+function Header(props: HeaderProps) {
   return (
     <header css={block}>
-      <HomeHeaderWeb />
-      <HomeHeaderMobile />
+      <HeaderWeb />
+      <HeaderMobile />
     </header>
   );
 }
@@ -24,7 +24,7 @@ const block = css`
   justify-content: center;
   align-items: center;
   padding: 0.25rem 0;
-  z-index: ${zIndexes.homeHeader};
+  z-index: ${zIndexes.layoutHeader};
 `;
 
-export default HomeHeader;
+export default Header;

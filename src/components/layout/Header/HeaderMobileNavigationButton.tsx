@@ -1,15 +1,15 @@
 import { css } from '@emotion/react';
-import useHomeHeaderActions from '../../../hooks/home/useHomeHeaderActions';
+import useHeaderActions from '../../../hooks/layout/useLayoutHeaderActions';
 import { MenuIcon } from '../../../image/icons';
 import { palette } from '../../../styles';
 import { themePalette } from '../../../styles';
 
-interface HomeHeaderMobileNavigationButtonProps {}
+interface HeaderMobileNavigationButtonProps {}
 
-function HomeHeaderMobileNavigationButton(
-  props: HomeHeaderMobileNavigationButtonProps,
+function HeaderMobileNavigationButton(
+  props: HeaderMobileNavigationButtonProps,
 ) {
-  const { handleMobileNavigation } = useHomeHeaderActions();
+  const { handleMobileNavigation } = useHeaderActions();
 
   return (
     <button css={block} onClick={handleMobileNavigation}>
@@ -42,4 +42,4 @@ const block = css`
   }
 `;
 
-export default HomeHeaderMobileNavigationButton;
+export default HeaderMobileNavigationButton;

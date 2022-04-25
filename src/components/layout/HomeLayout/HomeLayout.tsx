@@ -1,21 +1,19 @@
 import { css } from '@emotion/react';
 import { Outlet } from 'react-router-dom';
-import homeStyles from '../home.styles';
-import HomeFooter from '../HomeFooter';
-import HomeHeader from '../HomeHeader';
+import Header from '../../layout/Header';
+import layoutStyles from '../layout.styles';
 
 interface HomeTemplateProps {}
 
 function HomeTemplate(props: HomeTemplateProps) {
   return (
     <div css={block}>
-      <HomeHeader />
+      <Header />
       <main css={main}>
         <div css={content}>
           <Outlet />
         </div>
       </main>
-      <HomeFooter />
     </div>
   );
 }
@@ -30,7 +28,7 @@ const main = css`
   display: flex;
   justify-content: center;
   position: relative;
-  ${homeStyles.responsive}
+  ${layoutStyles.responsive}
 `;
 
 const content = css`

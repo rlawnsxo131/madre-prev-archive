@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import authApi from './api/authApi';
 import common from './common';
-import home from './home';
+import layout from './layout';
 import popupAuth from './popupAuth';
 import screenSignUp from './screenSignUp';
 import theme from './theme';
@@ -9,7 +9,7 @@ import user from './user';
 
 const rootReducer = combineReducers({
   common: common.reducer,
-  home: home.reducer,
+  layout: layout.reducer,
   theme: theme.reducer,
   user: user.reducer,
   popupAuth: popupAuth.reducer,

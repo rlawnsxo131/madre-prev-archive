@@ -1,18 +1,18 @@
 import { css } from '@emotion/react';
 import { media, mediaQuery } from '../../../styles';
-import HomeHeaderLogo from './HomeHeaderLogo';
-import HomeHeaderNavigation from './HomeHeaderNavigation';
+import HeaderLogo from './HeaderLogo';
+import HeaderNavigation from './HeaderNavigation';
 import UserPersonalMenu from '../../user/UserPersonalMenu';
 import ButtonThemeChange from '../../common/ButtonThemeChange';
 
-interface HomeHeaderWebProps {}
+interface HeaderWebProps {}
 
-function HomeHeaderWeb(props: HomeHeaderWebProps) {
+function HeaderWeb(props: HeaderWebProps) {
   return (
     <div css={block}>
-      <HomeHeaderLogo />
+      <HeaderLogo />
       <div css={itemBlock}>
-        <HomeHeaderNavigation />
+        <HeaderNavigation />
         <UserPersonalMenu />
         <div css={themeChangeButtonBlock}>
           <ButtonThemeChange />
@@ -51,4 +51,4 @@ const themeChangeButtonBlock = css`
   padding-left: 0.5rem;
 `;
 
-export default HomeHeaderWeb;
+export default HeaderWeb;

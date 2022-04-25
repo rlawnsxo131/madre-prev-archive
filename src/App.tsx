@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import Core from './components/common/Core';
 import ErrorBoundary from './components/error/ErrorBoundary';
-import HomeTemplate from './components/home/HomeTemplate';
+import HomeLayout from './components/layout/HomeLayout';
 import { HomePage, NotFoundPage, TestPage2 } from './pages';
 
 interface AppProps {}
@@ -10,7 +10,7 @@ function App(props: AppProps) {
   return (
     <ErrorBoundary>
       <Routes>
-        <Route path="/" element={<HomeTemplate />}>
+        <Route path="/" element={<HomeLayout />}>
           <Route index element={<HomePage />} />
           <Route path="guide" element={<div>guide</div>} />
           <Route path="notice" element={<div>notice</div>} />

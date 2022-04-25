@@ -7,7 +7,7 @@ import {
   ButtonSize,
   buttonSizeMap,
   buttonColorMap,
-  outlineButtonStyle,
+  buttonOutlineStyle,
 } from './Button.styles';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -70,11 +70,11 @@ const block = (
   ${outline &&
   css`
     color: ${buttonColorMap[color].background};
-    background: ${outlineButtonStyle.background};
+    background: ${buttonOutlineStyle.background};
     &:hover {
       color: ${buttonColorMap[color].hoverBackground};
       border: 1px solid ${buttonColorMap[color].hoverBackground};
-      opacity: ${outlineButtonStyle.opacity};
+      opacity: ${buttonOutlineStyle.opacity};
     }
   `}
   ${!outline &&
@@ -93,9 +93,9 @@ const block = (
     color: ${palette.gray['500']};
     ${outline &&
     css`
-      background: ${outlineButtonStyle.background};
+      background: ${buttonOutlineStyle.background};
       &:hover {
-        background: ${outlineButtonStyle.background};
+        background: ${buttonOutlineStyle.background};
       }
     `}
     ${!outline &&

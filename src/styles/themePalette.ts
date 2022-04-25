@@ -27,8 +27,8 @@ type VariableKey = keyof ThemeVariables;
 type ThemedPalette = Record<VariableKey, string>;
 
 /**
- * bg_element1: PopupBase, PopupAuth, HomeHeaderMobileNavigationLinks
- * shadow1: HomeHeaderMobileNavigationLinks
+ * bg_element1: PopupBase, PopupAuth, HeaderMobileNavigationLinks
+ * shadow1: HeaderMobileNavigationLinks
  */
 const themeVariableSets: Record<Theme, ThemeVariables> = {
   light: {
