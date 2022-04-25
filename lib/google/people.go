@@ -136,9 +136,9 @@ func GetPeopleProfile(accessToken string) (*PeopleProfile, error) {
 		return nil, err
 	}
 
-	profile := convertToPeopleProfile(rawProfile)
+	peopleProfile := convertToPeopleProfile(rawProfile)
 
-	return profile, nil
+	return peopleProfile, nil
 }
 
 func createRequest(accessToken string) (*http.Request, error) {

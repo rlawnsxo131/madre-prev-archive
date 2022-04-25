@@ -60,7 +60,7 @@ func (hl *httpLogger) LogEntry(r *http.Request, start time.Time, body string) {
 		Str("UserAgent", r.UserAgent()).
 		Str("Referer", r.Referer()).
 		Str("ClientIp", clientIP(r.Header)).
-		Msg("")
+		Send()
 }
 
 var (

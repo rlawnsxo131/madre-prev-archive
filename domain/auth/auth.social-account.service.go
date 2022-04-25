@@ -23,12 +23,6 @@ func (s *socialAccountService) Create(socialAccount SocialAccount) (string, erro
 	return id, err
 }
 
-func (s *socialAccountService) FindOneById(id int64) (SocialAccount, error) {
-	socialAccountReadRepo := NewSocialAccountReadRepository(s.db)
-	socialAccount, err := socialAccountReadRepo.FindOneById(id)
-	return socialAccount, err
-}
-
 func (s *socialAccountService) FindOneByProviderWithSocialId(socialId string, provider string) (SocialAccount, error) {
 	socialAccountReadRepo := NewSocialAccountReadRepository(s.db)
 	socialAccount, err := socialAccountReadRepo.FindOneByProviderWithSocialId(provider, socialId)

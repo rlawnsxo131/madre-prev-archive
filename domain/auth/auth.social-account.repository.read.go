@@ -8,7 +8,6 @@ import (
 )
 
 type SocialAccountReadRepository interface {
-	FindOneById(id int64) (SocialAccount, error)
 	FindOneByProviderWithSocialId(provider string, socialId string) (SocialAccount, error)
 }
 
@@ -20,19 +19,6 @@ func NewSocialAccountReadRepository(db *sqlx.DB) SocialAccountReadRepository {
 	return &socialAccountReadRepository{
 		ql: logger.NewQueryLogger(db),
 	}
-}
-
-func (r *socialAccountReadRepository) FindOneById(id int64) (SocialAccount, error) {
-	var socialAccount SocialAccount
-
-	query := "SELECT * FROM social_account WHERE id = $1"
-	err := r.ql.QueryRowx(query, id).StructScan(&socialAccount)
-	if err != nil {
-		customError := errors.Wrap(err, "SocialAccountReadRepository: FindOneById")
-		err = utils.ErrNoRowsReturnRawError(err, customError)
-	}
-
-	return socialAccount, err
 }
 
 func (r *socialAccountReadRepository) FindOneByProviderWithSocialId(provider string, socialId string) (SocialAccount, error) {

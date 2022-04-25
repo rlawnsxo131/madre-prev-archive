@@ -1,4 +1,4 @@
-# MySQL
+# PostgreSQL
 
 ```shell
 # If the current path is under the docker folder

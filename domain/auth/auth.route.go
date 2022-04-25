@@ -29,11 +29,11 @@ func ApplyRoutes(v1 *mux.Router) {
 func get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		writer := response.NewHttpWriter(w, r)
-		profile := syncmap.LoadUserTokenProfileFromHttpContext(r.Context())
+		userTokenProfile := syncmap.LoadUserTokenProfileFromHttpContext(r.Context())
 
 		writer.WriteCompress(
 			map[string]interface{}{
-				"user_token_profile": profile,
+				"user_token_profile": userTokenProfile,
 			},
 		)
 	}
@@ -46,7 +46,7 @@ func delete() http.HandlerFunc {
 		token.ResetTokenCookies(w)
 
 		writer.WriteCompress(
-			map[string]interface{}{
+			map[string]bool{
 				"is_success": true,
 			},
 		)
@@ -189,7 +189,6 @@ func postGoogleSignIn() http.HandlerFunc {
 		accessToken, refreshToken, err := token.GenerateTokens(token.GenerateTokenParams{
 			UserID:      user.ID,
 			DisplayName: user.DisplayName,
-			Email:       user.Email,
 			PhotoUrl:    utils.NormalizeNullString(user.PhotoUrl),
 		})
 		if err != nil {
@@ -205,7 +204,6 @@ func postGoogleSignIn() http.HandlerFunc {
 		writer.WriteCompress(map[string]interface{}{
 			"user_token_profile": token.UserTokenProfile{
 				DisplayName: user.DisplayName,
-				Email:       user.Email,
 				PhotoUrl:    utils.NormalizeNullString(user.PhotoUrl),
 				AccessToken: accessToken,
 			},
@@ -319,7 +317,6 @@ func postGoogleSignUp() http.HandlerFunc {
 		accessToken, refreshToken, err := token.GenerateTokens(token.GenerateTokenParams{
 			UserID:      user.ID,
 			DisplayName: user.DisplayName,
-			Email:       user.Email,
 			PhotoUrl:    utils.NormalizeNullString(user.PhotoUrl),
 		})
 		if err != nil {
@@ -335,7 +332,6 @@ func postGoogleSignUp() http.HandlerFunc {
 		writer.WriteCompress(map[string]interface{}{
 			"user_token_profile": token.UserTokenProfile{
 				DisplayName: user.DisplayName,
-				Email:       user.Email,
 				PhotoUrl:    utils.NormalizeNullString(user.PhotoUrl),
 				AccessToken: accessToken,
 			},

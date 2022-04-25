@@ -184,14 +184,13 @@ func JWT(next http.Handler) http.Handler {
 							accessToken, refreshToken, err := token.GenerateTokens(token.GenerateTokenParams{
 								UserID:      claims.UserID,
 								DisplayName: claims.DisplayName,
-								Email:       claims.Email,
 								PhotoUrl:    claims.PhotoUrl,
 							})
 							if err != nil {
 								logger.Logger.
 									Err(err).
 									Str("Action", "JWT").
-									Msg("")
+									Send()
 							} else {
 								token.SetTokenCookies(w, accessToken, refreshToken)
 
@@ -199,9 +198,8 @@ func JWT(next http.Handler) http.Handler {
 								ctx, err := syncmap.SetNewValueFromHttpContext(
 									r.Context(),
 									constants.Key_UserTokenProfile,
-									&token.UserTokenProfile{
+									token.UserTokenProfile{
 										DisplayName: claims.DisplayName,
-										Email:       claims.Email,
 										PhotoUrl:    claims.PhotoUrl,
 										AccessToken: accessToken,
 									},
@@ -224,9 +222,8 @@ func JWT(next http.Handler) http.Handler {
 				ctx, err := syncmap.SetNewValueFromHttpContext(
 					r.Context(),
 					constants.Key_UserTokenProfile,
-					&token.UserTokenProfile{
+					token.UserTokenProfile{
 						DisplayName: claims.DisplayName,
-						Email:       claims.Email,
 						PhotoUrl:    claims.PhotoUrl,
 						AccessToken: accessToken.Value,
 					},
@@ -283,14 +280,13 @@ func JWT(next http.Handler) http.Handler {
 					accessToken, refreshToken, err := token.GenerateTokens(token.GenerateTokenParams{
 						UserID:      claims.UserID,
 						DisplayName: claims.DisplayName,
-						Email:       claims.Email,
 						PhotoUrl:    claims.PhotoUrl,
 					})
 					if err != nil {
 						logger.Logger.
 							Err(err).
 							Str("Action", "JWT").
-							Msg("")
+							Send()
 					} else {
 						token.SetTokenCookies(w, accessToken, refreshToken)
 
@@ -300,7 +296,6 @@ func JWT(next http.Handler) http.Handler {
 							constants.Key_UserTokenProfile,
 							&token.UserTokenProfile{
 								DisplayName: claims.DisplayName,
-								Email:       claims.Email,
 								PhotoUrl:    claims.PhotoUrl,
 								AccessToken: accessToken,
 							},
