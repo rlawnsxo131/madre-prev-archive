@@ -1,11 +1,11 @@
 import { css } from '@emotion/react';
 import { Outlet } from 'react-router-dom';
-import Header from '../../layout/Header';
+import Header from '../Header';
 import layoutStyles from '../layout.styles';
 
-interface HomeTemplateProps {}
+interface LayoutProps {}
 
-function HomeTemplate(props: HomeTemplateProps) {
+function Layout(props: LayoutProps) {
   return (
     <div css={block}>
       <Header />
@@ -37,4 +37,4 @@ const content = css`
   width: 100%;
 `;
 
-export default HomeTemplate;
+export default Layout;
