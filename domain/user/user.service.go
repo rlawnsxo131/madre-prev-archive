@@ -19,13 +19,13 @@ func NewUserService(db *sqlx.DB) UserService {
 	}
 }
 
-func (s *userService) Create(u User) (string, error) {
+func (s *userService) Create(u *User) (string, error) {
 	userWriteRepo := NewUserWriteRepository(s.db)
 	id, err := userWriteRepo.Create(u)
 	return id, err
 }
 
-func (s *userService) FindOneById(id string) (User, error) {
+func (s *userService) FindOneById(id string) (*User, error) {
 	userReadRepo := NewUserReadRepository(s.db)
 	user, err := userReadRepo.FindOneById(id)
 	return user, err

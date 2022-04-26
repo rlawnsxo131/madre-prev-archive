@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"strings"
-
 	"time"
 
 	"github.com/jmoiron/sqlx"
@@ -23,7 +22,9 @@ const (
 	dbname   = "madre"
 )
 
-var sqlxDB *sqlx.DB
+var (
+	sqlxDB *sqlx.DB
+)
 
 func GetDB() (*sqlx.DB, error) {
 	if sqlxDB == nil {

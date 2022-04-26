@@ -13,7 +13,7 @@ func Test_AuthService_GetExistSocialAccountMap_ExistIsFalse(t *testing.T) {
 	assert := assert.New(t)
 
 	err := sql.ErrNoRows
-	socialAccount := auth.SocialAccount{
+	socialAccount := &auth.SocialAccount{
 		ID: "",
 	}
 
@@ -27,7 +27,7 @@ func Test_AuthService_GetExistSocialAccountMap_ExistIsFalse(t *testing.T) {
 func Test_AuthService_GetExistSocialAccountMap_ExistIsTrue(t *testing.T) {
 	assert := assert.New(t)
 
-	socialAccount := auth.SocialAccount{
+	socialAccount := &auth.SocialAccount{
 		ID: utils.GenerateUUIDString(),
 	}
 

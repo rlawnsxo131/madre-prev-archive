@@ -186,7 +186,7 @@ func postGoogleSignIn() http.HandlerFunc {
 			return
 		}
 
-		accessToken, refreshToken, err := token.GenerateTokens(token.GenerateTokenParams{
+		accessToken, refreshToken, err := token.GenerateTokens(&token.GenerateTokenParams{
 			UserID:      user.ID,
 			DisplayName: user.DisplayName,
 			PhotoUrl:    utils.NormalizeNullString(user.PhotoUrl),
@@ -277,7 +277,7 @@ func postGoogleSignUp() http.HandlerFunc {
 		}
 
 		userService := user.NewUserService(db)
-		userId, err := userService.Create(user.User{
+		userId, err := userService.Create(&user.User{
 			Email:       profile.Email,
 			OriginName:  utils.NewNullString(profile.DisplayName),
 			DisplayName: params.DisplayName,
@@ -301,7 +301,7 @@ func postGoogleSignUp() http.HandlerFunc {
 		}
 
 		socialAccountService := NewSocialAccountService(db)
-		_, err = socialAccountService.Create(SocialAccount{
+		_, err = socialAccountService.Create(&SocialAccount{
 			UserID:   user.ID,
 			Provider: "GOOGLE",
 			SocialId: profile.SocialId,
@@ -314,7 +314,7 @@ func postGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		accessToken, refreshToken, err := token.GenerateTokens(token.GenerateTokenParams{
+		accessToken, refreshToken, err := token.GenerateTokens(&token.GenerateTokenParams{
 			UserID:      user.ID,
 			DisplayName: user.DisplayName,
 			PhotoUrl:    utils.NormalizeNullString(user.PhotoUrl),

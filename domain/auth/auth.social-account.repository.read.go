@@ -8,7 +8,7 @@ import (
 )
 
 type SocialAccountReadRepository interface {
-	FindOneByProviderWithSocialId(provider string, socialId string) (SocialAccount, error)
+	FindOneByProviderWithSocialId(provider string, socialId string) (*SocialAccount, error)
 }
 
 type socialAccountReadRepository struct {
@@ -21,7 +21,7 @@ func NewSocialAccountReadRepository(db *sqlx.DB) SocialAccountReadRepository {
 	}
 }
 
-func (r *socialAccountReadRepository) FindOneByProviderWithSocialId(provider string, socialId string) (SocialAccount, error) {
+func (r *socialAccountReadRepository) FindOneByProviderWithSocialId(provider string, socialId string) (*SocialAccount, error) {
 	var socialAccount SocialAccount
 
 	query := "SELECT * FROM social_account WHERE provider = $1 AND social_id = $2"
@@ -31,5 +31,5 @@ func (r *socialAccountReadRepository) FindOneByProviderWithSocialId(provider str
 		err = utils.ErrNoRowsReturnRawError(err, customError)
 	}
 
-	return socialAccount, err
+	return &socialAccount, err
 }

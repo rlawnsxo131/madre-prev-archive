@@ -9,7 +9,7 @@ import (
 
 type DataReadRepository interface {
 	FindAll(limit int) ([]Data, error)
-	FindOneById(id string) (Data, error)
+	FindOneById(id string) (*Data, error)
 }
 
 type dataReadRepository struct {
@@ -44,7 +44,7 @@ func (r *dataReadRepository) FindAll(limit int) ([]Data, error) {
 	return dataList, nil
 }
 
-func (r *dataReadRepository) FindOneById(id string) (Data, error) {
+func (r *dataReadRepository) FindOneById(id string) (*Data, error) {
 	var data Data
 
 	query := "SELECT * FROM data WHERE id = $1"
@@ -54,5 +54,5 @@ func (r *dataReadRepository) FindOneById(id string) (Data, error) {
 		err = utils.ErrNoRowsReturnRawError(err, customError)
 	}
 
-	return data, err
+	return &data, err
 }

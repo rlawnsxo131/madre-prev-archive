@@ -17,13 +17,13 @@ func NewSocialAccountService(db *sqlx.DB) SocialAccountService {
 	}
 }
 
-func (s *socialAccountService) Create(socialAccount SocialAccount) (string, error) {
+func (s *socialAccountService) Create(socialAccount *SocialAccount) (string, error) {
 	socialAccountWriteRepo := NewSocialAccountWriteRepository(s.db)
 	id, err := socialAccountWriteRepo.Create(socialAccount)
 	return id, err
 }
 
-func (s *socialAccountService) FindOneByProviderWithSocialId(socialId string, provider string) (SocialAccount, error) {
+func (s *socialAccountService) FindOneByProviderWithSocialId(socialId string, provider string) (*SocialAccount, error) {
 	socialAccountReadRepo := NewSocialAccountReadRepository(s.db)
 	socialAccount, err := socialAccountReadRepo.FindOneByProviderWithSocialId(provider, socialId)
 	return socialAccount, err

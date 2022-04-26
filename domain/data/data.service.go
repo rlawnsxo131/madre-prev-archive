@@ -25,7 +25,7 @@ func (s *dataService) FindAll(limit int) ([]Data, error) {
 	return dataList, err
 }
 
-func (s *dataService) FindOneById(id string) (Data, error) {
+func (s *dataService) FindOneById(id string) (*Data, error) {
 	dataReadRepo := NewDataReadRepository(s.db)
 	data, err := dataReadRepo.FindOneById(id)
 	return data, err

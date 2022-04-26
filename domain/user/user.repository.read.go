@@ -8,7 +8,7 @@ import (
 )
 
 type UserReadRepository interface {
-	FindOneById(id string) (User, error)
+	FindOneById(id string) (*User, error)
 }
 
 type userReadRepository struct {
@@ -21,7 +21,7 @@ func NewUserReadRepository(db *sqlx.DB) UserReadRepository {
 	}
 }
 
-func (r *userReadRepository) FindOneById(id string) (User, error) {
+func (r *userReadRepository) FindOneById(id string) (*User, error) {
 	var user User
 
 	query := "SELECT * FROM public.user WHERE id = $1"
@@ -31,5 +31,5 @@ func (r *userReadRepository) FindOneById(id string) (User, error) {
 		err = utils.ErrNoRowsReturnRawError(err, customError)
 	}
 
-	return user, err
+	return &user, err
 }

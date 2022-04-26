@@ -181,7 +181,7 @@ func JWT(next http.Handler) http.Handler {
 							r.Context().Value(ctx)
 						} else {
 							// generate tokens and set cookie
-							accessToken, refreshToken, err := token.GenerateTokens(token.GenerateTokenParams{
+							accessToken, refreshToken, err := token.GenerateTokens(&token.GenerateTokenParams{
 								UserID:      claims.UserID,
 								DisplayName: claims.DisplayName,
 								PhotoUrl:    claims.PhotoUrl,
@@ -277,7 +277,7 @@ func JWT(next http.Handler) http.Handler {
 					r.Context().Value(ctx)
 				} else {
 					// generate tokens and set cookie
-					accessToken, refreshToken, err := token.GenerateTokens(token.GenerateTokenParams{
+					accessToken, refreshToken, err := token.GenerateTokens(&token.GenerateTokenParams{
 						UserID:      claims.UserID,
 						DisplayName: claims.DisplayName,
 						PhotoUrl:    claims.PhotoUrl,
