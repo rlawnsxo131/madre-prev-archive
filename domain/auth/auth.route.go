@@ -186,11 +186,11 @@ func postGoogleSignIn() http.HandlerFunc {
 			return
 		}
 
-		accessToken, refreshToken, err := token.GenerateTokens(token.GenerateTokenParams{
-			UserID:      user.ID,
-			DisplayName: user.DisplayName,
-			PhotoUrl:    utils.NormalizeNullString(user.PhotoUrl),
-		})
+		accessToken, refreshToken, err := token.GenerateTokens(
+			user.ID,
+			user.DisplayName,
+			utils.NormalizeNullString(user.PhotoUrl),
+		)
 		if err != nil {
 			writer.WriteError(
 				err,
@@ -314,11 +314,11 @@ func postGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		accessToken, refreshToken, err := token.GenerateTokens(token.GenerateTokenParams{
-			UserID:      user.ID,
-			DisplayName: user.DisplayName,
-			PhotoUrl:    utils.NormalizeNullString(user.PhotoUrl),
-		})
+		accessToken, refreshToken, err := token.GenerateTokens(
+			user.ID,
+			user.DisplayName,
+			utils.NormalizeNullString(user.PhotoUrl),
+		)
 		if err != nil {
 			writer.WriteError(
 				err,

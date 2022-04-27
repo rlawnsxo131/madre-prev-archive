@@ -4,13 +4,13 @@ import (
 	"database/sql"
 
 	"github.com/go-playground/validator/v10"
-	uuid "github.com/satori/go.uuid"
+	"github.com/google/uuid"
 )
 
 var Validator *validator.Validate = validator.New()
 
 func GenerateUUIDString() string {
-	return uuid.NewV4().String()
+	return uuid.NewString()
 }
 
 func NewNullString(s string) sql.NullString {

@@ -8,7 +8,7 @@ import (
 )
 
 type DataReadRepository interface {
-	FindAll(limit int) ([]Data, error)
+	FindAll(limit int) ([]*Data, error)
 	FindOneById(id string) (*Data, error)
 }
 
@@ -22,8 +22,8 @@ func NewDataReadRepository(db *sqlx.DB) DataReadRepository {
 	}
 }
 
-func (r *dataReadRepository) FindAll(limit int) ([]Data, error) {
-	var dataList []Data
+func (r *dataReadRepository) FindAll(limit int) ([]*Data, error) {
+	var dataList []*Data
 
 	query := "SELECT * FROM data LIMIT $1"
 	rows, err := r.ql.Queryx(query, limit)
@@ -38,7 +38,7 @@ func (r *dataReadRepository) FindAll(limit int) ([]Data, error) {
 		if err != nil {
 			return nil, errors.Wrap(err, "DataRepository: FindAll StructScan error")
 		}
-		dataList = append(dataList, d)
+		dataList = append(dataList, &d)
 	}
 
 	return dataList, nil

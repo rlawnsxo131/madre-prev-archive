@@ -4,10 +4,10 @@
 
 - PostgreSQL
 - Go
-- gorilla/mux
-- jmoiron/sqlx
-- rs/zerolog
-- stretchr/testify
+  - gorilla/mux
+  - jmoiron/sqlx
+  - rs/zerolog
+  - stretchr/testify
 
 ### V1 Repository
 

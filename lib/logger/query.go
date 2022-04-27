@@ -39,6 +39,7 @@ func (q *queryLogger) QueryRowx(query string, args ...interface{}) *sqlx.Row {
 func (q *queryLogger) PrepareNamedGet(id *string, query string, args interface{}) error {
 	q.logger.Debug().Msgf("sql: %s,%+v", query, args)
 	stmt, err := q.db.PrepareNamed(query)
+	defer stmt.Close()
 	if err != nil {
 		return err
 	}

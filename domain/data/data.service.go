@@ -19,7 +19,7 @@ func NewDataService(db *sqlx.DB) *dataService {
 	}
 }
 
-func (s *dataService) FindAll(limit int) ([]Data, error) {
+func (s *dataService) FindAll(limit int) ([]*Data, error) {
 	dataReadRepo := NewDataReadRepository(s.db)
 	dataList, err := dataReadRepo.FindAll(limit)
 	return dataList, err
