@@ -7,7 +7,7 @@ import (
 )
 
 type SocialAccountWriteRepository interface {
-	Create(socialAccount *SocialAccount) (string, error)
+	Create(socialAccount SocialAccount) (string, error)
 }
 
 type socialAccountWriteRepository struct {
@@ -20,7 +20,7 @@ func NewSocialAccountWriteRepository(db *sqlx.DB) SocialAccountWriteRepository {
 	}
 }
 
-func (r *socialAccountWriteRepository) Create(socialAccount *SocialAccount) (string, error) {
+func (r *socialAccountWriteRepository) Create(socialAccount SocialAccount) (string, error) {
 	var id string
 	var query = "INSERT INTO social_account(user_id, provider, social_id) VALUES(:user_id, :provider, :social_id) RETURNING id"
 

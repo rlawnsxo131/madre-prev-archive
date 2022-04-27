@@ -39,7 +39,7 @@ type authTokenClaims struct {
 	jwt.StandardClaims
 }
 
-func GenerateTokens(params *GenerateTokenParams) (string, string, error) {
+func GenerateTokens(params GenerateTokenParams) (string, string, error) {
 	now := time.Now()
 	var accessToken string
 	var refreshToken string
