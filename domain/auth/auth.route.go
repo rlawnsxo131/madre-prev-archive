@@ -2,7 +2,6 @@ package auth
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -19,7 +18,6 @@ import (
 
 func ApplyRoutes(v1 *mux.Router) {
 	authRoute := v1.NewRoute().PathPrefix("/auth").Subrouter()
-	log.Println("test")
 
 	authRoute.HandleFunc("", get()).Methods("GET")
 	authRoute.HandleFunc("", delete()).Methods("DELETE", "OPTIONS")
