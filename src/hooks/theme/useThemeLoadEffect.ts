@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
 import theme from '../../store/theme';
 
-export default function useThemeEffect() {
+export default function useThemeLoadEffect() {
   const dispatch = useDispatch<AppDispatch>();
   const { theme: currentTheme } = useSelector(
     (state: RootState) => state.theme,
