@@ -1,7 +1,6 @@
 import { css } from '@emotion/react';
 import { media } from '../../../styles';
 import ButtonThemeChange from '../../common/ButtonThemeChange';
-import UserPersonalMenu from '../../user/UserPersonalMenu';
 import HeaderLogo from './HeaderLogo';
 import HeaderMobileNavigation from './HeaderMobileNavigation';
 
@@ -12,7 +11,7 @@ function HeaderMobile(props: HeaderMobileProps) {
     <div css={block}>
       <HeaderLogo />
       <div css={right}>
-        <UserPersonalMenu />
+        {/* <UserPersonalMenu /> */}
         <ButtonThemeChange />
         <HeaderMobileNavigation />
       </div>

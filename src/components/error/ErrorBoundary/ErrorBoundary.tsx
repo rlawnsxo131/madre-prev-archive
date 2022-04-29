@@ -16,9 +16,9 @@ class ErrorBoundary extends Component {
     return { hasError: true };
   }
 
-  componentDidCatch(error: Error, errorInfo: any) {
+  componentDidCatch(error: Error, errorMadreStory: any) {
     // 에러 리포팅 서비스에 에러를 기록할 수도 있습니다.(production Sentry)
-    // logErrorToMyService(error, errorInfo);
+    // logErrorToMyService(error, errorMadreStory);
   }
 
   handleResolveError = () => {

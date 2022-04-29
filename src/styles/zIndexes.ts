@@ -1,5 +1,6 @@
 const zIndexes = {
   layoutHeader: 8,
+  layoutFooter: 8,
   dropdownItem: 8,
   opaqueLayer: 12,
   popup: 12,

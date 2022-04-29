@@ -2,7 +2,7 @@ import { palette } from '.';
 
 const standardColor = {
   navigation: {
-    active: palette.pink['700'],
+    active: palette.blue['600'],
   },
 };
 

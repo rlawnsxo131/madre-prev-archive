@@ -29,8 +29,8 @@ export const buttonColorMap = {
     hoverBackground: palette.gray['600'],
   },
   pink: {
-    background: palette.pink['600'],
-    hoverBackground: palette.pink['500'],
+    background: palette.blue['600'],
+    hoverBackground: palette.blue['500'],
   },
 };
 

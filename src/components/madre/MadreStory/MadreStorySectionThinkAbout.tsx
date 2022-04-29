@@ -1,13 +1,13 @@
 import { RealTimeAsyncImage } from '../../../image/images';
-import HomeSectionStyles from './HomeSection.styles';
+import MadreStoryStyles from './MadreStory.styles';
 
-interface HomeSectionThinkAboutProps {}
+interface MadreStorySectionThinkAboutProps {}
 
-function HomeSectionThinkAbout(props: HomeSectionThinkAboutProps) {
+function MadreStorySectionThinkAbout(props: MadreStorySectionThinkAboutProps) {
   return (
-    <section css={HomeSectionStyles.section}>
-      <div css={HomeSectionStyles.descriptionBlock}>
-        <div css={HomeSectionStyles.description}>
+    <section css={MadreStoryStyles.section}>
+      <div css={MadreStoryStyles.descriptionBlock}>
+        <div css={MadreStoryStyles.description}>
           <h3>Think About</h3>
           <h2>우린 지금, 얼마나 많은 데이터와 함께할까요?</h2>
           <p>
@@ -17,11 +17,11 @@ function HomeSectionThinkAbout(props: HomeSectionThinkAboutProps) {
           </p>
         </div>
       </div>
-      <div css={HomeSectionStyles.imageBlock}>
+      <div css={MadreStoryStyles.imageBlock}>
         <RealTimeAsyncImage />
       </div>
     </section>
   );
 }
 
-export default HomeSectionThinkAbout;
+export default MadreStorySectionThinkAbout;

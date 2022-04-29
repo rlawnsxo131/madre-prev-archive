@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import { Outlet } from 'react-router-dom';
+import Footer from '../Footer';
 import Header from '../Header';
 import layoutStyles from '../layout.styles';
 
@@ -14,6 +15,8 @@ function Layout(props: LayoutProps) {
           <Outlet />
         </div>
       </main>
+      {/* currently, only mobile is supposed to draw footer. */}
+      <Footer />
     </div>
   );
 }
@@ -22,9 +25,12 @@ const block = css`
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100%;
+  overflow-y: scroll;
 `;
 
 const main = css`
+  flex: 1;
   display: flex;
   justify-content: center;
   position: relative;

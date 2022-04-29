@@ -25,7 +25,7 @@ function PopupAuthRightBlockIsError({
     <div css={PopupAuthStyles.rightBlock}>
       <div css={PopupAuthStyles.rightBlockHeader}>
         <div css={headerIconBlock}>
-          <WarningIcon fill={palette.pink['600']} />
+          <WarningIcon fill={palette.blue['600']} />
           <CloseIcon className="popup-auth-close-icon" onClick={reset} />
         </div>
         <h1 className="is-error">Sorry, An Error Occurred</h1>

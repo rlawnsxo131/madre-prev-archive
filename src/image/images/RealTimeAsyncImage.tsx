@@ -4,12 +4,10 @@ function RealTimeAsyncImage(props: RealTimeAsyncImageProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      id="currentIllo"
       data-name="Layer 1"
       width="728.25201"
       height="598.94268"
       viewBox="0 0 728.25201 598.94268"
-      className="injected-svg DownloadModal__ImageFile-sc-p17csy-5 iIfSkb grid_media"
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >
       <path
@@ -67,7 +65,7 @@ function RealTimeAsyncImage(props: RealTimeAsyncImageProps) {
         transform="translate(-235.874 -150.52866)"
         fill="#e4e4e4"
       />
-      <circle cx="553.30743" cy="111.85222" r="35.81102" fill="#f70b68" />
+      <circle cx="553.30743" cy="111.85222" r="35.81102" fill="#339af0" />
       <path
         d="M784.29607,281.01885a3.98234,3.98234,0,0,1-3.18647-1.59372l-9.76979-13.02661a3.98339,3.98339,0,1,1,6.37358-4.77986l6.39173,8.52166,16.41634-24.62418a3.98356,3.98356,0,0,1,6.629,4.41936l-19.53959,29.30938a3.98519,3.98519,0,0,1-3.204,1.77267C784.37,281.0182,784.333,281.01885,784.29607,281.01885Z"
         transform="translate(-235.874 -150.52866)"
@@ -83,7 +81,7 @@ function RealTimeAsyncImage(props: RealTimeAsyncImageProps) {
         transform="translate(-235.874 -150.52866)"
         fill="#fff"
       />
-      <circle cx="347.03341" cy="96.37717" r="27" fill="#f70b68" />
+      <circle cx="347.03341" cy="96.37717" r="27" fill="#339af0" />
       <path
         d="M649.81307,286.17024l-93.50226,33.60994a2.36173,2.36173,0,1,1-1.59779-4.445l93.50227-33.60994a2.36173,2.36173,0,0,1,1.59778,4.445Z"
         transform="translate(-235.874 -150.52866)"
@@ -112,7 +110,7 @@ function RealTimeAsyncImage(props: RealTimeAsyncImageProps) {
       <path
         d="M629.75754,363.55813l-11.16718,4.01411a4.01609,4.01609,0,0,1-2.717-7.55869l11.16718-4.01411a4.01609,4.01609,0,0,1,2.717,7.55869Z"
         transform="translate(-235.874 -150.52866)"
-        fill="#f70b68"
+        fill="#339af0"
       />
       <circle cx="305.88244" cy="34.38035" r="1.55299" fill="#fff" />
       <path
@@ -254,9 +252,9 @@ function RealTimeAsyncImage(props: RealTimeAsyncImageProps) {
       <path
         d="M793.76409,692.28367l-17.5633-10.43584a6.91412,6.91412,0,0,1,7.06367-11.888l17.56329,10.43584a6.91411,6.91411,0,0,1-7.06366,11.888Z"
         transform="translate(-235.874 -150.52866)"
-        fill="#f70b68"
+        fill="#339af0"
       />
-      <circle cx="590.65864" cy="336.31445" r="36" fill="#f70b68" />
+      <circle cx="590.65864" cy="336.31445" r="36" fill="#339af0" />
       <path
         d="M236.298,633.13417H723.47882V351.08608a7.98,7.98,0,0,0-7.971-7.97078H244.269a7.98,7.98,0,0,0-7.971,7.97078Z"
         transform="translate(-235.874 -150.52866)"
@@ -302,9 +300,9 @@ function RealTimeAsyncImage(props: RealTimeAsyncImageProps) {
       <path
         d="M638.68354,584.79454H612.832a8.749,8.749,0,0,1,0-17.49805h25.85156a8.749,8.749,0,0,1,0,17.49805Z"
         transform="translate(-235.874 -150.52866)"
-        fill="#f70b68"
+        fill="#339af0"
       />
-      <circle cx="121.89451" cy="325.76588" r="45" fill="#f70b68" />
+      <circle cx="121.89451" cy="325.76588" r="45" fill="#339af0" />
       <path
         d="M884.3587,749.47134h-647.294a1.19069,1.19069,0,0,1,0-2.38137h647.294a1.19069,1.19069,0,0,1,0,2.38137Z"
         transform="translate(-235.874 -150.52866)"

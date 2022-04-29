@@ -18,7 +18,8 @@ const globalStyle = css`
     background: ${themePalette.bg4};
   }
 
-  header {
+  header,
+  footer {
     background: ${themePalette.bg3};
   }
 
@@ -67,7 +68,7 @@ const globalStyle = css`
     color: ${themePalette.text1};
     ::selection {
       color: ${palette.white};
-      background: ${palette.pink['600']};
+      background: ${palette.blue['600']};
     }
   }
   a {

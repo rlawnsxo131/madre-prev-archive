@@ -24,7 +24,6 @@ const rightBlockHeader = css`
   h1 {
     margin: 0;
     &.is-error {
-      color: ${palette.pink['600']};
       ${shakeAnimation}
     }
   }

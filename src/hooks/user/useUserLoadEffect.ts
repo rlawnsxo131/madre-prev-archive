@@ -29,12 +29,15 @@ export default function useUserLoadEffect() {
 
   useEffect(() => {
     if (!data) return;
-    console.log(data.user_token_profile);
-    dispatch(
-      user.actions.setUser({
-        userTokenProfile: data.user_token_profile,
-      }),
-    );
+    if (data.user_token_profile) {
+      dispatch(
+        user.actions.setUser({
+          userTokenProfile: data.user_token_profile,
+        }),
+      );
+      return;
+    }
+    dispatch(user.actions.resetUser());
   }, [dispatch, data]);
 
   useEffect(() => {

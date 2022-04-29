@@ -12,7 +12,7 @@ function SnowBackground({ withLogo = false }: SnowBackgroundProps) {
       {withLogo && <h1>Madre</h1>}
       <Snowfall
         snowflakeCount={100}
-        color={palette.pink['500']}
+        color={palette.blue['500']}
         speed={[0.5, 1]}
       />
     </div>

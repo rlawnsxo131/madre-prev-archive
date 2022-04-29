@@ -9,13 +9,13 @@ function HeaderNavigation(props: HeaderNavigationProps) {
     <nav css={block}>
       <ul css={ul}>
         <li>
-          <NavLink css={link} to="/notice">
-            공지사항
+          <NavLink css={link} to="/madre-story">
+            Madre 이야기
           </NavLink>
         </li>
         <li>
-          <NavLink css={link} to="/preview">
-            미리보기
+          <NavLink css={link} to="/notice">
+            공지사항
           </NavLink>
         </li>
         <li>

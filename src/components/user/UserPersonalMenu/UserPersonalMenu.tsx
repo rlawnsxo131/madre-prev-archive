@@ -32,6 +32,7 @@ function UserPersonalMenu(props: UserPersonalMenuProps) {
 
 const block = css`
   position: relative;
+  /* margin-right: 0.5rem; */
   display: flex;
   justify-content: center;
   align-items: center;

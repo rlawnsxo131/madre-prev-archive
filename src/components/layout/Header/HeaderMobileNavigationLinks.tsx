@@ -19,13 +19,8 @@ function HeaderMobileNavigationLinks(props: HeaderMobileNavigationLinksProps) {
     <nav css={block(visible)}>
       <ul css={ul}>
         <li>
-          <NavLink css={link} to="/preview">
-            미리보기
-          </NavLink>
-        </li>
-        <li>
-          <NavLink css={link} to="/guide">
-            가이드 및 튜토리얼
+          <NavLink css={link} to="/madre-story">
+            Madre 이야기
           </NavLink>
         </li>
         <li>
@@ -34,8 +29,8 @@ function HeaderMobileNavigationLinks(props: HeaderMobileNavigationLinksProps) {
           </NavLink>
         </li>
         <li>
-          <NavLink css={link} to="/policy">
-            서비스 정책
+          <NavLink css={link} to="/guide">
+            가이드 및 튜토리얼
           </NavLink>
         </li>
       </ul>

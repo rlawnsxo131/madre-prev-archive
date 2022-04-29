@@ -19,11 +19,11 @@ const block = (size: InputSize) => css`
   background: inherit;
   border: 2px solid ${themePalette.border_element1};
   border-radius: 3px;
-  caret-color: ${palette.pink['500']};
+  caret-color: ${palette.blue['500']};
 
   &:active,
   &:focus {
-    border: 2px solid ${palette.pink['500']};
+    border: 2px solid ${palette.blue['500']};
   }
 `;
 
