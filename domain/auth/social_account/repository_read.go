@@ -1,4 +1,4 @@
-package auth
+package socialaccount
 
 import (
 	"github.com/jmoiron/sqlx"

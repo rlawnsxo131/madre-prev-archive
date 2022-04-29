@@ -3,10 +3,12 @@ package auth
 import (
 	"database/sql"
 	"regexp"
+
+	socialaccount "github.com/rlawnsxo131/madre-server-v2/domain/auth/social_account"
 )
 
 type AuthService interface {
-	GetExistSocialAccountMap(socialAccount *SocialAccount, err error) (map[string]bool, error)
+	GetExistSocialAccountMap(socialAccount *socialaccount.SocialAccount, err error) (map[string]bool, error)
 	ValidateDisplayName(userName string) (bool, error)
 }
 
@@ -16,7 +18,7 @@ func NewAuthService() AuthService {
 	return &authService{}
 }
 
-func (s *authService) GetExistSocialAccountMap(socialAccount *SocialAccount, err error) (map[string]bool, error) {
+func (s *authService) GetExistSocialAccountMap(socialAccount *socialaccount.SocialAccount, err error) (map[string]bool, error) {
 	exist := false
 
 	if err != nil {

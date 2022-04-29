@@ -7,6 +7,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v2/database"
+	socialaccount "github.com/rlawnsxo131/madre-server-v2/domain/auth/social_account"
 	"github.com/rlawnsxo131/madre-server-v2/domain/user"
 	"github.com/rlawnsxo131/madre-server-v2/lib/google"
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"
@@ -99,9 +100,9 @@ func postGoogleCheck() http.HandlerFunc {
 		}
 
 		// if no rows in result set err -> { exist: false }
-		socialAccountService := NewSocialAccountService(db)
+		socialAccountService := socialaccount.NewSocialAccountService(db)
 		socialAccount, err := socialAccountService.FindOneByProviderWithSocialId(
-			Key_Provider_GOOGLE,
+			socialaccount.Key_Provider_GOOGLE,
 			profile.SocialId,
 		)
 		authService := NewAuthService()
@@ -163,9 +164,9 @@ func postGoogleSignIn() http.HandlerFunc {
 			return
 		}
 
-		socialAccountService := NewSocialAccountService(db)
+		socialAccountService := socialaccount.NewSocialAccountService(db)
 		socialAccount, err := socialAccountService.FindOneByProviderWithSocialId(
-			Key_Provider_GOOGLE,
+			socialaccount.Key_Provider_GOOGLE,
 			profile.SocialId,
 		)
 		if err != nil {
@@ -300,8 +301,8 @@ func postGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		socialAccountService := NewSocialAccountService(db)
-		_, err = socialAccountService.Create(SocialAccount{
+		socialAccountService := socialaccount.NewSocialAccountService(db)
+		_, err = socialAccountService.Create(socialaccount.SocialAccount{
 			UserID:   user.ID,
 			Provider: "GOOGLE",
 			SocialId: profile.SocialId,
