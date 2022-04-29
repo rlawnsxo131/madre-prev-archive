@@ -12,10 +12,10 @@ import (
 )
 
 func ApplyRoutes(v1 *mux.Router) {
-	dataRoute := v1.NewRoute().PathPrefix("/data").Subrouter()
+	route := v1.NewRoute().PathPrefix("/data").Subrouter()
 
-	dataRoute.HandleFunc("", getAll()).Methods("GET")
-	dataRoute.HandleFunc("/{id}", get()).Methods("GET")
+	route.HandleFunc("", getAll()).Methods("GET")
+	route.HandleFunc("/{id}", get()).Methods("GET")
 }
 
 func getAll() http.HandlerFunc {
@@ -25,7 +25,7 @@ func getAll() http.HandlerFunc {
 		if err != nil {
 			logger.Logger.
 				Warn().
-				Msgf("dataRoute: limit Atoi wrong: %v", err)
+				Msgf("route: limit Atoi wrong: %v", err)
 		}
 		limit = utils.IfIsNotExistGetDefaultIntValue(limit, 50)
 

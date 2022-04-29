@@ -34,15 +34,15 @@ func NewHttpLogger() HttpLogger {
 }
 
 func (hl *httpLogger) ReadBody(body io.ReadCloser) ([]byte, io.ReadCloser, error) {
-	bodyBuf, err := ioutil.ReadAll(body)
+	bodyBuffer, err := ioutil.ReadAll(body)
 
 	if err != nil {
 		return nil, nil, errors.WithStack(err)
 	}
 
-	reader := ioutil.NopCloser(bytes.NewBuffer(bodyBuf))
+	reader := ioutil.NopCloser(bytes.NewBuffer(bodyBuffer))
 
-	return bodyBuf, reader, nil
+	return bodyBuffer, reader, nil
 }
 
 func (hl *httpLogger) LogEntry(r *http.Request, start time.Time, body string) {

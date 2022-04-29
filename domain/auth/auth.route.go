@@ -17,13 +17,13 @@ import (
 )
 
 func ApplyRoutes(v1 *mux.Router) {
-	authRoute := v1.NewRoute().PathPrefix("/auth").Subrouter()
+	route := v1.NewRoute().PathPrefix("/auth").Subrouter()
 
-	authRoute.HandleFunc("", get()).Methods("GET")
-	authRoute.HandleFunc("", delete()).Methods("DELETE", "OPTIONS")
-	authRoute.HandleFunc("/google/check", postGoogleCheck()).Methods("POST", "OPTIONS")
-	authRoute.HandleFunc("/google/sign-in", postGoogleSignIn()).Methods("POST", "OPTIONS")
-	authRoute.HandleFunc("/google/sign-up", postGoogleSignUp()).Methods("POST", "OPTIONS")
+	route.HandleFunc("", get()).Methods("GET")
+	route.HandleFunc("", delete()).Methods("DELETE", "OPTIONS")
+	route.HandleFunc("/google/check", postGoogleCheck()).Methods("POST", "OPTIONS")
+	route.HandleFunc("/google/sign-in", postGoogleSignIn()).Methods("POST", "OPTIONS")
+	route.HandleFunc("/google/sign-up", postGoogleSignUp()).Methods("POST", "OPTIONS")
 }
 
 func get() http.HandlerFunc {

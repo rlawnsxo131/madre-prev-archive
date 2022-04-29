@@ -9,10 +9,10 @@ import (
 )
 
 func ApplyRoutes(v1 *mux.Router) {
-	userRoute := v1.NewRoute().PathPrefix("/user").Subrouter()
+	route := v1.NewRoute().PathPrefix("/user").Subrouter()
 
-	userRoute.HandleFunc("/{id}", get()).Methods("GET")
-	userRoute.HandleFunc("/{id}", put()).Methods("PUT", "OPTIONS")
+	route.HandleFunc("/{id}", get()).Methods("GET")
+	route.HandleFunc("/{id}", put()).Methods("PUT", "OPTIONS")
 }
 
 func get() http.HandlerFunc {

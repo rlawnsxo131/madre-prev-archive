@@ -37,7 +37,7 @@ func HttpLogger(next http.Handler) http.Handler {
 		start := time.Now()
 		httpLogger := logger.NewHttpLogger()
 
-		bodyBytes, reader, err := httpLogger.ReadBody(r.Body)
+		bodyBuffer, reader, err := httpLogger.ReadBody(r.Body)
 		if err != nil {
 			writer := response.NewHttpWriter(w, r)
 			writer.WriteError(
@@ -49,7 +49,7 @@ func HttpLogger(next http.Handler) http.Handler {
 		r.Body = reader
 
 		defer func() {
-			httpLogger.LogEntry(r, start, string(bodyBytes))
+			httpLogger.LogEntry(r, start, string(bodyBuffer))
 		}()
 		next.ServeHTTP(w, r)
 	})
@@ -198,7 +198,7 @@ func JWT(next http.Handler) http.Handler {
 								ctx, err := syncmap.SetNewValueFromHttpContext(
 									r.Context(),
 									constants.Key_UserTokenProfile,
-									token.UserTokenProfile{
+									&token.UserTokenProfile{
 										DisplayName: claims.DisplayName,
 										PhotoUrl:    claims.PhotoUrl,
 										AccessToken: accessToken,
@@ -222,7 +222,7 @@ func JWT(next http.Handler) http.Handler {
 				ctx, err := syncmap.SetNewValueFromHttpContext(
 					r.Context(),
 					constants.Key_UserTokenProfile,
-					token.UserTokenProfile{
+					&token.UserTokenProfile{
 						DisplayName: claims.DisplayName,
 						PhotoUrl:    claims.PhotoUrl,
 						AccessToken: accessToken.Value,
