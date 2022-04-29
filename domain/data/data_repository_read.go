@@ -3,6 +3,7 @@ package data
 import (
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
+
 	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
 	"github.com/rlawnsxo131/madre-server-v2/utils"
 )
@@ -39,6 +40,10 @@ func (r *dataReadRepository) FindAll(limit int) ([]*Data, error) {
 			return nil, errors.Wrap(err, "DataRepository: FindAll StructScan error")
 		}
 		dataList = append(dataList, &d)
+	}
+
+	if err := rows.Close(); err != nil {
+		return nil, errors.Wrap(err, "DataRepository: FindAll rows.Close error")
 	}
 
 	return dataList, nil

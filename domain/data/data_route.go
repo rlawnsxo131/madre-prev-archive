@@ -29,7 +29,7 @@ func getAll() http.HandlerFunc {
 		}
 		limit = utils.IfIsNotExistGetDefaultIntValue(limit, 50)
 
-		db, err := database.GetDBConn(r.Context())
+		db, err := database.GetDatabseFromHttpContext(r.Context())
 		if err != nil {
 			writer.WriteError(err, "get /data")
 			return
@@ -52,7 +52,7 @@ func get() http.HandlerFunc {
 		vars := mux.Vars(r)
 		id := vars["id"]
 
-		db, err := database.GetDBConn(r.Context())
+		db, err := database.GetDatabseFromHttpContext(r.Context())
 		if err != nil {
 			writer.WriteError(err, "get /data/{id}")
 			return

@@ -11,6 +11,7 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v2/constants"
+	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
 	"github.com/rlawnsxo131/madre-server-v2/lib/syncmap"
 )
 
@@ -26,31 +27,37 @@ var (
 	sqlxDB *sqlx.DB
 )
 
-func GetDB() (*sqlx.DB, error) {
-	if sqlxDB == nil {
-		psqlInfo := fmt.Sprintf(
+func GetDatabase() (*sqlx.DB, error) {
+	var err error
+
+	once.Do(func() {
+		// get database connection cofig
+		dbString := fmt.Sprintf(
 			"host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 			host, port, user, password, dbname,
 		)
-		db, err := sqlx.Connect("postgres", psqlInfo)
+		logger.Logger.
+			Info().
+			Str("database connection info", dbString).
+			Send()
+
+		// database connect
+		sqlxDB, err = sqlx.Connect("postgres", dbString)
 		if err != nil {
-			return nil, errors.Wrap(err, "sqlx: connect fail")
+			err = errors.Wrap(err, "sqlx: connect fail")
+			return
 		}
 
-		err = db.Ping()
-		if err != nil {
-			return nil, errors.Wrap(err, "sqlx: ping fail")
-		}
+		// initialize database config
+		sqlxDB.SetMaxIdleConns(5)
+		sqlxDB.SetMaxOpenConns(5)
+		sqlxDB.SetConnMaxLifetime(time.Minute)
+	})
 
-		db.SetMaxOpenConns(10)
-		db.SetMaxIdleConns(10)
-		db.SetConnMaxLifetime(time.Minute)
-		sqlxDB = db
-	}
-	return sqlxDB, nil
+	return sqlxDB, err
 }
 
-func GetDBConn(ctx context.Context) (*sqlx.DB, error) {
+func GetDatabseFromHttpContext(ctx context.Context) (*sqlx.DB, error) {
 	syncMap, err := syncmap.GetFromHttpContext(ctx)
 	if err != nil {
 		return nil, err
@@ -61,6 +68,7 @@ func GetDBConn(ctx context.Context) (*sqlx.DB, error) {
 			return sqlxDB, nil
 		}
 	}
+
 	return nil, errors.New("DB is not exist")
 }
 

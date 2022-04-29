@@ -56,7 +56,7 @@ func delete() http.HandlerFunc {
 func postGoogleCheck() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		writer := response.NewHttpWriter(w, r)
-		db, err := database.GetDBConn(r.Context())
+		db, err := database.GetDatabseFromHttpContext(r.Context())
 		if err != nil {
 			writer.WriteError(
 				err,
@@ -121,7 +121,7 @@ func postGoogleCheck() http.HandlerFunc {
 func postGoogleSignIn() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		writer := response.NewHttpWriter(w, r)
-		db, err := database.GetDBConn(r.Context())
+		db, err := database.GetDatabseFromHttpContext(r.Context())
 		if err != nil {
 			writer.WriteError(
 				err,
@@ -214,7 +214,7 @@ func postGoogleSignIn() http.HandlerFunc {
 func postGoogleSignUp() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		writer := response.NewHttpWriter(w, r)
-		db, err := database.GetDBConn(r.Context())
+		db, err := database.GetDatabseFromHttpContext(r.Context())
 		if err != nil {
 			writer.WriteError(
 				err,

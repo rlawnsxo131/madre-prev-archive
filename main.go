@@ -8,13 +8,13 @@ import (
 )
 
 func main() {
-	db, err := database.GetDB()
+	db, err := database.GetDatabase()
 	if err != nil {
 		log.Fatalf("%+v", err)
 	}
-	database.ExcuteInitSQL(db)
 	defer db.Close()
-	s := server.New(db)
+	database.ExcuteInitSQL(db)
+	s := server.New()
 	s.Start()
 }
 

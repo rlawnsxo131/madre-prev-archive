@@ -11,7 +11,6 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
-	"github.com/jmoiron/sqlx"
 	"github.com/rlawnsxo131/madre-server-v2/domain/auth"
 	"github.com/rlawnsxo131/madre-server-v2/domain/data"
 	"github.com/rlawnsxo131/madre-server-v2/domain/temp"
@@ -30,13 +29,11 @@ const (
 type server struct {
 	router     *mux.Router
 	httpServer *http.Server
-	db         *sqlx.DB
 }
 
-func New(db *sqlx.DB) *server {
+func New() *server {
 	s := &server{
 		router: mux.NewRouter(),
-		db:     db,
 	}
 	s.applyBaseMiddleware()
 	s.applyHealthSettings()
@@ -112,7 +109,7 @@ func (s *server) applyHealthSettings() {
 func (s *server) applyApiRoutesAndMiddleware() {
 	api := s.router.NewRoute().PathPrefix("/api").Subrouter()
 	api.Use(
-		middleware.SetDBContext(s.db),
+		middleware.SetDatabaseContext,
 		middleware.SetResponseContentTypeJson,
 	)
 	v1 := api.NewRoute().PathPrefix("/v1").Subrouter()
