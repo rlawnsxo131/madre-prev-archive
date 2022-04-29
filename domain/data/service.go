@@ -4,29 +4,29 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-type DataService interface {
+type Service interface {
 	ReadRepository
 	WriteRepository
 }
 
-type dataService struct {
+type service struct {
 	db *sqlx.DB
 }
 
-func NewService(db *sqlx.DB) *dataService {
-	return &dataService{
+func NewService(db *sqlx.DB) *service {
+	return &service{
 		db: db,
 	}
 }
 
-func (s *dataService) FindAll(limit int) ([]*Data, error) {
-	dataReadRepo := NewReadRepository(s.db)
-	dataList, err := dataReadRepo.FindAll(limit)
+func (s *service) FindAll(limit int) ([]*Data, error) {
+	readRepo := NewReadRepository(s.db)
+	dataList, err := readRepo.FindAll(limit)
 	return dataList, err
 }
 
-func (s *dataService) FindOneById(id string) (*Data, error) {
-	dataReadRepo := NewReadRepository(s.db)
-	data, err := dataReadRepo.FindOneById(id)
+func (s *service) FindOneById(id string) (*Data, error) {
+	readRepo := NewReadRepository(s.db)
+	data, err := readRepo.FindOneById(id)
 	return data, err
 }

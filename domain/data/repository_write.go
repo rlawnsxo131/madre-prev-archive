@@ -8,7 +8,7 @@ type writeRepository struct {
 	db *sqlx.DB
 }
 
-func NewwriteRepository(db *sqlx.DB) WriteRepository {
+func NewWriteRepository(db *sqlx.DB) WriteRepository {
 	return &writeRepository{
 		db: db,
 	}
