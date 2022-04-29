@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { palette, transitions } from '../../../styles';
+import { transitions } from '../../../styles';
 import { themePalette } from '../../../styles';
 
 const shakeAnimation = css`
