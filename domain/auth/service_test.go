@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/rlawnsxo131/madre-server-v2/domain/auth"
+	socialaccount "github.com/rlawnsxo131/madre-server-v2/domain/auth/social_account"
 	"github.com/rlawnsxo131/madre-server-v2/utils"
 	"github.com/stretchr/testify/assert"
 )
@@ -13,7 +14,7 @@ func Test_AuthService_GetExistSocialAccountMap_ExistIsFalse(t *testing.T) {
 	assert := assert.New(t)
 
 	err := sql.ErrNoRows
-	socialAccount := &auth.SocialAccount{
+	socialAccount := &socialaccount.SocialAccount{
 		ID: "",
 	}
 
@@ -27,7 +28,7 @@ func Test_AuthService_GetExistSocialAccountMap_ExistIsFalse(t *testing.T) {
 func Test_AuthService_GetExistSocialAccountMap_ExistIsTrue(t *testing.T) {
 	assert := assert.New(t)
 
-	socialAccount := &auth.SocialAccount{
+	socialAccount := &socialaccount.SocialAccount{
 		ID: utils.GenerateUUIDString(),
 	}
 
