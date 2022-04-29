@@ -24,7 +24,7 @@ func (s *service) Create(socialAccount SocialAccount) (string, error) {
 }
 
 func (s *service) FindOneByProviderWithSocialId(socialId string, provider string) (*SocialAccount, error) {
-	socialAccountReadRepo := NewReadRepository(s.db)
-	socialAccount, err := socialAccountReadRepo.FindOneByProviderWithSocialId(provider, socialId)
+	readRepo := NewReadRepository(s.db)
+	socialAccount, err := readRepo.FindOneByProviderWithSocialId(provider, socialId)
 	return socialAccount, err
 }
