@@ -35,7 +35,7 @@ func getAll() http.HandlerFunc {
 			return
 		}
 
-		dataService := NewDataService(db)
+		dataService := NewService(db)
 		dataList, err := dataService.FindAll(limit)
 		if err != nil {
 			writer.WriteError(err, "get /data")
@@ -58,7 +58,7 @@ func get() http.HandlerFunc {
 			return
 		}
 
-		dataService := NewDataService(db)
+		dataService := NewService(db)
 		data, err := dataService.FindOneById(id)
 		if err != nil {
 			writer.WriteError(err, "get /data/{id}")

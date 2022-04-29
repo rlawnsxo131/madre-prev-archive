@@ -2,14 +2,14 @@ package data
 
 import "github.com/jmoiron/sqlx"
 
-type DataWriteRepository interface{}
+type WriteRepository interface{}
 
-type dataWriteRepository struct {
+type writeRepository struct {
 	db *sqlx.DB
 }
 
-func NewDataWriteRepository(db *sqlx.DB) DataWriteRepository {
-	return &dataWriteRepository{
+func NewwriteRepository(db *sqlx.DB) WriteRepository {
+	return &writeRepository{
 		db: db,
 	}
 }

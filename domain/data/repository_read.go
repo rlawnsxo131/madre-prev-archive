@@ -8,22 +8,22 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/utils"
 )
 
-type DataReadRepository interface {
+type ReadRepository interface {
 	FindAll(limit int) ([]*Data, error)
 	FindOneById(id string) (*Data, error)
 }
 
-type dataReadRepository struct {
+type readRepository struct {
 	ql logger.QueryLogger
 }
 
-func NewDataReadRepository(db *sqlx.DB) DataReadRepository {
-	return &dataReadRepository{
+func NewReadRepository(db *sqlx.DB) ReadRepository {
+	return &readRepository{
 		ql: logger.NewQueryLogger(db),
 	}
 }
 
-func (r *dataReadRepository) FindAll(limit int) ([]*Data, error) {
+func (r *readRepository) FindAll(limit int) ([]*Data, error) {
 	var dataList []*Data
 
 	query := "SELECT * FROM data LIMIT $1"
@@ -49,7 +49,7 @@ func (r *dataReadRepository) FindAll(limit int) ([]*Data, error) {
 	return dataList, nil
 }
 
-func (r *dataReadRepository) FindOneById(id string) (*Data, error) {
+func (r *readRepository) FindOneById(id string) (*Data, error) {
 	var data Data
 
 	query := "SELECT * FROM data WHERE id = $1"

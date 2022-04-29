@@ -7,27 +7,27 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/utils"
 )
 
-type UserReadRepository interface {
+type ReadRepository interface {
 	FindOneById(id string) (*User, error)
 }
 
-type userReadRepository struct {
+type readRepository struct {
 	ql logger.QueryLogger
 }
 
-func NewUserReadRepository(db *sqlx.DB) UserReadRepository {
-	return &userReadRepository{
+func NewReadRepository(db *sqlx.DB) ReadRepository {
+	return &readRepository{
 		ql: logger.NewQueryLogger(db),
 	}
 }
 
-func (r *userReadRepository) FindOneById(id string) (*User, error) {
+func (r *readRepository) FindOneById(id string) (*User, error) {
 	var user User
 
 	query := "SELECT * FROM public.user WHERE id = $1"
 	err := r.ql.QueryRowx(query, id).StructScan(&user)
 	if err != nil {
-		customError := errors.Wrap(err, "UserReadRepository: FindOneById")
+		customError := errors.Wrap(err, "readRepository: FindOneById")
 		err = utils.ErrNoRowsReturnRawError(err, customError)
 	}
 

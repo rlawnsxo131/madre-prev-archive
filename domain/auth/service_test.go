@@ -18,7 +18,7 @@ func Test_AuthService_GetExistSocialAccountMap_ExistIsFalse(t *testing.T) {
 		ID: "",
 	}
 
-	authService := auth.NewAuthService()
+	authService := auth.NewService()
 	existSocialAccountMap, err := authService.GetExistSocialAccountMap(socialAccount, err)
 
 	assert.Nil(err)
@@ -32,7 +32,7 @@ func Test_AuthService_GetExistSocialAccountMap_ExistIsTrue(t *testing.T) {
 		ID: utils.GenerateUUIDString(),
 	}
 
-	authService := auth.NewAuthService()
+	authService := auth.NewService()
 	existSocialAccountMap, err := authService.GetExistSocialAccountMap(socialAccount, nil)
 
 	assert.Nil(err)
@@ -44,7 +44,7 @@ func Test_AuthService_ValidateDisplayName_ValidIsFalse(t *testing.T) {
 
 	displayName := ""
 
-	authService := auth.NewAuthService()
+	authService := auth.NewService()
 	valid, _ := authService.ValidateDisplayName(displayName)
 
 	assert.False(valid)
@@ -55,7 +55,7 @@ func Test_AuthService_ValidateDisplayName_ValidIsTrue(t *testing.T) {
 
 	displayName := "displayName"
 
-	authService := auth.NewAuthService()
+	authService := auth.NewService()
 	valid, _ := authService.ValidateDisplayName(displayName)
 
 	assert.True(valid)

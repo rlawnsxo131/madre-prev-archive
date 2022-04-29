@@ -7,27 +7,27 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/utils"
 )
 
-type SocialAccountReadRepository interface {
+type ReadRepository interface {
 	FindOneByProviderWithSocialId(provider string, socialId string) (*SocialAccount, error)
 }
 
-type socialAccountReadRepository struct {
+type readRepository struct {
 	ql logger.QueryLogger
 }
 
-func NewSocialAccountReadRepository(db *sqlx.DB) SocialAccountReadRepository {
-	return &socialAccountReadRepository{
+func NewReadRepository(db *sqlx.DB) ReadRepository {
+	return &readRepository{
 		ql: logger.NewQueryLogger(db),
 	}
 }
 
-func (r *socialAccountReadRepository) FindOneByProviderWithSocialId(provider string, socialId string) (*SocialAccount, error) {
+func (r *readRepository) FindOneByProviderWithSocialId(provider string, socialId string) (*SocialAccount, error) {
 	var socialAccount SocialAccount
 
 	query := "SELECT * FROM social_account WHERE provider = $1 AND social_id = $2"
 	err := r.ql.QueryRowx(query, socialId, provider).StructScan(&socialAccount)
 	if err != nil {
-		customError := errors.Wrap(err, "SocialAccountReadRepository: FindOneBySocialId")
+		customError := errors.Wrap(err, "ReadRepository: FindOneBySocialId")
 		err = utils.ErrNoRowsReturnRawError(err, customError)
 	}
 

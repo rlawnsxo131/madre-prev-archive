@@ -101,12 +101,12 @@ func postGoogleCheck() http.HandlerFunc {
 		}
 
 		// if no rows in result set err -> { exist: false }
-		socialAccountService := socialaccount.NewSocialAccountService(db)
+		socialAccountService := socialaccount.NewService(db)
 		socialAccount, err := socialAccountService.FindOneByProviderWithSocialId(
 			socialaccount.Key_Provider_GOOGLE,
 			profile.SocialId,
 		)
-		authService := NewAuthService()
+		authService := NewService()
 		existSocialAccountMap, err := authService.GetExistSocialAccountMap(socialAccount, err)
 		if err != nil {
 			writer.WriteError(
@@ -165,7 +165,7 @@ func postGoogleSignIn() http.HandlerFunc {
 			return
 		}
 
-		socialAccountService := socialaccount.NewSocialAccountService(db)
+		socialAccountService := socialaccount.NewService(db)
 		socialAccount, err := socialAccountService.FindOneByProviderWithSocialId(
 			socialaccount.Key_Provider_GOOGLE,
 			profile.SocialId,
@@ -178,7 +178,7 @@ func postGoogleSignIn() http.HandlerFunc {
 			return
 		}
 
-		userService := user.NewUserService(db)
+		userService := user.NewService(db)
 		user, err := userService.FindOneById(socialAccount.UserID)
 		if err != nil {
 			writer.WriteError(
@@ -250,7 +250,7 @@ func postGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		authService := NewAuthService()
+		authService := NewService()
 		valid, err := authService.ValidateDisplayName(params.DisplayName)
 		if err != nil {
 			writer.WriteError(
@@ -278,7 +278,7 @@ func postGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		userService := user.NewUserService(db)
+		userService := user.NewService(db)
 		userId, err := userService.Create(user.User{
 			Email:       profile.Email,
 			OriginName:  utils.NewNullString(profile.DisplayName),
@@ -302,7 +302,7 @@ func postGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		socialAccountService := socialaccount.NewSocialAccountService(db)
+		socialAccountService := socialaccount.NewService(db)
 		_, err = socialAccountService.Create(socialaccount.SocialAccount{
 			UserID:   user.ID,
 			Provider: "GOOGLE",

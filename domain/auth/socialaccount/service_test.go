@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_SocialAccountService_Create_IsSuccess(t *testing.T) {
+func Test_Service_Create_IsSuccess(t *testing.T) {
 	assert := assert.New(t)
 
 	db, _ := database.GetDatabase()
@@ -20,14 +20,14 @@ func Test_SocialAccountService_Create_IsSuccess(t *testing.T) {
 		SocialId: utils.GenerateUUIDString(),
 	}
 
-	socialAccountService := socialaccount.NewSocialAccountService(db)
+	socialAccountService := socialaccount.NewService(db)
 	lastInsertId, err := socialAccountService.Create(socialAccount)
 
 	assert.Nil(err)
 	assert.NotZero(lastInsertId)
 }
 
-func Test_SocialAccountService_Create_IsFail(t *testing.T) {
+func Test_Service_Create_IsFail(t *testing.T) {
 	assert := assert.New(t)
 
 	db, _ := database.GetDatabase()
@@ -38,7 +38,7 @@ func Test_SocialAccountService_Create_IsFail(t *testing.T) {
 		SocialId: utils.GenerateUUIDString(),
 	}
 
-	socialAccountService := socialaccount.NewSocialAccountService(db)
+	socialAccountService := socialaccount.NewService(db)
 	lastInsertId, err := socialAccountService.Create(socialAccount)
 
 	assert.Error(err)

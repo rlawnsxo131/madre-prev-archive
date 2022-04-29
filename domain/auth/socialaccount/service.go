@@ -2,29 +2,29 @@ package socialaccount
 
 import "github.com/jmoiron/sqlx"
 
-type SocialAccountService interface {
-	SocialAccountReadRepository
-	SocialAccountWriteRepository
+type Service interface {
+	ReadRepository
+	WriteRepository
 }
 
-type socialAccountService struct {
+type service struct {
 	db *sqlx.DB
 }
 
-func NewSocialAccountService(db *sqlx.DB) SocialAccountService {
-	return &socialAccountService{
+func NewService(db *sqlx.DB) Service {
+	return &service{
 		db: db,
 	}
 }
 
-func (s *socialAccountService) Create(socialAccount SocialAccount) (string, error) {
-	socialAccountWriteRepo := NewSocialAccountWriteRepository(s.db)
-	id, err := socialAccountWriteRepo.Create(socialAccount)
+func (s *service) Create(socialAccount SocialAccount) (string, error) {
+	writeRepo := NewWriteRepository(s.db)
+	id, err := writeRepo.Create(socialAccount)
 	return id, err
 }
 
-func (s *socialAccountService) FindOneByProviderWithSocialId(socialId string, provider string) (*SocialAccount, error) {
-	socialAccountReadRepo := NewSocialAccountReadRepository(s.db)
+func (s *service) FindOneByProviderWithSocialId(socialId string, provider string) (*SocialAccount, error) {
+	socialAccountReadRepo := NewReadRepository(s.db)
 	socialAccount, err := socialAccountReadRepo.FindOneByProviderWithSocialId(provider, socialId)
 	return socialAccount, err
 }

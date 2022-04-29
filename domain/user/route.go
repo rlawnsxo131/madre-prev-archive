@@ -27,7 +27,7 @@ func get() http.HandlerFunc {
 			return
 		}
 
-		userService := NewUserService(db)
+		userService := NewService(db)
 		user, err := userService.FindOneById(id)
 		if err != nil {
 			writer.WriteError(err, "get /user/{id}")

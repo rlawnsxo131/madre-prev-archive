@@ -6,21 +6,21 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
 )
 
-type UserWriteRepository interface {
+type WriteRepository interface {
 	Create(u User) (string, error)
 }
 
-type userWriteRepository struct {
+type writeRepository struct {
 	ql logger.QueryLogger
 }
 
-func NewUserWriteRepository(db *sqlx.DB) UserWriteRepository {
-	return &userWriteRepository{
+func NewWriteRepository(db *sqlx.DB) WriteRepository {
+	return &writeRepository{
 		ql: logger.NewQueryLogger(db),
 	}
 }
 
-func (r *userWriteRepository) Create(u User) (string, error) {
+func (r *writeRepository) Create(u User) (string, error) {
 	var id string
 	var query = "INSERT INTO public.user(email, origin_name, display_name, photo_url) VALUES(:email, :origin_name, :display_name, :photo_url) RETURNING id"
 

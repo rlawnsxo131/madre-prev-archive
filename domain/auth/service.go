@@ -7,18 +7,18 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/domain/auth/socialaccount"
 )
 
-type AuthService interface {
+type Service interface {
 	GetExistSocialAccountMap(socialAccount *socialaccount.SocialAccount, err error) (map[string]bool, error)
 	ValidateDisplayName(userName string) (bool, error)
 }
 
-type authService struct{}
+type service struct{}
 
-func NewAuthService() AuthService {
-	return &authService{}
+func NewService() Service {
+	return &service{}
 }
 
-func (s *authService) GetExistSocialAccountMap(socialAccount *socialaccount.SocialAccount, err error) (map[string]bool, error) {
+func (s *service) GetExistSocialAccountMap(socialAccount *socialaccount.SocialAccount, err error) (map[string]bool, error) {
 	exist := false
 
 	if err != nil {
@@ -36,7 +36,7 @@ func (s *authService) GetExistSocialAccountMap(socialAccount *socialaccount.Soci
 	return map[string]bool{"exist": exist}, nil
 }
 
-func (s *authService) ValidateDisplayName(displayName string) (bool, error) {
+func (s *service) ValidateDisplayName(displayName string) (bool, error) {
 	match, err := regexp.MatchString("^[a-zA-Z0-9가-힣]{1,16}$", displayName)
 	if err != nil {
 		return false, err

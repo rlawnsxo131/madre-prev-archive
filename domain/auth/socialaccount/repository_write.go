@@ -6,27 +6,27 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
 )
 
-type SocialAccountWriteRepository interface {
+type WriteRepository interface {
 	Create(socialAccount SocialAccount) (string, error)
 }
 
-type socialAccountWriteRepository struct {
+type writeRepository struct {
 	ql logger.QueryLogger
 }
 
-func NewSocialAccountWriteRepository(db *sqlx.DB) SocialAccountWriteRepository {
-	return &socialAccountWriteRepository{
+func NewWriteRepository(db *sqlx.DB) WriteRepository {
+	return &writeRepository{
 		ql: logger.NewQueryLogger(db),
 	}
 }
 
-func (r *socialAccountWriteRepository) Create(socialAccount SocialAccount) (string, error) {
+func (r *writeRepository) Create(socialAccount SocialAccount) (string, error) {
 	var id string
 	var query = "INSERT INTO social_account(user_id, provider, social_id) VALUES(:user_id, :provider, :social_id) RETURNING id"
 
 	err := r.ql.PrepareNamedGet(&id, query, socialAccount)
 	if err != nil {
-		return "", errors.Wrap(err, "SocialAccountWriteRepository: create")
+		return "", errors.Wrap(err, "writeRepository: create")
 	}
 
 	return id, err
