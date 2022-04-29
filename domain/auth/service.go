@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"regexp"
 
-	socialaccount "github.com/rlawnsxo131/madre-server-v2/domain/auth/social_account"
+	"github.com/rlawnsxo131/madre-server-v2/domain/auth/socialaccount"
 )
 
 type AuthService interface {

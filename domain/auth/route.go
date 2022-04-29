@@ -7,7 +7,8 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v2/database"
-	socialaccount "github.com/rlawnsxo131/madre-server-v2/domain/auth/social_account"
+
+	"github.com/rlawnsxo131/madre-server-v2/domain/auth/socialaccount"
 	"github.com/rlawnsxo131/madre-server-v2/domain/user"
 	"github.com/rlawnsxo131/madre-server-v2/lib/google"
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"

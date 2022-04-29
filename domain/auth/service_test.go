@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/rlawnsxo131/madre-server-v2/domain/auth"
-	socialaccount "github.com/rlawnsxo131/madre-server-v2/domain/auth/social_account"
+	"github.com/rlawnsxo131/madre-server-v2/domain/auth/socialaccount"
 	"github.com/rlawnsxo131/madre-server-v2/utils"
 	"github.com/stretchr/testify/assert"
 )
