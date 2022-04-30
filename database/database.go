@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"sync"
-	"time"
 
 	"github.com/jmoiron/sqlx"
 	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
@@ -17,6 +16,7 @@ type Database interface {
 	Begin()
 	Commit()
 	Rollback()
+	initDatabase()
 }
 
 var (
@@ -28,25 +28,24 @@ func GetDatabaseInstance() (Database, error) {
 	var err error
 
 	once.Do(func() {
-		l := zerolog.New(os.Stderr)
-		instanceDatabase = &singletonDatabase{
-			logger: &l,
-		}
-
 		psqlInfo := fmt.Sprintf(
 			"host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 			host, port, user, password, dbname,
 		)
 		logger.NewDefaultLogger().Logger.Info().Str("database connection info", psqlInfo).Send()
 
-		instanceDatabase.Database, err = sqlx.Connect("postgres", psqlInfo)
+		var database *sqlx.DB
+		database, err = sqlx.Connect("postgres", psqlInfo)
 		if err != nil {
 			return
 		}
 
-		instanceDatabase.Database.SetMaxIdleConns(5)
-		instanceDatabase.Database.SetMaxOpenConns(5)
-		instanceDatabase.Database.SetConnMaxLifetime(time.Minute)
+		l := zerolog.New(os.Stderr)
+		instanceDatabase = &singletonDatabase{
+			database: database,
+			logger:   &l,
+		}
+		instanceDatabase.initDatabase()
 	})
 
 	return instanceDatabase, err
