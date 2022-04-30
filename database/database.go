@@ -1,85 +1,53 @@
 package database
 
 import (
-	"context"
 	"fmt"
-	"io/ioutil"
-	"strings"
+	"os"
+	"sync"
 	"time"
 
 	"github.com/jmoiron/sqlx"
-	_ "github.com/lib/pq"
-	"github.com/pkg/errors"
-	"github.com/rlawnsxo131/madre-server-v2/constants"
 	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
-	"github.com/rlawnsxo131/madre-server-v2/lib/syncmap"
+	"github.com/rs/zerolog"
 )
 
-const (
-	host     = "localhost"
-	port     = 5432
-	user     = "madre"
-	password = "1234"
-	dbname   = "madre"
-)
+// TODO: Thinking about redefining the database and working on it
+
+type Database interface {
+	Begin()
+	Commit()
+	Rollback()
+}
 
 var (
-	sqlxDB *sqlx.DB
+	once             sync.Once
+	instanceDatabase *singletonDatabase
 )
 
-func GetDatabase() (*sqlx.DB, error) {
+func GetDatabaseInstance() (Database, error) {
 	var err error
 
 	once.Do(func() {
-		// get database connection cofig
-		dbString := fmt.Sprintf(
+		l := zerolog.New(os.Stderr)
+		instanceDatabase = &singletonDatabase{
+			logger: &l,
+		}
+
+		psqlInfo := fmt.Sprintf(
 			"host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 			host, port, user, password, dbname,
 		)
-		logger.Logger.
-			Info().
-			Str("database connection info", dbString).
-			Send()
+		logger.NewDefaultLogger().Logger.Info().Str("database connection info", psqlInfo).Send()
 
-		// database connect
-		sqlxDB, err = sqlx.Connect("postgres", dbString)
+		instanceDatabase.Database, err = sqlx.Connect("postgres", psqlInfo)
 		if err != nil {
-			err = errors.Wrap(err, "sqlx: connect fail")
 			return
 		}
 
-		// initialize database config
-		sqlxDB.SetMaxIdleConns(5)
-		sqlxDB.SetMaxOpenConns(5)
-		sqlxDB.SetConnMaxLifetime(time.Minute)
+		instanceDatabase.Database.SetMaxIdleConns(5)
+		instanceDatabase.Database.SetMaxOpenConns(5)
+		instanceDatabase.Database.SetConnMaxLifetime(time.Minute)
 	})
 
-	return sqlxDB, err
-}
-
-func GetDatabseFromHttpContext(ctx context.Context) (*sqlx.DB, error) {
-	syncMap, err := syncmap.GetFromHttpContext(ctx)
-	if err != nil {
-		return nil, err
-	}
-
-	if sqlxDB, ok := syncMap.Load(constants.Key_HttpContextDB); ok {
-		if sqlxDB, ok := sqlxDB.(*sqlx.DB); ok {
-			return sqlxDB, nil
-		}
-	}
-
-	return nil, errors.New("DB is not exist")
-}
-
-func ExcuteInitSQL(db *sqlx.DB) {
-	file, err := ioutil.ReadFile("./database/init.sql")
-	if err != nil {
-		panic(err)
-	}
-
-	queries := strings.Split(string(file), "\n\n")
-	for _, query := range queries {
-		sqlxDB.MustExec(query)
-	}
+	return instanceDatabase, err
 }

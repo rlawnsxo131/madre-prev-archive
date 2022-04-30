@@ -1,4 +1,4 @@
-package google
+package social
 
 import (
 	"encoding/json"
@@ -59,7 +59,7 @@ import (
 // 	]
 // }
 
-type RawPeopleProfile struct {
+type googlePeopleProfileOriginal struct {
 	ResourceName string `json:"resourceName"`
 	Etag         string `json:"etag"`
 	Names        []struct {
@@ -101,14 +101,14 @@ type RawPeopleProfile struct {
 	} `json:"emailAddresses"`
 }
 
-type PeopleProfile struct {
+type googlePeopleProfile struct {
 	SocialId    string
 	Email       string
 	PhotoUrl    string
 	DisplayName string
 }
 
-func GetPeopleProfile(accessToken string) (*PeopleProfile, error) {
+func GetGoogleProfile(accessToken string) (*googlePeopleProfile, error) {
 	req, err := createRequest(accessToken)
 	if err != nil {
 		err = errors.Wrap(
@@ -127,7 +127,7 @@ func GetPeopleProfile(accessToken string) (*PeopleProfile, error) {
 		return nil, err
 	}
 
-	rawProfile, err := convertToRawPeopleProfile(res)
+	originProfile, err := mapToGooglePeopleProfileOriginal(res)
 	if err != nil {
 		err = errors.Wrap(
 			err,
@@ -136,9 +136,9 @@ func GetPeopleProfile(accessToken string) (*PeopleProfile, error) {
 		return nil, err
 	}
 
-	peopleProfile := convertToPeopleProfile(rawProfile)
+	googlePeopleProfile := mapToGooglePeopleProfile(originProfile)
 
-	return peopleProfile, nil
+	return googlePeopleProfile, nil
 }
 
 func createRequest(accessToken string) (*http.Request, error) {
@@ -160,14 +160,14 @@ func excuteRequest(req *http.Request) (*http.Response, error) {
 	return res, nil
 }
 
-func convertToRawPeopleProfile(res *http.Response) (*RawPeopleProfile, error) {
+func mapToGooglePeopleProfileOriginal(res *http.Response) (*googlePeopleProfileOriginal, error) {
 	defer res.Body.Close()
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
 		return nil, err
 	}
 
-	var rawProfile RawPeopleProfile
+	var rawProfile googlePeopleProfileOriginal
 	if err := json.Unmarshal(body, &rawProfile); err != nil {
 		return nil, err
 	}
@@ -175,15 +175,15 @@ func convertToRawPeopleProfile(res *http.Response) (*RawPeopleProfile, error) {
 	return &rawProfile, nil
 }
 
-func convertToPeopleProfile(rawProfile *RawPeopleProfile) *PeopleProfile {
+func mapToGooglePeopleProfile(originProfile *googlePeopleProfileOriginal) *googlePeopleProfile {
 	var socialId string
 	var email string
 	var photoUrl string
 	var displayName string
 
 	// must not be null
-	if rawProfile.ResourceName != "" {
-		replaceResourceName := strings.ReplaceAll(rawProfile.ResourceName, "people/", "")
+	if originProfile.ResourceName != "" {
+		replaceResourceName := strings.ReplaceAll(originProfile.ResourceName, "people/", "")
 		if replaceResourceName != "" {
 			socialId = replaceResourceName
 		} else {
@@ -193,29 +193,28 @@ func convertToPeopleProfile(rawProfile *RawPeopleProfile) *PeopleProfile {
 		socialId = utils.GenerateUUIDString()
 	}
 
-	if len(rawProfile.EmailAddresses) > 0 {
-		value := rawProfile.EmailAddresses[0].Value
+	if len(originProfile.EmailAddresses) > 0 {
+		value := originProfile.EmailAddresses[0].Value
 		if value != "" {
 			email = value
 		}
 	}
 
-	if len(rawProfile.Photos) > 0 {
-		url := rawProfile.Photos[0].Url
+	if len(originProfile.Photos) > 0 {
+		url := originProfile.Photos[0].Url
 		if len(url) != 0 {
 			photoUrl = url
 		}
 	}
 
-	if len(rawProfile.Names) > 0 {
-		name := strings.Split(
-			rawProfile.Names[0].DisplayName, " ")[0]
+	if len(originProfile.Names) > 0 {
+		name := strings.Split(originProfile.Names[0].DisplayName, " ")[0]
 		if name != "" {
 			displayName = name
 		}
 	}
 
-	return &PeopleProfile{
+	return &googlePeopleProfile{
 		SocialId:    socialId,
 		Email:       email,
 		PhotoUrl:    photoUrl,

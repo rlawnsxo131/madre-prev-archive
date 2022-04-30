@@ -6,4 +6,13 @@ import (
 	"github.com/rs/zerolog"
 )
 
-var Logger = zerolog.New(os.Stderr).With().Timestamp().Logger()
+type defaultLogger struct {
+	Logger *zerolog.Logger
+}
+
+func NewDefaultLogger() *defaultLogger {
+	l := zerolog.New(os.Stderr).With().Timestamp().Logger()
+	return &defaultLogger{
+		Logger: &l,
+	}
+}

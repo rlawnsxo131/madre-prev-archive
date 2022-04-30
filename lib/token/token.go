@@ -1,11 +1,14 @@
 package token
 
 import (
+	"context"
 	"net/http"
+	"sync"
 	"time"
 
 	"github.com/golang-jwt/jwt"
 	"github.com/pkg/errors"
+	"github.com/rlawnsxo131/madre-server-v2/constants"
 	"github.com/rlawnsxo131/madre-server-v2/utils"
 )
 
@@ -153,4 +156,23 @@ func ResetTokenCookies(w http.ResponseWriter) {
 		HttpOnly: true,
 		SameSite: 2,
 	})
+}
+
+func LoadUserTokenProfileFromHttpContextSyncMap(ctx context.Context) *UserTokenProfile {
+	v := ctx.Value(constants.Key_HttpSyncMap)
+	syncMap, ok := v.(*sync.Map)
+
+	if ok {
+		if profile, ok := syncMap.Load(constants.Key_UserTokenProfile); ok {
+			if profile, ok := profile.(*UserTokenProfile); ok {
+				return profile
+			} else {
+				return nil
+			}
+		} else {
+			return nil
+		}
+	}
+
+	return nil
 }

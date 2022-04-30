@@ -17,19 +17,14 @@ import (
 
 // https://learning-cloud-native-go.github.io/docs/a6.adding_zerolog_logger/
 
-type HttpLogger interface {
-	ReadBody(body io.ReadCloser) ([]byte, io.ReadCloser, error)
-	LogEntry(r *http.Request, start time.Time, body string)
-}
-
 type httpLogger struct {
-	z *zerolog.Logger
+	l *zerolog.Logger
 }
 
-func NewHttpLogger() HttpLogger {
-	z := zerolog.New(os.Stderr).With().Timestamp().Logger()
+func NewHttpLogger() *httpLogger {
+	l := zerolog.New(os.Stderr).With().Timestamp().Logger() // .Output(zerolog.ConsoleWriter{Out: os.Stderr})
 	return &httpLogger{
-		z: &z,
+		l: &l,
 	}
 }
 
@@ -46,7 +41,7 @@ func (hl *httpLogger) ReadBody(body io.ReadCloser) ([]byte, io.ReadCloser, error
 }
 
 func (hl *httpLogger) LogEntry(r *http.Request, start time.Time, body string) {
-	hl.z.Info().
+	hl.l.Info().
 		Str("RequestId", utils.GenerateUUIDString()).
 		Dur("Laytancy", time.Since(start)).
 		Str("Protocol", r.Proto).

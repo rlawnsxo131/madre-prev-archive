@@ -10,9 +10,8 @@ import (
 
 	"github.com/rlawnsxo131/madre-server-v2/domain/auth/socialaccount"
 	"github.com/rlawnsxo131/madre-server-v2/domain/user"
-	"github.com/rlawnsxo131/madre-server-v2/lib/google"
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"
-	"github.com/rlawnsxo131/madre-server-v2/lib/syncmap"
+	"github.com/rlawnsxo131/madre-server-v2/lib/social"
 	"github.com/rlawnsxo131/madre-server-v2/lib/token"
 
 	"github.com/rlawnsxo131/madre-server-v2/utils"
@@ -31,7 +30,7 @@ func ApplyRoutes(v1 *mux.Router) {
 func get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		writer := response.NewHttpWriter(w, r)
-		userTokenProfile := syncmap.LoadUserTokenProfileFromHttpContext(r.Context())
+		userTokenProfile := token.LoadUserTokenProfileFromHttpContextSyncMap(r.Context())
 
 		writer.WriteCompress(
 			map[string]interface{}{
@@ -91,7 +90,7 @@ func postGoogleCheck() http.HandlerFunc {
 			return
 		}
 
-		profile, err := google.GetPeopleProfile(params.AccessToken)
+		profile, err := social.GetGoogleProfile(params.AccessToken)
 		if err != nil {
 			writer.WriteError(
 				err,
@@ -156,7 +155,7 @@ func postGoogleSignIn() http.HandlerFunc {
 			return
 		}
 
-		profile, err := google.GetPeopleProfile(params.AccessToken)
+		profile, err := social.GetGoogleProfile(params.AccessToken)
 		if err != nil {
 			writer.WriteError(
 				err,
@@ -269,7 +268,7 @@ func postGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		profile, err := google.GetPeopleProfile(params.AccessToken)
+		profile, err := social.GetGoogleProfile(params.AccessToken)
 		if err != nil {
 			writer.WriteError(
 				err,

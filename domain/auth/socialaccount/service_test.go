@@ -21,10 +21,10 @@ func Test_Service_Create_IsSuccess(t *testing.T) {
 	}
 
 	socialAccountService := socialaccount.NewService(db)
-	lastInsertId, err := socialAccountService.Create(socialAccount)
+	id, err := socialAccountService.Create(socialAccount)
 
 	assert.Nil(err)
-	assert.NotZero(lastInsertId)
+	assert.NotEmpty(id)
 }
 
 func Test_Service_Create_IsFail(t *testing.T) {
@@ -39,8 +39,8 @@ func Test_Service_Create_IsFail(t *testing.T) {
 	}
 
 	socialAccountService := socialaccount.NewService(db)
-	lastInsertId, err := socialAccountService.Create(socialAccount)
+	id, err := socialAccountService.Create(socialAccount)
 
 	assert.Error(err)
-	assert.Zero(lastInsertId)
+	assert.Empty(id)
 }

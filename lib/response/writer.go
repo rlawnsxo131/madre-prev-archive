@@ -112,7 +112,8 @@ func (writer *httpWriter) WriteError(err error, action string, msg ...string) {
 		}
 	}
 
-	logger.Logger.
+	logger.NewDefaultLogger().
+		Logger.
 		Err(err).
 		Str("Action", action).
 		Msg(b.String())
@@ -129,7 +130,8 @@ func (writer *httpWriter) WriteErrorBadRequest(err error, action string, params 
 		},
 	)
 
-	logger.Logger.
+	logger.NewDefaultLogger().
+		Logger.
 		Err(err).
 		Str("Action", action).
 		Msgf("Params: %+v", params)
