@@ -86,6 +86,7 @@ func (s *server) applyBaseMiddleware() {
 	s.router.Use(
 		middleware.Logger,
 		middleware.Recovery,
+		middleware.AllowHost,
 		middleware.Cors,
 		middleware.SetSyncMapContext,
 		middleware.JWT,

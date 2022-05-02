@@ -17,7 +17,8 @@ const (
 	ErrBadRequestMessage     = "BAD_REQUEST"           // 400
 	ErrNotFoundMessage       = "NOT_FOUND"             // 404
 	ErrInternalServerMessage = "INTERNAL_SERVER_ERROR" // 500
-	ErrUnauthorizedMessage   = "UNAUTHORIZED"
+	ErrUnauthorizedMessage   = "UNAUTHORIZED"          // 401
+	ErrForbiddenMessage      = "FORBIDDEN"             // 403
 )
 
 type HttpWriter interface {
@@ -25,6 +26,8 @@ type HttpWriter interface {
 	WriteError(err error, action string, msg ...string)
 	WriteErrorBadRequest(err error, action string, params interface{})
 	WriteErrorUnauthorized(err error, action string, params interface{})
+	WriteErrorForbidden(err error, action string, params interface{})
+	excuteStandardErrorWrite(status int, err error, action string, params interface{})
 }
 
 type httpWriter struct {
@@ -138,13 +141,29 @@ func (wt *httpWriter) WriteErrorBadRequest(err error, action string, params inte
 }
 
 func (wt *httpWriter) WriteErrorUnauthorized(err error, action string, params interface{}) {
-	status := http.StatusUnauthorized
+	wt.excuteStandardErrorWrite(
+		http.StatusUnauthorized,
+		err,
+		action,
+		params,
+	)
+}
 
+func (wt *httpWriter) WriteErrorForbidden(err error, action string, params interface{}) {
+	wt.excuteStandardErrorWrite(
+		http.StatusForbidden,
+		err,
+		action,
+		params,
+	)
+}
+
+func (wt *httpWriter) excuteStandardErrorWrite(status int, err error, action string, params interface{}) {
 	wt.w.WriteHeader(status)
 	json.NewEncoder(wt.w).Encode(
 		map[string]interface{}{
 			"status":  status,
-			"message": ErrUnauthorizedMessage,
+			"message": ErrForbiddenMessage,
 		},
 	)
 
