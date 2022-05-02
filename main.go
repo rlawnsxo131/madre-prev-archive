@@ -13,11 +13,15 @@ func main() {
 		log.Fatalf("%+v", err)
 	}
 	defer db.DB.Close()
+
+	// TODO: it should be written to run only in the develop environment.
 	database.ExcuteInitSQL(db.DB)
+
 	s := server.New()
 	s.Start()
 }
 
+// TODO: setting up environment
 func init() {
 	log.Println("init main")
 }

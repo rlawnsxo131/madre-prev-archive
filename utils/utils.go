@@ -2,18 +2,7 @@ package utils
 
 import (
 	"database/sql"
-
-	"github.com/go-playground/validator/v10"
-	"github.com/google/uuid"
 )
-
-func NewValidator() *validator.Validate {
-	return validator.New()
-}
-
-func GenerateUUIDString() string {
-	return uuid.NewString()
-}
 
 func NewNullString(s string) sql.NullString {
 	if len(s) == 0 {
