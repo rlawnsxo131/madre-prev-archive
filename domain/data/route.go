@@ -24,12 +24,11 @@ func getAll() http.HandlerFunc {
 		limit, err := strconv.Atoi(r.URL.Query().Get("limit"))
 		if err != nil {
 			logger.NewDefaultLogger().
-				Logger.
 				Warn().Msgf("route: limit Atoi wrong: %v", err)
 		}
 		limit = utils.IfIsNotExistGetDefaultIntValue(limit, 50)
 
-		db, err := database.GetDatabseFromHttpContext(r.Context())
+		db, err := database.LoadDBFromHttpSyncMapContext(r.Context())
 		if err != nil {
 			writer.WriteError(err, "get /data")
 			return
@@ -52,7 +51,7 @@ func get() http.HandlerFunc {
 		vars := mux.Vars(r)
 		id := vars["id"]
 
-		db, err := database.GetDatabseFromHttpContext(r.Context())
+		db, err := database.LoadDBFromHttpSyncMapContext(r.Context())
 		if err != nil {
 			writer.WriteError(err, "get /data/{id}")
 			return

@@ -12,7 +12,7 @@ import (
 func Test_Service_Create_IsSuccess(t *testing.T) {
 	assert := assert.New(t)
 
-	db, _ := database.GetDatabase()
+	db, _ := database.GetDatabaseInstance()
 
 	socialAccount := socialaccount.SocialAccount{
 		UserID:   utils.GenerateUUIDString(),
@@ -30,7 +30,7 @@ func Test_Service_Create_IsSuccess(t *testing.T) {
 func Test_Service_Create_IsFail(t *testing.T) {
 	assert := assert.New(t)
 
-	db, _ := database.GetDatabase()
+	db, _ := database.GetDatabaseInstance()
 
 	socialAccount := socialaccount.SocialAccount{
 		UserID:   utils.GenerateUUIDString(),

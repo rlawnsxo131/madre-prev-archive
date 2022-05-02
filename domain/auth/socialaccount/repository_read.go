@@ -1,9 +1,8 @@
 package socialaccount
 
 import (
-	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
-	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
+	"github.com/rlawnsxo131/madre-server-v2/database"
 	"github.com/rlawnsxo131/madre-server-v2/utils"
 )
 
@@ -12,12 +11,12 @@ type ReadRepository interface {
 }
 
 type readRepository struct {
-	ql logger.QueryLogger
+	db database.Database
 }
 
-func NewReadRepository(db *sqlx.DB) ReadRepository {
+func NewReadRepository(db database.Database) ReadRepository {
 	return &readRepository{
-		ql: logger.NewQueryLogger(db),
+		db: db,
 	}
 }
 
@@ -25,7 +24,7 @@ func (r *readRepository) FindOneByProviderWithSocialId(provider string, socialId
 	var socialAccount SocialAccount
 
 	query := "SELECT * FROM social_account WHERE provider = $1 AND social_id = $2"
-	err := r.ql.QueryRowx(query, socialId, provider).StructScan(&socialAccount)
+	err := r.db.QueryRowx(query, socialId, provider).StructScan(&socialAccount)
 	if err != nil {
 		customError := errors.Wrap(err, "ReadRepository: FindOneBySocialId")
 		err = utils.ErrNoRowsReturnRawError(err, customError)

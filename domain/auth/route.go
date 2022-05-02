@@ -57,7 +57,7 @@ func delete() http.HandlerFunc {
 func postGoogleCheck() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		writer := response.NewHttpWriter(w, r)
-		db, err := database.GetDatabseFromHttpContext(r.Context())
+		db, err := database.LoadDBFromHttpSyncMapContext(r.Context())
 		if err != nil {
 			writer.WriteError(
 				err,
@@ -80,7 +80,7 @@ func postGoogleCheck() http.HandlerFunc {
 			return
 		}
 
-		err = utils.Validator.Struct(&params)
+		err = utils.NewValidator().Struct(&params)
 		if err != nil {
 			writer.WriteErrorBadRequest(
 				err,
@@ -122,7 +122,7 @@ func postGoogleCheck() http.HandlerFunc {
 func postGoogleSignIn() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		writer := response.NewHttpWriter(w, r)
-		db, err := database.GetDatabseFromHttpContext(r.Context())
+		db, err := database.LoadDBFromHttpSyncMapContext(r.Context())
 		if err != nil {
 			writer.WriteError(
 				err,
@@ -145,7 +145,7 @@ func postGoogleSignIn() http.HandlerFunc {
 			return
 		}
 
-		err = utils.Validator.Struct(&params)
+		err = utils.NewValidator().Struct(&params)
 		if err != nil {
 			writer.WriteErrorBadRequest(
 				err,
@@ -215,7 +215,7 @@ func postGoogleSignIn() http.HandlerFunc {
 func postGoogleSignUp() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		writer := response.NewHttpWriter(w, r)
-		db, err := database.GetDatabseFromHttpContext(r.Context())
+		db, err := database.LoadDBFromHttpSyncMapContext(r.Context())
 		if err != nil {
 			writer.WriteError(
 				err,
@@ -239,7 +239,7 @@ func postGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		err = utils.Validator.Struct(&params)
+		err = utils.NewValidator().Struct(&params)
 		if err != nil {
 			writer.WriteErrorBadRequest(
 				err,

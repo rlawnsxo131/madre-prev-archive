@@ -1,7 +1,7 @@
 package user
 
 import (
-	"github.com/jmoiron/sqlx"
+	"github.com/rlawnsxo131/madre-server-v2/database"
 )
 
 type Service interface {
@@ -10,10 +10,10 @@ type Service interface {
 }
 
 type service struct {
-	db *sqlx.DB
+	db database.Database
 }
 
-func NewService(db *sqlx.DB) Service {
+func NewService(db database.Database) Service {
 	return &service{
 		db: db,
 	}

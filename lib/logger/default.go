@@ -10,9 +10,7 @@ type defaultLogger struct {
 	Logger *zerolog.Logger
 }
 
-func NewDefaultLogger() *defaultLogger {
+func NewDefaultLogger() *zerolog.Logger {
 	l := zerolog.New(os.Stderr).With().Timestamp().Logger()
-	return &defaultLogger{
-		Logger: &l,
-	}
+	return &l
 }

@@ -1,9 +1,8 @@
 package user
 
 import (
-	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
-	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
+	"github.com/rlawnsxo131/madre-server-v2/database"
 	"github.com/rlawnsxo131/madre-server-v2/utils"
 )
 
@@ -12,12 +11,12 @@ type ReadRepository interface {
 }
 
 type readRepository struct {
-	ql logger.QueryLogger
+	db database.Database
 }
 
-func NewReadRepository(db *sqlx.DB) ReadRepository {
+func NewReadRepository(db database.Database) ReadRepository {
 	return &readRepository{
-		ql: logger.NewQueryLogger(db),
+		db: db,
 	}
 }
 
@@ -25,7 +24,7 @@ func (r *readRepository) FindOneById(id string) (*User, error) {
 	var user User
 
 	query := "SELECT * FROM public.user WHERE id = $1"
-	err := r.ql.QueryRowx(query, id).StructScan(&user)
+	err := r.db.QueryRowx(query, id).StructScan(&user)
 	if err != nil {
 		customError := errors.Wrap(err, "readRepository: FindOneById")
 		err = utils.ErrNoRowsReturnRawError(err, customError)

@@ -21,7 +21,7 @@ func get() http.HandlerFunc {
 		vars := mux.Vars(r)
 		id := vars["id"]
 
-		db, err := database.GetDatabseFromHttpContext(r.Context())
+		db, err := database.LoadDBFromHttpSyncMapContext(r.Context())
 		if err != nil {
 			writer.WriteError(err, "get /user/{id}")
 			return

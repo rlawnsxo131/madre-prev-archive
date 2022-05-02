@@ -77,7 +77,6 @@ func JWT(next http.Handler) http.Handler {
 							)
 							if err != nil {
 								logger.NewDefaultLogger().
-									Logger.
 									Err(err).
 									Str("Action", "JWT").
 									Send()
@@ -174,7 +173,6 @@ func JWT(next http.Handler) http.Handler {
 					)
 					if err != nil {
 						logger.NewDefaultLogger().
-							Logger.
 							Err(err).
 							Str("Action", "JWT").
 							Send()

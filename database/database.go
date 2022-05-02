@@ -4,27 +4,28 @@ import (
 	"fmt"
 	"os"
 	"sync"
+	"time"
 
 	"github.com/jmoiron/sqlx"
+	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
 	"github.com/rs/zerolog"
 )
 
-// TODO: Thinking about redefining the database and working on it
-
-type Database interface {
-	Begin()
-	Commit()
-	Rollback()
-	initDatabase()
-}
+const (
+	host     = "localhost"
+	port     = 5432
+	user     = "madre"
+	password = "1234"
+	dbname   = "madre"
+)
 
 var (
 	once             sync.Once
 	instanceDatabase *singletonDatabase
 )
 
-func GetDatabaseInstance() (Database, error) {
+func GetDatabaseInstance() (*singletonDatabase, error) {
 	var err error
 
 	once.Do(func() {
@@ -32,21 +33,28 @@ func GetDatabaseInstance() (Database, error) {
 			"host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 			host, port, user, password, dbname,
 		)
-		logger.NewDefaultLogger().Logger.Info().Str("database connection info", psqlInfo).Send()
+		logger.NewDefaultLogger().
+			Info().Str("database connection info", psqlInfo).Send()
 
-		var database *sqlx.DB
-		database, err = sqlx.Connect("postgres", psqlInfo)
+		db, err := sqlx.Connect("postgres", psqlInfo)
 		if err != nil {
+			err = errors.Wrap(err, "sqlx: connect fail")
 			return
 		}
 
 		l := zerolog.New(os.Stderr)
 		instanceDatabase = &singletonDatabase{
-			database: database,
-			logger:   &l,
+			DB:     db,
+			logger: &l,
 		}
-		instanceDatabase.initDatabase()
+		initDatabase(instanceDatabase.DB)
 	})
 
 	return instanceDatabase, err
+}
+
+func initDatabase(db *sqlx.DB) {
+	db.SetMaxIdleConns(5)
+	db.SetMaxOpenConns(5)
+	db.SetConnMaxLifetime(time.Minute)
 }

@@ -17,9 +17,9 @@ func SetSyncMapContext(next http.Handler) http.Handler {
 	})
 }
 
-func SetDatabaseContext(next http.Handler) http.Handler {
+func SetDatabaseToSyncMapContext(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		db, err := database.GetDatabase()
+		db, err := database.GetDatabaseInstance()
 		if err != nil {
 			writer := response.NewHttpWriter(w, r)
 			writer.WriteError(

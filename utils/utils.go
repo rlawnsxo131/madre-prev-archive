@@ -7,7 +7,9 @@ import (
 	"github.com/google/uuid"
 )
 
-var Validator *validator.Validate = validator.New()
+func NewValidator() *validator.Validate {
+	return validator.New()
+}
 
 func GenerateUUIDString() string {
 	return uuid.NewString()
