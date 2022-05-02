@@ -2,14 +2,12 @@ package database
 
 import (
 	"fmt"
-	"os"
 	"sync"
 	"time"
 
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
-	"github.com/rs/zerolog"
 )
 
 const (
@@ -42,10 +40,10 @@ func GetDatabaseInstance() (*singletonDatabase, error) {
 			return
 		}
 
-		l := zerolog.New(os.Stderr)
+		l := logger.NewDefaultLogger()
 		instanceDatabase = &singletonDatabase{
 			DB:     db,
-			logger: &l,
+			logger: l,
 		}
 		initDatabase(instanceDatabase.DB)
 	})

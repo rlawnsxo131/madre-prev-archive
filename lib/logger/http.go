@@ -6,7 +6,6 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
-	"os"
 	"strings"
 	"time"
 
@@ -22,9 +21,9 @@ type httpLogger struct {
 }
 
 func NewHttpLogger() *httpLogger {
-	l := zerolog.New(os.Stderr).With().Timestamp().Logger() // .Output(zerolog.ConsoleWriter{Out: os.Stderr})
+	l := NewDefaultLogger()
 	return &httpLogger{
-		l: &l,
+		l: l,
 	}
 }
 

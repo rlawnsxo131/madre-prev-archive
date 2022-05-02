@@ -43,14 +43,19 @@ func get() http.HandlerFunc {
 func delete() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		writer := response.NewHttpWriter(w, r)
+		userTokenProfile := token.LoadUserTokenProfileFromHttpContextSyncMap(r.Context())
+
+		if userTokenProfile == nil {
+			writer.WriteErrorBadRequest(
+				errors.New("not found userTokenProfile"),
+				"delete /auth",
+				nil,
+			)
+			return
+		}
 
 		token.ResetTokenCookies(w)
-
-		writer.WriteCompress(
-			map[string]bool{
-				"is_success": true,
-			},
-		)
+		writer.WriteCompress(map[string]interface{}{})
 	}
 }
 
