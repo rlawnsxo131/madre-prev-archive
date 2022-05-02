@@ -17,12 +17,14 @@ const (
 	ErrBadRequestMessage     = "BAD_REQUEST"           // 400
 	ErrNotFoundMessage       = "NOT_FOUND"             // 404
 	ErrInternalServerMessage = "INTERNAL_SERVER_ERROR" // 500
+	ErrUnauthorizedMessage   = "UNAUTHORIZED"
 )
 
 type HttpWriter interface {
 	WriteCompress(data interface{})
 	WriteError(err error, action string, msg ...string)
 	WriteErrorBadRequest(err error, action string, params interface{})
+	WriteErrorUnauthorized(err error, action string, params interface{})
 }
 
 type httpWriter struct {
@@ -37,10 +39,10 @@ func NewHttpWriter(w http.ResponseWriter, r *http.Request) HttpWriter {
 	}
 }
 
-func (writer *httpWriter) WriteCompress(data interface{}) {
+func (wt *httpWriter) WriteCompress(data interface{}) {
 	jsonData, err := json.Marshal(data)
 	if err != nil {
-		writer.WriteError(
+		wt.WriteError(
 			errors.WithStack(err),
 			"ResponseJsonWriteCompress",
 			"json parse error",
@@ -50,10 +52,10 @@ func (writer *httpWriter) WriteCompress(data interface{}) {
 
 	// When an error occurs in the compress process, should I change it to return uncompressed json?
 	if len(jsonData) >= 2048 {
-		if strings.Contains(writer.r.Header.Get("Accept-Encoding"), "gzip") {
-			gz, err := gzip.NewWriterLevel(writer.w, gzip.DefaultCompression)
+		if strings.Contains(wt.r.Header.Get("Accept-Encoding"), "gzip") {
+			gz, err := gzip.NewWriterLevel(wt.w, gzip.DefaultCompression)
 			if err != nil {
-				writer.WriteError(
+				wt.WriteError(
 					errors.WithStack(err),
 					"ResponseJsonWriteCompress",
 					"gzip compress error",
@@ -61,15 +63,15 @@ func (writer *httpWriter) WriteCompress(data interface{}) {
 				return
 			}
 			defer gz.Close()
-			writer.w.Header().Set("Content-Encoding", "gzip")
-			writer.w.WriteHeader(http.StatusOK)
+			wt.w.Header().Set("Content-Encoding", "gzip")
+			wt.w.WriteHeader(http.StatusOK)
 			gz.Write(jsonData)
 			return
 		}
-		if strings.Contains(writer.r.Header.Get("Accept-Encoding"), "deflate") {
-			df, err := flate.NewWriter(writer.w, flate.DefaultCompression)
+		if strings.Contains(wt.r.Header.Get("Accept-Encoding"), "deflate") {
+			df, err := flate.NewWriter(wt.w, flate.DefaultCompression)
 			if err != nil {
-				writer.WriteError(
+				wt.WriteError(
 					errors.WithStack(err),
 					"ResponseJsonWriteCompress",
 					"dfalte compress error",
@@ -77,18 +79,18 @@ func (writer *httpWriter) WriteCompress(data interface{}) {
 				return
 			}
 			defer df.Close()
-			writer.w.Header().Set("Content-Encoding", "deflate")
-			writer.w.WriteHeader(http.StatusOK)
+			wt.w.Header().Set("Content-Encoding", "deflate")
+			wt.w.WriteHeader(http.StatusOK)
 			df.Write(jsonData)
 			return
 		}
 	}
 
-	writer.w.WriteHeader(http.StatusOK)
-	writer.w.Write(jsonData)
+	wt.w.WriteHeader(http.StatusOK)
+	wt.w.Write(jsonData)
 }
 
-func (writer *httpWriter) WriteError(err error, action string, msg ...string) {
+func (wt *httpWriter) WriteError(err error, action string, msg ...string) {
 	status := http.StatusInternalServerError
 	message := ErrInternalServerMessage
 
@@ -97,8 +99,8 @@ func (writer *httpWriter) WriteError(err error, action string, msg ...string) {
 		message = ErrNotFoundMessage
 	}
 
-	writer.w.WriteHeader(status)
-	json.NewEncoder(writer.w).Encode(
+	wt.w.WriteHeader(status)
+	json.NewEncoder(wt.w).Encode(
 		map[string]interface{}{
 			"status":  status,
 			"message": message,
@@ -118,14 +120,31 @@ func (writer *httpWriter) WriteError(err error, action string, msg ...string) {
 		Msg(b.String())
 }
 
-func (writer *httpWriter) WriteErrorBadRequest(err error, action string, params interface{}) {
+func (wt *httpWriter) WriteErrorBadRequest(err error, action string, params interface{}) {
 	status := http.StatusBadRequest
 
-	writer.w.WriteHeader(status)
-	json.NewEncoder(writer.w).Encode(
+	wt.w.WriteHeader(status)
+	json.NewEncoder(wt.w).Encode(
 		map[string]interface{}{
 			"status":  status,
 			"message": ErrBadRequestMessage,
+		},
+	)
+
+	logger.NewDefaultLogger().
+		Err(err).
+		Str("Action", action).
+		Msgf("Params: %+v", params)
+}
+
+func (wt *httpWriter) WriteErrorUnauthorized(err error, action string, params interface{}) {
+	status := http.StatusUnauthorized
+
+	wt.w.WriteHeader(status)
+	json.NewEncoder(wt.w).Encode(
+		map[string]interface{}{
+			"status":  status,
+			"message": ErrUnauthorizedMessage,
 		},
 	)
 

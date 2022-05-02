@@ -46,10 +46,10 @@ func delete() http.HandlerFunc {
 		userTokenProfile := token.LoadUserTokenProfileFromHttpContextSyncMap(r.Context())
 
 		if userTokenProfile == nil {
-			writer.WriteErrorBadRequest(
+			writer.WriteErrorUnauthorized(
 				errors.New("not found userTokenProfile"),
 				"delete /auth",
-				nil,
+				userTokenProfile,
 			)
 			return
 		}
@@ -90,7 +90,7 @@ func postGoogleCheck() http.HandlerFunc {
 			writer.WriteErrorBadRequest(
 				err,
 				"post /auth/google/check",
-				&params,
+				params,
 			)
 			return
 		}
@@ -155,7 +155,7 @@ func postGoogleSignIn() http.HandlerFunc {
 			writer.WriteErrorBadRequest(
 				err,
 				"post /auth/google/sign-in",
-				&params,
+				params,
 			)
 			return
 		}
@@ -249,7 +249,7 @@ func postGoogleSignUp() http.HandlerFunc {
 			writer.WriteErrorBadRequest(
 				err,
 				"post /auth/google/sign-up",
-				&params,
+				params,
 			)
 			return
 		}
@@ -268,7 +268,7 @@ func postGoogleSignUp() http.HandlerFunc {
 			writer.WriteErrorBadRequest(
 				errors.New("username validation error"),
 				"post /auth/google/sign-up",
-				&params,
+				params,
 			)
 			return
 		}
