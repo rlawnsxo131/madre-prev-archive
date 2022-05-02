@@ -2,8 +2,8 @@ import { css } from '@emotion/react';
 import { media, mediaQuery } from '../../../styles';
 import HeaderLogo from './HeaderLogo';
 import HeaderNavigation from './HeaderNavigation';
-import UserPersonalMenu from '../../user/UserPersonalMenu';
 import ButtonThemeChange from '../../common/ButtonThemeChange';
+import UserMenuButtonWeb from '../../user/UserMenuButtonWeb';
 
 interface HeaderWebProps {}
 
@@ -13,7 +13,7 @@ function HeaderWeb(props: HeaderWebProps) {
       <HeaderLogo />
       <div css={itemBlock}>
         <HeaderNavigation />
-        <UserPersonalMenu />
+        <UserMenuButtonWeb />
         <div css={themeChangeButtonBlock}>
           <ButtonThemeChange />
         </div>

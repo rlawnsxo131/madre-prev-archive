@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
+  DeleteAuthResponse,
   GetAuthResponse,
   PostAuthGoogleCheckParams,
   PostAuthGoogleCheckResponse,
@@ -28,22 +29,57 @@ const authApi = createApi({
       async onQueryStarted(_, { dispatch, queryFulfilled, getCacheEntry }) {
         try {
           await queryFulfilled;
+
+          const { data } = getCacheEntry();
+          if (data?.user_token_profile) {
+            dispatch(
+              user.actions.setUser({
+                userTokenProfile: data.user_token_profile,
+              }),
+            );
+          } else {
+            dispatch(user.actions.resetUser());
+          }
         } catch (e) {
           console.log('error: ', e);
         }
       },
+      providesTags: ['Auth'],
+    }),
+    delete: build.mutation<DeleteAuthResponse, undefined>({
+      query() {
+        return {
+          url: '',
+          method: 'DELETE',
+        };
+      },
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        dispatch(common.actions.showLoading());
+
+        try {
+          await queryFulfilled;
+          dispatch(user.actions.resetUser());
+          dispatch(common.actions.closeLoading());
+        } catch (e) {
+          dispatch(common.actions.closeLoading());
+          dispatch(authApi.util.invalidateTags(['Auth']));
+        }
+      },
+      invalidatesTags: ['Auth'],
     }),
     postGoogleCheckWithSignIn: build.mutation<
       PostAuthGoogleCheckResponse,
       PostAuthGoogleCheckParams
     >({
-      query: ({ access_token }) => ({
-        url: '/google/check',
-        method: 'POST',
-        body: {
-          access_token,
-        },
-      }),
+      query({ access_token }) {
+        return {
+          url: '/google/check',
+          method: 'POST',
+          body: {
+            access_token,
+          },
+        };
+      },
       async onQueryStarted(
         { access_token },
         { dispatch, queryFulfilled, getCacheEntry },
@@ -65,9 +101,8 @@ const authApi = createApi({
               }),
             );
           } else {
-            dispatch(screenSignUp.actions.show());
             dispatch(
-              screenSignUp.actions.setAccessToken({
+              screenSignUp.actions.show({
                 access_token,
               }),
             );
@@ -84,14 +119,16 @@ const authApi = createApi({
       PostAuthGoogleSignUpResponse,
       PostAuthGoogleSignUpParams
     >({
-      query: ({ access_token, display_name }) => ({
-        url: '/google/sign-up',
-        method: 'POST',
-        body: {
-          access_token,
-          display_name,
-        },
-      }),
+      query({ access_token, display_name }) {
+        return {
+          url: '/google/sign-up',
+          method: 'POST',
+          body: {
+            access_token,
+            display_name,
+          },
+        };
+      },
       async onQueryStarted(_, { dispatch, queryFulfilled, getCacheEntry }) {
         try {
           dispatch(common.actions.showLoading());

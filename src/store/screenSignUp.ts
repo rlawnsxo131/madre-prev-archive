@@ -18,8 +18,12 @@ const screenSignUp = createSlice({
   name: 'screenSignUp',
   initialState,
   reducers: {
-    show(state) {
+    show(
+      state,
+      action: PayloadAction<Pick<ScreenSignUpState, 'access_token'>>,
+    ) {
       state.visible = true;
+      state.access_token = action.payload.access_token;
     },
     close(state) {
       state.visible = false;
@@ -32,12 +36,6 @@ const screenSignUp = createSlice({
     },
     resetIsError(state) {
       state.isError = false;
-    },
-    setAccessToken(
-      state,
-      action: PayloadAction<Pick<ScreenSignUpState, 'access_token'>>,
-    ) {
-      state.access_token = action.payload.access_token;
     },
     setDisplayName(
       state,

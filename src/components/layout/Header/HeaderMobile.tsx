@@ -11,7 +11,6 @@ function HeaderMobile(props: HeaderMobileProps) {
     <div css={block}>
       <HeaderLogo />
       <div css={right}>
-        {/* <UserPersonalMenu /> */}
         <ButtonThemeChange />
         <HeaderMobileNavigation />
       </div>

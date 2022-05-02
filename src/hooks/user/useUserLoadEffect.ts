@@ -9,7 +9,7 @@ import user from '../../store/user';
 export default function useUserLoadEffect() {
   const dispatch = useDispatch<AppDispatch>();
   const [isPending, startTransition] = useTransition();
-  const { isFetching, data } = authApi.useGetQuery(undefined);
+  const { isFetching } = authApi.useGetQuery(undefined);
 
   const isPendingVisible = useMemo(() => {
     return isFetching || isPending;
@@ -26,19 +26,6 @@ export default function useUserLoadEffect() {
       );
     });
   }, [dispatch]);
-
-  useEffect(() => {
-    if (!data) return;
-    if (data.user_token_profile) {
-      dispatch(
-        user.actions.setUser({
-          userTokenProfile: data.user_token_profile,
-        }),
-      );
-      return;
-    }
-    dispatch(user.actions.resetUser());
-  }, [dispatch, data]);
 
   useEffect(() => {
     dispatch(

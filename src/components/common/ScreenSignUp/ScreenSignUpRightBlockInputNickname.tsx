@@ -3,12 +3,15 @@ import { CloseIcon } from '../../../image/icons';
 import { themePalette, zIndexes } from '../../../styles';
 import Button from '../Button';
 import Input from '../Input';
-import useScreenSignUpRightBlock from './hooks/useScreenSignUpRightBlock';
+import useScreenSignUpRightBlockInputNickname from './hooks/useScreenSignUpRightBlockInputNickname';
 
-interface ScreenSignUpRightBlockProps {}
+interface ScreenSignUpRightBlockInputNicknameProps {}
 
-function ScreenSignUpRightBlock(props: ScreenSignUpRightBlockProps) {
-  const { state, close, onChange, onSignUp } = useScreenSignUpRightBlock();
+function ScreenSignUpRightBlockInputNickname(
+  props: ScreenSignUpRightBlockInputNicknameProps,
+) {
+  const { state, close, onChange, onSignUp } =
+    useScreenSignUpRightBlockInputNickname();
 
   return (
     <div css={block}>
@@ -78,4 +81,4 @@ const footer = css`
   }
 `;
 
-export default ScreenSignUpRightBlock;
+export default ScreenSignUpRightBlockInputNickname;

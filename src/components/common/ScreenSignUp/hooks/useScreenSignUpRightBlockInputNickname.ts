@@ -4,7 +4,7 @@ import useInputs from '../../../../hooks/useInputs';
 import { normalizeString } from '../../../../lib/utils';
 import authApi from '../../../../store/api/authApi';
 
-export default function useScreenSignUpRightBlock() {
+export default function useScreenSignUpRightBlockInputNickname() {
   const { access_token } = useScreenSignUpState();
   const [googleSignUp] = authApi.usePostGoogleSignUpMutation();
   const { close } = useScreenSignUpActions();

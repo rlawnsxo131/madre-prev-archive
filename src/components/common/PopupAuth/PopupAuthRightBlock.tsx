@@ -1,4 +1,4 @@
-import PopupAuthRightBlockDefault from './PopupAuthRightBlockDefault';
+import PopupAuthRightBlockWelcomeSignIn from './PopupAuthRightBlockWelcomeSignIn';
 import PopupAuthRightBlockIsError from './PopupAuthRightBlockIsError';
 
 interface PopupAuthRightBlockProps {
@@ -15,7 +15,7 @@ function PopupAuthRightBlock({
   if (isError) {
     return <PopupAuthRightBlockIsError close={close} resetError={resetError} />;
   }
-  return <PopupAuthRightBlockDefault close={close} />;
+  return <PopupAuthRightBlockWelcomeSignIn close={close} />;
 }
 
 export default PopupAuthRightBlock;

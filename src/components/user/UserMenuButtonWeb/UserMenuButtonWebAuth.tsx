@@ -2,9 +2,9 @@ import { css } from '@emotion/react';
 import usePopupAuthActions from '../../../hooks/popupAuth/usePopupAuthActions';
 import { themePalette } from '../../../styles';
 
-interface UserPersonalMenuAuthButtonProps {}
+interface UserMenuButtonAuthProps {}
 
-function UserPersonalMenuAuthButton(props: UserPersonalMenuAuthButtonProps) {
+function UserMenuButtonAuth(props: UserMenuButtonAuthProps) {
   const { show } = usePopupAuthActions();
 
   return (
@@ -30,4 +30,4 @@ const button = css`
   background: none;
 `;
 
-export default UserPersonalMenuAuthButton;
+export default UserMenuButtonAuth;

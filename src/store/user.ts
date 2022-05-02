@@ -5,11 +5,17 @@ import { Storage } from '../lib/storage';
 
 interface UserState {
   isPending: boolean;
+  menu: {
+    navigationVisible: boolean;
+  };
   userTokenProfile: UserTokenProfile | null;
 }
 
 const initialState: UserState = {
   isPending: true,
+  menu: {
+    navigationVisible: false,
+  },
   userTokenProfile: null,
 };
 
@@ -30,6 +36,10 @@ const user = createSlice({
     },
     setIsPending(state, action: PayloadAction<Pick<UserState, 'isPending'>>) {
       state.isPending = action.payload.isPending;
+    },
+    handlePersonalMenuNavigation(state) {
+      const visible = !state.menu.navigationVisible;
+      state.menu.navigationVisible = visible;
     },
   },
 });

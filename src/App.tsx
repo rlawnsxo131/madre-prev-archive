@@ -17,6 +17,9 @@ function App(props: AppProps) {
           <Route path="notice" element={<div>notice</div>} />
           <Route path="policy" element={<div>policy</div>} />
         </Route>
+        <Route path="/@:displayName" element={<Layout />}>
+          <Route index element={<div>my</div>} />
+        </Route>
         <Route path="/test" element={<TestPage2 />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

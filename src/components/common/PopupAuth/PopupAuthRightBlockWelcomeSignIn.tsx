@@ -3,13 +3,13 @@ import { InspirationImage } from '../../../image/images';
 import ButtonGoogleSignIn from '../ButtonGoogleSignIn';
 import PopupAuthStyles from './PopupAuth.styles';
 
-interface PopupAuthRightBlockDefaultProps {
+interface PopupAuthRightBlockWelcomeSignInProps {
   close: () => void;
 }
 
-function PopupAuthRightBlockDefault({
+function PopupAuthRightBlockWelcomeSignIn({
   close,
-}: PopupAuthRightBlockDefaultProps) {
+}: PopupAuthRightBlockWelcomeSignInProps) {
   return (
     <div css={PopupAuthStyles.rightBlock}>
       <div css={PopupAuthStyles.rightBlockHeader}>
@@ -24,4 +24,4 @@ function PopupAuthRightBlockDefault({
   );
 }
 
-export default PopupAuthRightBlockDefault;
+export default PopupAuthRightBlockWelcomeSignIn;
