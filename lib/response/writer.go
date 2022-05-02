@@ -36,6 +36,14 @@ type HttpWriter interface {
 	)
 }
 
+type standardErrorInfo struct {
+	status  int
+	message string
+	err     error
+	action  string
+	params  interface{}
+}
+
 type httpWriter struct {
 	w http.ResponseWriter
 	r *http.Request
@@ -157,14 +165,6 @@ func (wt *httpWriter) WriteErrorForbidden(err error, action string, params inter
 		action,
 		params,
 	)
-}
-
-type standardErrorWrite struct {
-	status  int
-	message string
-	err     error
-	action  string
-	params  interface{}
 }
 
 func (wt *httpWriter) excuteStandardErrorWrite(status int, message string, err error, action string, params interface{}) {
