@@ -27,7 +27,13 @@ type HttpWriter interface {
 	WriteErrorBadRequest(err error, action string, params interface{})
 	WriteErrorUnauthorized(err error, action string, params interface{})
 	WriteErrorForbidden(err error, action string, params interface{})
-	excuteStandardErrorWrite(status int, err error, action string, params interface{})
+	excuteStandardErrorWrite(
+		status int,
+		message string,
+		err error,
+		action string,
+		params interface{},
+	)
 }
 
 type httpWriter struct {
@@ -124,25 +130,19 @@ func (wt *httpWriter) WriteError(err error, action string, msg ...string) {
 }
 
 func (wt *httpWriter) WriteErrorBadRequest(err error, action string, params interface{}) {
-	status := http.StatusBadRequest
-
-	wt.w.WriteHeader(status)
-	json.NewEncoder(wt.w).Encode(
-		map[string]interface{}{
-			"status":  status,
-			"message": ErrBadRequestMessage,
-		},
+	wt.excuteStandardErrorWrite(
+		http.StatusBadRequest,
+		ErrBadRequestMessage,
+		err,
+		action,
+		params,
 	)
-
-	logger.NewDefaultLogger().
-		Err(err).
-		Str("Action", action).
-		Msgf("Params: %+v", params)
 }
 
 func (wt *httpWriter) WriteErrorUnauthorized(err error, action string, params interface{}) {
 	wt.excuteStandardErrorWrite(
 		http.StatusUnauthorized,
+		ErrUnauthorizedMessage,
 		err,
 		action,
 		params,
@@ -152,13 +152,22 @@ func (wt *httpWriter) WriteErrorUnauthorized(err error, action string, params in
 func (wt *httpWriter) WriteErrorForbidden(err error, action string, params interface{}) {
 	wt.excuteStandardErrorWrite(
 		http.StatusForbidden,
+		ErrForbiddenMessage,
 		err,
 		action,
 		params,
 	)
 }
 
-func (wt *httpWriter) excuteStandardErrorWrite(status int, err error, action string, params interface{}) {
+type standardErrorWrite struct {
+	status  int
+	message string
+	err     error
+	action  string
+	params  interface{}
+}
+
+func (wt *httpWriter) excuteStandardErrorWrite(status int, message string, err error, action string, params interface{}) {
 	wt.w.WriteHeader(status)
 	json.NewEncoder(wt.w).Encode(
 		map[string]interface{}{
