@@ -172,7 +172,7 @@ func (wt *httpWriter) excuteStandardErrorWrite(status int, message string, err e
 	json.NewEncoder(wt.w).Encode(
 		map[string]interface{}{
 			"status":  status,
-			"message": ErrForbiddenMessage,
+			"message": message,
 		},
 	)
 
