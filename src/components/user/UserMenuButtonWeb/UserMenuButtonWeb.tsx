@@ -1,9 +1,7 @@
 import { css } from '@emotion/react';
-import useUserMenuButtonActions from '../../../hooks/user/useUserMenuButtonActions';
 import useUserState from '../../../hooks/user/useUserState';
-import { UserIcon } from '../../../image/icons';
-import { googlePhotoUrlSizeChange } from '../../../lib/utils';
 import { themePalette } from '../../../styles';
+import UserMenuButtonProfileIcon from './UserMenuButtonProfileIcon';
 import UserMenuButtonAuth from './UserMenuButtonWebAuth';
 import UserMenuButtonWebNavigation from './UserMenuButtonWebNavigation';
 
@@ -11,7 +9,6 @@ interface UserMenuButtonWebProps {}
 
 function UserMenuButtonWeb(props: UserMenuButtonWebProps) {
   const { isPending, userTokenProfile } = useUserState();
-  const { handleNavigation } = useUserMenuButtonActions();
 
   if (isPending) {
     return (
@@ -29,14 +26,7 @@ function UserMenuButtonWeb(props: UserMenuButtonWebProps) {
 
   return (
     <div css={block}>
-      {userTokenProfile.photo_url ? (
-        <img
-          src={googlePhotoUrlSizeChange(userTokenProfile.photo_url)}
-          onClick={handleNavigation}
-        />
-      ) : (
-        <UserIcon onClick={handleNavigation} />
-      )}
+      <UserMenuButtonProfileIcon />
       <UserMenuButtonWebNavigation />
     </div>
   );
