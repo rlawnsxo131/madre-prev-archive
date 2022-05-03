@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import useUserPersonalMenuActions from '../../../hooks/user/useUserPersonalMenuAction';
+import useUserMenuButtonActions from '../../../hooks/user/useUserMenuButtonActions';
 import useUserState from '../../../hooks/user/useUserState';
 import { UserIcon } from '../../../image/icons';
 import { googlePhotoUrlSizeChange } from '../../../lib/utils';
@@ -11,7 +11,7 @@ interface UserMenuButtonWebProps {}
 
 function UserMenuButtonWeb(props: UserMenuButtonWebProps) {
   const { isPending, userTokenProfile } = useUserState();
-  const { handleNavigation } = useUserPersonalMenuActions();
+  const { handleNavigation } = useUserMenuButtonActions();
 
   if (isPending) {
     return (

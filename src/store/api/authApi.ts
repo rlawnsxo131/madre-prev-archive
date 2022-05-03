@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
-  DeleteAuthResponse,
   GetAuthResponse,
   PostAuthGoogleCheckParams,
   PostAuthGoogleCheckResponse,
@@ -46,7 +45,7 @@ const authApi = createApi({
       },
       providesTags: ['Auth'],
     }),
-    delete: build.mutation<DeleteAuthResponse, undefined>({
+    delete: build.mutation<undefined, undefined>({
       query() {
         return {
           url: '',
@@ -54,11 +53,12 @@ const authApi = createApi({
         };
       },
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        dispatch(common.actions.showLoading());
-
         try {
+          dispatch(common.actions.showLoading());
           await queryFulfilled;
+
           dispatch(user.actions.resetUser());
+          dispatch(user.actions.closeNavigation());
           dispatch(common.actions.closeLoading());
         } catch (e) {
           dispatch(common.actions.closeLoading());

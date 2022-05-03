@@ -28,7 +28,3 @@ export interface PostAuthGoogleSignUpParams {
 export interface PostAuthGoogleSignUpResponse {
   user_token_profile: UserTokenProfile;
 }
-
-export interface DeleteAuthResponse {
-  is_success: boolean;
-}

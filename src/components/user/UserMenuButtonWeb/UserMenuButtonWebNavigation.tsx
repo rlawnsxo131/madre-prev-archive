@@ -14,19 +14,16 @@ interface UserMenuButtonWebNavigationProps {}
 
 function UserMenuButtonWebNavigation(props: UserMenuButtonWebNavigationProps) {
   const signOut = useUserSignOut();
-  const {
-    userTokenProfile,
-    menu: { navigationVisible },
-  } = useUserState();
+  const { menu, userTokenProfile } = useUserState();
   const closed = useTransitionTimeoutEffect({
-    visible: navigationVisible,
+    visible: menu.visible,
   });
 
-  if (!navigationVisible && closed) return null;
+  if (!menu.visible && closed) return null;
   if (!userTokenProfile) return null;
 
   return (
-    <div css={block(navigationVisible)}>
+    <div css={block(menu.visible)}>
       <ul css={ul}>
         <li>
           <NavLink
