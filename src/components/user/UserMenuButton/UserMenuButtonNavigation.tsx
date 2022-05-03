@@ -1,18 +1,13 @@
 import { css } from '@emotion/react';
-import { NavLink } from 'react-router-dom';
 import useUserSignOut from '../../../hooks/user/useUserSignOut';
 import useUserState from '../../../hooks/user/useUserState';
 import useTransitionTimeoutEffect from '../../../hooks/useTransitionTimeoutEffect';
-import {
-  standardColor,
-  themePalette,
-  transitions,
-  zIndexes,
-} from '../../../styles';
+import { themePalette, transitions, zIndexes } from '../../../styles';
+import MadreLink from '../../common/MadreLink';
 
-interface UserMenuButtonWebNavigationProps {}
+interface UserMenuButtonNavigationProps {}
 
-function UserMenuButtonWebNavigation(props: UserMenuButtonWebNavigationProps) {
+function UserMenuButtonNavigation(props: UserMenuButtonNavigationProps) {
   const signOut = useUserSignOut();
   const { menu, userTokenProfile } = useUserState();
   const closed = useTransitionTimeoutEffect({
@@ -26,15 +21,11 @@ function UserMenuButtonWebNavigation(props: UserMenuButtonWebNavigationProps) {
     <div css={block(menu.visible)}>
       <ul css={ul}>
         <li>
-          <NavLink
-            css={link}
+          <MadreLink
             to={`/@${userTokenProfile.display_name}`}
-            // style={({isActive}) => ({
-            //   color: isActive ? standardColor.navigation.active : themePalette.text1
-            // })}
-          >
-            마이 페이지
-          </NavLink>
+            displayName="마이 페이지"
+            parentDirection="column"
+          />
         </li>
         <li>
           <button css={button} onClick={signOut}>
@@ -50,7 +41,7 @@ const block = (visible: boolean) => css`
   position: absolute;
   top: 3.25rem;
   right: 0;
-  width: 8rem;
+  width: 10rem;
   height: auto;
   padding: 0.25rem 0.5rem;
   display: flex;
@@ -78,18 +69,6 @@ const ul = css`
   justify-content: center;
 `;
 
-const link = css`
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-  font-size: 0.9rem;
-  font-weight: bold;
-  padding: 0.5rem 0.25rem 0.5rem 0.25rem;
-  &.active {
-    color: ${standardColor.navigation.active};
-  }
-`;
-
 const button = css`
   background: none;
   outline: none;
@@ -105,4 +84,4 @@ const button = css`
   color: ${themePalette.text1};
 `;
 
-export default UserMenuButtonWebNavigation;
+export default UserMenuButtonNavigation;

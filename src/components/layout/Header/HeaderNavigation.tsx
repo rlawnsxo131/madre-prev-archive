@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
-import { NavLink } from 'react-router-dom';
-import { standardColor } from '../../../styles';
+import { appDisplayRoutes } from '../../../constants';
+import MadreLink from '../../common/MadreLink';
 
 interface HeaderNavigationProps {}
 
@@ -8,21 +8,11 @@ function HeaderNavigation(props: HeaderNavigationProps) {
   return (
     <nav css={block}>
       <ul css={ul}>
-        <li>
-          <NavLink css={link} to="/madre-story">
-            Madre 이야기
-          </NavLink>
-        </li>
-        <li>
-          <NavLink css={link} to="/notice">
-            공지사항
-          </NavLink>
-        </li>
-        <li>
-          <NavLink css={link} to="/guide">
-            가이드 및 튜토리얼
-          </NavLink>
-        </li>
+        {appDisplayRoutes.map((v) => (
+          <li key={`app_root_route_${v.path}`}>
+            <MadreLink to={v.path} displayName={v.displayName} />
+          </li>
+        ))}
       </ul>
     </nav>
   );
@@ -41,17 +31,6 @@ const ul = css`
   display: flex;
   justify-content: center;
   align-items: center;
-`;
-
-const link = css`
-  display: flex;
-  align-items: center;
-  font-size: 0.875rem;
-  font-weight: bold;
-  padding: 0 1rem;
-  &.active {
-    color: ${standardColor.navigation.active};
-  }
 `;
 
 export default HeaderNavigation;

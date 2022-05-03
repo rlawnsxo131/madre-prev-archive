@@ -1,9 +1,10 @@
 import { css } from '@emotion/react';
-import { NavLink } from 'react-router-dom';
-import { standardColor, transitions, zIndexes } from '../../../styles';
+import { transitions, zIndexes } from '../../../styles';
 import useTransitionTimeoutEffect from '../../../hooks/useTransitionTimeoutEffect';
 import useHeaderState from '../../../hooks/layout/useLayoutHeaderState';
 import { themePalette } from '../../../styles';
+import { appDisplayRoutes } from '../../../constants';
+import MadreLink from '../../common/MadreLink';
 
 interface HeaderMobileNavigationLinksProps {}
 
@@ -18,21 +19,15 @@ function HeaderMobileNavigationLinks(props: HeaderMobileNavigationLinksProps) {
   return (
     <nav css={block(visible)}>
       <ul css={ul}>
-        <li>
-          <NavLink css={link} to="/madre-story">
-            Madre 이야기
-          </NavLink>
-        </li>
-        <li>
-          <NavLink css={link} to="/notice">
-            공지사항
-          </NavLink>
-        </li>
-        <li>
-          <NavLink css={link} to="/guide">
-            가이드 및 튜토리얼
-          </NavLink>
-        </li>
+        {appDisplayRoutes.map((v) => (
+          <li key={`root_route_mobile_${v.path}`}>
+            <MadreLink
+              to={v.path}
+              displayName={v.displayName}
+              parentDirection="column"
+            />
+          </li>
+        ))}
       </ul>
     </nav>
   );
@@ -68,18 +63,6 @@ const ul = css`
   display: flex;
   flex-direction: column;
   justify-content: center;
-`;
-
-const link = css`
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-  font-size: 0.9rem;
-  font-weight: bold;
-  padding: 0.5rem 0.25rem 0.5rem 0.25rem;
-  &.active {
-    color: ${standardColor.navigation.active};
-  }
 `;
 
 export default HeaderMobileNavigationLinks;

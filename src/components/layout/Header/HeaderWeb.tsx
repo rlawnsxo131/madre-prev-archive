@@ -3,7 +3,7 @@ import { media, mediaQuery } from '../../../styles';
 import HeaderLogo from './HeaderLogo';
 import HeaderNavigation from './HeaderNavigation';
 import ButtonThemeChange from '../../common/ButtonThemeChange';
-import UserMenuButtonWeb from '../../user/UserMenuButtonWeb';
+import UserMenuButton from '../../user/UserMenuButton';
 
 interface HeaderWebProps {}
 
@@ -13,8 +13,8 @@ function HeaderWeb(props: HeaderWebProps) {
       <HeaderLogo />
       <div css={itemBlock}>
         <HeaderNavigation />
-        <UserMenuButtonWeb />
-        <div css={themeChangeButtonBlock}>
+        <UserMenuButton />
+        <div css={buttonThemeChangeBlock}>
           <ButtonThemeChange />
         </div>
       </div>
@@ -47,7 +47,7 @@ const itemBlock = css`
   justify-content: center;
 `;
 
-const themeChangeButtonBlock = css`
+const buttonThemeChangeBlock = css`
   margin-left: 1rem;
 `;
 

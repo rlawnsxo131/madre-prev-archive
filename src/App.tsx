@@ -13,8 +13,8 @@ function App(props: AppProps) {
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route path="madre-story" element={<MadreStoryPage />} />
-          <Route path="guide" element={<div>guide</div>} />
           <Route path="notice" element={<div>notice</div>} />
+          <Route path="guide" element={<div>guide</div>} />
           <Route path="policy" element={<div>policy</div>} />
         </Route>
         <Route path="/@:displayName" element={<Layout />}>

@@ -1,27 +1,17 @@
-import { useLocation, useNavigate, matchRoutes } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import authApi from '../../store/api/authApi';
-
-const userPersonalPath = '/@:displayName';
-const routes = [{ path: userPersonalPath }];
+import useIsUserPath from '../useIsUserPath';
 
 export default function useUserSignOut() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const routeInfo = matchRoutes(routes, location);
   const [signOut] = authApi.useDeleteMutation();
+  const isUserPath = useIsUserPath();
 
   return async () => {
     try {
       await signOut(undefined);
-      if (routeInfo) {
-        const [
-          {
-            route: { path },
-          },
-        ] = routeInfo;
-        if (path === userPersonalPath) {
-          navigate('/', { replace: true });
-        }
+      if (isUserPath) {
+        navigate('/', { replace: true });
       }
     } catch (e) {}
   };

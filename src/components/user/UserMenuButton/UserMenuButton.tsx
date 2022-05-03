@@ -2,12 +2,12 @@ import { css } from '@emotion/react';
 import useUserState from '../../../hooks/user/useUserState';
 import { themePalette } from '../../../styles';
 import UserMenuButtonProfileIcon from './UserMenuButtonProfileIcon';
-import UserMenuButtonAuth from './UserMenuButtonWebAuth';
-import UserMenuButtonWebNavigation from './UserMenuButtonWebNavigation';
+import UserMenuButtonAuth from './UserMenuButtonAuth';
+import UserMenuButtonNavigation from './UserMenuButtonNavigation';
 
-interface UserMenuButtonWebProps {}
+interface UserMenuButtonProps {}
 
-function UserMenuButtonWeb(props: UserMenuButtonWebProps) {
+function UserMenuButton(props: UserMenuButtonProps) {
   const { isPending, userTokenProfile } = useUserState();
 
   if (isPending) {
@@ -27,7 +27,7 @@ function UserMenuButtonWeb(props: UserMenuButtonWebProps) {
   return (
     <div css={block}>
       <UserMenuButtonProfileIcon />
-      <UserMenuButtonWebNavigation />
+      <UserMenuButtonNavigation />
     </div>
   );
 }
@@ -59,4 +59,4 @@ const block = css`
   }
 `;
 
-export default UserMenuButtonWeb;
+export default UserMenuButton;
