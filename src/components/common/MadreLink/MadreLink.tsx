@@ -31,21 +31,23 @@ const link = (parentDirection: ParentsDirection) => css`
     color: ${standardColor.navigation.active};
   }
 
-  ${parentDirection === 'row'
-    ? css`
-        display: flex;
-        align-items: center;
-        font-size: 0.875rem;
-        font-weight: bold;
-        padding: 0 1rem;
-      `
-    : css`
-        flex-flow: row wrap;
-        align-items: center;
-        font-size: 0.9rem;
-        font-weight: bold;
-        padding: 0.5rem 0.25rem 0.5rem 0.25rem;
-      `}
+  ${parentDirection === 'row' &&
+  css`
+    display: flex;
+    align-items: center;
+    font-size: 0.875rem;
+    font-weight: bold;
+    padding: 0 1rem;
+  `}
+
+  ${parentDirection === 'column' &&
+  css`
+    flex-flow: row wrap;
+    align-items: center;
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 0.5rem 0.25rem 0.5rem 0.25rem;
+  `}
 `;
 
 export default MadreLink;
