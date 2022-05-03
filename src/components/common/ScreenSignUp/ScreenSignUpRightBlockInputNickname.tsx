@@ -30,7 +30,7 @@ function ScreenSignUpRightBlockInputNickname(
         />
       </div>
       <div css={footer}>
-        <Button color="pink" onClick={onSignUp}>
+        <Button color="blue" onClick={onSignUp}>
           확인
         </Button>
       </div>

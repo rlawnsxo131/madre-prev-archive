@@ -3,7 +3,7 @@ import { themePalette } from '../../../styles';
 
 export type ButtonShape = 'rect' | 'round';
 export type ButtonSize = 'small' | 'medium' | 'large' | 'responsive';
-export type ButtonColor = 'gray' | 'pink';
+export type ButtonColor = 'gray' | 'blue';
 
 export const buttonSizeMap = {
   small: {
@@ -28,7 +28,7 @@ export const buttonColorMap = {
     background: palette.gray['700'],
     hoverBackground: palette.gray['600'],
   },
-  pink: {
+  blue: {
     background: palette.blue['600'],
     hoverBackground: palette.blue['500'],
   },

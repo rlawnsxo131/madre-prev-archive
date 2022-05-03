@@ -34,10 +34,10 @@ function PopupAuthRightBlockIsError({
         <CancelImage />
       </div>
       <div css={buttonBlock}>
-        <Button size="responsive" color="pink" outline onClick={resetError}>
+        <Button size="responsive" color="blue" outline onClick={resetError}>
           Try again
         </Button>
-        <Button size="responsive" color="pink" onClick={reset}>
+        <Button size="responsive" color="blue" onClick={reset}>
           Close
         </Button>
       </div>
