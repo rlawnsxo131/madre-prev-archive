@@ -36,14 +36,6 @@ type HttpWriter interface {
 	)
 }
 
-type standardErrorInfo struct {
-	status  int
-	message string
-	err     error
-	action  string
-	params  interface{}
-}
-
 type httpWriter struct {
 	w http.ResponseWriter
 	r *http.Request
