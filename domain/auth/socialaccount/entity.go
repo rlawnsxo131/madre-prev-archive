@@ -18,14 +18,12 @@ type SocialAccount struct {
 	UpdatedAt time.Time `json:"updated_at" db:"updated_at"`
 }
 
-func (sa *SocialAccount) GetExistSocialAccountMap(err error) (map[string]bool, error) {
+func (sa *SocialAccount) IsExist(err error) (bool, error) {
 	exist := false
 
 	if err != nil {
 		if err == sql.ErrNoRows {
 			exist = false
-		} else {
-			return nil, err
 		}
 	}
 
@@ -33,5 +31,5 @@ func (sa *SocialAccount) GetExistSocialAccountMap(err error) (map[string]bool, e
 		exist = true
 	}
 
-	return map[string]bool{"exist": exist}, nil
+	return exist, err
 }

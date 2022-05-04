@@ -8,14 +8,14 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_AuthService_GetExistSocialAccountMap_ExistIsTrue(t *testing.T) {
+func Test_AuthService_IsExist_IsTrue(t *testing.T) {
 	assert := assert.New(t)
 
 	sa := &socialaccount.SocialAccount{
 		ID: utils.GenerateUUIDString(),
 	}
-	existSocialAccountMap, err := sa.GetExistSocialAccountMap(nil)
+	exist, err := sa.IsExist(nil)
 
 	assert.Nil(err)
-	assert.True(existSocialAccountMap["exist"])
+	assert.True(exist)
 }

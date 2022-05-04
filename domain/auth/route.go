@@ -110,7 +110,7 @@ func postGoogleCheck() http.HandlerFunc {
 			socialaccount.Key_Provider_GOOGLE,
 			profile.SocialId,
 		)
-		existSocialAccountMap, err := socialAccount.GetExistSocialAccountMap(err)
+		exist, err := socialAccount.IsExist(err)
 		if err != nil {
 			writer.WriteError(
 				err,
@@ -119,7 +119,9 @@ func postGoogleCheck() http.HandlerFunc {
 			return
 		}
 
-		writer.WriteCompress(existSocialAccountMap)
+		writer.WriteCompress(map[string]bool{
+			"exist": exist,
+		})
 	}
 }
 
