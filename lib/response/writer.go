@@ -14,11 +14,11 @@ import (
 )
 
 const (
-	ErrBadRequestMessage     = "BAD_REQUEST"           // 400
-	ErrNotFoundMessage       = "NOT_FOUND"             // 404
-	ErrInternalServerMessage = "INTERNAL_SERVER_ERROR" // 500
-	ErrUnauthorizedMessage   = "UNAUTHORIZED"          // 401
-	ErrForbiddenMessage      = "FORBIDDEN"             // 403
+	Http_BadRequestMessage          = "BadRequest"          // 400
+	Http_NotFoundMessage            = "NotFound"            // 404
+	Http_InternalServerErrorMessage = "InternalServerError" // 500
+	Http_UnauthorizedMessage        = "Unauthorized"        // 401
+	Http_ForbiddenMessage           = "Forbidden"           // 403
 )
 
 type HttpWriter interface {
@@ -109,11 +109,11 @@ func (wt *httpWriter) WriteCompress(data interface{}) {
 
 func (wt *httpWriter) WriteError(err error, action string, msg ...string) {
 	status := http.StatusInternalServerError
-	message := ErrInternalServerMessage
+	message := Http_InternalServerErrorMessage
 
 	if err == sql.ErrNoRows {
 		status = http.StatusNotFound
-		message = ErrNotFoundMessage
+		message = Http_NotFoundMessage
 	}
 
 	wt.w.WriteHeader(status)
@@ -140,7 +140,7 @@ func (wt *httpWriter) WriteError(err error, action string, msg ...string) {
 func (wt *httpWriter) WriteErrorBadRequest(err error, action string, params interface{}) {
 	wt.excuteStandardErrorWrite(
 		http.StatusBadRequest,
-		ErrBadRequestMessage,
+		Http_BadRequestMessage,
 		err,
 		action,
 		params,
@@ -150,7 +150,7 @@ func (wt *httpWriter) WriteErrorBadRequest(err error, action string, params inte
 func (wt *httpWriter) WriteErrorUnauthorized(err error, action string, params interface{}) {
 	wt.excuteStandardErrorWrite(
 		http.StatusUnauthorized,
-		ErrUnauthorizedMessage,
+		Http_UnauthorizedMessage,
 		err,
 		action,
 		params,
@@ -160,7 +160,7 @@ func (wt *httpWriter) WriteErrorUnauthorized(err error, action string, params in
 func (wt *httpWriter) WriteErrorForbidden(err error, action string, params interface{}) {
 	wt.excuteStandardErrorWrite(
 		http.StatusForbidden,
-		ErrForbiddenMessage,
+		Http_ForbiddenMessage,
 		err,
 		action,
 		params,
