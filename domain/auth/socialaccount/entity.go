@@ -23,7 +23,9 @@ func (sa *SocialAccount) IsExist(err error) (bool, error) {
 
 	if err != nil {
 		if err == sql.ErrNoRows {
-			exist = false
+			return exist, nil
+		} else {
+			return exist, err
 		}
 	}
 
@@ -31,5 +33,5 @@ func (sa *SocialAccount) IsExist(err error) (bool, error) {
 		exist = true
 	}
 
-	return exist, err
+	return exist, nil
 }
