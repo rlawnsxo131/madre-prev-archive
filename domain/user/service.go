@@ -19,7 +19,7 @@ func NewService(db database.Database) Service {
 	}
 }
 
-func (s *service) Create(u User) (string, error) {
+func (s *service) Create(u *User) (string, error) {
 	userWriteRepo := NewWriteRepository(s.db)
 	id, err := userWriteRepo.Create(u)
 	return id, err

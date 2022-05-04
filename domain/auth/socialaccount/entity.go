@@ -1,6 +1,7 @@
 package socialaccount
 
 import (
+	"database/sql"
 	"time"
 )
 
@@ -15,4 +16,22 @@ type SocialAccount struct {
 	SocialId  string    `json:"social_id" db:"social_id"`
 	CreatedAt time.Time `json:"created_at" db:"created_at"`
 	UpdatedAt time.Time `json:"updated_at" db:"updated_at"`
+}
+
+func (sa *SocialAccount) GetExistSocialAccountMap(err error) (map[string]bool, error) {
+	exist := false
+
+	if err != nil {
+		if err == sql.ErrNoRows {
+			exist = false
+		} else {
+			return nil, err
+		}
+	}
+
+	if sa.ID != "" {
+		exist = true
+	}
+
+	return map[string]bool{"exist": exist}, nil
 }

@@ -6,7 +6,7 @@ import (
 )
 
 type WriteRepository interface {
-	Create(u User) (string, error)
+	Create(u *User) (string, error)
 }
 
 type writeRepository struct {
@@ -19,7 +19,7 @@ func NewWriteRepository(db database.Database) WriteRepository {
 	}
 }
 
-func (r *writeRepository) Create(u User) (string, error) {
+func (r *writeRepository) Create(u *User) (string, error) {
 	var id string
 	var query = "INSERT INTO public.user(email, origin_name, display_name, photo_url) VALUES(:email, :origin_name, :display_name, :photo_url) RETURNING id"
 

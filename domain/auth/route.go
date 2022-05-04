@@ -110,8 +110,7 @@ func postGoogleCheck() http.HandlerFunc {
 			socialaccount.Key_Provider_GOOGLE,
 			profile.SocialId,
 		)
-		authService := NewService()
-		existSocialAccountMap, err := authService.GetExistSocialAccountMap(socialAccount, err)
+		existSocialAccountMap, err := socialAccount.GetExistSocialAccountMap(err)
 		if err != nil {
 			writer.WriteError(
 				err,
@@ -254,8 +253,10 @@ func postGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		authService := NewService()
-		valid, err := authService.ValidateDisplayName(params.DisplayName)
+		u := &user.User{
+			DisplayName: params.DisplayName,
+		}
+		valid, err := u.ValidateDisplayName()
 		if err != nil {
 			writer.WriteError(
 				err,
@@ -282,13 +283,13 @@ func postGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
+		u.Email = profile.Email
+		u.OriginName = utils.NewNullString(profile.DisplayName)
+		u.DisplayName = params.DisplayName
+		u.PhotoUrl = utils.NewNullString(profile.PhotoUrl)
+
 		userService := user.NewService(db)
-		userId, err := userService.Create(user.User{
-			Email:       profile.Email,
-			OriginName:  utils.NewNullString(profile.DisplayName),
-			DisplayName: params.DisplayName,
-			PhotoUrl:    utils.NewNullString(profile.PhotoUrl),
-		})
+		userId, err := userService.Create(u)
 		if err != nil {
 			writer.WriteError(
 				err,
@@ -306,12 +307,13 @@ func postGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		socialAccountService := socialaccount.NewService(db)
-		_, err = socialAccountService.Create(socialaccount.SocialAccount{
+		sa := &socialaccount.SocialAccount{
 			UserID:   user.ID,
 			Provider: "GOOGLE",
 			SocialId: profile.SocialId,
-		})
+		}
+		socialAccountService := socialaccount.NewService(db)
+		_, err = socialAccountService.Create(sa)
 		if err != nil {
 			writer.WriteError(
 				err,
