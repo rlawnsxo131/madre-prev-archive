@@ -1,6 +1,6 @@
 {
   "name": "madre-client",
-  "packageManager": "yarn@3.1.0",
+  "packageManager": "yarn@3.2.0",
   "scripts": {
     "sdk": "yarn dlx @yarnpkg/sdks vscode",
     "sdk:update": "yarn dlx @yarnpkg/sdks",

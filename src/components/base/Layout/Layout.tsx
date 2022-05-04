@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import { Outlet } from 'react-router-dom';
 import Footer from '../Footer';
 import Header from '../Header';
-import layoutStyles from '../layout.styles';
+import baseStyles from '../base.styles';
 
 interface LayoutProps {}
 
@@ -34,7 +34,7 @@ const main = css`
   display: flex;
   justify-content: center;
   position: relative;
-  ${layoutStyles.responsive}
+  ${baseStyles.responsive}
 `;
 
 const content = css`

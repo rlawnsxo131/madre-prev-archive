@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import Core from './components/common/Core';
 import ErrorBoundary from './components/error/ErrorBoundary';
-import Layout from './components/layout/Layout';
+import Layout from './components/base/Layout';
 import { HomePage, MadreStoryPage, NotFoundPage, TestPage2 } from './pages';
 
 interface AppProps {}
