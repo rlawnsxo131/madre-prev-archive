@@ -1,28 +1,29 @@
 import { css } from '@emotion/react';
-import useUserSignOut from '../../../hooks/user/useUserSignOut';
-import useUserState from '../../../hooks/user/useUserState';
 import useTransitionTimeoutEffect from '../../../hooks/useTransitionTimeoutEffect';
 import { themePalette, transitions, zIndexes } from '../../../styles';
 import MadreLink from '../../common/MadreLink';
 
-interface UserMenuButtonNavigationProps {}
+interface UserHeaderMenuItemsProps {
+  signOut: () => Promise<void>;
+  visible: boolean;
+  display_name: string;
+}
 
-function UserMenuButtonNavigation(props: UserMenuButtonNavigationProps) {
-  const signOut = useUserSignOut();
-  const { menu, userTokenProfile } = useUserState();
-  const closed = useTransitionTimeoutEffect({
-    visible: menu.visible,
-  });
+function UserHeaderMenuItems({
+  signOut,
+  visible,
+  display_name,
+}: UserHeaderMenuItemsProps) {
+  const closed = useTransitionTimeoutEffect({ visible });
 
-  if (!menu.visible && closed) return null;
-  if (!userTokenProfile) return null;
+  if (!visible && closed) return null;
 
   return (
-    <div css={block(menu.visible)}>
+    <div css={block(visible)}>
       <ul css={ul}>
         <li>
           <MadreLink
-            to={`/@${userTokenProfile.display_name}`}
+            to={`/@${display_name}`}
             displayName="마이 페이지"
             parentDirection="column"
           />
@@ -84,4 +85,4 @@ const button = css`
   color: ${themePalette.text1};
 `;
 
-export default UserMenuButtonNavigation;
+export default UserHeaderMenuItems;

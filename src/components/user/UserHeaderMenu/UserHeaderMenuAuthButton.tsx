@@ -1,20 +1,19 @@
 import { css } from '@emotion/react';
-import usePopupAuthActions from '../../../hooks/popupAuth/usePopupAuthActions';
 import { themePalette } from '../../../styles';
 
-interface UserMenuButtonAuthProps {}
+interface UserHeaderMenuAuthButtonProps {
+  show: () => void;
+}
 
-function UserMenuButtonAuth(props: UserMenuButtonAuthProps) {
-  const { show } = usePopupAuthActions();
-
+function UserHeaderMenuAuthButton({ show }: UserHeaderMenuAuthButtonProps) {
   return (
-    <button css={button} onClick={show}>
+    <button css={block} onClick={show}>
       로그인
     </button>
   );
 }
 
-const button = css`
+const block = css`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -30,4 +29,4 @@ const button = css`
   background: none;
 `;
 
-export default UserMenuButtonAuth;
+export default UserHeaderMenuAuthButton;

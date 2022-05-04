@@ -3,7 +3,7 @@ import { media, mediaQuery } from '../../../styles';
 import HeaderLogo from './HeaderLogo';
 import HeaderNavigation from './HeaderNavigation';
 import ButtonThemeChange from '../../common/ButtonThemeChange';
-import UserMenuButton from '../../user/UserMenuButton';
+import UserHeaderMenu from '../../user/UserHeaderMenu';
 
 interface HeaderWebProps {}
 
@@ -13,7 +13,7 @@ function HeaderWeb(props: HeaderWebProps) {
       <HeaderLogo />
       <div css={itemBlock}>
         <HeaderNavigation />
-        <UserMenuButton />
+        <UserHeaderMenu />
         <div css={buttonThemeChangeBlock}>
           <ButtonThemeChange />
         </div>
