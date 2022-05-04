@@ -55,9 +55,8 @@ func (r *readRepository) FindAll(limit int) ([]*Data, error) {
 func (r *readRepository) FindOneById(id string) (*Data, error) {
 	var data Data
 
-	query :=
-		"SELECT * FROM data" +
-			"WHERE id = $1"
+	query := "SELECT * FROM data" +
+		"WHERE id = $1"
 
 	err := r.db.QueryRowx(query, id).StructScan(&data)
 	if err != nil {
