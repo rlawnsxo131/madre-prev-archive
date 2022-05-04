@@ -2,7 +2,7 @@ package user
 
 type entityMapper struct{}
 
-func (e entityMapper) toUserEntity(u *User) *User {
+func (e entityMapper) toEntity(u *User) *User {
 	return &User{
 		ID:          u.ID,
 		Email:       u.Email,
@@ -14,7 +14,7 @@ func (e entityMapper) toUserEntity(u *User) *User {
 	}
 }
 
-func (e entityMapper) toUserModel(u *User) *User {
+func (e entityMapper) toModel(u *User) *User {
 	return &User{
 		Email:       u.Email,
 		OriginName:  u.OriginName,
