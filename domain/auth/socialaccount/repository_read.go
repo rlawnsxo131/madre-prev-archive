@@ -11,12 +11,14 @@ type ReadRepository interface {
 }
 
 type readRepository struct {
-	db database.Database
+	db     database.Database
+	mapper entityMapper
 }
 
 func NewReadRepository(db database.Database) ReadRepository {
 	return &readRepository{
-		db: db,
+		db:     db,
+		mapper: entityMapper{},
 	}
 }
 
@@ -30,5 +32,5 @@ func (r *readRepository) FindOneByProviderWithSocialId(provider string, socialId
 		err = utils.ErrNoRowsReturnRawError(err, customError)
 	}
 
-	return &socialAccount, err
+	return r.mapper.toEntity(&socialAccount), err
 }

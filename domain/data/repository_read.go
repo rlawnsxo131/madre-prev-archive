@@ -13,12 +13,14 @@ type ReadRepository interface {
 }
 
 type readRepository struct {
-	db database.Database
+	db     database.Database
+	mapper entityMapper
 }
 
 func NewReadRepository(db database.Database) ReadRepository {
 	return &readRepository{
-		db: db,
+		db:     db,
+		mapper: entityMapper{},
 	}
 }
 
@@ -38,7 +40,7 @@ func (r *readRepository) FindAll(limit int) ([]*Data, error) {
 		if err != nil {
 			return nil, errors.Wrap(err, "DataRepository: FindAll StructScan error")
 		}
-		dataList = append(dataList, &d)
+		dataList = append(dataList, r.mapper.toEntity(&d))
 	}
 
 	if err := rows.Close(); err != nil {
@@ -58,5 +60,5 @@ func (r *readRepository) FindOneById(id string) (*Data, error) {
 		err = utils.ErrNoRowsReturnRawError(err, customError)
 	}
 
-	return &data, err
+	return r.mapper.toEntity(&data), err
 }

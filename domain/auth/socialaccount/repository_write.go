@@ -10,12 +10,14 @@ type WriteRepository interface {
 }
 
 type writeRepository struct {
-	db database.Database
+	db     database.Database
+	mapper entityMapper
 }
 
 func NewWriteRepository(db database.Database) WriteRepository {
 	return &writeRepository{
-		db: db,
+		db:     db,
+		mapper: entityMapper{},
 	}
 }
 
@@ -23,7 +25,11 @@ func (r *writeRepository) Create(socialAccount *SocialAccount) (string, error) {
 	var id string
 	var query = "INSERT INTO social_account(user_id, provider, social_id) VALUES(:user_id, :provider, :social_id) RETURNING id"
 
-	err := r.db.PrepareNamedGet(&id, query, socialAccount)
+	err := r.db.PrepareNamedGet(
+		&id,
+		query,
+		r.mapper.toModel(socialAccount),
+	)
 	if err != nil {
 		return "", errors.Wrap(err, "writeRepository: create")
 	}

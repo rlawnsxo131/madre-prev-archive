@@ -1,15 +1,19 @@
 package data
 
-import "github.com/jmoiron/sqlx"
+import (
+	"github.com/rlawnsxo131/madre-server-v2/database"
+)
 
 type WriteRepository interface{}
 
 type writeRepository struct {
-	db *sqlx.DB
+	db     database.Database
+	mapper entityMapper
 }
 
-func NewWriteRepository(db *sqlx.DB) WriteRepository {
+func NewWriteRepository(db database.Database) WriteRepository {
 	return &writeRepository{
-		db: db,
+		db:     db,
+		mapper: entityMapper{},
 	}
 }
