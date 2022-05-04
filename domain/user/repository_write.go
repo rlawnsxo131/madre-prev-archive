@@ -23,7 +23,9 @@ func NewWriteRepository(db database.Database) WriteRepository {
 
 func (r *writeRepository) Create(u *User) (string, error) {
 	var id string
-	var query = "INSERT INTO public.user(email, origin_name, display_name, photo_url) VALUES(:email, :origin_name, :display_name, :photo_url) RETURNING id"
+
+	query := "INSERT INTO public.user(email, origin_name, display_name, photo_url)" +
+		"VALUES(:email, :origin_name, :display_name, :photo_url) RETURNING id"
 
 	err := r.db.PrepareNamedGet(
 		&id,
