@@ -8,9 +8,6 @@ export default function useScreenSignUpActions() {
 
   return useMemo(
     () => ({
-      show() {
-        dispatch(screenSignUp.actions.show());
-      },
       close() {
         dispatch(screenSignUp.actions.close());
       },

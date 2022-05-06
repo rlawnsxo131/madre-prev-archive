@@ -33,7 +33,7 @@ const authApi = createApi({
           if (data?.user_token_profile) {
             dispatch(
               user.actions.setUser({
-                userTokenProfile: data.user_token_profile,
+                profile: data.user_token_profile,
               }),
             );
           } else {
@@ -97,7 +97,7 @@ const authApi = createApi({
             });
             dispatch(
               user.actions.setUser({
-                userTokenProfile: data.user_token_profile,
+                profile: data.user_token_profile,
               }),
             );
           } else {
@@ -140,7 +140,7 @@ const authApi = createApi({
           } else {
             dispatch(
               user.actions.setUser({
-                userTokenProfile: data.user_token_profile,
+                profile: data.user_token_profile,
               }),
             );
           }

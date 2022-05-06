@@ -9,7 +9,7 @@ export interface SocialAccount {
 }
 
 export interface UserTokenProfile {
+  user_id: string;
   display_name: string;
   photo_url?: string;
-  access_token: string;
 }

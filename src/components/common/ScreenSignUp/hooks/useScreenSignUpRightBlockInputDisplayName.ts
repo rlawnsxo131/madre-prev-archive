@@ -1,10 +1,10 @@
 import useScreenSignUpActions from '../../../../hooks/screenSignUp/useScreenSignUpActions';
 import useScreenSignUpState from '../../../../hooks/screenSignUp/useScreenSignUpState';
 import useInputs from '../../../../hooks/useInputs';
-import { normalizeString } from '../../../../lib/utils';
+import { isNormalEnglishString, normalizeString } from '../../../../lib/utils';
 import authApi from '../../../../store/api/authApi';
 
-export default function useScreenSignUpRightBlockInputNickname() {
+export default function useScreenSignUpRightBlockInputDisplayName() {
   const { access_token } = useScreenSignUpState();
   const [googleSignUp] = authApi.usePostGoogleSignUpMutation();
   const { close } = useScreenSignUpActions();
@@ -22,6 +22,10 @@ export default function useScreenSignUpRightBlockInputNickname() {
         return;
       }
       console.log('displayName 에러');
+      return;
+    }
+    if (!isNormalEnglishString(normalizedDisplayName)) {
+      alert('에러');
       return;
     }
     await googleSignUp({

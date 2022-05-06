@@ -10,7 +10,7 @@ import UserHeaderMenuItems from './UserHeaderMenuItems';
 interface UserHeaderMenuProps {}
 
 function UserHeaderMenu(props: UserHeaderMenuProps) {
-  const { isPending, userTokenProfile, menu } = useUserState();
+  const { isPending, profile, menu } = useUserState();
   const signOut = useUserSignOut();
   const { show } = usePopupAuthActions();
   const { handleNavigation } = useUserMenuButtonActions();
@@ -19,7 +19,7 @@ function UserHeaderMenu(props: UserHeaderMenuProps) {
     return <div css={flexCenter}>loading...</div>;
   }
 
-  if (!userTokenProfile) {
+  if (!profile) {
     return (
       <div css={[block, flexCenter]}>
         <UserHeaderMenuAuthButton show={show} />
@@ -27,7 +27,7 @@ function UserHeaderMenu(props: UserHeaderMenuProps) {
     );
   }
 
-  const { photo_url, display_name } = userTokenProfile;
+  const { photo_url, display_name } = profile;
 
   return (
     <div css={[block, flexCenter]}>

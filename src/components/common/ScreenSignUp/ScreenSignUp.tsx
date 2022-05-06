@@ -4,7 +4,7 @@ import { mediaQuery, themePalette } from '../../../styles';
 import { SnowBackground } from '../Background';
 import ScreenBase from '../ScreenBase';
 import ScreenSignUpLeftBlock from './ScreenSignUpLeftBlock';
-import ScreenSignUpRightBlockInputNickname from './ScreenSignUpRightBlockInputNickname';
+import ScreenSignUpRightBlockInputDisplayName from './ScreenSignUpRightBlockInputDisplayName';
 
 interface ScreenSignUpProps {}
 
@@ -17,7 +17,7 @@ function ScreenSignUp(props: ScreenSignUpProps) {
       <div css={block}>
         <div css={content}>
           <ScreenSignUpLeftBlock />
-          <ScreenSignUpRightBlockInputNickname />
+          <ScreenSignUpRightBlockInputDisplayName />
         </div>
       </div>
     </ScreenBase>

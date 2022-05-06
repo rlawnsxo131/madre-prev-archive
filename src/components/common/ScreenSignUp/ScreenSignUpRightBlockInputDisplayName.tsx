@@ -3,15 +3,15 @@ import { CloseIcon } from '../../../image/icons';
 import { themePalette, zIndexes } from '../../../styles';
 import Button from '../Button';
 import Input from '../Input';
-import useScreenSignUpRightBlockInputNickname from './hooks/useScreenSignUpRightBlockInputNickname';
+import useScreenSignUpRightBlockInputDisplayName from './hooks/useScreenSignUpRightBlockInputDisplayName';
 
-interface ScreenSignUpRightBlockInputNicknameProps {}
+interface ScreenSignUpRightBlockInputDisplayNameProps {}
 
-function ScreenSignUpRightBlockInputNickname(
-  props: ScreenSignUpRightBlockInputNicknameProps,
+function ScreenSignUpRightBlockInputDisplayName(
+  props: ScreenSignUpRightBlockInputDisplayNameProps,
 ) {
   const { state, close, onChange, onSignUp } =
-    useScreenSignUpRightBlockInputNickname();
+    useScreenSignUpRightBlockInputDisplayName();
 
   return (
     <div css={block}>
@@ -19,7 +19,7 @@ function ScreenSignUpRightBlockInputNickname(
         <CloseIcon onClick={close} />
       </div>
       <div css={body}>
-        <h3>닉네임을 입력해 주세요</h3>
+        <h3>사용하실 이름을 입력해 주세요</h3>
         <Input
           size="responsive"
           name="display_name"
@@ -27,6 +27,7 @@ function ScreenSignUpRightBlockInputNickname(
           onChange={onChange}
           minLength={1}
           maxLength={16}
+          placeholder="특수문자 제외, 영문 1~16자"
         />
       </div>
       <div css={footer}>
@@ -67,9 +68,6 @@ const body = css`
   input {
     z-index: ${zIndexes.screenSignUpItems};
   }
-  p {
-    margin: 0;
-  }
 `;
 
 const footer = css`
@@ -81,4 +79,4 @@ const footer = css`
   }
 `;
 
-export default ScreenSignUpRightBlockInputNickname;
+export default ScreenSignUpRightBlockInputDisplayName;

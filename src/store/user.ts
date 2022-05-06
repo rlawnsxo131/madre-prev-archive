@@ -8,7 +8,7 @@ interface UserState {
   menu: {
     visible: boolean;
   };
-  userTokenProfile: UserTokenProfile | null;
+  profile: UserTokenProfile | null;
 }
 
 const initialState: UserState = {
@@ -16,23 +16,20 @@ const initialState: UserState = {
   menu: {
     visible: false,
   },
-  userTokenProfile: null,
+  profile: null,
 };
 
 const user = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser(state, action: PayloadAction<Pick<UserState, 'userTokenProfile'>>) {
-      Storage.setItem(
-        MADRE_USER_TOKEN_PROFILE,
-        action.payload.userTokenProfile,
-      );
-      state.userTokenProfile = action.payload.userTokenProfile;
+    setUser(state, action: PayloadAction<Pick<UserState, 'profile'>>) {
+      Storage.setItem(MADRE_USER_TOKEN_PROFILE, action.payload.profile);
+      state.profile = action.payload.profile;
     },
     resetUser(state) {
       Storage.removeItem(MADRE_USER_TOKEN_PROFILE);
-      state.userTokenProfile = null;
+      state.profile = null;
     },
     setIsPending(state, action: PayloadAction<Pick<UserState, 'isPending'>>) {
       state.isPending = action.payload.isPending;

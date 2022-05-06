@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { memo } from 'react';
 import { palette, themePalette } from '../../../styles';
 import { InputSize, inputSizeMap } from './Input.styles';
 
@@ -8,11 +9,13 @@ interface InputProps
 }
 
 function Input({ size = 'medium', ...props }: InputProps) {
-  return <input css={block(size)} {...props} />;
+  return <input css={input(size)} {...props} />;
 }
 
-const block = (size: InputSize) => css`
-  all: unset;
+const input = (size: InputSize) => css`
+  margin: 0;
+  font: inherit;
+  color: ${themePalette.text1};
   outline: none;
   width: ${inputSizeMap[size].width};
   padding: ${inputSizeMap[size].padding};
@@ -25,6 +28,15 @@ const block = (size: InputSize) => css`
   &:focus {
     border: 2px solid ${palette.blue['500']};
   }
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    transition: background-color 5000s;
+    -webkit-text-font-size: inherit !important;
+    -webkit-text-fill-color: ${themePalette.text1} !important;
+  }
 `;
 
-export default Input;
+export default memo(Input);

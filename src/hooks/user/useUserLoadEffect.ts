@@ -17,11 +17,11 @@ export default function useUserLoadEffect() {
 
   useEffect(() => {
     startTransition(() => {
-      const userTokenProfile = Storage.getItem(MADRE_USER_TOKEN_PROFILE);
-      if (!userTokenProfile) return;
+      const profile = Storage.getItem(MADRE_USER_TOKEN_PROFILE);
+      if (!profile) return;
       dispatch(
         user.actions.setUser({
-          userTokenProfile,
+          profile,
         }),
       );
     });
