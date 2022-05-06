@@ -28,17 +28,17 @@ function PopupAuthRightBlockIsError({
           <WarningIcon fill={palette.blue['600']} />
           <CloseIcon className="popup-auth-close-icon" onClick={reset} />
         </div>
-        <h1 className="is-error">Sorry, An Error Occurred</h1>
+        <h1 className="is-error">이런! 오류가 발생했습니다.</h1>
       </div>
       <div css={PopupAuthStyles.rightBlockBody}>
         <CancelImage />
       </div>
       <div css={buttonBlock}>
         <Button size="responsive" color="blue" outline onClick={resetError}>
-          Try again
+          다시 시도
         </Button>
         <Button size="responsive" color="blue" onClick={reset}>
-          Close
+          닫기
         </Button>
       </div>
     </div>

@@ -14,7 +14,7 @@ function PopupAuthRightBlockWelcomeSignIn({
     <div css={PopupAuthStyles.rightBlock}>
       <div css={PopupAuthStyles.rightBlockHeader}>
         <CloseIcon className="popup-auth-close-icon" onClick={close} />
-        <h1>Welcome To Madre</h1>
+        <h1>Madre 에 오신걸 환영해요!</h1>
       </div>
       <div css={PopupAuthStyles.rightBlockBody}>
         <InspirationImage />

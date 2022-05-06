@@ -60,7 +60,7 @@ const block = (
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  outline: none;
+  /* outline: none; */
   border: none;
   box-sizing: border-box;
   cursor: pointer;
@@ -69,17 +69,17 @@ const block = (
 
   ${outline &&
   css`
-    color: ${buttonColorMap[color].background};
+    color: ${buttonOutlineStyle[color].default};
     background: ${buttonOutlineStyle.background};
     &:hover {
-      color: ${buttonColorMap[color].hoverBackground};
-      border: 1px solid ${buttonColorMap[color].hoverBackground};
+      color: ${buttonOutlineStyle[color].hover};
+      border: 1px solid ${buttonOutlineStyle[color].hover};
       opacity: ${buttonOutlineStyle.opacity};
     }
   `}
   ${!outline &&
   css`
-    color: ${palette.white};
+    color: ${buttonColorMap[color].font};
     background: ${buttonColorMap[color].background};
     &:hover {
       background: ${buttonColorMap[color].hoverBackground};

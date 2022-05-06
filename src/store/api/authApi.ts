@@ -12,6 +12,20 @@ import popupAuth from '../popupAuth';
 import screenSignUp from '../screenSignUp';
 import user from '../user';
 
+/**
+ * catch block error response data set
+ * {
+ *   error: {
+ *     status: 500,
+ *     data: {
+ *       message: "InternalServerError"
+ *       status: 500
+ *     }
+ *   }
+ *   isUnhandledError: false
+ *   meta: {request: Request, response: Response}
+ * }
+ */
 const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({

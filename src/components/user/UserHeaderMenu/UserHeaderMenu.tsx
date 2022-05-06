@@ -1,8 +1,10 @@
 import { css } from '@emotion/react';
 import usePopupAuthActions from '../../../hooks/popupAuth/usePopupAuthActions';
+import useUserIsPendingState from '../../../hooks/user/useUserIsPendingState';
 import useUserMenuButtonActions from '../../../hooks/user/useUserMenuButtonActions';
+import useUserMenuState from '../../../hooks/user/useUserMenuState';
+import useUserProfileState from '../../../hooks/user/useUserProfileState';
 import useUserSignOut from '../../../hooks/user/useUserSignOut';
-import useUserState from '../../../hooks/user/useUserState';
 import UserHeaderMenuAuthButton from './UserHeaderMenuAuthButton';
 import UserHeaderMenuIcon from './UserHeaderMenuIcon';
 import UserHeaderMenuItems from './UserHeaderMenuItems';
@@ -10,7 +12,9 @@ import UserHeaderMenuItems from './UserHeaderMenuItems';
 interface UserHeaderMenuProps {}
 
 function UserHeaderMenu(props: UserHeaderMenuProps) {
-  const { isPending, profile, menu } = useUserState();
+  const isPending = useUserIsPendingState();
+  const menu = useUserMenuState();
+  const profile = useUserProfileState();
   const signOut = useUserSignOut();
   const { show } = usePopupAuthActions();
   const { handleNavigation } = useUserMenuButtonActions();
@@ -27,15 +31,16 @@ function UserHeaderMenu(props: UserHeaderMenuProps) {
     );
   }
 
-  const { photo_url, display_name } = profile;
-
   return (
     <div css={[block, flexCenter]}>
-      <UserHeaderMenuIcon onClick={handleNavigation} photo_url={photo_url} />
+      <UserHeaderMenuIcon
+        onClick={handleNavigation}
+        photo_url={profile.photo_url}
+      />
       <UserHeaderMenuItems
         signOut={signOut}
         visible={menu.visible}
-        display_name={display_name}
+        display_name={profile.display_name}
       />
     </div>
   );

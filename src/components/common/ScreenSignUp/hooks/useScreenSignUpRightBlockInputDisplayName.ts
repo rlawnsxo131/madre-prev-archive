@@ -1,16 +1,18 @@
+import { useState } from 'react';
 import useScreenSignUpActions from '../../../../hooks/screenSignUp/useScreenSignUpActions';
 import useScreenSignUpState from '../../../../hooks/screenSignUp/useScreenSignUpState';
 import useInputs from '../../../../hooks/useInputs';
 import { isNormalEnglishString, normalizeString } from '../../../../lib/utils';
 import authApi from '../../../../store/api/authApi';
 
-export default function useScreenSignUpRightBlockInputDisplayName() {
-  const { access_token } = useScreenSignUpState();
+export default function useScreenSignUpInputDisplayName() {
+  const { isError, access_token } = useScreenSignUpState();
   const [googleSignUp] = authApi.usePostGoogleSignUpMutation();
   const { close } = useScreenSignUpActions();
   const { state, onChange } = useInputs({
     display_name: '',
   });
+  const [isValidateError, setIsValidateError] = useState(true);
 
   const onSignUp = async () => {
     const normalizedAccessToken = normalizeString(access_token);
@@ -18,14 +20,14 @@ export default function useScreenSignUpRightBlockInputDisplayName() {
 
     if (!normalizedAccessToken || !normalizedDisplayName) {
       if (!normalizedAccessToken) {
-        console.log('시스템 에러');
+        console.log('system error ');
         return;
       }
-      console.log('displayName 에러');
+      setIsValidateError(true);
       return;
     }
     if (!isNormalEnglishString(normalizedDisplayName)) {
-      alert('에러');
+      setIsValidateError(true);
       return;
     }
     await googleSignUp({
@@ -36,6 +38,8 @@ export default function useScreenSignUpRightBlockInputDisplayName() {
 
   return {
     state,
+    isError,
+    isValidateError,
     close,
     onChange,
     onSignUp,

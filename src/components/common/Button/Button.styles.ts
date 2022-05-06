@@ -25,16 +25,26 @@ export const buttonSizeMap = {
 
 export const buttonColorMap = {
   gray: {
+    font: palette.white,
     background: palette.gray['700'],
     hoverBackground: palette.gray['600'],
   },
   blue: {
+    font: palette.white,
     background: palette.blue['600'],
     hoverBackground: palette.blue['500'],
   },
 };
 
 export const buttonOutlineStyle = {
-  background: themePalette.bg_button1,
+  blue: {
+    default: palette.blue['600'],
+    hover: palette.blue['500'],
+  },
+  gray: {
+    default: palette.gray['700'],
+    hover: palette.gray['600'],
+  },
+  background: 'inherit',
   opacity: themePalette.opacity_button1,
 };
