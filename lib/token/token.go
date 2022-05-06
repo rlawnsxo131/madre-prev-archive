@@ -23,9 +23,9 @@ var (
 )
 
 type UserTokenProfile struct {
+	UserID      string `json:"user_id"`
 	DisplayName string `json:"display_name"`
 	PhotoUrl    string `json:"photo_url"`
-	AccessToken string `json:"access_token"`
 }
 
 type authTokenClaims struct {
@@ -36,7 +36,7 @@ type authTokenClaims struct {
 	jwt.StandardClaims
 }
 
-func GenerateTokens(userId string, displayName string, photoUrl string) (string, string, error) {
+func GenerateTokens(profile *UserTokenProfile) (string, string, error) {
 	now := time.Now()
 	var accessToken string
 	var refreshToken string
@@ -47,9 +47,9 @@ func GenerateTokens(userId string, displayName string, photoUrl string) (string,
 		if tokenType == Key_AccessToken {
 			claims = authTokenClaims{
 				TokenUUID:   utils.GenerateUUIDString(),
-				UserID:      userId,
-				DisplayName: displayName,
-				PhotoUrl:    photoUrl,
+				UserID:      profile.UserID,
+				DisplayName: profile.DisplayName,
+				PhotoUrl:    profile.PhotoUrl,
 				StandardClaims: jwt.StandardClaims{
 					ExpiresAt: now.AddDate(0, 0, 1).Unix(),
 					Issuer:    "madre",
@@ -60,9 +60,9 @@ func GenerateTokens(userId string, displayName string, photoUrl string) (string,
 		if tokenType == Key_RefreshToken {
 			claims = authTokenClaims{
 				TokenUUID:   utils.GenerateUUIDString(),
-				UserID:      userId,
-				DisplayName: displayName,
-				PhotoUrl:    photoUrl,
+				UserID:      profile.UserID,
+				DisplayName: profile.DisplayName,
+				PhotoUrl:    profile.PhotoUrl,
 				StandardClaims: jwt.StandardClaims{
 					ExpiresAt: now.AddDate(0, 0, 30).Unix(),
 					Issuer:    "madre",

@@ -20,13 +20,13 @@ func NewService(db database.Database) Service {
 }
 
 func (s *service) Create(socialAccount *SocialAccount) (string, error) {
-	writeRepo := NewWriteRepository(s.db)
-	id, err := writeRepo.Create(socialAccount)
+	repo := NewWriteRepository(s.db)
+	id, err := repo.Create(socialAccount)
 	return id, err
 }
 
 func (s *service) FindOneByProviderWithSocialId(socialId string, provider string) (*SocialAccount, error) {
-	readRepo := NewReadRepository(s.db)
-	socialAccount, err := readRepo.FindOneByProviderWithSocialId(provider, socialId)
+	repo := NewReadRepository(s.db)
+	socialAccount, err := repo.FindOneByProviderWithSocialId(provider, socialId)
 	return socialAccount, err
 }

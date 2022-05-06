@@ -193,11 +193,12 @@ func postGoogleSignIn() http.HandlerFunc {
 			return
 		}
 
-		accessToken, refreshToken, err := token.GenerateTokens(
-			user.ID,
-			user.DisplayName,
-			utils.NormalizeNullString(user.PhotoUrl),
-		)
+		userTokenProfile := token.UserTokenProfile{
+			UserID:      user.ID,
+			DisplayName: user.DisplayName,
+			PhotoUrl:    utils.NormalizeNullString(user.PhotoUrl),
+		}
+		accessToken, refreshToken, err := token.GenerateTokens(&userTokenProfile)
 		if err != nil {
 			writer.WriteError(
 				err,
@@ -210,9 +211,9 @@ func postGoogleSignIn() http.HandlerFunc {
 
 		writer.WriteCompress(map[string]interface{}{
 			"user_token_profile": token.UserTokenProfile{
+				UserID:      user.ID,
 				DisplayName: user.DisplayName,
 				PhotoUrl:    utils.NormalizeNullString(user.PhotoUrl),
-				AccessToken: accessToken,
 			},
 		})
 	}
@@ -255,8 +256,20 @@ func postGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
+		profile, err := social.GetGoogleProfile(params.AccessToken)
+		if err != nil {
+			writer.WriteError(
+				err,
+				"post /auth/google/sign-up",
+			)
+			return
+		}
+
 		u := &user.User{
+			Email:       profile.Email,
+			OriginName:  utils.NewNullString(profile.DisplayName),
 			DisplayName: params.DisplayName,
+			PhotoUrl:    utils.NewNullString(profile.PhotoUrl),
 		}
 		valid, err := u.ValidateDisplayName()
 		if err != nil {
@@ -275,20 +288,6 @@ func postGoogleSignUp() http.HandlerFunc {
 			)
 			return
 		}
-
-		profile, err := social.GetGoogleProfile(params.AccessToken)
-		if err != nil {
-			writer.WriteError(
-				err,
-				"post /auth/google/sign-up",
-			)
-			return
-		}
-
-		u.Email = profile.Email
-		u.OriginName = utils.NewNullString(profile.DisplayName)
-		u.DisplayName = params.DisplayName
-		u.PhotoUrl = utils.NewNullString(profile.PhotoUrl)
 
 		userService := user.NewService(db)
 		userId, err := userService.Create(u)
@@ -309,13 +308,13 @@ func postGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		sa := &socialaccount.SocialAccount{
+		socialAccount := &socialaccount.SocialAccount{
 			UserID:   user.ID,
 			Provider: "GOOGLE",
 			SocialId: profile.SocialId,
 		}
 		socialAccountService := socialaccount.NewService(db)
-		_, err = socialAccountService.Create(sa)
+		_, err = socialAccountService.Create(socialAccount)
 		if err != nil {
 			writer.WriteError(
 				err,
@@ -324,11 +323,12 @@ func postGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		accessToken, refreshToken, err := token.GenerateTokens(
-			user.ID,
-			user.DisplayName,
-			utils.NormalizeNullString(user.PhotoUrl),
-		)
+		userTokenProfile := token.UserTokenProfile{
+			UserID:      user.ID,
+			DisplayName: user.DisplayName,
+			PhotoUrl:    utils.NormalizeNullString(user.PhotoUrl),
+		}
+		accessToken, refreshToken, err := token.GenerateTokens(&userTokenProfile)
 		if err != nil {
 			writer.WriteError(
 				err,
@@ -341,9 +341,9 @@ func postGoogleSignUp() http.HandlerFunc {
 
 		writer.WriteCompress(map[string]interface{}{
 			"user_token_profile": token.UserTokenProfile{
+				UserID:      user.ID,
 				DisplayName: user.DisplayName,
 				PhotoUrl:    utils.NormalizeNullString(user.PhotoUrl),
-				AccessToken: accessToken,
 			},
 		})
 	}

@@ -70,11 +70,12 @@ func JWT(next http.Handler) http.Handler {
 							r.Context().Value(ctx)
 						} else {
 							// generate tokens and set cookie
-							accessToken, refreshToken, err := token.GenerateTokens(
-								claims.UserID,
-								claims.DisplayName,
-								claims.PhotoUrl,
-							)
+							profile := token.UserTokenProfile{
+								UserID:      claims.UserID,
+								DisplayName: claims.DisplayName,
+								PhotoUrl:    claims.PhotoUrl,
+							}
+							accessToken, refreshToken, err := token.GenerateTokens(&profile)
 							if err != nil {
 								logger.NewDefaultLogger().
 									Err(err).
@@ -88,9 +89,9 @@ func JWT(next http.Handler) http.Handler {
 									r.Context(),
 									constants.Key_UserTokenProfile,
 									&token.UserTokenProfile{
+										UserID:      claims.UserID,
 										DisplayName: claims.DisplayName,
 										PhotoUrl:    claims.PhotoUrl,
-										AccessToken: accessToken,
 									},
 								)
 								if err != nil {
@@ -112,9 +113,9 @@ func JWT(next http.Handler) http.Handler {
 					r.Context(),
 					constants.Key_UserTokenProfile,
 					&token.UserTokenProfile{
+						UserID:      claims.UserID,
 						DisplayName: claims.DisplayName,
 						PhotoUrl:    claims.PhotoUrl,
-						AccessToken: accessToken.Value,
 					},
 				)
 				if err != nil {
@@ -166,11 +167,12 @@ func JWT(next http.Handler) http.Handler {
 					r.Context().Value(ctx)
 				} else {
 					// generate tokens and set cookie
-					accessToken, refreshToken, err := token.GenerateTokens(
-						claims.UserID,
-						claims.DisplayName,
-						claims.PhotoUrl,
-					)
+					profile := token.UserTokenProfile{
+						UserID:      claims.UserID,
+						DisplayName: claims.DisplayName,
+						PhotoUrl:    claims.PhotoUrl,
+					}
+					accessToken, refreshToken, err := token.GenerateTokens(&profile)
 					if err != nil {
 						logger.NewDefaultLogger().
 							Err(err).
@@ -184,9 +186,9 @@ func JWT(next http.Handler) http.Handler {
 							r.Context(),
 							constants.Key_UserTokenProfile,
 							&token.UserTokenProfile{
+								UserID:      claims.UserID,
 								DisplayName: claims.DisplayName,
 								PhotoUrl:    claims.PhotoUrl,
-								AccessToken: accessToken,
 							},
 						)
 						if err != nil {

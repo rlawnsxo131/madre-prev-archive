@@ -20,13 +20,13 @@ func NewService(db database.Database) *service {
 }
 
 func (s *service) FindAll(limit int) ([]*Data, error) {
-	readRepo := NewReadRepository(s.db)
-	dataList, err := readRepo.FindAll(limit)
+	repo := NewReadRepository(s.db)
+	dataList, err := repo.FindAll(limit)
 	return dataList, err
 }
 
 func (s *service) FindOneById(id string) (*Data, error) {
-	readRepo := NewReadRepository(s.db)
-	data, err := readRepo.FindOneById(id)
+	repo := NewReadRepository(s.db)
+	data, err := repo.FindOneById(id)
 	return data, err
 }

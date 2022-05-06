@@ -26,7 +26,7 @@ func (r *readRepository) FindOneById(id string) (*User, error) {
 	var user User
 
 	query := "SELECT * FROM public.user" +
-		"WHERE id = $1"
+		" WHERE id = $1"
 
 	err := r.db.QueryRowx(query, id).StructScan(&user)
 	if err != nil {

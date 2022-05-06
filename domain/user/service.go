@@ -20,13 +20,13 @@ func NewService(db database.Database) Service {
 }
 
 func (s *service) Create(u *User) (string, error) {
-	userWriteRepo := NewWriteRepository(s.db)
-	id, err := userWriteRepo.Create(u)
+	repo := NewWriteRepository(s.db)
+	id, err := repo.Create(u)
 	return id, err
 }
 
 func (s *service) FindOneById(id string) (*User, error) {
-	userReadRepo := NewReadRepository(s.db)
-	user, err := userReadRepo.FindOneById(id)
+	repo := NewReadRepository(s.db)
+	user, err := repo.FindOneById(id)
 	return user, err
 }
