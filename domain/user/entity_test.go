@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_AuthService_ValidateDisplayName_ValidIsFalse(t *testing.T) {
+func Test_User_ValidateDisplayName_ValidIsFalse(t *testing.T) {
 	assert := assert.New(t)
 
 	u := &user.User{}
@@ -16,7 +16,7 @@ func Test_AuthService_ValidateDisplayName_ValidIsFalse(t *testing.T) {
 	assert.False(valid)
 }
 
-func Test_AuthService_ValidateDisplayName_ValidIsTrue(t *testing.T) {
+func Test_User_ValidateDisplayName_ValidIsTrue(t *testing.T) {
 	assert := assert.New(t)
 
 	u := &user.User{

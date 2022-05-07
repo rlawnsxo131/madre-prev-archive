@@ -34,8 +34,8 @@ func getAll() http.HandlerFunc {
 			return
 		}
 
-		dService := NewService(db)
-		dd, err := dService.FindAll(limit)
+		dataUseCase := NewUseCase(db)
+		dd, err := dataUseCase.FindAll(limit)
 		if err != nil {
 			rw.Error(err, "get /data")
 			return
@@ -57,8 +57,8 @@ func get() http.HandlerFunc {
 			return
 		}
 
-		dService := NewService(db)
-		d, err := dService.FindOneById(id)
+		dataUseCase := NewUseCase(db)
+		d, err := dataUseCase.FindOneById(id)
 		if err != nil {
 			rw.Error(err, "get /data/{id}")
 			return

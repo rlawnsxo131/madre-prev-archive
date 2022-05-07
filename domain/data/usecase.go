@@ -13,7 +13,7 @@ type usecase struct {
 	db database.Database
 }
 
-func NewService(db database.Database) UseCase {
+func NewUseCase(db database.Database) UseCase {
 	return &usecase{
 		db: db,
 	}

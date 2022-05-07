@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_AuthService_IsExist_IsTrue(t *testing.T) {
+func Test_SocialAccount_IsExist_IsTrue(t *testing.T) {
 	assert := assert.New(t)
 
 	sa := &socialaccount.SocialAccount{
