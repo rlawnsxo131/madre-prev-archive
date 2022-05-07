@@ -186,8 +186,8 @@ func postGoogleSignIn() http.HandlerFunc {
 			return
 		}
 
-		userUserCase := user.NewUseCase(db)
-		u, err := userUserCase.FindOneById(sa.UserID)
+		userUseCase := user.NewUseCase(db)
+		u, err := userUseCase.FindOneById(sa.UserID)
 		if err != nil {
 			rw.Error(
 				err,
