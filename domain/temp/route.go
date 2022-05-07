@@ -15,7 +15,7 @@ func ApplyRoutes(v1 *mux.Router) {
 		data := map[string]string{
 			"data": "data",
 		}
-		writer.WriteCompress(data)
+		writer.Compress(data)
 	}).Methods("GET")
 
 	temp.HandleFunc("/post", func(w http.ResponseWriter, r *http.Request) {
@@ -23,6 +23,6 @@ func ApplyRoutes(v1 *mux.Router) {
 		data := map[string]string{
 			"data": "data",
 		}
-		writer.WriteCompress(data)
+		writer.Compress(data)
 	}).Methods("POST", "OPTIONS")
 }

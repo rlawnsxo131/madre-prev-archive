@@ -25,7 +25,7 @@ func NewReadRepository(db database.Database) ReadRepository {
 }
 
 func (r *readRepository) FindAll(limit int) ([]*Data, error) {
-	var dataList []*Data
+	var dd []*Data
 
 	query := "SELECT * FROM data" +
 		"LIMIT $1"
@@ -42,27 +42,27 @@ func (r *readRepository) FindAll(limit int) ([]*Data, error) {
 		if err != nil {
 			return nil, errors.Wrap(err, "DataRepository: FindAll StructScan error")
 		}
-		dataList = append(dataList, r.mapper.toEntity(&d))
+		dd = append(dd, r.mapper.toEntity(&d))
 	}
 
 	if err := rows.Close(); err != nil {
 		return nil, errors.Wrap(err, "DataRepository: FindAll rows.Close error")
 	}
 
-	return dataList, nil
+	return dd, nil
 }
 
 func (r *readRepository) FindOneById(id string) (*Data, error) {
-	var data Data
+	var d Data
 
 	query := "SELECT * FROM data" +
 		" WHERE id = $1"
 
-	err := r.db.QueryRowx(query, id).StructScan(&data)
+	err := r.db.QueryRowx(query, id).StructScan(&d)
 	if err != nil {
 		customError := errors.Wrap(err, "DataRepository: FindOneById error")
 		err = utils.ErrNoRowsReturnRawError(err, customError)
 	}
 
-	return r.mapper.toEntity(&data), err
+	return r.mapper.toEntity(&d), err
 }

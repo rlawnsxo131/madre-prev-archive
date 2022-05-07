@@ -59,7 +59,7 @@ import (
 // 	]
 // }
 
-type googlePeopleProfileOriginal struct {
+type googlePeopleApiResponse struct {
 	ResourceName string `json:"resourceName"`
 	Etag         string `json:"etag"`
 	Names        []struct {
@@ -108,8 +108,14 @@ type googlePeopleProfile struct {
 	DisplayName string
 }
 
-func GetGoogleProfile(accessToken string) (*googlePeopleProfile, error) {
-	req, err := createRequest(accessToken)
+type googleApi struct{}
+
+func NewGoogleApi() *googleApi {
+	return &googleApi{}
+}
+
+func (g *googleApi) Do(accessToken string) (*googlePeopleProfile, error) {
+	req, err := g.createRequest(accessToken)
 	if err != nil {
 		err = errors.Wrap(
 			err,
@@ -118,7 +124,7 @@ func GetGoogleProfile(accessToken string) (*googlePeopleProfile, error) {
 		return nil, err
 	}
 
-	res, err := excuteRequest(req)
+	res, err := g.excuteRequest(req)
 	if err != nil {
 		err = errors.Wrap(
 			err,
@@ -127,7 +133,7 @@ func GetGoogleProfile(accessToken string) (*googlePeopleProfile, error) {
 		return nil, err
 	}
 
-	originProfile, err := mapToGooglePeopleProfileOriginal(res)
+	gapiRes, err := g.mapTogooglePeopleApiResponse(res)
 	if err != nil {
 		err = errors.Wrap(
 			err,
@@ -136,12 +142,12 @@ func GetGoogleProfile(accessToken string) (*googlePeopleProfile, error) {
 		return nil, err
 	}
 
-	googlePeopleProfile := mapToGooglePeopleProfile(originProfile)
+	gPeopleProfile := g.mapToGooglePeopleProfile(gapiRes)
 
-	return googlePeopleProfile, nil
+	return gPeopleProfile, nil
 }
 
-func createRequest(accessToken string) (*http.Request, error) {
+func (g *googleApi) createRequest(accessToken string) (*http.Request, error) {
 	url := "https://people.googleapis.com/v1/people/me?personFields=names,emailAddresses,photos"
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -151,7 +157,7 @@ func createRequest(accessToken string) (*http.Request, error) {
 	return req, nil
 }
 
-func excuteRequest(req *http.Request) (*http.Response, error) {
+func (g *googleApi) excuteRequest(req *http.Request) (*http.Response, error) {
 	client := &http.Client{}
 	res, err := client.Do(req)
 	if err != nil {
@@ -160,30 +166,29 @@ func excuteRequest(req *http.Request) (*http.Response, error) {
 	return res, nil
 }
 
-func mapToGooglePeopleProfileOriginal(res *http.Response) (*googlePeopleProfileOriginal, error) {
+func (g *googleApi) mapTogooglePeopleApiResponse(res *http.Response) (*googlePeopleApiResponse, error) {
 	defer res.Body.Close()
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
 		return nil, err
 	}
 
-	var rawProfile googlePeopleProfileOriginal
-	if err := json.Unmarshal(body, &rawProfile); err != nil {
+	var gapiRes googlePeopleApiResponse
+	if err := json.Unmarshal(body, &gapiRes); err != nil {
 		return nil, err
 	}
-
-	return &rawProfile, nil
+	return &gapiRes, nil
 }
 
-func mapToGooglePeopleProfile(originProfile *googlePeopleProfileOriginal) *googlePeopleProfile {
+func (g *googleApi) mapToGooglePeopleProfile(gapiRes *googlePeopleApiResponse) *googlePeopleProfile {
 	var socialId string
 	var email string
 	var photoUrl string
 	var displayName string
 
 	// must not be null
-	if originProfile.ResourceName != "" {
-		replaceResourceName := strings.ReplaceAll(originProfile.ResourceName, "people/", "")
+	if gapiRes.ResourceName != "" {
+		replaceResourceName := strings.ReplaceAll(gapiRes.ResourceName, "people/", "")
 		if replaceResourceName != "" {
 			socialId = replaceResourceName
 		} else {
@@ -193,22 +198,22 @@ func mapToGooglePeopleProfile(originProfile *googlePeopleProfileOriginal) *googl
 		socialId = utils.GenerateUUIDString()
 	}
 
-	if len(originProfile.EmailAddresses) > 0 {
-		value := originProfile.EmailAddresses[0].Value
+	if len(gapiRes.EmailAddresses) > 0 {
+		value := gapiRes.EmailAddresses[0].Value
 		if value != "" {
 			email = value
 		}
 	}
 
-	if len(originProfile.Photos) > 0 {
-		url := originProfile.Photos[0].Url
+	if len(gapiRes.Photos) > 0 {
+		url := gapiRes.Photos[0].Url
 		if len(url) != 0 {
 			photoUrl = url
 		}
 	}
 
-	if len(originProfile.Names) > 0 {
-		name := strings.Split(originProfile.Names[0].DisplayName, " ")[0]
+	if len(gapiRes.Names) > 0 {
+		name := strings.Split(gapiRes.Names[0].DisplayName, " ")[0]
 		if name != "" {
 			displayName = name
 		}

@@ -23,16 +23,17 @@ func NewReadRepository(db database.Database) ReadRepository {
 }
 
 func (r *readRepository) FindOneByProviderWithSocialId(provider string, socialId string) (*SocialAccount, error) {
-	var socialAccount SocialAccount
+	var sa SocialAccount
 
 	query := "SELECT * FROM social_account" +
-		" WHERE provider = $1 AND social_id = $2"
+		" WHERE provider = $1" +
+		" AND social_id = $2"
 
-	err := r.db.QueryRowx(query, socialId, provider).StructScan(&socialAccount)
+	err := r.db.QueryRowx(query, socialId, provider).StructScan(&sa)
 	if err != nil {
 		customError := errors.Wrap(err, "ReadRepository: FindOneBySocialId")
 		err = utils.ErrNoRowsReturnRawError(err, customError)
 	}
 
-	return r.mapper.toEntity(&socialAccount), err
+	return r.mapper.toEntity(&sa), err
 }

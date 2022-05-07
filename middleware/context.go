@@ -9,7 +9,7 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/lib/syncmap"
 )
 
-func SetSyncMapContext(next http.Handler) http.Handler {
+func SetSyncMapCtx(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ctx := syncmap.GenerateHttpContext(r.Context())
 		r.Context().Value(ctx)
@@ -17,12 +17,12 @@ func SetSyncMapContext(next http.Handler) http.Handler {
 	})
 }
 
-func SetDatabaseToSyncMapContext(next http.Handler) http.Handler {
+func SetDatabaseToSyncMapCtx(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		db, err := database.GetDatabaseInstance()
 		if err != nil {
 			writer := response.NewHttpWriter(w, r)
-			writer.WriteError(
+			writer.Error(
 				err,
 				"SetDBContext",
 			)
@@ -36,7 +36,7 @@ func SetDatabaseToSyncMapContext(next http.Handler) http.Handler {
 		)
 		if err != nil {
 			writer := response.NewHttpWriter(w, r)
-			writer.WriteError(
+			writer.Error(
 				err,
 				"SetDBContext",
 				"context set error",

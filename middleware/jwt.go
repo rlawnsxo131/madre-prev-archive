@@ -20,7 +20,7 @@ func JWT(next http.Handler) http.Handler {
 		if err != nil {
 			if err != http.ErrNoCookie {
 				writer := response.NewHttpWriter(w, r)
-				writer.WriteError(
+				writer.Error(
 					err,
 					"JwtMiddleware",
 					"get Access_token error",
@@ -38,7 +38,7 @@ func JWT(next http.Handler) http.Handler {
 					if err != nil {
 						if err != http.ErrNoCookie {
 							writer := response.NewHttpWriter(w, r)
-							writer.WriteError(
+							writer.Error(
 								err,
 								"JwtMiddleware",
 								"get Refresh_token error",
@@ -61,7 +61,7 @@ func JWT(next http.Handler) http.Handler {
 							)
 							if err != nil {
 								writer := response.NewHttpWriter(w, r)
-								writer.WriteError(
+								writer.Error(
 									err,
 									"JWT",
 								)
@@ -96,7 +96,7 @@ func JWT(next http.Handler) http.Handler {
 								)
 								if err != nil {
 									writer := response.NewHttpWriter(w, r)
-									writer.WriteError(
+									writer.Error(
 										err,
 										"JWT",
 									)
@@ -120,7 +120,7 @@ func JWT(next http.Handler) http.Handler {
 				)
 				if err != nil {
 					writer := response.NewHttpWriter(w, r)
-					writer.WriteError(
+					writer.Error(
 						err,
 						"JWT",
 					)
@@ -135,7 +135,7 @@ func JWT(next http.Handler) http.Handler {
 			if err != nil {
 				if err != http.ErrNoCookie {
 					writer := response.NewHttpWriter(w, r)
-					writer.WriteError(
+					writer.Error(
 						err,
 						"JwtMiddleware",
 						"get Refresh_token error",
@@ -158,7 +158,7 @@ func JWT(next http.Handler) http.Handler {
 					)
 					if err != nil {
 						writer := response.NewHttpWriter(w, r)
-						writer.WriteError(
+						writer.Error(
 							err,
 							"JWT",
 						)
@@ -193,7 +193,7 @@ func JWT(next http.Handler) http.Handler {
 						)
 						if err != nil {
 							writer := response.NewHttpWriter(w, r)
-							writer.WriteError(
+							writer.Error(
 								err,
 								"JWT",
 							)

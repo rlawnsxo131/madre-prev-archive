@@ -88,7 +88,7 @@ func (s *server) applyBaseMiddleware() {
 		middleware.Recovery,
 		middleware.AllowHost,
 		middleware.Cors,
-		middleware.SetSyncMapContext,
+		middleware.SetSyncMapCtx,
 		middleware.JWT,
 	)
 }
@@ -103,14 +103,14 @@ func (s *server) applyHealthSettings() {
 			"Referer": r.Header.Get("Referer"),
 			"Cookies": fmt.Sprint(r.Cookies()),
 		}
-		writer.WriteCompress(data)
+		writer.Compress(data)
 	})
 }
 
 func (s *server) applyApiRoutesAndMiddleware() {
 	api := s.router.NewRoute().PathPrefix("/api").Subrouter()
 	api.Use(
-		middleware.SetDatabaseToSyncMapContext,
+		middleware.SetDatabaseToSyncMapCtx,
 		middleware.ContentTypeToJson,
 	)
 	v1 := api.NewRoute().PathPrefix("/v1").Subrouter()

@@ -15,20 +15,20 @@ var (
 
 func AllowHost(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		requestHost := r.Host
+		reqHost := r.Host
 		validation := false
 		for _, host := range allowHostsWithoutProtocol {
-			if requestHost == host {
+			if reqHost == host {
 				validation = true
 				break
 			}
 		}
 		if !validation {
 			writer := response.NewHttpWriter(w, r)
-			writer.WriteErrorForbidden(
+			writer.ErrorForbidden(
 				errors.New("forbidden host"),
 				"AllowHost",
-				requestHost,
+				reqHost,
 			)
 			return
 		}
@@ -75,7 +75,7 @@ func Recovery(next http.Handler) http.Handler {
 		defer func() {
 			if err := recover(); err != nil {
 				writer := response.NewHttpWriter(w, r)
-				writer.WriteError(
+				writer.Error(
 					errors.New(string(debug.Stack())),
 					"Recovery",
 				)

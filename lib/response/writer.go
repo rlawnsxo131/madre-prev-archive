@@ -22,11 +22,11 @@ const (
 )
 
 type HttpWriter interface {
-	WriteCompress(data interface{})
-	WriteError(err error, action string, msg ...string)
-	WriteErrorBadRequest(err error, action string, params interface{})
-	WriteErrorUnauthorized(err error, action string, params interface{})
-	WriteErrorForbidden(err error, action string, params interface{})
+	Compress(data interface{})
+	Error(err error, action string, msg ...string)
+	ErrorBadRequest(err error, action string, params interface{})
+	ErrorUnauthorized(err error, action string, params interface{})
+	ErrorForbidden(err error, action string, params interface{})
 	excuteStandardErrorWrite(
 		status int,
 		message string,
@@ -48,12 +48,12 @@ func NewHttpWriter(w http.ResponseWriter, r *http.Request) HttpWriter {
 	}
 }
 
-func (wt *httpWriter) WriteCompress(data interface{}) {
+func (wt *httpWriter) Compress(data interface{}) {
 	jsonData, err := json.Marshal(data)
 	if err != nil {
-		wt.WriteError(
+		wt.Error(
 			errors.WithStack(err),
-			"ResponseJsonWriteCompress",
+			"ResponseJsonCompress",
 			"json parse error",
 		)
 		return
@@ -64,9 +64,9 @@ func (wt *httpWriter) WriteCompress(data interface{}) {
 		if strings.Contains(wt.r.Header.Get("Accept-Encoding"), "gzip") {
 			gz, err := gzip.NewWriterLevel(wt.w, gzip.DefaultCompression)
 			if err != nil {
-				wt.WriteError(
+				wt.Error(
 					errors.WithStack(err),
-					"ResponseJsonWriteCompress",
+					"ResponseJsonCompress",
 					"gzip compress error",
 				)
 				return
@@ -80,9 +80,9 @@ func (wt *httpWriter) WriteCompress(data interface{}) {
 		if strings.Contains(wt.r.Header.Get("Accept-Encoding"), "deflate") {
 			df, err := flate.NewWriter(wt.w, flate.DefaultCompression)
 			if err != nil {
-				wt.WriteError(
+				wt.Error(
 					errors.WithStack(err),
-					"ResponseJsonWriteCompress",
+					"ResponseJsonCompress",
 					"dfalte compress error",
 				)
 				return
@@ -99,7 +99,7 @@ func (wt *httpWriter) WriteCompress(data interface{}) {
 	wt.w.Write(jsonData)
 }
 
-func (wt *httpWriter) WriteError(err error, action string, msg ...string) {
+func (wt *httpWriter) Error(err error, action string, msg ...string) {
 	status := http.StatusInternalServerError
 	message := Http_InternalServerErrorMessage
 
@@ -129,7 +129,7 @@ func (wt *httpWriter) WriteError(err error, action string, msg ...string) {
 		Msg(b.String())
 }
 
-func (wt *httpWriter) WriteErrorBadRequest(err error, action string, params interface{}) {
+func (wt *httpWriter) ErrorBadRequest(err error, action string, params interface{}) {
 	wt.excuteStandardErrorWrite(
 		http.StatusBadRequest,
 		Http_BadRequestMessage,
@@ -139,7 +139,7 @@ func (wt *httpWriter) WriteErrorBadRequest(err error, action string, params inte
 	)
 }
 
-func (wt *httpWriter) WriteErrorUnauthorized(err error, action string, params interface{}) {
+func (wt *httpWriter) ErrorUnauthorized(err error, action string, params interface{}) {
 	wt.excuteStandardErrorWrite(
 		http.StatusUnauthorized,
 		Http_UnauthorizedMessage,
@@ -149,7 +149,7 @@ func (wt *httpWriter) WriteErrorUnauthorized(err error, action string, params in
 	)
 }
 
-func (wt *httpWriter) WriteErrorForbidden(err error, action string, params interface{}) {
+func (wt *httpWriter) ErrorForbidden(err error, action string, params interface{}) {
 	wt.excuteStandardErrorWrite(
 		http.StatusForbidden,
 		Http_ForbiddenMessage,

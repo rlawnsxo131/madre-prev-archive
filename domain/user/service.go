@@ -27,6 +27,6 @@ func (s *service) Create(u *User) (string, error) {
 
 func (s *service) FindOneById(id string) (*User, error) {
 	repo := NewReadRepository(s.db)
-	user, err := repo.FindOneById(id)
-	return user, err
+	u, err := repo.FindOneById(id)
+	return u, err
 }

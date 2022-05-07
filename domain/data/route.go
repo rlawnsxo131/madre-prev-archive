@@ -28,20 +28,20 @@ func getAll() http.HandlerFunc {
 		}
 		limit = utils.IfIsNotExistGetDefaultIntValue(limit, 50)
 
-		db, err := database.LoadDBFromHttpSyncMapContext(r.Context())
+		db, err := database.LoadFromHttpCtx(r.Context())
 		if err != nil {
-			writer.WriteError(err, "get /data")
+			writer.Error(err, "get /data")
 			return
 		}
 
-		dataService := NewService(db)
-		dataList, err := dataService.FindAll(limit)
+		dService := NewService(db)
+		dd, err := dService.FindAll(limit)
 		if err != nil {
-			writer.WriteError(err, "get /data")
+			writer.Error(err, "get /data")
 			return
 		}
 
-		writer.WriteCompress(dataList)
+		writer.Compress(dd)
 	}
 }
 
@@ -51,19 +51,19 @@ func get() http.HandlerFunc {
 		vars := mux.Vars(r)
 		id := vars["id"]
 
-		db, err := database.LoadDBFromHttpSyncMapContext(r.Context())
+		db, err := database.LoadFromHttpCtx(r.Context())
 		if err != nil {
-			writer.WriteError(err, "get /data/{id}")
+			writer.Error(err, "get /data/{id}")
 			return
 		}
 
-		dataService := NewService(db)
-		data, err := dataService.FindOneById(id)
+		dService := NewService(db)
+		d, err := dService.FindOneById(id)
 		if err != nil {
-			writer.WriteError(err, "get /data/{id}")
+			writer.Error(err, "get /data/{id}")
 			return
 		}
 
-		writer.WriteCompress(data)
+		writer.Compress(d)
 	}
 }

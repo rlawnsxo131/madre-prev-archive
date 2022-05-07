@@ -11,12 +11,12 @@ import (
 func Logger(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
-		httpLogger := logger.NewHttpLogger()
+		hl := logger.NewHttpLogger()
 
-		bodyBuffer, reader, err := httpLogger.ReadBody(r.Body)
+		bodyBuf, reader, err := hl.ReadBody(r.Body)
 		if err != nil {
 			writer := response.NewHttpWriter(w, r)
-			writer.WriteError(
+			writer.Error(
 				err,
 				"HttpLogger",
 			)
@@ -25,7 +25,7 @@ func Logger(next http.Handler) http.Handler {
 		r.Body = reader
 
 		defer func() {
-			httpLogger.LogEntry(r, start, string(bodyBuffer))
+			hl.LogEntry(r, start, string(bodyBuf))
 		}()
 		next.ServeHTTP(w, r)
 	})

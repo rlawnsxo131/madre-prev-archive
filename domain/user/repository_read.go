@@ -23,16 +23,16 @@ func NewReadRepository(db database.Database) ReadRepository {
 }
 
 func (r *readRepository) FindOneById(id string) (*User, error) {
-	var user User
+	var u User
 
 	query := "SELECT * FROM public.user" +
 		" WHERE id = $1"
 
-	err := r.db.QueryRowx(query, id).StructScan(&user)
+	err := r.db.QueryRowx(query, id).StructScan(&u)
 	if err != nil {
 		customError := errors.Wrap(err, "readRepository: FindOneById")
 		err = utils.ErrNoRowsReturnRawError(err, customError)
 	}
 
-	return r.mapper.toEntity(&user), err
+	return r.mapper.toEntity(&u), err
 }

@@ -25,7 +25,8 @@ func (r *writeRepository) Create(socialAccount *SocialAccount) (string, error) {
 	var id string
 
 	query := "INSERT INTO social_account(user_id, provider, social_id)" +
-		" VALUES(:user_id, :provider, :social_id) RETURNING id"
+		" VALUES(:user_id, :provider, :social_id)" +
+		" RETURNING id"
 
 	err := r.db.PrepareNamedGet(
 		&id,

@@ -21,20 +21,20 @@ func get() http.HandlerFunc {
 		vars := mux.Vars(r)
 		id := vars["id"]
 
-		db, err := database.LoadDBFromHttpSyncMapContext(r.Context())
+		db, err := database.LoadFromHttpCtx(r.Context())
 		if err != nil {
-			writer.WriteError(err, "get /user/{id}")
+			writer.Error(err, "get /user/{id}")
 			return
 		}
 
 		userService := NewService(db)
 		user, err := userService.FindOneById(id)
 		if err != nil {
-			writer.WriteError(err, "get /user/{id}")
+			writer.Error(err, "get /user/{id}")
 			return
 		}
 
-		writer.WriteCompress(user)
+		writer.Compress(user)
 	}
 }
 
