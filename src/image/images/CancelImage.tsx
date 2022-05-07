@@ -1,6 +1,6 @@
 interface CancelImageProps {}
 
-function CancelImage(props: CancelImageProps) {
+export default function CancelImage(props: CancelImageProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -153,5 +153,3 @@ function CancelImage(props: CancelImageProps) {
     </svg>
   );
 }
-
-export default CancelImage;

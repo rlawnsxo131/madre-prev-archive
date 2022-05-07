@@ -44,10 +44,10 @@ const authApi = createApi({
           await queryFulfilled;
 
           const { data } = getCacheEntry();
-          if (data?.user_token_profile) {
+          if (data?.user_profile) {
             dispatch(
               user.actions.setUser({
-                profile: data.user_token_profile,
+                profile: data.user_profile,
               }),
             );
           } else {
@@ -111,7 +111,7 @@ const authApi = createApi({
             });
             dispatch(
               user.actions.setUser({
-                profile: data.user_token_profile,
+                profile: data.user_profile,
               }),
             );
           } else {
@@ -154,7 +154,7 @@ const authApi = createApi({
           } else {
             dispatch(
               user.actions.setUser({
-                profile: data.user_token_profile,
+                profile: data.user_profile,
               }),
             );
           }

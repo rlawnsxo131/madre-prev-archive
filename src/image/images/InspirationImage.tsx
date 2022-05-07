@@ -1,6 +1,6 @@
 interface InspirationImageProps {}
 
-function InspirationImage(props: InspirationImageProps) {
+export default function InspirationImage(props: InspirationImageProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -313,5 +313,3 @@ function InspirationImage(props: InspirationImageProps) {
     </svg>
   );
 }
-
-export default InspirationImage;

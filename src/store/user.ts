@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { UserTokenProfile } from '../@types/domain/auth.types';
-import { MADRE_USER_TOKEN_PROFILE } from '../constants';
+import { UserProfile } from '../@types/domain/auth.types';
+import { MADRE_USER_PROFILE } from '../constants';
 import { Storage } from '../lib/storage';
 
 interface UserState {
@@ -8,7 +8,7 @@ interface UserState {
   menu: {
     visible: boolean;
   };
-  profile: UserTokenProfile | null;
+  profile: UserProfile | null;
 }
 
 const initialState: UserState = {
@@ -24,11 +24,11 @@ const user = createSlice({
   initialState,
   reducers: {
     setUser(state, action: PayloadAction<Pick<UserState, 'profile'>>) {
-      Storage.setItem(MADRE_USER_TOKEN_PROFILE, action.payload.profile);
+      Storage.setItem(MADRE_USER_PROFILE, action.payload.profile);
       state.profile = action.payload.profile;
     },
     resetUser(state) {
-      Storage.removeItem(MADRE_USER_TOKEN_PROFILE);
+      Storage.removeItem(MADRE_USER_PROFILE);
       state.profile = null;
     },
     setIsPending(state, action: PayloadAction<Pick<UserState, 'isPending'>>) {

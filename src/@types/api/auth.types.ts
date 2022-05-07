@@ -1,7 +1,7 @@
-import { UserTokenProfile } from '../domain/auth.types';
+import { UserProfile } from '../domain/auth.types';
 
 export interface GetAuthResponse {
-  user_token_profile: UserTokenProfile | null;
+  user_profile: UserProfile | null;
 }
 
 export interface PostAuthGoogleCheckParams {
@@ -17,7 +17,7 @@ export interface PostAuthGoogleSignInParams {
 }
 
 export interface PostAuthGoogleSigninResponse {
-  user_token_profile: UserTokenProfile;
+  user_profile: UserProfile;
 }
 
 export interface PostAuthGoogleSignUpParams {
@@ -26,5 +26,5 @@ export interface PostAuthGoogleSignUpParams {
 }
 
 export interface PostAuthGoogleSignUpResponse {
-  user_token_profile: UserTokenProfile;
+  user_profile: UserProfile;
 }

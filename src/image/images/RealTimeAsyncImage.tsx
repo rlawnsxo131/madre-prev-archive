@@ -1,6 +1,6 @@
 interface RealTimeAsyncImageProps {}
 
-function RealTimeAsyncImage(props: RealTimeAsyncImageProps) {
+export default function RealTimeAsyncImage(props: RealTimeAsyncImageProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -312,5 +312,3 @@ function RealTimeAsyncImage(props: RealTimeAsyncImageProps) {
     </svg>
   );
 }
-
-export default RealTimeAsyncImage;

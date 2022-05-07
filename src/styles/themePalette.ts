@@ -27,6 +27,7 @@ type VariableKey = keyof ThemeVariables;
 type ThemedPalette = Record<VariableKey, string>;
 
 /**
+ * border_element1: Input, ScreenSignUp
  * bg_element1: PopupBase, PopupAuth, HeaderMobileNavigationLinks
  * shadow1: HeaderMobileNavigationLinks
  */

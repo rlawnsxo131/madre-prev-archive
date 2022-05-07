@@ -8,7 +8,7 @@ export interface SocialAccount {
   updated_at: string;
 }
 
-export interface UserTokenProfile {
+export interface UserProfile {
   user_id: string;
   display_name: string;
   photo_url?: string;

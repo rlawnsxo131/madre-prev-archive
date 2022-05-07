@@ -1,6 +1,6 @@
 interface OnlineArtImageProps {}
 
-function OnlineArtImage(props: OnlineArtImageProps) {
+export default function OnlineArtImage(props: OnlineArtImageProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -265,5 +265,3 @@ function OnlineArtImage(props: OnlineArtImageProps) {
     </svg>
   );
 }
-
-export default OnlineArtImage;
