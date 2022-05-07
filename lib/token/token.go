@@ -35,8 +35,8 @@ type authTokenClaims struct {
 
 func GenerateTokens(profile *UserProfile) (string, string, error) {
 	now := time.Now()
-	var atk string
-	var rtk string
+	var actk string
+	var rftk string
 
 	for _, tokenType := range tokenTypes {
 		var claims authTokenClaims
@@ -75,13 +75,13 @@ func GenerateTokens(profile *UserProfile) (string, string, error) {
 		}
 
 		if tokenType == Key_AccessToken {
-			atk = ss
+			actk = ss
 			continue
 		}
-		rtk = ss
+		rftk = ss
 	}
 
-	return atk, rtk, nil
+	return actk, rftk, nil
 }
 
 func DecodeToken(token string) (*authTokenClaims, error) {

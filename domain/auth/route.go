@@ -201,7 +201,7 @@ func postGoogleSignIn() http.HandlerFunc {
 			DisplayName: u.DisplayName,
 			PhotoUrl:    utils.NormalizeNullString(u.PhotoUrl),
 		}
-		atk, rtk, err := token.GenerateTokens(&p)
+		actk, rftk, err := token.GenerateTokens(&p)
 		if err != nil {
 			rw.Error(
 				err,
@@ -210,7 +210,7 @@ func postGoogleSignIn() http.HandlerFunc {
 			return
 		}
 
-		token.SetTokenCookies(w, atk, rtk)
+		token.SetTokenCookies(w, actk, rftk)
 
 		rw.Compress(map[string]interface{}{
 			"user_profile": p,
@@ -327,7 +327,7 @@ func postGoogleSignUp() http.HandlerFunc {
 			DisplayName: user.DisplayName,
 			PhotoUrl:    utils.NormalizeNullString(user.PhotoUrl),
 		}
-		atk, rtk, err := token.GenerateTokens(&p)
+		actk, rftk, err := token.GenerateTokens(&p)
 		if err != nil {
 			rw.Error(
 				err,
@@ -336,7 +336,7 @@ func postGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		token.SetTokenCookies(w, atk, rtk)
+		token.SetTokenCookies(w, actk, rftk)
 
 		rw.Compress(map[string]interface{}{
 			"user_profile": p,

@@ -16,7 +16,7 @@ import (
 func JWT(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
-		atk, err := r.Cookie(token.Key_AccessToken)
+		actk, err := r.Cookie(token.Key_AccessToken)
 		if err != nil {
 			if err != http.ErrNoCookie {
 				rw := response.NewWriter(w, r)
@@ -29,12 +29,12 @@ func JWT(next http.Handler) http.Handler {
 			}
 		}
 
-		if atk != nil {
-			claims, err := token.DecodeToken(atk.Value)
+		if actk != nil {
+			claims, err := token.DecodeToken(actk.Value)
 			if err != nil {
 				_, ok := err.(*jwt.ValidationError)
 				if ok {
-					rtk, err := r.Cookie(token.Key_RefreshToken)
+					rftk, err := r.Cookie(token.Key_RefreshToken)
 					if err != nil {
 						if err != http.ErrNoCookie {
 							rw := response.NewWriter(w, r)
@@ -47,8 +47,8 @@ func JWT(next http.Handler) http.Handler {
 						}
 					}
 
-					if rtk != nil {
-						claims, err := token.DecodeToken(rtk.Value)
+					if rftk != nil {
+						claims, err := token.DecodeToken(rftk.Value)
 						if err != nil {
 							// remove cookies
 							token.ResetTokenCookies(w)
@@ -63,11 +63,11 @@ func JWT(next http.Handler) http.Handler {
 								DisplayName: claims.DisplayName,
 								PhotoUrl:    claims.PhotoUrl,
 							}
-							atk, rtk, err := token.GenerateTokens(&p)
+							actk, rftk, err := token.GenerateTokens(&p)
 							if err != nil {
 								logger.NewDefaultLogger().Err(err).Str("Action", "JWT").Msg("")
 							} else {
-								token.SetTokenCookies(w, atk, rtk)
+								token.SetTokenCookies(w, actk, rftk)
 
 								// set context value
 								cm := httpcontext.NewContextManager(ctx)
@@ -93,8 +93,8 @@ func JWT(next http.Handler) http.Handler {
 			}
 		}
 
-		if atk == nil {
-			rtk, err := r.Cookie(token.Key_AccessToken)
+		if actk == nil {
+			rftk, err := r.Cookie(token.Key_AccessToken)
 			if err != nil {
 				if err != http.ErrNoCookie {
 					rw := response.NewWriter(w, r)
@@ -107,8 +107,8 @@ func JWT(next http.Handler) http.Handler {
 				}
 			}
 
-			if rtk != nil {
-				claims, err := token.DecodeToken(rtk.Value)
+			if rftk != nil {
+				claims, err := token.DecodeToken(rftk.Value)
 				if err != nil {
 					// remove cookies
 					token.ResetTokenCookies(w)
@@ -122,11 +122,11 @@ func JWT(next http.Handler) http.Handler {
 						DisplayName: claims.DisplayName,
 						PhotoUrl:    claims.PhotoUrl,
 					}
-					atk, rtk, err := token.GenerateTokens(&p)
+					actk, rftk, err := token.GenerateTokens(&p)
 					if err != nil {
 						logger.NewDefaultLogger().Err(err).Str("Action", "JWT").Msg("")
 					} else {
-						token.SetTokenCookies(w, atk, rtk)
+						token.SetTokenCookies(w, actk, rftk)
 						cm := httpcontext.NewContextManager(ctx)
 						ctx = cm.SetUserProfile(nil)
 					}
