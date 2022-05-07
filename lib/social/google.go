@@ -142,9 +142,7 @@ func (g *googleApi) Do(accessToken string) (*googlePeopleProfile, error) {
 		return nil, err
 	}
 
-	gPeopleProfile := g.mapToGooglePeopleProfile(gapiRes)
-
-	return gPeopleProfile, nil
+	return g.mapToGooglePeopleProfile(gapiRes), nil
 }
 
 func (g *googleApi) createRequest(accessToken string) (*http.Request, error) {

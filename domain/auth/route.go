@@ -98,7 +98,7 @@ func postGoogleCheck() http.HandlerFunc {
 			return
 		}
 
-		googleProfile, err := social.NewGoogleApi().Do(params.AccessToken)
+		ggp, err := social.NewGoogleApi().Do(params.AccessToken)
 		if err != nil {
 			rw.Error(
 				err,
@@ -111,7 +111,7 @@ func postGoogleCheck() http.HandlerFunc {
 		socialUseCase := socialaccount.NewUseCase(db)
 		sa, err := socialUseCase.FindOneByProviderWithSocialId(
 			socialaccount.Key_Provider_GOOGLE,
-			googleProfile.SocialId,
+			ggp.SocialId,
 		)
 		exist, err := sa.IsExist(err)
 		if err != nil {
@@ -164,7 +164,7 @@ func postGoogleSignIn() http.HandlerFunc {
 			return
 		}
 
-		googleProfile, err := social.NewGoogleApi().Do(params.AccessToken)
+		ggp, err := social.NewGoogleApi().Do(params.AccessToken)
 		if err != nil {
 			rw.Error(
 				err,
@@ -176,7 +176,7 @@ func postGoogleSignIn() http.HandlerFunc {
 		socialUseCase := socialaccount.NewUseCase(db)
 		sa, err := socialUseCase.FindOneByProviderWithSocialId(
 			socialaccount.Key_Provider_GOOGLE,
-			googleProfile.SocialId,
+			ggp.SocialId,
 		)
 		if err != nil {
 			rw.Error(
@@ -201,7 +201,7 @@ func postGoogleSignIn() http.HandlerFunc {
 			DisplayName: u.DisplayName,
 			PhotoUrl:    utils.NormalizeNullString(u.PhotoUrl),
 		}
-		accessToken, refreshToken, err := token.GenerateTokens(&p)
+		atk, rtk, err := token.GenerateTokens(&p)
 		if err != nil {
 			rw.Error(
 				err,
@@ -210,7 +210,7 @@ func postGoogleSignIn() http.HandlerFunc {
 			return
 		}
 
-		token.SetTokenCookies(w, accessToken, refreshToken)
+		token.SetTokenCookies(w, atk, rtk)
 
 		rw.Compress(map[string]interface{}{
 			"user_profile": p,
@@ -255,7 +255,7 @@ func postGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		googleProfile, err := social.NewGoogleApi().Do(params.AccessToken)
+		ggp, err := social.NewGoogleApi().Do(params.AccessToken)
 		if err != nil {
 			rw.Error(
 				err,
@@ -265,10 +265,10 @@ func postGoogleSignUp() http.HandlerFunc {
 		}
 
 		u := &user.User{
-			Email:       googleProfile.Email,
-			OriginName:  utils.NewNullString(googleProfile.DisplayName),
+			Email:       ggp.Email,
+			OriginName:  utils.NewNullString(ggp.DisplayName),
 			DisplayName: params.DisplayName,
-			PhotoUrl:    utils.NewNullString(googleProfile.PhotoUrl),
+			PhotoUrl:    utils.NewNullString(ggp.PhotoUrl),
 		}
 		valid, err := u.ValidateDisplayName()
 		if err != nil {
@@ -310,7 +310,7 @@ func postGoogleSignUp() http.HandlerFunc {
 		sa := socialaccount.SocialAccount{
 			UserID:   user.ID,
 			Provider: "GOOGLE",
-			SocialId: googleProfile.SocialId,
+			SocialId: ggp.SocialId,
 		}
 		socialUseCase := socialaccount.NewUseCase(db)
 		_, err = socialUseCase.Create(&sa)
@@ -327,7 +327,7 @@ func postGoogleSignUp() http.HandlerFunc {
 			DisplayName: user.DisplayName,
 			PhotoUrl:    utils.NormalizeNullString(user.PhotoUrl),
 		}
-		accessToken, refreshToken, err := token.GenerateTokens(&p)
+		atk, rtk, err := token.GenerateTokens(&p)
 		if err != nil {
 			rw.Error(
 				err,
@@ -336,7 +336,7 @@ func postGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		token.SetTokenCookies(w, accessToken, refreshToken)
+		token.SetTokenCookies(w, atk, rtk)
 
 		rw.Compress(map[string]interface{}{
 			"user_profile": p,

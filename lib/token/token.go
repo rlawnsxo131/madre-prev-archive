@@ -35,8 +35,8 @@ type authTokenClaims struct {
 
 func GenerateTokens(profile *UserProfile) (string, string, error) {
 	now := time.Now()
-	var accessToken string
-	var refreshToken string
+	var atk string
+	var rtk string
 
 	for _, tokenType := range tokenTypes {
 		var claims authTokenClaims
@@ -68,20 +68,20 @@ func GenerateTokens(profile *UserProfile) (string, string, error) {
 			}
 		}
 
-		token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-		ss, err := token.SignedString(signKey)
+		t := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+		ss, err := t.SignedString(signKey)
 		if err != nil {
 			return "", "", errors.Wrap(err, "GenerateToken")
 		}
 
 		if tokenType == Key_AccessToken {
-			accessToken = ss
+			atk = ss
 			continue
 		}
-		refreshToken = ss
+		rtk = ss
 	}
 
-	return accessToken, refreshToken, nil
+	return atk, rtk, nil
 }
 
 func DecodeToken(token string) (*authTokenClaims, error) {
