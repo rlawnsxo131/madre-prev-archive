@@ -30,7 +30,7 @@ func ApplyRoutes(v1 *mux.Router) {
 func get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		writer := response.NewHttpWriter(w, r)
-		uTokenProfile := token.LoadUserTokenProfileFromCtx(r.Context())
+		uTokenProfile := token.LoadCtxUserTokenProfile(r.Context())
 
 		writer.Compress(
 			map[string]interface{}{
@@ -43,7 +43,7 @@ func get() http.HandlerFunc {
 func delete() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		writer := response.NewHttpWriter(w, r)
-		uTokenProfile := token.LoadUserTokenProfileFromCtx(r.Context())
+		uTokenProfile := token.LoadCtxUserTokenProfile(r.Context())
 
 		if uTokenProfile == nil {
 			writer.ErrorUnauthorized(

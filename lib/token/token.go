@@ -158,7 +158,7 @@ func ResetTokenCookies(w http.ResponseWriter) {
 	})
 }
 
-func LoadUserTokenProfileFromCtx(ctx context.Context) *UserTokenProfile {
+func LoadCtxUserTokenProfile(ctx context.Context) *UserTokenProfile {
 	v := ctx.Value(constants.Key_HttpSyncMap)
 	syncMap, ok := v.(*sync.Map)
 
