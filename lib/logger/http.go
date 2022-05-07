@@ -3,10 +3,10 @@ package logger
 import (
 	"bytes"
 	"fmt"
-	"io"
 	"io/ioutil"
 	"net/http"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/pkg/errors"
@@ -16,27 +16,36 @@ import (
 
 // https://learning-cloud-native-go.github.io/docs/a6.adding_zerolog_logger/
 
+var (
+	httplogger     *httpLogger
+	onceHttpLogger sync.Once
+)
+
 type httpLogger struct {
 	l *zerolog.Logger
 }
 
 func NewHttpLogger() *httpLogger {
-	l := NewDefaultLogger()
-	return &httpLogger{
-		l: l,
-	}
+	onceHttpLogger.Do(func() {
+		l := NewDefaultLogger()
+		httplogger = &httpLogger{
+			l: l,
+		}
+	})
+	return httplogger
 }
 
-func (hl *httpLogger) ReadBody(body io.ReadCloser) ([]byte, io.ReadCloser, error) {
-	bodyBuf, err := ioutil.ReadAll(body)
-
+func (hl *httpLogger) ReadBody(r *http.Request) ([]byte, error) {
+	buf, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		return nil, nil, errors.WithStack(err)
+		return nil, errors.WithStack(err)
 	}
 
-	reader := ioutil.NopCloser(bytes.NewBuffer(bodyBuf))
-
-	return bodyBuf, reader, nil
+	reader := ioutil.NopCloser(
+		bytes.NewBuffer(buf),
+	)
+	r.Body = reader
+	return buf, nil
 }
 
 func (hl *httpLogger) LogEntry(r *http.Request, start time.Time, body string) {
@@ -54,7 +63,7 @@ func (hl *httpLogger) LogEntry(r *http.Request, start time.Time, body string) {
 		Str("UserAgent", r.UserAgent()).
 		Str("Referer", r.Referer()).
 		Str("ClientIp", clientIP(r.Header)).
-		Send()
+		Msg("")
 }
 
 var (

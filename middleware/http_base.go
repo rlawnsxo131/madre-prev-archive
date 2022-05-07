@@ -24,8 +24,8 @@ func AllowHost(next http.Handler) http.Handler {
 			}
 		}
 		if !validation {
-			writer := response.NewWriter(w, r)
-			writer.ErrorForbidden(
+			rw := response.NewWriter(w, r)
+			rw.ErrorForbidden(
 				errors.New("forbidden host"),
 				"AllowHost",
 				reqHost,
@@ -74,8 +74,8 @@ func Recovery(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer func() {
 			if err := recover(); err != nil {
-				writer := response.NewWriter(w, r)
-				writer.Error(
+				rw := response.NewWriter(w, r)
+				rw.Error(
 					errors.New(string(debug.Stack())),
 					"Recovery",
 				)

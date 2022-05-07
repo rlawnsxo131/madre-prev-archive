@@ -12,7 +12,6 @@ import (
 func SetSyncMapCtx(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ctx := syncmap.GenerateHttpCtx(r.Context())
-		r.Context().Value(ctx)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
@@ -21,8 +20,8 @@ func SetDatabaseToSyncMapCtx(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		db, err := database.GetDatabaseInstance()
 		if err != nil {
-			writer := response.NewWriter(w, r)
-			writer.Error(
+			rw := response.NewWriter(w, r)
+			rw.Error(
 				err,
 				"SetDBContext",
 			)
@@ -35,8 +34,8 @@ func SetDatabaseToSyncMapCtx(next http.Handler) http.Handler {
 			db,
 		)
 		if err != nil {
-			writer := response.NewWriter(w, r)
-			writer.Error(
+			rw := response.NewWriter(w, r)
+			rw.Error(
 				err,
 				"SetDBContext",
 				"context set error",

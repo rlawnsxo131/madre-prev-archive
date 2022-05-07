@@ -32,7 +32,7 @@ func GetDatabaseInstance() (*singletonDatabase, error) {
 			host, port, user, password, dbname,
 		)
 		logger.NewDefaultLogger().
-			Info().Str("database connection info", psqlInfo).Send()
+			Info().Str("database connection info", psqlInfo).Msg("")
 
 		db, err := sqlx.Connect("postgres", psqlInfo)
 		if err != nil {
@@ -42,8 +42,8 @@ func GetDatabaseInstance() (*singletonDatabase, error) {
 
 		l := logger.NewDefaultLogger()
 		instanceDatabase = &singletonDatabase{
-			DB:     db,
-			logger: l,
+			DB: db,
+			l:  l,
 		}
 		initDatabase(instanceDatabase.DB)
 	})

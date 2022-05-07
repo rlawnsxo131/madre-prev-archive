@@ -4,10 +4,9 @@ import (
 	"net/http"
 
 	"github.com/golang-jwt/jwt"
-	"github.com/rlawnsxo131/madre-server-v2/constants"
+	"github.com/rlawnsxo131/madre-server-v2/lib/httpcontext"
 	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"
-	"github.com/rlawnsxo131/madre-server-v2/lib/syncmap"
 	"github.com/rlawnsxo131/madre-server-v2/lib/token"
 )
 
@@ -16,11 +15,12 @@ import (
 // only logging is processed so that other functions can be used.
 func JWT(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		ctx := r.Context()
 		accessToken, err := r.Cookie(token.Key_AccessToken)
 		if err != nil {
 			if err != http.ErrNoCookie {
-				writer := response.NewWriter(w, r)
-				writer.Error(
+				rw := response.NewWriter(w, r)
+				rw.Error(
 					err,
 					"JwtMiddleware",
 					"get Access_token error",
@@ -37,8 +37,8 @@ func JWT(next http.Handler) http.Handler {
 					refreshToken, err := r.Cookie(token.Key_RefreshToken)
 					if err != nil {
 						if err != http.ErrNoCookie {
-							writer := response.NewWriter(w, r)
-							writer.Error(
+							rw := response.NewWriter(w, r)
+							rw.Error(
 								err,
 								"JwtMiddleware",
 								"get Refresh_token error",
@@ -54,79 +54,42 @@ func JWT(next http.Handler) http.Handler {
 							token.ResetTokenCookies(w)
 
 							// set context value
-							ctx, err := syncmap.SetNewValueFromHttpCtx(
-								r.Context(),
-								constants.Key_UserTokenProfile,
-								nil,
-							)
-							if err != nil {
-								writer := response.NewWriter(w, r)
-								writer.Error(
-									err,
-									"JWT",
-								)
-								return
-							}
-							r.Context().Value(ctx)
+							cm := httpcontext.NewContextManager(ctx)
+							ctx = cm.SetUserProfile(nil)
 						} else {
 							// generate tokens and set cookie
-							profile := token.UserProfile{
+							p := token.UserProfile{
 								UserID:      claims.UserID,
 								DisplayName: claims.DisplayName,
 								PhotoUrl:    claims.PhotoUrl,
 							}
-							accessToken, refreshToken, err := token.GenerateTokens(&profile)
+							accessToken, refreshToken, err := token.GenerateTokens(&p)
 							if err != nil {
-								logger.NewDefaultLogger().
-									Err(err).
-									Str("Action", "JWT").
-									Send()
+								logger.NewDefaultLogger().Err(err).Str("Action", "JWT").Msg("")
 							} else {
 								token.SetTokenCookies(w, accessToken, refreshToken)
 
 								// set context value
-								ctx, err := syncmap.SetNewValueFromHttpCtx(
-									r.Context(),
-									constants.Key_UserTokenProfile,
-									&token.UserProfile{
-										UserID:      claims.UserID,
-										DisplayName: claims.DisplayName,
-										PhotoUrl:    claims.PhotoUrl,
-									},
-								)
-								if err != nil {
-									writer := response.NewWriter(w, r)
-									writer.Error(
-										err,
-										"JWT",
-									)
-									return
+								cm := httpcontext.NewContextManager(ctx)
+								p := token.UserProfile{
+									UserID:      claims.UserID,
+									DisplayName: claims.DisplayName,
+									PhotoUrl:    claims.PhotoUrl,
 								}
-								r.Context().Value(ctx)
+								ctx = cm.SetUserProfile(&p)
 							}
 						}
 					}
 				}
 			} else {
 				// set context value
-				ctx, err := syncmap.SetNewValueFromHttpCtx(
-					r.Context(),
-					constants.Key_UserTokenProfile,
-					&token.UserProfile{
-						UserID:      claims.UserID,
-						DisplayName: claims.DisplayName,
-						PhotoUrl:    claims.PhotoUrl,
-					},
-				)
-				if err != nil {
-					writer := response.NewWriter(w, r)
-					writer.Error(
-						err,
-						"JWT",
-					)
-					return
+				cm := httpcontext.NewContextManager(ctx)
+				p := token.UserProfile{
+					UserID:      claims.UserID,
+					DisplayName: claims.DisplayName,
+					PhotoUrl:    claims.PhotoUrl,
 				}
-				r.Context().Value(ctx)
+				ctx = cm.SetUserProfile(&p)
 			}
 		}
 
@@ -134,8 +97,8 @@ func JWT(next http.Handler) http.Handler {
 			refreshToken, err := r.Cookie(token.Key_RefreshToken)
 			if err != nil {
 				if err != http.ErrNoCookie {
-					writer := response.NewWriter(w, r)
-					writer.Error(
+					rw := response.NewWriter(w, r)
+					rw.Error(
 						err,
 						"JwtMiddleware",
 						"get Refresh_token error",
@@ -149,62 +112,28 @@ func JWT(next http.Handler) http.Handler {
 				if err != nil {
 					// remove cookies
 					token.ResetTokenCookies(w)
+					cm := httpcontext.NewContextManager(ctx)
+					ctx = cm.SetUserProfile(nil)
 
-					// set context value
-					ctx, err := syncmap.SetNewValueFromHttpCtx(
-						r.Context(),
-						constants.Key_UserTokenProfile,
-						nil,
-					)
-					if err != nil {
-						writer := response.NewWriter(w, r)
-						writer.Error(
-							err,
-							"JWT",
-						)
-						return
-					}
-					r.Context().Value(ctx)
 				} else {
 					// generate tokens and set cookie
-					profile := token.UserProfile{
+					p := token.UserProfile{
 						UserID:      claims.UserID,
 						DisplayName: claims.DisplayName,
 						PhotoUrl:    claims.PhotoUrl,
 					}
-					accessToken, refreshToken, err := token.GenerateTokens(&profile)
+					accessToken, refreshToken, err := token.GenerateTokens(&p)
 					if err != nil {
-						logger.NewDefaultLogger().
-							Err(err).
-							Str("Action", "JWT").
-							Send()
+						logger.NewDefaultLogger().Err(err).Str("Action", "JWT").Msg("")
 					} else {
 						token.SetTokenCookies(w, accessToken, refreshToken)
-
-						// set context value
-						ctx, err := syncmap.SetNewValueFromHttpCtx(
-							r.Context(),
-							constants.Key_UserTokenProfile,
-							&token.UserProfile{
-								UserID:      claims.UserID,
-								DisplayName: claims.DisplayName,
-								PhotoUrl:    claims.PhotoUrl,
-							},
-						)
-						if err != nil {
-							writer := response.NewWriter(w, r)
-							writer.Error(
-								err,
-								"JWT",
-							)
-							return
-						}
-						r.Context().Value(ctx)
+						cm := httpcontext.NewContextManager(ctx)
+						ctx = cm.SetUserProfile(nil)
 					}
 				}
 			}
 		}
 
-		next.ServeHTTP(w, r)
+		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }

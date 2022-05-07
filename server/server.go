@@ -95,7 +95,7 @@ func (s *server) applyBaseMiddleware() {
 
 func (s *server) applyHealthSettings() {
 	s.router.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
-		writer := response.NewWriter(w, r)
+		rw := response.NewWriter(w, r)
 		data := map[string]string{
 			"Method":  r.Method,
 			"Host":    r.Host,
@@ -103,7 +103,7 @@ func (s *server) applyHealthSettings() {
 			"Referer": r.Header.Get("Referer"),
 			"Cookies": fmt.Sprint(r.Cookies()),
 		}
-		writer.Compress(data)
+		rw.Compress(data)
 	})
 }
 

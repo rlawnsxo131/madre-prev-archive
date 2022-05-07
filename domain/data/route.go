@@ -20,7 +20,7 @@ func ApplyRoutes(v1 *mux.Router) {
 
 func getAll() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		writer := response.NewWriter(w, r)
+		rw := response.NewWriter(w, r)
 		limit, err := strconv.Atoi(r.URL.Query().Get("limit"))
 		if err != nil {
 			logger.NewDefaultLogger().
@@ -30,40 +30,40 @@ func getAll() http.HandlerFunc {
 
 		db, err := database.LoadFromHttpCtx(r.Context())
 		if err != nil {
-			writer.Error(err, "get /data")
+			rw.Error(err, "get /data")
 			return
 		}
 
 		dService := NewService(db)
 		dd, err := dService.FindAll(limit)
 		if err != nil {
-			writer.Error(err, "get /data")
+			rw.Error(err, "get /data")
 			return
 		}
 
-		writer.Compress(dd)
+		rw.Compress(dd)
 	}
 }
 
 func get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		writer := response.NewWriter(w, r)
+		rw := response.NewWriter(w, r)
 		vars := mux.Vars(r)
 		id := vars["id"]
 
 		db, err := database.LoadFromHttpCtx(r.Context())
 		if err != nil {
-			writer.Error(err, "get /data/{id}")
+			rw.Error(err, "get /data/{id}")
 			return
 		}
 
 		dService := NewService(db)
 		d, err := dService.FindOneById(id)
 		if err != nil {
-			writer.Error(err, "get /data/{id}")
+			rw.Error(err, "get /data/{id}")
 			return
 		}
 
-		writer.Compress(d)
+		rw.Compress(d)
 	}
 }

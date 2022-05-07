@@ -1,14 +1,11 @@
 package token
 
 import (
-	"context"
 	"net/http"
-	"sync"
 	"time"
 
 	"github.com/golang-jwt/jwt"
 	"github.com/pkg/errors"
-	"github.com/rlawnsxo131/madre-server-v2/constants"
 	"github.com/rlawnsxo131/madre-server-v2/utils"
 )
 
@@ -107,7 +104,7 @@ func DecodeToken(token string) (*authTokenClaims, error) {
 	return nil, errors.New("DecodeToken: token is not valid")
 }
 
-func SetTokenCookies(w http.ResponseWriter, accessToken string, refreshToken string) {
+func SetTokenCookies(w http.ResponseWriter, accessToken, refreshToken string) {
 	now := time.Now()
 
 	http.SetCookie(w, &http.Cookie{
@@ -156,23 +153,4 @@ func ResetTokenCookies(w http.ResponseWriter) {
 		HttpOnly: true,
 		SameSite: 2,
 	})
-}
-
-func LoadCtxUserProfile(ctx context.Context) *UserProfile {
-	v := ctx.Value(constants.Key_HttpSyncMap)
-	syncMap, ok := v.(*sync.Map)
-
-	if ok {
-		if profile, ok := syncMap.Load(constants.Key_UserTokenProfile); ok {
-			if profile, ok := profile.(*UserProfile); ok {
-				return profile
-			} else {
-				return nil
-			}
-		} else {
-			return nil
-		}
-	}
-
-	return nil
 }

@@ -11,18 +11,18 @@ func ApplyRoutes(v1 *mux.Router) {
 	temp := v1.NewRoute().PathPrefix("/temp").Subrouter()
 
 	temp.HandleFunc("/get", func(w http.ResponseWriter, r *http.Request) {
-		writer := response.NewWriter(w, r)
+		rw := response.NewWriter(w, r)
 		data := map[string]string{
 			"data": "data",
 		}
-		writer.Compress(data)
+		rw.Compress(data)
 	}).Methods("GET")
 
 	temp.HandleFunc("/post", func(w http.ResponseWriter, r *http.Request) {
-		writer := response.NewWriter(w, r)
+		rw := response.NewWriter(w, r)
 		data := map[string]string{
 			"data": "data",
 		}
-		writer.Compress(data)
+		rw.Compress(data)
 	}).Methods("POST", "OPTIONS")
 }

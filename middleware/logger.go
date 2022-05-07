@@ -12,21 +12,16 @@ func Logger(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
 		hl := logger.NewHttpLogger()
-
-		bodyBuf, reader, err := hl.ReadBody(r.Body)
+		buf, err := hl.ReadBody(r)
 		if err != nil {
-			writer := response.NewWriter(w, r)
-			writer.Error(
+			rw := response.NewWriter(w, r)
+			rw.Error(
 				err,
 				"HttpLogger",
 			)
 			return
 		}
-		r.Body = reader
-
-		defer func() {
-			hl.LogEntry(r, start, string(bodyBuf))
-		}()
 		next.ServeHTTP(w, r)
+		hl.LogEntry(r, start, string(buf))
 	})
 }

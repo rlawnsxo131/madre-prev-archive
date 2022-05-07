@@ -10,6 +10,7 @@ import (
 
 	"github.com/rlawnsxo131/madre-server-v2/domain/auth/socialaccount"
 	"github.com/rlawnsxo131/madre-server-v2/domain/user"
+	"github.com/rlawnsxo131/madre-server-v2/lib/httpcontext"
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"
 	"github.com/rlawnsxo131/madre-server-v2/lib/social"
 	"github.com/rlawnsxo131/madre-server-v2/lib/token"
@@ -29,12 +30,13 @@ func ApplyRoutes(v1 *mux.Router) {
 
 func get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		writer := response.NewWriter(w, r)
-		userProfile := token.LoadCtxUserProfile(r.Context())
+		rw := response.NewWriter(w, r)
+		cm := httpcontext.NewContextManager(r.Context())
+		p := cm.UserProfile()
 
-		writer.Compress(
+		rw.Compress(
 			map[string]interface{}{
-				"user_token_profile": userProfile,
+				"user_profile": p,
 			},
 		)
 	}
@@ -42,29 +44,30 @@ func get() http.HandlerFunc {
 
 func delete() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		writer := response.NewWriter(w, r)
-		userProfile := token.LoadCtxUserProfile(r.Context())
+		rw := response.NewWriter(w, r)
+		cm := httpcontext.NewContextManager(r.Context())
+		p := cm.UserProfile()
 
-		if userProfile == nil {
-			writer.ErrorUnauthorized(
-				errors.New("not found userTokenProfile"),
+		if p == nil {
+			rw.ErrorUnauthorized(
+				errors.New("not found userProfile"),
 				"delete /auth",
-				userProfile,
+				p,
 			)
 			return
 		}
 
 		token.ResetTokenCookies(w)
-		writer.Compress(map[string]interface{}{})
+		rw.Compress(map[string]interface{}{})
 	}
 }
 
 func postGoogleCheck() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		writer := response.NewWriter(w, r)
+		rw := response.NewWriter(w, r)
 		db, err := database.LoadFromHttpCtx(r.Context())
 		if err != nil {
-			writer.Error(
+			rw.Error(
 				err,
 				"post /auth/google/check",
 			)
@@ -77,7 +80,7 @@ func postGoogleCheck() http.HandlerFunc {
 
 		err = json.NewDecoder(r.Body).Decode(&params)
 		if err != nil {
-			writer.Error(
+			rw.Error(
 				errors.WithStack(err),
 				"post /auth/google/check",
 				"decode params error",
@@ -87,7 +90,7 @@ func postGoogleCheck() http.HandlerFunc {
 
 		err = utils.NewValidator().Struct(&params)
 		if err != nil {
-			writer.ErrorBadRequest(
+			rw.ErrorBadRequest(
 				err,
 				"post /auth/google/check",
 				params,
@@ -97,7 +100,7 @@ func postGoogleCheck() http.HandlerFunc {
 
 		googleProfile, err := social.NewGoogleApi().Do(params.AccessToken)
 		if err != nil {
-			writer.Error(
+			rw.Error(
 				err,
 				"post /auth/google/check",
 			)
@@ -112,14 +115,14 @@ func postGoogleCheck() http.HandlerFunc {
 		)
 		exist, err := sa.IsExist(err)
 		if err != nil {
-			writer.Error(
+			rw.Error(
 				err,
 				"post /auth/google/check",
 			)
 			return
 		}
 
-		writer.Compress(map[string]bool{
+		rw.Compress(map[string]bool{
 			"exist": exist,
 		})
 	}
@@ -127,10 +130,10 @@ func postGoogleCheck() http.HandlerFunc {
 
 func postGoogleSignIn() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		writer := response.NewWriter(w, r)
+		rw := response.NewWriter(w, r)
 		db, err := database.LoadFromHttpCtx(r.Context())
 		if err != nil {
-			writer.Error(
+			rw.Error(
 				err,
 				"post /auth/google/sign-in",
 			)
@@ -143,7 +146,7 @@ func postGoogleSignIn() http.HandlerFunc {
 
 		err = json.NewDecoder(r.Body).Decode(&params)
 		if err != nil {
-			writer.Error(
+			rw.Error(
 				errors.WithStack(err),
 				"post /auth/google/sign-in",
 				"decode params error",
@@ -153,7 +156,7 @@ func postGoogleSignIn() http.HandlerFunc {
 
 		err = utils.NewValidator().Struct(&params)
 		if err != nil {
-			writer.ErrorBadRequest(
+			rw.ErrorBadRequest(
 				err,
 				"post /auth/google/sign-in",
 				params,
@@ -163,7 +166,7 @@ func postGoogleSignIn() http.HandlerFunc {
 
 		googleProfile, err := social.NewGoogleApi().Do(params.AccessToken)
 		if err != nil {
-			writer.Error(
+			rw.Error(
 				err,
 				"post /auth/google/sign-in",
 			)
@@ -176,7 +179,7 @@ func postGoogleSignIn() http.HandlerFunc {
 			googleProfile.SocialId,
 		)
 		if err != nil {
-			writer.Error(
+			rw.Error(
 				err,
 				"post /auth/google/sign-in",
 			)
@@ -186,21 +189,21 @@ func postGoogleSignIn() http.HandlerFunc {
 		userUserCase := user.NewUseCase(db)
 		u, err := userUserCase.FindOneById(sa.UserID)
 		if err != nil {
-			writer.Error(
+			rw.Error(
 				err,
 				"post /auth/google/sign-in",
 			)
 			return
 		}
 
-		userProfile := token.UserProfile{
+		p := token.UserProfile{
 			UserID:      u.ID,
 			DisplayName: u.DisplayName,
 			PhotoUrl:    utils.NormalizeNullString(u.PhotoUrl),
 		}
-		accessToken, refreshToken, err := token.GenerateTokens(&userProfile)
+		accessToken, refreshToken, err := token.GenerateTokens(&p)
 		if err != nil {
-			writer.Error(
+			rw.Error(
 				err,
 				"post /auth/google/sign-in",
 			)
@@ -209,18 +212,18 @@ func postGoogleSignIn() http.HandlerFunc {
 
 		token.SetTokenCookies(w, accessToken, refreshToken)
 
-		writer.Compress(map[string]interface{}{
-			"user_token_profile": userProfile,
+		rw.Compress(map[string]interface{}{
+			"user_profile": p,
 		})
 	}
 }
 
 func postGoogleSignUp() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		writer := response.NewWriter(w, r)
+		rw := response.NewWriter(w, r)
 		db, err := database.LoadFromHttpCtx(r.Context())
 		if err != nil {
-			writer.Error(
+			rw.Error(
 				err,
 				"post /auth/google/sign-up",
 			)
@@ -234,7 +237,7 @@ func postGoogleSignUp() http.HandlerFunc {
 
 		err = json.NewDecoder(r.Body).Decode(&params)
 		if err != nil {
-			writer.Error(
+			rw.Error(
 				err,
 				"post /auth/google/sign-up",
 				"decode params error",
@@ -244,7 +247,7 @@ func postGoogleSignUp() http.HandlerFunc {
 
 		err = utils.NewValidator().Struct(&params)
 		if err != nil {
-			writer.ErrorBadRequest(
+			rw.ErrorBadRequest(
 				err,
 				"post /auth/google/sign-up",
 				params,
@@ -254,7 +257,7 @@ func postGoogleSignUp() http.HandlerFunc {
 
 		googleProfile, err := social.NewGoogleApi().Do(params.AccessToken)
 		if err != nil {
-			writer.Error(
+			rw.Error(
 				err,
 				"post /auth/google/sign-up",
 			)
@@ -269,7 +272,7 @@ func postGoogleSignUp() http.HandlerFunc {
 		}
 		valid, err := u.ValidateDisplayName()
 		if err != nil {
-			writer.Error(
+			rw.Error(
 				err,
 				"post /auth/google/sign-up",
 				"username validate error",
@@ -277,7 +280,7 @@ func postGoogleSignUp() http.HandlerFunc {
 			return
 		}
 		if !valid {
-			writer.ErrorBadRequest(
+			rw.ErrorBadRequest(
 				errors.New("username validation error"),
 				"post /auth/google/sign-up",
 				params,
@@ -288,7 +291,7 @@ func postGoogleSignUp() http.HandlerFunc {
 		userUseCase := user.NewUseCase(db)
 		userId, err := userUseCase.Create(u)
 		if err != nil {
-			writer.Error(
+			rw.Error(
 				err,
 				"post /auth/google/sign-up",
 			)
@@ -297,7 +300,7 @@ func postGoogleSignUp() http.HandlerFunc {
 
 		user, err := userUseCase.FindOneById(userId)
 		if err != nil {
-			writer.Error(
+			rw.Error(
 				err,
 				"post /auth/google/sign-up",
 			)
@@ -312,21 +315,21 @@ func postGoogleSignUp() http.HandlerFunc {
 		socialUseCase := socialaccount.NewUseCase(db)
 		_, err = socialUseCase.Create(&sa)
 		if err != nil {
-			writer.Error(
+			rw.Error(
 				err,
 				"post /auth/google/sign-up",
 			)
 			return
 		}
 
-		userProfile := token.UserProfile{
+		p := token.UserProfile{
 			UserID:      user.ID,
 			DisplayName: user.DisplayName,
 			PhotoUrl:    utils.NormalizeNullString(user.PhotoUrl),
 		}
-		accessToken, refreshToken, err := token.GenerateTokens(&userProfile)
+		accessToken, refreshToken, err := token.GenerateTokens(&p)
 		if err != nil {
-			writer.Error(
+			rw.Error(
 				err,
 				"post /auth/google/sign-in",
 			)
@@ -335,8 +338,8 @@ func postGoogleSignUp() http.HandlerFunc {
 
 		token.SetTokenCookies(w, accessToken, refreshToken)
 
-		writer.Compress(map[string]interface{}{
-			"user_token_profile": userProfile,
+		rw.Compress(map[string]interface{}{
+			"user_profile": p,
 		})
 	}
 }

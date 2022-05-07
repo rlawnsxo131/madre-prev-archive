@@ -17,24 +17,24 @@ func ApplyRoutes(v1 *mux.Router) {
 
 func get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		writer := response.NewWriter(w, r)
+		rw := response.NewWriter(w, r)
 		vars := mux.Vars(r)
 		id := vars["id"]
 
 		db, err := database.LoadFromHttpCtx(r.Context())
 		if err != nil {
-			writer.Error(err, "get /user/{id}")
+			rw.Error(err, "get /user/{id}")
 			return
 		}
 
 		userUseCase := NewUseCase(db)
 		user, err := userUseCase.FindOneById(id)
 		if err != nil {
-			writer.Error(err, "get /user/{id}")
+			rw.Error(err, "get /user/{id}")
 			return
 		}
 
-		writer.Compress(user)
+		rw.Compress(user)
 	}
 }
 
