@@ -20,7 +20,7 @@ func Test_Service_Create_IsSuccess(t *testing.T) {
 		SocialId: utils.GenerateUUIDString(),
 	}
 
-	saService := socialaccount.NewService(db)
+	saService := socialaccount.NewUseCase(db)
 	id, err := saService.Create(&sa)
 
 	assert.Nil(err)
@@ -38,7 +38,7 @@ func Test_Service_Create_IsFail(t *testing.T) {
 		SocialId: utils.GenerateUUIDString(),
 	}
 
-	saService := socialaccount.NewService(db)
+	saService := socialaccount.NewUseCase(db)
 	id, err := saService.Create(&sa)
 
 	assert.Error(err)
