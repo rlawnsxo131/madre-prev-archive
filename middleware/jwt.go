@@ -54,7 +54,7 @@ func JWT(next http.Handler) http.Handler {
 							token.ResetTokenCookies(w)
 
 							// set context value
-							ctx, err := syncmap.SetNewValueFromHttpContext(
+							ctx, err := syncmap.SetNewValueFromHttpCtx(
 								r.Context(),
 								constants.Key_UserTokenProfile,
 								nil,
@@ -85,7 +85,7 @@ func JWT(next http.Handler) http.Handler {
 								token.SetTokenCookies(w, accessToken, refreshToken)
 
 								// set context value
-								ctx, err := syncmap.SetNewValueFromHttpContext(
+								ctx, err := syncmap.SetNewValueFromHttpCtx(
 									r.Context(),
 									constants.Key_UserTokenProfile,
 									&token.UserTokenProfile{
@@ -109,7 +109,7 @@ func JWT(next http.Handler) http.Handler {
 				}
 			} else {
 				// set context value
-				ctx, err := syncmap.SetNewValueFromHttpContext(
+				ctx, err := syncmap.SetNewValueFromHttpCtx(
 					r.Context(),
 					constants.Key_UserTokenProfile,
 					&token.UserTokenProfile{
@@ -151,7 +151,7 @@ func JWT(next http.Handler) http.Handler {
 					token.ResetTokenCookies(w)
 
 					// set context value
-					ctx, err := syncmap.SetNewValueFromHttpContext(
+					ctx, err := syncmap.SetNewValueFromHttpCtx(
 						r.Context(),
 						constants.Key_UserTokenProfile,
 						nil,
@@ -182,7 +182,7 @@ func JWT(next http.Handler) http.Handler {
 						token.SetTokenCookies(w, accessToken, refreshToken)
 
 						// set context value
-						ctx, err := syncmap.SetNewValueFromHttpContext(
+						ctx, err := syncmap.SetNewValueFromHttpCtx(
 							r.Context(),
 							constants.Key_UserTokenProfile,
 							&token.UserTokenProfile{

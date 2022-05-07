@@ -11,7 +11,7 @@ import (
 
 func SetSyncMapCtx(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		ctx := syncmap.GenerateHttpContext(r.Context())
+		ctx := syncmap.GenerateHttpCtx(r.Context())
 		r.Context().Value(ctx)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
@@ -29,7 +29,7 @@ func SetDatabaseToSyncMapCtx(next http.Handler) http.Handler {
 			return
 		}
 
-		ctx, err := syncmap.SetNewValueFromHttpContext(
+		ctx, err := syncmap.SetNewValueFromHttpCtx(
 			r.Context(),
 			constants.Key_HttpContextDB,
 			db,

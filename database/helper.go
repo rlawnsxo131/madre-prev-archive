@@ -24,7 +24,7 @@ func ExcuteInitSQL(db *sqlx.DB) {
 }
 
 func LoadFromHttpCtx(ctx context.Context) (*singletonDatabase, error) {
-	syncMap, err := syncmap.GetFromHttpContext(ctx)
+	syncMap, err := syncmap.GetFromHttpCtx(ctx)
 	if err != nil {
 		return nil, err
 	}
