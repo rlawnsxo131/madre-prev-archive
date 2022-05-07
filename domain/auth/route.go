@@ -30,7 +30,7 @@ func ApplyRoutes(v1 *mux.Router) {
 func get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		writer := response.NewWriter(w, r)
-		uTokenProfile := token.LoadCtxUserTokenProfile(r.Context())
+		uTokenProfile := token.LoadCtxUserProfile(r.Context())
 
 		writer.Compress(
 			map[string]interface{}{
@@ -43,7 +43,7 @@ func get() http.HandlerFunc {
 func delete() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		writer := response.NewWriter(w, r)
-		uTokenProfile := token.LoadCtxUserTokenProfile(r.Context())
+		uTokenProfile := token.LoadCtxUserProfile(r.Context())
 
 		if uTokenProfile == nil {
 			writer.ErrorUnauthorized(
@@ -193,7 +193,7 @@ func postGoogleSignIn() http.HandlerFunc {
 			return
 		}
 
-		uTokenProfile := token.UserTokenProfile{
+		uTokenProfile := token.UserProfile{
 			UserID:      u.ID,
 			DisplayName: u.DisplayName,
 			PhotoUrl:    utils.NormalizeNullString(u.PhotoUrl),
@@ -319,7 +319,7 @@ func postGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		uTokenProfile := token.UserTokenProfile{
+		uTokenProfile := token.UserProfile{
 			UserID:      user.ID,
 			DisplayName: user.DisplayName,
 			PhotoUrl:    utils.NormalizeNullString(user.PhotoUrl),

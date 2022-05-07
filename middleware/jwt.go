@@ -70,7 +70,7 @@ func JWT(next http.Handler) http.Handler {
 							r.Context().Value(ctx)
 						} else {
 							// generate tokens and set cookie
-							profile := token.UserTokenProfile{
+							profile := token.UserProfile{
 								UserID:      claims.UserID,
 								DisplayName: claims.DisplayName,
 								PhotoUrl:    claims.PhotoUrl,
@@ -88,7 +88,7 @@ func JWT(next http.Handler) http.Handler {
 								ctx, err := syncmap.SetNewValueFromHttpCtx(
 									r.Context(),
 									constants.Key_UserTokenProfile,
-									&token.UserTokenProfile{
+									&token.UserProfile{
 										UserID:      claims.UserID,
 										DisplayName: claims.DisplayName,
 										PhotoUrl:    claims.PhotoUrl,
@@ -112,7 +112,7 @@ func JWT(next http.Handler) http.Handler {
 				ctx, err := syncmap.SetNewValueFromHttpCtx(
 					r.Context(),
 					constants.Key_UserTokenProfile,
-					&token.UserTokenProfile{
+					&token.UserProfile{
 						UserID:      claims.UserID,
 						DisplayName: claims.DisplayName,
 						PhotoUrl:    claims.PhotoUrl,
@@ -167,7 +167,7 @@ func JWT(next http.Handler) http.Handler {
 					r.Context().Value(ctx)
 				} else {
 					// generate tokens and set cookie
-					profile := token.UserTokenProfile{
+					profile := token.UserProfile{
 						UserID:      claims.UserID,
 						DisplayName: claims.DisplayName,
 						PhotoUrl:    claims.PhotoUrl,
@@ -185,7 +185,7 @@ func JWT(next http.Handler) http.Handler {
 						ctx, err := syncmap.SetNewValueFromHttpCtx(
 							r.Context(),
 							constants.Key_UserTokenProfile,
-							&token.UserTokenProfile{
+							&token.UserProfile{
 								UserID:      claims.UserID,
 								DisplayName: claims.DisplayName,
 								PhotoUrl:    claims.PhotoUrl,

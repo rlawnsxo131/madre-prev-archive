@@ -22,7 +22,7 @@ var (
 	tokenTypes = []string{Key_AccessToken, Key_RefreshToken}
 )
 
-type UserTokenProfile struct {
+type UserProfile struct {
 	UserID      string `json:"user_id"`
 	DisplayName string `json:"display_name"`
 	PhotoUrl    string `json:"photo_url"`
@@ -36,7 +36,7 @@ type authTokenClaims struct {
 	jwt.StandardClaims
 }
 
-func GenerateTokens(profile *UserTokenProfile) (string, string, error) {
+func GenerateTokens(profile *UserProfile) (string, string, error) {
 	now := time.Now()
 	var accessToken string
 	var refreshToken string
@@ -158,13 +158,13 @@ func ResetTokenCookies(w http.ResponseWriter) {
 	})
 }
 
-func LoadCtxUserTokenProfile(ctx context.Context) *UserTokenProfile {
+func LoadCtxUserProfile(ctx context.Context) *UserProfile {
 	v := ctx.Value(constants.Key_HttpSyncMap)
 	syncMap, ok := v.(*sync.Map)
 
 	if ok {
 		if profile, ok := syncMap.Load(constants.Key_UserTokenProfile); ok {
-			if profile, ok := profile.(*UserTokenProfile); ok {
+			if profile, ok := profile.(*UserProfile); ok {
 				return profile
 			} else {
 				return nil
