@@ -43,13 +43,13 @@ func get() http.HandlerFunc {
 func delete() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		writer := response.NewHttpWriter(w, r)
-		profile := token.LoadUserTokenProfileFromCtx(r.Context())
+		uTokenProfile := token.LoadUserTokenProfileFromCtx(r.Context())
 
-		if profile == nil {
+		if uTokenProfile == nil {
 			writer.ErrorUnauthorized(
 				errors.New("not found userTokenProfile"),
 				"delete /auth",
-				profile,
+				uTokenProfile,
 			)
 			return
 		}

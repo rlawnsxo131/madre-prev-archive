@@ -14,14 +14,14 @@ func Test_Service_Create_IsSuccess(t *testing.T) {
 
 	db, _ := database.GetDatabaseInstance()
 
-	socialAccount := &socialaccount.SocialAccount{
+	sa := socialaccount.SocialAccount{
 		UserID:   utils.GenerateUUIDString(),
 		Provider: "GOOGLE",
 		SocialId: utils.GenerateUUIDString(),
 	}
 
-	socialAccountService := socialaccount.NewService(db)
-	id, err := socialAccountService.Create(socialAccount)
+	saService := socialaccount.NewService(db)
+	id, err := saService.Create(&sa)
 
 	assert.Nil(err)
 	assert.NotEmpty(id)
@@ -32,14 +32,14 @@ func Test_Service_Create_IsFail(t *testing.T) {
 
 	db, _ := database.GetDatabaseInstance()
 
-	socialAccount := &socialaccount.SocialAccount{
+	sa := socialaccount.SocialAccount{
 		UserID:   utils.GenerateUUIDString(),
 		Provider: "",
 		SocialId: utils.GenerateUUIDString(),
 	}
 
-	socialAccountService := socialaccount.NewService(db)
-	id, err := socialAccountService.Create(socialAccount)
+	saService := socialaccount.NewService(db)
+	id, err := saService.Create(&sa)
 
 	assert.Error(err)
 	assert.Empty(id)
