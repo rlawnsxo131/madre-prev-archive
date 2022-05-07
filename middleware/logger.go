@@ -15,7 +15,7 @@ func Logger(next http.Handler) http.Handler {
 
 		bodyBuf, reader, err := hl.ReadBody(r.Body)
 		if err != nil {
-			writer := response.NewHttpWriter(w, r)
+			writer := response.NewWriter(w, r)
 			writer.Error(
 				err,
 				"HttpLogger",

@@ -19,7 +19,7 @@ func JWT(next http.Handler) http.Handler {
 		accessToken, err := r.Cookie(token.Key_AccessToken)
 		if err != nil {
 			if err != http.ErrNoCookie {
-				writer := response.NewHttpWriter(w, r)
+				writer := response.NewWriter(w, r)
 				writer.Error(
 					err,
 					"JwtMiddleware",
@@ -37,7 +37,7 @@ func JWT(next http.Handler) http.Handler {
 					refreshToken, err := r.Cookie(token.Key_RefreshToken)
 					if err != nil {
 						if err != http.ErrNoCookie {
-							writer := response.NewHttpWriter(w, r)
+							writer := response.NewWriter(w, r)
 							writer.Error(
 								err,
 								"JwtMiddleware",
@@ -60,7 +60,7 @@ func JWT(next http.Handler) http.Handler {
 								nil,
 							)
 							if err != nil {
-								writer := response.NewHttpWriter(w, r)
+								writer := response.NewWriter(w, r)
 								writer.Error(
 									err,
 									"JWT",
@@ -95,7 +95,7 @@ func JWT(next http.Handler) http.Handler {
 									},
 								)
 								if err != nil {
-									writer := response.NewHttpWriter(w, r)
+									writer := response.NewWriter(w, r)
 									writer.Error(
 										err,
 										"JWT",
@@ -119,7 +119,7 @@ func JWT(next http.Handler) http.Handler {
 					},
 				)
 				if err != nil {
-					writer := response.NewHttpWriter(w, r)
+					writer := response.NewWriter(w, r)
 					writer.Error(
 						err,
 						"JWT",
@@ -134,7 +134,7 @@ func JWT(next http.Handler) http.Handler {
 			refreshToken, err := r.Cookie(token.Key_RefreshToken)
 			if err != nil {
 				if err != http.ErrNoCookie {
-					writer := response.NewHttpWriter(w, r)
+					writer := response.NewWriter(w, r)
 					writer.Error(
 						err,
 						"JwtMiddleware",
@@ -157,7 +157,7 @@ func JWT(next http.Handler) http.Handler {
 						nil,
 					)
 					if err != nil {
-						writer := response.NewHttpWriter(w, r)
+						writer := response.NewWriter(w, r)
 						writer.Error(
 							err,
 							"JWT",
@@ -192,7 +192,7 @@ func JWT(next http.Handler) http.Handler {
 							},
 						)
 						if err != nil {
-							writer := response.NewHttpWriter(w, r)
+							writer := response.NewWriter(w, r)
 							writer.Error(
 								err,
 								"JWT",

@@ -11,7 +11,7 @@ func ApplyRoutes(v1 *mux.Router) {
 	temp := v1.NewRoute().PathPrefix("/temp").Subrouter()
 
 	temp.HandleFunc("/get", func(w http.ResponseWriter, r *http.Request) {
-		writer := response.NewHttpWriter(w, r)
+		writer := response.NewWriter(w, r)
 		data := map[string]string{
 			"data": "data",
 		}
@@ -19,7 +19,7 @@ func ApplyRoutes(v1 *mux.Router) {
 	}).Methods("GET")
 
 	temp.HandleFunc("/post", func(w http.ResponseWriter, r *http.Request) {
-		writer := response.NewHttpWriter(w, r)
+		writer := response.NewWriter(w, r)
 		data := map[string]string{
 			"data": "data",
 		}

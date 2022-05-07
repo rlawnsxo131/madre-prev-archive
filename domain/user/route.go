@@ -17,7 +17,7 @@ func ApplyRoutes(v1 *mux.Router) {
 
 func get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		writer := response.NewHttpWriter(w, r)
+		writer := response.NewWriter(w, r)
 		vars := mux.Vars(r)
 		id := vars["id"]
 

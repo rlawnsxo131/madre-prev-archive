@@ -95,7 +95,7 @@ func (s *server) applyBaseMiddleware() {
 
 func (s *server) applyHealthSettings() {
 	s.router.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
-		writer := response.NewHttpWriter(w, r)
+		writer := response.NewWriter(w, r)
 		data := map[string]string{
 			"Method":  r.Method,
 			"Host":    r.Host,

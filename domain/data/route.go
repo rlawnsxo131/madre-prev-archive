@@ -20,7 +20,7 @@ func ApplyRoutes(v1 *mux.Router) {
 
 func getAll() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		writer := response.NewHttpWriter(w, r)
+		writer := response.NewWriter(w, r)
 		limit, err := strconv.Atoi(r.URL.Query().Get("limit"))
 		if err != nil {
 			logger.NewDefaultLogger().
@@ -47,7 +47,7 @@ func getAll() http.HandlerFunc {
 
 func get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		writer := response.NewHttpWriter(w, r)
+		writer := response.NewWriter(w, r)
 		vars := mux.Vars(r)
 		id := vars["id"]
 

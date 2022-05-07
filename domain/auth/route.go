@@ -29,7 +29,7 @@ func ApplyRoutes(v1 *mux.Router) {
 
 func get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		writer := response.NewHttpWriter(w, r)
+		writer := response.NewWriter(w, r)
 		uTokenProfile := token.LoadCtxUserTokenProfile(r.Context())
 
 		writer.Compress(
@@ -42,7 +42,7 @@ func get() http.HandlerFunc {
 
 func delete() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		writer := response.NewHttpWriter(w, r)
+		writer := response.NewWriter(w, r)
 		uTokenProfile := token.LoadCtxUserTokenProfile(r.Context())
 
 		if uTokenProfile == nil {
@@ -61,7 +61,7 @@ func delete() http.HandlerFunc {
 
 func postGoogleCheck() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		writer := response.NewHttpWriter(w, r)
+		writer := response.NewWriter(w, r)
 		db, err := database.LoadFromHttpCtx(r.Context())
 		if err != nil {
 			writer.Error(
@@ -127,7 +127,7 @@ func postGoogleCheck() http.HandlerFunc {
 
 func postGoogleSignIn() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		writer := response.NewHttpWriter(w, r)
+		writer := response.NewWriter(w, r)
 		db, err := database.LoadFromHttpCtx(r.Context())
 		if err != nil {
 			writer.Error(
@@ -217,7 +217,7 @@ func postGoogleSignIn() http.HandlerFunc {
 
 func postGoogleSignUp() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		writer := response.NewHttpWriter(w, r)
+		writer := response.NewWriter(w, r)
 		db, err := database.LoadFromHttpCtx(r.Context())
 		if err != nil {
 			writer.Error(

@@ -21,7 +21,7 @@ const (
 	Http_ForbiddenMessage           = "Forbidden"           // 403
 )
 
-type HttpWriter interface {
+type Writer interface {
 	Compress(data interface{})
 	Error(err error, action string, msg ...string)
 	ErrorBadRequest(err error, action string, params interface{})
@@ -36,19 +36,19 @@ type HttpWriter interface {
 	)
 }
 
-type httpWriter struct {
+type writer struct {
 	w http.ResponseWriter
 	r *http.Request
 }
 
-func NewHttpWriter(w http.ResponseWriter, r *http.Request) HttpWriter {
-	return &httpWriter{
+func NewWriter(w http.ResponseWriter, r *http.Request) Writer {
+	return &writer{
 		w: w,
 		r: r,
 	}
 }
 
-func (wt *httpWriter) Compress(data interface{}) {
+func (wt *writer) Compress(data interface{}) {
 	jsonData, err := json.Marshal(data)
 	if err != nil {
 		wt.Error(
@@ -99,7 +99,7 @@ func (wt *httpWriter) Compress(data interface{}) {
 	wt.w.Write(jsonData)
 }
 
-func (wt *httpWriter) Error(err error, action string, msg ...string) {
+func (wt *writer) Error(err error, action string, msg ...string) {
 	status := http.StatusInternalServerError
 	message := Http_InternalServerErrorMessage
 
@@ -129,7 +129,7 @@ func (wt *httpWriter) Error(err error, action string, msg ...string) {
 		Msg(b.String())
 }
 
-func (wt *httpWriter) ErrorBadRequest(err error, action string, params interface{}) {
+func (wt *writer) ErrorBadRequest(err error, action string, params interface{}) {
 	wt.standardError(
 		http.StatusBadRequest,
 		Http_BadRequestMessage,
@@ -139,7 +139,7 @@ func (wt *httpWriter) ErrorBadRequest(err error, action string, params interface
 	)
 }
 
-func (wt *httpWriter) ErrorUnauthorized(err error, action string, params interface{}) {
+func (wt *writer) ErrorUnauthorized(err error, action string, params interface{}) {
 	wt.standardError(
 		http.StatusUnauthorized,
 		Http_UnauthorizedMessage,
@@ -149,7 +149,7 @@ func (wt *httpWriter) ErrorUnauthorized(err error, action string, params interfa
 	)
 }
 
-func (wt *httpWriter) ErrorForbidden(err error, action string, params interface{}) {
+func (wt *writer) ErrorForbidden(err error, action string, params interface{}) {
 	wt.standardError(
 		http.StatusForbidden,
 		Http_ForbiddenMessage,
@@ -159,7 +159,7 @@ func (wt *httpWriter) ErrorForbidden(err error, action string, params interface{
 	)
 }
 
-func (wt *httpWriter) standardError(status int, message string, err error, action string, params interface{}) {
+func (wt *writer) standardError(status int, message string, err error, action string, params interface{}) {
 	wt.w.WriteHeader(status)
 	json.NewEncoder(wt.w).Encode(
 		map[string]interface{}{

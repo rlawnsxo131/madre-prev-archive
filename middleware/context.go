@@ -21,7 +21,7 @@ func SetDatabaseToSyncMapCtx(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		db, err := database.GetDatabaseInstance()
 		if err != nil {
-			writer := response.NewHttpWriter(w, r)
+			writer := response.NewWriter(w, r)
 			writer.Error(
 				err,
 				"SetDBContext",
@@ -35,7 +35,7 @@ func SetDatabaseToSyncMapCtx(next http.Handler) http.Handler {
 			db,
 		)
 		if err != nil {
-			writer := response.NewHttpWriter(w, r)
+			writer := response.NewWriter(w, r)
 			writer.Error(
 				err,
 				"SetDBContext",
