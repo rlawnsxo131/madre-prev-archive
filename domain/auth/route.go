@@ -6,7 +6,6 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/pkg/errors"
-	"github.com/rlawnsxo131/madre-server-v2/database"
 
 	"github.com/rlawnsxo131/madre-server-v2/domain/auth/socialaccount"
 	"github.com/rlawnsxo131/madre-server-v2/domain/user"
@@ -65,7 +64,7 @@ func delete() http.HandlerFunc {
 func postGoogleCheck() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
-		db, err := database.LoadFromHttpCtx(r.Context())
+		db, err := httpcontext.NewManager(r.Context()).Database()
 		if err != nil {
 			rw.Error(
 				err,
@@ -131,7 +130,7 @@ func postGoogleCheck() http.HandlerFunc {
 func postGoogleSignIn() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
-		db, err := database.LoadFromHttpCtx(r.Context())
+		db, err := httpcontext.NewManager(r.Context()).Database()
 		if err != nil {
 			rw.Error(
 				err,
@@ -221,7 +220,7 @@ func postGoogleSignIn() http.HandlerFunc {
 func postGoogleSignUp() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
-		db, err := database.LoadFromHttpCtx(r.Context())
+		db, err := httpcontext.NewManager(r.Context()).Database()
 		if err != nil {
 			rw.Error(
 				err,

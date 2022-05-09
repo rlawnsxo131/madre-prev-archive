@@ -1,14 +1,10 @@
 package database
 
 import (
-	"context"
 	"io/ioutil"
 	"strings"
 
 	"github.com/jmoiron/sqlx"
-	"github.com/pkg/errors"
-	"github.com/rlawnsxo131/madre-server-v2/constants"
-	"github.com/rlawnsxo131/madre-server-v2/lib/syncmap"
 )
 
 func ExcuteInitSQL(db *sqlx.DB) {
@@ -21,19 +17,4 @@ func ExcuteInitSQL(db *sqlx.DB) {
 	for _, query := range queries {
 		db.MustExec(query)
 	}
-}
-
-func LoadFromHttpCtx(ctx context.Context) (*singletonDatabase, error) {
-	syncMap, err := syncmap.GetFromHttpCtx(ctx)
-	if err != nil {
-		return nil, err
-	}
-
-	if db, ok := syncMap.Load(constants.Key_HttpContextDB); ok {
-		if db, ok := db.(*singletonDatabase); ok {
-			return db, nil
-		}
-	}
-
-	return nil, errors.New("DB is not exist")
 }

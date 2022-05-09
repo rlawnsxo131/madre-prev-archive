@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/rlawnsxo131/madre-server-v2/database"
+	"github.com/rlawnsxo131/madre-server-v2/lib/httpcontext"
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"
 )
 
@@ -21,7 +21,7 @@ func get() http.HandlerFunc {
 		vars := mux.Vars(r)
 		id := vars["id"]
 
-		db, err := database.LoadFromHttpCtx(r.Context())
+		db, err := httpcontext.NewManager(r.Context()).Database()
 		if err != nil {
 			rw.Error(err, "get /user/{id}")
 			return

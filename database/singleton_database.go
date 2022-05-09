@@ -5,13 +5,6 @@ import (
 	"github.com/rs/zerolog"
 )
 
-type Database interface {
-	Queryx(query string, args ...interface{}) (*sqlx.Rows, error)
-	QueryRowx(query string, args ...interface{}) *sqlx.Row
-	NamedQuery(query string, arg interface{}) (*sqlx.Rows, error)
-	PrepareNamedGet(id *string, query string, args interface{}) error
-}
-
 type singletonDatabase struct {
 	DB *sqlx.DB
 	l  *zerolog.Logger

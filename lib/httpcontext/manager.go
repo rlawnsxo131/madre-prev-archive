@@ -2,11 +2,14 @@ package httpcontext
 
 import (
 	"context"
+	"errors"
 
+	"github.com/rlawnsxo131/madre-server-v2/database"
 	"github.com/rlawnsxo131/madre-server-v2/lib/token"
 )
 
 const (
+	Key_Database    = "Database"
 	key_RequestID   = "RequestID"
 	Key_UserProfile = "UserProfile"
 )
@@ -19,6 +22,22 @@ func NewManager(ctx context.Context) *manager {
 	return &manager{
 		ctx: ctx,
 	}
+}
+
+func (m *manager) Database() (database.Database, error) {
+	v := m.ctx.Value(Key_Database)
+	if v, ok := v.(database.Database); ok {
+		return v, nil
+	}
+	return nil, errors.New("Database is not exist")
+}
+
+func (m *manager) SetDatabase(db database.Database) context.Context {
+	return context.WithValue(
+		m.ctx,
+		Key_Database,
+		db,
+	)
 }
 
 func (m *manager) RequestId() string {

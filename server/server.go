@@ -88,7 +88,6 @@ func (s *server) applyBaseMiddleware() {
 		middleware.Recovery,
 		middleware.AllowHost,
 		middleware.Cors,
-		middleware.SetSyncMapCtx,
 		middleware.JWT,
 	)
 }
@@ -110,7 +109,7 @@ func (s *server) applyHealthSettings() {
 func (s *server) applyApiRoutesAndMiddleware() {
 	api := s.router.NewRoute().PathPrefix("/api").Subrouter()
 	api.Use(
-		middleware.SetDatabaseToSyncMapCtx,
+		middleware.SetDatabaseCtx,
 		middleware.ContentTypeToJson,
 	)
 	v1 := api.NewRoute().PathPrefix("/v1").Subrouter()
