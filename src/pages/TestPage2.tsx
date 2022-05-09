@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { css } from '@emotion/react';
 import { format, add } from 'date-fns';
 import { v4 } from 'uuid';
@@ -151,4 +151,4 @@ const block = ({
   }
 `;
 
-export default memo(TestPage2);
+export default TestPage2;

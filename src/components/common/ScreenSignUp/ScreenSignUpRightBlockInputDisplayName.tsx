@@ -81,4 +81,4 @@ const footer = css`
   }
 `;
 
-export default memo(ScreenSignUpRightBlockInputDisplayName);
+export default ScreenSignUpRightBlockInputDisplayName;
