@@ -20,14 +20,14 @@ const (
 )
 
 var (
-	once             sync.Once
 	instanceDatabase *singletonDatabase
+	onceDatabase     sync.Once
 )
 
 func GetDatabaseInstance() (*singletonDatabase, error) {
 	var err error
 
-	once.Do(func() {
+	onceDatabase.Do(func() {
 		psqlInfo := fmt.Sprintf(
 			"host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 			host, port, user, password, dbname,
@@ -37,7 +37,7 @@ func GetDatabaseInstance() (*singletonDatabase, error) {
 
 		db, err := sqlx.Connect("postgres", psqlInfo)
 		if err != nil {
-			err = errors.Wrap(err, "sqlx: connect fail")
+			err = errors.Wrap(err, "sqlx connect fail")
 			return
 		}
 

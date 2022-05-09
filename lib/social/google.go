@@ -117,28 +117,16 @@ func NewGoogleApi() *googleApi {
 func (g *googleApi) Do(accessToken string) (*googlePeopleProfile, error) {
 	req, err := g.createRequest(accessToken)
 	if err != nil {
-		err = errors.Wrap(
-			err,
-			"GetPeopleProfile: createRequest error",
-		)
 		return nil, err
 	}
 
 	res, err := g.excuteRequest(req)
 	if err != nil {
-		err = errors.Wrap(
-			err,
-			"GetPeopleProfile: excuteRequest error",
-		)
 		return nil, err
 	}
 
 	gapiRes, err := g.mapTogooglePeopleApiResponse(res)
 	if err != nil {
-		err = errors.Wrap(
-			err,
-			"GetPeopleProfile: convertToRawPeopleProfile error",
-		)
 		return nil, err
 	}
 
@@ -149,7 +137,7 @@ func (g *googleApi) createRequest(accessToken string) (*http.Request, error) {
 	url := "https://people.googleapis.com/v1/people/me?personFields=names,emailAddresses,photos"
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "social GoogleApi createRequest")
 	}
 	req.Header.Add("Authorization", "Bearer "+accessToken)
 	return req, nil
@@ -159,7 +147,7 @@ func (g *googleApi) excuteRequest(req *http.Request) (*http.Response, error) {
 	client := &http.Client{}
 	res, err := client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "social GoogleApi excuteRequest")
 	}
 	return res, nil
 }
@@ -168,12 +156,12 @@ func (g *googleApi) mapTogooglePeopleApiResponse(res *http.Response) (*googlePeo
 	defer res.Body.Close()
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "social GoogleApi mapTogooglePeopleApiResponse res.Body read")
 	}
 
 	var gapiRes googlePeopleApiResponse
 	if err := json.Unmarshal(body, &gapiRes); err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "social GoogleApi mapTogooglePeopleApiResponse Unmarshal")
 	}
 	return &gapiRes, nil
 }

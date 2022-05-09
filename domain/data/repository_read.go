@@ -32,7 +32,7 @@ func (r *readRepository) FindAll(limit int) ([]*Data, error) {
 
 	rows, err := r.db.Queryx(query, limit)
 	if err != nil {
-		customError := errors.Wrap(err, "DataRepository: FindAll query error")
+		customError := errors.Wrap(err, "data ReadRepository FindAll query error")
 		return nil, utils.ErrNoRowsReturnRawError(err, customError)
 	}
 
@@ -40,13 +40,13 @@ func (r *readRepository) FindAll(limit int) ([]*Data, error) {
 		var d Data
 		err := rows.StructScan(&d)
 		if err != nil {
-			return nil, errors.Wrap(err, "DataRepository: FindAll StructScan error")
+			return nil, errors.Wrap(err, "data ReadRepository FindAll StructScan error")
 		}
 		dd = append(dd, r.mapper.toEntity(&d))
 	}
 
 	if err := rows.Close(); err != nil {
-		return nil, errors.Wrap(err, "DataRepository: FindAll rows.Close error")
+		return nil, errors.Wrap(err, "data ReadRepository FindAll rows.Close error")
 	}
 
 	return dd, nil

@@ -90,7 +90,7 @@ func DecodeToken(token string) (*authTokenClaims, error) {
 		if _, ok := t.Method.(*jwt.SigningMethodHMAC); ok {
 			return signKey, nil
 		}
-		return nil, errors.New("ParseWithClaims error")
+		return nil, errors.New("DocodeToken: ParseWithClaims")
 	})
 
 	if err != nil {

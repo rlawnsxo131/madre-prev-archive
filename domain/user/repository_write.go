@@ -34,7 +34,7 @@ func (r *writeRepository) Create(u *User) (string, error) {
 		r.mapper.toModel(u),
 	)
 	if err != nil {
-		return "", errors.Wrap(err, "UserWriteRepository: create")
+		return "", errors.Wrap(err, "user WriteRepository create")
 	}
 
 	return id, nil

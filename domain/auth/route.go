@@ -275,7 +275,6 @@ func postGoogleSignUp() http.HandlerFunc {
 			rw.Error(
 				err,
 				"post /auth/google/sign-up",
-				"username validate error",
 			)
 			return
 		}

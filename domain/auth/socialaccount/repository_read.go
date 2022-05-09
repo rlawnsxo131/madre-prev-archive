@@ -31,7 +31,7 @@ func (r *readRepository) FindOneByProviderWithSocialId(provider string, socialId
 
 	err := r.db.QueryRowx(query, socialId, provider).StructScan(&sa)
 	if err != nil {
-		customError := errors.Wrap(err, "ReadRepository: FindOneBySocialId")
+		customError := errors.Wrap(err, "socialaccount ReadRepository FindOneBySocialId")
 		err = utils.ErrNoRowsReturnRawError(err, customError)
 	}
 

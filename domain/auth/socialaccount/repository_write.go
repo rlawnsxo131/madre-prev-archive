@@ -34,7 +34,7 @@ func (r *writeRepository) Create(socialAccount *SocialAccount) (string, error) {
 		r.mapper.toModel(socialAccount),
 	)
 	if err != nil {
-		return "", errors.Wrap(err, "writeRepository: create")
+		return "", errors.Wrap(err, "socialaccount WriteRepository create")
 	}
 
 	return id, err

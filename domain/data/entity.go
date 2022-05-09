@@ -3,14 +3,14 @@ package data
 import "time"
 
 const (
-	Key_ID          = "Key_ID"
-	Key_UserID      = "Key_UserID"
-	Key_FileUrl     = "Key_FileUrl"
-	Key_Title       = "Key_Title"
-	Key_Description = "Key_Description"
-	Key_IsPublic    = "Key_IsPublic"
-	Key_CreatedAt   = "Key_CreatedAt"
-	Key_UpdatedAt   = "Key_UpdatedAt"
+	Key_ID          = "ID"
+	Key_UserID      = "UserID"
+	Key_FileUrl     = "FileUrl"
+	Key_Title       = "Title"
+	Key_Description = "Description"
+	Key_IsPublic    = "IsPublic"
+	Key_CreatedAt   = "CreatedAt"
+	Key_UpdatedAt   = "UpdatedAt"
 )
 
 type Data struct {

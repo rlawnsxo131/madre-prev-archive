@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"regexp"
 	"time"
+
+	"github.com/pkg/errors"
 )
 
 const (
@@ -81,7 +83,7 @@ func (u *User) Filter(keys []string) map[string]interface{} {
 func (u *User) ValidateDisplayName() (bool, error) {
 	match, err := regexp.MatchString("^[a-zA-Z0-9가-힣]{1,16}$", u.DisplayName)
 	if err != nil {
-		return false, err
+		return false, errors.Wrap(err, "ValidateDisplayName")
 	}
 	return match, nil
 }
