@@ -64,7 +64,8 @@ func delete() http.HandlerFunc {
 func postGoogleCheck() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
-		db, err := httpcontext.NewManager(r.Context()).Database()
+		cm := httpcontext.NewManager(r.Context())
+		db, err := cm.Database()
 		if err != nil {
 			rw.Error(
 				err,
@@ -97,7 +98,7 @@ func postGoogleCheck() http.HandlerFunc {
 			return
 		}
 
-		ggp, err := social.NewGoogleApi().Do(params.AccessToken)
+		ggp, err := social.NewGoogleApi(params.AccessToken).Do()
 		if err != nil {
 			rw.Error(
 				err,
@@ -130,7 +131,8 @@ func postGoogleCheck() http.HandlerFunc {
 func postGoogleSignIn() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
-		db, err := httpcontext.NewManager(r.Context()).Database()
+		cm := httpcontext.NewManager(r.Context())
+		db, err := cm.Database()
 		if err != nil {
 			rw.Error(
 				err,
@@ -163,7 +165,7 @@ func postGoogleSignIn() http.HandlerFunc {
 			return
 		}
 
-		ggp, err := social.NewGoogleApi().Do(params.AccessToken)
+		ggp, err := social.NewGoogleApi(params.AccessToken).Do()
 		if err != nil {
 			rw.Error(
 				err,
@@ -220,7 +222,8 @@ func postGoogleSignIn() http.HandlerFunc {
 func postGoogleSignUp() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
-		db, err := httpcontext.NewManager(r.Context()).Database()
+		cm := httpcontext.NewManager(r.Context())
+		db, err := cm.Database()
 		if err != nil {
 			rw.Error(
 				err,
@@ -254,7 +257,7 @@ func postGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		ggp, err := social.NewGoogleApi().Do(params.AccessToken)
+		ggp, err := social.NewGoogleApi(params.AccessToken).Do()
 		if err != nil {
 			rw.Error(
 				err,

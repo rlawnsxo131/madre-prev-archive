@@ -21,7 +21,8 @@ func get() http.HandlerFunc {
 		vars := mux.Vars(r)
 		id := vars["id"]
 
-		db, err := httpcontext.NewManager(r.Context()).Database()
+		cm := httpcontext.NewManager(r.Context())
+		db, err := cm.Database()
 		if err != nil {
 			rw.Error(err, "get /user/{id}")
 			return

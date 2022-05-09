@@ -109,7 +109,7 @@ func (s *server) applyHealthSettings() {
 func (s *server) applyApiRoutesAndMiddleware() {
 	api := s.router.NewRoute().PathPrefix("/api").Subrouter()
 	api.Use(
-		middleware.SetDatabaseCtx,
+		middleware.SetDatabase,
 		middleware.ContentTypeToJson,
 	)
 	v1 := api.NewRoute().PathPrefix("/v1").Subrouter()

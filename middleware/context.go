@@ -8,14 +8,14 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"
 )
 
-func SetDatabaseCtx(next http.Handler) http.Handler {
+func SetDatabase(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		db, err := database.GetDatabaseInstance()
 		if err != nil {
 			rw := response.NewWriter(w, r)
 			rw.Error(
 				err,
-				"SetDatabaseCtx",
+				"SetDatabase",
 			)
 			return
 		}

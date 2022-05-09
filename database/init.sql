@@ -65,8 +65,8 @@ CREATE TABLE IF NOT EXISTS public.social_account (
   PRIMARY KEY (id)
 );
 
+CREATE UNIQUE INDEX IF NOT EXISTS social_account_ix_user_id ON public.social_account USING btree (user_id);
 CREATE UNIQUE INDEX IF NOT EXISTS social_account_ix_provider_social_id ON public.social_account USING btree (provider, social_id);
-CREATE INDEX IF NOT EXISTS social_account_ix_user_id ON public.social_account USING btree (user_id);
 
 -- ALTER TABLE public.social_account OWNER TO madre;
 

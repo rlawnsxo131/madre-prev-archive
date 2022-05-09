@@ -21,7 +21,8 @@ func ApplyRoutes(v1 *mux.Router) {
 func getAll() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
-		db, err := httpcontext.NewManager(r.Context()).Database()
+		cm := httpcontext.NewManager(r.Context())
+		db, err := cm.Database()
 		if err != nil {
 			rw.Error(err, "get /data")
 			return
@@ -48,7 +49,8 @@ func getAll() http.HandlerFunc {
 func get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
-		db, err := httpcontext.NewManager(r.Context()).Database()
+		cm := httpcontext.NewManager(r.Context())
+		db, err := cm.Database()
 		if err != nil {
 			rw.Error(err, "get /data/{id}")
 			return

@@ -32,7 +32,7 @@ type Database interface {
 }
 
 func GetDatabaseInstance() (*singletonDatabase, error) {
-	var err error
+	var resultError error
 
 	onceDatabase.Do(func() {
 		psqlInfo := fmt.Sprintf(
@@ -44,7 +44,7 @@ func GetDatabaseInstance() (*singletonDatabase, error) {
 
 		db, err := sqlx.Connect("postgres", psqlInfo)
 		if err != nil {
-			err = errors.Wrap(err, "sqlx connect fail")
+			resultError = errors.Wrap(err, "sqlx connect fail")
 			return
 		}
 
@@ -56,7 +56,7 @@ func GetDatabaseInstance() (*singletonDatabase, error) {
 		initDatabase(instanceDatabase.DB)
 	})
 
-	return instanceDatabase, err
+	return instanceDatabase, resultError
 }
 
 func initDatabase(db *sqlx.DB) {

@@ -108,14 +108,18 @@ type googlePeopleProfile struct {
 	DisplayName string
 }
 
-type googleApi struct{}
-
-func NewGoogleApi() *googleApi {
-	return &googleApi{}
+type googleApi struct {
+	accessToken string
 }
 
-func (g *googleApi) Do(accessToken string) (*googlePeopleProfile, error) {
-	req, err := g.createRequest(accessToken)
+func NewGoogleApi(actk string) *googleApi {
+	return &googleApi{
+		accessToken: actk,
+	}
+}
+
+func (g *googleApi) Do() (*googlePeopleProfile, error) {
+	req, err := g.createRequest(g.accessToken)
 	if err != nil {
 		return nil, err
 	}
