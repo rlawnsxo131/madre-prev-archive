@@ -9,6 +9,7 @@ export default function useScreenSignUpInputDisplayName() {
   const [googleSignUp] = authApi.usePostGoogleSignUpMutation();
   const { close, setIsValidateError, resetIsValidateError } =
     useScreenSignUpActions();
+
   const inputRef = useRef<HTMLInputElement>(null);
   const [displayName, setDisplayName] = useState('');
 
