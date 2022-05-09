@@ -11,34 +11,33 @@ interface ScreenSignUpRightBlockInputDisplayNameProps {}
 function ScreenSignUpRightBlockInputDisplayName(
   props: ScreenSignUpRightBlockInputDisplayNameProps,
 ) {
-  const { state, isError, isValidateError, close, onChange, onSignUp } =
+  const { inputRef, displayName, onChange, close, onSignUp } =
     useScreenSignUpInputDisplayName();
 
   return (
-    <>
-      <div css={block}>
-        <div css={header}>
-          <CloseIcon onClick={close} />
-        </div>
-        <div css={body}>
-          <h3>사용하실 이름을 입력해 주세요.</h3>
-          <Input
-            size="responsive"
-            name="display_name"
-            value={state.display_name}
-            onChange={onChange}
-            minLength={1}
-            maxLength={16}
-            placeholder="특수문자 제외, 영문 1~16자"
-          />
-        </div>
-        <div css={footer}>
-          <Button color="blue" onClick={onSignUp}>
-            확인
-          </Button>
-        </div>
+    <div css={block}>
+      <div css={header}>
+        <CloseIcon onClick={close} />
       </div>
-    </>
+      <div css={body}>
+        <h3>사용하실 이름을 입력해 주세요.</h3>
+        <Input
+          size="responsive"
+          name="display_name"
+          value={displayName}
+          onChange={onChange}
+          ref={inputRef}
+          minLength={1}
+          maxLength={16}
+          placeholder="특수문자 제외, 영문 1~16자"
+        />
+      </div>
+      <div css={footer}>
+        <Button color="blue" onClick={onSignUp}>
+          확인
+        </Button>
+      </div>
+    </div>
   );
 }
 

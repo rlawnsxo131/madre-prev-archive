@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { css } from '@emotion/react';
 import useTransitionTimeoutEffect from '../../../hooks/useTransitionTimeoutEffect';
 import { themePalette, transitions, zIndexes } from '../../../styles';
@@ -85,4 +86,4 @@ const button = css`
   color: ${themePalette.text1};
 `;
 
-export default UserHeaderMenuItems;
+export default memo(UserHeaderMenuItems);

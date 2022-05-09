@@ -3,18 +3,26 @@ import { UserProfile } from '../@types/domain/auth.types';
 import { MADRE_USER_PROFILE } from '../constants';
 import { Storage } from '../lib/storage';
 
-interface UserState {
+interface UserLoadStatus {
   isPending: boolean;
+  isError: boolean;
+}
+
+interface UserState {
   menu: {
     visible: boolean;
   };
+  loadUserStatus: UserLoadStatus;
   profile: UserProfile | null;
 }
 
 const initialState: UserState = {
-  isPending: true,
   menu: {
     visible: false,
+  },
+  loadUserStatus: {
+    isPending: false,
+    isError: false,
   },
   profile: null,
 };
@@ -31,8 +39,17 @@ const user = createSlice({
       Storage.removeItem(MADRE_USER_PROFILE);
       state.profile = null;
     },
-    setIsPending(state, action: PayloadAction<Pick<UserState, 'isPending'>>) {
-      state.isPending = action.payload.isPending;
+    setLoadUserStatusIsPending(
+      state,
+      action: PayloadAction<Pick<UserLoadStatus, 'isPending'>>,
+    ) {
+      state.loadUserStatus.isPending = action.payload.isPending;
+    },
+    setLoadUserStatusIsError(
+      state,
+      action: PayloadAction<Pick<UserLoadStatus, 'isError'>>,
+    ) {
+      state.loadUserStatus.isError = action.payload.isError;
     },
     handleNavigation(state) {
       const visible = !state.menu.visible;

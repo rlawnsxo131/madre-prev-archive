@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import usePopupAuthActions from '../../../hooks/popupAuth/usePopupAuthActions';
-import useUserIsPendingState from '../../../hooks/user/useUserIsPendingState';
+import useUserLoadStatusState from '../../../hooks/user/useUserLoadStatusState';
 import useUserMenuButtonActions from '../../../hooks/user/useUserMenuButtonActions';
 import useUserMenuState from '../../../hooks/user/useUserMenuState';
 import useUserProfileState from '../../../hooks/user/useUserProfileState';
@@ -12,7 +12,7 @@ import UserHeaderMenuItems from './UserHeaderMenuItems';
 interface UserHeaderMenuProps {}
 
 function UserHeaderMenu(props: UserHeaderMenuProps) {
-  const isPending = useUserIsPendingState();
+  const { isPending, isError } = useUserLoadStatusState();
   const menu = useUserMenuState();
   const profile = useUserProfileState();
   const signOut = useUserSignOut();
@@ -21,6 +21,10 @@ function UserHeaderMenu(props: UserHeaderMenuProps) {
 
   if (isPending) {
     return <div css={flexCenter}>loading...</div>;
+  }
+
+  if (isError) {
+    return <div css={flexCenter}>error</div>;
   }
 
   if (!profile) {

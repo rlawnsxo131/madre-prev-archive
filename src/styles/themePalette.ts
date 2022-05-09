@@ -8,6 +8,10 @@ interface ThemeVariables {
 
   bg_button1: string;
 
+  outline_button_gray: string;
+  outline_button_gray_hover: string;
+  outline_button_disabled: string;
+
   text1: string;
   text2: string;
 
@@ -42,6 +46,10 @@ const themeVariableSets: Record<Theme, ThemeVariables> = {
 
     bg_button1: 'rgba(255, 255, 255, 0)',
 
+    outline_button_gray: '#495057',
+    outline_button_gray_hover: '#868e96',
+    outline_button_disabled: '#adb5bd',
+
     text1: '#242526',
     text2: '#495057',
 
@@ -64,6 +72,10 @@ const themeVariableSets: Record<Theme, ThemeVariables> = {
     bg_element1: '#242526',
 
     bg_button1: '#FFFF',
+
+    outline_button_gray: '#adb5bd',
+    outline_button_gray_hover: '#ced4da',
+    outline_button_disabled: '#495057',
 
     text1: '#FFFF',
     text2: '#adb5bd',

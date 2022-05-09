@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { memo } from 'react';
+import { forwardRef, memo } from 'react';
 import { palette, themePalette } from '../../../styles';
 import { InputSize, inputSizeMap } from './Input.styles';
 
@@ -8,9 +8,11 @@ interface InputProps
   size?: InputSize;
 }
 
-function Input({ size = 'medium', ...props }: InputProps) {
-  return <input css={input(size)} {...props} />;
-}
+const Input = forwardRef<HTMLInputElement, InputProps>(
+  ({ size = 'medium', ...props }, ref) => {
+    return <input css={input(size)} {...props} ref={ref} />;
+  },
+);
 
 const input = (size: InputSize) => css`
   margin: 0;

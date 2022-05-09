@@ -11,6 +11,12 @@ export default function useScreenSignUpActions() {
       close() {
         dispatch(screenSignUp.actions.close());
       },
+      setIsValidateError() {
+        dispatch(screenSignUp.actions.setIsValidateError());
+      },
+      resetIsValidateError() {
+        dispatch(screenSignUp.actions.resetIsValidateError());
+      },
     }),
     [dispatch],
   );

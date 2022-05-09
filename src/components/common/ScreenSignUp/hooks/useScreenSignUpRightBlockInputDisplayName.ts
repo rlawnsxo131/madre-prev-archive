@@ -1,33 +1,36 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useScreenSignUpActions from '../../../../hooks/screenSignUp/useScreenSignUpActions';
 import useScreenSignUpState from '../../../../hooks/screenSignUp/useScreenSignUpState';
-import useInputs from '../../../../hooks/useInputs';
 import { isNormalEnglishString, normalizeString } from '../../../../lib/utils';
 import authApi from '../../../../store/api/authApi';
 
 export default function useScreenSignUpInputDisplayName() {
-  const { isError, access_token } = useScreenSignUpState();
+  const { isError, isValidateError, access_token } = useScreenSignUpState();
   const [googleSignUp] = authApi.usePostGoogleSignUpMutation();
-  const { close } = useScreenSignUpActions();
-  const { state, onChange } = useInputs({
-    display_name: '',
-  });
-  const [isValidateError, setIsValidateError] = useState(true);
+  const { close, setIsValidateError, resetIsValidateError } =
+    useScreenSignUpActions();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [displayName, setDisplayName] = useState('');
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    resetIsValidateError();
+    setDisplayName(e.target.value);
+  };
 
   const onSignUp = async () => {
     const normalizedAccessToken = normalizeString(access_token);
-    const normalizedDisplayName = normalizeString(state.display_name);
+    const normalizedDisplayName = normalizeString(displayName);
 
     if (!normalizedAccessToken || !normalizedDisplayName) {
       if (!normalizedAccessToken) {
-        console.log('system error ');
+        console.log('system error');
         return;
       }
-      setIsValidateError(true);
+      setIsValidateError();
       return;
     }
     if (!isNormalEnglishString(normalizedDisplayName)) {
-      setIsValidateError(true);
+      setIsValidateError();
       return;
     }
     await googleSignUp({
@@ -36,12 +39,16 @@ export default function useScreenSignUpInputDisplayName() {
     });
   };
 
+  useEffect(() => {
+    if (!isValidateError) return;
+    inputRef.current?.focus();
+  }, [isValidateError]);
+
   return {
-    state,
-    isError,
-    isValidateError,
-    close,
+    inputRef,
+    displayName,
     onChange,
+    close,
     onSignUp,
   };
 }

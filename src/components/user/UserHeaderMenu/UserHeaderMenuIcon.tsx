@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { css } from '@emotion/react';
 import { UserIcon } from '../../../image/icons';
 import { googlePhotoUrlSizeChange } from '../../../lib/utils';
@@ -35,4 +36,4 @@ const borderRadius = css`
   border-radius: 100%;
 `;
 
-export default UserHeaderMenuIcon;
+export default memo(UserHeaderMenuIcon);

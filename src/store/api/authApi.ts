@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { ResponseError } from '../../@types/api/api.types';
 import {
   GetAuthResponse,
   PostAuthGoogleCheckParams,
@@ -12,20 +13,6 @@ import popupAuth from '../popupAuth';
 import screenSignUp from '../screenSignUp';
 import user from '../user';
 
-/**
- * catch block error response data set
- * {
- *   error: {
- *     status: 500,
- *     data: {
- *       message: "InternalServerError"
- *       status: 500
- *     }
- *   }
- *   isUnhandledError: false
- *   meta: {request: Request, response: Response}
- * }
- */
 const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({
@@ -44,6 +31,11 @@ const authApi = createApi({
           await queryFulfilled;
 
           const { data } = getCacheEntry();
+          dispatch(
+            user.actions.setLoadUserStatusIsError({
+              isError: false,
+            }),
+          );
           if (data?.user_profile) {
             dispatch(
               user.actions.setUser({
@@ -54,6 +46,11 @@ const authApi = createApi({
             dispatch(user.actions.resetUser());
           }
         } catch (e) {
+          dispatch(
+            user.actions.setLoadUserStatusIsError({
+              isError: true,
+            }),
+          );
           console.log('error: ', e);
         }
       },
@@ -76,7 +73,26 @@ const authApi = createApi({
           dispatch(common.actions.closeLoading());
         } catch (e) {
           dispatch(common.actions.closeLoading());
-          dispatch(authApi.util.invalidateTags(['Auth']));
+          dispatch(user.actions.closeNavigation());
+
+          // TODO: Let's think about error formalization
+          const { error } = e as ResponseError;
+          if (error.data.status === 401) {
+            dispatch(
+              common.actions.showPopupCommon({
+                title: '',
+                message: '잘못된 요청입니다.',
+              }),
+            );
+          } else {
+            dispatch(
+              common.actions.showPopupCommon({
+                title: '',
+                message: '로그아웃 에러가 발생했습니다',
+              }),
+            );
+          }
+          console.log(e);
         }
       },
       invalidatesTags: ['Auth'],
@@ -162,7 +178,13 @@ const authApi = createApi({
           dispatch(screenSignUp.actions.close());
         } catch (e) {
           dispatch(common.actions.closeLoading());
-          dispatch(screenSignUp.actions.setIsError());
+
+          const { error } = e as ResponseError;
+          if (error.data.status === 400) {
+            dispatch(screenSignUp.actions.setIsValidateError());
+          } else {
+            dispatch(screenSignUp.actions.setIsError());
+          }
         }
       },
     }),

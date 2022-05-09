@@ -14,7 +14,7 @@ export const inputSizeMap = {
     padding: '0.5rem',
   },
   responsive: {
-    width: 'calc(100% - 1rem)',
+    width: '100%',
     padding: '0.5rem',
   },
 };

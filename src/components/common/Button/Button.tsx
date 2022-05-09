@@ -71,6 +71,7 @@ const block = (
   css`
     color: ${buttonOutlineStyle[color].default};
     background: ${buttonOutlineStyle.background};
+    border: 1px solid ${buttonOutlineStyle[color].default};
     &:hover {
       color: ${buttonOutlineStyle[color].hover};
       border: 1px solid ${buttonOutlineStyle[color].hover};
@@ -89,18 +90,21 @@ const block = (
   
   &:disabled {
     cursor: not-allowed;
-    border: 1px solid ${palette.gray['100']};
-    color: ${palette.gray['500']};
     ${outline &&
     css`
+      color: ${buttonOutlineStyle.disabled};
       background: ${buttonOutlineStyle.background};
+      border: 1px solid ${buttonOutlineStyle.disabled};
       &:hover {
         background: ${buttonOutlineStyle.background};
+        opacity: 1;
       }
     `}
     ${!outline &&
     css`
+      color: ${palette.gray['500']};
       background: ${palette.gray['300']};
+      border: 1px solid ${palette.gray['100']};
       &:hover {
         background: ${palette.gray['300']};
       }

@@ -46,7 +46,7 @@ const link = (parentDirection: ParentsDirection) => css`
     align-items: center;
     font-size: 0.9rem;
     font-weight: bold;
-    padding: 0.5rem 0.25rem 0.5rem 0.25rem;
+    padding: 0.5rem 0.25rem;
   `}
 `;
 

@@ -29,7 +29,7 @@ export default function useUserLoadEffect() {
 
   useEffect(() => {
     dispatch(
-      user.actions.setIsPending({
+      user.actions.setLoadUserStatusIsPending({
         isPending: isPendingVisible,
       }),
     );
