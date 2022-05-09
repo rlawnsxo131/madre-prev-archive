@@ -104,12 +104,12 @@ func DecodeToken(token string) (*authTokenClaims, error) {
 	return nil, errors.New("DecodeToken: token is not valid")
 }
 
-func SetTokenCookies(w http.ResponseWriter, accessToken, refreshToken string) {
+func SetTokenCookies(w http.ResponseWriter, actk, rftk string) {
 	now := time.Now()
 
 	http.SetCookie(w, &http.Cookie{
 		Name:  Key_AccessToken,
-		Value: accessToken,
+		Value: actk,
 		Path:  "/",
 		// Domain:   ".juntae.kim",
 		Expires:  now.AddDate(0, 0, 1),
@@ -119,7 +119,7 @@ func SetTokenCookies(w http.ResponseWriter, accessToken, refreshToken string) {
 	})
 	http.SetCookie(w, &http.Cookie{
 		Name:  Key_RefreshToken,
-		Value: refreshToken,
+		Value: rftk,
 		Path:  "/",
 		// Domain:   ".juntae.kim",
 		Expires:  now.AddDate(0, 0, 30),

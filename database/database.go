@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq"
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
 )
@@ -31,7 +32,7 @@ func GetDatabaseInstance() (*singletonDatabase, error) {
 			"host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 			host, port, user, password, dbname,
 		)
-		logger.NewDefaultLogger().
+		logger.GetDefaultLogger().
 			Info().Str("database connection info", psqlInfo).Msg("")
 
 		db, err := sqlx.Connect("postgres", psqlInfo)

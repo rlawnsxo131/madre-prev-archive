@@ -31,7 +31,7 @@ func ApplyRoutes(v1 *mux.Router) {
 func get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
-		cm := httpcontext.NewContextManager(r.Context())
+		cm := httpcontext.NewManager(r.Context())
 		p := cm.UserProfile()
 
 		rw.Compress(
@@ -45,7 +45,7 @@ func get() http.HandlerFunc {
 func delete() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
-		cm := httpcontext.NewContextManager(r.Context())
+		cm := httpcontext.NewManager(r.Context())
 		p := cm.UserProfile()
 
 		if p == nil {

@@ -12,11 +12,16 @@ var (
 	onceDefaultLogger sync.Once
 )
 
-func NewDefaultLogger() *zerolog.Logger {
+func GetDefaultLogger() *zerolog.Logger {
 	onceDefaultLogger.Do(func() {
-		//.Output(zerolog.ConsoleWriter{Out: os.Stderr})
-		l := zerolog.New(os.Stderr).With().Timestamp().Logger()
-		defaultLogger = &l
+		l := NewDefaultLogger()
+		defaultLogger = l
 	})
 	return defaultLogger
+}
+
+func NewDefaultLogger() *zerolog.Logger {
+	//.Output(zerolog.ConsoleWriter{Out: os.Stderr})
+	l := zerolog.New(os.Stderr).With().Timestamp().Logger()
+	return &l
 }

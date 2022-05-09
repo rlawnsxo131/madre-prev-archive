@@ -27,6 +27,6 @@ func (uc *usecase) FindAll(limit int) ([]*Data, error) {
 
 func (uc *usecase) FindOneById(id string) (*Data, error) {
 	repo := NewReadRepository(uc.db)
-	data, err := repo.FindOneById(id)
-	return data, err
+	d, err := repo.FindOneById(id)
+	return d, err
 }

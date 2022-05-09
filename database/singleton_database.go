@@ -2,13 +2,13 @@ package database
 
 import (
 	"github.com/jmoiron/sqlx"
-	_ "github.com/lib/pq"
 	"github.com/rs/zerolog"
 )
 
 type Database interface {
 	Queryx(query string, args ...interface{}) (*sqlx.Rows, error)
 	QueryRowx(query string, args ...interface{}) *sqlx.Row
+	NamedQuery(query string, arg interface{}) (*sqlx.Rows, error)
 	PrepareNamedGet(id *string, query string, args interface{}) error
 }
 
@@ -27,12 +27,17 @@ func (sd *singletonDatabase) QueryRowx(query string, args ...interface{}) *sqlx.
 	return sd.DB.QueryRowx(query, args...)
 }
 
-func (sd *singletonDatabase) PrepareNamedGet(id *string, query string, args interface{}) error {
-	sd.l.Debug().Msgf("sql: %s,%+v", query, args)
+func (sd *singletonDatabase) NamedQuery(query string, arg interface{}) (*sqlx.Rows, error) {
+	sd.l.Debug().Msgf("sql: %s,%+v", query, arg)
+	return sd.DB.NamedQuery(query, arg)
+}
+
+func (sd *singletonDatabase) PrepareNamedGet(id *string, query string, arg interface{}) error {
+	sd.l.Debug().Msgf("sql: %s,%+v", query, arg)
 	stmt, err := sd.DB.PrepareNamed(query)
 	defer stmt.Close()
 	if err != nil {
 		return err
 	}
-	return stmt.Get(id, args)
+	return stmt.Get(id, arg)
 }

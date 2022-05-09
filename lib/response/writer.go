@@ -123,7 +123,7 @@ func (wt *writer) Error(err error, action string, msg ...string) {
 		}
 	}
 
-	logger.NewDefaultLogger().
+	logger.GetDefaultLogger().
 		Err(err).
 		Str("Action", action).
 		Msg(b.String())
@@ -168,7 +168,7 @@ func (wt *writer) standardError(status int, message string, err error, action st
 		},
 	)
 
-	logger.NewDefaultLogger().
+	logger.GetDefaultLogger().
 		Err(err).
 		Str("Action", action).
 		Msgf("Params: %+v", params)

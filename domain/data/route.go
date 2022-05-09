@@ -23,7 +23,7 @@ func getAll() http.HandlerFunc {
 		rw := response.NewWriter(w, r)
 		limit, err := strconv.Atoi(r.URL.Query().Get("limit"))
 		if err != nil {
-			logger.NewDefaultLogger().
+			logger.GetDefaultLogger().
 				Warn().Msgf("route: limit Atoi wrong: %v", err)
 		}
 		limit = utils.IfIsNotExistGetDefaultIntValue(limit, 50)

@@ -10,7 +10,6 @@ import (
 	"time"
 
 	"github.com/pkg/errors"
-	"github.com/rlawnsxo131/madre-server-v2/utils"
 	"github.com/rs/zerolog"
 )
 
@@ -48,9 +47,9 @@ func (hl *httpLogger) ReadBody(r *http.Request) ([]byte, error) {
 	return buf, nil
 }
 
-func (hl *httpLogger) LogEntry(r *http.Request, start time.Time, body string) {
+func (hl *httpLogger) LogEntry(r *http.Request, reqId string, body string, start time.Time) {
 	hl.l.Info().
-		Str("RequestId", utils.GenerateUUIDString()).
+		Str("RequestId", reqId).
 		Dur("Laytancy", time.Since(start)).
 		Str("Protocol", r.Proto).
 		Str("RequestMethod", r.Method).
