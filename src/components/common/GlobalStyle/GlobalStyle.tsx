@@ -20,8 +20,12 @@ const globalStyle = css`
 
   header,
   footer {
-    background: ${themePalette.bg3};
+    background: ${themePalette.bg4};
   }
+
+  /* footer {
+    background: ${themePalette.bg3};
+  } */
 
   html {
     box-sizing: border-box;

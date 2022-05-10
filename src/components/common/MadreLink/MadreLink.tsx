@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { NavLink } from 'react-router-dom';
-import { standardColor } from '../../../styles';
+import { themePalette } from '../../../styles';
 
 type ParentsDirection = 'row' | 'column';
 
@@ -15,11 +15,8 @@ function MadreLink({
   displayName,
   parentDirection = 'row',
 }: MadreLinkProps) {
-  const className = ({ isActive }: { isActive: boolean }) =>
-    isActive ? 'active' : undefined;
-
   return (
-    <NavLink css={link(parentDirection)} to={to} className={className}>
+    <NavLink css={link(parentDirection)} to={to}>
       {displayName}
     </NavLink>
   );
@@ -28,7 +25,7 @@ function MadreLink({
 const link = (parentDirection: ParentsDirection) => css`
   display: flex;
   &.active {
-    color: ${standardColor.navigation.active};
+    color: ${themePalette.anchor_active1};
   }
 
   ${parentDirection === 'row' &&
@@ -37,7 +34,7 @@ const link = (parentDirection: ParentsDirection) => css`
     align-items: center;
     font-size: 0.875rem;
     font-weight: bold;
-    padding: 0 1rem;
+    padding: 0.5rem 1rem;
   `}
 
   ${parentDirection === 'column' &&

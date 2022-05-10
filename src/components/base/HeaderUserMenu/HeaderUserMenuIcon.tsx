@@ -2,7 +2,6 @@ import { memo } from 'react';
 import { css } from '@emotion/react';
 import { UserIcon } from '../../../image/icons';
 import { googlePhotoUrlSizeChange } from '../../../lib/utils';
-import { themePalette } from '../../../styles';
 
 interface HeaderUserMenuIconProps {
   onClick: () => void;
@@ -10,30 +9,27 @@ interface HeaderUserMenuIconProps {
 }
 
 function HeaderUserMenuIcon({ onClick, photo_url }: HeaderUserMenuIconProps) {
-  if (!photo_url) {
-    return <UserIcon css={[icon, fill]} onClick={onClick} />;
-  }
-
   return (
-    <img
-      css={[icon, borderRadius]}
-      src={googlePhotoUrlSizeChange(photo_url)}
-      onClick={onClick}
-    />
+    <div css={block} onClick={onClick}>
+      {photo_url ? (
+        <img src={googlePhotoUrlSizeChange(photo_url)} />
+      ) : (
+        <UserIcon />
+      )}
+    </div>
   );
 }
 
-const icon = css`
-  width: 1.9rem;
-  height: 1.9rem;
-`;
-
-const fill = css`
-  fill: ${themePalette.fill1};
-`;
-
-const borderRadius = css`
-  border-radius: 100%;
+const block = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.25rem;
+  img {
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: 100%;
+  }
 `;
 
 export default memo(HeaderUserMenuIcon);

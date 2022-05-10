@@ -2,7 +2,6 @@ import { css } from '@emotion/react';
 import { media } from '../../../styles';
 import ButtonThemeChange from '../../common/ButtonThemeChange';
 import HeaderLogo from './HeaderLogo';
-import HeaderMobileNavigation from './HeaderMobileNavigation';
 
 interface HeaderMobileProps {}
 
@@ -12,7 +11,6 @@ function HeaderMobile(props: HeaderMobileProps) {
       <HeaderLogo />
       <div css={right}>
         <ButtonThemeChange />
-        <HeaderMobileNavigation />
       </div>
     </div>
   );
@@ -37,7 +35,7 @@ const right = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
 `;
 
 export default HeaderMobile;

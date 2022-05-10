@@ -1,15 +1,14 @@
 import { css } from '@emotion/react';
-import { media } from '../../../styles';
+import { media, themePalette } from '../../../styles';
+import FooterMobileItems from './FooterMobileItems';
 
 interface FooterMobileProps {}
 
 function FooterMobile(props: FooterMobileProps) {
   return (
     <div css={block}>
-      <div>a</div>
-      <div>a</div>
-      <div>a</div>
-      <div>a</div>
+      <FooterMobileItems />
+      <div css={fakeBlock} />
     </div>
   );
 }
@@ -17,17 +16,19 @@ function FooterMobile(props: FooterMobileProps) {
 const block = css`
   position: relative;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  height: 3rem;
-  padding: 0.25rem 0;
-
-  ${media.xxxsmall} {
-    width: 93%;
-  }
+  border-radius: 1rem 1rem 0 0;
+  border-top: 1px solid ${themePalette.border_element1};
   ${media.small} {
     display: none;
   }
+`;
+
+const fakeBlock = css`
+  width: 100%;
+  height: 1.5rem;
 `;
 
 export default FooterMobile;

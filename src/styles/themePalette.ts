@@ -22,6 +22,8 @@ interface ThemeVariables {
 
   fill1: string;
 
+  anchor_active1: string;
+
   shadow1: string;
 
   opaque_layer: string;
@@ -61,6 +63,8 @@ const themeVariableSets: Record<Theme, ThemeVariables> = {
 
     fill1: '#242526',
 
+    anchor_active1: '#228be6',
+
     shadow1: '1px 1px 3px 1px #adb5bd',
 
     opaque_layer: '',
@@ -88,6 +92,8 @@ const themeVariableSets: Record<Theme, ThemeVariables> = {
     border_element2: '#242526',
 
     fill1: '#FFFF',
+
+    anchor_active1: '#228be6',
 
     shadow1: '1px 1px 3px 1px #18191A',
 

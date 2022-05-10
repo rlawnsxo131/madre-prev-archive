@@ -1,8 +1,8 @@
 import { themePalette } from '../../styles';
 
-interface MenuIconProps extends React.SVGProps<HTMLOrSVGElement> {}
+interface HomeIconProps extends React.SVGProps<HTMLOrSVGElement> {}
 
-function MenuIcon(props: MenuIconProps) {
+function HomeIcon(props: HomeIconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -12,9 +12,9 @@ function MenuIcon(props: MenuIconProps) {
       fill={themePalette.fill1}
     >
       <path d="M0 0h24v24H0z" fill="none" />
-      <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
     </svg>
   );
 }
 
-export default MenuIcon;
+export default HomeIcon;

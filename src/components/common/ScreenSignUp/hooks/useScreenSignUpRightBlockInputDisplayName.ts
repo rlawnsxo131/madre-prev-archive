@@ -48,10 +48,7 @@ export default function useScreenSignUpInputDisplayName() {
   useEffect(() => {
     if (!isValidateError) return;
     inputRef.current?.focus();
-    warn(
-      '이름을 다시 확인해 주세요.(특수문자 제외, 영문 1~16자)',
-      'top-center',
-    );
+    warn('이름을 다시 확인해 주세요.(영문, 숫자 1~16자)', 'top-center');
   }, [isValidateError]);
 
   useEffect(() => {

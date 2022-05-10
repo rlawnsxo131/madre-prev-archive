@@ -41,7 +41,7 @@ function HeaderUserMenuItems({
 
 const block = (visible: boolean) => css`
   position: absolute;
-  top: 3.25rem;
+  top: 3rem;
   right: 0;
   width: 10rem;
   height: auto;

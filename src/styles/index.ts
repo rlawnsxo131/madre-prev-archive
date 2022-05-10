@@ -1,7 +1,6 @@
 export { media } from './media';
 export { mediaQuery } from './media';
 export { default as palette } from './palette';
-export { default as standardColor } from './standardColor';
 export { themes } from './themePalette';
 export { themePalette } from './themePalette';
 export { default as transitions } from './transitions';

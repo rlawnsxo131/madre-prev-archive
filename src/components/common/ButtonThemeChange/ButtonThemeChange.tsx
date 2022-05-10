@@ -24,6 +24,7 @@ const block = css`
   border: none;
   box-shadow: none;
   border-radius: 0;
+  padding: 0;
   overflow: visible;
   display: flex;
   align-items: center;
@@ -34,7 +35,6 @@ const block = css`
   svg {
     fill: ${themePalette.fill1};
   }
-  padding: 0.5rem;
 `;
 
 export default ButtonThemeChange;

@@ -2,9 +2,9 @@ import { css } from '@emotion/react';
 import { appDisplayRoutes } from '../../../constants';
 import MadreLink from '../../common/MadreLink';
 
-interface HeaderNavigationProps {}
+interface HeaderWebNavigationProps {}
 
-function HeaderNavigation(props: HeaderNavigationProps) {
+function HeaderWebNavigation(props: HeaderWebNavigationProps) {
   return (
     <nav css={block}>
       <ul css={ul}>
@@ -33,4 +33,4 @@ const ul = css`
   align-items: center;
 `;
 
-export default HeaderNavigation;
+export default HeaderWebNavigation;

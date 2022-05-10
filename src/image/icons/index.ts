@@ -7,3 +7,5 @@ export { default as UserIcon } from './UserIcon';
 export { default as DropArrowIcon } from './DropArrowIcon';
 export { default as LoadingIcon } from './LoadingIcon';
 export { default as WarningIcon } from './WarningIcon';
+export { default as HomeIcon } from './HomeIcon';
+export { default as NotificationIcon } from './NotificationIcon';

@@ -16,9 +16,10 @@ function App(props: AppProps) {
           <Route path="notice" element={<div>notice</div>} />
           <Route path="guide" element={<div>guide</div>} />
           <Route path="policy" element={<div>policy</div>} />
+          <Route path="notifications" element={<div>notifications</div>} />
         </Route>
         <Route path="/@:displayName" element={<Layout />}>
-          <Route index element={<div>my</div>} />
+          <Route index element={<div>user info</div>} />
         </Route>
         <Route path="/test" element={<TestPage2 />} />
         <Route path="*" element={<NotFoundPage />} />

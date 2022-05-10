@@ -28,7 +28,7 @@ function ScreenSignUpRightBlockInputDisplayName(
           ref={inputRef}
           minLength={1}
           maxLength={16}
-          placeholder="특수문자 제외, 영문 1~16자"
+          placeholder="영문, 숫자 1~16자"
         />
       </div>
       <div css={footer}>
