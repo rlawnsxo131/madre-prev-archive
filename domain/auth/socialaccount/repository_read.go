@@ -29,7 +29,7 @@ func (r *readRepository) FindOneByProviderWithSocialId(provider string, socialId
 		" WHERE provider = $1" +
 		" AND social_id = $2"
 
-	err := r.db.QueryRowx(query, socialId, provider).StructScan(&sa)
+	err := r.db.QueryRowx(query, provider, socialId).StructScan(&sa)
 	if err != nil {
 		customError := errors.Wrap(err, "socialaccount ReadRepository FindOneBySocialId")
 		err = utils.ErrNoRowsReturnRawError(err, customError)

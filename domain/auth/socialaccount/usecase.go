@@ -19,13 +19,13 @@ func NewUseCase(db database.Database) UseCase {
 	}
 }
 
-func (uc *usecase) Create(socialAccount *SocialAccount) (string, error) {
+func (uc *usecase) Create(s *SocialAccount) (string, error) {
 	repo := NewWriteRepository(uc.db)
-	id, err := repo.Create(socialAccount)
+	id, err := repo.Create(s)
 	return id, err
 }
 
-func (uc *usecase) FindOneByProviderWithSocialId(socialId string, provider string) (*SocialAccount, error) {
+func (uc *usecase) FindOneByProviderWithSocialId(provider string, socialId string) (*SocialAccount, error) {
 	repo := NewReadRepository(uc.db)
 	sa, err := repo.FindOneByProviderWithSocialId(provider, socialId)
 	return sa, err

@@ -14,11 +14,11 @@ import (
 )
 
 const (
-	Http_BadRequestMessage          = "BadRequest"          // 400
-	Http_NotFoundMessage            = "NotFound"            // 404
-	Http_InternalServerErrorMessage = "InternalServerError" // 500
-	Http_UnauthorizedMessage        = "Unauthorized"        // 401
-	Http_ForbiddenMessage           = "Forbidden"           // 403
+	Http_Msg_BadRequest          = "BadRequest"          // 400
+	Http_Msg_NotFound            = "NotFound"            // 404
+	Http_Msg_InternalServerError = "InternalServerError" // 500
+	Http_Msg_Unauthorized        = "Unauthorized"        // 401
+	HTtp_Msg_Forbidden           = "Forbidden"           // 403
 )
 
 type Writer interface {
@@ -29,7 +29,7 @@ type Writer interface {
 	ErrorForbidden(err error, action string, params interface{})
 	standardError(
 		status int,
-		message string,
+		Msg string,
 		err error,
 		action string,
 		params interface{},
@@ -101,18 +101,18 @@ func (wt *writer) Compress(data interface{}) {
 
 func (wt *writer) Error(err error, action string, msg ...string) {
 	status := http.StatusInternalServerError
-	message := Http_InternalServerErrorMessage
+	Msg := Http_Msg_InternalServerError
 
 	if err == sql.ErrNoRows {
 		status = http.StatusNotFound
-		message = Http_NotFoundMessage
+		Msg = Http_Msg_NotFound
 	}
 
 	wt.w.WriteHeader(status)
 	json.NewEncoder(wt.w).Encode(
 		map[string]interface{}{
-			"status":  status,
-			"message": message,
+			"status": status,
+			"Msg":    Msg,
 		},
 	)
 
@@ -132,7 +132,7 @@ func (wt *writer) Error(err error, action string, msg ...string) {
 func (wt *writer) ErrorBadRequest(err error, action string, params interface{}) {
 	wt.standardError(
 		http.StatusBadRequest,
-		Http_BadRequestMessage,
+		Http_Msg_BadRequest,
 		err,
 		action,
 		params,
@@ -142,7 +142,7 @@ func (wt *writer) ErrorBadRequest(err error, action string, params interface{}) 
 func (wt *writer) ErrorUnauthorized(err error, action string, params interface{}) {
 	wt.standardError(
 		http.StatusUnauthorized,
-		Http_UnauthorizedMessage,
+		Http_Msg_Unauthorized,
 		err,
 		action,
 		params,
@@ -152,19 +152,19 @@ func (wt *writer) ErrorUnauthorized(err error, action string, params interface{}
 func (wt *writer) ErrorForbidden(err error, action string, params interface{}) {
 	wt.standardError(
 		http.StatusForbidden,
-		Http_ForbiddenMessage,
+		HTtp_Msg_Forbidden,
 		err,
 		action,
 		params,
 	)
 }
 
-func (wt *writer) standardError(status int, message string, err error, action string, params interface{}) {
+func (wt *writer) standardError(status int, Msg string, err error, action string, params interface{}) {
 	wt.w.WriteHeader(status)
 	json.NewEncoder(wt.w).Encode(
 		map[string]interface{}{
-			"status":  status,
-			"message": message,
+			"status": status,
+			"Msg":    Msg,
 		},
 	)
 
