@@ -20,6 +20,7 @@ const block = css`
   justify-content: space-between;
   align-items: center;
   height: 3rem;
+  padding: 0.25rem 0;
 
   ${media.xxxsmall} {
     width: 93%;

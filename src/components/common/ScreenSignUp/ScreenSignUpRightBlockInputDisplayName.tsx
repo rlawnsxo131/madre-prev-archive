@@ -1,5 +1,4 @@
 import { css } from '@emotion/react';
-import { memo } from 'react';
 import { CloseIcon } from '../../../image/icons';
 import { themePalette, zIndexes } from '../../../styles';
 import Button from '../Button';

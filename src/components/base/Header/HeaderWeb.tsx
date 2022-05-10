@@ -26,7 +26,7 @@ const block = css`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 3rem;
+  height: 3.25rem;
   ${media.xxxsmall} {
     display: none;
   }

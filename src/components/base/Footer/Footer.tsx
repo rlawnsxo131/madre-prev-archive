@@ -21,7 +21,6 @@ const block = css`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0.25rem 0;
   z-index: ${zIndexes.layoutFooter};
 `;
 

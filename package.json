@@ -21,6 +21,7 @@
     "@types/uuid": "^8.3.4",
     "babel-loader": "^8.2.5",
     "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^6.7.1",
     "css-minimizer-webpack-plugin": "^3.4.1",
     "dotenv": "^16.0.0",
     "file-loader": "^6.2.0",
@@ -49,6 +50,7 @@
     "react-redux": "^8.0.1",
     "react-router-dom": "^6.3.0",
     "react-snowfall": "^1.1.2",
+    "react-toastify": "^9.0.1",
     "uuid": "^8.3.2"
   }
 }

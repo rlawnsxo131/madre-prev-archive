@@ -142,6 +142,7 @@ const authApi = createApi({
         } catch (e) {
           dispatch(common.actions.closeLoading());
           dispatch(popupAuth.actions.setIsError());
+          console.log(e);
         }
       },
     }),
@@ -162,6 +163,7 @@ const authApi = createApi({
       async onQueryStarted(_, { dispatch, queryFulfilled, getCacheEntry }) {
         try {
           dispatch(common.actions.showLoading());
+          dispatch(screenSignUp.actions.resetIsError());
           await queryFulfilled;
 
           const { data } = getCacheEntry();
@@ -185,6 +187,7 @@ const authApi = createApi({
           } else {
             dispatch(screenSignUp.actions.setIsError());
           }
+          console.log(e);
         }
       },
     }),

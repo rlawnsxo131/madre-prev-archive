@@ -18,6 +18,7 @@ interface ThemeVariables {
   opacity_button1: string;
 
   border_element1: string;
+  border_element2: string;
 
   fill1: string;
 
@@ -56,6 +57,7 @@ const themeVariableSets: Record<Theme, ThemeVariables> = {
     opacity_button1: '0.7',
 
     border_element1: '#e9ecef',
+    border_element2: '#e9ecef',
 
     fill1: '#242526',
 
@@ -83,6 +85,7 @@ const themeVariableSets: Record<Theme, ThemeVariables> = {
     opacity_button1: '1',
 
     border_element1: '#868e96',
+    border_element2: '#242526',
 
     fill1: '#FFFF',
 

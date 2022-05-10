@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import useScreenSignUpActions from '../../../../hooks/screenSignUp/useScreenSignUpActions';
 import useScreenSignUpState from '../../../../hooks/screenSignUp/useScreenSignUpState';
+import useToast from '../../../../hooks/useToast';
 import { isNormalEnglishString, normalizeString } from '../../../../lib/utils';
 import authApi from '../../../../store/api/authApi';
 
 export default function useScreenSignUpInputDisplayName() {
   const { isError, isValidateError, access_token } = useScreenSignUpState();
   const [googleSignUp] = authApi.usePostGoogleSignUpMutation();
+  const { error, warn } = useToast();
   const { close, setIsValidateError, resetIsValidateError } =
     useScreenSignUpActions();
 
@@ -24,7 +26,10 @@ export default function useScreenSignUpInputDisplayName() {
 
     if (!normalizedAccessToken || !normalizedDisplayName) {
       if (!normalizedAccessToken) {
-        console.log('system error');
+        error(
+          '에러가 발생했습니다. 화면을 닫고 로그인을 다시 시도해 주세요.',
+          'top-center',
+        );
         return;
       }
       setIsValidateError();
@@ -43,7 +48,16 @@ export default function useScreenSignUpInputDisplayName() {
   useEffect(() => {
     if (!isValidateError) return;
     inputRef.current?.focus();
+    warn(
+      '이름을 다시 확인해 주세요.(특수문자 제외, 영문 1~16자)',
+      'top-center',
+    );
   }, [isValidateError]);
+
+  useEffect(() => {
+    if (!isError) return;
+    error('에러가 발생했습니다. 잠시후 다시 시도해 주세요.', 'top-center');
+  }, [isError]);
 
   return {
     inputRef,
