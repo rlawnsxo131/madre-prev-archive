@@ -31,7 +31,7 @@ type Writer interface {
 	ErrorConflict(err error, action string, params interface{})
 	standardError(
 		status int,
-		Msg string,
+		msg string,
 		err error,
 		action string,
 		params interface{},
@@ -172,12 +172,18 @@ func (wt *writer) ErrorConflict(err error, action string, params interface{}) {
 
 }
 
-func (wt *writer) standardError(status int, Msg string, err error, action string, params interface{}) {
+func (wt *writer) standardError(
+	status int,
+	msg string,
+	err error,
+	action string,
+	params interface{},
+) {
 	wt.w.WriteHeader(status)
 	json.NewEncoder(wt.w).Encode(
 		map[string]interface{}{
 			"status": status,
-			"Msg":    Msg,
+			"Msg":    msg,
 		},
 	)
 
