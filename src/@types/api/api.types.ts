@@ -33,6 +33,10 @@ type ResponseErrors =
   | {
       message: 'Forbidden';
       status: 403;
+    }
+  | {
+      message: 'Conflict';
+      status: 409;
     };
 
 export interface ResponseError {

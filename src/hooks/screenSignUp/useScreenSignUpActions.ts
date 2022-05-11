@@ -17,6 +17,9 @@ export default function useScreenSignUpActions() {
       resetIsValidateError() {
         dispatch(screenSignUp.actions.resetIsValidateError());
       },
+      resetIsConflictError() {
+        dispatch(screenSignUp.actions.resetIsConflictError());
+      },
     }),
     [dispatch],
   );

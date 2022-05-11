@@ -1,25 +1,39 @@
 import { css } from '@emotion/react';
-import { HomeIcon, MenuIcon } from '../../../image/icons';
+import { useNavigate } from 'react-router-dom';
+import { userPath } from '../../../constants';
+import usePopupAuthActions from '../../../hooks/popupAuth/usePopupAuthActions';
+import useUserProfileState from '../../../hooks/user/useUserProfileState';
+import { HomeIcon, MenuIcon, UserIcon } from '../../../image/icons';
+import MadreButtonLink from '../../common/MadreButtonLink';
 import MadreImageLink from '../../common/MadreImageLink';
 import FooterMobileNotification from './FooterMobileNotification';
-import FooterMobileUserMenu from './FooterMobileUserMenu';
 
 interface FooterMobileItemsProps {}
 
-// TODO: need path change
 function FooterMobileItems(props: FooterMobileItemsProps) {
+  const navigate = useNavigate();
+  const profile = useUserProfileState();
+  const { show } = usePopupAuthActions();
+  const onClickMobileUserMenu = () => {
+    if (!profile || !profile?.username) {
+      show();
+      return;
+    }
+    navigate(`/@${profile.username}`);
+  };
+
   return (
     <div css={block}>
       <MadreImageLink to="/">
         <HomeIcon />
       </MadreImageLink>
-      <MadreImageLink to="/@name">
-        <FooterMobileUserMenu />
-      </MadreImageLink>
+      <MadreButtonLink onClick={onClickMobileUserMenu} matchPath={userPath}>
+        <UserIcon />
+      </MadreButtonLink>
       <MadreImageLink to="/notifications">
         <FooterMobileNotification />
       </MadreImageLink>
-      <MadreImageLink to="/">
+      <MadreImageLink to="/m/all-menu">
         <MenuIcon />
       </MadreImageLink>
     </div>

@@ -9,9 +9,7 @@ function HeaderMobile(props: HeaderMobileProps) {
   return (
     <div css={block}>
       <HeaderLogo />
-      <div css={right}>
-        <ButtonThemeChange />
-      </div>
+      <ButtonThemeChange />
     </div>
   );
 }
@@ -29,13 +27,6 @@ const block = css`
   ${media.small} {
     display: none;
   }
-`;
-
-const right = css`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1.5rem;
 `;
 
 export default HeaderMobile;

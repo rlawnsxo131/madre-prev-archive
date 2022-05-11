@@ -1,19 +1,24 @@
 import { memo } from 'react';
 import { css } from '@emotion/react';
 import useTransitionTimeoutEffect from '../../../hooks/useTransitionTimeoutEffect';
-import { themePalette, transitions, zIndexes } from '../../../styles';
+import {
+  basicStyles,
+  themePalette,
+  transitions,
+  zIndexes,
+} from '../../../styles';
 import MadreLink from '../../common/MadreLink';
 
 interface HeaderUserMenuItemsProps {
   signOut: () => Promise<void>;
   visible: boolean;
-  display_name: string;
+  username: string;
 }
 
 function HeaderUserMenuItems({
   signOut,
   visible,
-  display_name,
+  username,
 }: HeaderUserMenuItemsProps) {
   const closed = useTransitionTimeoutEffect({ visible });
 
@@ -24,7 +29,7 @@ function HeaderUserMenuItems({
       <ul css={ul}>
         <li>
           <MadreLink
-            to={`/@${display_name}`}
+            to={`/@${username}`}
             displayName="마이 페이지"
             parentDirection="column"
           />
@@ -72,17 +77,13 @@ const ul = css`
 `;
 
 const button = css`
-  background: none;
-  outline: none;
-  border: none;
-  box-sizing: border-box;
+  ${basicStyles.button};
   display: flex;
   flex-flow: row wrap;
   align-items: center;
   font-size: 0.9rem;
   font-weight: bold;
   padding: 0.5rem 0.25rem 0.5rem 0.25rem;
-  cursor: pointer;
   color: ${themePalette.text1};
 `;
 

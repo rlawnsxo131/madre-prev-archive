@@ -8,10 +8,6 @@ interface ThemeVariables {
 
   bg_button1: string;
 
-  outline_button_gray: string;
-  outline_button_gray_hover: string;
-  outline_button_disabled: string;
-
   text1: string;
   text2: string;
 
@@ -19,6 +15,9 @@ interface ThemeVariables {
 
   border_element1: string;
   border_element2: string;
+  border_button_gray: string;
+  border_button_gray_hover: string;
+  border_button_disabled: string;
 
   fill1: string;
 
@@ -49,10 +48,6 @@ const themeVariableSets: Record<Theme, ThemeVariables> = {
 
     bg_button1: 'rgba(255, 255, 255, 0)',
 
-    outline_button_gray: '#495057',
-    outline_button_gray_hover: '#868e96',
-    outline_button_disabled: '#adb5bd',
-
     text1: '#242526',
     text2: '#495057',
 
@@ -60,6 +55,9 @@ const themeVariableSets: Record<Theme, ThemeVariables> = {
 
     border_element1: '#e9ecef',
     border_element2: '#e9ecef',
+    border_button_gray: '#495057',
+    border_button_gray_hover: '#868e96',
+    border_button_disabled: '#adb5bd',
 
     fill1: '#242526',
 
@@ -79,10 +77,6 @@ const themeVariableSets: Record<Theme, ThemeVariables> = {
 
     bg_button1: '#FFFF',
 
-    outline_button_gray: '#adb5bd',
-    outline_button_gray_hover: '#ced4da',
-    outline_button_disabled: '#495057',
-
     text1: '#FFFF',
     text2: '#adb5bd',
 
@@ -90,6 +84,9 @@ const themeVariableSets: Record<Theme, ThemeVariables> = {
 
     border_element1: '#868e96',
     border_element2: '#242526',
+    border_button_gray: '#adb5bd',
+    border_button_gray_hover: '#ced4da',
+    border_button_disabled: '#495057',
 
     fill1: '#FFFF',
 

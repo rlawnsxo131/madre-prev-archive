@@ -2,7 +2,9 @@ import { css } from '@emotion/react';
 import { media, mediaQuery } from '../../../styles';
 import HeaderLogo from './HeaderLogo';
 import HeaderWebNavigation from './HeaderWebNavigation';
-import HeaderWebMenuIconItems from './HeaderWebMenuIconItems';
+import HeaderUserNotification from '../HeaderUserNotification';
+import HeaderUserMenu from '../HeaderUserMenu';
+import ButtonThemeChange from '../../common/ButtonThemeChange';
 
 interface HeaderWebProps {}
 
@@ -12,7 +14,11 @@ function HeaderWeb(props: HeaderWebProps) {
       <HeaderLogo />
       <div css={itemBlock}>
         <HeaderWebNavigation />
-        <HeaderWebMenuIconItems />
+        <div css={iconItemsBlock}>
+          <HeaderUserNotification />
+          <HeaderUserMenu />
+          <ButtonThemeChange />
+        </div>
       </div>
     </div>
   );
@@ -41,6 +47,14 @@ const block = css`
 const itemBlock = css`
   display: flex;
   justify-content: center;
+`;
+
+const iconItemsBlock = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0 1rem;
 `;
 
 export default HeaderWeb;

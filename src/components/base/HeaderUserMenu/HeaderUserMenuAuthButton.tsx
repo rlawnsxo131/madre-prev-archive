@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { themePalette } from '../../../styles';
+import { basicStyles, themePalette } from '../../../styles';
 
 interface HeaderUserMenuAuthButtonProps {
   show: () => void;
@@ -7,7 +7,7 @@ interface HeaderUserMenuAuthButtonProps {
 
 function HeaderUserMenuAuthButton({ show }: HeaderUserMenuAuthButtonProps) {
   return (
-    <button css={block} onClick={show}>
+    <button css={[basicStyles.button, block]} onClick={show}>
       로그인
     </button>
   );
@@ -20,11 +20,6 @@ const block = css`
   padding: 0.5rem 0.25rem 0.5rem 0.25rem;
   font-size: 0.9rem;
   font-weight: bold;
-  cursor: pointer;
-  outline: none;
-  border: none;
-  box-sizing: border-box;
-  cursor: pointer;
   color: ${themePalette.text1};
   background: none;
 `;

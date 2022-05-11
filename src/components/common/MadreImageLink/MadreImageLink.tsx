@@ -5,11 +5,12 @@ import { themePalette } from '../../../styles';
 interface MadreImageLinkProps {
   children: React.ReactNode;
   to: string;
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 }
 
-function MadreImageLink({ children, to }: MadreImageLinkProps) {
+function MadreImageLink({ children, to, onClick }: MadreImageLinkProps) {
   return (
-    <NavLink css={link} to={to}>
+    <NavLink css={link} to={to} onClick={onClick}>
       {children}
     </NavLink>
   );

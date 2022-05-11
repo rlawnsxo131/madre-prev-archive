@@ -1,10 +1,12 @@
+import { themePalette } from '../../styles';
+
 interface CloseIconProps extends React.SVGProps<HTMLOrSVGElement> {}
 
 function CloseIcon({ onClick, className }: CloseIconProps) {
   return (
     <svg
       stroke="currentColor"
-      fill="currentColor"
+      fill={themePalette.fill1}
       strokeWidth="0"
       viewBox="0 0 24 24"
       tabIndex={1}

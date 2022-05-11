@@ -10,6 +10,6 @@ export interface SocialAccount {
 
 export interface UserProfile {
   user_id: string;
-  display_name: string;
+  username: string;
   photo_url?: string;
 }

@@ -150,13 +150,13 @@ const authApi = createApi({
       PostAuthGoogleSignUpResponse,
       PostAuthGoogleSignUpParams
     >({
-      query({ access_token, display_name }) {
+      query({ access_token, username }) {
         return {
           url: '/google/sign-up',
           method: 'POST',
           body: {
             access_token,
-            display_name,
+            username,
           },
         };
       },
@@ -164,6 +164,7 @@ const authApi = createApi({
         try {
           dispatch(common.actions.showLoading());
           dispatch(screenSignUp.actions.resetIsError());
+          dispatch(screenSignUp.actions.resetIsConflictError());
           await queryFulfilled;
 
           const { data } = getCacheEntry();
@@ -184,6 +185,8 @@ const authApi = createApi({
           const { error } = e as ResponseError;
           if (error.data.status === 400) {
             dispatch(screenSignUp.actions.setIsValidateError());
+          } else if (error.data.status === 409) {
+            dispatch(screenSignUp.actions.setIsConflictError());
           } else {
             dispatch(screenSignUp.actions.setIsError());
           }

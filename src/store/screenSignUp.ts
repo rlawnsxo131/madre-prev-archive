@@ -4,6 +4,7 @@ interface ScreenSignUpState {
   visible: boolean;
   isError: boolean;
   isValidateError: boolean;
+  isConflictError: boolean;
   access_token: string;
 }
 
@@ -11,6 +12,7 @@ const initialState: ScreenSignUpState = {
   visible: false,
   isError: false,
   isValidateError: false,
+  isConflictError: false,
   access_token: '',
 };
 
@@ -42,6 +44,12 @@ const screenSignUp = createSlice({
     },
     resetIsValidateError(state) {
       state.isValidateError = false;
+    },
+    setIsConflictError(state) {
+      state.isConflictError = true;
+    },
+    resetIsConflictError(state) {
+      state.isConflictError = false;
     },
   },
 });

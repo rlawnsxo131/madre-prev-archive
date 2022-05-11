@@ -5,26 +5,32 @@ import useToast from '../../../../hooks/useToast';
 import { isNormalEnglishString, normalizeString } from '../../../../lib/utils';
 import authApi from '../../../../store/api/authApi';
 
-export default function useScreenSignUpInputDisplayName() {
-  const { isError, isValidateError, access_token } = useScreenSignUpState();
+export default function useScreenSignUpInputUsername() {
+  const { isError, isValidateError, isConflictError, access_token } =
+    useScreenSignUpState();
   const [googleSignUp] = authApi.usePostGoogleSignUpMutation();
   const { error, warn } = useToast();
-  const { close, setIsValidateError, resetIsValidateError } =
-    useScreenSignUpActions();
+  const {
+    close,
+    setIsValidateError,
+    resetIsValidateError,
+    resetIsConflictError,
+  } = useScreenSignUpActions();
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const [displayName, setDisplayName] = useState('');
+  const [username, setUsername] = useState('');
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     resetIsValidateError();
-    setDisplayName(e.target.value);
+    resetIsConflictError();
+    setUsername(e.target.value);
   };
 
   const onSignUp = async () => {
     const normalizedAccessToken = normalizeString(access_token);
-    const normalizedDisplayName = normalizeString(displayName);
+    const normalizedUsername = normalizeString(username);
 
-    if (!normalizedAccessToken || !normalizedDisplayName) {
+    if (!normalizedAccessToken || !normalizedUsername) {
       if (!normalizedAccessToken) {
         error(
           '에러가 발생했습니다. 화면을 닫고 로그인을 다시 시도해 주세요.',
@@ -35,13 +41,13 @@ export default function useScreenSignUpInputDisplayName() {
       setIsValidateError();
       return;
     }
-    if (!isNormalEnglishString(normalizedDisplayName)) {
+    if (!isNormalEnglishString(normalizedUsername)) {
       setIsValidateError();
       return;
     }
     await googleSignUp({
       access_token: normalizedAccessToken,
-      display_name: normalizedDisplayName,
+      username: normalizedUsername,
     });
   };
 
@@ -52,13 +58,19 @@ export default function useScreenSignUpInputDisplayName() {
   }, [isValidateError]);
 
   useEffect(() => {
+    if (!isConflictError) return;
+    inputRef.current?.focus();
+    error('중복된 이름입니다.', 'top-center');
+  }, [isConflictError]);
+
+  useEffect(() => {
     if (!isError) return;
     error('에러가 발생했습니다. 잠시후 다시 시도해 주세요.', 'top-center');
   }, [isError]);
 
   return {
     inputRef,
-    displayName,
+    username,
     onChange,
     close,
     onSignUp,

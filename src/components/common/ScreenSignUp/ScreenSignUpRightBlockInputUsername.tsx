@@ -3,15 +3,15 @@ import { CloseIcon } from '../../../image/icons';
 import { themePalette, zIndexes } from '../../../styles';
 import Button from '../Button';
 import Input from '../Input';
-import useScreenSignUpInputDisplayName from './hooks/useScreenSignUpRightBlockInputDisplayName';
+import useScreenSignUpInputUsername from './hooks/useScreenSignUpRightBlockInputUsername';
 
-interface ScreenSignUpRightBlockInputDisplayNameProps {}
+interface ScreenSignUpRightBlockInputUsernameProps {}
 
-function ScreenSignUpRightBlockInputDisplayName(
-  props: ScreenSignUpRightBlockInputDisplayNameProps,
+function ScreenSignUpRightBlockInputUsername(
+  props: ScreenSignUpRightBlockInputUsernameProps,
 ) {
-  const { inputRef, displayName, onChange, close, onSignUp } =
-    useScreenSignUpInputDisplayName();
+  const { inputRef, username, onChange, close, onSignUp } =
+    useScreenSignUpInputUsername();
 
   return (
     <div css={block}>
@@ -19,16 +19,16 @@ function ScreenSignUpRightBlockInputDisplayName(
         <CloseIcon onClick={close} />
       </div>
       <div css={body}>
-        <h3>사용하실 이름을 입력해 주세요.</h3>
+        <h3>아이디로 사용하실 이름을 입력해 주세요.</h3>
         <Input
           size="responsive"
-          name="display_name"
-          value={displayName}
+          name="username"
+          value={username}
           onChange={onChange}
           ref={inputRef}
           minLength={1}
           maxLength={16}
-          placeholder="영문, 숫자 1~16자"
+          placeholder="중복 불가. 영문, 숫자 1~16자"
         />
       </div>
       <div css={footer}>
@@ -80,4 +80,4 @@ const footer = css`
   }
 `;
 
-export default ScreenSignUpRightBlockInputDisplayName;
+export default ScreenSignUpRightBlockInputUsername;

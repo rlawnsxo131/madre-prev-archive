@@ -22,7 +22,7 @@ export interface PostAuthGoogleSigninResponse {
 
 export interface PostAuthGoogleSignUpParams {
   access_token: string;
-  display_name: string;
+  username: string;
 }
 
 export interface PostAuthGoogleSignUpResponse {

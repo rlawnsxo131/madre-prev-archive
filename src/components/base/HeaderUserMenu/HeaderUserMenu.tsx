@@ -44,7 +44,7 @@ function HeaderUserMenu(props: HeaderUserMenuProps) {
       <HeaderUserMenuItems
         signOut={signOut}
         visible={menu.visible}
-        display_name={profile.display_name}
+        username={profile.username}
       />
     </div>
   );
@@ -58,7 +58,6 @@ const flexCenter = css`
 
 const block = css`
   position: relative;
-  gap: 0.4rem;
   cursor: pointer;
 `;
 

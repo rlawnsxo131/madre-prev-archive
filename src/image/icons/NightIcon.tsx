@@ -1,3 +1,5 @@
+import { themePalette } from '../../styles';
+
 interface NightIconProps extends React.SVGProps<HTMLOrSVGElement> {}
 
 function NightIcon(props: NightIconProps) {
@@ -8,6 +10,7 @@ function NightIcon(props: NightIconProps) {
       height="24"
       viewBox="0 0 24 24"
       width="24"
+      fill={themePalette.fill1}
     >
       <g>
         <path d="M0,0h24v24H0V0z" fill="none" />

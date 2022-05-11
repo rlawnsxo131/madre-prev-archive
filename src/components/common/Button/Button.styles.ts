@@ -42,10 +42,10 @@ export const buttonOutlineStyle = {
     hover: palette.blue['500'],
   },
   gray: {
-    default: themePalette.outline_button_gray,
-    hover: themePalette.outline_button_gray_hover,
+    default: themePalette.border_button_gray,
+    hover: themePalette.border_button_gray_hover,
   },
   background: 'inherit',
   opacity: themePalette.opacity_button1,
-  disabled: themePalette.outline_button_disabled,
+  disabled: themePalette.border_button_disabled,
 };

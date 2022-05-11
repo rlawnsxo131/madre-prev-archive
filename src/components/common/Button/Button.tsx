@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { memo } from 'react';
-import { palette } from '../../../styles';
+import { palette, basicStyles } from '../../../styles';
 import {
   ButtonColor,
   ButtonShape,
@@ -54,16 +54,13 @@ const block = (
   shape: ButtonShape,
   outline: boolean,
 ) => css`
+  ${basicStyles.button};
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-size: 1rem;
   font-weight: 600;
-  cursor: pointer;
-  /* outline: none; */
-  border: none;
-  box-sizing: border-box;
-  cursor: pointer;
+
   border-radius: 4px;
   border: 1px solid ${buttonColorMap[color].background};
 
