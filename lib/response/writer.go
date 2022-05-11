@@ -15,11 +15,11 @@ import (
 
 const (
 	Http_Msg_BadRequest          = "BadRequest"          // 400
-	Http_Msg_NotFound            = "NotFound"            // 404
-	Http_Msg_InternalServerError = "InternalServerError" // 500
 	Http_Msg_Unauthorized        = "Unauthorized"        // 401
 	Http_Msg_Forbidden           = "Forbidden"           // 403
+	Http_Msg_NotFound            = "NotFound"            // 404
 	Http_Msg_Conflict            = "Conflict"            // 409
+	Http_Msg_InternalServerError = "InternalServerError" // 500
 )
 
 type Writer interface {
