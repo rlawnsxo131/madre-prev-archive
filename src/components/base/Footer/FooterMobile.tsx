@@ -1,13 +1,27 @@
 import { css } from '@emotion/react';
+import { HomeIcon, MenuIcon } from '../../../image/icons';
 import { media, themePalette } from '../../../styles';
-import FooterMobileItems from './FooterMobileItems';
+import MadreImageLink from '../../common/MadreImageLink';
+import FooterMobileNotification from './FooterMobileNotification';
+import FooterMobileUserMenu from './FooterMobileUserMenu';
 
 interface FooterMobileProps {}
 
 function FooterMobile(props: FooterMobileProps) {
   return (
     <div css={block}>
-      <FooterMobileItems />
+      <div css={menuBlock}>
+        <MadreImageLink to="/">
+          <HomeIcon />
+        </MadreImageLink>
+        <FooterMobileUserMenu />
+        <MadreImageLink to="/notifications">
+          <FooterMobileNotification />
+        </MadreImageLink>
+        <MadreImageLink to="/m/all-menu">
+          <MenuIcon />
+        </MadreImageLink>
+      </div>
       <div css={fakeBlock} />
     </div>
   );
@@ -24,6 +38,14 @@ const block = css`
   ${media.small} {
     display: none;
   }
+`;
+
+const menuBlock = css`
+  width: 93%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 3rem;
 `;
 
 const fakeBlock = css`

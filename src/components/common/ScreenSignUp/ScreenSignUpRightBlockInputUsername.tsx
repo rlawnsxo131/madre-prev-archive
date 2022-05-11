@@ -19,7 +19,7 @@ function ScreenSignUpRightBlockInputUsername(
         <CloseIcon onClick={close} />
       </div>
       <div css={body}>
-        <h3>아이디로 사용하실 이름을 입력해 주세요.</h3>
+        <h3>아이디로 사용할 이름을 입력해 주세요.</h3>
         <Input
           size="responsive"
           name="username"
