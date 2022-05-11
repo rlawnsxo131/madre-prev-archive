@@ -25,7 +25,7 @@ func (uc *usecase) Create(s *SocialAccount) (string, error) {
 	return id, err
 }
 
-func (uc *usecase) FindOneByProviderWithSocialId(provider string, socialId string) (*SocialAccount, error) {
+func (uc *usecase) FindOneByProviderWithSocialId(provider, socialId string) (*SocialAccount, error) {
 	repo := NewReadRepository(uc.db)
 	sa, err := repo.FindOneByProviderWithSocialId(provider, socialId)
 	return sa, err

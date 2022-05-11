@@ -8,6 +8,7 @@ import (
 
 type ReadRepository interface {
 	FindOneById(id string) (*User, error)
+	FindOneByUsername(username string) (*User, error)
 }
 
 type readRepository struct {
@@ -31,6 +32,21 @@ func (r *readRepository) FindOneById(id string) (*User, error) {
 	err := r.db.QueryRowx(query, id).StructScan(&u)
 	if err != nil {
 		customError := errors.Wrap(err, "user ReadRepository FindOneById")
+		err = utils.ErrNoRowsReturnRawError(err, customError)
+	}
+
+	return r.mapper.toEntity(&u), err
+}
+
+func (r *readRepository) FindOneByUsername(username string) (*User, error) {
+	var u User
+
+	query := "SELECT * FROM public.user" +
+		" WHERE username = $1"
+
+	err := r.db.QueryRowx(query, username).StructScan(&u)
+	if err != nil {
+		customError := errors.Wrap(err, "user ReadRepository FindOneByUsername")
 		err = utils.ErrNoRowsReturnRawError(err, customError)
 	}
 

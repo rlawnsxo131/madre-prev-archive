@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS public.user(
   id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
   email varchar(255) NOT NULL,
   origin_name varchar(16) DEFAULT NULL,
-  display_name varchar(48) NOT NULL,
+  username varchar(48) NOT NULL,
   photo_url varchar(255) DEFAULT NULL,
   created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
   updated_at TIMESTAMPTZ DEFAULT now() NOT NULL,
@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS public.user(
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS user_ix_email ON public.user USING btree (email);
+CREATE UNIQUE INDEX IF NOT EXISTS user_ix_username ON public.user USING btree (username);
 
 -- ALTER TABLE public.user OWNER TO madre;
 

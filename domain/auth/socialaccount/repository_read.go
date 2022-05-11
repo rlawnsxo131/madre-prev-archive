@@ -22,7 +22,7 @@ func NewReadRepository(db database.Database) ReadRepository {
 	}
 }
 
-func (r *readRepository) FindOneByProviderWithSocialId(provider string, socialId string) (*SocialAccount, error) {
+func (r *readRepository) FindOneByProviderWithSocialId(provider, socialId string) (*SocialAccount, error) {
 	var sa SocialAccount
 
 	query := "SELECT * FROM social_account" +

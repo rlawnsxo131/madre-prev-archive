@@ -9,23 +9,23 @@ import (
 )
 
 const (
-	Key_ID          = "ID"
-	Key_Email       = "Email"
-	Key_OriginName  = "OriginName"
-	Key_DisplayName = "DisplayName"
-	Key_PhotoUrl    = "PhotoUrl"
-	Key_CreatedAt   = "CreatedAt"
-	Key_UpdatedAt   = "UpdatedAt"
+	Key_ID         = "ID"
+	Key_Email      = "Email"
+	Key_OriginName = "OriginName"
+	Key_Username   = "Username"
+	Key_PhotoUrl   = "PhotoUrl"
+	Key_CreatedAt  = "CreatedAt"
+	Key_UpdatedAt  = "UpdatedAt"
 )
 
 type User struct {
-	ID          string         `json:"id" db:"id"`
-	Email       string         `json:"email" db:"email"`
-	OriginName  sql.NullString `json:"origin_name" db:"origin_name"`
-	DisplayName string         `json:"display_name" db:"display_name"`
-	PhotoUrl    sql.NullString `json:"photo_url" db:"photo_url"`
-	CreatedAt   time.Time      `json:"created_at" db:"created_at"`
-	UpdatedAt   time.Time      `json:"updated_at" db:"updated_at"`
+	ID         string         `json:"id" db:"id"`
+	Email      string         `json:"email" db:"email"`
+	OriginName sql.NullString `json:"origin_name" db:"origin_name"`
+	Username   string         `json:"username" db:"username"`
+	PhotoUrl   sql.NullString `json:"photo_url" db:"photo_url"`
+	CreatedAt  time.Time      `json:"created_at" db:"created_at"`
+	UpdatedAt  time.Time      `json:"updated_at" db:"updated_at"`
 }
 
 func (u *User) Filter(keys []string) map[string]interface{} {
@@ -34,7 +34,7 @@ func (u *User) Filter(keys []string) map[string]interface{} {
 	if keys == nil {
 		result["id"] = u.ID
 		result["email"] = u.Email
-		result["display_name"] = u.DisplayName
+		result["username"] = u.Username
 		result["created_at"] = u.CreatedAt
 		result["updated_at"] = u.UpdatedAt
 
@@ -61,8 +61,8 @@ func (u *User) Filter(keys []string) map[string]interface{} {
 				} else {
 					result["origin_name"] = nil
 				}
-			} else if key == Key_DisplayName {
-				result["display_name"] = u.DisplayName
+			} else if key == Key_Username {
+				result["username"] = u.Username
 			} else if key == Key_PhotoUrl {
 				if u.PhotoUrl.Valid {
 					result["photo_url"] = u.PhotoUrl.String
@@ -80,10 +80,28 @@ func (u *User) Filter(keys []string) map[string]interface{} {
 	return result
 }
 
-func (u *User) ValidateDisplayName() (bool, error) {
-	match, err := regexp.MatchString("^[a-zA-Z0-9가-힣]{1,16}$", u.DisplayName)
+func (u *User) ValidateUsername() (bool, error) {
+	match, err := regexp.MatchString("^[a-zA-Z0-9가-힣]{1,16}$", u.Username)
 	if err != nil {
 		return false, errors.Wrap(err, "ValidateDisplayName")
 	}
 	return match, nil
+}
+
+func (u *User) IsExist(err error) (bool, error) {
+	exist := false
+
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return exist, nil
+		} else {
+			return exist, err
+		}
+	}
+
+	if u.Username != "" {
+		exist = true
+	}
+
+	return exist, nil
 }

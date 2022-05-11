@@ -59,9 +59,9 @@ func JWT(next http.Handler) http.Handler {
 						} else {
 							// generate tokens and set cookie
 							p := token.UserProfile{
-								UserID:      claims.UserID,
-								DisplayName: claims.DisplayName,
-								PhotoUrl:    claims.PhotoUrl,
+								UserID:   claims.UserID,
+								Username: claims.Username,
+								PhotoUrl: claims.PhotoUrl,
 							}
 							actk, rftk, err := token.GenerateTokens(&p)
 							if err != nil {
@@ -72,9 +72,9 @@ func JWT(next http.Handler) http.Handler {
 								// set context value
 								cm := httpcontext.NewManager(ctx)
 								p := token.UserProfile{
-									UserID:      claims.UserID,
-									DisplayName: claims.DisplayName,
-									PhotoUrl:    claims.PhotoUrl,
+									UserID:   claims.UserID,
+									Username: claims.Username,
+									PhotoUrl: claims.PhotoUrl,
 								}
 								ctx = cm.SetUserProfile(&p)
 							}
@@ -85,9 +85,9 @@ func JWT(next http.Handler) http.Handler {
 				// set context value
 				cm := httpcontext.NewManager(ctx)
 				p := token.UserProfile{
-					UserID:      claims.UserID,
-					DisplayName: claims.DisplayName,
-					PhotoUrl:    claims.PhotoUrl,
+					UserID:   claims.UserID,
+					Username: claims.Username,
+					PhotoUrl: claims.PhotoUrl,
 				}
 				ctx = cm.SetUserProfile(&p)
 			}
@@ -118,9 +118,9 @@ func JWT(next http.Handler) http.Handler {
 				} else {
 					// generate tokens and set cookie
 					p := token.UserProfile{
-						UserID:      claims.UserID,
-						DisplayName: claims.DisplayName,
-						PhotoUrl:    claims.PhotoUrl,
+						UserID:   claims.UserID,
+						Username: claims.Username,
+						PhotoUrl: claims.PhotoUrl,
 					}
 					actk, rftk, err := token.GenerateTokens(&p)
 					if err != nil {

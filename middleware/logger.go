@@ -27,6 +27,6 @@ func Logger(next http.Handler) http.Handler {
 			return
 		}
 		next.ServeHTTP(w, r.WithContext(ctx))
-		hl.LogEntry(r, reqId, string(buf), start)
+		hl.LogEntry(r, start, reqId, string(buf))
 	})
 }

@@ -30,3 +30,9 @@ func (uc *usecase) FindOneById(id string) (*User, error) {
 	u, err := repo.FindOneById(id)
 	return u, err
 }
+
+func (uc *usecase) FindOneByUsername(username string) (*User, error) {
+	repo := NewReadRepository(uc.db)
+	u, err := repo.FindOneByUsername(username)
+	return u, err
+}

@@ -46,7 +46,6 @@ func delete() http.HandlerFunc {
 		rw := response.NewWriter(w, r)
 		cm := httpcontext.NewManager(r.Context())
 		p := cm.UserProfile()
-
 		if p == nil {
 			rw.ErrorUnauthorized(
 				errors.New("not found userProfile"),
@@ -55,8 +54,8 @@ func delete() http.HandlerFunc {
 			)
 			return
 		}
-
 		token.ResetTokenCookies(w)
+
 		rw.Compress(map[string]interface{}{})
 	}
 }
@@ -198,9 +197,9 @@ func postGoogleSignIn() http.HandlerFunc {
 		}
 
 		p := token.UserProfile{
-			UserID:      u.ID,
-			DisplayName: u.DisplayName,
-			PhotoUrl:    utils.NormalizeNullString(u.PhotoUrl),
+			UserID:   u.ID,
+			Username: u.Username,
+			PhotoUrl: utils.NormalizeNullString(u.PhotoUrl),
 		}
 		actk, rftk, err := token.GenerateTokens(&p)
 		if err != nil {
@@ -210,7 +209,6 @@ func postGoogleSignIn() http.HandlerFunc {
 			)
 			return
 		}
-
 		token.SetTokenCookies(w, actk, rftk)
 
 		rw.Compress(map[string]interface{}{
@@ -234,7 +232,7 @@ func postGoogleSignUp() http.HandlerFunc {
 
 		var params struct {
 			AccessToken string `json:"access_token" validate:"required,min=50"`
-			DisplayName string `json:"display_name" validate:"required,max=16,min=1"`
+			Username    string `json:"username" validate:"required,max=16,min=1"`
 		}
 
 		err = json.NewDecoder(r.Body).Decode(&params)
@@ -266,13 +264,32 @@ func postGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		u := &user.User{
-			Email:       ggp.Email,
-			OriginName:  utils.NewNullString(ggp.DisplayName),
-			DisplayName: params.DisplayName,
-			PhotoUrl:    utils.NewNullString(ggp.PhotoUrl),
+		userUseCase := user.NewUseCase(db)
+		sameNameUser, err := userUseCase.FindOneByUsername(params.Username)
+		exist, err := sameNameUser.IsExist(err)
+		if err != nil {
+			rw.Error(
+				err,
+				"post /auth/google/sign-up",
+			)
+			return
 		}
-		valid, err := u.ValidateDisplayName()
+		if exist {
+			rw.ErrorConflict(
+				err,
+				"post /auth/google/sign-up",
+				params,
+			)
+			return
+		}
+
+		u := &user.User{
+			Email:      ggp.Email,
+			OriginName: utils.NewNullString(ggp.DisplayName),
+			Username:   params.Username,
+			PhotoUrl:   utils.NewNullString(ggp.PhotoUrl),
+		}
+		valid, err := u.ValidateUsername()
 		if err != nil {
 			rw.Error(
 				err,
@@ -289,7 +306,6 @@ func postGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		userUseCase := user.NewUseCase(db)
 		userId, err := userUseCase.Create(u)
 		if err != nil {
 			rw.Error(
@@ -324,9 +340,9 @@ func postGoogleSignUp() http.HandlerFunc {
 		}
 
 		p := token.UserProfile{
-			UserID:      user.ID,
-			DisplayName: user.DisplayName,
-			PhotoUrl:    utils.NormalizeNullString(user.PhotoUrl),
+			UserID:   user.ID,
+			Username: user.Username,
+			PhotoUrl: utils.NormalizeNullString(user.PhotoUrl),
 		}
 		actk, rftk, err := token.GenerateTokens(&p)
 		if err != nil {
@@ -336,7 +352,6 @@ func postGoogleSignUp() http.HandlerFunc {
 			)
 			return
 		}
-
 		token.SetTokenCookies(w, actk, rftk)
 
 		rw.Compress(map[string]interface{}{

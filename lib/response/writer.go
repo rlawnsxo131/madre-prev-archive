@@ -18,7 +18,8 @@ const (
 	Http_Msg_NotFound            = "NotFound"            // 404
 	Http_Msg_InternalServerError = "InternalServerError" // 500
 	Http_Msg_Unauthorized        = "Unauthorized"        // 401
-	HTtp_Msg_Forbidden           = "Forbidden"           // 403
+	Http_Msg_Forbidden           = "Forbidden"           // 403
+	Http_Msg_Conflict            = "Conflict"            // 409
 )
 
 type Writer interface {
@@ -27,6 +28,7 @@ type Writer interface {
 	ErrorBadRequest(err error, action string, params interface{})
 	ErrorUnauthorized(err error, action string, params interface{})
 	ErrorForbidden(err error, action string, params interface{})
+	ErrorConflict(err error, action string, params interface{})
 	standardError(
 		status int,
 		Msg string,
@@ -152,11 +154,22 @@ func (wt *writer) ErrorUnauthorized(err error, action string, params interface{}
 func (wt *writer) ErrorForbidden(err error, action string, params interface{}) {
 	wt.standardError(
 		http.StatusForbidden,
-		HTtp_Msg_Forbidden,
+		Http_Msg_Forbidden,
 		err,
 		action,
 		params,
 	)
+}
+
+func (wt *writer) ErrorConflict(err error, action string, params interface{}) {
+	wt.standardError(
+		http.StatusConflict,
+		Http_Msg_Conflict,
+		err,
+		action,
+		params,
+	)
+
 }
 
 func (wt *writer) standardError(status int, Msg string, err error, action string, params interface{}) {

@@ -7,22 +7,22 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_User_ValidateDisplayName_ValidIsFalse(t *testing.T) {
+func Test_User_ValidateUsername_ValidIsFalse(t *testing.T) {
 	assert := assert.New(t)
 
 	u := &user.User{}
-	valid, _ := u.ValidateDisplayName()
+	valid, _ := u.ValidateUsername()
 
 	assert.False(valid)
 }
 
-func Test_User_ValidateDisplayName_ValidIsTrue(t *testing.T) {
+func Test_User_ValidateUsername_ValidIsTrue(t *testing.T) {
 	assert := assert.New(t)
 
 	u := &user.User{
-		DisplayName: "displayName",
+		Username: "username",
 	}
-	valid, _ := u.ValidateDisplayName()
+	valid, _ := u.ValidateUsername()
 
 	assert.True(valid)
 }
