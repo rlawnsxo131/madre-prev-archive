@@ -22,7 +22,7 @@ function App(props: AppProps) {
           </Route>
         </Route>
         <Route path="/@:username" element={<Layout />}>
-          <Route index element={<div>user info?</div>} />
+          <Route index element={<div>user info</div>} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
