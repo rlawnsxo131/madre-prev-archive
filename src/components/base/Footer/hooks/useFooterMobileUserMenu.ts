@@ -28,14 +28,16 @@ export default function useFooterMobileUserMenu() {
   };
 
   useEffect(() => {
+    console.log(isClickRef.current);
     if (!profile?.username) return;
     if (!isClickRef.current) return;
+
     navigate(`/@${profile?.username}`);
 
     return () => {
       isClickRef.current = false;
     };
-  }, [isClickRef.current, profile?.username]);
+  }, [profile?.username]);
 
   return {
     isActive,
