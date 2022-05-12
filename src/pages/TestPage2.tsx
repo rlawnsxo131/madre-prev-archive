@@ -33,7 +33,7 @@ function TestPage2(props: TestPage2Props) {
       height,
       margin,
     });
-  }, [ref.current]);
+  }, []);
 
   useEffect(() => {
     if (!ref.current) return;
@@ -112,7 +112,7 @@ function TestPage2(props: TestPage2Props) {
         clearTimeout(timeoutId);
       }
     };
-  }, [ref.current, chartRef.current]);
+  }, []);
 
   return (
     <div

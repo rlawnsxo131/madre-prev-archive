@@ -26,7 +26,7 @@ export default function useButtonGoogleSignIn() {
         },
       );
     });
-  }, [window.gapi, buttonRef.current]);
+  }, [window.gapi]);
 
   return {
     buttonRef,

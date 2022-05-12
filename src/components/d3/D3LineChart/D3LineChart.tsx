@@ -72,7 +72,7 @@ function D3LineChart<T>({
     chartRef.current.appendArea();
     chartRef.current.removeAndAppendCircle();
     chartRef.current.resetData();
-  }, [containerRef.current, chartRef.current, data]);
+  }, [data]);
 
   // update chart
   useEffect(() => {
@@ -92,7 +92,7 @@ function D3LineChart<T>({
     chartRef.current.updateArea();
     chartRef.current.removeAndAppendCircle();
     chartRef.current.resetData();
-  }, [containerRef.current, chartRef.current, loading, data]);
+  }, [loading, data]);
 
   return <div ref={containerRef}></div>;
 }
