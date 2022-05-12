@@ -81,7 +81,7 @@ func (u *User) Filter(keys []string) map[string]interface{} {
 }
 
 func (u *User) ValidateUsername() (bool, error) {
-	match, err := regexp.MatchString("^[a-zA-Z0-9가-힣]{1,16}$", u.Username)
+	match, err := regexp.MatchString("^[a-zA-Z0-9가-힣]{1,20}$", u.Username)
 	if err != nil {
 		return false, errors.Wrap(err, "ValidateDisplayName")
 	}
@@ -99,7 +99,7 @@ func (u *User) IsExist(err error) (bool, error) {
 		}
 	}
 
-	if u.Username != "" {
+	if u.ID != "" {
 		exist = true
 	}
 

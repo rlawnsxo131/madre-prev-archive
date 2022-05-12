@@ -37,8 +37,8 @@ COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UU
 CREATE TABLE IF NOT EXISTS public.user(
   id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
   email varchar(255) NOT NULL,
-  origin_name varchar(16) DEFAULT NULL,
-  username varchar(48) NOT NULL,
+  origin_name varchar(50) DEFAULT NULL,
+  username varchar(50) NOT NULL,
   photo_url varchar(255) DEFAULT NULL,
   created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
   updated_at TIMESTAMPTZ DEFAULT now() NOT NULL,

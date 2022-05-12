@@ -232,7 +232,7 @@ func postGoogleSignUp() http.HandlerFunc {
 
 		var params struct {
 			AccessToken string `json:"access_token" validate:"required,min=50"`
-			Username    string `json:"username" validate:"required,max=16,min=1"`
+			Username    string `json:"username" validate:"required,max=20,min=1"`
 		}
 
 		err = json.NewDecoder(r.Body).Decode(&params)
@@ -255,15 +255,6 @@ func postGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		ggp, err := social.NewGoogleApi(params.AccessToken).Do()
-		if err != nil {
-			rw.Error(
-				err,
-				"post /auth/google/sign-up",
-			)
-			return
-		}
-
 		userUseCase := user.NewUseCase(db)
 		sameNameUser, err := userUseCase.FindOneByUsername(params.Username)
 		exist, err := sameNameUser.IsExist(err)
@@ -279,6 +270,15 @@ func postGoogleSignUp() http.HandlerFunc {
 				err,
 				"post /auth/google/sign-up",
 				params,
+			)
+			return
+		}
+
+		ggp, err := social.NewGoogleApi(params.AccessToken).Do()
+		if err != nil {
+			rw.Error(
+				err,
+				"post /auth/google/sign-up",
 			)
 			return
 		}
