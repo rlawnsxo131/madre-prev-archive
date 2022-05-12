@@ -6,6 +6,6 @@ export default function useIsUserPath() {
   const matchPath = useMatchedRoute();
 
   return useMemo(() => {
-    return matchPath?.startsWith(userPath) ?? false;
+    return matchPath?.startsWith(userPath);
   }, [matchPath]);
 }

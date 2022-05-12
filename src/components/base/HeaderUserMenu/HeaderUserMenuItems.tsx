@@ -35,7 +35,7 @@ function HeaderUserMenuItems({
           />
         </li>
         <li>
-          <button css={button} onClick={signOut}>
+          <button css={[basicStyles.button, button]} onClick={signOut}>
             로그아웃
           </button>
         </li>
@@ -77,7 +77,6 @@ const ul = css`
 `;
 
 const button = css`
-  ${basicStyles.button};
   display: flex;
   flex-flow: row wrap;
   align-items: center;

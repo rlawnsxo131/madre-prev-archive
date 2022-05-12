@@ -33,7 +33,7 @@ function Button({
   return (
     <button
       ref={buttonRef}
-      css={block(color, size, shape, outline)}
+      css={[basicStyles.button, button(color, size, shape, outline)]}
       onClick={(e) => {
         if (rest.onClick) {
           rest.onClick(e);
@@ -48,13 +48,12 @@ function Button({
   );
 }
 
-const block = (
+const button = (
   color: ButtonColor,
   size: ButtonSize,
   shape: ButtonShape,
   outline: boolean,
 ) => css`
-  ${basicStyles.button};
   display: inline-flex;
   align-items: center;
   justify-content: center;

@@ -4,15 +4,6 @@ import { toast, ToastPosition } from 'react-toastify';
 import { RootState } from '../store';
 import { palette, themePalette } from '../styles';
 
-interface PromisifyParams {
-  func: () => Promise<void>;
-  message: {
-    pending: string;
-    success: string;
-    error: string;
-  };
-}
-
 const bodyStyle = {
   color: themePalette.text1,
   fontSize: '0.9rem',
@@ -56,7 +47,14 @@ export default function useToast() {
         });
       },
       promisify(
-        params: PromisifyParams,
+        params: {
+          func: () => Promise<void>;
+          message: {
+            pending: string;
+            success: string;
+            error: string;
+          };
+        },
         position: ToastPosition = 'top-right',
       ) {
         toast.promise(params.func, params.message, {

@@ -17,12 +17,12 @@ function App(props: AppProps) {
           <Route path="guide" element={<div>guide</div>} />
           <Route path="policy" element={<div>policy</div>} />
           <Route path="notifications" element={<div>notifications</div>} />
-          <Route path="/m">
-            <Route path="all-menu" element={<div>mobile all menu</div>} />
-          </Route>
         </Route>
         <Route path="/@:username" element={<Layout />}>
           <Route index element={<div>user info</div>} />
+        </Route>
+        <Route path="/m" element={<Layout />}>
+          <Route path="all-menu" element={<div>mobile all menu</div>} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

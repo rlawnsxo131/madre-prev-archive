@@ -22,6 +22,7 @@ const authApi = createApi({
     },
     credentials: 'include',
   }),
+  // refetchOnFocus: true,
   tagTypes: ['Auth'],
   endpoints: (build) => ({
     get: build.query<GetAuthResponse, undefined>({

@@ -1,31 +1,30 @@
 import { css } from '@emotion/react';
 import { UserIcon } from '../../../image/icons';
-import { basicStyles } from '../../../styles';
+import { basicStyles, themePalette } from '../../../styles';
+import useFooterMobileUserMenu from './hooks/useFooterMobileUserMenu';
 
 interface FooterMobileUserMenuProps {}
 
 function FooterMobileUserMenu(props: FooterMobileUserMenuProps) {
-  // const navigate = useNavigate();
-  // const profile = useUserProfileState();
-  // const { show } = usePopupAuthActions();
-  // const onClickMobileUserMenu = () => {
-  //   if (!profile || !profile?.username) {
-  //     show();
-  //     return;
-  //   }
-  //   navigate(`/@${profile.username}`);
-  // };
+  const { isActive, onClick } = useFooterMobileUserMenu();
+
   return (
-    <button css={[basicStyles.button, button]}>
+    <button css={[basicStyles.button, button(isActive)]} onClick={onClick}>
       <UserIcon />
     </button>
   );
 }
 
-const button = css`
+const button = (isActive?: boolean) => css`
   display: flex;
   justify-content: center;
   align-items: center;
+  ${isActive &&
+  css`
+    svg {
+      fill: ${themePalette.anchor_active1};
+    }
+  `}
 `;
 
 export default FooterMobileUserMenu;

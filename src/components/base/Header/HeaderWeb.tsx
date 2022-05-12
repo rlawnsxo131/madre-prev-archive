@@ -11,14 +11,14 @@ interface HeaderWebProps {}
 function HeaderWeb(props: HeaderWebProps) {
   return (
     <div css={block}>
-      <HeaderLogo />
       <div css={itemBlock}>
+        <HeaderLogo />
         <HeaderWebNavigation />
-        <div css={iconItemsBlock}>
-          <HeaderUserNotification />
-          <HeaderUserMenu />
-          <ButtonThemeChange />
-        </div>
+      </div>
+      <div css={iconItemsBlock}>
+        <HeaderUserNotification />
+        <HeaderUserMenu />
+        <ButtonThemeChange />
       </div>
     </div>
   );
@@ -47,6 +47,7 @@ const block = css`
 const itemBlock = css`
   display: flex;
   justify-content: center;
+  gap: 1.5rem;
 `;
 
 const iconItemsBlock = css`

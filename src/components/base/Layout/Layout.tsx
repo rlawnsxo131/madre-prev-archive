@@ -1,8 +1,8 @@
 import { css } from '@emotion/react';
-import { Outlet } from 'react-router-dom';
 import Footer from '../Footer';
 import Header from '../Header';
 import baseStyles from '../base.styles';
+import { Outlet } from 'react-router-dom';
 
 interface LayoutProps {}
 

@@ -27,8 +27,8 @@ function ScreenSignUpRightBlockInputUsername(
           onChange={onChange}
           ref={inputRef}
           minLength={1}
-          maxLength={16}
-          placeholder="중복 불가. 영문, 숫자 1~16자"
+          maxLength={20}
+          placeholder="중복 불가. 영문, 숫자 1~20자"
         />
       </div>
       <div css={footer}>

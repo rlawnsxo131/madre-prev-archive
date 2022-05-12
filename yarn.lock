@@ -2535,10 +2535,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^17.0.31":
-  version: 17.0.31
-  resolution: "@types/node@npm:17.0.31"
-  checksum: 704618350f8420d5c47db0f7778398e821b7724369946f5c441a7e6b9343295553936400eb8309f0b07d5e39c240988ab3456b983712ca86265dabc9aee4ad3d
+"@types/node@npm:^17.0.32":
+  version: 17.0.32
+  resolution: "@types/node@npm:17.0.32"
+  checksum: afb05704b42032566b3da8b2d80a68883cd3b888472d1b8b4dd6c84f8fad371454f083d4e28bd30c10589187296119d92aba255638b30067afe062b5922388a5
   languageName: node
   linkType: hard
 
@@ -4560,10 +4560,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv@npm:^16.0.0":
-  version: 16.0.0
-  resolution: "dotenv@npm:16.0.0"
-  checksum: 664cebb51f0a9a1d1b930f51f0271e72e26d62feaecc9dc03df39453dd494b4e724809ca480fb3ec3213382b1ed3f791aaeb83569a137f9329ce58efd4853dbf
+"dotenv@npm:^16.0.1":
+  version: 16.0.1
+  resolution: "dotenv@npm:16.0.1"
+  checksum: f459ffce07b977b7f15d8cc4ee69cdff77d4dd8c5dc8c85d2d485ee84655352c2415f9dd09d42b5b5985ced3be186130871b34e2f3e2569ebc72fbc2e8096792
   languageName: node
   linkType: hard
 
@@ -4642,13 +4642,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"enhanced-resolve@npm:^5.9.2":
-  version: 5.9.2
-  resolution: "enhanced-resolve@npm:5.9.2"
+"enhanced-resolve@npm:^5.9.3":
+  version: 5.9.3
+  resolution: "enhanced-resolve@npm:5.9.3"
   dependencies:
     graceful-fs: ^4.2.4
     tapable: ^2.2.0
-  checksum: 792b7a01abb4ee4433b658c71f92d5948675938e0c03cad1732abe843b87395f15cb880ace4f819f78ead94163278283afc79b8be63c0eddca8ab45f7d8c515d
+  checksum: 64c2dbbdd608d1a4df93b6e60786c603a1faf3b2e66dfd051d62cf4cfaeeb5e800166183685587208d62e9f7afff3f78f3d5978e32cd80125ba0c83b59a79d78
   languageName: node
   linkType: hard
 
@@ -5782,14 +5782,7 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"json-parse-better-errors@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "json-parse-better-errors@npm:1.0.2"
-  checksum: ff2b5ba2a70e88fd97a3cb28c1840144c5ce8fae9cbeeddba15afa333a5c407cf0e42300cd0a2885dbb055227fe68d405070faad941beeffbfde9cf3b2c78c5d
-  languageName: node
-  linkType: hard
-
-"json-parse-even-better-errors@npm:^2.3.0":
+"json-parse-even-better-errors@npm:^2.3.0, json-parse-even-better-errors@npm:^2.3.1":
   version: 2.3.1
   resolution: "json-parse-even-better-errors@npm:2.3.1"
   checksum: 798ed4cf3354a2d9ccd78e86d2169515a0097a5c133337807cdf7f1fc32e1391d207ccfc276518cc1d7d8d4db93288b8a50ba4293d212ad1336e52a8ec0a941f
@@ -5959,7 +5952,7 @@ fsevents@~2.3.2:
     "@emotion/react": ^11.9.0
     "@reduxjs/toolkit": ^1.8.1
     "@types/d3": ^7.1.0
-    "@types/node": ^17.0.31
+    "@types/node": ^17.0.32
     "@types/react": ^18.0.9
     "@types/react-dom": ^18.0.3
     "@types/react-redux": ^7.1.24
@@ -5972,7 +5965,7 @@ fsevents@~2.3.2:
     css-minimizer-webpack-plugin: ^3.4.1
     d3: ^7.4.4
     date-fns: ^2.28.0
-    dotenv: ^16.0.0
+    dotenv: ^16.0.1
     file-loader: ^6.2.0
     fork-ts-checker-webpack-plugin: ^7.2.11
     html-webpack-plugin: ^5.5.0
@@ -5990,7 +5983,7 @@ fsevents@~2.3.2:
     typescript: 4.5.5
     url-loader: ^4.1.1
     uuid: ^8.3.2
-    webpack: ^5.72.0
+    webpack: ^5.72.1
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.9.0
     webpack-manifest-plugin: ^5.0.0
@@ -8768,9 +8761,9 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.72.0":
-  version: 5.72.0
-  resolution: "webpack@npm:5.72.0"
+"webpack@npm:^5.72.1":
+  version: 5.72.1
+  resolution: "webpack@npm:5.72.1"
   dependencies:
     "@types/eslint-scope": ^3.7.3
     "@types/estree": ^0.0.51
@@ -8781,13 +8774,13 @@ fsevents@~2.3.2:
     acorn-import-assertions: ^1.7.6
     browserslist: ^4.14.5
     chrome-trace-event: ^1.0.2
-    enhanced-resolve: ^5.9.2
+    enhanced-resolve: ^5.9.3
     es-module-lexer: ^0.9.0
     eslint-scope: 5.1.1
     events: ^3.2.0
     glob-to-regexp: ^0.4.1
     graceful-fs: ^4.2.9
-    json-parse-better-errors: ^1.0.2
+    json-parse-even-better-errors: ^2.3.1
     loader-runner: ^4.2.0
     mime-types: ^2.1.27
     neo-async: ^2.6.2
@@ -8801,7 +8794,7 @@ fsevents@~2.3.2:
       optional: true
   bin:
     webpack: bin/webpack.js
-  checksum: 8365f1466d0f7adbf80ebc9b780f263a28eeeabcd5fb515249bfd9a56ab7fe8d29ea53df3d9364d0732ab39ae774445eb28abce694ed375b13882a6b2fe93ffc
+  checksum: d1eff085eee1c67a68f7bf1d077ea202c1e68a0de0e0866274984769838c3f224fbc64e847e1a1bbc6eba9fb6a9965098809cc0be9292b573767bb5d8d2df96e
   languageName: node
   linkType: hard
 
