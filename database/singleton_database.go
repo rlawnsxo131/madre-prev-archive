@@ -11,22 +11,22 @@ type singletonDatabase struct {
 }
 
 func (sd *singletonDatabase) Queryx(query string, args ...interface{}) (*sqlx.Rows, error) {
-	sd.l.Info().Msgf("sql: %s,%+v", query, args)
+	sd.l.Log().Msgf("sql: %s,%+v", query, args)
 	return sd.DB.Queryx(query, args...)
 }
 
 func (sd *singletonDatabase) QueryRowx(query string, args ...interface{}) *sqlx.Row {
-	sd.l.Info().Msgf("sql: %s,%+v", query, args)
+	sd.l.Log().Msgf("sql: %s,%+v", query, args)
 	return sd.DB.QueryRowx(query, args...)
 }
 
 func (sd *singletonDatabase) NamedQuery(query string, arg interface{}) (*sqlx.Rows, error) {
-	sd.l.Info().Msgf("sql: %s,%+v", query, arg)
+	sd.l.Log().Msgf("sql: %s,%+v", query, arg)
 	return sd.DB.NamedQuery(query, arg)
 }
 
 func (sd *singletonDatabase) PrepareNamedGet(id *string, query string, arg interface{}) error {
-	sd.l.Info().Msgf("sql: %s,%+v", query, arg)
+	sd.l.Log().Msgf("sql: %s,%+v", query, arg)
 	stmt, err := sd.DB.PrepareNamed(query)
 	defer stmt.Close()
 	if err != nil {

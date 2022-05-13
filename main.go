@@ -11,8 +11,7 @@ import (
 func main() {
 	db, err := database.GetDatabaseInstance()
 	if err != nil {
-		logger.GetDefaultLogger().
-			Fatal().Err(err).Msg("")
+		logger.GetDefaultLogger().Fatal().Err(err).Msg("")
 	}
 	defer db.DB.Close()
 	// TODO: It should be written to run only in the develop environment.

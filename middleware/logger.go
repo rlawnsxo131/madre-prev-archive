@@ -12,7 +12,7 @@ import (
 
 func Logger(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		start := time.Now()
+		start := time.Now().UTC()
 		reqId := utils.GenerateUUIDString()
 		ctx := httpcontext.SetRequestId(r.Context(), reqId)
 		hl := logger.NewHttpLogger()
