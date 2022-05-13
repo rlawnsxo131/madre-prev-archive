@@ -2,13 +2,13 @@ import { css } from '@emotion/react';
 import { NavLink } from 'react-router-dom';
 import { themePalette } from '../../../styles';
 
-interface MadreImageLinkProps {
+interface LinkImageProps {
   children: React.ReactNode;
   to: string;
   onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 }
 
-function MadreImageLink({ children, to, onClick }: MadreImageLinkProps) {
+function LinkImage({ children, to, onClick }: LinkImageProps) {
   return (
     <NavLink css={link} to={to} onClick={onClick}>
       {children}
@@ -27,4 +27,4 @@ const link = css`
   }
 `;
 
-export default MadreImageLink;
+export default LinkImage;

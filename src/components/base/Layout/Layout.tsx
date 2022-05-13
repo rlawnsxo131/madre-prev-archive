@@ -10,7 +10,7 @@ function Layout(props: LayoutProps) {
   return (
     <div css={block}>
       <Header />
-      <main css={main}>
+      <main css={[baseStyles.responsive, main]}>
         <div css={content}>
           <Outlet />
         </div>
@@ -34,7 +34,6 @@ const main = css`
   display: flex;
   justify-content: center;
   position: relative;
-  ${baseStyles.responsive}
 `;
 
 const content = css`

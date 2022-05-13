@@ -19,7 +19,7 @@ export const appRoutes = [
 
 // The values ​​below are in the order in which they are displayed.
 export const appInfoRoutes = [
-  { path: '/madre-story', displayName: 'Madre 이야기' },
-  { path: '/notice', displayName: '공지사항' },
-  { path: '/guide', displayName: '가이드 및 튜토리얼' },
+  { path: '/madre-story', displayText: 'Madre 이야기' },
+  { path: '/notice', displayText: '공지사항' },
+  { path: '/guide', displayText: '가이드 및 튜토리얼' },
 ];

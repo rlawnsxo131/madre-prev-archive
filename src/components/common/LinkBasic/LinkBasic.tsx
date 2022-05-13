@@ -4,20 +4,20 @@ import { themePalette } from '../../../styles';
 
 type ParentsDirection = 'row' | 'column';
 
-interface MadreLinkProps {
+interface LinkBasicProps {
   to: string;
-  displayName: string;
+  displayText: string;
   parentDirection?: ParentsDirection;
 }
 
-function MadreLink({
+function LinkBasic({
   to,
-  displayName,
+  displayText,
   parentDirection = 'row',
-}: MadreLinkProps) {
+}: LinkBasicProps) {
   return (
     <NavLink css={link(parentDirection)} to={to}>
-      {displayName}
+      {displayText}
     </NavLink>
   );
 }
@@ -47,4 +47,4 @@ const link = (parentDirection: ParentsDirection) => css`
   `}
 `;
 
-export default MadreLink;
+export default LinkBasic;

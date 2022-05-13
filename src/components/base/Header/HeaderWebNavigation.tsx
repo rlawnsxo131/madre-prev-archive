@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { appInfoRoutes } from '../../../constants';
-import MadreLink from '../../common/MadreLink';
+import LinkBasic from '../../common/LinkBasic';
 
 interface HeaderWebNavigationProps {}
 
@@ -10,7 +10,7 @@ function HeaderWebNavigation(props: HeaderWebNavigationProps) {
       <ul css={ul}>
         {appInfoRoutes.map((v) => (
           <li key={`app_root_route_${v.path}`}>
-            <MadreLink to={v.path} displayName={v.displayName} />
+            <LinkBasic to={v.path} displayText={v.displayText} />
           </li>
         ))}
       </ul>

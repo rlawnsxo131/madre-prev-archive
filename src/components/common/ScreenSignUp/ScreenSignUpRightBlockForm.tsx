@@ -3,18 +3,16 @@ import { CloseIcon } from '../../../image/icons';
 import { themePalette, zIndexes } from '../../../styles';
 import Button from '../Button';
 import Input from '../Input';
-import useScreenSignUpInputUsername from './hooks/useScreenSignUpRightBlockInputUsername';
+import useScreenSignUpRightBlockForm from './hooks/useScreenSignUpRightBlockForm';
 
-interface ScreenSignUpRightBlockInputUsernameProps {}
+interface ScreenSignUpRightBlockFormProps {}
 
-function ScreenSignUpRightBlockInputUsername(
-  props: ScreenSignUpRightBlockInputUsernameProps,
-) {
+function ScreenSignUpRightBlockForm(props: ScreenSignUpRightBlockFormProps) {
   const { inputRef, username, onChange, close, onSignUp } =
-    useScreenSignUpInputUsername();
+    useScreenSignUpRightBlockForm();
 
   return (
-    <div css={block}>
+    <form css={block} onSubmit={onSignUp}>
       <div css={header}>
         <CloseIcon onClick={close} />
       </div>
@@ -32,11 +30,9 @@ function ScreenSignUpRightBlockInputUsername(
         />
       </div>
       <div css={footer}>
-        <Button color="blue" onClick={onSignUp}>
-          확인
-        </Button>
+        <Button color="blue">확인</Button>
       </div>
-    </div>
+    </form>
   );
 }
 
@@ -80,4 +76,4 @@ const footer = css`
   }
 `;
 
-export default ScreenSignUpRightBlockInputUsername;
+export default ScreenSignUpRightBlockForm;

@@ -23,10 +23,6 @@ const globalStyle = css`
     background: ${themePalette.bg4};
   }
 
-  /* footer {
-    background: ${themePalette.bg3};
-  } */
-
   html {
     box-sizing: border-box;
     * {

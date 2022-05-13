@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { memo } from 'react';
 import { basicStyles, themePalette } from '../../../styles';
 
 interface HeaderUserMenuAuthButtonProps {
@@ -24,4 +25,4 @@ const block = css`
   background: none;
 `;
 
-export default HeaderUserMenuAuthButton;
+export default memo(HeaderUserMenuAuthButton);

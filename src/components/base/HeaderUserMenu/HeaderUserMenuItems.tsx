@@ -7,7 +7,7 @@ import {
   transitions,
   zIndexes,
 } from '../../../styles';
-import MadreLink from '../../common/MadreLink';
+import LinkBasic from '../../common/LinkBasic';
 
 interface HeaderUserMenuItemsProps {
   signOut: () => Promise<void>;
@@ -28,9 +28,9 @@ function HeaderUserMenuItems({
     <div css={block(visible)}>
       <ul css={ul}>
         <li>
-          <MadreLink
+          <LinkBasic
             to={`/@${username}`}
-            displayName="마이 페이지"
+            displayText="마이 페이지"
             parentDirection="column"
           />
         </li>

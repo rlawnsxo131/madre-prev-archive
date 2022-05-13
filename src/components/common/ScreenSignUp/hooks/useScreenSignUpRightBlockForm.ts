@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import useScreenSignUpActions from '../../../../hooks/screenSignUp/useScreenSignUpActions';
 import useScreenSignUpState from '../../../../hooks/screenSignUp/useScreenSignUpState';
@@ -5,7 +6,7 @@ import useToast from '../../../../hooks/useToast';
 import { isNormalEnglishString, normalizeString } from '../../../../lib/utils';
 import authApi from '../../../../store/api/authApi';
 
-export default function useScreenSignUpInputUsername() {
+export default function useScreenSignUpRightBlockForm() {
   const { isError, isValidateError, isConflictError, access_token } =
     useScreenSignUpState();
   const [googleSignUp] = authApi.usePostGoogleSignUpMutation();
@@ -26,7 +27,8 @@ export default function useScreenSignUpInputUsername() {
     setUsername(e.target.value);
   };
 
-  const onSignUp = async () => {
+  const onSignUp = async (e: React.FormEvent) => {
+    e.preventDefault();
     const normalizedAccessToken = normalizeString(access_token);
     const normalizedUsername = normalizeString(username);
 

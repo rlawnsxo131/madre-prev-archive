@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { HomeIcon, MenuIcon } from '../../../image/icons';
 import { media, themePalette } from '../../../styles';
-import MadreImageLink from '../../common/MadreImageLink';
+import LinkImage from '../../common/LinkImage';
 import FooterMobileNotification from './FooterMobileNotification';
 import FooterMobileUserMenu from './FooterMobileUserMenu';
 
@@ -11,16 +11,16 @@ function FooterMobile(props: FooterMobileProps) {
   return (
     <div css={block}>
       <div css={menuBlock}>
-        <MadreImageLink to="/">
+        <LinkImage to="/">
           <HomeIcon />
-        </MadreImageLink>
+        </LinkImage>
         <FooterMobileUserMenu />
-        <MadreImageLink to="/notifications">
+        <LinkImage to="/notifications">
           <FooterMobileNotification />
-        </MadreImageLink>
-        <MadreImageLink to="/m/all-menu">
+        </LinkImage>
+        <LinkImage to="/m/all-menu">
           <MenuIcon />
-        </MadreImageLink>
+        </LinkImage>
       </div>
       <div css={fakeBlock} />
     </div>
