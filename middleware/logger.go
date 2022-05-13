@@ -14,8 +14,7 @@ func Logger(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
 		reqId := utils.GenerateUUIDString()
-		cm := httpcontext.NewManager(r.Context())
-		ctx := cm.SetRequestId(reqId)
+		ctx := httpcontext.SetRequestId(r.Context(), reqId)
 		hl := logger.NewHttpLogger()
 		buf, err := hl.ReadBody(r)
 		if err != nil {

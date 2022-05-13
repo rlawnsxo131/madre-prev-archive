@@ -10,29 +10,25 @@ type UseCase interface {
 }
 
 type usecase struct {
-	db database.Database
+	readRepo  ReadRepository
+	writeRepo WriteRepository
 }
 
 func NewUseCase(db database.Database) UseCase {
 	return &usecase{
-		db: db,
+		readRepo:  NewReadRepository(db),
+		writeRepo: NewWriteRepository(db),
 	}
 }
 
 func (uc *usecase) Create(u *User) (string, error) {
-	repo := NewWriteRepository(uc.db)
-	id, err := repo.Create(u)
-	return id, err
+	return uc.writeRepo.Create(u)
 }
 
 func (uc *usecase) FindOneById(id string) (*User, error) {
-	repo := NewReadRepository(uc.db)
-	u, err := repo.FindOneById(id)
-	return u, err
+	return uc.readRepo.FindOneById(id)
 }
 
 func (uc *usecase) FindOneByUsername(username string) (*User, error) {
-	repo := NewReadRepository(uc.db)
-	u, err := repo.FindOneByUsername(username)
-	return u, err
+	return uc.readRepo.FindOneByUsername(username)
 }

@@ -11,9 +11,9 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
+	"github.com/rlawnsxo131/madre-server-v2/database"
 	"github.com/rlawnsxo131/madre-server-v2/domain/auth"
 	"github.com/rlawnsxo131/madre-server-v2/domain/data"
-	"github.com/rlawnsxo131/madre-server-v2/domain/temp"
 	"github.com/rlawnsxo131/madre-server-v2/domain/user"
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"
 	"github.com/rlawnsxo131/madre-server-v2/middleware"
@@ -27,17 +27,19 @@ const (
 )
 
 type server struct {
+	db         database.Database
 	router     *mux.Router
 	httpServer *http.Server
 }
 
-func New() *server {
+func New(db database.Database) *server {
 	s := &server{
+		db:     db,
 		router: mux.NewRouter(),
 	}
-	s.applyBaseMiddleware()
+	s.applyMiddleware()
 	s.applyHealthSettings()
-	s.applyApiRoutesAndMiddleware()
+	s.applyApiRoutes()
 	s.applyHttpServer()
 	return s
 }
@@ -82,13 +84,14 @@ func (s *server) Start() {
 	os.Exit(0)
 }
 
-func (s *server) applyBaseMiddleware() {
+func (s *server) applyMiddleware() {
 	s.router.Use(
 		middleware.Logger,
 		middleware.Recovery,
 		middleware.AllowHost,
 		middleware.Cors,
 		middleware.JWT,
+		middleware.ContentTypeToJson,
 	)
 }
 
@@ -106,17 +109,13 @@ func (s *server) applyHealthSettings() {
 	})
 }
 
-func (s *server) applyApiRoutesAndMiddleware() {
+func (s *server) applyApiRoutes() {
 	api := s.router.NewRoute().PathPrefix("/api").Subrouter()
-	api.Use(
-		middleware.SetDatabase,
-		middleware.ContentTypeToJson,
-	)
 	v1 := api.NewRoute().PathPrefix("/v1").Subrouter()
-	auth.ApplyRoutes(v1)
-	user.ApplyRoutes(v1)
-	data.ApplyRoutes(v1)
-	temp.ApplyRoutes(v1)
+
+	auth.ApplyRoutes(v1, s.db)
+	user.ApplyRoutes(v1, s.db)
+	data.ApplyRoutes(v1, s.db)
 }
 
 func (s *server) applyHttpServer() {

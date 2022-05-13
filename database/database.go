@@ -48,10 +48,9 @@ func GetDatabaseInstance() (*singletonDatabase, error) {
 			return
 		}
 
-		l := logger.NewDefaultLogger()
 		instanceDatabase = &singletonDatabase{
 			DB: db,
-			l:  l,
+			l:  logger.NewBaseLogger(),
 		}
 		initDatabase(instanceDatabase.DB)
 	})

@@ -28,7 +28,7 @@ func (r *readRepository) FindAll(limit int) ([]*Data, error) {
 	var dd []*Data
 
 	query := "SELECT * FROM data" +
-		"LIMIT $1"
+		" LIMIT $1"
 
 	rows, err := r.db.Queryx(query, limit)
 	if err != nil {

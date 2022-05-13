@@ -54,8 +54,7 @@ func JWT(next http.Handler) http.Handler {
 							token.ResetTokenCookies(w)
 
 							// set context value
-							cm := httpcontext.NewManager(ctx)
-							ctx = cm.SetUserProfile(nil)
+							ctx = httpcontext.SetUserProfile(r.Context(), nil)
 						} else {
 							// generate tokens and set cookie
 							p := token.UserProfile{
@@ -70,26 +69,24 @@ func JWT(next http.Handler) http.Handler {
 								token.SetTokenCookies(w, actk, rftk)
 
 								// set context value
-								cm := httpcontext.NewManager(ctx)
 								p := token.UserProfile{
 									UserID:   claims.UserID,
 									Username: claims.Username,
 									PhotoUrl: claims.PhotoUrl,
 								}
-								ctx = cm.SetUserProfile(&p)
+								ctx = httpcontext.SetUserProfile(r.Context(), &p)
 							}
 						}
 					}
 				}
 			} else {
 				// set context value
-				cm := httpcontext.NewManager(ctx)
 				p := token.UserProfile{
 					UserID:   claims.UserID,
 					Username: claims.Username,
 					PhotoUrl: claims.PhotoUrl,
 				}
-				ctx = cm.SetUserProfile(&p)
+				ctx = httpcontext.SetUserProfile(r.Context(), &p)
 			}
 		}
 
@@ -112,9 +109,7 @@ func JWT(next http.Handler) http.Handler {
 				if err != nil {
 					// remove cookies
 					token.ResetTokenCookies(w)
-					cm := httpcontext.NewManager(ctx)
-					ctx = cm.SetUserProfile(nil)
-
+					ctx = httpcontext.SetUserProfile(r.Context(), nil)
 				} else {
 					// generate tokens and set cookie
 					p := token.UserProfile{
@@ -127,8 +122,7 @@ func JWT(next http.Handler) http.Handler {
 						logger.GetDefaultLogger().Err(err).Str("Action", "JWT").Msg("")
 					} else {
 						token.SetTokenCookies(w, actk, rftk)
-						cm := httpcontext.NewManager(ctx)
-						ctx = cm.SetUserProfile(nil)
+						ctx = httpcontext.SetUserProfile(r.Context(), nil)
 					}
 				}
 			}

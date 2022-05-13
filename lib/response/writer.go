@@ -11,6 +11,7 @@ import (
 
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
+	"github.com/rs/zerolog"
 )
 
 const (
@@ -41,17 +42,20 @@ type Writer interface {
 type writer struct {
 	w http.ResponseWriter
 	r *http.Request
+	l *zerolog.Logger
 }
 
 func NewWriter(w http.ResponseWriter, r *http.Request) Writer {
 	return &writer{
 		w: w,
 		r: r,
+		l: logger.NewBaseLogger(),
 	}
 }
 
 func (wt *writer) Compress(data interface{}) {
 	jsonData, err := json.Marshal(data)
+
 	if err != nil {
 		wt.Error(
 			errors.WithStack(err),
@@ -103,18 +107,18 @@ func (wt *writer) Compress(data interface{}) {
 
 func (wt *writer) Error(err error, action string, msg ...string) {
 	status := http.StatusInternalServerError
-	Msg := Http_Msg_InternalServerError
+	message := Http_Msg_InternalServerError
 
 	if err == sql.ErrNoRows {
 		status = http.StatusNotFound
-		Msg = Http_Msg_NotFound
+		message = Http_Msg_NotFound
 	}
 
 	wt.w.WriteHeader(status)
 	json.NewEncoder(wt.w).Encode(
 		map[string]interface{}{
-			"status": status,
-			"Msg":    Msg,
+			"status":  status,
+			"message": message,
 		},
 	)
 
@@ -124,11 +128,7 @@ func (wt *writer) Error(err error, action string, msg ...string) {
 			b.WriteString(v)
 		}
 	}
-
-	logger.GetDefaultLogger().
-		Err(err).
-		Str("Action", action).
-		Msg(b.String())
+	wt.l.Err(err).Str("Action", action).Msg(b.String())
 }
 
 func (wt *writer) ErrorBadRequest(err error, action string, params interface{}) {
@@ -182,13 +182,9 @@ func (wt *writer) standardError(
 	wt.w.WriteHeader(status)
 	json.NewEncoder(wt.w).Encode(
 		map[string]interface{}{
-			"status": status,
-			"Msg":    msg,
+			"status":  status,
+			"message": msg,
 		},
 	)
-
-	logger.GetDefaultLogger().
-		Err(err).
-		Str("Action", action).
-		Msgf("Params: %+v", params)
+	wt.l.Err(err).Str("Action", action).Msgf("Params: %+v", params)
 }

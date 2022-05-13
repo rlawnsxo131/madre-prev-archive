@@ -18,7 +18,7 @@ func main() {
 	// TODO: It should be written to run only in the develop environment.
 	database.ExcuteInitSQL(db.DB)
 
-	s := server.New()
+	s := server.New(db)
 	s.Start()
 }
 

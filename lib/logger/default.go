@@ -1,7 +1,6 @@
 package logger
 
 import (
-	"os"
 	"sync"
 
 	"github.com/rs/zerolog"
@@ -14,14 +13,7 @@ var (
 
 func GetDefaultLogger() *zerolog.Logger {
 	onceDefaultLogger.Do(func() {
-		l := NewDefaultLogger()
-		defaultLogger = l
+		defaultLogger = NewBaseLogger()
 	})
 	return defaultLogger
-}
-
-func NewDefaultLogger() *zerolog.Logger {
-	//.Output(zerolog.ConsoleWriter{Out: os.Stderr})
-	l := zerolog.New(os.Stderr).With().Timestamp().Logger()
-	return &l
 }

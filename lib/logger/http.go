@@ -26,9 +26,8 @@ type httpLogger struct {
 
 func NewHttpLogger() *httpLogger {
 	onceHttpLogger.Do(func() {
-		l := NewDefaultLogger()
 		httplogger = &httpLogger{
-			l: l,
+			l: NewBaseLogger(),
 		}
 	})
 	return httplogger
