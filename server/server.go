@@ -113,9 +113,9 @@ func (s *server) applyApiRoutes() {
 	api := s.router.NewRoute().PathPrefix("/api").Subrouter()
 	v1 := api.NewRoute().PathPrefix("/v1").Subrouter()
 
-	auth.ApplyRoutes(v1, s.db)
-	user.ApplyRoutes(v1, s.db)
-	data.ApplyRoutes(v1, s.db)
+	auth.ApplyRoutes(v1, auth.NewController(s.db))
+	user.ApplyRoutes(v1, user.NewController(s.db))
+	data.ApplyRoutes(v1, data.NewController(s.db))
 }
 
 func (s *server) applyHttpServer() {

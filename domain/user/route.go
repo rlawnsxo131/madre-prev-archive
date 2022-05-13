@@ -2,11 +2,9 @@ package user
 
 import (
 	"github.com/gorilla/mux"
-	"github.com/rlawnsxo131/madre-server-v2/database"
 )
 
-func ApplyRoutes(v1 *mux.Router, db database.Database) {
-	ctrl := NewController(db)
+func ApplyRoutes(v1 *mux.Router, ctrl Controller) {
 	r := v1.NewRoute().PathPrefix("/user").Subrouter()
 
 	r.HandleFunc("/{id}", ctrl.Get()).Methods("GET")
