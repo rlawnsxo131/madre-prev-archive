@@ -9,10 +9,12 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/database"
 	"github.com/rlawnsxo131/madre-server-v2/domain/auth/socialaccount"
 	"github.com/rlawnsxo131/madre-server-v2/domain/user"
+	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"
 	"github.com/rlawnsxo131/madre-server-v2/lib/social"
 	"github.com/rlawnsxo131/madre-server-v2/lib/token"
 	"github.com/rlawnsxo131/madre-server-v2/utils"
+	"github.com/rs/zerolog"
 )
 
 type Controller interface {
@@ -70,6 +72,9 @@ func (c *controller) PostGoogleCheck() http.HandlerFunc {
 			AccessToken string `json:"access_token" validate:"required,min=50"`
 		}
 		err := json.NewDecoder(r.Body).Decode(&params)
+		logger.GetHTTPLoggerCtx(r.Context()).Add(func(e *zerolog.Event) {
+			e.Interface("body", params)
+		})
 		if err != nil {
 			rw.Error(
 				errors.Wrap(err, "decode params error"),
@@ -117,6 +122,9 @@ func (c *controller) PostGoogleSignIn() http.HandlerFunc {
 			AccessToken string `json:"access_token" validate:"required,min=50"`
 		}
 		err := json.NewDecoder(r.Body).Decode(&params)
+		logger.GetHTTPLoggerCtx(r.Context()).Add(func(e *zerolog.Event) {
+			e.Interface("body", params)
+		})
 		if err != nil {
 			rw.Error(
 				errors.Wrap(err, "decode params error"),
@@ -182,6 +190,9 @@ func (c *controller) PostGoogleSignUp() http.HandlerFunc {
 			Username    string `json:"username" validate:"required,max=20,min=1"`
 		}
 		err := json.NewDecoder(r.Body).Decode(&params)
+		logger.GetHTTPLoggerCtx(r.Context()).Add(func(e *zerolog.Event) {
+			e.Interface("body", params)
+		})
 		if err != nil {
 			rw.Error(
 				errors.Wrap(err, "decode params error"),
