@@ -2,11 +2,13 @@ package data
 
 import (
 	"github.com/gorilla/mux"
+	"github.com/rlawnsxo131/madre-server-v2/database"
 )
 
-func ApplyRoutes(v1 *mux.Router, ctrl Controller) {
-	r := v1.NewRoute().PathPrefix("/data").Subrouter()
+func ApplyRoutes(r *mux.Router, db database.Database) {
+	dataRoute := r.NewRoute().PathPrefix("/data").Subrouter()
+	ctrl := NewController(db)
 
-	r.HandleFunc("", ctrl.GetAll()).Methods("GET")
-	r.HandleFunc("/{id}", ctrl.Get()).Methods("GET")
+	dataRoute.HandleFunc("", ctrl.GetAll()).Methods("GET")
+	dataRoute.HandleFunc("/{id}", ctrl.Get()).Methods("GET")
 }
