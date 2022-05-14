@@ -1,67 +1,58 @@
 package logger
 
 import (
-	"bytes"
-	"fmt"
-	"io/ioutil"
 	"net/http"
 	"strings"
-	"sync"
 	"time"
 
-	"github.com/pkg/errors"
 	"github.com/rs/zerolog"
 )
 
-// https://learning-cloud-native-go.github.io/docs/a6.adding_zerolog_logger/
-
-var (
-	httplogger     *httpLogger
-	onceHttpLogger sync.Once
-)
-
-type httpLogger struct {
-	l *zerolog.Logger
+type HTTPLogger struct {
+	l   *zerolog.Logger
+	r   *http.Request
+	add []func(e *zerolog.Event)
 }
 
-func NewHttpLogger() *httpLogger {
-	onceHttpLogger.Do(func() {
-		httplogger = &httpLogger{
-			l: NewBaseLogger(),
-		}
-	})
-	return httplogger
-}
-
-func (hl *httpLogger) ReadBody(r *http.Request) ([]byte, error) {
-	buf, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		return nil, errors.WithStack(err)
+func NewHTTPLogger(r *http.Request) *HTTPLogger {
+	return &HTTPLogger{
+		l:   NewBaseLogger(),
+		r:   r,
+		add: []func(e *zerolog.Event){},
 	}
-
-	reader := ioutil.NopCloser(
-		bytes.NewBuffer(buf),
-	)
-	r.Body = reader
-	return buf, nil
 }
 
-func (hl *httpLogger) LogEntry(r *http.Request, start time.Time, reqId, body string) {
-	hl.l.Log().
-		Str("RequestId", reqId).
-		Dur("Laytancy", time.Since(start)).
-		Str("Protocol", r.Proto).
-		Str("RequestMethod", r.Method).
-		Str("Path", r.URL.Path).
-		Str("RequestURL", r.URL.String()).
-		Str("Query", r.URL.RawQuery).
-		Str("Body", body).
-		Str("Cookies", fmt.Sprint(r.Cookies())).
-		Str("Origin", r.Header.Get("Origin")).
-		Str("UserAgent", r.UserAgent()).
-		Str("Referer", r.Referer()).
-		Str("ClientIp", clientIP(r.Header)).
-		Msg("")
+func (hl *HTTPLogger) Add(f func(e *zerolog.Event)) {
+	hl.add = append(hl.add, f)
+}
+
+func (hl *HTTPLogger) Write(t time.Time) {
+	// e := hl.l.Log().
+	// 	Str("protocol", "http").
+	// 	Str("path", hl.r.URL.Path).
+	// 	Str("time", t.UTC().Format(time.RFC3339Nano)).
+	// 	Dur("elapsed(ms)", time.Since(t))
+
+	// e := hl.l.Log().
+	// 	Str("RequestId", reqId).
+	// 	Dur("Laytancy", time.Since(start)).
+	// 	Str("Protocol", r.Proto).
+	// 	Str("RequestMethod", r.Method).
+	// 	Str("Path", r.URL.Path).
+	// 	Str("RequestURL", r.URL.String()).
+	// 	Str("Query", r.URL.RawQuery).
+	// 	Str("Body", body).
+	// 	Str("Cookies", fmt.Sprint(r.Cookies())).
+	// 	Str("Origin", r.Header.Get("Origin")).
+	// 	Str("UserAgent", r.UserAgent()).
+	// 	Str("Referer", r.Referer()).
+	// 	Str("ClientIp", clientIP(r.Header)).
+
+	// for _, f := range le.add {
+	// 	f(e)
+	// }
+
+	// e.Send()
 }
 
 var (

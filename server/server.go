@@ -38,7 +38,7 @@ func New(db database.Database) *server {
 		router: mux.NewRouter(),
 	}
 	s.applyMiddleware()
-	s.applyHealthSettings()
+	s.applyHealthRoute()
 	s.applyApiRoutes()
 	s.applyHttpServer()
 	return s
@@ -95,7 +95,7 @@ func (s *server) applyMiddleware() {
 	)
 }
 
-func (s *server) applyHealthSettings() {
+func (s *server) applyHealthRoute() {
 	s.router.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
 		data := map[string]string{
