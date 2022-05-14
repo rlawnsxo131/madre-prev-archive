@@ -7,7 +7,6 @@ import (
 	"database/sql"
 	"encoding/json"
 	"net/http"
-	"strconv"
 	"strings"
 
 	"github.com/pkg/errors"
@@ -107,8 +106,8 @@ func (wt *writer) Compress(data interface{}) {
 	wt.w.Write(jsonData)
 
 	httpcontext.HTTPLogger(wt.r.Context()).Add(func(e *zerolog.Event) {
-		e.Str("Status", strconv.Itoa(http.StatusOK))
-		e.Bytes("Response", jsonData)
+		e.Int("Status", http.StatusOK)
+		e.RawJSON("Response", jsonData)
 	})
 }
 
