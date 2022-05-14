@@ -96,18 +96,7 @@ func (wt *writer) Error(err error) {
 		message = Http_Msg_NotFound
 	}
 
-	data := map[string]interface{}{
-		"status":  status,
-		"message": message,
-	}
-	jsonData, _ := json.Marshal(data)
-
-	wt.w.WriteHeader(status)
-	wt.w.Write(jsonData)
-
-	logger.GetHTTPLoggerCtx(wt.r.Context()).Add(func(e *zerolog.Event) {
-		e.Err(err).Int("status", status).RawJSON("response", jsonData)
-	})
+	wt.standardError(status, message, err)
 }
 
 func (wt *writer) ErrorBadRequest(err error) {
