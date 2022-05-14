@@ -7,16 +7,14 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/lib/httpcontext"
 	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"
-	"github.com/rlawnsxo131/madre-server-v2/utils"
 )
 
 func Logger(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now().UTC()
-		reqId := utils.GenerateUUIDString()
-		ctx := httpcontext.SetRequestId(r.Context(), reqId)
-		hl := logger.NewHttpLogger()
+		hl := logger.NewHTTPLogger(r)
 		buf, err := hl.ReadBody(r)
+		ctx := httpcontext.SetHTTPLogger(r.Context(), hl)
 		if err != nil {
 			rw := response.NewWriter(w, r)
 			rw.Error(
@@ -26,6 +24,6 @@ func Logger(next http.Handler) http.Handler {
 			return
 		}
 		next.ServeHTTP(w, r.WithContext(ctx))
-		hl.LogEntry(r, start, reqId, string(buf))
+		hl.Write(start, string(buf))
 	})
 }

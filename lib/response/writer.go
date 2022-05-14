@@ -7,9 +7,11 @@ import (
 	"database/sql"
 	"encoding/json"
 	"net/http"
+	"strconv"
 	"strings"
 
 	"github.com/pkg/errors"
+	"github.com/rlawnsxo131/madre-server-v2/lib/httpcontext"
 	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
 	"github.com/rs/zerolog"
 )
@@ -103,6 +105,11 @@ func (wt *writer) Compress(data interface{}) {
 
 	wt.w.WriteHeader(http.StatusOK)
 	wt.w.Write(jsonData)
+
+	httpcontext.HTTPLogger(wt.r.Context()).Add(func(e *zerolog.Event) {
+		e.Str("Status", strconv.Itoa(http.StatusOK))
+		e.Bytes("Response", jsonData)
+	})
 }
 
 func (wt *writer) Error(err error, action string, msg ...string) {

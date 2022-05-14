@@ -3,28 +3,29 @@ package httpcontext
 import (
 	"context"
 
+	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
 	"github.com/rlawnsxo131/madre-server-v2/lib/token"
 )
 
 const (
 	Key_Database    = "Database"
-	key_RequestID   = "RequestID"
+	Key_HTTPLogger  = "HTTPLogger"
 	Key_UserProfile = "UserProfile"
 )
 
-func RequestId(ctx context.Context) string {
-	v := ctx.Value(key_RequestID)
-	if v, ok := v.(string); ok {
+func HTTPLogger(ctx context.Context) logger.HTTPLogger {
+	v := ctx.Value(Key_HTTPLogger)
+	if v, ok := v.(logger.HTTPLogger); ok {
 		return v
 	}
-	return ""
+	return nil
 }
 
-func SetRequestId(ctx context.Context, id string) context.Context {
+func SetHTTPLogger(ctx context.Context, l logger.HTTPLogger) context.Context {
 	return context.WithValue(
 		ctx,
-		key_RequestID,
-		id,
+		Key_HTTPLogger,
+		l,
 	)
 }
 
