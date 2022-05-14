@@ -44,3 +44,27 @@ func Test_SocialAccountUseCase_Create_IsFail(t *testing.T) {
 	assert.Error(err)
 	assert.Empty(id)
 }
+
+func Test_SocialAccountUseCase_FindOneByProviderWithSocialId_IsSuccess(t *testing.T) {
+	assert := assert.New(t)
+
+	db, _ := database.GetDatabaseInstance()
+
+	socialId := uuid.NewString()
+	sa := socialaccount.SocialAccount{
+		UserID:   uuid.NewString(),
+		Provider: socialaccount.Key_Provider_GOOGLE,
+		SocialId: socialId,
+	}
+
+	socialUseCase := socialaccount.NewUseCase(db)
+	id, _ := socialUseCase.Create(&sa)
+
+	newSa, err := socialUseCase.FindOneByProviderWithSocialId(
+		socialaccount.Key_Provider_GOOGLE,
+		socialId,
+	)
+
+	assert.Nil(err)
+	assert.Equal(id, newSa.ID)
+}
