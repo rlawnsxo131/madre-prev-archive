@@ -41,17 +41,17 @@ func (hl *httpLogger) Write(t time.Time) {
 		Str("protocol", hl.r.Proto).
 		Str("method", hl.r.Method).
 		Str("path", hl.r.URL.Path).
-		Str("query", hl.r.URL.RawQuery).
-		Str("cookies", fmt.Sprint(hl.r.Cookies())).
 		Str("origin", hl.r.Header.Get("Origin")).
 		Str("agent", hl.r.UserAgent()).
 		Str("referer", hl.r.Referer()).
-		Str("clientIp", clientIP(hl.r.Header))
+		Str("clientIp", clientIP(hl.r.Header)).
+		Str("query", hl.r.URL.RawQuery)
 
 	for _, f := range hl.add {
 		f(e)
 	}
 
+	e.Str("cookies", fmt.Sprint(hl.r.Cookies()))
 	e.Msg("")
 }
 

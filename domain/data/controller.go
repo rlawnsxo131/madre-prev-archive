@@ -1,6 +1,8 @@
 package data
 
 import (
+	"errors"
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -9,6 +11,7 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"
 	"github.com/rlawnsxo131/madre-server-v2/utils"
+	"github.com/rs/zerolog"
 )
 
 type Controller interface {
@@ -31,8 +34,13 @@ func (c *controller) GetAll() http.HandlerFunc {
 		rw := response.NewWriter(w, r)
 		limit, err := strconv.Atoi(r.URL.Query().Get("limit"))
 		if err != nil {
-			logger.GetDefaultLogger().
-				Warn().Msgf("route: limit Atoi wrong: %v", err)
+			logger.GetHTTPLoggerCtx(r.Context()).Add(func(e *zerolog.Event) {
+				e.Err(
+					errors.New(
+						fmt.Sprintf("limit Atoi wrong: %v", err),
+					),
+				)
+			})
 		}
 		limit = utils.IfIsNotExistGetDefaultIntValue(limit, 50)
 

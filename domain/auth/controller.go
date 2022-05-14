@@ -217,7 +217,7 @@ func (c *controller) PostGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		u := &user.User{
+		u := user.User{
 			Email:      ggp.Email,
 			OriginName: utils.NewNullString(ggp.DisplayName),
 			Username:   params.Username,
@@ -235,7 +235,7 @@ func (c *controller) PostGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		userId, err := userUseCase.Create(u)
+		userId, err := userUseCase.Create(&u)
 		if err != nil {
 			rw.Error(err)
 			return

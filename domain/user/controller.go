@@ -30,13 +30,13 @@ func (c *controller) Get() http.HandlerFunc {
 		id := vars["id"]
 
 		userUseCase := NewUseCase(c.db)
-		user, err := userUseCase.FindOneById(id)
+		u, err := userUseCase.FindOneById(id)
 		if err != nil {
 			rw.Error(err)
 			return
 		}
 
-		rw.Compress(user)
+		rw.Compress(u)
 	}
 }
 
