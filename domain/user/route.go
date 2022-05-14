@@ -5,7 +5,7 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/database"
 )
 
-func RegisterController(r *mux.Router, db database.Database) {
+func RegisterRoutes(r *mux.Router, db database.Database) {
 	r = r.NewRoute().PathPrefix("/user").Subrouter()
 	ctrl := NewController(db)
 

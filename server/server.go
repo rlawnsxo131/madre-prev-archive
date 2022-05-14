@@ -37,10 +37,10 @@ func New(db database.Database) *server {
 		db:     db,
 		router: mux.NewRouter(),
 	}
-	s.applyMiddleware()
-	s.applyHealthRoute()
-	s.applyApiRoutes()
-	s.applyHttpServer()
+	s.RegisterMiddleware()
+	s.RegisterHealthRoute()
+	s.RegisterAPIRoutes()
+	s.RegisterHTTPServer()
 	return s
 }
 
@@ -84,7 +84,7 @@ func (s *server) Start() {
 	os.Exit(0)
 }
 
-func (s *server) applyMiddleware() {
+func (s *server) RegisterMiddleware() {
 	s.router.Use(
 		middleware.HTTPLogger,
 		middleware.Recovery,
@@ -95,7 +95,7 @@ func (s *server) applyMiddleware() {
 	)
 }
 
-func (s *server) applyHealthRoute() {
+func (s *server) RegisterHealthRoute() {
 	s.router.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
 		data := map[string]string{
@@ -109,16 +109,16 @@ func (s *server) applyHealthRoute() {
 	})
 }
 
-func (s *server) applyApiRoutes() {
+func (s *server) RegisterAPIRoutes() {
 	api := s.router.NewRoute().PathPrefix("/api").Subrouter()
 	v1 := api.NewRoute().PathPrefix("/v1").Subrouter()
 
-	auth.RegisterController(v1, s.db)
-	user.RegisterController(v1, s.db)
-	data.RegisterController(v1, s.db)
+	auth.RegisterRoutes(v1, s.db)
+	user.RegisterRoutes(v1, s.db)
+	data.RegisterRoutes(v1, s.db)
 }
 
-func (s *server) applyHttpServer() {
+func (s *server) RegisterHTTPServer() {
 	s.httpServer = &http.Server{
 		Addr: "0.0.0.0:" + port,
 		// Good practice to set timeouts to avoid Slowloris attacks.
