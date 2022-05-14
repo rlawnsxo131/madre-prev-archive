@@ -86,7 +86,7 @@ func (s *server) Start() {
 
 func (s *server) applyMiddleware() {
 	s.router.Use(
-		middleware.Logger,
+		middleware.HTTPLogger,
 		middleware.Recovery,
 		middleware.AllowHost,
 		middleware.Cors,

@@ -1,12 +1,13 @@
 package token
 
 import (
+	"context"
 	"net/http"
 	"time"
 
 	"github.com/golang-jwt/jwt"
+	"github.com/google/uuid"
 	"github.com/pkg/errors"
-	"github.com/rlawnsxo131/madre-server-v2/utils"
 )
 
 const (
@@ -43,7 +44,7 @@ func GenerateTokens(p *UserProfile) (string, string, error) {
 
 		if tokenType == Key_AccessToken {
 			claims = authTokenClaims{
-				TokenUUID: utils.GenerateUUIDString(),
+				TokenUUID: uuid.NewString(),
 				UserID:    p.UserID,
 				Username:  p.Username,
 				PhotoUrl:  p.PhotoUrl,
@@ -56,7 +57,7 @@ func GenerateTokens(p *UserProfile) (string, string, error) {
 		}
 		if tokenType == Key_RefreshToken {
 			claims = authTokenClaims{
-				TokenUUID: utils.GenerateUUIDString(),
+				TokenUUID: uuid.NewString(),
 				UserID:    p.UserID,
 				Username:  p.Username,
 				PhotoUrl:  p.PhotoUrl,
@@ -153,4 +154,25 @@ func ResetTokenCookies(w http.ResponseWriter) {
 		HttpOnly: true,
 		SameSite: 2,
 	})
+}
+
+const (
+	Key_UserProfileCtx = "Key_UserProfileCtx"
+)
+
+func RequestUserProfile(ctx context.Context) *UserProfile {
+	v := ctx.Value(Key_UserProfileCtx)
+	if v, ok := v.(*UserProfile); ok {
+		return v
+	}
+	return nil
+}
+
+func RequestWithUserProfile(r *http.Request, p *UserProfile) *http.Request {
+	ctx := context.WithValue(
+		r.Context(),
+		Key_UserProfileCtx,
+		p,
+	)
+	return r.WithContext(ctx)
 }

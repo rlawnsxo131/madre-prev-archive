@@ -1,10 +1,10 @@
 package middleware
 
 import (
-	"errors"
 	"net/http"
 	"runtime/debug"
 
+	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"
 )
 
@@ -26,9 +26,7 @@ func AllowHost(next http.Handler) http.Handler {
 		if !validation {
 			rw := response.NewWriter(w, r)
 			rw.ErrorForbidden(
-				errors.New("forbidden host"),
-				"AllowHost",
-				reqHost,
+				errors.New("AllowHost forbidden host"),
 			)
 			return
 		}
@@ -75,9 +73,9 @@ func Recovery(next http.Handler) http.Handler {
 		defer func() {
 			if err := recover(); err != nil {
 				rw := response.NewWriter(w, r)
+				err := errors.New(string(debug.Stack()))
 				rw.Error(
-					errors.New(string(debug.Stack())),
-					"Recovery",
+					errors.Wrap(err, "Recovery"),
 				)
 			}
 		}()

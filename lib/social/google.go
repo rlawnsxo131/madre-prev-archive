@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/google/uuid"
 	"github.com/pkg/errors"
-	"github.com/rlawnsxo131/madre-server-v2/utils"
 )
 
 // Google people api Response
@@ -182,10 +182,10 @@ func (g *googleApi) mapToGooglePeopleProfile(gapiRes *googlePeopleApiResponse) *
 		if replaceResourceName != "" {
 			socialId = replaceResourceName
 		} else {
-			socialId = utils.GenerateUUIDString()
+			socialId = uuid.NewString()
 		}
 	} else {
-		socialId = utils.GenerateUUIDString()
+		socialId = uuid.NewString()
 	}
 
 	if len(gapiRes.EmailAddresses) > 0 {

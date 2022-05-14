@@ -1,22 +1,19 @@
 package logger
 
 import (
-	"bytes"
+	"context"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"strings"
 	"time"
 
-	"github.com/pkg/errors"
-	"github.com/rlawnsxo131/madre-server-v2/utils"
+	"github.com/google/uuid"
 	"github.com/rs/zerolog"
 )
 
 type HTTPLogger interface {
-	ReadBody(r *http.Request) ([]byte, error)
 	Add(f func(e *zerolog.Event))
-	Write(t time.Time, body string)
+	Write(t time.Time)
 }
 
 type httpLogger struct {
@@ -33,37 +30,23 @@ func NewHTTPLogger(r *http.Request) HTTPLogger {
 	}
 }
 
-func (hl *httpLogger) ReadBody(r *http.Request) ([]byte, error) {
-	buf, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		return nil, errors.WithStack(err)
-	}
-
-	reader := ioutil.NopCloser(
-		bytes.NewBuffer(buf),
-	)
-	r.Body = reader
-	return buf, nil
-}
-
 func (hl *httpLogger) Add(f func(e *zerolog.Event)) {
 	hl.add = append(hl.add, f)
 }
 
-func (hl *httpLogger) Write(t time.Time, body string) {
-	e := hl.l.Log().
-		Str("RequestId", utils.GenerateUUIDString()).
-		Dur("Laytancy", time.Since(t)).
-		Str("Protocol", hl.r.Proto).
-		Str("RequestMethod", hl.r.Method).
-		Str("Path", hl.r.URL.Path).
-		Str("Query", hl.r.URL.RawQuery).
-		Str("Body", body).
-		Str("Cookies", fmt.Sprint(hl.r.Cookies())).
-		Str("Origin", hl.r.Header.Get("Origin")).
-		Str("UserAgent", hl.r.UserAgent()).
-		Str("Referer", hl.r.Referer()).
-		Str("ClientIp", clientIP(hl.r.Header))
+func (hl *httpLogger) Write(t time.Time) {
+	e := hl.l.Log().Timestamp().
+		Str("requestId", uuid.NewString()).
+		Dur("elapsed(ms)", time.Since(t)).
+		Str("protocol", hl.r.Proto).
+		Str("method", hl.r.Method).
+		Str("path", hl.r.URL.Path).
+		Str("query", hl.r.URL.RawQuery).
+		Str("cookies", fmt.Sprint(hl.r.Cookies())).
+		Str("origin", hl.r.Header.Get("Origin")).
+		Str("agent", hl.r.UserAgent()).
+		Str("referer", hl.r.Referer()).
+		Str("clientIp", clientIP(hl.r.Header))
 
 	for _, f := range hl.add {
 		f(e)
@@ -97,4 +80,20 @@ func clientIP(h http.Header) string {
 	}
 
 	return ""
+}
+
+const (
+	Key_HTTPLoggerCtx = "Key_HTTPLoggerCtx"
+)
+
+func GetHTTPLoggerCtx(ctx context.Context) HTTPLogger {
+	v := ctx.Value(Key_HTTPLoggerCtx)
+	if v, ok := v.(HTTPLogger); ok {
+		return v
+	}
+	return nil
+}
+
+func SetHTTPLoggerCtx(ctx context.Context, hl HTTPLogger) context.Context {
+	return context.WithValue(ctx, Key_HTTPLoggerCtx, hl)
 }

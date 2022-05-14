@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/golang-jwt/jwt"
-	"github.com/rlawnsxo131/madre-server-v2/lib/httpcontext"
+	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"
 	"github.com/rlawnsxo131/madre-server-v2/lib/token"
@@ -15,15 +15,13 @@ import (
 // only logging is processed so that other functions can be used.
 func JWT(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		ctx := r.Context()
+		var profile *token.UserProfile
 		actk, err := r.Cookie(token.Key_AccessToken)
 		if err != nil {
 			if err != http.ErrNoCookie {
 				rw := response.NewWriter(w, r)
 				rw.Error(
-					err,
-					"JwtMiddleware",
-					"get Access_token error",
+					errors.Wrap(err, "JWT get Access_token error"),
 				)
 				return
 			}
@@ -39,9 +37,7 @@ func JWT(next http.Handler) http.Handler {
 						if err != http.ErrNoCookie {
 							rw := response.NewWriter(w, r)
 							rw.Error(
-								err,
-								"JwtMiddleware",
-								"get Refresh_token error",
+								errors.Wrap(err, "JWT get Refresh_token error"),
 							)
 							return
 						}
@@ -52,11 +48,7 @@ func JWT(next http.Handler) http.Handler {
 						if err != nil {
 							// remove cookies
 							token.ResetTokenCookies(w)
-
-							// set context value
-							ctx = httpcontext.SetUserProfile(r.Context(), nil)
 						} else {
-							// generate tokens and set cookie
 							p := token.UserProfile{
 								UserID:   claims.UserID,
 								Username: claims.Username,
@@ -64,29 +56,20 @@ func JWT(next http.Handler) http.Handler {
 							}
 							actk, rftk, err := token.GenerateTokens(&p)
 							if err != nil {
-								logger.GetDefaultLogger().Err(err).Str("Action", "JWT").Msg("")
+								logger.GetDefaultLogger().Err(err).Str("action", "JWT").Msg("")
 							} else {
+								profile = &p
 								token.SetTokenCookies(w, actk, rftk)
-
-								// set context value
-								p := token.UserProfile{
-									UserID:   claims.UserID,
-									Username: claims.Username,
-									PhotoUrl: claims.PhotoUrl,
-								}
-								ctx = httpcontext.SetUserProfile(r.Context(), &p)
 							}
 						}
 					}
 				}
 			} else {
-				// set context value
-				p := token.UserProfile{
+				profile = &token.UserProfile{
 					UserID:   claims.UserID,
 					Username: claims.Username,
 					PhotoUrl: claims.PhotoUrl,
 				}
-				ctx = httpcontext.SetUserProfile(r.Context(), &p)
 			}
 		}
 
@@ -96,9 +79,7 @@ func JWT(next http.Handler) http.Handler {
 				if err != http.ErrNoCookie {
 					rw := response.NewWriter(w, r)
 					rw.Error(
-						err,
-						"JwtMiddleware",
-						"get Refresh_token error",
+						errors.Wrap(err, "get Refresh_token error"),
 					)
 					return
 				}
@@ -109,9 +90,7 @@ func JWT(next http.Handler) http.Handler {
 				if err != nil {
 					// remove cookies
 					token.ResetTokenCookies(w)
-					ctx = httpcontext.SetUserProfile(r.Context(), nil)
 				} else {
-					// generate tokens and set cookie
 					p := token.UserProfile{
 						UserID:   claims.UserID,
 						Username: claims.Username,
@@ -119,15 +98,20 @@ func JWT(next http.Handler) http.Handler {
 					}
 					actk, rftk, err := token.GenerateTokens(&p)
 					if err != nil {
-						logger.GetDefaultLogger().Err(err).Str("Action", "JWT").Msg("")
+						logger.GetDefaultLogger().Err(err).Str("action", "JWT").Msg("")
 					} else {
+						profile = &p
 						token.SetTokenCookies(w, actk, rftk)
-						ctx = httpcontext.SetUserProfile(r.Context(), nil)
 					}
 				}
 			}
 		}
 
-		next.ServeHTTP(w, r.WithContext(ctx))
+		if profile != nil {
+			next.ServeHTTP(w, token.RequestWithUserProfile(r, profile))
+			return
+		}
+
+		next.ServeHTTP(w, r)
 	})
 }

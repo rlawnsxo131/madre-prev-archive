@@ -39,7 +39,7 @@ func (c *controller) GetAll() http.HandlerFunc {
 		dataUseCase := NewUseCase(c.db)
 		dd, err := dataUseCase.FindAll(limit)
 		if err != nil {
-			rw.Error(err, "get /data")
+			rw.Error(err)
 			return
 		}
 
@@ -57,7 +57,7 @@ func (c *controller) Get() http.HandlerFunc {
 		dataUseCase := NewUseCase(c.db)
 		d, err := dataUseCase.FindOneById(id)
 		if err != nil {
-			rw.Error(err, "get /data/{id}")
+			rw.Error(err)
 			return
 		}
 

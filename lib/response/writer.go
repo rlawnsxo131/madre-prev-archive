@@ -1,7 +1,6 @@
 package response
 
 import (
-	"bytes"
 	"compress/flate"
 	"compress/gzip"
 	"database/sql"
@@ -10,7 +9,6 @@ import (
 	"strings"
 
 	"github.com/pkg/errors"
-	"github.com/rlawnsxo131/madre-server-v2/lib/httpcontext"
 	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
 	"github.com/rs/zerolog"
 )
@@ -26,43 +24,30 @@ const (
 
 type Writer interface {
 	Compress(data interface{})
-	Error(err error, action string, msg ...string)
-	ErrorBadRequest(err error, action string, params interface{})
-	ErrorUnauthorized(err error, action string, params interface{})
-	ErrorForbidden(err error, action string, params interface{})
-	ErrorConflict(err error, action string, params interface{})
-	standardError(
-		status int,
-		msg string,
-		err error,
-		action string,
-		params interface{},
-	)
+	Error(err error)
+	ErrorBadRequest(err error)
+	ErrorUnauthorized(err error)
+	ErrorForbidden(err error)
+	ErrorConflict(err error)
+	standardError(status int, msg string, err error)
 }
 
 type writer struct {
 	w http.ResponseWriter
 	r *http.Request
-	l *zerolog.Logger
 }
 
 func NewWriter(w http.ResponseWriter, r *http.Request) Writer {
 	return &writer{
 		w: w,
 		r: r,
-		l: logger.NewBaseLogger(),
 	}
 }
 
 func (wt *writer) Compress(data interface{}) {
 	jsonData, err := json.Marshal(data)
-
 	if err != nil {
-		wt.Error(
-			errors.WithStack(err),
-			"ResponseJsonCompress",
-			"json parse error",
-		)
+		wt.Error(errors.Wrap(err, "compress json parse error"))
 		return
 	}
 
@@ -71,11 +56,7 @@ func (wt *writer) Compress(data interface{}) {
 		if strings.Contains(wt.r.Header.Get("Accept-Encoding"), "gzip") {
 			gz, err := gzip.NewWriterLevel(wt.w, gzip.DefaultCompression)
 			if err != nil {
-				wt.Error(
-					errors.WithStack(err),
-					"ResponseJsonCompress",
-					"gzip compress error",
-				)
+				wt.Error(errors.Wrap(err, "gzip compress error"))
 				return
 			}
 			defer gz.Close()
@@ -87,11 +68,7 @@ func (wt *writer) Compress(data interface{}) {
 		if strings.Contains(wt.r.Header.Get("Accept-Encoding"), "deflate") {
 			df, err := flate.NewWriter(wt.w, flate.DefaultCompression)
 			if err != nil {
-				wt.Error(
-					errors.WithStack(err),
-					"ResponseJsonCompress",
-					"dfalte compress error",
-				)
+				wt.Error(errors.Wrap(err, "dfalte compress error"))
 				return
 			}
 			defer df.Close()
@@ -105,13 +82,12 @@ func (wt *writer) Compress(data interface{}) {
 	wt.w.WriteHeader(http.StatusOK)
 	wt.w.Write(jsonData)
 
-	httpcontext.HTTPLogger(wt.r.Context()).Add(func(e *zerolog.Event) {
-		e.Int("Status", http.StatusOK)
-		e.RawJSON("Response", jsonData)
+	logger.GetHTTPLoggerCtx(wt.r.Context()).Add(func(e *zerolog.Event) {
+		e.Int("status", http.StatusOK).RawJSON("response", jsonData)
 	})
 }
 
-func (wt *writer) Error(err error, action string, msg ...string) {
+func (wt *writer) Error(err error) {
 	status := http.StatusInternalServerError
 	message := Http_Msg_InternalServerError
 
@@ -120,77 +96,47 @@ func (wt *writer) Error(err error, action string, msg ...string) {
 		message = Http_Msg_NotFound
 	}
 
-	wt.w.WriteHeader(status)
-	json.NewEncoder(wt.w).Encode(
-		map[string]interface{}{
-			"status":  status,
-			"message": message,
-		},
-	)
-
-	var b bytes.Buffer
-	if len(msg) > 0 {
-		for _, v := range msg {
-			b.WriteString(v)
-		}
+	data := map[string]interface{}{
+		"status":  status,
+		"message": message,
 	}
-	wt.l.Err(err).Str("Action", action).Msg(b.String())
-}
+	jsonData, _ := json.Marshal(data)
 
-func (wt *writer) ErrorBadRequest(err error, action string, params interface{}) {
-	wt.standardError(
-		http.StatusBadRequest,
-		Http_Msg_BadRequest,
-		err,
-		action,
-		params,
-	)
-}
-
-func (wt *writer) ErrorUnauthorized(err error, action string, params interface{}) {
-	wt.standardError(
-		http.StatusUnauthorized,
-		Http_Msg_Unauthorized,
-		err,
-		action,
-		params,
-	)
-}
-
-func (wt *writer) ErrorForbidden(err error, action string, params interface{}) {
-	wt.standardError(
-		http.StatusForbidden,
-		Http_Msg_Forbidden,
-		err,
-		action,
-		params,
-	)
-}
-
-func (wt *writer) ErrorConflict(err error, action string, params interface{}) {
-	wt.standardError(
-		http.StatusConflict,
-		Http_Msg_Conflict,
-		err,
-		action,
-		params,
-	)
-
-}
-
-func (wt *writer) standardError(
-	status int,
-	msg string,
-	err error,
-	action string,
-	params interface{},
-) {
 	wt.w.WriteHeader(status)
-	json.NewEncoder(wt.w).Encode(
-		map[string]interface{}{
-			"status":  status,
-			"message": msg,
-		},
-	)
-	wt.l.Err(err).Str("Action", action).Msgf("Params: %+v", params)
+	wt.w.Write(jsonData)
+
+	logger.GetHTTPLoggerCtx(wt.r.Context()).Add(func(e *zerolog.Event) {
+		e.Err(err).Int("status", status).RawJSON("response", jsonData)
+	})
+}
+
+func (wt *writer) ErrorBadRequest(err error) {
+	wt.standardError(http.StatusBadRequest, Http_Msg_BadRequest, err)
+}
+
+func (wt *writer) ErrorUnauthorized(err error) {
+	wt.standardError(http.StatusUnauthorized, Http_Msg_Unauthorized, err)
+}
+
+func (wt *writer) ErrorForbidden(err error) {
+	wt.standardError(http.StatusForbidden, Http_Msg_Forbidden, err)
+}
+
+func (wt *writer) ErrorConflict(err error) {
+	wt.standardError(http.StatusConflict, Http_Msg_Conflict, err)
+}
+
+func (wt *writer) standardError(status int, message string, err error) {
+	data := map[string]interface{}{
+		"status":  status,
+		"message": message,
+	}
+	jsonData, _ := json.Marshal(data)
+
+	wt.w.WriteHeader(status)
+	wt.w.Write(jsonData)
+
+	logger.GetHTTPLoggerCtx(wt.r.Context()).Add(func(e *zerolog.Event) {
+		e.Err(err).Int("status", status).RawJSON("response", jsonData)
+	})
 }

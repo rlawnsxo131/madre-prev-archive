@@ -32,7 +32,7 @@ func (c *controller) Get() http.HandlerFunc {
 		userUseCase := NewUseCase(c.db)
 		user, err := userUseCase.FindOneById(id)
 		if err != nil {
-			rw.Error(err, "get /user/{id}")
+			rw.Error(err)
 			return
 		}
 
