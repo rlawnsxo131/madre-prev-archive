@@ -34,7 +34,7 @@ func (c *controller) GetAll() http.HandlerFunc {
 		rw := response.NewWriter(w, r)
 		limit, err := strconv.Atoi(r.URL.Query().Get("limit"))
 		if err != nil {
-			logger.GetHTTPLoggerCtx(r.Context()).Add(func(e *zerolog.Event) {
+			logger.HTTPLoggerCtx(r.Context()).Add(func(e *zerolog.Event) {
 				e.Err(
 					errors.New(
 						fmt.Sprintf("limit Atoi wrong: %v", err),

@@ -35,17 +35,17 @@ func (hl *httpLogger) Add(f func(e *zerolog.Event)) {
 }
 
 func (hl *httpLogger) Write(t time.Time) {
+	hl.r.Cookies()
 	e := hl.l.Log().Timestamp().
 		Str("requestId", uuid.NewString()).
 		Dur("elapsed(ms)", time.Since(t)).
 		Str("protocol", hl.r.Proto).
 		Str("method", hl.r.Method).
-		Str("path", hl.r.URL.Path).
 		Str("origin", hl.r.Header.Get("Origin")).
+		Str("uri", hl.r.URL.RequestURI()).
 		Str("agent", hl.r.UserAgent()).
 		Str("referer", hl.r.Referer()).
-		Str("clientIp", clientIP(hl.r.Header)).
-		Str("query", hl.r.URL.RawQuery)
+		Str("clientIp", clientIP(hl.r.Header))
 
 	for _, f := range hl.add {
 		f(e)
@@ -86,7 +86,7 @@ const (
 	Key_HTTPLoggerCtx = "Key_HTTPLoggerCtx"
 )
 
-func GetHTTPLoggerCtx(ctx context.Context) HTTPLogger {
+func HTTPLoggerCtx(ctx context.Context) HTTPLogger {
 	v := ctx.Value(Key_HTTPLoggerCtx)
 	if v, ok := v.(HTTPLogger); ok {
 		return v

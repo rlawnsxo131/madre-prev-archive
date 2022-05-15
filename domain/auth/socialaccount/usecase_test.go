@@ -12,7 +12,7 @@ import (
 func Test_SoicalAccountUseCase_Create_IsSuccess(t *testing.T) {
 	assert := assert.New(t)
 
-	db, _ := database.GetDatabaseInstance()
+	db, _ := database.DatabaseInstance()
 
 	sa := socialaccount.SocialAccount{
 		UserID:   uuid.NewString(),
@@ -30,7 +30,7 @@ func Test_SoicalAccountUseCase_Create_IsSuccess(t *testing.T) {
 func Test_SocialAccountUseCase_Create_IsFail(t *testing.T) {
 	assert := assert.New(t)
 
-	db, _ := database.GetDatabaseInstance()
+	db, _ := database.DatabaseInstance()
 
 	sa := socialaccount.SocialAccount{
 		UserID:   uuid.NewString(),
@@ -48,7 +48,7 @@ func Test_SocialAccountUseCase_Create_IsFail(t *testing.T) {
 func Test_SocialAccountUseCase_FindOneByProviderWithSocialId_IsSuccess(t *testing.T) {
 	assert := assert.New(t)
 
-	db, _ := database.GetDatabaseInstance()
+	db, _ := database.DatabaseInstance()
 
 	socialId := uuid.NewString()
 	sa := socialaccount.SocialAccount{

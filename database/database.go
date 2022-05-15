@@ -8,15 +8,8 @@ import (
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 	"github.com/pkg/errors"
+	"github.com/rlawnsxo131/madre-server-v2/lib/env"
 	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
-)
-
-const (
-	host     = "localhost"
-	port     = 5432
-	user     = "madre"
-	password = "1234"
-	dbname   = "madre"
 )
 
 var (
@@ -31,16 +24,21 @@ type Database interface {
 	PrepareNamedGet(id *string, query string, args interface{}) error
 }
 
-func GetDatabaseInstance() (*singletonDatabase, error) {
+func DatabaseInstance() (*singletonDatabase, error) {
 	var resultError error
 
 	onceDatabase.Do(func() {
 		psqlInfo := fmt.Sprintf(
-			"host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
-			host, port, user, password, dbname,
+			"host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
+			env.DatabaseHost(),
+			env.DatabasePort(),
+			env.DatabaseUser(),
+			env.DatabasePassword(),
+			env.DatabaseDBName(),
+			env.DatabaseSSLMode(),
 		)
-		logger.GetDefaultLogger().
-			Info().Str("database connection info", psqlInfo).Msg("")
+		logger.DefaultLogger().Info().
+			Timestamp().Str("database connection info", psqlInfo).Msg("")
 
 		db, err := sqlx.Connect("postgres", psqlInfo)
 		if err != nil {

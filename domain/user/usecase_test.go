@@ -12,7 +12,7 @@ import (
 func Test_UserUseCase_Create_IsSuccess(t *testing.T) {
 	assert := assert.New(t)
 
-	db, _ := database.GetDatabaseInstance()
+	db, _ := database.DatabaseInstance()
 
 	u := user.User{
 		Email:      "madre@gmail.com",
@@ -31,7 +31,7 @@ func Test_UserUseCase_Create_IsSuccess(t *testing.T) {
 func Test_UserUseCase_Create_IsFail(t *testing.T) {
 	assert := assert.New(t)
 
-	db, _ := database.GetDatabaseInstance()
+	db, _ := database.DatabaseInstance()
 
 	u := user.User{
 		OriginName: utils.NewNullString("madre"),

@@ -8,6 +8,7 @@ import (
 	"github.com/golang-jwt/jwt"
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
+	"github.com/rlawnsxo131/madre-server-v2/lib/env"
 )
 
 const (
@@ -16,7 +17,6 @@ const (
 )
 
 var (
-	signKey    = []byte("madre base")
 	tokenTypes = []string{Key_AccessToken, Key_RefreshToken}
 )
 
@@ -70,7 +70,7 @@ func GenerateTokens(p *UserProfile) (string, string, error) {
 		}
 
 		t := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-		ss, err := t.SignedString(signKey)
+		ss, err := t.SignedString([]byte(env.JWTSecretKey()))
 		if err != nil {
 			return "", "", errors.Wrap(err, "GenerateToken")
 		}
@@ -89,7 +89,7 @@ func DecodeToken(token string) (*authTokenClaims, error) {
 	claims := authTokenClaims{}
 	t, err := jwt.ParseWithClaims(token, &claims, func(t *jwt.Token) (interface{}, error) {
 		if _, ok := t.Method.(*jwt.SigningMethodHMAC); ok {
-			return signKey, nil
+			return []byte(env.JWTSecretKey()), nil
 		}
 		return nil, errors.New("DocodeToken: ParseWithClaims")
 	})
@@ -160,7 +160,7 @@ const (
 	Key_UserProfileCtx = "Key_UserProfileCtx"
 )
 
-func GetUserProfileCtx(ctx context.Context) *UserProfile {
+func UserProfileCtx(ctx context.Context) *UserProfile {
 	v := ctx.Value(Key_UserProfileCtx)
 	if v, ok := v.(*UserProfile); ok {
 		return v

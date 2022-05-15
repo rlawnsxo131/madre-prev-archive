@@ -38,7 +38,7 @@ func NewController(db database.Database) Controller {
 func (c *controller) Get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
-		p := token.GetUserProfileCtx(r.Context())
+		p := token.UserProfileCtx(r.Context())
 
 		rw.Compress(
 			map[string]interface{}{
@@ -51,7 +51,7 @@ func (c *controller) Get() http.HandlerFunc {
 func (c *controller) Delete() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
-		p := token.GetUserProfileCtx(r.Context())
+		p := token.UserProfileCtx(r.Context())
 		if p == nil {
 			rw.ErrorUnauthorized(
 				errors.New("not found userProfile"),
@@ -72,7 +72,7 @@ func (c *controller) PostGoogleCheck() http.HandlerFunc {
 			AccessToken string `json:"access_token" validate:"required,min=50"`
 		}
 		err := json.NewDecoder(r.Body).Decode(&params)
-		logger.GetHTTPLoggerCtx(r.Context()).Add(func(e *zerolog.Event) {
+		logger.HTTPLoggerCtx(r.Context()).Add(func(e *zerolog.Event) {
 			e.Interface("body", params)
 		})
 		if err != nil {
@@ -122,7 +122,7 @@ func (c *controller) PostGoogleSignIn() http.HandlerFunc {
 			AccessToken string `json:"access_token" validate:"required,min=50"`
 		}
 		err := json.NewDecoder(r.Body).Decode(&params)
-		logger.GetHTTPLoggerCtx(r.Context()).Add(func(e *zerolog.Event) {
+		logger.HTTPLoggerCtx(r.Context()).Add(func(e *zerolog.Event) {
 			e.Interface("body", params)
 		})
 		if err != nil {
@@ -190,7 +190,7 @@ func (c *controller) PostGoogleSignUp() http.HandlerFunc {
 			Username    string `json:"username" validate:"required,max=20,min=1"`
 		}
 		err := json.NewDecoder(r.Body).Decode(&params)
-		logger.GetHTTPLoggerCtx(r.Context()).Add(func(e *zerolog.Event) {
+		logger.HTTPLoggerCtx(r.Context()).Add(func(e *zerolog.Event) {
 			e.Interface("body", params)
 		})
 		if err != nil {

@@ -33,5 +33,9 @@ go.work
 
 # End of https://www.toptal.com/developers/gitignore/api/go
 
+# environment variable
+.env
+.env.prod
+
 # docker
 /docker/postgresql/data

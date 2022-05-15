@@ -63,7 +63,7 @@ func (wt *writer) Compress(data interface{}) {
 			wt.w.Header().Set("Content-Encoding", "gzip")
 			wt.w.WriteHeader(http.StatusOK)
 			gz.Write(jsonData)
-			logger.GetHTTPLoggerCtx(wt.r.Context()).Add(func(e *zerolog.Event) {
+			logger.HTTPLoggerCtx(wt.r.Context()).Add(func(e *zerolog.Event) {
 				e.Int("status", http.StatusOK).RawJSON("response", jsonData)
 			})
 			return
@@ -78,7 +78,7 @@ func (wt *writer) Compress(data interface{}) {
 			wt.w.Header().Set("Content-Encoding", "deflate")
 			wt.w.WriteHeader(http.StatusOK)
 			df.Write(jsonData)
-			logger.GetHTTPLoggerCtx(wt.r.Context()).Add(func(e *zerolog.Event) {
+			logger.HTTPLoggerCtx(wt.r.Context()).Add(func(e *zerolog.Event) {
 				e.Int("status", http.StatusOK).RawJSON("response", jsonData)
 			})
 			return
@@ -87,7 +87,7 @@ func (wt *writer) Compress(data interface{}) {
 
 	wt.w.WriteHeader(http.StatusOK)
 	wt.w.Write(jsonData)
-	logger.GetHTTPLoggerCtx(wt.r.Context()).Add(func(e *zerolog.Event) {
+	logger.HTTPLoggerCtx(wt.r.Context()).Add(func(e *zerolog.Event) {
 		e.Int("status", http.StatusOK).RawJSON("response", jsonData)
 	})
 }
@@ -129,7 +129,7 @@ func (wt *writer) standardError(status int, message string, err error) {
 	wt.w.WriteHeader(status)
 	wt.w.Write(jsonData)
 
-	logger.GetHTTPLoggerCtx(wt.r.Context()).Add(func(e *zerolog.Event) {
+	logger.HTTPLoggerCtx(wt.r.Context()).Add(func(e *zerolog.Event) {
 		e.Err(err).Int("status", status).RawJSON("response", jsonData)
 	})
 }

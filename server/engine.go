@@ -15,36 +15,43 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/domain/auth"
 	"github.com/rlawnsxo131/madre-server-v2/domain/data"
 	"github.com/rlawnsxo131/madre-server-v2/domain/user"
+	"github.com/rlawnsxo131/madre-server-v2/lib/env"
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"
 	"github.com/rlawnsxo131/madre-server-v2/middleware"
 )
 
 const (
-	port         = "5000"
 	writeTimeout = time.Second * 15
 	readTimeout  = time.Second * 15
 	idleTimeout  = time.Second * 60
 )
 
-type server struct {
-	db         database.Database
-	router     *mux.Router
-	httpServer *http.Server
+type engine struct {
+	db  database.Database
+	r   *mux.Router
+	srv *http.Server
 }
 
-func New(db database.Database) *server {
-	s := &server{
-		db:     db,
-		router: mux.NewRouter(),
+func New(db database.Database) *engine {
+	e := &engine{
+		db: db,
+		r:  mux.NewRouter(),
 	}
-	s.RegisterMiddleware()
-	s.RegisterHealthRoute()
-	s.RegisterAPIRoutes()
-	s.RegisterHTTPServer()
-	return s
+	e.srv = &http.Server{
+		Addr: "0.0.0.0:" + env.Port(),
+		// Good practice to set timeouts to avoid Slowloris attacks.
+		WriteTimeout: writeTimeout,
+		ReadTimeout:  readTimeout,
+		IdleTimeout:  idleTimeout,
+		Handler:      e.r,
+	}
+	e.RegisterMiddleware()
+	e.RegisterHealthRoute()
+	e.RegisterAPIRoutes()
+	return e
 }
 
-func (s *server) Start() {
+func (s *engine) Start() {
 	var wait time.Duration
 	flag.DurationVar(
 		&wait,
@@ -56,8 +63,8 @@ func (s *server) Start() {
 
 	// Run our server in a goroutine so that it doesn't block.
 	go func() {
-		log.Println("Going to listen on port", port)
-		err := s.httpServer.ListenAndServe()
+		log.Println("Going to listen on port", env.Port())
+		err := s.srv.ListenAndServe()
 		if err != nil {
 			log.Println(err)
 		}
@@ -76,7 +83,7 @@ func (s *server) Start() {
 	defer cancel()
 	// Doesn't block if no connections, but will otherwise wait
 	// until the timeout deadline.
-	s.httpServer.Shutdown(ctx)
+	s.srv.Shutdown(ctx)
 	// Optionally, you could run srv.Shutdown in a goroutine and block on
 	// <-ctx.Done() if your application should wait for other services
 	// to finalize based on context cancellation.
@@ -84,8 +91,8 @@ func (s *server) Start() {
 	os.Exit(0)
 }
 
-func (s *server) RegisterMiddleware() {
-	s.router.Use(
+func (e *engine) RegisterMiddleware() {
+	e.r.Use(
 		middleware.HTTPLogger,
 		middleware.Recovery,
 		middleware.AllowHost,
@@ -95,8 +102,8 @@ func (s *server) RegisterMiddleware() {
 	)
 }
 
-func (s *server) RegisterHealthRoute() {
-	s.router.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+func (e *engine) RegisterHealthRoute() {
+	e.r.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
 		data := map[string]string{
 			"Method":  r.Method,
@@ -109,22 +116,11 @@ func (s *server) RegisterHealthRoute() {
 	})
 }
 
-func (s *server) RegisterAPIRoutes() {
-	api := s.router.NewRoute().PathPrefix("/api").Subrouter()
+func (e *engine) RegisterAPIRoutes() {
+	api := e.r.NewRoute().PathPrefix("/api").Subrouter()
 	v1 := api.NewRoute().PathPrefix("/v1").Subrouter()
 
-	auth.RegisterRoutes(v1, s.db)
-	user.RegisterRoutes(v1, s.db)
-	data.RegisterRoutes(v1, s.db)
-}
-
-func (s *server) RegisterHTTPServer() {
-	s.httpServer = &http.Server{
-		Addr: "0.0.0.0:" + port,
-		// Good practice to set timeouts to avoid Slowloris attacks.
-		WriteTimeout: writeTimeout,
-		ReadTimeout:  readTimeout,
-		IdleTimeout:  idleTimeout,
-		Handler:      s.router,
-	}
+	auth.RegisterRoutes(v1, e.db)
+	user.RegisterRoutes(v1, e.db)
+	data.RegisterRoutes(v1, e.db)
 }

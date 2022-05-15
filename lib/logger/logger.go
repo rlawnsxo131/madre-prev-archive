@@ -18,7 +18,7 @@ func NewBaseLogger() *zerolog.Logger {
 	return &l
 }
 
-func GetDefaultLogger() *zerolog.Logger {
+func DefaultLogger() *zerolog.Logger {
 	onceDefaultLogger.Do(func() {
 		defaultLogger = NewBaseLogger()
 	})
