@@ -208,20 +208,6 @@ func (c *controller) PostGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		userUseCase := user.NewUseCase(c.db)
-		sameNameUser, err := userUseCase.FindOneByUsername(params.Username)
-		exist, err := sameNameUser.IsExist(err)
-		if err != nil {
-			rw.Error(err)
-			return
-		}
-		if exist {
-			rw.ErrorConflict(
-				errors.Wrap(err, "username is exist"),
-			)
-			return
-		}
-
 		ggp, err := social.NewGoogleApi(params.AccessToken).Do()
 		if err != nil {
 			rw.Error(err)
@@ -242,6 +228,20 @@ func (c *controller) PostGoogleSignUp() http.HandlerFunc {
 		if !valid {
 			rw.ErrorBadRequest(
 				errors.New("username validation error"),
+			)
+			return
+		}
+
+		userUseCase := user.NewUseCase(c.db)
+		sameNameUser, err := userUseCase.FindOneByUsername(params.Username)
+		exist, err := sameNameUser.IsExist(err)
+		if err != nil {
+			rw.Error(err)
+			return
+		}
+		if exist {
+			rw.ErrorConflict(
+				errors.Wrap(err, "username is exist"),
 			)
 			return
 		}
