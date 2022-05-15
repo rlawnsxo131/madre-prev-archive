@@ -17,7 +17,6 @@ func main() {
 	defer db.DB.Close()
 
 	if env.IsLocal() {
-		log.Println("local")
 		database.ExcuteInitSQL(db.DB)
 	}
 
