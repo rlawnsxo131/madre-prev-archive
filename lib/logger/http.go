@@ -35,7 +35,6 @@ func (hl *httpLogger) Add(f func(e *zerolog.Event)) {
 }
 
 func (hl *httpLogger) Write(t time.Time) {
-	hl.r.Cookies()
 	e := hl.l.Log().Timestamp().
 		Str("requestId", uuid.NewString()).
 		Dur("elapsed(ms)", time.Since(t)).
