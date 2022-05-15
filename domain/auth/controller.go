@@ -38,7 +38,7 @@ func NewController(db database.Database) Controller {
 func (c *controller) Get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
-		p := token.RequestUserProfile(r.Context())
+		p := token.GetUserProfileCtx(r.Context())
 
 		rw.Compress(
 			map[string]interface{}{
@@ -51,7 +51,7 @@ func (c *controller) Get() http.HandlerFunc {
 func (c *controller) Delete() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
-		p := token.RequestUserProfile(r.Context())
+		p := token.GetUserProfileCtx(r.Context())
 		if p == nil {
 			rw.ErrorUnauthorized(
 				errors.New("not found userProfile"),
@@ -176,7 +176,7 @@ func (c *controller) PostGoogleSignIn() http.HandlerFunc {
 		token.SetTokenCookies(w, actk, rftk)
 
 		rw.Compress(map[string]interface{}{
-			"user_profile": p,
+			"user_profile": &p,
 		})
 	}
 }
@@ -283,7 +283,7 @@ func (c *controller) PostGoogleSignUp() http.HandlerFunc {
 		token.SetTokenCookies(w, actk, rftk)
 
 		rw.Compress(map[string]interface{}{
-			"user_profile": p,
+			"user_profile": &p,
 		})
 	}
 }

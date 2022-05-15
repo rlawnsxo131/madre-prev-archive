@@ -160,7 +160,7 @@ const (
 	Key_UserProfileCtx = "Key_UserProfileCtx"
 )
 
-func RequestUserProfile(ctx context.Context) *UserProfile {
+func GetUserProfileCtx(ctx context.Context) *UserProfile {
 	v := ctx.Value(Key_UserProfileCtx)
 	if v, ok := v.(*UserProfile); ok {
 		return v
@@ -168,11 +168,6 @@ func RequestUserProfile(ctx context.Context) *UserProfile {
 	return nil
 }
 
-func RequestWithUserProfile(r *http.Request, p *UserProfile) *http.Request {
-	ctx := context.WithValue(
-		r.Context(),
-		Key_UserProfileCtx,
-		p,
-	)
-	return r.WithContext(ctx)
+func SetUserProfileCtx(ctx context.Context, p *UserProfile) context.Context {
+	return context.WithValue(ctx, Key_UserProfileCtx, p)
 }

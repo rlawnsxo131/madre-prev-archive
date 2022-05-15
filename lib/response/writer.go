@@ -63,6 +63,9 @@ func (wt *writer) Compress(data interface{}) {
 			wt.w.Header().Set("Content-Encoding", "gzip")
 			wt.w.WriteHeader(http.StatusOK)
 			gz.Write(jsonData)
+			logger.GetHTTPLoggerCtx(wt.r.Context()).Add(func(e *zerolog.Event) {
+				e.Int("status", http.StatusOK).RawJSON("response", jsonData)
+			})
 			return
 		}
 		if strings.Contains(wt.r.Header.Get("Accept-Encoding"), "deflate") {
@@ -75,13 +78,15 @@ func (wt *writer) Compress(data interface{}) {
 			wt.w.Header().Set("Content-Encoding", "deflate")
 			wt.w.WriteHeader(http.StatusOK)
 			df.Write(jsonData)
+			logger.GetHTTPLoggerCtx(wt.r.Context()).Add(func(e *zerolog.Event) {
+				e.Int("status", http.StatusOK).RawJSON("response", jsonData)
+			})
 			return
 		}
 	}
 
 	wt.w.WriteHeader(http.StatusOK)
 	wt.w.Write(jsonData)
-
 	logger.GetHTTPLoggerCtx(wt.r.Context()).Add(func(e *zerolog.Event) {
 		e.Int("status", http.StatusOK).RawJSON("response", jsonData)
 	})
@@ -116,11 +121,10 @@ func (wt *writer) ErrorConflict(err error) {
 }
 
 func (wt *writer) standardError(status int, message string, err error) {
-	data := map[string]interface{}{
+	jsonData, _ := json.Marshal(map[string]interface{}{
 		"status":  status,
 		"message": message,
-	}
-	jsonData, _ := json.Marshal(data)
+	})
 
 	wt.w.WriteHeader(status)
 	wt.w.Write(jsonData)

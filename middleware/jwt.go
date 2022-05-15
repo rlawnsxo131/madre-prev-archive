@@ -15,7 +15,7 @@ import (
 // only logging is processed so that other functions can be used.
 func JWT(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		var profile *token.UserProfile
+		ctx := r.Context()
 		actk, err := r.Cookie(token.Key_AccessToken)
 		if err != nil {
 			if err != http.ErrNoCookie {
@@ -58,18 +58,19 @@ func JWT(next http.Handler) http.Handler {
 							if err != nil {
 								logger.GetDefaultLogger().Err(err).Str("action", "JWT").Msg("")
 							} else {
-								profile = &p
+								ctx = token.SetUserProfileCtx(ctx, &p)
 								token.SetTokenCookies(w, actk, rftk)
 							}
 						}
 					}
 				}
 			} else {
-				profile = &token.UserProfile{
+				p := token.UserProfile{
 					UserID:   claims.UserID,
 					Username: claims.Username,
 					PhotoUrl: claims.PhotoUrl,
 				}
+				ctx = token.SetUserProfileCtx(ctx, &p)
 			}
 		}
 
@@ -100,18 +101,13 @@ func JWT(next http.Handler) http.Handler {
 					if err != nil {
 						logger.GetDefaultLogger().Err(err).Str("action", "JWT").Msg("")
 					} else {
-						profile = &p
 						token.SetTokenCookies(w, actk, rftk)
+						ctx = token.SetUserProfileCtx(ctx, &p)
 					}
 				}
 			}
 		}
 
-		if profile != nil {
-			next.ServeHTTP(w, token.RequestWithUserProfile(r, profile))
-			return
-		}
-
-		next.ServeHTTP(w, r)
+		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
