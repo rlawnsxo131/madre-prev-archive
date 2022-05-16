@@ -56,7 +56,7 @@ func New(db database.Database) *engine {
 
 func (s *engine) Start() {
 	// Server run context
-	srvCtx, srvStopCtx := context.WithCancel(context.Background())
+	srvCtx, srvCtxCancel := context.WithCancel(context.Background())
 
 	// Listen for syscall signals for process to interrupt/quit
 	sig := make(chan os.Signal, 1)
@@ -65,7 +65,8 @@ func (s *engine) Start() {
 		<-sig
 
 		// Shutdown signal with grace period of 30 seconds
-		shutdownCtx, _ := context.WithTimeout(srvCtx, 30*time.Second)
+		shutdownCtx, shutdownCtxCancel := context.WithTimeout(srvCtx, 30*time.Second)
+		defer shutdownCtxCancel()
 
 		go func() {
 			<-shutdownCtx.Done()
@@ -80,12 +81,12 @@ func (s *engine) Start() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		srvStopCtx()
+		srvCtxCancel()
 	}()
 
 	// Run the server
 	logger.DefaultLogger().Info().
-		Timestamp().Msg("going to listen on port" + env.Port())
+		Timestamp().Msg("going to listen on port %s" + env.Port())
 	err := s.srv.ListenAndServe()
 	if err != nil && err != http.ErrServerClosed {
 		logger.DefaultLogger().Fatal().Timestamp().Err(err).Msg("")
