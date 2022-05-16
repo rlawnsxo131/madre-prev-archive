@@ -3,7 +3,7 @@ package user
 import (
 	"net/http"
 
-	"github.com/gorilla/mux"
+	"github.com/go-chi/chi/v5"
 	"github.com/rlawnsxo131/madre-server-v2/database"
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"
 )
@@ -26,8 +26,7 @@ func NewController(db database.Database) Controller {
 func (c *controller) Get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
-		vars := mux.Vars(r)
-		id := vars["id"]
+		id := chi.URLParam(r, "id")
 
 		userUseCase := NewUseCase(c.db)
 		u, err := userUseCase.FindOneById(id)
@@ -36,7 +35,7 @@ func (c *controller) Get() http.HandlerFunc {
 			return
 		}
 
-		rw.Compress(u)
+		rw.Write(u)
 	}
 }
 

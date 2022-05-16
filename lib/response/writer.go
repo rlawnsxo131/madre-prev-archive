@@ -1,12 +1,9 @@
 package response
 
 import (
-	"compress/flate"
-	"compress/gzip"
 	"database/sql"
 	"encoding/json"
 	"net/http"
-	"strings"
 
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
@@ -23,7 +20,7 @@ const (
 )
 
 type Writer interface {
-	Compress(data interface{})
+	Write(data interface{})
 	Error(err error)
 	ErrorBadRequest(err error)
 	ErrorUnauthorized(err error)
@@ -44,51 +41,18 @@ func NewWriter(w http.ResponseWriter, r *http.Request) Writer {
 	}
 }
 
-func (wt *writer) Compress(data interface{}) {
-	jsonData, err := json.Marshal(data)
+func (wt *writer) Write(data interface{}) {
+	d, err := json.Marshal(data)
 	if err != nil {
-		wt.Error(errors.Wrap(err, "compress json parse error"))
+		wt.Error(
+			errors.Wrap(err, "Write json parse error"),
+		)
 		return
 	}
-
-	// When an error occurs in the compress process, should I change it to return uncompressed json?
-	if len(jsonData) >= 2048 {
-		if strings.Contains(wt.r.Header.Get("Accept-Encoding"), "gzip") {
-			gz, err := gzip.NewWriterLevel(wt.w, gzip.DefaultCompression)
-			if err != nil {
-				wt.Error(errors.Wrap(err, "gzip compress error"))
-				return
-			}
-			defer gz.Close()
-			wt.w.Header().Set("Content-Encoding", "gzip")
-			wt.w.WriteHeader(http.StatusOK)
-			gz.Write(jsonData)
-			logger.HTTPLoggerCtx(wt.r.Context()).Add(func(e *zerolog.Event) {
-				e.Int("status", http.StatusOK).RawJSON("response", jsonData)
-			})
-			return
-		}
-		if strings.Contains(wt.r.Header.Get("Accept-Encoding"), "deflate") {
-			df, err := flate.NewWriter(wt.w, flate.DefaultCompression)
-			if err != nil {
-				wt.Error(errors.Wrap(err, "dfalte compress error"))
-				return
-			}
-			defer df.Close()
-			wt.w.Header().Set("Content-Encoding", "deflate")
-			wt.w.WriteHeader(http.StatusOK)
-			df.Write(jsonData)
-			logger.HTTPLoggerCtx(wt.r.Context()).Add(func(e *zerolog.Event) {
-				e.Int("status", http.StatusOK).RawJSON("response", jsonData)
-			})
-			return
-		}
-	}
-
 	wt.w.WriteHeader(http.StatusOK)
-	wt.w.Write(jsonData)
+	wt.w.Write(d)
 	logger.HTTPLoggerCtx(wt.r.Context()).Add(func(e *zerolog.Event) {
-		e.Int("status", http.StatusOK).RawJSON("response", jsonData)
+		e.RawJSON("response", d)
 	})
 }
 
@@ -121,15 +85,13 @@ func (wt *writer) ErrorConflict(err error) {
 }
 
 func (wt *writer) standardError(status int, message string, err error) {
-	jsonData, _ := json.Marshal(map[string]interface{}{
+	d, _ := json.Marshal(map[string]interface{}{
 		"status":  status,
 		"message": message,
 	})
-
 	wt.w.WriteHeader(status)
-	wt.w.Write(jsonData)
-
+	wt.w.Write(d)
 	logger.HTTPLoggerCtx(wt.r.Context()).Add(func(e *zerolog.Event) {
-		e.Err(err).Int("status", status).RawJSON("response", jsonData)
+		e.Err(err).RawJSON("response", d)
 	})
 }

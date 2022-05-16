@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/gorilla/mux"
+	"github.com/go-chi/chi/v5"
 	"github.com/rlawnsxo131/madre-server-v2/database"
 	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"
@@ -51,16 +51,14 @@ func (c *controller) GetAll() http.HandlerFunc {
 			return
 		}
 
-		rw.Compress(dd)
+		rw.Write(dd)
 	}
 }
 
 func (c *controller) Get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
-
-		vars := mux.Vars(r)
-		id := vars["id"]
+		id := chi.URLParam(r, "id")
 
 		dataUseCase := NewUseCase(c.db)
 		d, err := dataUseCase.FindOneById(id)
@@ -69,6 +67,6 @@ func (c *controller) Get() http.HandlerFunc {
 			return
 		}
 
-		rw.Compress(d)
+		rw.Write(d)
 	}
 }

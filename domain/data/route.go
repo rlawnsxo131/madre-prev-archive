@@ -1,14 +1,15 @@
 package data
 
 import (
-	"github.com/gorilla/mux"
+	"github.com/go-chi/chi/v5"
+
 	"github.com/rlawnsxo131/madre-server-v2/database"
 )
 
-func RegisterRoutes(r *mux.Router, db database.Database) {
-	r = r.NewRoute().PathPrefix("/data").Subrouter()
+func RegisterRoutes(r chi.Router, db database.Database) {
 	ctrl := NewController(db)
-
-	r.HandleFunc("", ctrl.GetAll()).Methods("GET")
-	r.HandleFunc("/{id}", ctrl.Get()).Methods("GET")
+	r.Route("/data", func(r chi.Router) {
+		r.Get("/", ctrl.GetAll())
+		r.Get("/{id}", ctrl.Get())
+	})
 }

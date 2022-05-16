@@ -4,7 +4,7 @@
 
 - PostgreSQL
 - Go
-  - gorilla/mux
+  - go-chi/chi
   - jmoiron/sqlx
   - rs/zerolog
 

@@ -40,7 +40,7 @@ func (c *controller) Get() http.HandlerFunc {
 		rw := response.NewWriter(w, r)
 		p := token.UserProfileCtx(r.Context())
 
-		rw.Compress(
+		rw.Write(
 			map[string]interface{}{
 				"user_profile": p,
 			},
@@ -60,7 +60,7 @@ func (c *controller) Delete() http.HandlerFunc {
 		}
 		token.ResetTokenCookies(w)
 
-		rw.Compress(map[string]interface{}{})
+		rw.Write(map[string]interface{}{})
 	}
 }
 
@@ -108,7 +108,7 @@ func (c *controller) PostGoogleCheck() http.HandlerFunc {
 			return
 		}
 
-		rw.Compress(map[string]bool{
+		rw.Write(map[string]bool{
 			"exist": exist,
 		})
 	}
@@ -175,7 +175,7 @@ func (c *controller) PostGoogleSignIn() http.HandlerFunc {
 		}
 		token.SetTokenCookies(w, actk, rftk)
 
-		rw.Compress(map[string]interface{}{
+		rw.Write(map[string]interface{}{
 			"user_profile": &p,
 		})
 	}
@@ -282,7 +282,7 @@ func (c *controller) PostGoogleSignUp() http.HandlerFunc {
 		}
 		token.SetTokenCookies(w, actk, rftk)
 
-		rw.Compress(map[string]interface{}{
+		rw.Write(map[string]interface{}{
 			"user_profile": &p,
 		})
 	}

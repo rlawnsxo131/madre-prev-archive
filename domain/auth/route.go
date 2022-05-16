@@ -1,17 +1,17 @@
 package auth
 
 import (
-	"github.com/gorilla/mux"
+	"github.com/go-chi/chi/v5"
 	"github.com/rlawnsxo131/madre-server-v2/database"
 )
 
-func RegisterRoutes(r *mux.Router, db database.Database) {
-	r = r.NewRoute().PathPrefix("/auth").Subrouter()
+func RegisterRoutes(r chi.Router, db database.Database) {
 	ctrl := NewController(db)
-
-	r.HandleFunc("", ctrl.Get()).Methods("GET")
-	r.HandleFunc("", ctrl.Delete()).Methods("DELETE", "OPTIONS")
-	r.HandleFunc("/google/check", ctrl.PostGoogleCheck()).Methods("POST", "OPTIONS")
-	r.HandleFunc("/google/sign-in", ctrl.PostGoogleSignIn()).Methods("POST", "OPTIONS")
-	r.HandleFunc("/google/sign-up", ctrl.PostGoogleSignUp()).Methods("POST", "OPTIONS")
+	r.Route("/auth", func(r chi.Router) {
+		r.Get("/", ctrl.Get())
+		r.Delete("/", ctrl.Delete())
+		r.Post("/google/check", ctrl.PostGoogleCheck())
+		r.Post("/google/sign-in", ctrl.PostGoogleSignIn())
+		r.Post("/google/sign-up", ctrl.PostGoogleSignUp())
+	})
 }

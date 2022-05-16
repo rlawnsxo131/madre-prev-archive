@@ -1,14 +1,14 @@
 package user
 
 import (
-	"github.com/gorilla/mux"
+	"github.com/go-chi/chi/v5"
 	"github.com/rlawnsxo131/madre-server-v2/database"
 )
 
-func RegisterRoutes(r *mux.Router, db database.Database) {
-	r = r.NewRoute().PathPrefix("/user").Subrouter()
+func RegisterRoutes(r chi.Router, db database.Database) {
 	ctrl := NewController(db)
-
-	r.HandleFunc("/{id}", ctrl.Get()).Methods("GET")
-	r.HandleFunc("/{id}", ctrl.Put()).Methods("PUT", "OPTIONS")
+	r.Route("/user", func(r chi.Router) {
+		r.Get("/{id}", ctrl.Get())
+		r.Put("/{id}", ctrl.Put())
+	})
 }

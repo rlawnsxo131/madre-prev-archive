@@ -2,20 +2,22 @@ package server
 
 import (
 	"context"
-	"flag"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
+	"syscall"
 	"time"
 
-	"github.com/gorilla/mux"
+	"github.com/go-chi/chi/v5"
+	chi_middleware "github.com/go-chi/chi/v5/middleware"
 	"github.com/rlawnsxo131/madre-server-v2/database"
 	"github.com/rlawnsxo131/madre-server-v2/domain/auth"
 	"github.com/rlawnsxo131/madre-server-v2/domain/data"
 	"github.com/rlawnsxo131/madre-server-v2/domain/user"
 	"github.com/rlawnsxo131/madre-server-v2/lib/env"
+	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"
 	"github.com/rlawnsxo131/madre-server-v2/middleware"
 )
@@ -28,14 +30,15 @@ const (
 
 type engine struct {
 	db  database.Database
-	r   *mux.Router
+	r   *chi.Mux
 	srv *http.Server
 }
 
 func New(db database.Database) *engine {
+	r := chi.NewRouter()
 	e := &engine{
 		db: db,
-		r:  mux.NewRouter(),
+		r:  r,
 	}
 	e.srv = &http.Server{
 		Addr: "0.0.0.0:" + env.Port(),
@@ -52,58 +55,60 @@ func New(db database.Database) *engine {
 }
 
 func (s *engine) Start() {
-	var wait time.Duration
-	flag.DurationVar(
-		&wait,
-		"graceful-timeout",
-		time.Second*15,
-		"the duration for which the server gracefully wait for existing connections to finish - e.g. 15s or 1m",
-	)
-	flag.Parse()
+	// Server run context
+	srvCtx, srvStopCtx := context.WithCancel(context.Background())
 
-	// Run our server in a goroutine so that it doesn't block.
+	// Listen for syscall signals for process to interrupt/quit
+	sig := make(chan os.Signal, 1)
+	signal.Notify(sig, syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
 	go func() {
-		log.Println("Going to listen on port", env.Port())
-		err := s.srv.ListenAndServe()
+		<-sig
+
+		// Shutdown signal with grace period of 30 seconds
+		shutdownCtx, _ := context.WithTimeout(srvCtx, 30*time.Second)
+
+		go func() {
+			<-shutdownCtx.Done()
+			if shutdownCtx.Err() == context.DeadlineExceeded {
+				logger.DefaultLogger().Fatal().
+					Timestamp().Msg("graceful shutdown timed out.. forcing exit.")
+			}
+		}()
+
+		// Trigger graceful shutdown
+		err := s.srv.Shutdown(shutdownCtx)
 		if err != nil {
-			log.Println(err)
+			log.Fatal(err)
 		}
+		srvStopCtx()
 	}()
 
-	c := make(chan os.Signal, 1)
-	// We'll accept graceful shutdowns when quit via SIGINT (Ctrl+C)
-	// SIGKILL, SIGQUIT or SIGTERM (Ctrl+/) will not be caught.
-	signal.Notify(c, os.Interrupt)
+	// Run the server
+	logger.DefaultLogger().Info().
+		Timestamp().Msg("going to listen on port" + env.Port())
+	err := s.srv.ListenAndServe()
+	if err != nil && err != http.ErrServerClosed {
+		logger.DefaultLogger().Fatal().Timestamp().Err(err).Msg("")
+	}
 
-	// Block until we receive our signal.
-	<-c
-
-	// Create a deadline to wait for.
-	ctx, cancel := context.WithTimeout(context.Background(), wait)
-	defer cancel()
-	// Doesn't block if no connections, but will otherwise wait
-	// until the timeout deadline.
-	s.srv.Shutdown(ctx)
-	// Optionally, you could run srv.Shutdown in a goroutine and block on
-	// <-ctx.Done() if your application should wait for other services
-	// to finalize based on context cancellation.
-	log.Println("shutting down")
-	os.Exit(0)
+	// Wait for server context to be stopped
+	<-srvCtx.Done()
 }
 
 func (e *engine) RegisterMiddleware() {
-	e.r.Use(
-		middleware.HTTPLogger,
-		middleware.Recovery,
-		middleware.AllowHost,
-		middleware.Cors,
-		middleware.JWT,
-		middleware.ContentTypeToJson,
-	)
+	e.r.Use(chi_middleware.RequestID)
+	e.r.Use(chi_middleware.RealIP)
+	e.r.Use(middleware.HTTPLogger)
+	e.r.Use(middleware.Recovery)
+	e.r.Use(middleware.AllowHost)
+	e.r.Use(middleware.Cors)
+	e.r.Use(middleware.JWT)
+	e.r.Use(middleware.ContentTypeToJson)
+	e.r.Use(chi_middleware.Compress(5))
 }
 
 func (e *engine) RegisterHealthRoute() {
-	e.r.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+	e.r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
 		data := map[string]string{
 			"Method":  r.Method,
@@ -112,15 +117,16 @@ func (e *engine) RegisterHealthRoute() {
 			"Referer": r.Header.Get("Referer"),
 			"Cookies": fmt.Sprint(r.Cookies()),
 		}
-		rw.Compress(data)
+		rw.Write(data)
 	})
 }
 
 func (e *engine) RegisterAPIRoutes() {
-	api := e.r.NewRoute().PathPrefix("/api").Subrouter()
-	v1 := api.NewRoute().PathPrefix("/v1").Subrouter()
-
-	auth.RegisterRoutes(v1, e.db)
-	user.RegisterRoutes(v1, e.db)
-	data.RegisterRoutes(v1, e.db)
+	e.r.Route("/api", func(r chi.Router) {
+		r.Route("/v1", func(r chi.Router) {
+			auth.RegisterRoutes(r, e.db)
+			user.RegisterRoutes(r, e.db)
+			data.RegisterRoutes(r, e.db)
+		})
+	})
 }

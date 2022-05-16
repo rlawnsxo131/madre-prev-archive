@@ -3,11 +3,12 @@ package logger
 import (
 	"context"
 	"fmt"
+	"net"
 	"net/http"
 	"strings"
 	"time"
 
-	"github.com/google/uuid"
+	chi_middleware "github.com/go-chi/chi/v5/middleware"
 	"github.com/rs/zerolog"
 )
 
@@ -19,13 +20,15 @@ type HTTPLogger interface {
 type httpLogger struct {
 	l   *zerolog.Logger
 	r   *http.Request
+	ww  chi_middleware.WrapResponseWriter
 	add []func(e *zerolog.Event)
 }
 
-func NewHTTPLogger(r *http.Request) HTTPLogger {
+func NewHTTPLogger(r *http.Request, ww chi_middleware.WrapResponseWriter) HTTPLogger {
 	return &httpLogger{
 		l:   NewBaseLogger(),
 		r:   r,
+		ww:  ww,
 		add: []func(e *zerolog.Event){},
 	}
 }
@@ -36,7 +39,7 @@ func (hl *httpLogger) Add(f func(e *zerolog.Event)) {
 
 func (hl *httpLogger) Write(t time.Time) {
 	e := hl.l.Log().Timestamp().
-		Str("requestId", uuid.NewString()).
+		Str("requestId", chi_middleware.GetReqID(hl.r.Context())).
 		Dur("elapsed(ms)", time.Since(t)).
 		Str("protocol", hl.r.Proto).
 		Str("method", hl.r.Method).
@@ -44,10 +47,16 @@ func (hl *httpLogger) Write(t time.Time) {
 		Str("uri", hl.r.URL.RequestURI()).
 		Str("agent", hl.r.UserAgent()).
 		Str("referer", hl.r.Referer()).
-		Str("clientIp", clientIP(hl.r.Header))
+		Int("status", hl.ww.Status())
 
 	for _, f := range hl.add {
 		f(e)
+	}
+
+	if ip := clientIP(hl.r.Header); ip != "" {
+		e.Str("client-ip", ip)
+	} else if ip, _, err := net.SplitHostPort(strings.TrimSpace(hl.r.RemoteAddr)); err == nil {
+		e.Str("client-ip", ip)
 	}
 
 	e.Str("cookies", fmt.Sprint(hl.r.Cookies()))
