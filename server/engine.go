@@ -39,14 +39,14 @@ func New(db database.Database) *engine {
 	e := &engine{
 		db: db,
 		r:  r,
-	}
-	e.srv = &http.Server{
-		Addr: "0.0.0.0:" + env.Port(),
-		// Good practice to set timeouts to avoid Slowloris attacks.
-		WriteTimeout: writeTimeout,
-		ReadTimeout:  readTimeout,
-		IdleTimeout:  idleTimeout,
-		Handler:      e.r,
+		srv: &http.Server{
+			Addr: "0.0.0.0:" + env.Port(),
+			// Good practice to set timeouts to avoid Slowloris attacks.
+			WriteTimeout: writeTimeout,
+			ReadTimeout:  readTimeout,
+			IdleTimeout:  idleTimeout,
+			Handler:      r,
+		},
 	}
 	e.RegisterMiddleware()
 	e.RegisterHealthRoute()
