@@ -21,12 +21,17 @@ const authApi = createApi({
       return headers;
     },
     credentials: 'include',
+    referrerPolicy: 'strict-origin-when-cross-origin',
   }),
   // refetchOnFocus: true,
   tagTypes: ['Auth'],
   endpoints: (build) => ({
     get: build.query<GetAuthResponse, undefined>({
-      query: () => '',
+      query() {
+        return {
+          url: '',
+        };
+      },
       async onQueryStarted(_, { dispatch, queryFulfilled, getCacheEntry }) {
         try {
           await queryFulfilled;
