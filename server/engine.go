@@ -3,7 +3,6 @@ package server
 import (
 	"context"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"os/signal"
@@ -79,14 +78,14 @@ func (s *engine) Start() {
 		// Trigger graceful shutdown
 		err := s.srv.Shutdown(shutdownCtx)
 		if err != nil {
-			log.Fatal(err)
+			logger.DefaultLogger().Fatal().Timestamp().Err(err).Msg("")
 		}
 		srvCtxCancel()
 	}()
 
 	// Run the server
 	logger.DefaultLogger().Info().
-		Timestamp().Msg("going to listen on port %s" + env.Port())
+		Timestamp().Msg("going to listen on port " + env.Port())
 	err := s.srv.ListenAndServe()
 	if err != nil && err != http.ErrServerClosed {
 		logger.DefaultLogger().Fatal().Timestamp().Err(err).Msg("")

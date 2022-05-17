@@ -25,6 +25,10 @@ func IsLocal() bool {
 	return true
 }
 
+func AppEnv() string {
+	return getEnv("APP_ENV")
+}
+
 func Port() string {
 	return getEnv("PORT")
 }

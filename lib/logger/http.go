@@ -13,6 +13,7 @@ import (
 )
 
 type HTTPLogger interface {
+	// ReadBody() error
 	Add(f func(e *zerolog.Event))
 	Write(t time.Time)
 }
@@ -33,6 +34,29 @@ func NewHTTPLogger(r *http.Request, ww chi_middleware.WrapResponseWriter) HTTPLo
 	}
 }
 
+// func (hl *httpLogger) ReadBody() error {
+// 	if hl.r.Body == nil {
+// 		hl.add = append(hl.add, func(e *zerolog.Event) {
+// 			e.Str("body", "")
+// 		})
+// 		return nil
+// 	}
+
+// 	body, err := ioutil.ReadAll(hl.r.Body)
+// 	if err != nil {
+// 		return errors.Wrap(err, "http body read error")
+// 	}
+
+// 	hl.add = append(hl.add, func(e *zerolog.Event) {
+// 		e.Str("body", string(body))
+// 	})
+// 	hl.r.Body = ioutil.NopCloser(
+// 		bytes.NewBuffer(body),
+// 	)
+
+// 	return nil
+// }
+
 func (hl *httpLogger) Add(f func(e *zerolog.Event)) {
 	hl.add = append(hl.add, f)
 }
@@ -43,11 +67,11 @@ func (hl *httpLogger) Write(t time.Time) {
 		Dur("elapsed(ms)", time.Since(t)).
 		Str("protocol", hl.r.Proto).
 		Str("method", hl.r.Method).
-		Str("origin", hl.r.Header.Get("Origin")).
 		Str("uri", hl.r.URL.RequestURI()).
-		Str("agent", hl.r.UserAgent()).
+		Str("origin", hl.r.Header.Get("Origin")).
 		Str("referer", hl.r.Referer()).
-		Int("status", hl.ww.Status())
+		Int("status", hl.ww.Status()).
+		Str("agent", hl.r.UserAgent())
 
 	for _, f := range hl.add {
 		f(e)

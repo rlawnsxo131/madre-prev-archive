@@ -1,8 +1,6 @@
 package main
 
 import (
-	"log"
-
 	"github.com/rlawnsxo131/madre-server-v2/database"
 	"github.com/rlawnsxo131/madre-server-v2/lib/env"
 	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
@@ -25,6 +23,6 @@ func main() {
 }
 
 func init() {
-	log.Println("init main")
+	logger.DefaultLogger().Info().Timestamp().Msg("init main")
 	env.Load()
 }
