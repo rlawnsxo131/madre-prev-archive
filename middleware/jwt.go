@@ -56,7 +56,7 @@ func JWT(next http.Handler) http.Handler {
 							}
 							actk, rftk, err := token.GenerateTokens(&p)
 							if err != nil {
-								logger.DefaultLogger().Err(err).Timestamp().Str("action", "JWT").Msg("")
+								logger.DefaultLogger().Err(err).Timestamp().Str("action", "JWT").Send()
 							} else {
 								token.SetTokenCookies(w, actk, rftk)
 								ctx = token.SetUserProfileCtx(ctx, &p)
@@ -99,7 +99,7 @@ func JWT(next http.Handler) http.Handler {
 					}
 					actk, rftk, err := token.GenerateTokens(&p)
 					if err != nil {
-						logger.DefaultLogger().Err(err).Timestamp().Str("action", "JWT").Msg("")
+						logger.DefaultLogger().Err(err).Timestamp().Str("action", "JWT").Send()
 					} else {
 						token.SetTokenCookies(w, actk, rftk)
 						ctx = token.SetUserProfileCtx(ctx, &p)

@@ -78,7 +78,7 @@ func (s *engine) Start() {
 		// Trigger graceful shutdown
 		err := s.srv.Shutdown(shutdownCtx)
 		if err != nil {
-			logger.DefaultLogger().Fatal().Timestamp().Err(err).Msg("")
+			logger.DefaultLogger().Fatal().Timestamp().Err(err).Send()
 		}
 		srvCtxCancel()
 	}()
@@ -88,7 +88,7 @@ func (s *engine) Start() {
 		Timestamp().Msg("going to listen on port " + env.Port())
 	err := s.srv.ListenAndServe()
 	if err != nil && err != http.ErrServerClosed {
-		logger.DefaultLogger().Fatal().Timestamp().Err(err).Msg("")
+		logger.DefaultLogger().Fatal().Timestamp().Err(err).Send()
 	}
 
 	// Wait for server context to be stopped
@@ -98,10 +98,10 @@ func (s *engine) Start() {
 func (e *engine) RegisterMiddleware() {
 	e.r.Use(chi_middleware.RequestID)
 	e.r.Use(chi_middleware.RealIP)
+	e.r.Use(middleware.Cors)
 	e.r.Use(middleware.HTTPLogger)
 	e.r.Use(middleware.Recovery)
 	e.r.Use(middleware.AllowHost)
-	e.r.Use(middleware.Cors)
 	e.r.Use(middleware.JWT)
 	e.r.Use(middleware.ContentTypeToJson)
 	e.r.Use(chi_middleware.Compress(5))

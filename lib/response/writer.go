@@ -21,6 +21,7 @@ const (
 
 type Writer interface {
 	Write(data interface{})
+	WriteWithOptionsAndDefaultLogger(status int, message string, err error)
 	Error(err error)
 	ErrorBadRequest(err error)
 	ErrorUnauthorized(err error)
@@ -54,6 +55,16 @@ func (wt *writer) Write(data interface{}) {
 	logger.HTTPLoggerCtx(wt.r.Context()).Add(func(e *zerolog.Event) {
 		e.RawJSON("response", d)
 	})
+}
+
+func (wt *writer) WriteWithOptionsAndDefaultLogger(status int, message string, err error) {
+	d, _ := json.Marshal(map[string]interface{}{
+		"status":  status,
+		"message": message,
+	})
+	wt.w.WriteHeader(status)
+	wt.w.Write(d)
+	logger.DefaultLogger().Fatal().Timestamp().Err(err).Send()
 }
 
 func (wt *writer) Error(err error) {

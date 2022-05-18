@@ -68,7 +68,7 @@ func getEnv(key string) string {
 			errors.New(
 				fmt.Sprintf("%s not set", key),
 			),
-		).Timestamp().Msg("")
+		).Timestamp().Send()
 	}
 	return v
 }

@@ -38,7 +38,7 @@ func DatabaseInstance() (*singletonDatabase, error) {
 			env.DatabaseSSLMode(),
 		)
 		logger.DefaultLogger().Info().
-			Timestamp().Str("database connection info", psqlInfo).Msg("")
+			Timestamp().Str("database connection info", psqlInfo).Send()
 
 		db, err := sqlx.Connect("postgres", psqlInfo)
 		if err != nil {

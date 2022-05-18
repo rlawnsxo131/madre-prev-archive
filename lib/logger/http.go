@@ -1,28 +1,32 @@
 package logger
 
 import (
+	"bytes"
 	"context"
 	"fmt"
+	"io/ioutil"
 	"net"
 	"net/http"
 	"strings"
 	"time"
 
 	chi_middleware "github.com/go-chi/chi/v5/middleware"
+	"github.com/pkg/errors"
 	"github.com/rs/zerolog"
 )
 
 type HTTPLogger interface {
-	// ReadBody() error
 	Add(f func(e *zerolog.Event))
 	Write(t time.Time)
+	ReadBody() error
 }
 
 type httpLogger struct {
-	l   *zerolog.Logger
-	r   *http.Request
-	ww  chi_middleware.WrapResponseWriter
-	add []func(e *zerolog.Event)
+	l    *zerolog.Logger
+	r    *http.Request
+	ww   chi_middleware.WrapResponseWriter
+	add  []func(e *zerolog.Event)
+	body []byte
 }
 
 func NewHTTPLogger(r *http.Request, ww chi_middleware.WrapResponseWriter) HTTPLogger {
@@ -34,28 +38,20 @@ func NewHTTPLogger(r *http.Request, ww chi_middleware.WrapResponseWriter) HTTPLo
 	}
 }
 
-// func (hl *httpLogger) ReadBody() error {
-// 	if hl.r.Body == nil {
-// 		hl.add = append(hl.add, func(e *zerolog.Event) {
-// 			e.Str("body", "")
-// 		})
-// 		return nil
-// 	}
-
-// 	body, err := ioutil.ReadAll(hl.r.Body)
-// 	if err != nil {
-// 		return errors.Wrap(err, "http body read error")
-// 	}
-
-// 	hl.add = append(hl.add, func(e *zerolog.Event) {
-// 		e.Str("body", string(body))
-// 	})
-// 	hl.r.Body = ioutil.NopCloser(
-// 		bytes.NewBuffer(body),
-// 	)
-
-// 	return nil
-// }
+func (hl *httpLogger) ReadBody() error {
+	if hl.r.Body != nil {
+		body, err := ioutil.ReadAll(hl.r.Body)
+		err = errors.New("Asdf")
+		if err != nil {
+			return errors.Wrap(err, "http body read error")
+		}
+		hl.body = body
+		hl.r.Body = ioutil.NopCloser(
+			bytes.NewBuffer(body),
+		)
+	}
+	return nil
+}
 
 func (hl *httpLogger) Add(f func(e *zerolog.Event)) {
 	hl.add = append(hl.add, f)
@@ -68,6 +64,7 @@ func (hl *httpLogger) Write(t time.Time) {
 		Str("protocol", hl.r.Proto).
 		Str("method", hl.r.Method).
 		Str("uri", hl.r.URL.RequestURI()).
+		Bytes("body", hl.body).
 		Str("origin", hl.r.Header.Get("Origin")).
 		Str("referer", hl.r.Referer()).
 		Int("status", hl.ww.Status()).
@@ -84,7 +81,7 @@ func (hl *httpLogger) Write(t time.Time) {
 	}
 
 	e.Str("cookies", fmt.Sprint(hl.r.Cookies()))
-	e.Msg("")
+	e.Send()
 }
 
 var (

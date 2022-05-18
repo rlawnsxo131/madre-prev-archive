@@ -10,7 +10,7 @@ import (
 func main() {
 	db, err := database.DatabaseInstance()
 	if err != nil {
-		logger.DefaultLogger().Fatal().Timestamp().Err(err).Msg("")
+		logger.DefaultLogger().Fatal().Timestamp().Err(err).Send()
 	}
 	defer db.DB.Close()
 
