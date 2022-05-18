@@ -41,7 +41,6 @@ func NewHTTPLogger(r *http.Request, ww chi_middleware.WrapResponseWriter) HTTPLo
 func (hl *httpLogger) ReadBody() error {
 	if hl.r.Body != nil {
 		body, err := ioutil.ReadAll(hl.r.Body)
-		err = errors.New("Asdf")
 		if err != nil {
 			return errors.Wrap(err, "http body read error")
 		}
