@@ -98,10 +98,10 @@ func (s *engine) Start() {
 func (e *engine) RegisterMiddleware() {
 	e.r.Use(chi_middleware.RequestID)
 	e.r.Use(chi_middleware.RealIP)
-	e.r.Use(middleware.Cors)
 	e.r.Use(middleware.HTTPLogger)
 	e.r.Use(middleware.Recovery)
 	e.r.Use(middleware.AllowHost)
+	e.r.Use(middleware.Cors)
 	e.r.Use(middleware.JWT)
 	e.r.Use(middleware.ContentTypeToJson)
 	e.r.Use(chi_middleware.Compress(5))

@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 	"time"
 
@@ -27,6 +28,7 @@ func HTTPLogger(next http.Handler) http.Handler {
 
 		t := time.Now()
 		defer func() {
+			log.Println("defer")
 			hl.Write(t)
 		}()
 

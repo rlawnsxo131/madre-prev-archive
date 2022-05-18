@@ -16,17 +16,17 @@ import (
 )
 
 type HTTPLogger interface {
+	ReadBody() error
 	Add(f func(e *zerolog.Event))
 	Write(t time.Time)
-	ReadBody() error
 }
 
 type httpLogger struct {
 	l    *zerolog.Logger
 	r    *http.Request
 	ww   chi_middleware.WrapResponseWriter
-	add  []func(e *zerolog.Event)
 	body []byte
+	add  []func(e *zerolog.Event)
 }
 
 func NewHTTPLogger(r *http.Request, ww chi_middleware.WrapResponseWriter) HTTPLogger {
@@ -41,8 +41,13 @@ func NewHTTPLogger(r *http.Request, ww chi_middleware.WrapResponseWriter) HTTPLo
 func (hl *httpLogger) ReadBody() error {
 	if hl.r.Body != nil {
 		body, err := ioutil.ReadAll(hl.r.Body)
+		err = errors.New("asdf")
 		if err != nil {
-			return errors.Wrap(err, "http body read error")
+			hl.add = append(hl.add, func(e *zerolog.Event) {
+				e.Err(errors.Wrap(err, "read http body error"))
+			})
+			hl.Write(time.Now())
+			return err
 		}
 		hl.body = body
 		hl.r.Body = ioutil.NopCloser(
