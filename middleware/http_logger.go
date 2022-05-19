@@ -19,12 +19,12 @@ func HTTPLogger(next http.Handler) http.Handler {
 
 		err := hl.ReadBody()
 		if err != nil {
-			d, _ := json.Marshal(map[string]interface{}{
+			res, _ := json.Marshal(map[string]interface{}{
 				"status":  http.StatusInternalServerError,
 				"message": response.Http_Msg_InternalServerError,
 			})
 			ww.WriteHeader(http.StatusInternalServerError)
-			ww.Write(d)
+			ww.Write(res)
 			return
 		}
 

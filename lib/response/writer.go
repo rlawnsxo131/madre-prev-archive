@@ -42,7 +42,7 @@ func NewWriter(w http.ResponseWriter, r *http.Request) Writer {
 }
 
 func (wt *writer) Write(data interface{}) {
-	d, err := json.Marshal(data)
+	res, err := json.Marshal(data)
 	if err != nil {
 		wt.Error(
 			errors.Wrap(err, "Write json parse error"),
@@ -50,9 +50,9 @@ func (wt *writer) Write(data interface{}) {
 		return
 	}
 	wt.w.WriteHeader(http.StatusOK)
-	wt.w.Write(d)
+	wt.w.Write(res)
 	logger.HTTPLoggerCtx(wt.r.Context()).Add(func(e *zerolog.Event) {
-		e.RawJSON("response", d)
+		e.RawJSON("response", res)
 	})
 }
 
@@ -85,13 +85,13 @@ func (wt *writer) ErrorConflict(err error) {
 }
 
 func (wt *writer) standardError(status int, message string, err error) {
-	d, _ := json.Marshal(map[string]interface{}{
+	res, _ := json.Marshal(map[string]interface{}{
 		"status":  status,
 		"message": message,
 	})
 	wt.w.WriteHeader(status)
-	wt.w.Write(d)
+	wt.w.Write(res)
 	logger.HTTPLoggerCtx(wt.r.Context()).Add(func(e *zerolog.Event) {
-		e.Err(err).RawJSON("response", d)
+		e.Err(err).RawJSON("response", res)
 	})
 }
