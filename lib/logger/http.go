@@ -31,10 +31,11 @@ type httpLogger struct {
 
 func NewHTTPLogger(r *http.Request, ww chi_middleware.WrapResponseWriter) HTTPLogger {
 	return &httpLogger{
-		l:   NewBaseLogger(),
-		r:   r,
-		ww:  ww,
-		add: []func(e *zerolog.Event){},
+		l:    NewBaseLogger(),
+		r:    r,
+		ww:   ww,
+		body: []byte{},
+		add:  []func(e *zerolog.Event){},
 	}
 }
 
@@ -47,7 +48,7 @@ func (hl *httpLogger) ReadBody() error {
 			})
 			return err
 		}
-		hl.body = body
+		hl.body = append(hl.body, body...)
 		hl.r.Body = ioutil.NopCloser(
 			bytes.NewBuffer(body),
 		)
