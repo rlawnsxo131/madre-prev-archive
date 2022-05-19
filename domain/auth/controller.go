@@ -93,9 +93,9 @@ func (c *controller) PostGoogleCheck() http.HandlerFunc {
 
 		// if no rows in result set err -> { exist: false }
 		socialUseCase := socialaccount.NewUseCase(c.db)
-		sa, err := socialUseCase.FindOneByProviderWithSocialId(
-			socialaccount.Key_Provider_GOOGLE,
+		sa, err := socialUseCase.FindOneBySocialIdWithProvider(
 			ggp.SocialId,
+			socialaccount.Key_Provider_GOOGLE,
 		)
 		exist, err := sa.IsExist(err)
 		if err != nil {
@@ -139,9 +139,9 @@ func (c *controller) PostGoogleSignIn() http.HandlerFunc {
 		}
 
 		socialUseCase := socialaccount.NewUseCase(c.db)
-		sa, err := socialUseCase.FindOneByProviderWithSocialId(
-			socialaccount.Key_Provider_GOOGLE,
+		sa, err := socialUseCase.FindOneBySocialIdWithProvider(
 			ggp.SocialId,
+			socialaccount.Key_Provider_GOOGLE,
 		)
 		if err != nil {
 			rw.Error(err)
@@ -249,8 +249,8 @@ func (c *controller) PostGoogleSignUp() http.HandlerFunc {
 
 		sa := socialaccount.SocialAccount{
 			UserID:   user.ID,
-			Provider: "GOOGLE",
 			SocialId: ggp.SocialId,
+			Provider: "GOOGLE",
 		}
 		socialUseCase := socialaccount.NewUseCase(c.db)
 		_, err = socialUseCase.Create(&sa)

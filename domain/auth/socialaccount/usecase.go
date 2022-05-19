@@ -25,6 +25,6 @@ func (uc *usecase) Create(s *SocialAccount) (string, error) {
 	return uc.writeRepo.Create(s)
 }
 
-func (uc *usecase) FindOneByProviderWithSocialId(provider, socialId string) (*SocialAccount, error) {
-	return uc.readRepo.FindOneByProviderWithSocialId(provider, socialId)
+func (uc *usecase) FindOneBySocialIdWithProvider(socialId, provider string) (*SocialAccount, error) {
+	return uc.readRepo.FindOneBySocialIdWithProvider(socialId, provider)
 }

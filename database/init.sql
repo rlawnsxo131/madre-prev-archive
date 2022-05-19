@@ -59,15 +59,15 @@ CREATE UNIQUE INDEX IF NOT EXISTS user_ix_username ON public.user USING btree (u
 CREATE TABLE IF NOT EXISTS public.social_account (
   id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
   user_id uuid NOT NULL,
-  provider social_account_provider NOT NULL DEFAULT 'GOOGLE',
   social_id varchar(255) NOT NULL,
+  provider social_account_provider NOT NULL DEFAULT 'GOOGLE',
   created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
   updated_at TIMESTAMPTZ DEFAULT now() NOT NULL,
   PRIMARY KEY (id)
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS social_account_ix_user_id ON public.social_account USING btree (user_id);
-CREATE UNIQUE INDEX IF NOT EXISTS social_account_ix_provider_social_id ON public.social_account USING btree (provider, social_id);
+CREATE UNIQUE INDEX IF NOT EXISTS social_account_ix_social_id_provider ON public.social_account USING btree (social_id, provider);
 
 -- ALTER TABLE public.social_account OWNER TO madre;
 

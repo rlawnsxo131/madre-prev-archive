@@ -16,8 +16,8 @@ func Test_SoicalAccountUseCase_Create_IsSuccess(t *testing.T) {
 
 	sa := socialaccount.SocialAccount{
 		UserID:   uuid.NewString(),
-		Provider: "GOOGLE",
 		SocialId: uuid.NewString(),
+		Provider: "GOOGLE",
 	}
 
 	socialUseCase := socialaccount.NewUseCase(db)
@@ -34,8 +34,8 @@ func Test_SocialAccountUseCase_Create_IsFail(t *testing.T) {
 
 	sa := socialaccount.SocialAccount{
 		UserID:   uuid.NewString(),
-		Provider: "",
 		SocialId: uuid.NewString(),
+		Provider: "",
 	}
 
 	socialUseCase := socialaccount.NewUseCase(db)
@@ -53,16 +53,16 @@ func Test_SocialAccountUseCase_FindOneByProviderWithSocialId_IsSuccess(t *testin
 	socialId := uuid.NewString()
 	sa := socialaccount.SocialAccount{
 		UserID:   uuid.NewString(),
-		Provider: socialaccount.Key_Provider_GOOGLE,
 		SocialId: socialId,
+		Provider: socialaccount.Key_Provider_GOOGLE,
 	}
 
 	socialUseCase := socialaccount.NewUseCase(db)
 	id, _ := socialUseCase.Create(&sa)
 
-	newSa, err := socialUseCase.FindOneByProviderWithSocialId(
-		socialaccount.Key_Provider_GOOGLE,
+	newSa, err := socialUseCase.FindOneBySocialIdWithProvider(
 		socialId,
+		socialaccount.Key_Provider_GOOGLE,
 	)
 
 	assert.Nil(err)
