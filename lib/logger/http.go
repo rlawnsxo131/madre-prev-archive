@@ -45,7 +45,6 @@ func (hl *httpLogger) ReadBody() error {
 			hl.add = append(hl.add, func(e *zerolog.Event) {
 				e.Err(errors.Wrap(err, "read http body error"))
 			})
-			hl.Write(time.Now())
 			return err
 		}
 		hl.body = body

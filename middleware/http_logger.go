@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 	"time"
 
@@ -13,8 +12,11 @@ import (
 
 func HTTPLogger(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		t := time.Now()
 		ww := chi_middleware.NewWrapResponseWriter(w, r.ProtoMajor)
 		hl := logger.NewHTTPLogger(r, ww)
+		defer hl.Write(t)
+
 		err := hl.ReadBody()
 		if err != nil {
 			d, _ := json.Marshal(map[string]interface{}{
@@ -25,12 +27,6 @@ func HTTPLogger(next http.Handler) http.Handler {
 			ww.Write(d)
 			return
 		}
-
-		t := time.Now()
-		defer func() {
-			log.Println("defer")
-			hl.Write(t)
-		}()
 
 		next.ServeHTTP(
 			ww,
