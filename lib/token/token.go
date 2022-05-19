@@ -12,8 +12,9 @@ import (
 )
 
 const (
-	Key_AccessToken  = "Access_token"
-	Key_RefreshToken = "Refresh_token"
+	Key_AccessToken    = "Access_token"
+	Key_RefreshToken   = "Refresh_token"
+	Key_UserProfileCtx = "Key_UserProfileCtx"
 )
 
 var (
@@ -40,32 +41,25 @@ func GenerateTokens(p *UserProfile) (string, string, error) {
 	var rftk string
 
 	for _, tokenType := range tokenTypes {
-		var claims authTokenClaims
+		claims := &authTokenClaims{
+			TokenUUID: uuid.NewString(),
+			UserID:    p.UserID,
+			Username:  p.Username,
+			PhotoUrl:  p.PhotoUrl,
+		}
 
 		if tokenType == Key_AccessToken {
-			claims = authTokenClaims{
-				TokenUUID: uuid.NewString(),
-				UserID:    p.UserID,
-				Username:  p.Username,
-				PhotoUrl:  p.PhotoUrl,
-				StandardClaims: jwt.StandardClaims{
-					ExpiresAt: now.AddDate(0, 0, 1).Unix(),
-					Issuer:    "madre",
-					IssuedAt:  now.Unix(),
-				},
+			claims.StandardClaims = jwt.StandardClaims{
+				ExpiresAt: now.AddDate(0, 0, 1).Unix(),
+				Issuer:    "madre",
+				IssuedAt:  now.Unix(),
 			}
 		}
 		if tokenType == Key_RefreshToken {
-			claims = authTokenClaims{
-				TokenUUID: uuid.NewString(),
-				UserID:    p.UserID,
-				Username:  p.Username,
-				PhotoUrl:  p.PhotoUrl,
-				StandardClaims: jwt.StandardClaims{
-					ExpiresAt: now.AddDate(0, 0, 30).Unix(),
-					Issuer:    "madre",
-					IssuedAt:  now.Unix(),
-				},
+			claims.StandardClaims = jwt.StandardClaims{
+				ExpiresAt: now.AddDate(0, 0, 30).Unix(),
+				Issuer:    "madre",
+				IssuedAt:  now.Unix(),
 			}
 		}
 
@@ -155,10 +149,6 @@ func ResetTokenCookies(w http.ResponseWriter) {
 		SameSite: 2,
 	})
 }
-
-const (
-	Key_UserProfileCtx = "Key_UserProfileCtx"
-)
 
 func UserProfileCtx(ctx context.Context) *UserProfile {
 	v := ctx.Value(Key_UserProfileCtx)
