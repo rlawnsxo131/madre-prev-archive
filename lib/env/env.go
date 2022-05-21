@@ -11,9 +11,6 @@ import (
 
 func Load() {
 	env := getEnv("APP_ENV")
-	if env == "" {
-		env = "local"
-	}
 	godotenv.Load(".env." + env)
 }
 
