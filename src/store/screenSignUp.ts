@@ -31,6 +31,7 @@ const screenSignUp = createSlice({
       state.visible = false;
       state.isError = false;
       state.isValidateError = false;
+      state.isConflictError = false;
       state.access_token = '';
     },
     setIsError(state) {
