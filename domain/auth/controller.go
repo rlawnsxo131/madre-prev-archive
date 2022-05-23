@@ -92,8 +92,8 @@ func (c *controller) PostGoogleCheck() http.HandlerFunc {
 		}
 
 		// if no rows in result set err -> { exist: false }
-		socialReadUC := socialaccount.NewReadUseCase(c.db)
-		sa, err := socialReadUC.FindOneBySocialIdWithProvider(
+		socialReadUseCase := socialaccount.NewReadUseCase(c.db)
+		sa, err := socialReadUseCase.FindOneBySocialIdWithProvider(
 			ggp.SocialId,
 			socialaccount.Key_Provider_GOOGLE,
 		)
@@ -138,8 +138,8 @@ func (c *controller) PostGoogleSignIn() http.HandlerFunc {
 			return
 		}
 
-		socialReadUC := socialaccount.NewReadUseCase(c.db)
-		sa, err := socialReadUC.FindOneBySocialIdWithProvider(
+		socialReadUseCase := socialaccount.NewReadUseCase(c.db)
+		sa, err := socialReadUseCase.FindOneBySocialIdWithProvider(
 			ggp.SocialId,
 			socialaccount.Key_Provider_GOOGLE,
 		)
@@ -148,8 +148,8 @@ func (c *controller) PostGoogleSignIn() http.HandlerFunc {
 			return
 		}
 
-		userReadUC := user.NewReadUseCase(c.db)
-		u, err := userReadUC.FindOneById(sa.UserID)
+		userReadUseCase := user.NewReadUseCase(c.db)
+		u, err := userReadUseCase.FindOneById(sa.UserID)
 		if err != nil {
 			rw.Error(err)
 			return
@@ -221,8 +221,8 @@ func (c *controller) PostGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		userReadUC := user.NewReadUseCase(c.db)
-		sameNameUser, err := userReadUC.FindOneByUsername(params.Username)
+		userReadUseCase := user.NewReadUseCase(c.db)
+		sameNameUser, err := userReadUseCase.FindOneByUsername(params.Username)
 		exist, err := sameNameUser.IsExist(err)
 		if err != nil {
 			rw.Error(err)
@@ -235,14 +235,14 @@ func (c *controller) PostGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		userWriteUC := user.NewWriteUseCase(c.db)
-		userId, err := userWriteUC.Create(&u)
+		userWriteUseCase := user.NewWriteUseCase(c.db)
+		userId, err := userWriteUseCase.Create(&u)
 		if err != nil {
 			rw.Error(err)
 			return
 		}
 
-		user, err := userReadUC.FindOneById(userId)
+		user, err := userReadUseCase.FindOneById(userId)
 		if err != nil {
 			rw.Error(err)
 			return
@@ -253,8 +253,8 @@ func (c *controller) PostGoogleSignUp() http.HandlerFunc {
 			SocialId: ggp.SocialId,
 			Provider: "GOOGLE",
 		}
-		socialWriteUC := socialaccount.NewWriteUseCase(c.db)
-		_, err = socialWriteUC.Create(&sa)
+		socialWriteUseCase := socialaccount.NewWriteUseCase(c.db)
+		_, err = socialWriteUseCase.Create(&sa)
 		if err != nil {
 			rw.Error(err)
 			return

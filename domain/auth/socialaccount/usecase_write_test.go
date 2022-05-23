@@ -20,8 +20,8 @@ func Test_SoicalAccountWriteUseCase_Create_IsSuccess(t *testing.T) {
 		Provider: "GOOGLE",
 	}
 
-	socialWriteUC := socialaccount.NewWriteUseCase(db)
-	id, err := socialWriteUC.Create(&sa)
+	socialWriteUseCase := socialaccount.NewWriteUseCase(db)
+	id, err := socialWriteUseCase.Create(&sa)
 
 	assert.Nil(err)
 	assert.NotEmpty(id)
@@ -38,8 +38,8 @@ func Test_SoicalAccountWriteUseCase_Create_IsFail(t *testing.T) {
 		Provider: "",
 	}
 
-	socialWriteUC := socialaccount.NewWriteUseCase(db)
-	id, err := socialWriteUC.Create(&sa)
+	socialWriteUseCase := socialaccount.NewWriteUseCase(db)
+	id, err := socialWriteUseCase.Create(&sa)
 
 	assert.Error(err)
 	assert.Empty(id)

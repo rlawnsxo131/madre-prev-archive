@@ -21,8 +21,8 @@ func Test_UserWriteUseCase_Create_IsSuccess(t *testing.T) {
 		PhotoUrl:   utils.NewNullString("https://google.com"),
 	}
 
-	userWriteUC := user.NewWriteUseCase(db)
-	id, err := userWriteUC.Create(&u)
+	userWriteUseCase := user.NewWriteUseCase(db)
+	id, err := userWriteUseCase.Create(&u)
 
 	assert.Nil(err)
 	assert.NotEmpty(id)
@@ -39,8 +39,8 @@ func Test_UserWriteUseCase_Create_IsFail(t *testing.T) {
 		PhotoUrl:   utils.NewNullString("https://google.com"),
 	}
 
-	userWriteUC := user.NewWriteUseCase(db)
-	id, err := userWriteUC.Create(&u)
+	userWriteUseCase := user.NewWriteUseCase(db)
+	id, err := userWriteUseCase.Create(&u)
 
 	assert.Error(err)
 	assert.Empty(id)

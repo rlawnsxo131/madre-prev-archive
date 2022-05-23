@@ -21,11 +21,11 @@ func Test_SocialAccountReadUseCase_FindOneByProviderWithSocialId_IsSuccess(t *te
 		Provider: socialaccount.Key_Provider_GOOGLE,
 	}
 
-	socialReadUC := socialaccount.NewReadUseCase(db)
-	socialWriteUC := socialaccount.NewWriteUseCase(db)
-	id, _ := socialWriteUC.Create(&sa)
+	socialReadUseCase := socialaccount.NewReadUseCase(db)
+	socialWriteUseCase := socialaccount.NewWriteUseCase(db)
+	id, _ := socialWriteUseCase.Create(&sa)
 
-	newSa, err := socialReadUC.FindOneBySocialIdWithProvider(
+	newSa, err := socialReadUseCase.FindOneBySocialIdWithProvider(
 		socialId,
 		socialaccount.Key_Provider_GOOGLE,
 	)
