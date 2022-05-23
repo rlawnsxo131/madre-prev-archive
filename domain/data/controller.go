@@ -44,8 +44,8 @@ func (c *controller) GetAll() http.HandlerFunc {
 		}
 		limit = utils.IfIsNotExistGetDefaultIntValue(limit, 50)
 
-		dataUseCase := NewUseCase(c.db)
-		dd, err := dataUseCase.FindAll(limit)
+		dataReadUC := NewReadUseCase(c.db)
+		dd, err := dataReadUC.FindAll(limit)
 		if err != nil {
 			rw.Error(err)
 			return
@@ -60,8 +60,8 @@ func (c *controller) Get() http.HandlerFunc {
 		rw := response.NewWriter(w, r)
 		id := chi.URLParam(r, "id")
 
-		dataUseCase := NewUseCase(c.db)
-		d, err := dataUseCase.FindOneById(id)
+		dataReadUC := NewReadUseCase(c.db)
+		d, err := dataReadUC.FindOneById(id)
 		if err != nil {
 			rw.Error(err)
 			return

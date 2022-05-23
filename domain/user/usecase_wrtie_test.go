@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_UserUseCase_Create_IsSuccess(t *testing.T) {
+func Test_UserWriteUseCase_Create_IsSuccess(t *testing.T) {
 	assert := assert.New(t)
 
 	db, _ := database.DatabaseInstance()
@@ -21,14 +21,14 @@ func Test_UserUseCase_Create_IsSuccess(t *testing.T) {
 		PhotoUrl:   utils.NewNullString("https://google.com"),
 	}
 
-	userUseCase := user.NewUseCase(db)
-	id, err := userUseCase.Create(&u)
+	userWriteUC := user.NewWriteUseCase(db)
+	id, err := userWriteUC.Create(&u)
 
 	assert.Nil(err)
 	assert.NotEmpty(id)
 }
 
-func Test_UserUseCase_Create_IsFail(t *testing.T) {
+func Test_UserWriteUseCase_Create_IsFail(t *testing.T) {
 	assert := assert.New(t)
 
 	db, _ := database.DatabaseInstance()
@@ -39,17 +39,9 @@ func Test_UserUseCase_Create_IsFail(t *testing.T) {
 		PhotoUrl:   utils.NewNullString("https://google.com"),
 	}
 
-	userUseCase := user.NewUseCase(db)
-	id, err := userUseCase.Create(&u)
+	userWriteUC := user.NewWriteUseCase(db)
+	id, err := userWriteUC.Create(&u)
 
 	assert.Error(err)
 	assert.Empty(id)
 }
-
-func Test_UserUseCase_FindOneById_IsSuccess(t *testing.T) {}
-
-func Test_UserUseCase_FindOneById_IsFail(t *testing.T) {}
-
-func Test_USerUseCase_FindOneByUsername_IsSuccess(t *testing.T) {}
-
-func Test_USerUseCase_FindOneByUsername_IsFail(t *testing.T) {}

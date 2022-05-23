@@ -28,8 +28,8 @@ func (c *controller) Get() http.HandlerFunc {
 		rw := response.NewWriter(w, r)
 		id := chi.URLParam(r, "id")
 
-		userUseCase := NewUseCase(c.db)
-		u, err := userUseCase.FindOneById(id)
+		userReadUC := NewReadUseCase(c.db)
+		u, err := userReadUC.FindOneById(id)
 		if err != nil {
 			rw.Error(err)
 			return

@@ -92,8 +92,8 @@ func (c *controller) PostGoogleCheck() http.HandlerFunc {
 		}
 
 		// if no rows in result set err -> { exist: false }
-		socialUseCase := socialaccount.NewUseCase(c.db)
-		sa, err := socialUseCase.FindOneBySocialIdWithProvider(
+		socialReadUC := socialaccount.NewReadUseCase(c.db)
+		sa, err := socialReadUC.FindOneBySocialIdWithProvider(
 			ggp.SocialId,
 			socialaccount.Key_Provider_GOOGLE,
 		)
@@ -138,8 +138,8 @@ func (c *controller) PostGoogleSignIn() http.HandlerFunc {
 			return
 		}
 
-		socialUseCase := socialaccount.NewUseCase(c.db)
-		sa, err := socialUseCase.FindOneBySocialIdWithProvider(
+		socialReadUC := socialaccount.NewReadUseCase(c.db)
+		sa, err := socialReadUC.FindOneBySocialIdWithProvider(
 			ggp.SocialId,
 			socialaccount.Key_Provider_GOOGLE,
 		)
@@ -148,8 +148,8 @@ func (c *controller) PostGoogleSignIn() http.HandlerFunc {
 			return
 		}
 
-		userUseCase := user.NewUseCase(c.db)
-		u, err := userUseCase.FindOneById(sa.UserID)
+		userReadUC := user.NewReadUseCase(c.db)
+		u, err := userReadUC.FindOneById(sa.UserID)
 		if err != nil {
 			rw.Error(err)
 			return
@@ -221,8 +221,8 @@ func (c *controller) PostGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		userUseCase := user.NewUseCase(c.db)
-		sameNameUser, err := userUseCase.FindOneByUsername(params.Username)
+		userReadUC := user.NewReadUseCase(c.db)
+		sameNameUser, err := userReadUC.FindOneByUsername(params.Username)
 		exist, err := sameNameUser.IsExist(err)
 		if err != nil {
 			rw.Error(err)
@@ -235,13 +235,14 @@ func (c *controller) PostGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		userId, err := userUseCase.Create(&u)
+		userWriteUC := user.NewWriteUseCase(c.db)
+		userId, err := userWriteUC.Create(&u)
 		if err != nil {
 			rw.Error(err)
 			return
 		}
 
-		user, err := userUseCase.FindOneById(userId)
+		user, err := userReadUC.FindOneById(userId)
 		if err != nil {
 			rw.Error(err)
 			return
@@ -252,8 +253,8 @@ func (c *controller) PostGoogleSignUp() http.HandlerFunc {
 			SocialId: ggp.SocialId,
 			Provider: "GOOGLE",
 		}
-		socialUseCase := socialaccount.NewUseCase(c.db)
-		_, err = socialUseCase.Create(&sa)
+		socialWriteUC := socialaccount.NewWriteUseCase(c.db)
+		_, err = socialWriteUC.Create(&sa)
 		if err != nil {
 			rw.Error(err)
 			return
