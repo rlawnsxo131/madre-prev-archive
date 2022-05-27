@@ -36,12 +36,12 @@ COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UU
 --
 CREATE TABLE IF NOT EXISTS public.user(
   id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-  email varchar(255) NOT NULL,
-  origin_name varchar(50) DEFAULT NULL,
-  username varchar(50) NOT NULL,
-  photo_url varchar(255) DEFAULT NULL,
-  created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
-  updated_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  email character varying(255) NOT NULL,
+  origin_name character varying(50) DEFAULT NULL,
+  username character varying(50) NOT NULL,
+  photo_url character varying(255) DEFAULT NULL,
+  created_at timestamp with time zone DEFAULT now() NOT NULL,
+  updated_at timestamp with time zone DEFAULT now() NOT NULL,
   PRIMARY KEY (id)
 );
 
@@ -53,16 +53,14 @@ CREATE UNIQUE INDEX IF NOT EXISTS user_ix_username ON public.user USING btree (u
 --
 -- social_account
 --
--- DROP TYPE IF EXISTS social_account_provider;
--- CREATE TYPE social_account_provider AS ENUM ('GOOGLE');
 
 CREATE TABLE IF NOT EXISTS public.social_account (
   id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
   user_id uuid NOT NULL,
-  social_id varchar(255) NOT NULL,
-  provider social_account_provider NOT NULL DEFAULT 'GOOGLE',
-  created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
-  updated_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  social_id character varying(255) NOT NULL,
+  provider character varying(10) NOT NULL DEFAULT 'GOOGLE',
+  created_at timestamp with time zone DEFAULT now() NOT NULL,
+  updated_at timestamp with time zone DEFAULT now() NOT NULL,
   PRIMARY KEY (id)
 );
 
@@ -77,12 +75,12 @@ CREATE UNIQUE INDEX IF NOT EXISTS social_account_ix_social_id_provider ON public
 CREATE TABLE IF NOT EXISTS public.data (
   id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
   user_id uuid NOT NULL,
-  file_url varchar(255)  NOT NULL,
-  title varchar(255)  NOT NULL,
-  description varchar(255) DEFAULT NULL,
+  file_url character varying(255)  NOT NULL,
+  title character varying(255)  NOT NULL,
+  description character varying(255) DEFAULT NULL,
   is_public boolean NOT NULL DEFAULT false,
-  created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
-  updated_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  created_at timestamp with time zone DEFAULT now() NOT NULL,
+  updated_at timestamp with time zone DEFAULT now() NOT NULL,
   PRIMARY KEY (id)
 );
 

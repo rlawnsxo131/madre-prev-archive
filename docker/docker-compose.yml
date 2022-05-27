@@ -12,4 +12,4 @@ services:
     environment:
       POSTGRES_USER: madre
       POSTGRES_PASSWORD: 1234
-      TZ: Asia/Seoul
+      # TZ: Asia/Seoul
