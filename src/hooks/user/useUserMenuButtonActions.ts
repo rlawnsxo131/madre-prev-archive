@@ -12,6 +12,6 @@ export default function useUserMenuButtonActions() {
         dispatch(user.actions.handleNavigation());
       },
     }),
-    [],
+    [dispatch],
   );
 }

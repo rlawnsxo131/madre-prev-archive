@@ -7,12 +7,11 @@ export default function useUserSignOut() {
   const [signOut] = authApi.useDeleteMutation();
   const isUserPath = useIsUserPath();
 
+  // handled inside useDeleteMutation when an error occurs
   return async () => {
-    try {
-      await signOut(undefined);
-      if (isUserPath) {
-        navigate('/', { replace: true });
-      }
-    } catch (e) {}
+    await signOut(undefined);
+    if (isUserPath) {
+      navigate('/', { replace: true });
+    }
   };
 }

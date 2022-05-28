@@ -29,12 +29,12 @@ export default function useInputs<T>(defaultValues: T) {
         value: e.target.value,
       });
     },
-    [],
+    [dispatch],
   );
 
   const onReset = useCallback(() => {
     dispatch(null);
-  }, []);
+  }, [dispatch]);
 
   return {
     state,

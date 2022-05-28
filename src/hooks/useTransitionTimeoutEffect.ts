@@ -27,7 +27,7 @@ export default function useTransitionTimeoutEffect({
         clearTimeout(timeoutId);
       }
     };
-  }, [visible]);
+  }, [visible, delay]);
 
   return closed;
 }

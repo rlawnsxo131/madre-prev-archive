@@ -120,9 +120,9 @@ export default class D3AxisChart extends D3Common {
   /**
    * circle options
    */
-  private circleRadius: number = 3;
-  private circleStrokeWidth: number = 2;
-  private circleIsFill: boolean = false;
+  private circleRadius = 3;
+  private circleStrokeWidth = 2;
+  private circleIsFill = false;
   private circleDrawDelay = 550;
 
   constructor({
@@ -452,15 +452,16 @@ export default class D3AxisChart extends D3Common {
         )
         .attr('d', `${lineGenerator(data)}`);
 
-      const pathLength = path.node()?.getTotalLength()!;
-
-      path
-        .attr('stroke-dasharray', `${pathLength} ${pathLength}`)
-        .attr('stroke-dashoffset', pathLength)
-        .transition()
-        .ease(easeSinInOut)
-        .duration(this.lineTransitionDuration)
-        .attr('stroke-dashoffset', 0);
+      const pathLength = path.node()?.getTotalLength();
+      if (pathLength) {
+        path
+          .attr('stroke-dasharray', `${pathLength} ${pathLength}`)
+          .attr('stroke-dashoffset', pathLength)
+          .transition()
+          .ease(easeSinInOut)
+          .duration(this.lineTransitionDuration)
+          .attr('stroke-dashoffset', 0);
+      }
     });
   }
 
@@ -501,7 +502,7 @@ export default class D3AxisChart extends D3Common {
     if (areaType) this.areaType = areaType;
     if (areaOpacity) this.areaOpacity = areaOpacity;
     if (areaTransitionDuration)
-      this.areaTransitionDuration = this.areaTransitionDuration;
+      this.areaTransitionDuration = areaTransitionDuration;
   }
 
   private getAreaGenerator() {

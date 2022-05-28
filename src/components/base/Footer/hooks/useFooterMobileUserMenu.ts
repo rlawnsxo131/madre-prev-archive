@@ -36,7 +36,7 @@ export default function useFooterMobileUserMenu() {
     return () => {
       isClickRef.current = false;
     };
-  }, [profile?.username]);
+  }, [profile?.username, navigate]);
 
   return {
     isActive,
