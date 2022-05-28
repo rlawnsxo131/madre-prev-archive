@@ -19,16 +19,12 @@ type ResponseErrors =
       status: 400;
     }
   | {
-      message: 'NotFound';
-      status: 404;
-    }
-  | {
-      message: 'InternalServerError';
-      status: 500;
-    }
-  | {
       message: 'Unauthorized';
       status: 401;
+    }
+  | {
+      message: 'NotFound';
+      status: 404;
     }
   | {
       message: 'Forbidden';
@@ -37,6 +33,10 @@ type ResponseErrors =
   | {
       message: 'Conflict';
       status: 409;
+    }
+  | {
+      message: 'InternalServerError';
+      status: 500;
     };
 
 export interface ResponseError {
