@@ -17,7 +17,7 @@ export const appRoutes = [
   { path: '/m/all-menu' },
 ];
 
-// The values ​​below are in the order in which they are displayed.
+// The values below are in the order in which they are displayed.
 export const appInfoRoutes = [
   { path: '/madre-story', displayText: 'Madre 이야기' },
   { path: '/notice', displayText: '공지사항' },
