@@ -21,7 +21,7 @@ func NewWriteRepository(db database.Database) WriteRepository {
 	}
 }
 
-func (r *writeRepository) Create(s *SocialAccount) (string, error) {
+func (r *writeRepository) Create(sa *SocialAccount) (string, error) {
 	var id string
 
 	query := "INSERT INTO social_account(user_id, provider, social_id)" +
@@ -31,7 +31,7 @@ func (r *writeRepository) Create(s *SocialAccount) (string, error) {
 	err := r.db.PrepareNamedGet(
 		&id,
 		query,
-		r.mapper.toModel(s),
+		r.mapper.toModel(sa),
 	)
 	if err != nil {
 		return "", errors.Wrap(err, "socialaccount WriteRepository create")

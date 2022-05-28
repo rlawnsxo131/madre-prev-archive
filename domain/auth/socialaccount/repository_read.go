@@ -7,7 +7,7 @@ import (
 )
 
 type ReadRepository interface {
-	FindOneBySocialIdWithProvider(socialId, provider string) (*SocialAccount, error)
+	FindOneBySocialIdAndProvider(socialId, provider string) (*SocialAccount, error)
 }
 
 type readRepository struct {
@@ -22,7 +22,7 @@ func NewReadRepository(db database.Database) ReadRepository {
 	}
 }
 
-func (r *readRepository) FindOneBySocialIdWithProvider(socialId, provider string) (*SocialAccount, error) {
+func (r *readRepository) FindOneBySocialIdAndProvider(socialId, provider string) (*SocialAccount, error) {
 	var sa SocialAccount
 
 	query := "SELECT * FROM social_account" +

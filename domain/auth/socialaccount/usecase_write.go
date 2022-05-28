@@ -16,6 +16,6 @@ func NewWriteUseCase(db database.Database) WriteUseCase {
 	}
 }
 
-func (uc *writeUseCase) Create(s *SocialAccount) (string, error) {
-	return uc.repo.Create(s)
+func (uc *writeUseCase) Create(sa *SocialAccount) (string, error) {
+	return uc.repo.Create(sa)
 }

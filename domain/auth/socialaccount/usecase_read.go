@@ -16,6 +16,6 @@ func NewReadUseCase(db database.Database) ReadUseCase {
 	}
 }
 
-func (uc *readUseCase) FindOneBySocialIdWithProvider(socialId, provider string) (*SocialAccount, error) {
-	return uc.repo.FindOneBySocialIdWithProvider(socialId, provider)
+func (uc *readUseCase) FindOneBySocialIdAndProvider(socialId, provider string) (*SocialAccount, error) {
+	return uc.repo.FindOneBySocialIdAndProvider(socialId, provider)
 }
