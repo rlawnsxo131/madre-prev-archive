@@ -16,10 +16,7 @@ func Load() {
 
 func IsLocal() bool {
 	env := getEnv("APP_ENV")
-	if env != "local" {
-		return false
-	}
-	return true
+	return env == "local"
 }
 
 func AppEnv() string {
