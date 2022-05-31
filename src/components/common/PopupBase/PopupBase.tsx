@@ -23,6 +23,7 @@ function PopupBase({ children, visible }: PopupBaseProps) {
     </>
   );
 }
+
 const block = css`
   position: fixed;
   top: 0;
@@ -44,15 +45,13 @@ const content = (visible: boolean) => css`
   background: ${themePalette.bg_element1};
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.09);
   z-index: ${zIndexes.popup};
-  ${
-    visible
-      ? css`
+  ${visible
+    ? css`
         animation: ${transitions.popInFromBottom} 0.4s forwards ease-in-out;
       `
-      : css`
+    : css`
         animation: ${transitions.popOutToBottom} 0.25s forwards ease-in-out;
-      `
-  };
+      `};
 `;
 
 export default PopupBase;

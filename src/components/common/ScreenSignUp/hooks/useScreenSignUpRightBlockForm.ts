@@ -57,18 +57,18 @@ export default function useScreenSignUpRightBlockForm() {
     if (!isValidateError) return;
     inputRef.current?.focus();
     warn('이름을 다시 확인해 주세요.(영문, 숫자 1~16자)', 'top-center');
-  }, [isValidateError]);
+  }, [isValidateError, warn]);
 
   useEffect(() => {
     if (!isConflictError) return;
     inputRef.current?.focus();
     error('중복된 이름입니다.', 'top-center');
-  }, [isConflictError]);
+  }, [isConflictError, error]);
 
   useEffect(() => {
     if (!isError) return;
     error('에러가 발생했습니다. 잠시후 다시 시도해 주세요.', 'top-center');
-  }, [isError]);
+  }, [isError, error]);
 
   return {
     inputRef,
