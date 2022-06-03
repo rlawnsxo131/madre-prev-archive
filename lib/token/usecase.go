@@ -1,7 +1,6 @@
 package token
 
 import (
-	"context"
 	"net/http"
 	"time"
 
@@ -35,7 +34,76 @@ type authTokenClaims struct {
 	jwt.StandardClaims
 }
 
-func GenerateTokens(p *UserProfile) (string, string, error) {
+type UseCase interface {
+	GenerateAndSetCookie(w http.ResponseWriter, p *UserProfile) error
+	DecodeToken(token string) (*authTokenClaims, error)
+	ResetTokenCookies(w http.ResponseWriter)
+	generateTokens(p *UserProfile) (string, string, error)
+	setTokenCookies(w http.ResponseWriter, actk, rftk string)
+}
+
+type useCase struct{}
+
+func NewUseCase() UseCase {
+	return &useCase{}
+}
+
+func (uc *useCase) GenerateAndSetCookie(w http.ResponseWriter, p *UserProfile) error {
+	actk, rftk, err := uc.generateTokens(p)
+	if err != nil {
+		return err
+	}
+	uc.setTokenCookies(w, actk, rftk)
+	return nil
+}
+
+func (uc *useCase) DecodeToken(token string) (*authTokenClaims, error) {
+	claims := authTokenClaims{}
+	t, err := jwt.ParseWithClaims(token, &claims, func(t *jwt.Token) (interface{}, error) {
+		if _, ok := t.Method.(*jwt.SigningMethodHMAC); ok {
+			return []byte(env.JWTSecretKey()), nil
+		}
+		return nil, errors.New("DocodeToken: ParseWithClaims")
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	if t.Valid {
+		return &claims, nil
+	}
+
+	return nil, errors.New("DecodeToken: token is not valid")
+}
+
+func (uc *useCase) ResetTokenCookies(w http.ResponseWriter) {
+	now := time.Now()
+	expires := now.AddDate(0, 0, -1)
+
+	http.SetCookie(w, &http.Cookie{
+		Name:  Key_AccessToken,
+		Value: "",
+		Path:  "/",
+		// Domain:   ".juntae.kim",
+		Expires:  expires,
+		Secure:   true,
+		HttpOnly: true,
+		SameSite: 2,
+	})
+	http.SetCookie(w, &http.Cookie{
+		Name:  Key_RefreshToken,
+		Value: "",
+		Path:  "/",
+		// Domain:   ".juntae.kim",
+		Expires:  expires,
+		Secure:   true,
+		HttpOnly: true,
+		SameSite: 2,
+	})
+}
+
+func (uc *useCase) generateTokens(p *UserProfile) (string, string, error) {
 	now := time.Now()
 	var actk string
 	var rftk string
@@ -79,27 +147,7 @@ func GenerateTokens(p *UserProfile) (string, string, error) {
 	return actk, rftk, nil
 }
 
-func DecodeToken(token string) (*authTokenClaims, error) {
-	claims := authTokenClaims{}
-	t, err := jwt.ParseWithClaims(token, &claims, func(t *jwt.Token) (interface{}, error) {
-		if _, ok := t.Method.(*jwt.SigningMethodHMAC); ok {
-			return []byte(env.JWTSecretKey()), nil
-		}
-		return nil, errors.New("DocodeToken: ParseWithClaims")
-	})
-
-	if err != nil {
-		return nil, err
-	}
-
-	if t.Valid {
-		return &claims, nil
-	}
-
-	return nil, errors.New("DecodeToken: token is not valid")
-}
-
-func SetTokenCookies(w http.ResponseWriter, actk, rftk string) {
+func (uc *useCase) setTokenCookies(w http.ResponseWriter, actk, rftk string) {
 	now := time.Now()
 
 	http.SetCookie(w, &http.Cookie{
@@ -122,42 +170,4 @@ func SetTokenCookies(w http.ResponseWriter, actk, rftk string) {
 		HttpOnly: true,
 		SameSite: 2,
 	})
-}
-
-func ResetTokenCookies(w http.ResponseWriter) {
-	now := time.Now()
-	expires := now.AddDate(0, 0, -1)
-
-	http.SetCookie(w, &http.Cookie{
-		Name:  Key_AccessToken,
-		Value: "",
-		Path:  "/",
-		// Domain:   ".juntae.kim",
-		Expires:  expires,
-		Secure:   true,
-		HttpOnly: true,
-		SameSite: 2,
-	})
-	http.SetCookie(w, &http.Cookie{
-		Name:  Key_RefreshToken,
-		Value: "",
-		Path:  "/",
-		// Domain:   ".juntae.kim",
-		Expires:  expires,
-		Secure:   true,
-		HttpOnly: true,
-		SameSite: 2,
-	})
-}
-
-func UserProfileCtx(ctx context.Context) *UserProfile {
-	v := ctx.Value(Key_UserProfileCtx)
-	if v, ok := v.(*UserProfile); ok {
-		return v
-	}
-	return nil
-}
-
-func SetUserProfileCtx(ctx context.Context, p *UserProfile) context.Context {
-	return context.WithValue(ctx, Key_UserProfileCtx, p)
 }

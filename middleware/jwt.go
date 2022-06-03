@@ -17,6 +17,7 @@ func JWT(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		actk, err := r.Cookie(token.Key_AccessToken)
+		tokenUseCase := token.NewUseCase()
 		if err != nil {
 			if err != http.ErrNoCookie {
 				rw := response.NewWriter(w, r)
@@ -28,7 +29,7 @@ func JWT(next http.Handler) http.Handler {
 		}
 
 		if actk != nil {
-			claims, err := token.DecodeToken(actk.Value)
+			claims, err := tokenUseCase.DecodeToken(actk.Value)
 			if err != nil {
 				_, ok := err.(*jwt.ValidationError)
 				if ok {
@@ -44,21 +45,20 @@ func JWT(next http.Handler) http.Handler {
 					}
 
 					if rftk != nil {
-						claims, err := token.DecodeToken(rftk.Value)
+						claims, err := tokenUseCase.DecodeToken(rftk.Value)
 						if err != nil {
 							// remove cookies
-							token.ResetTokenCookies(w)
+							tokenUseCase.ResetTokenCookies(w)
 						} else {
 							p := token.UserProfile{
 								UserID:   claims.UserID,
 								Username: claims.Username,
 								PhotoUrl: claims.PhotoUrl,
 							}
-							actk, rftk, err := token.GenerateTokens(&p)
+							err = tokenUseCase.GenerateAndSetCookie(w, &p)
 							if err != nil {
 								logger.DefaultLogger().Err(err).Timestamp().Str("action", "JWT").Send()
 							} else {
-								token.SetTokenCookies(w, actk, rftk)
 								ctx = token.SetUserProfileCtx(ctx, &p)
 							}
 						}
@@ -87,21 +87,20 @@ func JWT(next http.Handler) http.Handler {
 			}
 
 			if rftk != nil {
-				claims, err := token.DecodeToken(rftk.Value)
+				claims, err := tokenUseCase.DecodeToken(rftk.Value)
 				if err != nil {
 					// remove cookies
-					token.ResetTokenCookies(w)
+					tokenUseCase.ResetTokenCookies(w)
 				} else {
 					p := token.UserProfile{
 						UserID:   claims.UserID,
 						Username: claims.Username,
 						PhotoUrl: claims.PhotoUrl,
 					}
-					actk, rftk, err := token.GenerateTokens(&p)
+					err = tokenUseCase.GenerateAndSetCookie(w, &p)
 					if err != nil {
 						logger.DefaultLogger().Err(err).Timestamp().Str("action", "JWT").Send()
 					} else {
-						token.SetTokenCookies(w, actk, rftk)
 						ctx = token.SetUserProfileCtx(ctx, &p)
 					}
 				}
