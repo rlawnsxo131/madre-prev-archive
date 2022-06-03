@@ -48,7 +48,7 @@ func JWT(next http.Handler) http.Handler {
 						claims, err := tokenManager.DecodeToken(rftk.Value)
 						if err != nil {
 							// remove cookies
-							tokenManager.ResetTokenCookies(w)
+							tokenManager.ResetCookies(w)
 						} else {
 							p := token.UserProfile{
 								UserID:   claims.UserID,
@@ -90,7 +90,7 @@ func JWT(next http.Handler) http.Handler {
 				claims, err := tokenManager.DecodeToken(rftk.Value)
 				if err != nil {
 					// remove cookies
-					tokenManager.ResetTokenCookies(w)
+					tokenManager.ResetCookies(w)
 				} else {
 					p := token.UserProfile{
 						UserID:   claims.UserID,

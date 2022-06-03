@@ -37,7 +37,7 @@ type authTokenClaims struct {
 type Manager interface {
 	GenerateAndSetCookies(p *UserProfile, w http.ResponseWriter) error
 	DecodeToken(token string) (*authTokenClaims, error)
-	ResetTokenCookies(w http.ResponseWriter)
+	ResetCookies(w http.ResponseWriter)
 	generateTokens(p *UserProfile) (string, string, error)
 	setTokenCookies(w http.ResponseWriter, actk, rftk string)
 }
@@ -77,7 +77,7 @@ func (m *manager) DecodeToken(token string) (*authTokenClaims, error) {
 	return nil, errors.New("DecodeToken: token is not valid")
 }
 
-func (m *manager) ResetTokenCookies(w http.ResponseWriter) {
+func (m *manager) ResetCookies(w http.ResponseWriter) {
 	now := time.Now()
 	expires := now.AddDate(0, 0, -1)
 

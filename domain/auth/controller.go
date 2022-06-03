@@ -43,7 +43,7 @@ func (c *controller) Delete() http.HandlerFunc {
 			)
 			return
 		}
-		token.NewManager().ResetTokenCookies(w)
+		token.NewManager().ResetCookies(w)
 
 		rw.Write(map[string]interface{}{})
 	}
