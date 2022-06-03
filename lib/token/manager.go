@@ -39,7 +39,7 @@ type Manager interface {
 	DecodeToken(token string) (*authTokenClaims, error)
 	ResetCookies(w http.ResponseWriter)
 	generateTokens(p *UserProfile) (string, string, error)
-	setTokenCookies(w http.ResponseWriter, actk, rftk string)
+	setCookies(w http.ResponseWriter, actk, rftk string)
 }
 
 type manager struct{}
@@ -53,7 +53,7 @@ func (m *manager) GenerateAndSetCookies(p *UserProfile, w http.ResponseWriter) e
 	if err != nil {
 		return err
 	}
-	m.setTokenCookies(w, actk, rftk)
+	m.setCookies(w, actk, rftk)
 	return nil
 }
 
@@ -147,7 +147,7 @@ func (m *manager) generateTokens(p *UserProfile) (string, string, error) {
 	return actk, rftk, nil
 }
 
-func (m *manager) setTokenCookies(w http.ResponseWriter, actk, rftk string) {
+func (m *manager) setCookies(w http.ResponseWriter, actk, rftk string) {
 	now := time.Now()
 
 	http.SetCookie(w, &http.Cookie{
