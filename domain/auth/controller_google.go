@@ -130,7 +130,7 @@ func (c *googleController) PostGoogleSignIn() http.HandlerFunc {
 			PhotoUrl: utils.NormalizeNullString(u.PhotoUrl),
 		}
 		tokenManager := token.NewManager()
-		err = tokenManager.GenerateAndSetCookie(w, &p)
+		err = tokenManager.GenerateAndSetCookies(w, &p)
 		if err != nil {
 			rw.Error(err)
 			return
@@ -233,7 +233,7 @@ func (c *googleController) PostGoogleSignUp() http.HandlerFunc {
 			PhotoUrl: utils.NormalizeNullString(user.PhotoUrl),
 		}
 		tokenManager := token.NewManager()
-		err = tokenManager.GenerateAndSetCookie(w, &p)
+		err = tokenManager.GenerateAndSetCookies(w, &p)
 		if err != nil {
 			rw.Error(err)
 			return

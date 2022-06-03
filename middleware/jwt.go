@@ -55,7 +55,7 @@ func JWT(next http.Handler) http.Handler {
 								Username: claims.Username,
 								PhotoUrl: claims.PhotoUrl,
 							}
-							err = tokenManager.GenerateAndSetCookie(w, &p)
+							err = tokenManager.GenerateAndSetCookies(w, &p)
 							if err != nil {
 								logger.DefaultLogger().Err(err).Timestamp().Str("action", "JWT").Send()
 							} else {
@@ -97,7 +97,7 @@ func JWT(next http.Handler) http.Handler {
 						Username: claims.Username,
 						PhotoUrl: claims.PhotoUrl,
 					}
-					err = tokenManager.GenerateAndSetCookie(w, &p)
+					err = tokenManager.GenerateAndSetCookies(w, &p)
 					if err != nil {
 						logger.DefaultLogger().Err(err).Timestamp().Str("action", "JWT").Send()
 					} else {
