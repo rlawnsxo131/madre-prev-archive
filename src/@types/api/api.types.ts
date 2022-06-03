@@ -23,12 +23,12 @@ type ResponseErrors =
       status: 401;
     }
   | {
-      message: 'NotFound';
-      status: 404;
-    }
-  | {
       message: 'Forbidden';
       status: 403;
+    }
+  | {
+      message: 'NotFound';
+      status: 404;
     }
   | {
       message: 'Conflict';

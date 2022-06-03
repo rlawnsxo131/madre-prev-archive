@@ -1,30 +1,25 @@
 import { UserProfile } from '../domain/auth.types';
 
-export interface GetAuthResponse {
-  user_profile: UserProfile | null;
-}
+// get user
+export type GetAuthResponse = UserProfile | null;
 
+// check google
 export interface PostAuthGoogleCheckParams {
   access_token: string;
 }
-
 export interface PostAuthGoogleCheckResponse {
   exist: boolean;
 }
 
+// sign in
 export interface PostAuthGoogleSignInParams {
   access_token: string;
 }
+export type PostAuthGoogleSigninResponse = UserProfile;
 
-export interface PostAuthGoogleSigninResponse {
-  user_profile: UserProfile;
-}
-
+// sign up
 export interface PostAuthGoogleSignUpParams {
   access_token: string;
   username: string;
 }
-
-export interface PostAuthGoogleSignUpResponse {
-  user_profile: UserProfile;
-}
+export type PostAuthGoogleSignUpResponse = UserProfile;

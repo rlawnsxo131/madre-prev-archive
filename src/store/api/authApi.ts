@@ -42,10 +42,10 @@ const authApi = createApi({
               isError: false,
             }),
           );
-          if (data?.user_profile) {
+          if (data) {
             dispatch(
               user.actions.setUser({
-                profile: data.user_profile,
+                profile: data,
               }),
             );
           } else {
@@ -133,7 +133,7 @@ const authApi = createApi({
             });
             dispatch(
               user.actions.setUser({
-                profile: data.user_profile,
+                profile: data,
               }),
             );
           } else {
@@ -179,7 +179,7 @@ const authApi = createApi({
           } else {
             dispatch(
               user.actions.setUser({
-                profile: data.user_profile,
+                profile: data,
               }),
             );
           }
