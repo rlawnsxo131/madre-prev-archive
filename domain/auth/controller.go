@@ -29,11 +29,7 @@ func (c *controller) Get() http.HandlerFunc {
 		rw := response.NewWriter(w, r)
 		p := token.UserProfileCtx(r.Context())
 
-		rw.Write(
-			map[string]interface{}{
-				"user_profile": p,
-			},
-		)
+		rw.Write(p)
 	}
 }
 
@@ -47,7 +43,7 @@ func (c *controller) Delete() http.HandlerFunc {
 			)
 			return
 		}
-		token.NewUseCase().ResetTokenCookies(w)
+		token.NewManager().ResetTokenCookies(w)
 
 		rw.Write(map[string]interface{}{})
 	}

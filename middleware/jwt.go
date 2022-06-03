@@ -17,7 +17,7 @@ func JWT(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		actk, err := r.Cookie(token.Key_AccessToken)
-		tokenUseCase := token.NewUseCase()
+		tokenManager := token.NewManager()
 		if err != nil {
 			if err != http.ErrNoCookie {
 				rw := response.NewWriter(w, r)
@@ -29,7 +29,7 @@ func JWT(next http.Handler) http.Handler {
 		}
 
 		if actk != nil {
-			claims, err := tokenUseCase.DecodeToken(actk.Value)
+			claims, err := tokenManager.DecodeToken(actk.Value)
 			if err != nil {
 				_, ok := err.(*jwt.ValidationError)
 				if ok {
@@ -45,17 +45,17 @@ func JWT(next http.Handler) http.Handler {
 					}
 
 					if rftk != nil {
-						claims, err := tokenUseCase.DecodeToken(rftk.Value)
+						claims, err := tokenManager.DecodeToken(rftk.Value)
 						if err != nil {
 							// remove cookies
-							tokenUseCase.ResetTokenCookies(w)
+							tokenManager.ResetTokenCookies(w)
 						} else {
 							p := token.UserProfile{
 								UserID:   claims.UserID,
 								Username: claims.Username,
 								PhotoUrl: claims.PhotoUrl,
 							}
-							err = tokenUseCase.GenerateAndSetCookie(w, &p)
+							err = tokenManager.GenerateAndSetCookie(w, &p)
 							if err != nil {
 								logger.DefaultLogger().Err(err).Timestamp().Str("action", "JWT").Send()
 							} else {
@@ -87,17 +87,17 @@ func JWT(next http.Handler) http.Handler {
 			}
 
 			if rftk != nil {
-				claims, err := tokenUseCase.DecodeToken(rftk.Value)
+				claims, err := tokenManager.DecodeToken(rftk.Value)
 				if err != nil {
 					// remove cookies
-					tokenUseCase.ResetTokenCookies(w)
+					tokenManager.ResetTokenCookies(w)
 				} else {
 					p := token.UserProfile{
 						UserID:   claims.UserID,
 						Username: claims.Username,
 						PhotoUrl: claims.PhotoUrl,
 					}
-					err = tokenUseCase.GenerateAndSetCookie(w, &p)
+					err = tokenManager.GenerateAndSetCookie(w, &p)
 					if err != nil {
 						logger.DefaultLogger().Err(err).Timestamp().Str("action", "JWT").Send()
 					} else {

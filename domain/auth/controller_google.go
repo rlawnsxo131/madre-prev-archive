@@ -129,16 +129,14 @@ func (c *googleController) PostGoogleSignIn() http.HandlerFunc {
 			Username: u.Username,
 			PhotoUrl: utils.NormalizeNullString(u.PhotoUrl),
 		}
-		tokenUseCase := token.NewUseCase()
-		err = tokenUseCase.GenerateAndSetCookie(w, &p)
+		tokenManager := token.NewManager()
+		err = tokenManager.GenerateAndSetCookie(w, &p)
 		if err != nil {
 			rw.Error(err)
 			return
 		}
 
-		rw.Write(map[string]interface{}{
-			"user_profile": &p,
-		})
+		rw.Write(&p)
 	}
 }
 
@@ -234,15 +232,13 @@ func (c *googleController) PostGoogleSignUp() http.HandlerFunc {
 			Username: user.Username,
 			PhotoUrl: utils.NormalizeNullString(user.PhotoUrl),
 		}
-		tokenUseCase := token.NewUseCase()
-		err = tokenUseCase.GenerateAndSetCookie(w, &p)
+		tokenManager := token.NewManager()
+		err = tokenManager.GenerateAndSetCookie(w, &p)
 		if err != nil {
 			rw.Error(err)
 			return
 		}
 
-		rw.Write(map[string]interface{}{
-			"user_profile": &p,
-		})
+		rw.Write(&p)
 	}
 }

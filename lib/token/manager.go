@@ -34,7 +34,7 @@ type authTokenClaims struct {
 	jwt.StandardClaims
 }
 
-type UseCase interface {
+type Manager interface {
 	GenerateAndSetCookie(w http.ResponseWriter, p *UserProfile) error
 	DecodeToken(token string) (*authTokenClaims, error)
 	ResetTokenCookies(w http.ResponseWriter)
@@ -42,22 +42,22 @@ type UseCase interface {
 	setTokenCookies(w http.ResponseWriter, actk, rftk string)
 }
 
-type useCase struct{}
+type manager struct{}
 
-func NewUseCase() UseCase {
-	return &useCase{}
+func NewManager() Manager {
+	return &manager{}
 }
 
-func (uc *useCase) GenerateAndSetCookie(w http.ResponseWriter, p *UserProfile) error {
-	actk, rftk, err := uc.generateTokens(p)
+func (m *manager) GenerateAndSetCookie(w http.ResponseWriter, p *UserProfile) error {
+	actk, rftk, err := m.generateTokens(p)
 	if err != nil {
 		return err
 	}
-	uc.setTokenCookies(w, actk, rftk)
+	m.setTokenCookies(w, actk, rftk)
 	return nil
 }
 
-func (uc *useCase) DecodeToken(token string) (*authTokenClaims, error) {
+func (m *manager) DecodeToken(token string) (*authTokenClaims, error) {
 	claims := authTokenClaims{}
 	t, err := jwt.ParseWithClaims(token, &claims, func(t *jwt.Token) (interface{}, error) {
 		if _, ok := t.Method.(*jwt.SigningMethodHMAC); ok {
@@ -77,7 +77,7 @@ func (uc *useCase) DecodeToken(token string) (*authTokenClaims, error) {
 	return nil, errors.New("DecodeToken: token is not valid")
 }
 
-func (uc *useCase) ResetTokenCookies(w http.ResponseWriter) {
+func (m *manager) ResetTokenCookies(w http.ResponseWriter) {
 	now := time.Now()
 	expires := now.AddDate(0, 0, -1)
 
@@ -103,7 +103,7 @@ func (uc *useCase) ResetTokenCookies(w http.ResponseWriter) {
 	})
 }
 
-func (uc *useCase) generateTokens(p *UserProfile) (string, string, error) {
+func (m *manager) generateTokens(p *UserProfile) (string, string, error) {
 	now := time.Now()
 	var actk string
 	var rftk string
@@ -147,7 +147,7 @@ func (uc *useCase) generateTokens(p *UserProfile) (string, string, error) {
 	return actk, rftk, nil
 }
 
-func (uc *useCase) setTokenCookies(w http.ResponseWriter, actk, rftk string) {
+func (m *manager) setTokenCookies(w http.ResponseWriter, actk, rftk string) {
 	now := time.Now()
 
 	http.SetCookie(w, &http.Cookie{
