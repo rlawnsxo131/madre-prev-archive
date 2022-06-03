@@ -36,7 +36,7 @@ type authTokenClaims struct {
 
 type Manager interface {
 	GenerateAndSetCookies(p *UserProfile, w http.ResponseWriter) error
-	DecodeToken(token string) (*authTokenClaims, error)
+	Decode(token string) (*authTokenClaims, error)
 	ResetCookies(w http.ResponseWriter)
 	generateTokens(p *UserProfile) (string, string, error)
 	setCookies(w http.ResponseWriter, actk, rftk string)
@@ -57,13 +57,13 @@ func (m *manager) GenerateAndSetCookies(p *UserProfile, w http.ResponseWriter) e
 	return nil
 }
 
-func (m *manager) DecodeToken(token string) (*authTokenClaims, error) {
+func (m *manager) Decode(token string) (*authTokenClaims, error) {
 	claims := authTokenClaims{}
 	t, err := jwt.ParseWithClaims(token, &claims, func(t *jwt.Token) (interface{}, error) {
 		if _, ok := t.Method.(*jwt.SigningMethodHMAC); ok {
 			return []byte(env.JWTSecretKey()), nil
 		}
-		return nil, errors.New("DocodeToken: ParseWithClaims")
+		return nil, errors.New("Docode: ParseWithClaims")
 	})
 
 	if err != nil {
@@ -74,7 +74,7 @@ func (m *manager) DecodeToken(token string) (*authTokenClaims, error) {
 		return &claims, nil
 	}
 
-	return nil, errors.New("DecodeToken: token is not valid")
+	return nil, errors.New("Decode: token is not valid")
 }
 
 func (m *manager) ResetCookies(w http.ResponseWriter) {
@@ -134,7 +134,7 @@ func (m *manager) generateTokens(p *UserProfile) (string, string, error) {
 		t := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 		ss, err := t.SignedString([]byte(env.JWTSecretKey()))
 		if err != nil {
-			return "", "", errors.Wrap(err, "GenerateToken")
+			return "", "", errors.Wrap(err, "generateTokens")
 		}
 
 		if tokenType == Key_AccessToken {

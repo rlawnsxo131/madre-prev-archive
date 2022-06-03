@@ -29,7 +29,7 @@ func JWT(next http.Handler) http.Handler {
 		}
 
 		if actk != nil {
-			claims, err := tokenManager.DecodeToken(actk.Value)
+			claims, err := tokenManager.Decode(actk.Value)
 			if err != nil {
 				_, ok := err.(*jwt.ValidationError)
 				if ok {
@@ -45,7 +45,7 @@ func JWT(next http.Handler) http.Handler {
 					}
 
 					if rftk != nil {
-						claims, err := tokenManager.DecodeToken(rftk.Value)
+						claims, err := tokenManager.Decode(rftk.Value)
 						if err != nil {
 							// remove cookies
 							tokenManager.ResetCookies(w)
@@ -87,7 +87,7 @@ func JWT(next http.Handler) http.Handler {
 			}
 
 			if rftk != nil {
-				claims, err := tokenManager.DecodeToken(rftk.Value)
+				claims, err := tokenManager.Decode(rftk.Value)
 				if err != nil {
 					// remove cookies
 					tokenManager.ResetCookies(w)

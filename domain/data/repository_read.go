@@ -60,7 +60,7 @@ func (r *readRepository) FindOneById(id string) (*Data, error) {
 
 	err := r.db.QueryRowx(query, id).StructScan(&d)
 	if err != nil {
-		customError := errors.Wrap(err, "DataRepository: FindOneById error")
+		customError := errors.Wrap(err, "data ReadRepository FindOneById error")
 		err = utils.ErrNoRowsReturnRawError(err, customError)
 	}
 
