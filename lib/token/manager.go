@@ -35,7 +35,7 @@ type authTokenClaims struct {
 }
 
 type Manager interface {
-	GenerateAndSetCookies(w http.ResponseWriter, p *UserProfile) error
+	GenerateAndSetCookies(p *UserProfile, w http.ResponseWriter) error
 	DecodeToken(token string) (*authTokenClaims, error)
 	ResetTokenCookies(w http.ResponseWriter)
 	generateTokens(p *UserProfile) (string, string, error)
@@ -48,7 +48,7 @@ func NewManager() Manager {
 	return &manager{}
 }
 
-func (m *manager) GenerateAndSetCookies(w http.ResponseWriter, p *UserProfile) error {
+func (m *manager) GenerateAndSetCookies(p *UserProfile, w http.ResponseWriter) error {
 	actk, rftk, err := m.generateTokens(p)
 	if err != nil {
 		return err
