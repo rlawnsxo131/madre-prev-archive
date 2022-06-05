@@ -2,10 +2,6 @@ package user
 
 import "github.com/rlawnsxo131/madre-server-v2/database"
 
-type ReadUseCase interface {
-	ReadRepository
-}
-
 type readUseCase struct {
 	repo ReadRepository
 }

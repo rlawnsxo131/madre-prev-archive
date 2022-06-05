@@ -17,7 +17,7 @@ func Test_SocialAccountReadUseCase_FindOneByProviderWithSocialId_IsSuccess(t *te
 	socialId := uuid.NewString()
 	sa := socialaccount.SocialAccount{
 		UserID:   uuid.NewString(),
-		SocialId: socialId,
+		SocialID: socialId,
 		Provider: socialaccount.Key_Provider_GOOGLE,
 	}
 
@@ -26,8 +26,10 @@ func Test_SocialAccountReadUseCase_FindOneByProviderWithSocialId_IsSuccess(t *te
 	id, _ := socialWriteUseCase.Create(&sa)
 
 	newSa, err := socialReadUseCase.FindOneBySocialIdAndProvider(
-		socialId,
-		socialaccount.Key_Provider_GOOGLE,
+		&socialaccount.SocialIDAndProviderDto{
+			SocialID: sa.SocialID,
+			Provider: socialaccount.Key_Provider_GOOGLE,
+		},
 	)
 
 	assert.Nil(err)

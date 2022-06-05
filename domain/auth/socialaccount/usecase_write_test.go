@@ -16,7 +16,7 @@ func Test_SoicalAccountWriteUseCase_Create_IsSuccess(t *testing.T) {
 
 	sa := socialaccount.SocialAccount{
 		UserID:   uuid.NewString(),
-		SocialId: uuid.NewString(),
+		SocialID: uuid.NewString(),
 		Provider: "GOOGLE",
 	}
 
@@ -34,7 +34,7 @@ func Test_SoicalAccountWriteUseCase_Create_IsFail(t *testing.T) {
 
 	sa := socialaccount.SocialAccount{
 		UserID:   uuid.NewString(),
-		SocialId: uuid.NewString(),
+		SocialID: uuid.NewString(),
 		Provider: "",
 	}
 

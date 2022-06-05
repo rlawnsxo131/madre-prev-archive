@@ -14,16 +14,11 @@ import (
 	"github.com/rs/zerolog"
 )
 
-type Controller interface {
-	GetAll() http.HandlerFunc
-	Get() http.HandlerFunc
-}
-
 type controller struct {
 	db database.Database
 }
 
-func NewController(db database.Database) Controller {
+func NewController(db database.Database) *controller {
 	return &controller{
 		db: db,
 	}

@@ -7,11 +7,6 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/utils"
 )
 
-type ReadRepository interface {
-	FindAll(limit int) ([]*Data, error)
-	FindOneById(id string) (*Data, error)
-}
-
 type readRepository struct {
 	db     database.Database
 	mapper entityMapper

@@ -1,10 +1,8 @@
 package socialaccount
 
-import "github.com/rlawnsxo131/madre-server-v2/database"
-
-type ReadUseCase interface {
-	ReadRepository
-}
+import (
+	"github.com/rlawnsxo131/madre-server-v2/database"
+)
 
 type readUseCase struct {
 	repo ReadRepository
@@ -16,6 +14,6 @@ func NewReadUseCase(db database.Database) ReadUseCase {
 	}
 }
 
-func (uc *readUseCase) FindOneBySocialIdAndProvider(socialId, provider string) (*SocialAccount, error) {
-	return uc.repo.FindOneBySocialIdAndProvider(socialId, provider)
+func (uc *readUseCase) FindOneBySocialIdAndProvider(params *SocialIDAndProviderDto) (*SocialAccount, error) {
+	return uc.repo.FindOneBySocialIdAndProvider(params)
 }

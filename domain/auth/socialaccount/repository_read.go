@@ -6,10 +6,6 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/utils"
 )
 
-type ReadRepository interface {
-	FindOneBySocialIdAndProvider(socialId, provider string) (*SocialAccount, error)
-}
-
 type readRepository struct {
 	db     database.Database
 	mapper entityMapper
@@ -22,14 +18,18 @@ func NewReadRepository(db database.Database) ReadRepository {
 	}
 }
 
-func (r *readRepository) FindOneBySocialIdAndProvider(socialId, provider string) (*SocialAccount, error) {
+func (r *readRepository) FindOneBySocialIdAndProvider(params *SocialIDAndProviderDto) (*SocialAccount, error) {
 	var sa SocialAccount
 
 	query := "SELECT * FROM social_account" +
-		" WHERE social_id = $1" +
-		" AND provider = $2"
+		" WHERE social_id = :social_id" +
+		" AND provider = :provider"
 
-	err := r.db.QueryRowx(query, socialId, provider).StructScan(&sa)
+	err := r.db.PrepareNamedGet(
+		&sa,
+		query,
+		params,
+	)
 	if err != nil {
 		customError := errors.Wrap(err, "socialaccount ReadRepository FindOneBySocialId")
 		err = utils.ErrNoRowsReturnRawError(err, customError)

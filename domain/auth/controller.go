@@ -9,16 +9,11 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/lib/token"
 )
 
-type Controller interface {
-	Get() http.HandlerFunc
-	Delete() http.HandlerFunc
-}
-
 type controller struct {
 	db database.Database
 }
 
-func NewController(db database.Database) Controller {
+func NewController(db database.Database) *controller {
 	return &controller{
 		db: db,
 	}
@@ -45,6 +40,6 @@ func (c *controller) Delete() http.HandlerFunc {
 		}
 		token.NewManager().ResetCookies(w)
 
-		rw.Write(map[string]interface{}{})
+		rw.Write(struct{}{})
 	}
 }

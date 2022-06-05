@@ -7,7 +7,7 @@ func (e entityMapper) toEntity(sa *SocialAccount) *SocialAccount {
 		ID:        sa.ID,
 		UserID:    sa.UserID,
 		Provider:  sa.Provider,
-		SocialId:  sa.SocialId,
+		SocialID:  sa.SocialID,
 		CreatedAt: sa.CreatedAt,
 		UpdatedAt: sa.UpdatedAt,
 	}
@@ -17,6 +17,6 @@ func (e entityMapper) toModel(sa *SocialAccount) *SocialAccount {
 	return &SocialAccount{
 		UserID:   sa.UserID,
 		Provider: sa.Provider,
-		SocialId: sa.SocialId,
+		SocialID: sa.SocialID,
 	}
 }

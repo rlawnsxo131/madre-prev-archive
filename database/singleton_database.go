@@ -27,12 +27,12 @@ func (sd *singletonDatabase) NamedQuery(query string, arg interface{}) (*sqlx.Ro
 	return sd.DB.NamedQuery(query, arg)
 }
 
-func (sd *singletonDatabase) PrepareNamedGet(id *string, query string, arg interface{}) error {
+func (sd *singletonDatabase) PrepareNamedGet(result interface{}, query string, arg interface{}) error {
 	sd.l.Log().Timestamp().Str("query", fmt.Sprintf("%s,%+v", query, arg)).Send()
 	stmt, err := sd.DB.PrepareNamed(query)
 	defer stmt.Close()
 	if err != nil {
 		return err
 	}
-	return stmt.Get(id, arg)
+	return stmt.Get(result, arg)
 }

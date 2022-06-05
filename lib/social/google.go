@@ -102,7 +102,7 @@ type googlePeopleApiResponse struct {
 }
 
 type googlePeopleProfile struct {
-	SocialId    string
+	SocialID    string
 	Email       string
 	PhotoUrl    string
 	DisplayName string
@@ -210,7 +210,7 @@ func (g *googleApi) mapToGooglePeopleProfile(gapiRes *googlePeopleApiResponse) *
 	}
 
 	return &googlePeopleProfile{
-		SocialId:    socialId,
+		SocialID:    socialId,
 		Email:       email,
 		PhotoUrl:    photoUrl,
 		DisplayName: displayName,

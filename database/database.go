@@ -21,7 +21,7 @@ type Database interface {
 	Queryx(query string, args ...interface{}) (*sqlx.Rows, error)
 	QueryRowx(query string, args ...interface{}) *sqlx.Row
 	NamedQuery(query string, arg interface{}) (*sqlx.Rows, error)
-	PrepareNamedGet(id *string, query string, args interface{}) error
+	PrepareNamedGet(result interface{}, query string, args interface{}) error
 }
 
 func DatabaseInstance() (*singletonDatabase, error) {

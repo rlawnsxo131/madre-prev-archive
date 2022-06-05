@@ -15,17 +15,11 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/utils"
 )
 
-type GoogleController interface {
-	PostGoogleCheck() http.HandlerFunc
-	PostGoogleSignIn() http.HandlerFunc
-	PostGoogleSignUp() http.HandlerFunc
-}
-
 type googleController struct {
 	db database.Database
 }
 
-func NewGoogleController(db database.Database) GoogleController {
+func NewGoogleController(db database.Database) *googleController {
 	return &googleController{
 		db: db,
 	}
@@ -35,9 +29,7 @@ func (c *googleController) PostGoogleCheck() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
 
-		var params struct {
-			AccessToken string `json:"access_token" validate:"required,min=50"`
-		}
+		var params PostGoogleCheckRequestDto
 		err := json.NewDecoder(r.Body).Decode(&params)
 		if err != nil {
 			rw.Error(
@@ -49,7 +41,7 @@ func (c *googleController) PostGoogleCheck() http.HandlerFunc {
 		err = validator.New().Struct(&params)
 		if err != nil {
 			rw.ErrorBadRequest(
-				errors.Wrap(err, "access_token validate error"),
+				errors.Wrap(err, "PostGoogleCheckRequestDto validate error"),
 			)
 			return
 		}
@@ -63,8 +55,10 @@ func (c *googleController) PostGoogleCheck() http.HandlerFunc {
 		// if no rows in result set err -> { exist: false }
 		socialReadUseCase := socialaccount.NewReadUseCase(c.db)
 		sa, err := socialReadUseCase.FindOneBySocialIdAndProvider(
-			ggp.SocialId,
-			socialaccount.Key_Provider_GOOGLE,
+			&socialaccount.SocialIDAndProviderDto{
+				SocialID: ggp.SocialID,
+				Provider: socialaccount.Key_Provider_GOOGLE,
+			},
 		)
 		exist, err := sa.IsExist(err)
 		if err != nil {
@@ -82,9 +76,7 @@ func (c *googleController) PostGoogleSignIn() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
 
-		var params struct {
-			AccessToken string `json:"access_token" validate:"required,min=50"`
-		}
+		var params PostGoogleSignInRequestDto
 		err := json.NewDecoder(r.Body).Decode(&params)
 		if err != nil {
 			rw.Error(
@@ -96,7 +88,7 @@ func (c *googleController) PostGoogleSignIn() http.HandlerFunc {
 		err = validator.New().Struct(&params)
 		if err != nil {
 			rw.ErrorBadRequest(
-				errors.Wrap(err, "access_token validate error"),
+				errors.Wrap(err, "PostGoogleSignInRequestDto validate error"),
 			)
 			return
 		}
@@ -109,8 +101,10 @@ func (c *googleController) PostGoogleSignIn() http.HandlerFunc {
 
 		socialReadUseCase := socialaccount.NewReadUseCase(c.db)
 		sa, err := socialReadUseCase.FindOneBySocialIdAndProvider(
-			ggp.SocialId,
-			socialaccount.Key_Provider_GOOGLE,
+			&socialaccount.SocialIDAndProviderDto{
+				SocialID: ggp.SocialID,
+				Provider: socialaccount.Key_Provider_GOOGLE,
+			},
 		)
 		if err != nil {
 			rw.Error(err)
@@ -144,10 +138,7 @@ func (c *googleController) PostGoogleSignUp() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
 
-		var params struct {
-			AccessToken string `json:"access_token" validate:"required,min=50"`
-			Username    string `json:"username" validate:"required,max=20,min=1"`
-		}
+		var params PostGoogleSignUpRequestDto
 		err := json.NewDecoder(r.Body).Decode(&params)
 		if err != nil {
 			rw.Error(
@@ -159,7 +150,7 @@ func (c *googleController) PostGoogleSignUp() http.HandlerFunc {
 		err = validator.New().Struct(&params)
 		if err != nil {
 			rw.ErrorBadRequest(
-				errors.Wrap(err, "access_token, username validate error"),
+				errors.Wrap(err, "PostGoogleSignUpRequestDto validate error"),
 			)
 			return
 		}
@@ -217,7 +208,7 @@ func (c *googleController) PostGoogleSignUp() http.HandlerFunc {
 
 		sa := socialaccount.SocialAccount{
 			UserID:   user.ID,
-			SocialId: ggp.SocialId,
+			SocialID: ggp.SocialID,
 			Provider: "GOOGLE",
 		}
 		socialWriteUseCase := socialaccount.NewWriteUseCase(c.db)
