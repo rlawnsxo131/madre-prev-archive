@@ -13,7 +13,7 @@ type controller struct {
 	db database.Database
 }
 
-func NewController(db database.Database) *controller {
+func NewController(db database.Database) Controller {
 	return &controller{
 		db: db,
 	}

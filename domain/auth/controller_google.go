@@ -19,7 +19,7 @@ type googleController struct {
 	db database.Database
 }
 
-func NewGoogleController(db database.Database) *googleController {
+func NewGoogleController(db database.Database) GoogleController {
 	return &googleController{
 		db: db,
 	}
