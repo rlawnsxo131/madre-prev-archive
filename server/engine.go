@@ -13,7 +13,6 @@ import (
 	chi_middleware "github.com/go-chi/chi/v5/middleware"
 	"github.com/rlawnsxo131/madre-server-v2/database"
 	"github.com/rlawnsxo131/madre-server-v2/domain/auth"
-	"github.com/rlawnsxo131/madre-server-v2/domain/data"
 	"github.com/rlawnsxo131/madre-server-v2/domain/user"
 	"github.com/rlawnsxo131/madre-server-v2/lib/env"
 	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
@@ -126,7 +125,6 @@ func (e *engine) RegisterAPIRoutes() {
 		r.Route("/v1", func(r chi.Router) {
 			auth.RegisterRoutes(r, e.db)
 			user.RegisterRoutes(r, e.db)
-			data.RegisterRoutes(r, e.db)
 		})
 	})
 }

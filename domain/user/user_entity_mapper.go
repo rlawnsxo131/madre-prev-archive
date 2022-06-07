@@ -1,13 +1,9 @@
-package repository
-
-import (
-	"github.com/rlawnsxo131/madre-server-v2/domain_v2/user"
-)
+package user
 
 type userEntityMapper struct{}
 
-func (e userEntityMapper) toEntity(u *user.User) *user.User {
-	return &user.User{
+func (e userEntityMapper) toEntity(u *User) *User {
+	return &User{
 		ID:         u.ID,
 		Email:      u.Email,
 		OriginName: u.OriginName,
@@ -18,8 +14,8 @@ func (e userEntityMapper) toEntity(u *user.User) *user.User {
 	}
 }
 
-func (e userEntityMapper) toModel(u *user.User) *user.User {
-	return &user.User{
+func (e userEntityMapper) toModel(u *User) *User {
+	return &User{
 		Email:      u.Email,
 		OriginName: u.OriginName,
 		Username:   u.Username,

@@ -3,14 +3,14 @@ package data
 import "time"
 
 const (
-	Key_ID          = "ID"
-	Key_UserID      = "UserID"
-	Key_FileUrl     = "FileUrl"
-	Key_Title       = "Title"
-	Key_Description = "Description"
-	Key_IsPublic    = "IsPublic"
-	Key_CreatedAt   = "CreatedAt"
-	Key_UpdatedAt   = "UpdatedAt"
+	Key_Data_ID          = "ID"
+	Key_Data_UserID      = "UserID"
+	Key_Data_FileUrl     = "FileUrl"
+	Key_Data_Title       = "Title"
+	Key_Data_Description = "Description"
+	Key_Data_IsPublic    = "IsPublic"
+	Key_Data_CreatedAt   = "CreatedAt"
+	Key_Data_UpdatedAt   = "UpdatedAt"
 )
 
 type Data struct {
@@ -38,21 +38,21 @@ func (d *Data) Filter(keys []string) map[string]interface{} {
 		result["updated_at"] = d.UpdatedAt
 	} else {
 		for _, key := range keys {
-			if key == Key_ID {
+			if key == Key_Data_ID {
 				result["id"] = d.ID
-			} else if key == Key_UserID {
+			} else if key == Key_Data_UserID {
 				result["user_id"] = d.UserID
-			} else if key == Key_FileUrl {
+			} else if key == Key_Data_FileUrl {
 				result["file_url"] = d.FileUrl
-			} else if key == Key_Title {
+			} else if key == Key_Data_Title {
 				result["title"] = d.Title
-			} else if key == Key_Description {
+			} else if key == Key_Data_Description {
 				result["description"] = d.Description
-			} else if key == Key_IsPublic {
+			} else if key == Key_Data_IsPublic {
 				result["is_public"] = d.IsPublic
-			} else if key == Key_CreatedAt {
+			} else if key == Key_Data_CreatedAt {
 				result["created_at"] = d.CreatedAt
-			} else if key == Key_UpdatedAt {
+			} else if key == Key_Data_UpdatedAt {
 				result["updated_at"] = d.UpdatedAt
 			}
 		}

@@ -1,8 +1,8 @@
-package socialaccount
+package auth
 
-type entityMapper struct{}
+type socialAccountEntityMapper struct{}
 
-func (e entityMapper) toEntity(sa *SocialAccount) *SocialAccount {
+func (e socialAccountEntityMapper) toEntity(sa *SocialAccount) *SocialAccount {
 	return &SocialAccount{
 		ID:        sa.ID,
 		UserID:    sa.UserID,
@@ -13,7 +13,7 @@ func (e entityMapper) toEntity(sa *SocialAccount) *SocialAccount {
 	}
 }
 
-func (e entityMapper) toModel(sa *SocialAccount) *SocialAccount {
+func (e socialAccountEntityMapper) toModel(sa *SocialAccount) *SocialAccount {
 	return &SocialAccount{
 		UserID:   sa.UserID,
 		Provider: sa.Provider,
