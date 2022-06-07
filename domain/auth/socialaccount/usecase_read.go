@@ -5,7 +5,7 @@ import (
 )
 
 type ReadUseCase interface {
-	FindOneBySocialIdAndProvider(params *SocialIDAndProviderDto) (*SocialAccount, error)
+	FindOneBySocialIdAndProvider(socialId, provider string) (*SocialAccount, error)
 }
 
 type readUseCase struct {
@@ -18,6 +18,6 @@ func NewReadUseCase(db database.Database) ReadUseCase {
 	}
 }
 
-func (uc *readUseCase) FindOneBySocialIdAndProvider(params *SocialIDAndProviderDto) (*SocialAccount, error) {
-	return uc.repo.FindOneBySocialIdAndProvider(params)
+func (uc *readUseCase) FindOneBySocialIdAndProvider(socialId, provider string) (*SocialAccount, error) {
+	return uc.repo.FindOneBySocialIdAndProvider(socialId, provider)
 }

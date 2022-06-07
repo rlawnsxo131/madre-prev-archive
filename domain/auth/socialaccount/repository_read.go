@@ -7,7 +7,7 @@ import (
 )
 
 type ReadRepository interface {
-	FindOneBySocialIdAndProvider(params *SocialIDAndProviderDto) (*SocialAccount, error)
+	FindOneBySocialIdAndProvider(socialId, provider string) (*SocialAccount, error)
 }
 
 type readRepository struct {
@@ -22,18 +22,14 @@ func NewReadRepository(db database.Database) ReadRepository {
 	}
 }
 
-func (r *readRepository) FindOneBySocialIdAndProvider(params *SocialIDAndProviderDto) (*SocialAccount, error) {
+func (r *readRepository) FindOneBySocialIdAndProvider(socialId, provider string) (*SocialAccount, error) {
 	var sa SocialAccount
 
 	query := "SELECT * FROM social_account" +
-		" WHERE social_id = :social_id" +
-		" AND provider = :provider"
+		" WHERE social_id = $1" +
+		" AND provider = $2"
 
-	err := r.db.PrepareNamedGet(
-		&sa,
-		query,
-		params,
-	)
+	err := r.db.QueryRowx(query, socialId, provider).StructScan(&sa)
 	if err != nil {
 		customError := errors.Wrap(err, "socialaccount ReadRepository FindOneBySocialId")
 		err = utils.ErrNoRowsReturnRawError(err, customError)
