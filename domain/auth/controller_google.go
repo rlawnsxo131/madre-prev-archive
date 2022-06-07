@@ -15,6 +15,12 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/utils"
 )
 
+type GoogleController interface {
+	PostGoogleCheck() http.HandlerFunc
+	PostGoogleSignIn() http.HandlerFunc
+	PostGoogleSignUp() http.HandlerFunc
+}
+
 type googleController struct {
 	db database.Database
 }

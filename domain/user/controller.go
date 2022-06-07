@@ -8,6 +8,11 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"
 )
 
+type Controller interface {
+	Get() http.HandlerFunc
+	Put() http.HandlerFunc
+}
+
 type controller struct {
 	db database.Database
 }

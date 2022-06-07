@@ -2,6 +2,10 @@ package user
 
 import "github.com/rlawnsxo131/madre-server-v2/database"
 
+type WriteUseCase interface {
+	Create(u *User) (string, error)
+}
+
 type writeUseCase struct {
 	repo WriteRepository
 }

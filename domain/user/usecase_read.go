@@ -2,6 +2,11 @@ package user
 
 import "github.com/rlawnsxo131/madre-server-v2/database"
 
+type ReadUseCase interface {
+	FindOneById(id string) (*User, error)
+	FindOneByUsername(username string) (*User, error)
+}
+
 type readUseCase struct {
 	repo ReadRepository
 }

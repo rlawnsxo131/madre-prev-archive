@@ -2,6 +2,11 @@ package data
 
 import "github.com/rlawnsxo131/madre-server-v2/database"
 
+type ReadUseCase interface {
+	FindAll(limit int) ([]*Data, error)
+	FindOneById(id string) (*Data, error)
+}
+
 type readUseCase struct {
 	repo ReadRepository
 }

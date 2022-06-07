@@ -6,6 +6,10 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/utils"
 )
 
+type ReadRepository interface {
+	FindOneBySocialIdAndProvider(params *SocialIDAndProviderDto) (*SocialAccount, error)
+}
+
 type readRepository struct {
 	db     database.Database
 	mapper entityMapper

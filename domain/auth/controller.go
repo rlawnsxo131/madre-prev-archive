@@ -9,6 +9,11 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/lib/token"
 )
 
+type Controller interface {
+	Get() http.HandlerFunc
+	Delete() http.HandlerFunc
+}
+
 type controller struct {
 	db database.Database
 }

@@ -14,6 +14,11 @@ import (
 	"github.com/rs/zerolog"
 )
 
+type Controller interface {
+	Get() http.HandlerFunc
+	GetAll() http.HandlerFunc
+}
+
 type controller struct {
 	db database.Database
 }

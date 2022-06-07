@@ -4,6 +4,10 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/database"
 )
 
+type ReadUseCase interface {
+	FindOneBySocialIdAndProvider(params *SocialIDAndProviderDto) (*SocialAccount, error)
+}
+
 type readUseCase struct {
 	repo ReadRepository
 }
