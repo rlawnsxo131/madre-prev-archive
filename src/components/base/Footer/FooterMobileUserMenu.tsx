@@ -1,13 +1,17 @@
 import { css } from '@emotion/react';
+import { memo } from 'react';
 import { UserIcon } from '../../../image/icons';
 import { basicStyles, themePalette } from '../../../styles';
-import useFooterMobileUserMenu from './hooks/useFooterMobileUserMenu';
 
-interface FooterMobileUserMenuProps {}
+interface FooterMobileUserMenuProps {
+  isActive?: boolean;
+  onClick: () => void;
+}
 
-function FooterMobileUserMenu(props: FooterMobileUserMenuProps) {
-  const { isActive, onClick } = useFooterMobileUserMenu();
-
+function FooterMobileUserMenu({
+  isActive,
+  onClick,
+}: FooterMobileUserMenuProps) {
   return (
     <button css={[basicStyles.button, button(isActive)]} onClick={onClick}>
       <UserIcon />
@@ -27,4 +31,4 @@ const button = (isActive?: boolean) => css`
   `}
 `;
 
-export default FooterMobileUserMenu;
+export default memo(FooterMobileUserMenu);

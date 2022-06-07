@@ -4,17 +4,20 @@ import { media, themePalette } from '../../../styles';
 import LinkImage from '../../common/LinkImage';
 import FooterMobileNotification from './FooterMobileNotification';
 import FooterMobileUserMenu from './FooterMobileUserMenu';
+import useFooterMobileUserMenu from './hooks/useFooterMobileUserMenu';
 
 interface FooterMobileProps {}
 
 function FooterMobile(props: FooterMobileProps) {
+  const { isActive, onClick } = useFooterMobileUserMenu();
+
   return (
     <div css={block}>
       <div css={menuBlock}>
         <LinkImage to="/">
           <HomeIcon />
         </LinkImage>
-        <FooterMobileUserMenu />
+        <FooterMobileUserMenu isActive={isActive} onClick={onClick} />
         <LinkImage to="/notifications">
           <FooterMobileNotification />
         </LinkImage>
