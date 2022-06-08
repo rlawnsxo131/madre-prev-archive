@@ -7,7 +7,6 @@ import (
 
 func RegisterRoutes(r chi.Router, db database.Database) {
 	ctrl := NewController(db)
-
 	r.Route("/auth", func(r chi.Router) {
 		r.Get("/", ctrl.Get())
 		r.Delete("/", ctrl.Delete())
