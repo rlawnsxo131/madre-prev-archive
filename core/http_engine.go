@@ -1,4 +1,4 @@
-package app
+package core
 
 import (
 	"context"
@@ -14,7 +14,7 @@ import (
 
 	"github.com/rlawnsxo131/madre-server-v3/adapter/authadapter"
 	"github.com/rlawnsxo131/madre-server-v3/adapter/useradapter"
-	"github.com/rlawnsxo131/madre-server-v3/app/middleware"
+	"github.com/rlawnsxo131/madre-server-v3/core/middleware"
 
 	"github.com/rlawnsxo131/madre-server-v3/datastore/rdb"
 	"github.com/rlawnsxo131/madre-server-v3/lib/env"

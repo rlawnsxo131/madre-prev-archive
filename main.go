@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/rlawnsxo131/madre-server-v3/app"
+	"github.com/rlawnsxo131/madre-server-v3/core"
 	"github.com/rlawnsxo131/madre-server-v3/datastore/rdb"
 
 	"github.com/rlawnsxo131/madre-server-v3/lib/env"
@@ -19,8 +19,8 @@ func main() {
 		rdb.ExcuteInitSQL(db.DB)
 	}
 
-	httpApp := app.NewHTTPEngine(db)
-	httpApp.Start()
+	httpEngine := core.NewHTTPEngine(db)
+	httpEngine.Start()
 }
 
 func init() {
