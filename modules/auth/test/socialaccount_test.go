@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/google/uuid"
-	"github.com/rlawnsxo131/madre-server-v2/domain/auth"
+	"github.com/rlawnsxo131/madre-server-v2/modules/auth"
 	"github.com/stretchr/testify/assert"
 )
 

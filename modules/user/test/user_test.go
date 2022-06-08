@@ -3,7 +3,7 @@ package user_test
 import (
 	"testing"
 
-	"github.com/rlawnsxo131/madre-server-v2/domain/user"
+	"github.com/rlawnsxo131/madre-server-v2/modules/user"
 	"github.com/stretchr/testify/assert"
 )
 
