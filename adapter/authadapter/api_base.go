@@ -4,14 +4,11 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/rlawnsxo131/madre-server-v3/datastore/rdb"
 	"github.com/rlawnsxo131/madre-server-v3/lib/response"
 	"github.com/rlawnsxo131/madre-server-v3/lib/token"
 )
 
-type baseHandler struct {
-	db rdb.Database
-}
+type baseHandler struct{}
 
 func NewBaseHandler() *baseHandler {
 	return &baseHandler{}
