@@ -9,17 +9,17 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/lib/token"
 )
 
-type crudHandler struct {
+type baseHandler struct {
 	db database.Database
 }
 
-func NewCRUDHandler(db database.Database) *crudHandler {
-	return &crudHandler{
+func NewBaseHandler(db database.Database) *baseHandler {
+	return &baseHandler{
 		db: db,
 	}
 }
 
-func (h *crudHandler) Get() http.HandlerFunc {
+func (h *baseHandler) Get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
 		p := token.UserProfileCtx(r.Context())
@@ -28,7 +28,7 @@ func (h *crudHandler) Get() http.HandlerFunc {
 	}
 }
 
-func (h *crudHandler) Delete() http.HandlerFunc {
+func (h *baseHandler) Delete() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
 		p := token.UserProfileCtx(r.Context())

@@ -8,17 +8,17 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"
 )
 
-type crudHandler struct {
+type baseHandler struct {
 	db database.Database
 }
 
-func NewCRUDHandler(db database.Database) *crudHandler {
-	return &crudHandler{
+func NewBaseHandler(db database.Database) *baseHandler {
+	return &baseHandler{
 		db: db,
 	}
 }
 
-func (h *crudHandler) Get() http.HandlerFunc {
+func (h *baseHandler) Get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
 		id := chi.URLParam(r, "id")
@@ -36,6 +36,6 @@ func (h *crudHandler) Get() http.HandlerFunc {
 	}
 }
 
-func (h *crudHandler) Put() http.HandlerFunc {
+func (h *baseHandler) Put() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {}
 }

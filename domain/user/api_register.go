@@ -6,10 +6,10 @@ import (
 )
 
 func RegisterAPI(r chi.Router, db database.Database) {
-	crudHandler := NewCRUDHandler(db)
+	baseHandler := NewBaseHandler(db)
 
 	r.Route("/user", func(r chi.Router) {
-		r.Get("/{id}", crudHandler.Get())
-		r.Put("/{id}", crudHandler.Put())
+		r.Get("/{id}", baseHandler.Get())
+		r.Put("/{id}", baseHandler.Put())
 	})
 }
