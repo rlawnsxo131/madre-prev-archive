@@ -18,7 +18,7 @@ func main() {
 		database.ExcuteInitSQL(db.DB)
 	}
 
-	s := server.New(db)
+	s := server.NewEngine(db)
 	s.Start()
 }
 

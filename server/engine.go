@@ -32,7 +32,7 @@ type engine struct {
 	srv *http.Server
 }
 
-func New(db database.Database) *engine {
+func NewEngine(db database.Database) *engine {
 	r := chi.NewRouter()
 	e := &engine{
 		db: db,
