@@ -7,10 +7,10 @@ import (
 	"github.com/go-playground/validator/v10"
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v2/database"
-	"github.com/rlawnsxo131/madre-server-v2/domain/user"
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"
 	"github.com/rlawnsxo131/madre-server-v2/lib/social"
 	"github.com/rlawnsxo131/madre-server-v2/lib/token"
+	"github.com/rlawnsxo131/madre-server-v2/modules/user"
 	"github.com/rlawnsxo131/madre-server-v2/utils"
 )
 
