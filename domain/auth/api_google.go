@@ -15,58 +15,33 @@ import (
 )
 
 type (
-	PostGoogleCheckRequestDto struct {
+	PostGoogleCheckRequestParams struct {
 		AccessToken string `json:"access_token" validate:"required,min=50"`
 	}
-	PostGoogleSignInRequestDto struct {
+	PostGoogleSignInRequestParams struct {
 		AccessToken string `json:"access_token" validate:"required,min=50"`
 	}
-	PostGoogleSignUpRequestDto struct {
+	PostGoogleSignUpRequestParams struct {
 		AccessToken string `json:"access_token" validate:"required,min=50"`
 		Username    string `json:"username" validate:"required,max=20,min=1"`
 	}
 )
 
-type controller struct {
+type googleHandler struct {
 	db database.Database
 }
 
-func NewController(db database.Database) *controller {
-	return &controller{
+func NewGoogleHandler(db database.Database) *googleHandler {
+	return &googleHandler{
 		db: db,
 	}
 }
 
-func (c *controller) Get() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		rw := response.NewWriter(w, r)
-		p := token.UserProfileCtx(r.Context())
-
-		rw.Write(p)
-	}
-}
-
-func (c *controller) Delete() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		rw := response.NewWriter(w, r)
-		p := token.UserProfileCtx(r.Context())
-		if p == nil {
-			rw.ErrorUnauthorized(
-				errors.New("not found userProfile"),
-			)
-			return
-		}
-		token.NewManager().ResetCookies(w)
-
-		rw.Write(struct{}{})
-	}
-}
-
-func (c *controller) PostGoogleCheck() http.HandlerFunc {
+func (h *googleHandler) PostGoogleCheck() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
 
-		var params PostGoogleCheckRequestDto
+		var params PostGoogleCheckRequestParams
 		err := json.NewDecoder(r.Body).Decode(&params)
 		if err != nil {
 			rw.Error(
@@ -78,7 +53,7 @@ func (c *controller) PostGoogleCheck() http.HandlerFunc {
 		err = validator.New().Struct(&params)
 		if err != nil {
 			rw.ErrorBadRequest(
-				errors.Wrap(err, "PostGoogleCheckRequestDto validate error"),
+				errors.Wrap(err, "PostGoogleCheckRequestParams validate error"),
 			)
 			return
 		}
@@ -91,7 +66,7 @@ func (c *controller) PostGoogleCheck() http.HandlerFunc {
 
 		// if no rows in result set err -> { exist: false }
 		socialUseCase := NewSocialAccountUseCase(
-			NewSocialAccountRepository(c.db),
+			NewSocialAccountRepository(h.db),
 		)
 		sa, err := socialUseCase.FindOneBySocialIdAndProvider(
 			ggp.SocialID,
@@ -109,11 +84,11 @@ func (c *controller) PostGoogleCheck() http.HandlerFunc {
 	}
 }
 
-func (c *controller) PostGoogleSignIn() http.HandlerFunc {
+func (h *googleHandler) PostGoogleSignIn() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
 
-		var params PostGoogleSignInRequestDto
+		var params PostGoogleSignInRequestParams
 		err := json.NewDecoder(r.Body).Decode(&params)
 		if err != nil {
 			rw.Error(
@@ -125,7 +100,7 @@ func (c *controller) PostGoogleSignIn() http.HandlerFunc {
 		err = validator.New().Struct(&params)
 		if err != nil {
 			rw.ErrorBadRequest(
-				errors.Wrap(err, "PostGoogleSignInRequestDto validate error"),
+				errors.Wrap(err, "PostGoogleSignInRequestParams validate error"),
 			)
 			return
 		}
@@ -137,7 +112,7 @@ func (c *controller) PostGoogleSignIn() http.HandlerFunc {
 		}
 
 		socialUseCase := NewSocialAccountUseCase(
-			NewSocialAccountRepository(c.db),
+			NewSocialAccountRepository(h.db),
 		)
 		sa, err := socialUseCase.FindOneBySocialIdAndProvider(
 			ggp.SocialID,
@@ -149,7 +124,7 @@ func (c *controller) PostGoogleSignIn() http.HandlerFunc {
 		}
 
 		userUseCase := user.NewUserUseCase(
-			user.NewUserRepository(c.db),
+			user.NewUserRepository(h.db),
 		)
 		u, err := userUseCase.FindOneById(sa.UserID)
 		if err != nil {
@@ -173,11 +148,11 @@ func (c *controller) PostGoogleSignIn() http.HandlerFunc {
 	}
 }
 
-func (c *controller) PostGoogleSignUp() http.HandlerFunc {
+func (h *googleHandler) PostGoogleSignUp() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
 
-		var params PostGoogleSignUpRequestDto
+		var params PostGoogleSignUpRequestParams
 		err := json.NewDecoder(r.Body).Decode(&params)
 		if err != nil {
 			rw.Error(
@@ -189,7 +164,7 @@ func (c *controller) PostGoogleSignUp() http.HandlerFunc {
 		err = validator.New().Struct(&params)
 		if err != nil {
 			rw.ErrorBadRequest(
-				errors.Wrap(err, "PostGoogleSignUpRequestDto validate error"),
+				errors.Wrap(err, "PostGoogleSignUpRequestParams validate error"),
 			)
 			return
 		}
@@ -219,7 +194,7 @@ func (c *controller) PostGoogleSignUp() http.HandlerFunc {
 		}
 
 		userUseCase := user.NewUserUseCase(
-			user.NewUserRepository(c.db),
+			user.NewUserRepository(h.db),
 		)
 		sameNameUser, err := userUseCase.FindOneByUsername(params.Username)
 		exist, err := sameNameUser.IsExist(err)
@@ -252,7 +227,7 @@ func (c *controller) PostGoogleSignUp() http.HandlerFunc {
 			Provider: "GOOGLE",
 		}
 		socialUseCase := NewSocialAccountUseCase(
-			NewSocialAccountRepository(c.db),
+			NewSocialAccountRepository(h.db),
 		)
 		_, err = socialUseCase.Create(&sa)
 		if err != nil {

@@ -8,23 +8,23 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"
 )
 
-type controller struct {
+type crudHandler struct {
 	db database.Database
 }
 
-func NewController(db database.Database) *controller {
-	return &controller{
+func NewCRUDHandler(db database.Database) *crudHandler {
+	return &crudHandler{
 		db: db,
 	}
 }
 
-func (c *controller) Get() http.HandlerFunc {
+func (h *crudHandler) Get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
 		id := chi.URLParam(r, "id")
 
 		userUseCase := NewUserUseCase(
-			NewUserRepository(c.db),
+			NewUserRepository(h.db),
 		)
 		u, err := userUseCase.FindOneById(id)
 		if err != nil {
@@ -36,6 +36,6 @@ func (c *controller) Get() http.HandlerFunc {
 	}
 }
 
-func (c *controller) Put() http.HandlerFunc {
+func (h *crudHandler) Put() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {}
 }

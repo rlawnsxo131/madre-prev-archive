@@ -24,7 +24,7 @@ type Data struct {
 	UpdatedAt   time.Time `json:"updated_at" db:"updated_at"`
 }
 
-func (d *Data) Filter(keys []string) map[string]interface{} {
+func (d *Data) Filter(keys []string) interface{} {
 	result := make(map[string]interface{})
 
 	if keys == nil {

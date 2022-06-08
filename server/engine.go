@@ -17,7 +17,7 @@ import (
 	"github.com/rlawnsxo131/madre-server-v2/lib/env"
 	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"
-	"github.com/rlawnsxo131/madre-server-v2/middleware"
+	"github.com/rlawnsxo131/madre-server-v2/server/middleware"
 )
 
 const (
@@ -46,9 +46,9 @@ func New(db database.Database) *engine {
 			Handler:      r,
 		},
 	}
-	e.RegisterMiddleware()
-	e.RegisterHealthRoute()
-	e.RegisterAPIRoutes()
+	e.RegisterAPIMiddleware()
+	e.RegisterHealthAPI()
+	e.RegisterAPI()
 	return e
 }
 
@@ -94,7 +94,7 @@ func (s *engine) Start() {
 	<-srvCtx.Done()
 }
 
-func (e *engine) RegisterMiddleware() {
+func (e *engine) RegisterAPIMiddleware() {
 	e.r.Use(chi_middleware.RequestID)
 	e.r.Use(chi_middleware.RealIP)
 	e.r.Use(middleware.HTTPLogger)
@@ -106,7 +106,7 @@ func (e *engine) RegisterMiddleware() {
 	e.r.Use(chi_middleware.Compress(5))
 }
 
-func (e *engine) RegisterHealthRoute() {
+func (e *engine) RegisterHealthAPI() {
 	e.r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
 		rw := response.NewWriter(w, r)
 		data := map[string]string{
@@ -120,11 +120,11 @@ func (e *engine) RegisterHealthRoute() {
 	})
 }
 
-func (e *engine) RegisterAPIRoutes() {
+func (e *engine) RegisterAPI() {
 	e.r.Route("/api", func(r chi.Router) {
 		r.Route("/v1", func(r chi.Router) {
-			auth.RegisterRoutes(r, e.db)
-			user.RegisterRoutes(r, e.db)
+			auth.RegisterAPI(r, e.db)
+			user.RegisterAPI(r, e.db)
 		})
 	})
 }
