@@ -12,11 +12,11 @@ import (
 	"github.com/go-chi/chi/v5"
 	chi_middleware "github.com/go-chi/chi/v5/middleware"
 	"github.com/rlawnsxo131/madre-server-v2/database"
-	"github.com/rlawnsxo131/madre-server-v2/domain/auth"
-	"github.com/rlawnsxo131/madre-server-v2/domain/user"
 	"github.com/rlawnsxo131/madre-server-v2/lib/env"
 	"github.com/rlawnsxo131/madre-server-v2/lib/logger"
 	"github.com/rlawnsxo131/madre-server-v2/lib/response"
+	"github.com/rlawnsxo131/madre-server-v2/modules/auth"
+	"github.com/rlawnsxo131/madre-server-v2/modules/user"
 	"github.com/rlawnsxo131/madre-server-v2/server/middleware"
 )
 
