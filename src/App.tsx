@@ -3,6 +3,7 @@ import Core from './components/common/Core';
 import ErrorBoundary from './components/error/ErrorBoundary';
 import Layout from './components/base/Layout';
 import { HomePage, MadreStoryPage, NotFoundPage } from './pages';
+import UserPage from './pages/UserPage';
 
 interface AppProps {}
 
@@ -19,7 +20,8 @@ function App(props: AppProps) {
           <Route path="notifications" element={<div>notifications</div>} />
         </Route>
         <Route path="/@:username" element={<Layout />}>
-          <Route index element={<div>user info</div>} />
+          <Route index element={<UserPage />} />
+          <Route path="profile" element={<div>user profile</div>} />
         </Route>
         <Route path="/m" element={<Layout />}>
           <Route path="all-menu" element={<div>mobile all menu</div>} />

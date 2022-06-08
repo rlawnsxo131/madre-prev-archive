@@ -14,6 +14,7 @@ export const appRoutes = [
   { path: '/policy' },
   { path: '/notifications' },
   { path: userPath },
+  { path: `${userPath}/profile` },
   { path: '/m/all-menu' },
 ];
 
