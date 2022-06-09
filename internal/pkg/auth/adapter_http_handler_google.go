@@ -22,12 +22,9 @@ func NewHTTPGoogleHandler(
 	socialAccountRepo SocialAccountRepository,
 	userRepo user.UserRepository,
 ) *httpGoogleHandler {
-	socialAccountService := NewSocialAccountService(socialAccountRepo)
-	userService := user.NewUserService(userRepo)
-
 	return &httpGoogleHandler{
-		socialAccountService,
-		userService,
+		NewSocialAccountService(socialAccountRepo),
+		user.NewUserService(userRepo),
 	}
 }
 
