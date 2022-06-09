@@ -1,11 +1,10 @@
 package main
 
 import (
-	"github.com/rlawnsxo131/madre-server-v3/core"
-	"github.com/rlawnsxo131/madre-server-v3/datastore/rdb"
-
-	"github.com/rlawnsxo131/madre-server-v3/lib/env"
-	"github.com/rlawnsxo131/madre-server-v3/lib/logger"
+	"github.com/rlawnsxo131/madre-server-v3/internal/datastore/rdb"
+	"github.com/rlawnsxo131/madre-server-v3/internal/engine"
+	"github.com/rlawnsxo131/madre-server-v3/internal/lib/env"
+	"github.com/rlawnsxo131/madre-server-v3/internal/lib/logger"
 )
 
 func main() {
@@ -19,8 +18,8 @@ func main() {
 		rdb.ExcuteInitSQL(db.DB)
 	}
 
-	httpEngine := core.NewHTTPEngine(db)
-	httpEngine.Start()
+	e := engine.NewHTTPEngine(db)
+	e.Start()
 }
 
 func init() {
