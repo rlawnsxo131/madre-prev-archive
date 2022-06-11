@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/rlawnsxo131/madre-server-v3/internal/datastore/rdb"
-	"github.com/rlawnsxo131/madre-server-v3/internal/engine"
-	"github.com/rlawnsxo131/madre-server-v3/internal/lib/env"
-	"github.com/rlawnsxo131/madre-server-v3/internal/lib/logger"
+	"github.com/rlawnsxo131/madre-server-v3/external/datastore/rdb"
+	"github.com/rlawnsxo131/madre-server-v3/external/engine"
+	"github.com/rlawnsxo131/madre-server-v3/lib/env"
+	"github.com/rlawnsxo131/madre-server-v3/lib/logger"
 )
 
 func main() {
