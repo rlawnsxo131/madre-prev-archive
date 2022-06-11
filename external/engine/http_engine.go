@@ -45,9 +45,9 @@ func NewHTTPEngine(db rdb.Database) *httpEngine {
 			Handler:      r,
 		},
 	}
-	e.RegisterAPIMiddleware()
+	e.RegisterHTTPMiddleware()
 	e.RegisterHealthHandler()
-	e.RegisterAPI()
+	e.RegisterHandler()
 	return e
 }
 
@@ -93,7 +93,7 @@ func (s *httpEngine) Start() {
 	<-srvCtx.Done()
 }
 
-func (e *httpEngine) RegisterAPIMiddleware() {
+func (e *httpEngine) RegisterHTTPMiddleware() {
 	e.r.Use(chi_middleware.RequestID)
 	e.r.Use(chi_middleware.RealIP)
 	e.r.Use(httpmiddleware.Logger)
@@ -119,7 +119,7 @@ func (e *httpEngine) RegisterHealthHandler() {
 	})
 }
 
-func (e *httpEngine) RegisterAPI() {
+func (e *httpEngine) RegisterHandler() {
 	e.r.Route("/api", func(r chi.Router) {
 		r.Route("/v1", func(r chi.Router) {
 			presentation.NewAuthHandler().Register(r)
