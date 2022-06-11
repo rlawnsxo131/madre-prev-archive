@@ -11,7 +11,8 @@ import (
 	"github.com/rlawnsxo131/madre-server-v3/external/engine/httpresponse"
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/auth"
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/user"
-	"github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/repository"
+	"github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/command"
+	"github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/query"
 	"github.com/rlawnsxo131/madre-server-v3/lib/social"
 	"github.com/rlawnsxo131/madre-server-v3/lib/token"
 	"github.com/rlawnsxo131/madre-server-v3/utils"
@@ -25,12 +26,12 @@ type authGoogleHandler struct {
 func NewAuthGoogleHandler(db rdb.Database) *authGoogleHandler {
 	return &authGoogleHandler{
 		auth.NewSocialAccountService(
-			repository.NewSocialAccountCommandRepository(db),
-			repository.NewSocialAccountQueryRepository(db),
+			command.NewSocialAccountCommandRepository(db),
+			query.NewSocialAccountQueryRepository(db),
 		),
 		user.NewUserService(
-			repository.NewUserCommandRepository(db),
-			repository.NewUserQueryRepository(db),
+			command.NewUserCommandRepository(db),
+			query.NewUserQueryRepository(db),
 		),
 	}
 }

@@ -7,7 +7,8 @@ import (
 	"github.com/rlawnsxo131/madre-server-v3/external/datastore/rdb"
 	"github.com/rlawnsxo131/madre-server-v3/external/engine/httpresponse"
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/user"
-	"github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/repository"
+	"github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/command"
+	"github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/query"
 )
 
 type userHandler struct {
@@ -17,8 +18,8 @@ type userHandler struct {
 func NewUserHandler(db rdb.Database) *userHandler {
 	return &userHandler{
 		user.NewUserService(
-			repository.NewUserCommandRepository(db),
-			repository.NewUserQueryRepository(db),
+			command.NewUserCommandRepository(db),
+			query.NewUserQueryRepository(db),
 		),
 	}
 }
