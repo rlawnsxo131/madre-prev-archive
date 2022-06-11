@@ -28,3 +28,7 @@ $ go run ./main.go
 ### V1 Repository
 
 <https://github.com/rlawnsxo131/madre-server>
+
+### V3 Repository
+
+<https://github.com/rlawnsxo131/madre-server-v3>
