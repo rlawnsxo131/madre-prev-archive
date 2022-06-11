@@ -22,3 +22,7 @@ $ yarn start:dev
 ### V2 Repository
 
 <https://github.com/rlawnsxo131/madre-server-v2>
+
+### V3 Repository
+
+<https://github.com/rlawnsxo131/madre-server-v3>
