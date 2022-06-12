@@ -6,24 +6,24 @@ type SocialAccountService interface {
 }
 
 type socialAccountService struct {
-	commandRepo SocialAccountCommandRepository
-	queryRepo   SocialAccountQueryRepository
+	command SocialAccountCommandRepository
+	query   SocialAccountQueryRepository
 }
 
 func NewSocialAccountService(
-	commandRepo SocialAccountCommandRepository,
-	queryRepo SocialAccountQueryRepository,
+	command SocialAccountCommandRepository,
+	query SocialAccountQueryRepository,
 ) SocialAccountService {
 	return &socialAccountService{
-		commandRepo,
-		queryRepo,
+		command,
+		query,
 	}
 }
 
 func (s *socialAccountService) Create(sa *SocialAccount) (string, error) {
-	return s.commandRepo.Create(sa)
+	return s.command.Create(sa)
 }
 
 func (s *socialAccountService) FindOneBySocialIdAndProvider(socialId, provider string) (*SocialAccount, error) {
-	return s.queryRepo.FindOneBySocialIdAndProvider(socialId, provider)
+	return s.query.FindOneBySocialIdAndProvider(socialId, provider)
 }

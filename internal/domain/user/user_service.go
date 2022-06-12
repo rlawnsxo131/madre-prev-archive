@@ -7,28 +7,28 @@ type UserService interface {
 }
 
 type userService struct {
-	commandRepo UserCommandRepository
-	queryRepo   UserQueryRepository
+	command UserCommandRepository
+	query   UserQueryRepository
 }
 
 func NewUserService(
-	commandRepo UserCommandRepository,
-	queryRepo UserQueryRepository,
+	command UserCommandRepository,
+	query UserQueryRepository,
 ) UserService {
 	return &userService{
-		commandRepo,
-		queryRepo,
+		command,
+		query,
 	}
 }
 
 func (s *userService) Create(u *User) (string, error) {
-	return s.commandRepo.Create(u)
+	return s.command.Create(u)
 }
 
 func (s *userService) FindOneById(id string) (*User, error) {
-	return s.queryRepo.FindOneById(id)
+	return s.query.FindOneById(id)
 }
 
 func (s *userService) FindOneByUsername(username string) (*User, error) {
-	return s.queryRepo.FindOneByUsername(username)
+	return s.query.FindOneByUsername(username)
 }
