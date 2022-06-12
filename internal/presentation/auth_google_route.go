@@ -18,13 +18,13 @@ import (
 	"github.com/rlawnsxo131/madre-server-v3/utils"
 )
 
-type authGoogleHandler struct {
+type authGoogleRoute struct {
 	socialAccountService auth.SocialAccountService
 	userService          user.UserService
 }
 
-func NewAuthGoogleHandler(db rdb.Database) *authGoogleHandler {
-	return &authGoogleHandler{
+func NewAuthGoogleRoute(db rdb.Database) *authGoogleRoute {
+	return &authGoogleRoute{
 		auth.NewSocialAccountService(
 			command.NewSocialAccountCommandRepository(db),
 			query.NewSocialAccountQueryRepository(db),
@@ -36,7 +36,7 @@ func NewAuthGoogleHandler(db rdb.Database) *authGoogleHandler {
 	}
 }
 
-func (h *authGoogleHandler) Register(r chi.Router) {
+func (h *authGoogleRoute) Register(r chi.Router) {
 	r.Route("/auth/google", func(r chi.Router) {
 		r.Post("/check", h.PostGoogleCheck())
 		r.Post("/sign-in", h.PostGoogleSignIn())
@@ -44,7 +44,7 @@ func (h *authGoogleHandler) Register(r chi.Router) {
 	})
 }
 
-func (h *authGoogleHandler) PostGoogleCheck() http.HandlerFunc {
+func (h *authGoogleRoute) PostGoogleCheck() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := httpresponse.NewWriter(w, r)
 
@@ -90,7 +90,7 @@ func (h *authGoogleHandler) PostGoogleCheck() http.HandlerFunc {
 	}
 }
 
-func (h *authGoogleHandler) PostGoogleSignIn() http.HandlerFunc {
+func (h *authGoogleRoute) PostGoogleSignIn() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := httpresponse.NewWriter(w, r)
 
@@ -150,7 +150,7 @@ func (h *authGoogleHandler) PostGoogleSignIn() http.HandlerFunc {
 	}
 }
 
-func (h *authGoogleHandler) PostGoogleSignUp() http.HandlerFunc {
+func (h *authGoogleRoute) PostGoogleSignUp() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := httpresponse.NewWriter(w, r)
 

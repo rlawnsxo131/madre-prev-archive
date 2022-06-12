@@ -9,20 +9,20 @@ import (
 	"github.com/rlawnsxo131/madre-server-v3/lib/token"
 )
 
-type authHandler struct{}
+type authRoute struct{}
 
-func NewAuthHandler() *authHandler {
-	return &authHandler{}
+func NewAuthRoute() *authRoute {
+	return &authRoute{}
 }
 
-func (h *authHandler) Register(r chi.Router) {
+func (h *authRoute) Register(r chi.Router) {
 	r.Route("/auth", func(r chi.Router) {
 		r.Get("/", h.Get())
 		r.Delete("/", h.Delete())
 	})
 }
 
-func (h *authHandler) Get() http.HandlerFunc {
+func (h *authRoute) Get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := httpresponse.NewWriter(w, r)
 		p := token.UserProfileCtx(r.Context())
@@ -31,7 +31,7 @@ func (h *authHandler) Get() http.HandlerFunc {
 	}
 }
 
-func (h *authHandler) Delete() http.HandlerFunc {
+func (h *authRoute) Delete() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := httpresponse.NewWriter(w, r)
 		p := token.UserProfileCtx(r.Context())

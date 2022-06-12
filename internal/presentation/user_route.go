@@ -11,12 +11,12 @@ import (
 	"github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/query"
 )
 
-type userHandler struct {
+type userRoute struct {
 	userService user.UserService
 }
 
-func NewUserHandler(db rdb.Database) *userHandler {
-	return &userHandler{
+func NewUserRoute(db rdb.Database) *userRoute {
+	return &userRoute{
 		user.NewUserService(
 			command.NewUserCommandRepository(db),
 			query.NewUserQueryRepository(db),
@@ -24,13 +24,13 @@ func NewUserHandler(db rdb.Database) *userHandler {
 	}
 }
 
-func (h *userHandler) Register(r chi.Router) {
+func (h *userRoute) Register(r chi.Router) {
 	r.Route("/user", func(r chi.Router) {
 		r.Get("/{id}", h.Get())
 	})
 }
 
-func (h *userHandler) Get() http.HandlerFunc {
+func (h *userRoute) Get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := httpresponse.NewWriter(w, r)
 		id := chi.URLParam(r, "id")

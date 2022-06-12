@@ -46,8 +46,8 @@ func NewHTTPEngine(db rdb.Database) *httpEngine {
 		},
 	}
 	e.RegisterHTTPMiddleware()
-	e.RegisterHealthHandler()
-	e.RegisterHandler()
+	e.RegisterHealthRoute()
+	e.RegisterAPIRoute()
 	return e
 }
 
@@ -105,7 +105,7 @@ func (e *httpEngine) RegisterHTTPMiddleware() {
 	e.r.Use(chi_middleware.Compress(5))
 }
 
-func (e *httpEngine) RegisterHealthHandler() {
+func (e *httpEngine) RegisterHealthRoute() {
 	e.r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
 		rw := httpresponse.NewWriter(w, r)
 		data := map[string]string{
@@ -119,12 +119,12 @@ func (e *httpEngine) RegisterHealthHandler() {
 	})
 }
 
-func (e *httpEngine) RegisterHandler() {
+func (e *httpEngine) RegisterAPIRoute() {
 	e.r.Route("/api", func(r chi.Router) {
 		r.Route("/v1", func(r chi.Router) {
-			presentation.NewAuthHandler().Register(r)
-			presentation.NewAuthGoogleHandler(e.db).Register(r)
-			presentation.NewUserHandler(e.db).Register(r)
+			presentation.NewAuthRoute().Register(r)
+			presentation.NewAuthGoogleRoute(e.db).Register(r)
+			presentation.NewUserRoute(e.db).Register(r)
 		})
 	})
 }
