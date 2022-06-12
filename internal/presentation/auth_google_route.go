@@ -123,14 +123,28 @@ func (h *authGoogleRoute) PostGoogleSignIn() http.HandlerFunc {
 			ggp.SocialID,
 			auth.Key_SocialAccount_Provider_GOOGLE,
 		)
+		exist, err := sa.IsExist(err)
 		if err != nil {
 			rw.Error(err)
 			return
 		}
+		if !exist {
+			rw.ErrorBadRequest(
+				errors.New("not found socialaccount"),
+			)
+			return
+		}
 
 		u, err := h.userService.FindOneById(sa.UserID)
+		exist, err = u.IsExist(err)
 		if err != nil {
 			rw.Error(err)
+			return
+		}
+		if !exist {
+			rw.ErrorBadRequest(
+				errors.New("not found user"),
+			)
 			return
 		}
 
