@@ -194,6 +194,8 @@ func (h *authGoogleRoute) PostGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
+		// TODO: already exist social account validation process
+
 		u := user.User{
 			Email:      ggp.Email,
 			OriginName: utils.NewNullString(ggp.DisplayName),
