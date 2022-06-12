@@ -62,7 +62,7 @@ func (h *authGoogleRoute) PostGoogleCheck() http.HandlerFunc {
 		err = validator.New().Struct(&params)
 		if err != nil {
 			rw.ErrorBadRequest(
-				errors.Wrap(err, "PostGoogleCheckRequestDto validate error"),
+				errors.Wrap(err, "PostGoogleCheck params validate error"),
 			)
 			return
 		}
@@ -108,7 +108,7 @@ func (h *authGoogleRoute) PostGoogleSignIn() http.HandlerFunc {
 		err = validator.New().Struct(&params)
 		if err != nil {
 			rw.ErrorBadRequest(
-				errors.Wrap(err, "PostGoogleSignInRequestDto validate error"),
+				errors.Wrap(err, "PostGoogleSignIn params validate error"),
 			)
 			return
 		}
@@ -169,7 +169,7 @@ func (h *authGoogleRoute) PostGoogleSignUp() http.HandlerFunc {
 		err = validator.New().Struct(&params)
 		if err != nil {
 			rw.ErrorBadRequest(
-				errors.Wrap(err, "PostGoogleSignUpRequestDto validate error"),
+				errors.Wrap(err, "PostGoogleSignUpRequest parmas validate error"),
 			)
 			return
 		}
