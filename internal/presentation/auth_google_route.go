@@ -169,7 +169,7 @@ func (h *authGoogleRoute) PostGoogleSignUp() http.HandlerFunc {
 		err = validator.New().Struct(&params)
 		if err != nil {
 			rw.ErrorBadRequest(
-				errors.Wrap(err, "PostGoogleSignUpRequest parmas validate error"),
+				errors.Wrap(err, "PostGoogleSignUpRequest params validate error"),
 			)
 			return
 		}
