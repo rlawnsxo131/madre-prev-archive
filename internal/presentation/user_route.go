@@ -42,6 +42,5 @@ func (h *userRoute) Get() http.HandlerFunc {
 		}
 
 		rw.Write(u)
-
 	}
 }
