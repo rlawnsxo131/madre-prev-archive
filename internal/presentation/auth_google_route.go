@@ -240,7 +240,7 @@ func (h *authGoogleRoute) PostGoogleSignUp() http.HandlerFunc {
 		sa := auth.SocialAccount{
 			UserID:   user.ID,
 			SocialID: ggp.SocialID,
-			Provider: "GOOGLE",
+			Provider: auth.Key_SocialAccount_Provider_GOOGLE,
 		}
 		_, err = h.socialAccountService.Create(&sa)
 		if err != nil {
