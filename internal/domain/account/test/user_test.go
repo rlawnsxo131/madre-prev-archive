@@ -1,17 +1,17 @@
-package user_test
+package account_test
 
 import (
 	"testing"
 
 	"github.com/google/uuid"
-	"github.com/rlawnsxo131/madre-server-v3/internal/domain/user"
+	"github.com/rlawnsxo131/madre-server-v3/internal/domain/account"
 	"github.com/stretchr/testify/assert"
 )
 
 func Test_User_IsExist_IsTrue(t *testing.T) {
 	assert := assert.New(t)
 
-	u := &user.User{
+	u := &account.User{
 		ID: uuid.NewString(),
 	}
 	exist, err := u.IsExist(nil)
@@ -23,7 +23,7 @@ func Test_User_IsExist_IsTrue(t *testing.T) {
 func Test_User_ValidateUsername_ValidIsTrue(t *testing.T) {
 	assert := assert.New(t)
 
-	u := &user.User{
+	u := &account.User{
 		Username: "username",
 	}
 	valid, _ := u.ValidateUsername()
@@ -34,7 +34,7 @@ func Test_User_ValidateUsername_ValidIsTrue(t *testing.T) {
 func Test_User_ValidateUsername_ValidIsFalse(t *testing.T) {
 	assert := assert.New(t)
 
-	u := &user.User{}
+	u := &account.User{}
 	valid, _ := u.ValidateUsername()
 
 	assert.False(valid)

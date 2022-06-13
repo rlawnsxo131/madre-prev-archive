@@ -3,7 +3,7 @@ package query
 import (
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v3/external/datastore/rdb"
-	"github.com/rlawnsxo131/madre-server-v3/internal/domain/user"
+	"github.com/rlawnsxo131/madre-server-v3/internal/domain/account"
 	"github.com/rlawnsxo131/madre-server-v3/utils"
 )
 
@@ -11,12 +11,12 @@ type userQueryRepository struct {
 	db rdb.Database
 }
 
-func NewUserQueryRepository(db rdb.Database) user.UserQueryRepository {
+func NewUserQueryRepository(db rdb.Database) account.UserQueryRepository {
 	return &userQueryRepository{db}
 }
 
-func (r *userQueryRepository) FindOneById(id string) (*user.User, error) {
-	var u user.User
+func (r *userQueryRepository) FindOneById(id string) (*account.User, error) {
+	var u account.User
 
 	query := "SELECT * FROM public.user" +
 		" WHERE id = $1"
@@ -30,8 +30,8 @@ func (r *userQueryRepository) FindOneById(id string) (*user.User, error) {
 	return &u, err
 }
 
-func (r *userQueryRepository) FindOneByUsername(username string) (*user.User, error) {
-	var u user.User
+func (r *userQueryRepository) FindOneByUsername(username string) (*account.User, error) {
+	var u account.User
 
 	query := "SELECT * FROM public.user" +
 		" WHERE username = $1"

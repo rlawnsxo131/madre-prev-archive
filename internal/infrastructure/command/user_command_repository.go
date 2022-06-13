@@ -3,18 +3,18 @@ package command
 import (
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v3/external/datastore/rdb"
-	"github.com/rlawnsxo131/madre-server-v3/internal/domain/user"
+	"github.com/rlawnsxo131/madre-server-v3/internal/domain/account"
 )
 
 type userCommandRepository struct {
 	db rdb.Database
 }
 
-func NewUserCommandRepository(db rdb.Database) user.UserCommandRepository {
+func NewUserCommandRepository(db rdb.Database) account.UserCommandRepository {
 	return &userCommandRepository{db}
 }
 
-func (r *userCommandRepository) Create(u *user.User) (string, error) {
+func (r *userCommandRepository) Create(u *account.User) (string, error) {
 	var id string
 
 	query := "INSERT INTO public.user(email, origin_name, username, photo_url)" +

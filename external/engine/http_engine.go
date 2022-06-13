@@ -122,9 +122,7 @@ func (e *httpEngine) RegisterHealthRoute() {
 func (e *httpEngine) RegisterAPIRoute() {
 	e.r.Route("/api", func(r chi.Router) {
 		r.Route("/v1", func(r chi.Router) {
-			presentation.NewAuthRoute().Register(r)
-			presentation.NewAuthGoogleRoute(e.db).Register(r)
-			presentation.NewUserRoute(e.db).Register(r)
+			presentation.NewAuthRoute(e.db).Register(r)
 		})
 	})
 }

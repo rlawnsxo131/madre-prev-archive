@@ -1,4 +1,4 @@
-package auth
+package account
 
 type SocialAccountCommandRepository interface {
 	Create(sa *SocialAccount) (string, error)
