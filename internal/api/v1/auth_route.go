@@ -24,6 +24,11 @@ func (ar *authRoute) Get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := httpresponse.NewWriter(w, r)
 		p := token.ProfileCtx(r.Context())
-		rw.Write(p)
+		rw.Write(
+			httpresponse.NewResponse(
+				http.StatusOK,
+				p,
+			),
+		)
 	}
 }

@@ -1,7 +1,7 @@
 package user
 
 type UserRepository interface {
-	Save(u *User) (string, error)
+	CreateUser(u *User) (string, error)
 }
 
 type UserQueryRepository interface {

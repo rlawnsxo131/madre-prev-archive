@@ -20,4 +20,4 @@ const (
 		" RETURNING id"
 )
 
-func (ur *userRepository) Save(u *user.User) (string, error)
+func (ur *userRepository) CreateUser(u *user.User) (string, error)

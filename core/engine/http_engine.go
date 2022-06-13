@@ -113,7 +113,12 @@ func (e *httpEngine) RegisterHealthRoute() {
 			"Referer": r.Header.Get("Referer"),
 			"Cookies": fmt.Sprint(r.Cookies()),
 		}
-		rw.Write(data)
+		rw.Write(
+			httpresponse.NewResponse(
+				http.StatusOK,
+				data,
+			),
+		)
 	})
 }
 

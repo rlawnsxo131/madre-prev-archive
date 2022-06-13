@@ -23,7 +23,7 @@ const (
 )
 
 type Writer interface {
-	Write(data any)
+	Write(res *Response)
 	Error(err error, message ...string)
 	ErrorBadRequest(err error, message ...string)
 	ErrorUnauthorized(err error, message ...string)
@@ -41,18 +41,18 @@ func NewWriter(w http.ResponseWriter, r *http.Request) Writer {
 	return &writer{w, r}
 }
 
-func (wt *writer) Write(data any) {
-	res, err := json.Marshal(data)
+func (wt *writer) Write(res *Response) {
+	jsonRes, err := json.Marshal(res)
 	if err != nil {
 		wt.Error(
 			errors.Wrap(err, "Write json parse error"),
 		)
 		return
 	}
-	wt.w.WriteHeader(http.StatusOK)
-	wt.w.Write(res)
+	wt.w.WriteHeader(res.Code)
+	wt.w.Write(jsonRes)
 	httplogger.LoggerCtx(wt.r.Context()).Add(func(e *zerolog.Event) {
-		e.RawJSON("response", res)
+		e.RawJSON("response", jsonRes)
 	})
 }
 
