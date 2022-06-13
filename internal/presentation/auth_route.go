@@ -11,8 +11,8 @@ import (
 	"github.com/rlawnsxo131/madre-server-v3/external/engine/httpresponse"
 	"github.com/rlawnsxo131/madre-server-v3/internal/application"
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/account"
-	"github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/command"
-	"github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/query"
+	"github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/repository/commandrepository"
+	"github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/repository/queryrepository"
 	"github.com/rlawnsxo131/madre-server-v3/lib/social"
 	"github.com/rlawnsxo131/madre-server-v3/lib/token"
 	"github.com/rlawnsxo131/madre-server-v3/utils"
@@ -26,12 +26,12 @@ type authRoute struct {
 func NewAuthRoute(db rdb.Database) *authRoute {
 	return &authRoute{
 		application.NewSocialAccountUseCase(
-			command.NewSocialAccountCommandRepository(db),
-			query.NewSocialAccountQueryRepository(db),
+			commandrepository.NewSocialAccountCommandRepository(db),
+			queryrepository.NewSocialAccountQueryRepository(db),
 		),
 		application.NewUserUseCase(
-			command.NewUserCommandRepository(db),
-			query.NewUserQueryRepository(db),
+			commandrepository.NewUserCommandRepository(db),
+			queryrepository.NewUserQueryRepository(db),
 		),
 	}
 }

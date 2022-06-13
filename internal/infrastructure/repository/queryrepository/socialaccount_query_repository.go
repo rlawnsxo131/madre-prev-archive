@@ -1,4 +1,4 @@
-package query
+package queryrepository
 
 import (
 	"github.com/pkg/errors"

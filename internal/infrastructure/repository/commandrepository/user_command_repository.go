@@ -1,4 +1,4 @@
-package command
+package commandrepository
 
 import (
 	"github.com/pkg/errors"
