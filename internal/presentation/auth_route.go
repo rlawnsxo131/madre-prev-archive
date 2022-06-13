@@ -62,10 +62,12 @@ func (h *authRoute) Delete() http.HandlerFunc {
 }
 
 func (h *authRoute) Register(r chi.Router) {
-	r.Route("/auth/google", func(r chi.Router) {
-		r.Post("/check", h.PostGoogleCheck())
-		r.Post("/sign-in", h.PostGoogleSignIn())
-		r.Post("/sign-up", h.PostGoogleSignUp())
+	r.Route("/auth", func(r chi.Router) {
+		r.Get("/", h.Get())
+		r.Delete("/", h.Delete())
+		r.Post("/google/check", h.PostGoogleCheck())
+		r.Post("/google/sign-in", h.PostGoogleSignIn())
+		r.Post("/google/sign-up", h.PostGoogleSignUp())
 	})
 }
 
