@@ -26,7 +26,8 @@ func (uds *userDomainService) CheckConflictUsername(username string) *common.Mad
 	exist, err := uds.userQueryRepository.ExistsByUsername(username)
 	if err != nil {
 		return common.NewMadreError(err)
-	} else if exist {
+	}
+	if exist {
 		return common.NewMadreError(
 			common.ErrConflictUniqValue,
 			"중복된 이름입니다.",
@@ -42,7 +43,8 @@ func (uds *userDomainService) CheckConflictSocialAccount(socialId, provider stri
 	)
 	if err != nil {
 		return common.NewMadreError(err)
-	} else if exist {
+	}
+	if exist {
 		return common.NewMadreError(
 			common.ErrConflictUniqValue,
 			"이미 가입한 소셜 계정입니다.",

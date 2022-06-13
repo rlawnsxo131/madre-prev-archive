@@ -35,6 +35,8 @@ func (uch *userCommandHandler) CreateUser(cmd *CreateUserCommand) (*user.User, *
 	if err != nil {
 		return nil, common.NewMadreError(err, "이름을 다시 확인해 주세요.")
 	}
+
+	// socialaccount is essential when creating a new user
 	err = u.SetNewSocialAccount(
 		cmd.SocialId,
 		cmd.SocialUsername,

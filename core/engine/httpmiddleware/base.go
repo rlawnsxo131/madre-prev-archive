@@ -16,14 +16,14 @@ var (
 func AllowHost(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		reqHost := r.Host
-		validation := false
+		valid := false
 		for _, host := range allowHostsWithoutProtocol {
 			if reqHost == host {
-				validation = true
+				valid = true
 				break
 			}
 		}
-		if !validation {
+		if !valid {
 			rw := httpresponse.NewWriter(w, r)
 			rw.ErrorForbidden(
 				errors.New("AllowHost forbidden host"),

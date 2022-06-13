@@ -20,7 +20,7 @@ type User struct {
 	SocialAccount *SocialAccount `json:"socialAccount,omitempty"`
 }
 
-// instacne static
+// public static constructor
 func NewUserWithoutId(email, username, photoUrl string) (*User, error) {
 	if email == "" || username == "" {
 		return nil, common.ErrMissingRequiredValue
@@ -28,11 +28,12 @@ func NewUserWithoutId(email, username, photoUrl string) (*User, error) {
 	if err := validateUsername(username); err != nil {
 		return nil, err
 	}
-	return &User{
+	u := User{
 		Email:    email,
 		Username: username,
 		PhotoUrl: photoUrl,
-	}, nil
+	}
+	return &u, nil
 }
 
 func NewUserWithId(id, email, username, photoUrl string) (*User, error) {
@@ -42,15 +43,16 @@ func NewUserWithId(id, email, username, photoUrl string) (*User, error) {
 	if err := validateUsername(username); err != nil {
 		return nil, err
 	}
-	return &User{
+	u := User{
 		Id:       id,
 		Email:    email,
 		Username: username,
 		PhotoUrl: photoUrl,
-	}, nil
+	}
+	return &u, nil
 }
 
-// method
+// public method
 func (u *User) SetNewSocialAccount(socialId, socialUsername, provider string) error {
 	if socialId == "" || socialUsername == "" || provider == "" {
 		return common.ErrMissingRequiredValue
