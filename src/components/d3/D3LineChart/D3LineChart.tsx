@@ -72,7 +72,7 @@ function D3LineChart<T>({
     chartRef.current.appendArea();
     chartRef.current.removeAndAppendCircle();
     chartRef.current.resetData();
-  }, [data]);
+  }, [width, height, margin, data, uniqIdentifierValueAndColorArray]);
 
   // update chart
   useEffect(() => {
