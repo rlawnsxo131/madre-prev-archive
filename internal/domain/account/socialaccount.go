@@ -1,12 +1,14 @@
 package account
 
 import (
-	"database/sql"
 	"time"
+
+	"github.com/pkg/errors"
+	"github.com/rlawnsxo131/madre-server-v3/internal/domain/domainhelper"
 )
 
 const (
-	Key_SocialAccount_Provider_GOOGLE = "GOOGLE"
+	SOCIAL_ACCOUNT_PROVIDER_GOOGLE = "GOOGLE"
 )
 
 type SocialAccount struct {
@@ -19,19 +21,6 @@ type SocialAccount struct {
 }
 
 func (sa *SocialAccount) IsExist(err error) (bool, error) {
-	exist := false
-
-	if err != nil {
-		if err == sql.ErrNoRows {
-			return exist, nil
-		} else {
-			return exist, err
-		}
-	}
-
-	if sa.ID != "" {
-		exist = true
-	}
-
-	return exist, nil
+	exist, err := domainhelper.IsExistEntity(sa.ID, err)
+	return exist, errors.Wrap(err, "not found socialaccount In IsExist")
 }

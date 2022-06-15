@@ -9,7 +9,8 @@ import (
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v3/external/datastore/rdb"
 	"github.com/rlawnsxo131/madre-server-v3/external/engine/httpresponse"
-	"github.com/rlawnsxo131/madre-server-v3/internal/application"
+	"github.com/rlawnsxo131/madre-server-v3/internal/application/command"
+	"github.com/rlawnsxo131/madre-server-v3/internal/application/query"
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/account"
 	"github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/repository/commandrepository"
 	"github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/repository/queryrepository"
@@ -19,19 +20,17 @@ import (
 )
 
 type authRoute struct {
-	socialAccountUseCase account.SocialAccountUseCase
-	userUseCase          account.UserUseCase
+	accountCommandService account.AccountCommandService
+	accontQueryService    account.AccountQueryService
 }
 
 func NewAuthRoute(db rdb.Database) *authRoute {
 	return &authRoute{
-		application.NewSocialAccountUseCase(
-			commandrepository.NewSocialAccountCommandRepository(db),
-			queryrepository.NewSocialAccountQueryRepository(db),
+		command.NewAccountCommandService(
+			commandrepository.NewAccountCommandRepository(db),
 		),
-		application.NewUserUseCase(
-			commandrepository.NewUserCommandRepository(db),
-			queryrepository.NewUserQueryRepository(db),
+		query.NewAccountQueryService(
+			queryrepository.NewAccountQueryRepository(db),
 		),
 	}
 }
@@ -100,12 +99,10 @@ func (h *authRoute) PostGoogleCheck() http.HandlerFunc {
 			return
 		}
 
-		// if no rows in result set err -> { exist: false }
-		sa, err := h.socialAccountUseCase.FindOneBySocialIdAndProvider(
+		exist, err := h.accontQueryService.IsExistOfSocialAccount(
 			ggp.SocialID,
-			account.Key_SocialAccount_Provider_GOOGLE,
+			account.SOCIAL_ACCOUNT_PROVIDER_GOOGLE,
 		)
-		exist, err := sa.IsExist(err)
 		if err != nil {
 			rw.Error(err)
 			return
@@ -146,9 +143,9 @@ func (h *authRoute) PostGoogleSignIn() http.HandlerFunc {
 			return
 		}
 
-		sa, err := h.socialAccountUseCase.FindOneBySocialIdAndProvider(
+		sa, err := h.accontQueryService.FindSocialAccountBySocialIdAndProvider(
 			ggp.SocialID,
-			account.Key_SocialAccount_Provider_GOOGLE,
+			account.SOCIAL_ACCOUNT_PROVIDER_GOOGLE,
 		)
 		exist, err := sa.IsExist(err)
 		if err != nil {
@@ -162,7 +159,7 @@ func (h *authRoute) PostGoogleSignIn() http.HandlerFunc {
 			return
 		}
 
-		u, err := h.userUseCase.FindOneById(sa.UserID)
+		u, err := h.accontQueryService.FindUserById(sa.UserID)
 		exist, err = u.IsExist(err)
 		if err != nil {
 			rw.Error(err)
@@ -222,14 +219,15 @@ func (h *authRoute) PostGoogleSignUp() http.HandlerFunc {
 		}
 
 		// TODO: already exist social account validation process
-
-		u := account.User{
+		newAccount := &account.Account{}
+		newAccount.AddUser(&account.User{
 			Email:      ggp.Email,
 			OriginName: utils.NewNullString(ggp.DisplayName),
 			Username:   params.Username,
 			PhotoUrl:   utils.NewNullString(ggp.PhotoUrl),
-		}
-		valid, err := u.ValidateUsername()
+		})
+
+		valid, err := newAccount.ValidateUsername()
 		if err != nil {
 			rw.Error(err)
 			return
@@ -241,54 +239,54 @@ func (h *authRoute) PostGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		sameNameUser, err := h.userUseCase.FindOneByUsername(params.Username)
-		exist, err := sameNameUser.IsExist(err)
-		if err != nil {
-			rw.Error(err)
-			return
-		}
-		if exist {
-			rw.ErrorConflict(
-				errors.Wrap(err, "username is exist"),
-			)
-			return
-		}
+		// sameNameUser, err := h.userUseCase.FindOneByUsername(params.Username)
+		// exist, err := sameNameUser.IsExist(err)
+		// if err != nil {
+		// 	rw.Error(err)
+		// 	return
+		// }
+		// if exist {
+		// 	rw.ErrorConflict(
+		// 		errors.Wrap(err, "username is exist"),
+		// 	)
+		// 	return
+		// }
 
-		userId, err := h.userUseCase.Create(&u)
-		if err != nil {
-			rw.Error(err)
-			return
-		}
+		// userId, err := h.userUseCase.Create(&u)
+		// if err != nil {
+		// 	rw.Error(err)
+		// 	return
+		// }
 
-		user, err := h.userUseCase.FindOneById(userId)
-		if err != nil {
-			rw.Error(err)
-			return
-		}
+		// user, err := h.userUseCase.FindOneById(userId)
+		// if err != nil {
+		// 	rw.Error(err)
+		// 	return
+		// }
 
-		sa := account.SocialAccount{
-			UserID:   user.ID,
-			SocialID: ggp.SocialID,
-			Provider: account.Key_SocialAccount_Provider_GOOGLE,
-		}
-		_, err = h.socialAccountUseCase.Create(&sa)
-		if err != nil {
-			rw.Error(err)
-			return
-		}
+		// sa := account.SocialAccount{
+		// 	UserID:   user.ID,
+		// 	SocialID: ggp.SocialID,
+		// 	Provider: account.SOCIAL_ACCOUNT_PROVIDER_GOOGLE,
+		// }
+		// _, err = h.socialAccountUseCase.Create(&sa)
+		// if err != nil {
+		// 	rw.Error(err)
+		// 	return
+		// }
 
-		p := token.UserProfile{
-			UserID:   user.ID,
-			Username: user.Username,
-			PhotoUrl: utils.NormalizeNullString(user.PhotoUrl),
-		}
-		tokenManager := token.NewManager()
-		err = tokenManager.GenerateAndSetCookies(&p, w)
-		if err != nil {
-			rw.Error(err)
-			return
-		}
+		// p := token.UserProfile{
+		// 	UserID:   user.ID,
+		// 	Username: user.Username,
+		// 	PhotoUrl: utils.NormalizeNullString(user.PhotoUrl),
+		// }
+		// tokenManager := token.NewManager()
+		// err = tokenManager.GenerateAndSetCookies(&p, w)
+		// if err != nil {
+		// 	rw.Error(err)
+		// 	return
+		// }
 
-		rw.Write(&p)
+		rw.Write(nil)
 	}
 }

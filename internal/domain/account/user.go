@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/pkg/errors"
+	"github.com/rlawnsxo131/madre-server-v3/internal/domain/domainhelper"
 )
 
 type User struct {
@@ -27,19 +28,6 @@ func (u *User) ValidateUsername() (bool, error) {
 }
 
 func (u *User) IsExist(err error) (bool, error) {
-	exist := false
-
-	if err != nil {
-		if err == sql.ErrNoRows {
-			return exist, nil
-		} else {
-			return exist, err
-		}
-	}
-
-	if u.ID != "" {
-		exist = true
-	}
-
-	return exist, nil
+	exist, err := domainhelper.IsExistEntity(u.ID, err)
+	return exist, errors.Wrap(err, "not found user in IsExist")
 }

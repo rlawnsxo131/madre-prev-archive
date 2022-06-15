@@ -22,7 +22,7 @@ func Logger(next http.Handler) http.Handler {
 		if err != nil {
 			res, _ := json.Marshal(map[string]interface{}{
 				"status":  http.StatusInternalServerError,
-				"message": httpresponse.Http_Msg_InternalServerError,
+				"message": httpresponse.HTTP_MSG_INTERNAL_SERVER_ERROR,
 			})
 			ww.WriteHeader(http.StatusInternalServerError)
 			ww.Write(res)

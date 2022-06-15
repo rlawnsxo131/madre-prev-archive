@@ -11,12 +11,12 @@ import (
 )
 
 const (
-	Http_Msg_BadRequest          = "BadRequest"          // 400
-	Http_Msg_Unauthorized        = "Unauthorized"        // 401
-	Http_Msg_Forbidden           = "Forbidden"           // 403
-	Http_Msg_NotFound            = "NotFound"            // 404
-	Http_Msg_Conflict            = "Conflict"            // 409
-	Http_Msg_InternalServerError = "InternalServerError" // 500
+	HTTP_MSG_BAD_REQUEST           = "BadRequest"          // 400
+	HTTP_MSG_UNAUTHORIZED          = "Unauthorized"        // 401
+	HTTP_MSG_FORBIDDEN             = "Forbidden"           // 403
+	HTTP_MSG_NOT_FOUND             = "NotFound"            // 404
+	HTTP_MSG_CONFLICT              = "Conflict"            // 409
+	HTTP_MSG_INTERNAL_SERVER_ERROR = "InternalServerError" // 500
 )
 
 type Writer interface {
@@ -58,30 +58,30 @@ func (wt *writer) Write(data interface{}) {
 
 func (wt *writer) Error(err error) {
 	status := http.StatusInternalServerError
-	message := Http_Msg_InternalServerError
+	message := HTTP_MSG_INTERNAL_SERVER_ERROR
 
 	if err == sql.ErrNoRows {
 		status = http.StatusNotFound
-		message = Http_Msg_NotFound
+		message = HTTP_MSG_NOT_FOUND
 	}
 
 	wt.standardError(status, message, err)
 }
 
 func (wt *writer) ErrorBadRequest(err error) {
-	wt.standardError(http.StatusBadRequest, Http_Msg_BadRequest, err)
+	wt.standardError(http.StatusBadRequest, HTTP_MSG_BAD_REQUEST, err)
 }
 
 func (wt *writer) ErrorUnauthorized(err error) {
-	wt.standardError(http.StatusUnauthorized, Http_Msg_Unauthorized, err)
+	wt.standardError(http.StatusUnauthorized, HTTP_MSG_UNAUTHORIZED, err)
 }
 
 func (wt *writer) ErrorForbidden(err error) {
-	wt.standardError(http.StatusForbidden, Http_Msg_Forbidden, err)
+	wt.standardError(http.StatusForbidden, HTTP_MSG_FORBIDDEN, err)
 }
 
 func (wt *writer) ErrorConflict(err error) {
-	wt.standardError(http.StatusConflict, Http_Msg_Conflict, err)
+	wt.standardError(http.StatusConflict, HTTP_MSG_CONFLICT, err)
 }
 
 func (wt *writer) standardError(status int, message string, err error) {

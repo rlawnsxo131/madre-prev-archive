@@ -7,15 +7,15 @@ import (
 	"github.com/rlawnsxo131/madre-server-v3/utils"
 )
 
-type userQueryRepository struct {
+type accountQueryRepository struct {
 	db rdb.Database
 }
 
-func NewUserQueryRepository(db rdb.Database) account.UserQueryRepository {
-	return &userQueryRepository{db}
+func NewAccountQueryRepository(db rdb.Database) account.AccountQueryRepository {
+	return &accountQueryRepository{db}
 }
 
-func (r *userQueryRepository) FindOneById(id string) (*account.User, error) {
+func (r *accountQueryRepository) FindUserById(id string) (*account.User, error) {
 	var u account.User
 
 	query := "SELECT * FROM public.user" +
@@ -30,7 +30,7 @@ func (r *userQueryRepository) FindOneById(id string) (*account.User, error) {
 	return &u, err
 }
 
-func (r *userQueryRepository) FindOneByUsername(username string) (*account.User, error) {
+func (r *accountQueryRepository) FindUserByUsername(username string) (*account.User, error) {
 	var u account.User
 
 	query := "SELECT * FROM public.user" +
@@ -43,4 +43,20 @@ func (r *userQueryRepository) FindOneByUsername(username string) (*account.User,
 	}
 
 	return &u, err
+}
+
+func (r *accountQueryRepository) FindSocialAccountBySocialIdAndProvider(socialId, provider string) (*account.SocialAccount, error) {
+	var sa account.SocialAccount
+
+	query := "SELECT * FROM social_account" +
+		" WHERE social_id = $1" +
+		" AND provider = $2"
+
+	err := r.db.QueryRowx(query, socialId, provider).StructScan(&sa)
+	if err != nil {
+		customError := errors.Wrap(err, "socialaccount ReadRepository FindOneBySocialIdAndProvider")
+		err = utils.ErrNoRowsReturnRawError(err, customError)
+	}
+
+	return &sa, err
 }
