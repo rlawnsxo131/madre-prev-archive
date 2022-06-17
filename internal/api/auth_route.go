@@ -1,4 +1,4 @@
-package presentation
+package api
 
 import (
 	"encoding/json"
@@ -99,11 +99,10 @@ func (ar *authRoute) PostGoogleCheck() http.HandlerFunc {
 			return
 		}
 
-		sa, err := ar.accountQueryService.FindSocialAccountBySocialIdAndProvider(
+		exist, err := ar.accountQueryService.ExistSocialAccountBySocialIdAndProvider(
 			ggp.SocialID,
 			account.SOCIAL_ACCOUNT_PROVIDER_GOOGLE,
 		)
-		exist, err := sa.IsExist(err)
 		if err != nil {
 			rw.Error(err)
 			return
@@ -236,8 +235,7 @@ func (ar *authRoute) PostGoogleSignUp() http.HandlerFunc {
 			)
 		}
 
-		sameNameUser, err := ar.accountQueryService.FindUserByUsername(params.Username)
-		exist, err := sameNameUser.IsExist(err)
+		exist, err := ar.accountQueryService.ExistsUserByUsername(params.Username)
 		if err != nil {
 			rw.Error(err)
 			return
@@ -249,11 +247,10 @@ func (ar *authRoute) PostGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		alreaySocialAccount, err := ar.accountQueryService.FindSocialAccountBySocialIdAndProvider(
+		exist, err = ar.accountQueryService.ExistSocialAccountBySocialIdAndProvider(
 			ggp.SocialID,
 			account.SOCIAL_ACCOUNT_PROVIDER_GOOGLE,
 		)
-		exist, err = alreaySocialAccount.IsExist(err)
 		if err != nil {
 			rw.Error(err)
 			return
@@ -272,7 +269,11 @@ func (ar *authRoute) PostGoogleSignUp() http.HandlerFunc {
 		ac := account.Account{}
 		ac.AddUser(&u)
 		ac.AddSocialAccount(&sa)
-		ar.accountCommandService.SaveAccount(&ac)
+		_, err = ar.accountCommandService.SaveAccount(&ac)
+		if err != nil {
+			rw.Error(err)
+			return
+		}
 
 		p := token.UserProfile{
 			UserID:   ac.User().ID,

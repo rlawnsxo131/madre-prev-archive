@@ -1,20 +1,20 @@
-package presentation
+package api
 
 import (
 	"github.com/go-chi/chi/v5"
 	"github.com/rlawnsxo131/madre-server-v3/external/datastore/rdb"
 )
 
-type v1Route struct {
+type apiv1 struct {
 	r  chi.Router
 	db rdb.Database
 }
 
-func NewV1Route(r chi.Router, db rdb.Database) *v1Route {
-	return &v1Route{r, db}
+func NewAPIV1(r chi.Router, db rdb.Database) *apiv1 {
+	return &apiv1{r, db}
 }
 
-func (v1r *v1Route) Register() {
+func (v1r *apiv1) Register() {
 	v1r.r.Route("/v1", func(r chi.Router) {
 		NewAuthRoute(v1r.db).Register(r)
 	})

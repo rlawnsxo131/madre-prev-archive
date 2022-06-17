@@ -20,6 +20,14 @@ func (as *accountQueryService) FindUserByUsername(username string) (*account.Use
 	return as.repo.FindUserByUsername(username)
 }
 
+func (as *accountQueryService) ExistsUserByUsername(username string) (bool, error) {
+	return as.repo.ExistsUserByUsername(username)
+}
+
 func (as *accountQueryService) FindSocialAccountBySocialIdAndProvider(socialId, provider string) (*account.SocialAccount, error) {
 	return as.repo.FindSocialAccountBySocialIdAndProvider(socialId, provider)
+}
+
+func (as *accountQueryService) ExistSocialAccountBySocialIdAndProvider(socialId, provider string) (bool, error) {
+	return as.repo.ExistsSocialAccountBySocialIdAndProvider(socialId, provider)
 }

@@ -45,6 +45,21 @@ func (r *accountQueryRepository) FindUserByUsername(username string) (*account.U
 	return &u, err
 }
 
+func (r *accountQueryRepository) ExistsUserByUsername(username string) (bool, error) {
+	var exist bool
+
+	query := "SELECT EXISTS" +
+		"(SELECT 1 FROM public.user WHERE username = $1)"
+
+	err := r.db.QueryRowx(query, username).Scan(&exist)
+	if err != nil {
+		customError := errors.Wrap(err, "accountQueryRepository ExistsUserByUsername")
+		err = utils.ErrNoRowsReturnRawError(err, customError)
+	}
+
+	return exist, err
+}
+
 func (r *accountQueryRepository) FindSocialAccountBySocialIdAndProvider(socialId, provider string) (*account.SocialAccount, error) {
 	var sa account.SocialAccount
 
@@ -59,4 +74,19 @@ func (r *accountQueryRepository) FindSocialAccountBySocialIdAndProvider(socialId
 	}
 
 	return &sa, err
+}
+
+func (r *accountQueryRepository) ExistsSocialAccountBySocialIdAndProvider(socialId, provider string) (bool, error) {
+	var exist bool
+
+	query := "SELECT EXISTS" +
+		"(SELECT 1 FROM social_account WHERE social_id = $1 AND provider = $2)"
+
+	err := r.db.QueryRowx(query, socialId, provider).Scan(&exist)
+	if err != nil {
+		customError := errors.Wrap(err, "accountQueryRepository ExistsSocialAccountBySocialIdAndProvider")
+		err = utils.ErrNoRowsReturnRawError(err, customError)
+	}
+
+	return exist, err
 }
