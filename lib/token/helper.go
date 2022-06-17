@@ -2,6 +2,10 @@ package token
 
 import "context"
 
+const (
+	KEY_USER_PROFILE_CTX = "KEY_USER_PROFILE_CTX"
+)
+
 func UserProfileCtx(ctx context.Context) *UserProfile {
 	v := ctx.Value(KEY_USER_PROFILE_CTX)
 	if v, ok := v.(*UserProfile); ok {
