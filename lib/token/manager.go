@@ -11,9 +11,8 @@ import (
 )
 
 const (
-	ACCESS_TOKEN         = "Access_token"
-	REFRESH_TOKEN        = "Refresh_token"
-	KEY_USER_PROFILE_CTX = "KEY_USER_PROFILE_CTX"
+	ACCESS_TOKEN  = "Access_token"
+	REFRESH_TOKEN = "Refresh_token"
 )
 
 var (
