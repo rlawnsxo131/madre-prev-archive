@@ -23,7 +23,7 @@ func (r *accountQueryRepository) FindUserById(id string) (*account.User, error) 
 
 	err := r.db.QueryRowx(query, id).StructScan(&u)
 	if err != nil {
-		customError := errors.Wrap(err, "user ReadRepository FindOneById")
+		customError := errors.Wrap(err, "accountQueryRepository FindUserById")
 		err = utils.ErrNoRowsReturnRawError(err, customError)
 	}
 
@@ -38,7 +38,7 @@ func (r *accountQueryRepository) FindUserByUsername(username string) (*account.U
 
 	err := r.db.QueryRowx(query, username).StructScan(&u)
 	if err != nil {
-		customError := errors.Wrap(err, "user ReadRepository FindOneByUsername")
+		customError := errors.Wrap(err, "accountQueryRepository FindUserUsername")
 		err = utils.ErrNoRowsReturnRawError(err, customError)
 	}
 
@@ -54,7 +54,7 @@ func (r *accountQueryRepository) FindSocialAccountBySocialIdAndProvider(socialId
 
 	err := r.db.QueryRowx(query, socialId, provider).StructScan(&sa)
 	if err != nil {
-		customError := errors.Wrap(err, "socialaccount ReadRepository FindOneBySocialIdAndProvider")
+		customError := errors.Wrap(err, "accountQueryRepository FindSocialAccountBySocialIdAndProvider")
 		err = utils.ErrNoRowsReturnRawError(err, customError)
 	}
 

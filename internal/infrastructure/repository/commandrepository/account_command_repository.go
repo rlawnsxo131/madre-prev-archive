@@ -27,7 +27,7 @@ func (r *accountCommandRepository) InsertUser(u *account.User) (*account.User, e
 		u,
 	)
 	if err != nil {
-		return nil, errors.Wrap(err, "user WriteRepository create")
+		return nil, errors.Wrap(err, "accountCommandRepository InsertUser")
 	}
 	u.ID = id
 
@@ -47,7 +47,7 @@ func (r *accountCommandRepository) InsertSocialAccount(sa *account.SocialAccount
 		sa,
 	)
 	if err != nil {
-		return nil, errors.Wrap(err, "socialaccount WriteRepository create")
+		return nil, errors.Wrap(err, "accountCommandRepository InsertSocialAccount")
 	}
 	sa.ID = id
 
