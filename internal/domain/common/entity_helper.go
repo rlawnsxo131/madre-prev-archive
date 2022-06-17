@@ -1,4 +1,4 @@
-package domainhelper
+package common
 
 import "database/sql"
 

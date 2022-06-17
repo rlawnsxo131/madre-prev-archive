@@ -6,6 +6,6 @@ type AccountCommandService interface {
 
 type AccountQueryService interface {
 	FindUserById(userId string) (*User, error)
+	FindUserByUsername(username string) (*User, error)
 	FindSocialAccountBySocialIdAndProvider(socialId, provider string) (*SocialAccount, error)
-	IsExistOfSocialAccount(socialId, provider string) (bool, error)
 }

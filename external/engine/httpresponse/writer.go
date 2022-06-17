@@ -16,6 +16,7 @@ const (
 	HTTP_MSG_FORBIDDEN             = "Forbidden"           // 403
 	HTTP_MSG_NOT_FOUND             = "NotFound"            // 404
 	HTTP_MSG_CONFLICT              = "Conflict"            // 409
+	HTTP_MSG_UNPROCESSABLE_ENTITY  = "UnprocessableEntity" // 422
 	HTTP_MSG_INTERNAL_SERVER_ERROR = "InternalServerError" // 500
 )
 
@@ -25,7 +26,9 @@ type Writer interface {
 	ErrorBadRequest(err error)
 	ErrorUnauthorized(err error)
 	ErrorForbidden(err error)
+	ErrorNotFound(err error)
 	ErrorConflict(err error)
+	ErrorUnprocessableEntity(err error)
 	standardError(status int, msg string, err error)
 }
 
@@ -80,8 +83,16 @@ func (wt *writer) ErrorForbidden(err error) {
 	wt.standardError(http.StatusForbidden, HTTP_MSG_FORBIDDEN, err)
 }
 
+func (wt *writer) ErrorNotFound(err error) {
+	wt.standardError(http.StatusNotFound, HTTP_MSG_NOT_FOUND, err)
+}
+
 func (wt *writer) ErrorConflict(err error) {
 	wt.standardError(http.StatusConflict, HTTP_MSG_CONFLICT, err)
+}
+
+func (wt *writer) ErrorUnprocessableEntity(err error) {
+	wt.standardError(http.StatusUnprocessableEntity, HTTP_MSG_UNPROCESSABLE_ENTITY, err)
 }
 
 func (wt *writer) standardError(status int, message string, err error) {

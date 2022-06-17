@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/pkg/errors"
-	"github.com/rlawnsxo131/madre-server-v3/internal/domain/domainhelper"
+	"github.com/rlawnsxo131/madre-server-v3/internal/domain/common"
 )
 
 type User struct {
@@ -19,15 +19,14 @@ type User struct {
 	UpdatedAt  time.Time      `json:"updated_at" db:"updated_at"`
 }
 
+func (u *User) IsExist(err error) (bool, error) {
+	return common.IsExistEntity(u.ID, err)
+}
+
 func (u *User) ValidateUsername() (bool, error) {
 	match, err := regexp.MatchString("^[a-zA-Z0-9]{1,20}$", u.Username)
 	if err != nil {
 		return false, errors.Wrap(err, "ValidateUsername regex error")
 	}
 	return match, nil
-}
-
-func (u *User) IsExist(err error) (bool, error) {
-	exist, err := domainhelper.IsExistEntity(u.ID, err)
-	return exist, errors.Wrap(err, "not found user in IsExist")
 }

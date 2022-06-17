@@ -15,6 +15,7 @@ func (s *accountCommandService) SaveAccount(ac *account.Account) (*account.Accou
 	if err != nil {
 		return nil, err
 	}
+	ac.SocialAccount().UserID = ac.User().ID
 	_, err = s.repo.InsertSocialAccount(ac.SocialAccount())
 	if err != nil {
 		return nil, err

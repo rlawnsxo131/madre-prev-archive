@@ -3,8 +3,7 @@ package account
 import (
 	"time"
 
-	"github.com/pkg/errors"
-	"github.com/rlawnsxo131/madre-server-v3/internal/domain/domainhelper"
+	"github.com/rlawnsxo131/madre-server-v3/internal/domain/common"
 )
 
 const (
@@ -21,6 +20,5 @@ type SocialAccount struct {
 }
 
 func (sa *SocialAccount) IsExist(err error) (bool, error) {
-	exist, err := domainhelper.IsExistEntity(sa.ID, err)
-	return exist, errors.Wrap(err, "not found socialaccount In IsExist")
+	return common.IsExistEntity(sa.ID, err)
 }

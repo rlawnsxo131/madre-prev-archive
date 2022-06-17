@@ -12,17 +12,14 @@ func NewAccountQueryService(repo account.AccountQueryRepository) account.Account
 	return &accountQueryService{repo}
 }
 
-func (s *accountQueryService) FindUserById(userId string) (*account.User, error) {
-	u, err := s.repo.FindUserById(userId)
-	return u, err
+func (as *accountQueryService) FindUserById(userId string) (*account.User, error) {
+	return as.repo.FindUserById(userId)
 }
 
-func (s *accountQueryService) FindSocialAccountBySocialIdAndProvider(socialId, provider string) (*account.SocialAccount, error) {
-	sa, err := s.repo.FindSocialAccountBySocialIdAndProvider(socialId, provider)
-	return sa, err
+func (as *accountQueryService) FindUserByUsername(username string) (*account.User, error) {
+	return as.repo.FindUserByUsername(username)
 }
 
-func (s *accountQueryService) IsExistOfSocialAccount(socialId, provider string) (bool, error) {
-	sa, err := s.repo.FindSocialAccountBySocialIdAndProvider(socialId, provider)
-	return sa.IsExist(err)
+func (as *accountQueryService) FindSocialAccountBySocialIdAndProvider(socialId, provider string) (*account.SocialAccount, error) {
+	return as.repo.FindSocialAccountBySocialIdAndProvider(socialId, provider)
 }

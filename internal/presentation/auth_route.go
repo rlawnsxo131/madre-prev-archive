@@ -21,7 +21,7 @@ import (
 
 type authRoute struct {
 	accountCommandService account.AccountCommandService
-	accontQueryService    account.AccountQueryService
+	accountQueryService   account.AccountQueryService
 }
 
 func NewAuthRoute(db rdb.Database) *authRoute {
@@ -35,7 +35,17 @@ func NewAuthRoute(db rdb.Database) *authRoute {
 	}
 }
 
-func (h *authRoute) Get() http.HandlerFunc {
+func (ar *authRoute) Register(r chi.Router) {
+	r.Route("/auth", func(r chi.Router) {
+		r.Get("/", ar.Get())
+		r.Delete("/", ar.Delete())
+		r.Post("/google/check", ar.PostGoogleCheck())
+		r.Post("/google/sign-in", ar.PostGoogleSignIn())
+		r.Post("/google/sign-up", ar.PostGoogleSignUp())
+	})
+}
+
+func (ar *authRoute) Get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := httpresponse.NewWriter(w, r)
 		p := token.UserProfileCtx(r.Context())
@@ -44,7 +54,7 @@ func (h *authRoute) Get() http.HandlerFunc {
 	}
 }
 
-func (h *authRoute) Delete() http.HandlerFunc {
+func (ar *authRoute) Delete() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := httpresponse.NewWriter(w, r)
 		p := token.UserProfileCtx(r.Context())
@@ -60,17 +70,7 @@ func (h *authRoute) Delete() http.HandlerFunc {
 	}
 }
 
-func (h *authRoute) Register(r chi.Router) {
-	r.Route("/auth", func(r chi.Router) {
-		r.Get("/", h.Get())
-		r.Delete("/", h.Delete())
-		r.Post("/google/check", h.PostGoogleCheck())
-		r.Post("/google/sign-in", h.PostGoogleSignIn())
-		r.Post("/google/sign-up", h.PostGoogleSignUp())
-	})
-}
-
-func (h *authRoute) PostGoogleCheck() http.HandlerFunc {
+func (ar *authRoute) PostGoogleCheck() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := httpresponse.NewWriter(w, r)
 
@@ -99,10 +99,11 @@ func (h *authRoute) PostGoogleCheck() http.HandlerFunc {
 			return
 		}
 
-		exist, err := h.accontQueryService.IsExistOfSocialAccount(
+		sa, err := ar.accountQueryService.FindSocialAccountBySocialIdAndProvider(
 			ggp.SocialID,
 			account.SOCIAL_ACCOUNT_PROVIDER_GOOGLE,
 		)
+		exist, err := sa.IsExist(err)
 		if err != nil {
 			rw.Error(err)
 			return
@@ -114,7 +115,7 @@ func (h *authRoute) PostGoogleCheck() http.HandlerFunc {
 	}
 }
 
-func (h *authRoute) PostGoogleSignIn() http.HandlerFunc {
+func (ar *authRoute) PostGoogleSignIn() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := httpresponse.NewWriter(w, r)
 
@@ -143,7 +144,7 @@ func (h *authRoute) PostGoogleSignIn() http.HandlerFunc {
 			return
 		}
 
-		sa, err := h.accontQueryService.FindSocialAccountBySocialIdAndProvider(
+		sa, err := ar.accountQueryService.FindSocialAccountBySocialIdAndProvider(
 			ggp.SocialID,
 			account.SOCIAL_ACCOUNT_PROVIDER_GOOGLE,
 		)
@@ -159,7 +160,7 @@ func (h *authRoute) PostGoogleSignIn() http.HandlerFunc {
 			return
 		}
 
-		u, err := h.accontQueryService.FindUserById(sa.UserID)
+		u, err := ar.accountQueryService.FindUserById(sa.UserID)
 		exist, err = u.IsExist(err)
 		if err != nil {
 			rw.Error(err)
@@ -188,7 +189,7 @@ func (h *authRoute) PostGoogleSignIn() http.HandlerFunc {
 	}
 }
 
-func (h *authRoute) PostGoogleSignUp() http.HandlerFunc {
+func (ar *authRoute) PostGoogleSignUp() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := httpresponse.NewWriter(w, r)
 
@@ -218,16 +219,13 @@ func (h *authRoute) PostGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		// TODO: already exist social account validation process
-		newAccount := &account.Account{}
-		newAccount.AddUser(&account.User{
+		u := account.User{
 			Email:      ggp.Email,
 			OriginName: utils.NewNullString(ggp.DisplayName),
 			Username:   params.Username,
 			PhotoUrl:   utils.NewNullString(ggp.PhotoUrl),
-		})
-
-		valid, err := newAccount.ValidateUsername()
+		}
+		valid, err := u.ValidateUsername()
 		if err != nil {
 			rw.Error(err)
 			return
@@ -236,57 +234,58 @@ func (h *authRoute) PostGoogleSignUp() http.HandlerFunc {
 			rw.ErrorBadRequest(
 				errors.New("username validation error"),
 			)
+		}
+
+		sameNameUser, err := ar.accountQueryService.FindUserByUsername(params.Username)
+		exist, err := sameNameUser.IsExist(err)
+		if err != nil {
+			rw.Error(err)
+			return
+		}
+		if exist {
+			rw.ErrorConflict(
+				errors.Wrap(err, "username is exist"),
+			)
 			return
 		}
 
-		// sameNameUser, err := h.userUseCase.FindOneByUsername(params.Username)
-		// exist, err := sameNameUser.IsExist(err)
-		// if err != nil {
-		// 	rw.Error(err)
-		// 	return
-		// }
-		// if exist {
-		// 	rw.ErrorConflict(
-		// 		errors.Wrap(err, "username is exist"),
-		// 	)
-		// 	return
-		// }
+		alreaySocialAccount, err := ar.accountQueryService.FindSocialAccountBySocialIdAndProvider(
+			ggp.SocialID,
+			account.SOCIAL_ACCOUNT_PROVIDER_GOOGLE,
+		)
+		exist, err = alreaySocialAccount.IsExist(err)
+		if err != nil {
+			rw.Error(err)
+			return
+		}
+		if exist {
+			rw.ErrorUnprocessableEntity(
+				errors.Wrap(err, "socialaccount is exist"),
+			)
+			return
+		}
 
-		// userId, err := h.userUseCase.Create(&u)
-		// if err != nil {
-		// 	rw.Error(err)
-		// 	return
-		// }
+		sa := account.SocialAccount{
+			SocialID: ggp.SocialID,
+			Provider: account.SOCIAL_ACCOUNT_PROVIDER_GOOGLE,
+		}
+		ac := account.Account{}
+		ac.AddUser(&u)
+		ac.AddSocialAccount(&sa)
+		ar.accountCommandService.SaveAccount(&ac)
 
-		// user, err := h.userUseCase.FindOneById(userId)
-		// if err != nil {
-		// 	rw.Error(err)
-		// 	return
-		// }
+		p := token.UserProfile{
+			UserID:   ac.User().ID,
+			Username: ac.User().Username,
+			PhotoUrl: utils.NormalizeNullString(ac.User().PhotoUrl),
+		}
+		tokenManager := token.NewManager()
+		err = tokenManager.GenerateAndSetCookies(&p, w)
+		if err != nil {
+			rw.Error(err)
+			return
+		}
 
-		// sa := account.SocialAccount{
-		// 	UserID:   user.ID,
-		// 	SocialID: ggp.SocialID,
-		// 	Provider: account.SOCIAL_ACCOUNT_PROVIDER_GOOGLE,
-		// }
-		// _, err = h.socialAccountUseCase.Create(&sa)
-		// if err != nil {
-		// 	rw.Error(err)
-		// 	return
-		// }
-
-		// p := token.UserProfile{
-		// 	UserID:   user.ID,
-		// 	Username: user.Username,
-		// 	PhotoUrl: utils.NormalizeNullString(user.PhotoUrl),
-		// }
-		// tokenManager := token.NewManager()
-		// err = tokenManager.GenerateAndSetCookies(&p, w)
-		// if err != nil {
-		// 	rw.Error(err)
-		// 	return
-		// }
-
-		rw.Write(nil)
+		rw.Write(&p)
 	}
 }
