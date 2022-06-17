@@ -35,6 +35,10 @@ type ResponseErrors =
       status: 409;
     }
   | {
+      message: 'UnprocessableEntity';
+      status: 422;
+    }
+  | {
       message: 'InternalServerError';
       status: 500;
     };
