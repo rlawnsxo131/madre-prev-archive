@@ -4,15 +4,17 @@ import (
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v3/external/datastore/rdb"
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/account"
+	"github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/mapper"
 	"github.com/rlawnsxo131/madre-server-v3/utils"
 )
 
 type accountQueryRepository struct {
-	db rdb.Database
+	db     rdb.Database
+	mapper mapper.AccountMapper
 }
 
 func NewAccountQueryRepository(db rdb.Database) account.AccountQueryRepository {
-	return &accountQueryRepository{db}
+	return &accountQueryRepository{db, mapper.AccountMapper{}}
 }
 
 func (r *accountQueryRepository) FindUserById(id string) (*account.User, error) {
@@ -27,7 +29,7 @@ func (r *accountQueryRepository) FindUserById(id string) (*account.User, error) 
 		err = utils.ErrNoRowsReturnRawError(err, customError)
 	}
 
-	return &u, err
+	return r.mapper.ToUserEntity(&u), err
 }
 
 func (r *accountQueryRepository) FindUserByUsername(username string) (*account.User, error) {
@@ -42,7 +44,7 @@ func (r *accountQueryRepository) FindUserByUsername(username string) (*account.U
 		err = utils.ErrNoRowsReturnRawError(err, customError)
 	}
 
-	return &u, err
+	return r.mapper.ToUserEntity(&u), err
 }
 
 func (r *accountQueryRepository) ExistsUserByUsername(username string) (bool, error) {
@@ -73,7 +75,7 @@ func (r *accountQueryRepository) FindSocialAccountBySocialIdAndProvider(socialId
 		err = utils.ErrNoRowsReturnRawError(err, customError)
 	}
 
-	return &sa, err
+	return r.mapper.ToSocialAccountEntity(&sa), err
 }
 
 func (r *accountQueryRepository) ExistsSocialAccountBySocialIdAndProvider(socialId, provider string) (bool, error) {

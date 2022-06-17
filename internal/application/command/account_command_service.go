@@ -10,15 +10,20 @@ func NewAccountCommandService(repo account.AccountCommandRepository) account.Acc
 	return &accountCommandService{repo}
 }
 
-func (s *accountCommandService) SaveAccount(ac *account.Account) (*account.Account, error) {
-	_, err := s.repo.InsertUser(ac.User())
+func (scs *accountCommandService) SaveAccount(u *account.User, sa *account.SocialAccount) (*account.Account, error) {
+	u, err := scs.repo.InsertUser(u)
 	if err != nil {
 		return nil, err
 	}
-	ac.SocialAccount().UserID = ac.User().ID
-	_, err = s.repo.InsertSocialAccount(ac.SocialAccount())
+
+	sa, err = scs.repo.InsertSocialAccount(sa)
 	if err != nil {
 		return nil, err
 	}
-	return ac, nil
+
+	ac := account.Account{}
+	ac.AddUser(u)
+	ac.AddSocialAccount(sa)
+
+	return &ac, nil
 }

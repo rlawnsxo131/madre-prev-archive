@@ -1,13 +1,13 @@
 package account
 
 type AccountCommandService interface {
-	SaveAccount(ac *Account) (*Account, error)
+	SaveAccount(u *User, sa *SocialAccount) (*Account, error)
 }
 
 type AccountQueryService interface {
-	FindUserById(userId string) (*User, error)
-	FindUserByUsername(username string) (*User, error)
+	GetUserById(userId string) (*User, error)
+	GetUserByUsername(username string) (*User, error)
 	ExistsUserByUsername(username string) (bool, error)
-	FindSocialAccountBySocialIdAndProvider(socialId, provider string) (*SocialAccount, error)
+	GetSocialAccountBySocialIdAndProvider(socialId, provider string) (*SocialAccount, error)
 	ExistSocialAccountBySocialIdAndProvider(socialId, provider string) (bool, error)
 }

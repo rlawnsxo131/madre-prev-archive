@@ -14,7 +14,7 @@ import (
 	"github.com/rlawnsxo131/madre-server-v3/external/datastore/rdb"
 	"github.com/rlawnsxo131/madre-server-v3/external/engine/httpmiddleware"
 	"github.com/rlawnsxo131/madre-server-v3/external/engine/httpresponse"
-	"github.com/rlawnsxo131/madre-server-v3/internal/api"
+	"github.com/rlawnsxo131/madre-server-v3/internal/api/apiv1"
 
 	"github.com/rlawnsxo131/madre-server-v3/lib/env"
 	"github.com/rlawnsxo131/madre-server-v3/lib/logger"
@@ -122,6 +122,6 @@ func (e *httpEngine) RegisterHealthRoute() {
 
 func (e *httpEngine) RegisterAPIRoute() {
 	e.r.Route("/api", func(r chi.Router) {
-		api.NewAPIV1(r, e.db).Register()
+		apiv1.NewAPI(r, e.db).Register()
 	})
 }

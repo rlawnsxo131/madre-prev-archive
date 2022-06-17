@@ -12,22 +12,22 @@ func NewAccountQueryService(repo account.AccountQueryRepository) account.Account
 	return &accountQueryService{repo}
 }
 
-func (as *accountQueryService) FindUserById(userId string) (*account.User, error) {
-	return as.repo.FindUserById(userId)
+func (aqs *accountQueryService) GetUserById(userId string) (*account.User, error) {
+	return aqs.repo.FindUserById(userId)
 }
 
-func (as *accountQueryService) FindUserByUsername(username string) (*account.User, error) {
-	return as.repo.FindUserByUsername(username)
+func (aqs *accountQueryService) GetUserByUsername(username string) (*account.User, error) {
+	return aqs.repo.FindUserByUsername(username)
 }
 
-func (as *accountQueryService) ExistsUserByUsername(username string) (bool, error) {
-	return as.repo.ExistsUserByUsername(username)
+func (aqs *accountQueryService) ExistsUserByUsername(username string) (bool, error) {
+	return aqs.repo.ExistsUserByUsername(username)
 }
 
-func (as *accountQueryService) FindSocialAccountBySocialIdAndProvider(socialId, provider string) (*account.SocialAccount, error) {
-	return as.repo.FindSocialAccountBySocialIdAndProvider(socialId, provider)
+func (aqs *accountQueryService) GetSocialAccountBySocialIdAndProvider(socialId, provider string) (*account.SocialAccount, error) {
+	return aqs.repo.FindSocialAccountBySocialIdAndProvider(socialId, provider)
 }
 
-func (as *accountQueryService) ExistSocialAccountBySocialIdAndProvider(socialId, provider string) (bool, error) {
-	return as.repo.ExistsSocialAccountBySocialIdAndProvider(socialId, provider)
+func (aqs *accountQueryService) ExistSocialAccountBySocialIdAndProvider(socialId, provider string) (bool, error) {
+	return aqs.repo.ExistsSocialAccountBySocialIdAndProvider(socialId, provider)
 }

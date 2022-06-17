@@ -1,4 +1,4 @@
-package api
+package apiv1
 
 import (
 	"encoding/json"
@@ -143,7 +143,7 @@ func (ar *authRoute) PostGoogleSignIn() http.HandlerFunc {
 			return
 		}
 
-		sa, err := ar.accountQueryService.FindSocialAccountBySocialIdAndProvider(
+		sa, err := ar.accountQueryService.GetSocialAccountBySocialIdAndProvider(
 			ggp.SocialID,
 			account.SOCIAL_ACCOUNT_PROVIDER_GOOGLE,
 		)
@@ -159,7 +159,7 @@ func (ar *authRoute) PostGoogleSignIn() http.HandlerFunc {
 			return
 		}
 
-		u, err := ar.accountQueryService.FindUserById(sa.UserID)
+		u, err := ar.accountQueryService.GetUserById(sa.UserID)
 		exist, err = u.IsExist(err)
 		if err != nil {
 			rw.Error(err)
@@ -266,10 +266,8 @@ func (ar *authRoute) PostGoogleSignUp() http.HandlerFunc {
 			SocialID: ggp.SocialID,
 			Provider: account.SOCIAL_ACCOUNT_PROVIDER_GOOGLE,
 		}
-		ac := account.Account{}
-		ac.AddUser(&u)
-		ac.AddSocialAccount(&sa)
-		_, err = ar.accountCommandService.SaveAccount(&ac)
+
+		ac, err := ar.accountCommandService.SaveAccount(&u, &sa)
 		if err != nil {
 			rw.Error(err)
 			return

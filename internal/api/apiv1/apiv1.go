@@ -1,4 +1,4 @@
-package api
+package apiv1
 
 import (
 	"github.com/go-chi/chi/v5"
@@ -10,7 +10,7 @@ type apiv1 struct {
 	db rdb.Database
 }
 
-func NewAPIV1(r chi.Router, db rdb.Database) *apiv1 {
+func NewAPI(r chi.Router, db rdb.Database) *apiv1 {
 	return &apiv1{r, db}
 }
 
