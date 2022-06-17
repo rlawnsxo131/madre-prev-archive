@@ -16,6 +16,7 @@ func (scs *accountCommandService) SaveAccount(u *account.User, sa *account.Socia
 		return nil, err
 	}
 
+	sa.UserID = u.ID
 	sa, err = scs.repo.InsertSocialAccount(sa)
 	if err != nil {
 		return nil, err

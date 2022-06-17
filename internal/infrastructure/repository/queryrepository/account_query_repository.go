@@ -62,6 +62,21 @@ func (r *accountQueryRepository) ExistsUserByUsername(username string) (bool, er
 	return exist, err
 }
 
+func (r *accountQueryRepository) FindSocialAccountByUserId(userId string) (*account.SocialAccount, error) {
+	var sa account.SocialAccount
+
+	query := "SELECT * FROM social_account" +
+		" WHERE user_id = $1"
+
+	err := r.db.QueryRowx(query, userId).StructScan(&sa)
+	if err != nil {
+		customError := errors.Wrap(err, "accountQueryRepository FindSocialAccountBySocialIdAndProvider")
+		err = utils.ErrNoRowsReturnRawError(err, customError)
+	}
+
+	return r.mapper.ToSocialAccountEntity(&sa), err
+}
+
 func (r *accountQueryRepository) FindSocialAccountBySocialIdAndProvider(socialId, provider string) (*account.SocialAccount, error) {
 	var sa account.SocialAccount
 

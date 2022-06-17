@@ -5,6 +5,7 @@ type AccountCommandService interface {
 }
 
 type AccountQueryService interface {
+	GetAccountByUserId(userId string) (*Account, error)
 	GetUserById(userId string) (*User, error)
 	GetUserByUsername(username string) (*User, error)
 	ExistsUserByUsername(username string) (bool, error)

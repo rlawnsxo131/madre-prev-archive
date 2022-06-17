@@ -12,6 +12,23 @@ func NewAccountQueryService(repo account.AccountQueryRepository) account.Account
 	return &accountQueryService{repo}
 }
 
+func (aqs *accountQueryService) GetAccountByUserId(userId string) (*account.Account, error) {
+	u, err := aqs.repo.FindUserById(userId)
+	if err != nil {
+		return nil, err
+	}
+	sa, err := aqs.repo.FindSocialAccountByUserId(u.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	ac := account.Account{}
+	ac.AddUser(u)
+	ac.AddSocialAccount(sa)
+
+	return &ac, nil
+}
+
 func (aqs *accountQueryService) GetUserById(userId string) (*account.User, error) {
 	return aqs.repo.FindUserById(userId)
 }

@@ -18,7 +18,6 @@ func (am *AccountMapper) ToUserEntity(u *account.User) *account.User {
 
 func (am *AccountMapper) ToUserModel(u *account.User) *account.User {
 	return &account.User{
-		ID:         u.ID,
 		Email:      u.Email,
 		OriginName: u.OriginName,
 		Username:   u.Username,
