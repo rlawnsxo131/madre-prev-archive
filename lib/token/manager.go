@@ -11,13 +11,13 @@ import (
 )
 
 const (
-	Key_AccessToken    = "Access_token"
-	Key_RefreshToken   = "Refresh_token"
-	Key_UserProfileCtx = "Key_UserProfileCtx"
+	ACCESS_TOKEN         = "Access_token"
+	REFRESH_TOKEN        = "Refresh_token"
+	KEY_USER_PROFILE_CTX = "KEY_USER_PROFILE_CTX"
 )
 
 var (
-	tokenTypes = []string{Key_AccessToken, Key_RefreshToken}
+	tokenTypes = []string{ACCESS_TOKEN, REFRESH_TOKEN}
 )
 
 type UserProfile struct {
@@ -82,7 +82,7 @@ func (m *manager) ResetCookies(w http.ResponseWriter) {
 	expires := now.AddDate(0, 0, -1)
 
 	http.SetCookie(w, &http.Cookie{
-		Name:  Key_AccessToken,
+		Name:  ACCESS_TOKEN,
 		Value: "",
 		Path:  "/",
 		// Domain:   ".juntae.kim",
@@ -92,7 +92,7 @@ func (m *manager) ResetCookies(w http.ResponseWriter) {
 		SameSite: 2,
 	})
 	http.SetCookie(w, &http.Cookie{
-		Name:  Key_RefreshToken,
+		Name:  REFRESH_TOKEN,
 		Value: "",
 		Path:  "/",
 		// Domain:   ".juntae.kim",
@@ -116,14 +116,14 @@ func (m *manager) generateTokens(p *UserProfile) (string, string, error) {
 			PhotoUrl:  p.PhotoUrl,
 		}
 
-		if tokenType == Key_AccessToken {
+		if tokenType == ACCESS_TOKEN {
 			claims.StandardClaims = jwt.StandardClaims{
 				ExpiresAt: now.AddDate(0, 0, 1).Unix(),
 				Issuer:    "madre",
 				IssuedAt:  now.Unix(),
 			}
 		}
-		if tokenType == Key_RefreshToken {
+		if tokenType == REFRESH_TOKEN {
 			claims.StandardClaims = jwt.StandardClaims{
 				ExpiresAt: now.AddDate(0, 0, 30).Unix(),
 				Issuer:    "madre",
@@ -137,7 +137,7 @@ func (m *manager) generateTokens(p *UserProfile) (string, string, error) {
 			return "", "", errors.Wrap(err, "generateTokens")
 		}
 
-		if tokenType == Key_AccessToken {
+		if tokenType == ACCESS_TOKEN {
 			actk = ss
 			continue
 		}
@@ -151,7 +151,7 @@ func (m *manager) setCookies(w http.ResponseWriter, actk, rftk string) {
 	now := time.Now()
 
 	http.SetCookie(w, &http.Cookie{
-		Name:  Key_AccessToken,
+		Name:  ACCESS_TOKEN,
 		Value: actk,
 		Path:  "/",
 		// Domain:   ".juntae.kim",
@@ -161,7 +161,7 @@ func (m *manager) setCookies(w http.ResponseWriter, actk, rftk string) {
 		SameSite: 2,
 	})
 	http.SetCookie(w, &http.Cookie{
-		Name:  Key_RefreshToken,
+		Name:  ACCESS_TOKEN,
 		Value: rftk,
 		Path:  "/",
 		// Domain:   ".juntae.kim",

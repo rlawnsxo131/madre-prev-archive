@@ -3,7 +3,7 @@ package token
 import "context"
 
 func UserProfileCtx(ctx context.Context) *UserProfile {
-	v := ctx.Value(Key_UserProfileCtx)
+	v := ctx.Value(KEY_USER_PROFILE_CTX)
 	if v, ok := v.(*UserProfile); ok {
 		return v
 	}
@@ -11,5 +11,5 @@ func UserProfileCtx(ctx context.Context) *UserProfile {
 }
 
 func SetUserProfileCtx(ctx context.Context, p *UserProfile) context.Context {
-	return context.WithValue(ctx, Key_UserProfileCtx, p)
+	return context.WithValue(ctx, KEY_USER_PROFILE_CTX, p)
 }

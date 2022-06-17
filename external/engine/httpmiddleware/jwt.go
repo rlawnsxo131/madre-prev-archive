@@ -16,7 +16,7 @@ import (
 func JWT(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
-		actk, err := r.Cookie(token.Key_AccessToken)
+		actk, err := r.Cookie(token.ACCESS_TOKEN)
 		tokenManager := token.NewManager()
 		if err != nil {
 			if err != http.ErrNoCookie {
@@ -33,7 +33,7 @@ func JWT(next http.Handler) http.Handler {
 			if err != nil {
 				_, ok := err.(*jwt.ValidationError)
 				if ok {
-					rftk, err := r.Cookie(token.Key_RefreshToken)
+					rftk, err := r.Cookie(token.REFRESH_TOKEN)
 					if err != nil {
 						if err != http.ErrNoCookie {
 							rw := httpresponse.NewWriter(w, r)
@@ -75,7 +75,7 @@ func JWT(next http.Handler) http.Handler {
 		}
 
 		if actk == nil {
-			rftk, err := r.Cookie(token.Key_AccessToken)
+			rftk, err := r.Cookie(token.ACCESS_TOKEN)
 			if err != nil {
 				if err != http.ErrNoCookie {
 					rw := httpresponse.NewWriter(w, r)

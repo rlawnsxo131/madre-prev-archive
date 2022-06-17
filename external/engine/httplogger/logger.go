@@ -117,11 +117,11 @@ func clientIP(h http.Header) string {
 }
 
 const (
-	Key_loggerCtx = "Key_loggerCtx"
+	KEY_LOGGER_CTX = "KEY_LOGGER_CTX"
 )
 
 func LoggerCtx(ctx context.Context) Logger {
-	v := ctx.Value(Key_loggerCtx)
+	v := ctx.Value(KEY_LOGGER_CTX)
 	if v, ok := v.(Logger); ok {
 		return v
 	}
@@ -129,5 +129,5 @@ func LoggerCtx(ctx context.Context) Logger {
 }
 
 func SetLoggerCtx(ctx context.Context, hl Logger) context.Context {
-	return context.WithValue(ctx, Key_loggerCtx, hl)
+	return context.WithValue(ctx, KEY_LOGGER_CTX, hl)
 }

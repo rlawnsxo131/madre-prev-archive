@@ -21,9 +21,9 @@ import (
 )
 
 const (
-	writeTimeout = time.Second * 15
-	readTimeout  = time.Second * 15
-	idleTimeout  = time.Second * 60
+	WRITE_TIMEOUT = time.Second * 15
+	READ_TIMEOUT  = time.Second * 15
+	IDLE_TIMEOUT  = time.Second * 60
 )
 
 type httpEngine struct {
@@ -40,9 +40,9 @@ func NewHTTPEngine(db rdb.Database) *httpEngine {
 		srv: &http.Server{
 			Addr: "0.0.0.0:" + env.Port(),
 			// Good practice to set timeouts to avoid Slowloris attacks.
-			WriteTimeout: writeTimeout,
-			ReadTimeout:  readTimeout,
-			IdleTimeout:  idleTimeout,
+			WriteTimeout: WRITE_TIMEOUT,
+			ReadTimeout:  READ_TIMEOUT,
+			IdleTimeout:  IDLE_TIMEOUT,
 			Handler:      r,
 		},
 	}
