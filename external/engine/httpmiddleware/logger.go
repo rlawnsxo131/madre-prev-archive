@@ -20,7 +20,7 @@ func Logger(next http.Handler) http.Handler {
 
 		err := hl.ReadBody()
 		if err != nil {
-			res, _ := json.Marshal(map[string]interface{}{
+			res, _ := json.Marshal(map[string]any{
 				"status":  http.StatusInternalServerError,
 				"message": httpresponse.HTTP_MSG_INTERNAL_SERVER_ERROR,
 			})

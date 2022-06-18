@@ -2,6 +2,7 @@ package rdb
 
 import (
 	"fmt"
+	"os"
 	"sync"
 	"time"
 
@@ -10,6 +11,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v3/lib/env"
 	"github.com/rlawnsxo131/madre-server-v3/lib/logger"
+	"github.com/rs/zerolog"
 )
 
 var (
@@ -18,10 +20,10 @@ var (
 )
 
 type Database interface {
-	Queryx(query string, args ...interface{}) (*sqlx.Rows, error)
-	QueryRowx(query string, args ...interface{}) *sqlx.Row
-	NamedQuery(query string, arg interface{}) (*sqlx.Rows, error)
-	PrepareNamedGet(result interface{}, query string, arg interface{}) error
+	Queryx(query string, args ...any) (*sqlx.Rows, error)
+	QueryRowx(query string, args ...any) *sqlx.Row
+	NamedQuery(query string, arg any) (*sqlx.Rows, error)
+	PrepareNamedGet(result any, query string, arg any) error
 }
 
 func DatabaseInstance() (*singletonDatabase, error) {
@@ -46,10 +48,8 @@ func DatabaseInstance() (*singletonDatabase, error) {
 			return
 		}
 
-		instanceDatabase = &singletonDatabase{
-			DB: db,
-			l:  logger.NewBaseLogger(),
-		}
+		l := zerolog.New(os.Stderr).With().Logger()
+		instanceDatabase = &singletonDatabase{db, &l}
 		initDatabase(instanceDatabase.DB)
 	})
 

@@ -21,7 +21,7 @@ const (
 )
 
 type Writer interface {
-	Write(data interface{})
+	Write(data any)
 	Error(err error)
 	ErrorBadRequest(err error)
 	ErrorUnauthorized(err error)
@@ -44,7 +44,7 @@ func NewWriter(w http.ResponseWriter, r *http.Request) Writer {
 	}
 }
 
-func (wt *writer) Write(data interface{}) {
+func (wt *writer) Write(data any) {
 	res, err := json.Marshal(data)
 	if err != nil {
 		wt.Error(
@@ -96,7 +96,7 @@ func (wt *writer) ErrorUnprocessableEntity(err error) {
 }
 
 func (wt *writer) standardError(status int, message string, err error) {
-	res, _ := json.Marshal(map[string]interface{}{
+	res, _ := json.Marshal(map[string]any{
 		"status":  status,
 		"message": message,
 	})

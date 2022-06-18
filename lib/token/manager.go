@@ -58,7 +58,7 @@ func (m *manager) GenerateAndSetCookies(p *UserProfile, w http.ResponseWriter) e
 
 func (m *manager) Decode(token string) (*authTokenClaims, error) {
 	claims := authTokenClaims{}
-	t, err := jwt.ParseWithClaims(token, &claims, func(t *jwt.Token) (interface{}, error) {
+	t, err := jwt.ParseWithClaims(token, &claims, func(t *jwt.Token) (any, error) {
 		if _, ok := t.Method.(*jwt.SigningMethodHMAC); ok {
 			return []byte(env.JWTSecretKey()), nil
 		}

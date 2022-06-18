@@ -12,22 +12,22 @@ type singletonDatabase struct {
 	l  *zerolog.Logger
 }
 
-func (sd *singletonDatabase) Queryx(query string, args ...interface{}) (*sqlx.Rows, error) {
+func (sd *singletonDatabase) Queryx(query string, args ...any) (*sqlx.Rows, error) {
 	sd.l.Log().Timestamp().Str("query", fmt.Sprintf("%s,%+v", query, args)).Send()
 	return sd.DB.Queryx(query, args...)
 }
 
-func (sd *singletonDatabase) QueryRowx(query string, args ...interface{}) *sqlx.Row {
+func (sd *singletonDatabase) QueryRowx(query string, args ...any) *sqlx.Row {
 	sd.l.Log().Timestamp().Str("query", fmt.Sprintf("%s,%+v", query, args)).Send()
 	return sd.DB.QueryRowx(query, args...)
 }
 
-func (sd *singletonDatabase) NamedQuery(query string, arg interface{}) (*sqlx.Rows, error) {
+func (sd *singletonDatabase) NamedQuery(query string, arg any) (*sqlx.Rows, error) {
 	sd.l.Log().Timestamp().Str("query", fmt.Sprintf("%s,%+v", query, arg)).Send()
 	return sd.DB.NamedQuery(query, arg)
 }
 
-func (sd *singletonDatabase) PrepareNamedGet(result interface{}, query string, arg interface{}) error {
+func (sd *singletonDatabase) PrepareNamedGet(result any, query string, arg any) error {
 	sd.l.Log().Timestamp().Str("query", fmt.Sprintf("%s,%+v", query, arg)).Send()
 	stmt, err := sd.DB.PrepareNamed(query)
 	defer stmt.Close()
