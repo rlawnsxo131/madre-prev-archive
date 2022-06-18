@@ -1,3 +1,3 @@
 interface Window {
-  gapi: any | undefined;
+  google: any;
 }
