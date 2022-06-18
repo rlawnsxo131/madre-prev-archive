@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import authApi from '../../../../store/api/authApi';
 
+// TODO: GOOGLE auth change
 export default function useButtonGoogleSignIn() {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [googleCheckWithSignIn] =
@@ -26,7 +27,7 @@ export default function useButtonGoogleSignIn() {
         },
       );
     });
-  }, [window.gapi]);
+  }, [googleCheckWithSignIn]);
 
   return {
     buttonRef,
