@@ -10,5 +10,5 @@ type AccountQueryService interface {
 	GetUserByUsername(username string) (*User, error)
 	ExistsUserByUsername(username string) (bool, error)
 	GetSocialAccountBySocialIdAndProvider(socialId, provider string) (*SocialAccount, error)
-	ExistSocialAccountBySocialIdAndProvider(socialId, provider string) (bool, error)
+	ExistsSocialAccountBySocialIdAndProvider(socialId, provider string) (bool, error)
 }

@@ -50,27 +50,27 @@ func JWT(next http.Handler) http.Handler {
 							// remove cookies
 							tokenManager.ResetCookies(w)
 						} else {
-							p := token.UserProfile{
-								UserID:   claims.UserID,
-								Username: claims.Username,
-								PhotoUrl: claims.PhotoUrl,
-							}
-							err = tokenManager.GenerateAndSetCookies(&p, w)
+							p := token.NewUserProfile(
+								claims.UserID,
+								claims.Username,
+								claims.PhotoUrl,
+							)
+							err = tokenManager.GenerateAndSetCookies(p, w)
 							if err != nil {
 								logger.DefaultLogger().Err(err).Timestamp().Str("action", "JWT").Send()
 							} else {
-								ctx = token.SetUserProfileCtx(ctx, &p)
+								ctx = token.SetUserProfileCtx(ctx, p)
 							}
 						}
 					}
 				}
 			} else {
-				p := token.UserProfile{
-					UserID:   claims.UserID,
-					Username: claims.Username,
-					PhotoUrl: claims.PhotoUrl,
-				}
-				ctx = token.SetUserProfileCtx(ctx, &p)
+				p := token.NewUserProfile(
+					claims.UserID,
+					claims.Username,
+					claims.PhotoUrl,
+				)
+				ctx = token.SetUserProfileCtx(ctx, p)
 			}
 		}
 
@@ -92,16 +92,16 @@ func JWT(next http.Handler) http.Handler {
 					// remove cookies
 					tokenManager.ResetCookies(w)
 				} else {
-					p := token.UserProfile{
-						UserID:   claims.UserID,
-						Username: claims.Username,
-						PhotoUrl: claims.PhotoUrl,
-					}
-					err = tokenManager.GenerateAndSetCookies(&p, w)
+					p := token.NewUserProfile(
+						claims.UserID,
+						claims.Username,
+						claims.PhotoUrl,
+					)
+					err = tokenManager.GenerateAndSetCookies(p, w)
 					if err != nil {
 						logger.DefaultLogger().Err(err).Timestamp().Str("action", "JWT").Send()
 					} else {
-						ctx = token.SetUserProfileCtx(ctx, &p)
+						ctx = token.SetUserProfileCtx(ctx, p)
 					}
 				}
 			}

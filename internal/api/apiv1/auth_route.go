@@ -60,7 +60,7 @@ func (ar *authRoute) Delete() http.HandlerFunc {
 		p := token.UserProfileCtx(r.Context())
 		if p == nil {
 			rw.ErrorUnauthorized(
-				errors.New("not found UserProfile"),
+				errors.New("not found userProfile"),
 			)
 			return
 		}
@@ -99,7 +99,7 @@ func (ar *authRoute) PostGoogleCheck() http.HandlerFunc {
 			return
 		}
 
-		exist, err := ar.accountQueryService.ExistSocialAccountBySocialIdAndProvider(
+		exist, err := ar.accountQueryService.ExistsSocialAccountBySocialIdAndProvider(
 			ggp.SocialID,
 			account.SOCIAL_ACCOUNT_PROVIDER_GOOGLE,
 		)
@@ -172,13 +172,13 @@ func (ar *authRoute) PostGoogleSignIn() http.HandlerFunc {
 			return
 		}
 
-		p := token.UserProfile{
-			UserID:   u.ID,
-			Username: u.Username,
-			PhotoUrl: utils.NormalizeNullString(u.PhotoUrl),
-		}
+		p := token.NewUserProfile(
+			u.ID,
+			u.Username,
+			utils.NormalizeNullString(u.PhotoUrl),
+		)
 		tokenManager := token.NewManager()
-		err = tokenManager.GenerateAndSetCookies(&p, w)
+		err = tokenManager.GenerateAndSetCookies(p, w)
 		if err != nil {
 			rw.Error(err)
 			return
@@ -247,7 +247,7 @@ func (ar *authRoute) PostGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		exist, err = ar.accountQueryService.ExistSocialAccountBySocialIdAndProvider(
+		exist, err = ar.accountQueryService.ExistsSocialAccountBySocialIdAndProvider(
 			ggp.SocialID,
 			account.SOCIAL_ACCOUNT_PROVIDER_GOOGLE,
 		)
@@ -273,13 +273,13 @@ func (ar *authRoute) PostGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		p := token.UserProfile{
-			UserID:   ac.User().ID,
-			Username: ac.User().Username,
-			PhotoUrl: utils.NormalizeNullString(ac.User().PhotoUrl),
-		}
+		p := token.NewUserProfile(
+			ac.User().ID,
+			ac.User().Username,
+			utils.NormalizeNullString(ac.User().PhotoUrl),
+		)
 		tokenManager := token.NewManager()
-		err = tokenManager.GenerateAndSetCookies(&p, w)
+		err = tokenManager.GenerateAndSetCookies(p, w)
 		if err != nil {
 			rw.Error(err)
 			return

@@ -22,9 +22,9 @@ func (acs *accountCommandService) SaveAccount(u *account.User, sa *account.Socia
 		return nil, err
 	}
 
-	ac := account.Account{}
+	ac := &account.Account{}
 	ac.AddUser(u)
 	ac.AddSocialAccount(sa)
 
-	return &ac, nil
+	return ac, nil
 }

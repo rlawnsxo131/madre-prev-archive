@@ -22,11 +22,11 @@ func (aqs *accountQueryService) GetAccountByUserId(userId string) (*account.Acco
 		return nil, err
 	}
 
-	ac := account.Account{}
+	ac := &account.Account{}
 	ac.AddUser(u)
 	ac.AddSocialAccount(sa)
 
-	return &ac, nil
+	return ac, nil
 }
 
 func (aqs *accountQueryService) GetUserById(userId string) (*account.User, error) {
@@ -45,6 +45,6 @@ func (aqs *accountQueryService) GetSocialAccountBySocialIdAndProvider(socialId, 
 	return aqs.repo.FindSocialAccountBySocialIdAndProvider(socialId, provider)
 }
 
-func (aqs *accountQueryService) ExistSocialAccountBySocialIdAndProvider(socialId, provider string) (bool, error) {
+func (aqs *accountQueryService) ExistsSocialAccountBySocialIdAndProvider(socialId, provider string) (bool, error) {
 	return aqs.repo.ExistsSocialAccountBySocialIdAndProvider(socialId, provider)
 }
