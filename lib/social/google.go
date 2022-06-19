@@ -129,7 +129,7 @@ func (g *googlePeopleAPI) Do() (*googlePeopleProfile, error) {
 		return nil, err
 	}
 
-	gapiRes, err := g.mapTogooglePeopleApiResponse(res)
+	gapiRes, err := g.mapToGooglePeopleApiResponse(res)
 	if err != nil {
 		return nil, err
 	}
@@ -156,7 +156,7 @@ func (g *googlePeopleAPI) excuteRequest(req *http.Request) (*http.Response, erro
 	return res, nil
 }
 
-func (g *googlePeopleAPI) mapTogooglePeopleApiResponse(res *http.Response) (*googlePeopleApiResponse, error) {
+func (g *googlePeopleAPI) mapToGooglePeopleApiResponse(res *http.Response) (*googlePeopleApiResponse, error) {
 	defer res.Body.Close()
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {

@@ -184,7 +184,7 @@ func (ar *authRoute) PostGoogleSignIn() http.HandlerFunc {
 			return
 		}
 
-		rw.Write(&p)
+		rw.Write(p)
 	}
 }
 
@@ -285,6 +285,6 @@ func (ar *authRoute) PostGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		rw.Write(&p)
+		rw.Write(p)
 	}
 }
