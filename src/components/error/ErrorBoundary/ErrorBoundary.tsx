@@ -1,6 +1,10 @@
 import { Component } from 'react';
 
-class ErrorBoundary extends Component {
+interface ErrorBoundaryProps {
+  children: React.ReactNode;
+}
+
+class ErrorBoundary extends Component<ErrorBoundaryProps> {
   state = {
     hasError: false,
     chunkError: false,
