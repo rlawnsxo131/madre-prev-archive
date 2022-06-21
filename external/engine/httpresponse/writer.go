@@ -11,13 +11,13 @@ import (
 )
 
 const (
-	HTTP_MSG_BAD_REQUEST           = "BadRequest"          // 400
-	HTTP_MSG_UNAUTHORIZED          = "Unauthorized"        // 401
-	HTTP_MSG_FORBIDDEN             = "Forbidden"           // 403
-	HTTP_MSG_NOT_FOUND             = "NotFound"            // 404
-	HTTP_MSG_CONFLICT              = "Conflict"            // 409
-	HTTP_MSG_UNPROCESSABLE_ENTITY  = "UnprocessableEntity" // 422
-	HTTP_MSG_INTERNAL_SERVER_ERROR = "InternalServerError" // 500
+	HTTP_CODE_BAD_REQUEST           = "BadRequest"          // 400
+	HTTP_CODE_UNAUTHORIZED          = "Unauthorized"        // 401
+	HTTP_CODE_FORBIDDEN             = "Forbidden"           // 403
+	HTTP_CODE_NOT_FOUND             = "NotFound"            // 404
+	HTTP_CODE_CONFLICT              = "Conflict"            // 409
+	HTTP_CODE_UNPROCESSABLE_ENTITY  = "UnprocessableEntity" // 422
+	HTTP_CODE_INTERNAL_SERVER_ERROR = "InternalServerError" // 500
 )
 
 type Writer interface {
@@ -29,7 +29,7 @@ type Writer interface {
 	ErrorNotFound(err error)
 	ErrorConflict(err error)
 	ErrorUnprocessableEntity(err error)
-	standardError(status int, msg string, err error)
+	standardError(status int, code string, err error)
 }
 
 type writer struct {
@@ -38,10 +38,7 @@ type writer struct {
 }
 
 func NewWriter(w http.ResponseWriter, r *http.Request) Writer {
-	return &writer{
-		w: w,
-		r: r,
-	}
+	return &writer{w, r}
 }
 
 func (wt *writer) Write(data any) {
@@ -61,44 +58,68 @@ func (wt *writer) Write(data any) {
 
 func (wt *writer) Error(err error) {
 	status := http.StatusInternalServerError
-	message := HTTP_MSG_INTERNAL_SERVER_ERROR
+	code := HTTP_CODE_INTERNAL_SERVER_ERROR
 
 	if err == sql.ErrNoRows {
 		status = http.StatusNotFound
-		message = HTTP_MSG_NOT_FOUND
+		code = HTTP_CODE_NOT_FOUND
 	}
 
-	wt.standardError(status, message, err)
+	wt.standardError(status, code, err)
 }
 
 func (wt *writer) ErrorBadRequest(err error) {
-	wt.standardError(http.StatusBadRequest, HTTP_MSG_BAD_REQUEST, err)
+	wt.standardError(
+		http.StatusBadRequest,
+		HTTP_CODE_BAD_REQUEST,
+		err,
+	)
 }
 
 func (wt *writer) ErrorUnauthorized(err error) {
-	wt.standardError(http.StatusUnauthorized, HTTP_MSG_UNAUTHORIZED, err)
+	wt.standardError(
+		http.StatusUnauthorized,
+		HTTP_CODE_UNAUTHORIZED,
+		err,
+	)
 }
 
 func (wt *writer) ErrorForbidden(err error) {
-	wt.standardError(http.StatusForbidden, HTTP_MSG_FORBIDDEN, err)
+	wt.standardError(
+		http.StatusForbidden,
+		HTTP_CODE_FORBIDDEN,
+		err,
+	)
 }
 
 func (wt *writer) ErrorNotFound(err error) {
-	wt.standardError(http.StatusNotFound, HTTP_MSG_NOT_FOUND, err)
+	wt.standardError(
+		http.StatusNotFound,
+		HTTP_CODE_NOT_FOUND,
+		err,
+	)
 }
 
 func (wt *writer) ErrorConflict(err error) {
-	wt.standardError(http.StatusConflict, HTTP_MSG_CONFLICT, err)
+	wt.standardError(
+		http.StatusConflict,
+		HTTP_CODE_CONFLICT,
+		err,
+	)
 }
 
 func (wt *writer) ErrorUnprocessableEntity(err error) {
-	wt.standardError(http.StatusUnprocessableEntity, HTTP_MSG_UNPROCESSABLE_ENTITY, err)
+	wt.standardError(
+		http.StatusUnprocessableEntity,
+		HTTP_CODE_UNPROCESSABLE_ENTITY,
+		err,
+	)
 }
 
-func (wt *writer) standardError(status int, message string, err error) {
+func (wt *writer) standardError(status int, code string, err error) {
 	res, _ := json.Marshal(map[string]any{
-		"status":  status,
-		"message": message,
+		"status": status,
+		"code":   code,
 	})
 	wt.w.WriteHeader(status)
 	wt.w.Write(res)
