@@ -9,11 +9,10 @@ import (
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v3/external/datastore/rdb"
 	"github.com/rlawnsxo131/madre-server-v3/external/engine/httpresponse"
-	"github.com/rlawnsxo131/madre-server-v3/internal/application/command"
-	"github.com/rlawnsxo131/madre-server-v3/internal/application/query"
+
+	accountservice "github.com/rlawnsxo131/madre-server-v3/internal/application/service/account"
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/account"
-	"github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/repository/commandrepository"
-	"github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/repository/queryrepository"
+	accountrepository "github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/repository/account"
 	"github.com/rlawnsxo131/madre-server-v3/lib/social"
 	"github.com/rlawnsxo131/madre-server-v3/lib/token"
 	"github.com/rlawnsxo131/madre-server-v3/utils"
@@ -26,11 +25,11 @@ type authRoute struct {
 
 func NewAuthRoute(db rdb.Database) *authRoute {
 	return &authRoute{
-		command.NewAccountCommandService(
-			commandrepository.NewAccountCommandRepository(db),
+		accountservice.NewAccountCommandService(
+			accountrepository.NewAccountCommandRepository(db),
 		),
-		query.NewAccountQueryService(
-			queryrepository.NewAccountQueryRepository(db),
+		accountservice.NewAccountQueryService(
+			accountrepository.NewAccountQueryRepository(db),
 		),
 	}
 }
@@ -218,12 +217,12 @@ func (ar *authRoute) PostGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		u := account.User{
-			Email:      ggp.Email,
-			OriginName: utils.NewNullString(ggp.DisplayName),
-			Username:   params.Username,
-			PhotoUrl:   utils.NewNullString(ggp.PhotoUrl),
-		}
+		u := accountservice.NewSaveAccountUser(
+			ggp.Email,
+			ggp.DisplayName,
+			params.Username,
+			ggp.PhotoUrl,
+		)
 		valid, err := u.ValidateUsername()
 		if err != nil {
 			rw.Error(err)
@@ -262,12 +261,12 @@ func (ar *authRoute) PostGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		sa := account.SocialAccount{
-			SocialID: ggp.SocialID,
-			Provider: account.SOCIAL_ACCOUNT_PROVIDER_GOOGLE,
-		}
+		sa := accountservice.NewSaveAccountSocialAccount(
+			ggp.SocialID,
+			account.SOCIAL_ACCOUNT_PROVIDER_GOOGLE,
+		)
 
-		ac, err := ar.accountCommandService.SaveAccount(&u, &sa)
+		ac, err := ar.accountCommandService.SaveAccount(u, sa)
 		if err != nil {
 			rw.Error(err)
 			return

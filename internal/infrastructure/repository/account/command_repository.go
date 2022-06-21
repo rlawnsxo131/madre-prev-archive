@@ -1,19 +1,18 @@
-package commandrepository
+package accountrepository
 
 import (
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v3/external/datastore/rdb"
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/account"
-	"github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/mapper"
 )
 
 type accountCommandRepository struct {
 	db     rdb.Database
-	mapper mapper.AccountMapper
+	mapper accountMapper
 }
 
 func NewAccountCommandRepository(db rdb.Database) account.AccountCommandRepository {
-	return &accountCommandRepository{db, mapper.AccountMapper{}}
+	return &accountCommandRepository{db, accountMapper{}}
 }
 
 func (r *accountCommandRepository) InsertUser(u *account.User) (*account.User, error) {
@@ -26,14 +25,14 @@ func (r *accountCommandRepository) InsertUser(u *account.User) (*account.User, e
 	err := r.db.PrepareNamedGet(
 		&id,
 		query,
-		r.mapper.ToUserModel(u),
+		r.mapper.toUserModel(u),
 	)
 	if err != nil {
 		return nil, errors.Wrap(err, "accountCommandRepository InsertUser")
 	}
 	u.ID = id
 
-	return r.mapper.ToUserEntity(u), nil
+	return r.mapper.toUserEntity(u), nil
 }
 
 func (r *accountCommandRepository) InsertSocialAccount(sa *account.SocialAccount) (*account.SocialAccount, error) {
@@ -46,12 +45,12 @@ func (r *accountCommandRepository) InsertSocialAccount(sa *account.SocialAccount
 	err := r.db.PrepareNamedGet(
 		&id,
 		query,
-		r.mapper.ToSocialAccountModel(sa),
+		r.mapper.toSocialAccountModel(sa),
 	)
 	if err != nil {
 		return nil, errors.Wrap(err, "accountCommandRepository InsertSocialAccount")
 	}
 	sa.ID = id
 
-	return r.mapper.ToSocialAccountEntity(sa), err
+	return r.mapper.toSocialAccountEntity(sa), err
 }
