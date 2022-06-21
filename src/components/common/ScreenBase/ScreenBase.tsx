@@ -31,7 +31,7 @@ const block = (visible: boolean, type: ScreenBaseType) => css`
   background: ${type === 'default' ? themePalette.bg4 : palette.opaque['50']};
   ${visible
     ? css`
-        animation: ${transitions.slideUp} 0.4s forwards ease-in-out;
+        animation: ${transitions.slideUp} 0.5s forwards ease-in-out;
       `
     : css`
         animation: ${transitions.slideDown} 0.25s forwards ease-in-out;
