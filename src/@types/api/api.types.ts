@@ -43,6 +43,12 @@ type ResponseErrors =
       code: 'InternalServerError';
     };
 
+// TODO: fetch fail error handling(ex: network error)
+export type RTKFetchError = {
+  status: 'FETCH_ERROR';
+  error: string;
+};
+
 export interface ResponseError {
   error: {
     status: number;
