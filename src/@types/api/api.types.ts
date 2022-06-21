@@ -4,8 +4,8 @@
  *   error: {
  *     status: 500,
  *     data: {
- *       message: "InternalServerError"
  *       status: 500
+ *       code: "InternalServerError"
  *     }
  *   }
  *   isUnhandledError: false
@@ -15,32 +15,32 @@
 
 type ResponseErrors =
   | {
-      message: 'BadRequest';
       status: 400;
+      code: 'BadRequest';
     }
   | {
-      message: 'Unauthorized';
       status: 401;
+      code: 'Unauthorized';
     }
   | {
-      message: 'Forbidden';
       status: 403;
+      code: 'Forbidden';
     }
   | {
-      message: 'NotFound';
       status: 404;
+      code: 'NotFound';
     }
   | {
-      message: 'Conflict';
       status: 409;
+      code: 'Conflict';
     }
   | {
-      message: 'UnprocessableEntity';
       status: 422;
+      code: 'UnprocessableEntity';
     }
   | {
-      message: 'InternalServerError';
       status: 500;
+      code: 'InternalServerError';
     };
 
 export interface ResponseError {
