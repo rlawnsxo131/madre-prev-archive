@@ -16,7 +16,7 @@ func NewAccountCommandRepository(db rdb.Database) account.AccountCommandReposito
 	return &accountCommandRepository{db, mapper.AccountMapper{}}
 }
 
-func (r *accountCommandRepository) InsertUser(u *account.User) (*account.User, error) {
+func (r *accountCommandRepository) InsertUser(u *account.User) (string, error) {
 	var id string
 
 	query := "INSERT INTO public.user(email, origin_name, username, photo_url)" +
@@ -29,14 +29,14 @@ func (r *accountCommandRepository) InsertUser(u *account.User) (*account.User, e
 		r.mapper.ToUserModel(u),
 	)
 	if err != nil {
-		return nil, errors.Wrap(err, "accountCommandRepository InsertUser")
+		return "", errors.Wrap(err, "accountCommandRepository InsertUser")
 	}
 	u.ID = id
 
-	return r.mapper.ToUserEntity(u), nil
+	return id, nil
 }
 
-func (r *accountCommandRepository) InsertSocialAccount(sa *account.SocialAccount) (*account.SocialAccount, error) {
+func (r *accountCommandRepository) InsertSocialAccount(sa *account.SocialAccount) (string, error) {
 	var id string
 
 	query := "INSERT INTO social_account(user_id, provider, social_id)" +
@@ -49,9 +49,9 @@ func (r *accountCommandRepository) InsertSocialAccount(sa *account.SocialAccount
 		r.mapper.ToSocialAccountModel(sa),
 	)
 	if err != nil {
-		return nil, errors.Wrap(err, "accountCommandRepository InsertSocialAccount")
+		return "", errors.Wrap(err, "accountCommandRepository InsertSocialAccount")
 	}
 	sa.ID = id
 
-	return r.mapper.ToSocialAccountEntity(sa), err
+	return id, err
 }

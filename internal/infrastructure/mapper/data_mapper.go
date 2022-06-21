@@ -1,3 +1,3 @@
 package mapper
 
-type mapper struct{}
+type DataMapper struct{}

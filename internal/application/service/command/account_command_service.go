@@ -11,16 +11,17 @@ func NewAccountCommandService(repo account.AccountCommandRepository) account.Acc
 }
 
 func (acs *accountCommandService) SaveAccount(u *account.User, sa *account.SocialAccount) (*account.Account, error) {
-	u, err := acs.repo.InsertUser(u)
+	userId, err := acs.repo.InsertUser(u)
 	if err != nil {
 		return nil, err
 	}
 
-	sa.UserID = u.ID
-	sa, err = acs.repo.InsertSocialAccount(sa)
+	sa.UserID = userId
+	socialAccountId, err := acs.repo.InsertSocialAccount(sa)
 	if err != nil {
 		return nil, err
 	}
+	sa.ID = socialAccountId
 
 	ac := &account.Account{}
 	ac.AddUser(u)

@@ -1,8 +1,8 @@
 package account
 
 type AccountCommandRepository interface {
-	InsertUser(u *User) (*User, error)
-	InsertSocialAccount(sa *SocialAccount) (*SocialAccount, error)
+	InsertUser(u *User) (string, error)
+	InsertSocialAccount(sa *SocialAccount) (string, error)
 }
 
 type AccountQueryRepository interface {
