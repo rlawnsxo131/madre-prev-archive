@@ -1,4 +1,4 @@
-package dataservice
+package commandservice
 
 import "github.com/rlawnsxo131/madre-server-v3/internal/domain/data"
 

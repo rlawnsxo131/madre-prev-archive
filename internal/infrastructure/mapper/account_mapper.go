@@ -1,10 +1,10 @@
-package accountrepository
+package mapper
 
 import "github.com/rlawnsxo131/madre-server-v3/internal/domain/account"
 
-type accountMapper struct{}
+type AccountMapper struct{}
 
-func (am accountMapper) toUserEntity(u *account.User) *account.User {
+func (am AccountMapper) ToUserEntity(u *account.User) *account.User {
 	return &account.User{
 		ID:         u.ID,
 		Email:      u.Email,
@@ -16,7 +16,7 @@ func (am accountMapper) toUserEntity(u *account.User) *account.User {
 	}
 }
 
-func (am accountMapper) toUserModel(u *account.User) *account.User {
+func (am AccountMapper) ToUserModel(u *account.User) *account.User {
 	return &account.User{
 		Email:      u.Email,
 		OriginName: u.OriginName,
@@ -26,7 +26,7 @@ func (am accountMapper) toUserModel(u *account.User) *account.User {
 	}
 }
 
-func (am accountMapper) toSocialAccountEntity(sa *account.SocialAccount) *account.SocialAccount {
+func (am AccountMapper) ToSocialAccountEntity(sa *account.SocialAccount) *account.SocialAccount {
 	return &account.SocialAccount{
 		ID:        sa.ID,
 		UserID:    sa.UserID,
@@ -37,7 +37,7 @@ func (am accountMapper) toSocialAccountEntity(sa *account.SocialAccount) *accoun
 	}
 }
 
-func (am accountMapper) toSocialAccountModel(sa *account.SocialAccount) *account.SocialAccount {
+func (am AccountMapper) ToSocialAccountModel(sa *account.SocialAccount) *account.SocialAccount {
 	return &account.SocialAccount{
 		UserID:   sa.UserID,
 		Provider: sa.Provider,

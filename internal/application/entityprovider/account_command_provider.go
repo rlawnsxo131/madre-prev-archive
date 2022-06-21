@@ -1,4 +1,4 @@
-package accountservice
+package entityprovider
 
 import (
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/account"

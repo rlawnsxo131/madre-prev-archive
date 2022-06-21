@@ -10,9 +10,13 @@ import (
 	"github.com/rlawnsxo131/madre-server-v3/external/datastore/rdb"
 	"github.com/rlawnsxo131/madre-server-v3/external/engine/httpresponse"
 
-	accountservice "github.com/rlawnsxo131/madre-server-v3/internal/application/service/account"
+	"github.com/rlawnsxo131/madre-server-v3/internal/application/entityprovider"
+	commandservice "github.com/rlawnsxo131/madre-server-v3/internal/application/service/command"
+	queryservice "github.com/rlawnsxo131/madre-server-v3/internal/application/service/query"
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/account"
-	accountrepository "github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/repository/account"
+	commandrepository "github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/repository/command"
+	queryrepository "github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/repository/query"
+
 	"github.com/rlawnsxo131/madre-server-v3/lib/social"
 	"github.com/rlawnsxo131/madre-server-v3/lib/token"
 	"github.com/rlawnsxo131/madre-server-v3/utils"
@@ -25,11 +29,11 @@ type authRoute struct {
 
 func NewAuthRoute(db rdb.Database) *authRoute {
 	return &authRoute{
-		accountservice.NewAccountCommandService(
-			accountrepository.NewAccountCommandRepository(db),
+		commandservice.NewAccountCommandService(
+			commandrepository.NewAccountCommandRepository(db),
 		),
-		accountservice.NewAccountQueryService(
-			accountrepository.NewAccountQueryRepository(db),
+		queryservice.NewAccountQueryService(
+			queryrepository.NewAccountQueryRepository(db),
 		),
 	}
 }
@@ -217,7 +221,7 @@ func (ar *authRoute) PostGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		u := accountservice.NewSaveAccountUser(
+		u := entityprovider.NewSaveAccountUser(
 			ggp.Email,
 			ggp.DisplayName,
 			params.Username,
@@ -261,7 +265,7 @@ func (ar *authRoute) PostGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		sa := accountservice.NewSaveAccountSocialAccount(
+		sa := entityprovider.NewSaveAccountSocialAccount(
 			ggp.SocialID,
 			account.SOCIAL_ACCOUNT_PROVIDER_GOOGLE,
 		)
