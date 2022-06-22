@@ -31,7 +31,6 @@ func (r *accountCommandRepository) InsertUser(u *account.User) (string, error) {
 	if err != nil {
 		return "", errors.Wrap(err, "accountCommandRepository InsertUser")
 	}
-	u.ID = id
 
 	return id, nil
 }
@@ -51,7 +50,6 @@ func (r *accountCommandRepository) InsertSocialAccount(sa *account.SocialAccount
 	if err != nil {
 		return "", errors.Wrap(err, "accountCommandRepository InsertSocialAccount")
 	}
-	sa.ID = id
 
 	return id, err
 }
