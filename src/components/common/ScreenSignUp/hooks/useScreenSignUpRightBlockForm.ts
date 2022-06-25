@@ -1,4 +1,3 @@
-import React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import useScreenSignUpActions from '../../../../hooks/screenSignUp/useScreenSignUpActions';
 import useScreenSignUpState from '../../../../hooks/screenSignUp/useScreenSignUpState';

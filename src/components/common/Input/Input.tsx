@@ -13,6 +13,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     return <input css={input(size)} {...props} ref={ref} />;
   },
 );
+Input.displayName = 'Input';
 
 const input = (size: InputSize) => css`
   margin: 0;
