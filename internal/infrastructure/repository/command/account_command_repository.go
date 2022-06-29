@@ -4,16 +4,16 @@ import (
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v3/external/datastore/rdb"
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/account"
-	"github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/mapper"
+	"github.com/rlawnsxo131/madre-server-v3/internal/infrastructure"
 )
 
 type accountCommandRepository struct {
 	db     rdb.Database
-	mapper mapper.AccountMapper
+	mapper infrastructure.AccountMapper
 }
 
 func NewAccountCommandRepository(db rdb.Database) account.AccountCommandRepository {
-	return &accountCommandRepository{db, mapper.AccountMapper{}}
+	return &accountCommandRepository{db, infrastructure.AccountMapper{}}
 }
 
 func (r *accountCommandRepository) InsertUser(u *account.User) (string, error) {

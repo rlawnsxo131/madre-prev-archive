@@ -1,3 +1,3 @@
-package mapper
+package infrastructure
 
 type DataMapper struct{}

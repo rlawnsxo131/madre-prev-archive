@@ -1,15 +1,19 @@
 package queryservice
 
 import (
+	"github.com/rlawnsxo131/madre-server-v3/external/datastore/rdb"
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/account"
+	queryrepository "github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/repository/query"
 )
 
 type accountQueryService struct {
 	repo account.AccountQueryRepository
 }
 
-func NewAccountQueryService(repo account.AccountQueryRepository) account.AccountQueryService {
-	return &accountQueryService{repo}
+func NewAccountQueryService(db rdb.Database) account.AccountQueryService {
+	return &accountQueryService{
+		queryrepository.NewAccountQueryRepository(db),
+	}
 }
 
 func (aqs *accountQueryService) GetAccountByUserId(userId string) (*account.Account, error) {

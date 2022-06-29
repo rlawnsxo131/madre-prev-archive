@@ -4,18 +4,18 @@ import (
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v3/external/datastore/rdb"
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/account"
-	"github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/mapper"
+	"github.com/rlawnsxo131/madre-server-v3/internal/infrastructure"
 
 	"github.com/rlawnsxo131/madre-server-v3/utils"
 )
 
 type accountQueryRepository struct {
 	db     rdb.Database
-	mapper mapper.AccountMapper
+	mapper infrastructure.AccountMapper
 }
 
 func NewAccountQueryRepository(db rdb.Database) account.AccountQueryRepository {
-	return &accountQueryRepository{db, mapper.AccountMapper{}}
+	return &accountQueryRepository{db, infrastructure.AccountMapper{}}
 }
 
 func (r *accountQueryRepository) FindUserById(id string) (*account.User, error) {

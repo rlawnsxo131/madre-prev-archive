@@ -1,4 +1,4 @@
-package mapper
+package infrastructure
 
 import "github.com/rlawnsxo131/madre-server-v3/internal/domain/account"
 
