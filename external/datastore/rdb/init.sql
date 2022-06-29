@@ -79,6 +79,7 @@ CREATE TABLE IF NOT EXISTS public.data (
   title character varying(255)  NOT NULL,
   description character varying(255) DEFAULT NULL,
   is_public boolean NOT NULL DEFAULT false,
+  -- status character varying(15) NOT NULL DEFAULT, // is_public 제거뒤 날짜랑 복합인덱스 걸지말지 고민해보기
   created_at timestamp with time zone DEFAULT now() NOT NULL,
   updated_at timestamp with time zone DEFAULT now() NOT NULL,
   PRIMARY KEY (id)
