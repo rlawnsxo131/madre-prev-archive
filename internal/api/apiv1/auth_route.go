@@ -9,7 +9,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v3/external/datastore/rdb"
 	"github.com/rlawnsxo131/madre-server-v3/external/engine/httpresponse"
-	"github.com/rlawnsxo131/madre-server-v3/internal/application/applicationentity"
+	commandentity "github.com/rlawnsxo131/madre-server-v3/internal/application/entity/command"
 	commandservice "github.com/rlawnsxo131/madre-server-v3/internal/application/service/command"
 	queryservice "github.com/rlawnsxo131/madre-server-v3/internal/application/service/query"
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/account"
@@ -213,12 +213,13 @@ func (ar *authRoute) PostGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		u := applicationentity.NewSaveAccountUser(
+		u := commandentity.NewSaveAccountUser(
 			ggp.Email,
 			ggp.DisplayName,
 			params.Username,
 			ggp.PhotoUrl,
 		)
+
 		valid, err := u.ValidateUsername()
 		if err != nil {
 			rw.Error(err)
@@ -257,7 +258,7 @@ func (ar *authRoute) PostGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		sa := applicationentity.NewSaveAccountSocialAccount(
+		sa := commandentity.NewSaveAccountSocialAccount(
 			ggp.SocialID,
 			account.SOCIAL_ACCOUNT_PROVIDER_GOOGLE,
 		)
