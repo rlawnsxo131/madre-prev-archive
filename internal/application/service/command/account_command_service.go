@@ -21,6 +21,7 @@ func (acs *accountCommandService) SaveAccount(u *account.User, sa *account.Socia
 	if err != nil {
 		return nil, err
 	}
+	u.ID = userId
 
 	sa.UserID = userId
 	socialAccountId, err := acs.repo.InsertSocialAccount(sa)
@@ -29,9 +30,10 @@ func (acs *accountCommandService) SaveAccount(u *account.User, sa *account.Socia
 	}
 	sa.ID = socialAccountId
 
-	ac := &account.Account{}
-	ac.User = u
-	ac.SocialAccount = sa
+	ac := account.Account{
+		User:          u,
+		SocialAccount: sa,
+	}
 
-	return ac, nil
+	return &ac, nil
 }
