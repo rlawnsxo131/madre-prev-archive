@@ -14,8 +14,8 @@ func NewAPI(r chi.Router, db rdb.Database) *apiv1 {
 	return &apiv1{r, db}
 }
 
-func (v1r *apiv1) Register() {
-	v1r.r.Route("/v1", func(r chi.Router) {
-		NewAuthRoute(v1r.db).Register(r)
+func (v1 *apiv1) Register() {
+	v1.r.Route("/v1", func(r chi.Router) {
+		NewAuthRoute(v1.db).Register(r)
 	})
 }

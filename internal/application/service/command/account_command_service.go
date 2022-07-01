@@ -30,8 +30,8 @@ func (acs *accountCommandService) SaveAccount(u *account.User, sa *account.Socia
 	sa.ID = socialAccountId
 
 	ac := &account.Account{}
-	ac.AddUser(u)
-	ac.AddSocialAccount(sa)
+	ac.User = u
+	ac.SocialAccount = sa
 
 	return ac, nil
 }

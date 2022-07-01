@@ -94,7 +94,7 @@ func (ar *authRoute) PostGoogleCheck() http.HandlerFunc {
 			return
 		}
 
-		exist, err := ar.accountQueryService.ExistsSocialAccountBySocialIdAndProvider(
+		exist, err := ar.accountQueryService.GetExistsSocialAccountBySocialIdAndProvider(
 			ggp.SocialID,
 			account.SOCIAL_ACCOUNT_PROVIDER_GOOGLE,
 		)
@@ -231,7 +231,7 @@ func (ar *authRoute) PostGoogleSignUp() http.HandlerFunc {
 			)
 		}
 
-		exist, err := ar.accountQueryService.ExistsUserByUsername(params.Username)
+		exist, err := ar.accountQueryService.GetExistsUserByUsername(params.Username)
 		if err != nil {
 			rw.Error(err)
 			return
@@ -243,7 +243,7 @@ func (ar *authRoute) PostGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		exist, err = ar.accountQueryService.ExistsSocialAccountBySocialIdAndProvider(
+		exist, err = ar.accountQueryService.GetExistsSocialAccountBySocialIdAndProvider(
 			ggp.SocialID,
 			account.SOCIAL_ACCOUNT_PROVIDER_GOOGLE,
 		)
@@ -270,9 +270,9 @@ func (ar *authRoute) PostGoogleSignUp() http.HandlerFunc {
 		}
 
 		p := token.NewUserProfile(
-			ac.User().ID,
-			ac.User().Username,
-			utils.NormalizeNullString(ac.User().PhotoUrl),
+			ac.User.ID,
+			ac.User.Username,
+			utils.NormalizeNullString(ac.User.PhotoUrl),
 		)
 		tokenManager := token.NewManager()
 		err = tokenManager.GenerateAndSetCookies(p, w)

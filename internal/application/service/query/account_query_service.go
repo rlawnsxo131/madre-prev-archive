@@ -27,8 +27,8 @@ func (aqs *accountQueryService) GetAccountByUserId(userId string) (*account.Acco
 	}
 
 	ac := &account.Account{}
-	ac.AddUser(u)
-	ac.AddSocialAccount(sa)
+	ac.User = u
+	ac.SocialAccount = sa
 
 	return ac, nil
 }
@@ -41,7 +41,7 @@ func (aqs *accountQueryService) GetUserByUsername(username string) (*account.Use
 	return aqs.repo.FindUserByUsername(username)
 }
 
-func (aqs *accountQueryService) ExistsUserByUsername(username string) (bool, error) {
+func (aqs *accountQueryService) GetExistsUserByUsername(username string) (bool, error) {
 	return aqs.repo.ExistsUserByUsername(username)
 }
 
@@ -49,6 +49,6 @@ func (aqs *accountQueryService) GetSocialAccountBySocialIdAndProvider(socialId, 
 	return aqs.repo.FindSocialAccountBySocialIdAndProvider(socialId, provider)
 }
 
-func (aqs *accountQueryService) ExistsSocialAccountBySocialIdAndProvider(socialId, provider string) (bool, error) {
+func (aqs *accountQueryService) GetExistsSocialAccountBySocialIdAndProvider(socialId, provider string) (bool, error) {
 	return aqs.repo.ExistsSocialAccountBySocialIdAndProvider(socialId, provider)
 }
