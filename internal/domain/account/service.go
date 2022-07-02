@@ -1,7 +1,7 @@
 package account
 
 type AccountCommandService interface {
-	SaveAccount(u *User, sa *SocialAccount) (*Account, error)
+	CreateAccount(u *User, sa *SocialAccount) (*Account, error)
 }
 
 type AccountQueryService interface {

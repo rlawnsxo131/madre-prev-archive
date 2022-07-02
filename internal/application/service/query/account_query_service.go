@@ -26,12 +26,7 @@ func (aqs *accountQueryService) GetAccountByUserId(userId string) (*account.Acco
 		return nil, err
 	}
 
-	ac := account.Account{
-		User:          u,
-		SocialAccount: sa,
-	}
-
-	return &ac, nil
+	return account.NewAccount(u, sa), nil
 }
 
 func (aqs *accountQueryService) GetUserById(userId string) (*account.User, error) {

@@ -16,7 +16,7 @@ func NewAccountCommandService(db rdb.Database) account.AccountCommandService {
 	}
 }
 
-func (acs *accountCommandService) SaveAccount(u *account.User, sa *account.SocialAccount) (*account.Account, error) {
+func (acs *accountCommandService) CreateAccount(u *account.User, sa *account.SocialAccount) (*account.Account, error) {
 	userId, err := acs.repo.InsertUser(u)
 	if err != nil {
 		return nil, err
@@ -30,10 +30,5 @@ func (acs *accountCommandService) SaveAccount(u *account.User, sa *account.Socia
 	}
 	sa.ID = socialAccountId
 
-	ac := account.Account{
-		User:          u,
-		SocialAccount: sa,
-	}
-
-	return &ac, nil
+	return account.NewAccount(u, sa), nil
 }

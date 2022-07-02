@@ -263,16 +263,16 @@ func (ar *authRoute) PostGoogleSignUp() http.HandlerFunc {
 			account.SOCIAL_ACCOUNT_PROVIDER_GOOGLE,
 		)
 
-		ac, err := ar.accountCommandService.SaveAccount(u, sa)
+		ac, err := ar.accountCommandService.CreateAccount(u, sa)
 		if err != nil {
 			rw.Error(err)
 			return
 		}
 
 		p := token.NewUserProfile(
-			ac.User.ID,
-			ac.User.Username,
-			utils.NormalizeNullString(ac.User.PhotoUrl),
+			ac.UserID,
+			ac.Username,
+			ac.PhotoUrl,
 		)
 		tokenManager := token.NewManager()
 		err = tokenManager.GenerateAndSetCookies(p, w)
