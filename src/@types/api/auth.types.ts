@@ -1,4 +1,4 @@
-import { UserProfile } from '../domain/auth.types';
+import { UserProfile } from '../domain/account.types';
 
 // get user
 export type GetAuthResponse = UserProfile | null;

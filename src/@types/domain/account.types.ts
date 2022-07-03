@@ -11,6 +11,16 @@ export interface Account {
   updated_at: string;
 }
 
+export interface User {
+  id: string;
+  email: string;
+  origin_name?: string;
+  username: string;
+  photo_url?: string;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface SocialAccount {
   id: string;
   user_id: string;
