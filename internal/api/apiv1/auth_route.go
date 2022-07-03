@@ -213,7 +213,7 @@ func (ar *authRoute) PostGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		u := commandentity.NewSaveAccountUser(
+		u := commandentity.NewCreateAccountUser(
 			ggp.Email,
 			ggp.DisplayName,
 			params.Username,
@@ -258,7 +258,7 @@ func (ar *authRoute) PostGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		sa := commandentity.NewSaveAccountSocialAccount(
+		sa := commandentity.NewCreateAccountSocialAccount(
 			ggp.SocialID,
 			account.SOCIAL_ACCOUNT_PROVIDER_GOOGLE,
 		)
