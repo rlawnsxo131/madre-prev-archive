@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { UserProfile } from '../@types/domain/auth.types';
+import { UserProfile } from '../@types/domain/account.types';
 import { MADRE_USER_PROFILE } from '../constants';
 import { Storage } from '../lib/storage';
 
