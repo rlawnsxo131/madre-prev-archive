@@ -43,7 +43,7 @@ func (ar *authRoute) Register(r chi.Router) {
 func (ar *authRoute) Get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := httpresponse.NewWriter(w, r)
-		p := token.UserProfileCtx(r.Context())
+		p := token.ProfileCtx(r.Context())
 
 		rw.Write(p)
 	}
@@ -52,10 +52,10 @@ func (ar *authRoute) Get() http.HandlerFunc {
 func (ar *authRoute) Delete() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := httpresponse.NewWriter(w, r)
-		p := token.UserProfileCtx(r.Context())
+		p := token.ProfileCtx(r.Context())
 		if p == nil {
 			rw.ErrorUnauthorized(
-				errors.New("not found userProfile"),
+				errors.New("not found token profile"),
 			)
 			return
 		}
@@ -83,7 +83,7 @@ func (ar *authRoute) PostGoogleCheck() http.HandlerFunc {
 		err = validator.New().Struct(&params)
 		if err != nil {
 			rw.ErrorBadRequest(
-				errors.Wrap(err, "PostGoogleCheck params validate error"),
+				errors.Wrap(err, "params validate error"),
 			)
 			return
 		}
@@ -127,7 +127,7 @@ func (ar *authRoute) PostGoogleSignIn() http.HandlerFunc {
 		err = validator.New().Struct(&params)
 		if err != nil {
 			rw.ErrorBadRequest(
-				errors.Wrap(err, "PostGoogleSignIn params validate error"),
+				errors.Wrap(err, "params validate error"),
 			)
 			return
 		}
@@ -167,7 +167,7 @@ func (ar *authRoute) PostGoogleSignIn() http.HandlerFunc {
 			return
 		}
 
-		p := token.NewUserProfile(
+		p := token.NewProfile(
 			u.ID,
 			u.Username,
 			utils.NormalizeNullString(u.PhotoUrl),
@@ -202,7 +202,7 @@ func (ar *authRoute) PostGoogleSignUp() http.HandlerFunc {
 		err = validator.New().Struct(&params)
 		if err != nil {
 			rw.ErrorBadRequest(
-				errors.Wrap(err, "PostGoogleSignUpRequest params validate error"),
+				errors.Wrap(err, "params validate error"),
 			)
 			return
 		}
@@ -269,7 +269,7 @@ func (ar *authRoute) PostGoogleSignUp() http.HandlerFunc {
 			return
 		}
 
-		p := token.NewUserProfile(
+		p := token.NewProfile(
 			ac.UserID,
 			ac.Username,
 			ac.PhotoUrl,

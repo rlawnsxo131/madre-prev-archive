@@ -6,24 +6,24 @@ const (
 	KEY_USER_PROFILE_CTX = "KEY_USER_PROFILE_CTX"
 )
 
-type userProfile struct {
+type profile struct {
 	UserID   string `json:"user_id"`
 	Username string `json:"username"`
 	PhotoUrl string `json:"photo_url"`
 }
 
-func NewUserProfile(userId, username, photoUrl string) *userProfile {
-	return &userProfile{userId, username, photoUrl}
+func NewProfile(userId, username, photoUrl string) *profile {
+	return &profile{userId, username, photoUrl}
 }
 
-func UserProfileCtx(ctx context.Context) *userProfile {
+func ProfileCtx(ctx context.Context) *profile {
 	v := ctx.Value(KEY_USER_PROFILE_CTX)
-	if v, ok := v.(*userProfile); ok {
+	if v, ok := v.(*profile); ok {
 		return v
 	}
 	return nil
 }
 
-func SetUserProfileCtx(ctx context.Context, p *userProfile) context.Context {
+func SetProfile(ctx context.Context, p *profile) context.Context {
 	return context.WithValue(ctx, KEY_USER_PROFILE_CTX, p)
 }

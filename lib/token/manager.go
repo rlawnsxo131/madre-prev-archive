@@ -27,21 +27,13 @@ type authTokenClaims struct {
 	jwt.StandardClaims
 }
 
-type Manager interface {
-	GenerateAndSetCookies(p *userProfile, w http.ResponseWriter) error
-	Decode(token string) (*authTokenClaims, error)
-	ResetCookies(w http.ResponseWriter)
-	generateTokens(p *userProfile) (string, string, error)
-	setCookies(w http.ResponseWriter, actk, rftk string)
-}
-
 type manager struct{}
 
-func NewManager() Manager {
+func NewManager() *manager {
 	return &manager{}
 }
 
-func (m *manager) GenerateAndSetCookies(p *userProfile, w http.ResponseWriter) error {
+func (m *manager) GenerateAndSetCookies(p *profile, w http.ResponseWriter) error {
 	actk, rftk, err := m.generateTokens(p)
 	if err != nil {
 		return err
@@ -96,7 +88,7 @@ func (m *manager) ResetCookies(w http.ResponseWriter) {
 	})
 }
 
-func (m *manager) generateTokens(p *userProfile) (string, string, error) {
+func (m *manager) generateTokens(p *profile) (string, string, error) {
 	now := time.Now()
 	var actk string
 	var rftk string
