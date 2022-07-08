@@ -146,7 +146,7 @@ func (m *manager) setCookies(w http.ResponseWriter, actk, rftk string) {
 		SameSite: 2,
 	})
 	http.SetCookie(w, &http.Cookie{
-		Name:  ACCESS_TOKEN,
+		Name:  REFRESH_TOKEN,
 		Value: rftk,
 		Path:  "/",
 		// Domain:   ".juntae.kim",
