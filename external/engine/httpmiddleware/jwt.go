@@ -80,7 +80,7 @@ func JWT(next http.Handler) http.Handler {
 				if err != http.ErrNoCookie {
 					rw := httpresponse.NewWriter(w, r)
 					rw.Error(
-						errors.Wrap(err, "get Refresh_token error"),
+						errors.Wrap(err, "JWT get Refresh_token error"),
 					)
 					return
 				}

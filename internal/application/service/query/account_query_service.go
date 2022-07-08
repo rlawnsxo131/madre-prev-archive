@@ -21,7 +21,7 @@ func (aqs *accountQueryService) GetAccountByUserId(userId string) (*account.Acco
 	if err != nil {
 		return nil, err
 	}
-	sa, err := aqs.repo.FindSocialAccountByUserId(u.ID)
+	sa, err := aqs.repo.FindSocialAccountByUserId(userId)
 	if err != nil {
 		return nil, err
 	}
