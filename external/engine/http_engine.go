@@ -11,10 +11,8 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	chi_middleware "github.com/go-chi/chi/v5/middleware"
-	"github.com/rlawnsxo131/madre-server-v3/external/datastore/rdb"
 	"github.com/rlawnsxo131/madre-server-v3/external/engine/httpmiddleware"
 	"github.com/rlawnsxo131/madre-server-v3/external/engine/httpresponse"
-	"github.com/rlawnsxo131/madre-server-v3/internal/api/apiv1"
 
 	"github.com/rlawnsxo131/madre-server-v3/lib/env"
 	"github.com/rlawnsxo131/madre-server-v3/lib/logger"
@@ -27,16 +25,14 @@ const (
 )
 
 type httpEngine struct {
-	db  rdb.Database
 	r   *chi.Mux
 	srv *http.Server
 }
 
-func NewHTTPEngine(db rdb.Database) *httpEngine {
+func NewHTTPEngine() *httpEngine {
 	r := chi.NewRouter()
 	e := &httpEngine{
-		db: db,
-		r:  r,
+		r: r,
 		srv: &http.Server{
 			Addr: "0.0.0.0:" + env.Port(),
 			// Good practice to set timeouts to avoid Slowloris attacks.
@@ -122,6 +118,6 @@ func (e *httpEngine) RegisterHealthRoute() {
 
 func (e *httpEngine) RegisterAPIRoute() {
 	e.r.Route("/api", func(r chi.Router) {
-		apiv1.NewAPI(r, e.db).Register()
+
 	})
 }

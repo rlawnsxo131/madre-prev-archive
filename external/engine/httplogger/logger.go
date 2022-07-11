@@ -31,7 +31,7 @@ type logger struct {
 }
 
 func NewLogger(r *http.Request, ww chi_middleware.WrapResponseWriter) Logger {
-	l := zerolog.New(os.Stderr).With().Logger()
+	l := zerolog.New(os.Stdout).With().Logger()
 	return &logger{
 		l:    &l,
 		r:    r,

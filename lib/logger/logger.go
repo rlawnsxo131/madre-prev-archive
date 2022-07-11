@@ -13,8 +13,8 @@ var (
 )
 
 func NewBaseLogger() *zerolog.Logger {
-	//.Output(zerolog.ConsoleWriter{Out: os.Stderr})
-	l := zerolog.New(os.Stderr).With().Logger()
+	//.Output(zerolog.ConsoleWriter{Out: os.Stdout})
+	l := zerolog.New(os.Stdout).With().Logger()
 	return &l
 }
 

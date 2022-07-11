@@ -1,46 +1,30 @@
 package rdb
 
-import (
-	"fmt"
+// func (sd *singletonDatabase) QueryRowx(query string, args ...any) *sqlx.Row {
+// 	sd.l.Log().Timestamp().Str("query", fmt.Sprintf("%s,%+v", query, args)).Send()
+// 	return sd.DB.QueryRowx(query, args...)
+// }
 
-	"github.com/jmoiron/sqlx"
-	"github.com/rs/zerolog"
-)
+// func (sd *singletonDatabase) NamedQuery(query string, arg any) (*sqlx.Rows, error) {
+// 	sd.l.Log().Timestamp().Str("query", fmt.Sprintf("%s,%+v", query, arg)).Send()
+// 	return sd.DB.NamedQuery(query, arg)
+// }
 
-// TODO: the structure to use transaction flexibly should be considered and rewritten
-type singletonDatabase struct {
-	DB *sqlx.DB
-	l  *zerolog.Logger
-}
-
-func (sd *singletonDatabase) Queryx(query string, args ...any) (*sqlx.Rows, error) {
-	sd.l.Log().Timestamp().Str("query", fmt.Sprintf("%s,%+v", query, args)).Send()
-	return sd.DB.Queryx(query, args...)
-}
-
-func (sd *singletonDatabase) QueryRowx(query string, args ...any) *sqlx.Row {
-	sd.l.Log().Timestamp().Str("query", fmt.Sprintf("%s,%+v", query, args)).Send()
-	return sd.DB.QueryRowx(query, args...)
-}
-
-func (sd *singletonDatabase) NamedQuery(query string, arg any) (*sqlx.Rows, error) {
-	sd.l.Log().Timestamp().Str("query", fmt.Sprintf("%s,%+v", query, arg)).Send()
-	return sd.DB.NamedQuery(query, arg)
-}
-
-func (sd *singletonDatabase) PrepareNamedGet(result any, query string, arg any) error {
-	sd.l.Log().Timestamp().Str("query", fmt.Sprintf("%s,%+v", query, arg)).Send()
-	stmt, err := sd.DB.PrepareNamed(query)
-	defer stmt.Close()
-	if err != nil {
-		return err
-	}
-	return stmt.Get(result, arg)
-}
+// func (sd *singletonDatabase) PrepareNamedGet(result any, query string, arg any) error {
+// 	sd.l.Log().Timestamp().Str("query", fmt.Sprintf("%s,%+v", query, arg)).Send()
+// 	stmt, err := sd.DB.PrepareNamed(query)
+// 	defer stmt.Close()
+// 	if err != nil {
+// 		return err
+// 	}
+// 	return stmt.Get(result, arg)
+// }
 
 // func (sd *singletonDatabase) WithTimeoutTxx() (*sqlx.Tx, error) {
 // 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*2)
 // 	defer cancel()
+
+// 	sd.DB.Connect(context.Background())
 
 // 	tx, err := sd.DB.BeginTxx(ctx, nil)
 // 	if err != nil {

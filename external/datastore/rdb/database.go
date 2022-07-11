@@ -1,13 +1,15 @@
 package rdb
 
 import (
+	"context"
 	"fmt"
+	"log"
 	"os"
 	"sync"
 	"time"
 
-	"github.com/jmoiron/sqlx"
-	_ "github.com/lib/pq"
+	"github.com/jackc/pgx/v4/log/zerologadapter"
+	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v3/lib/env"
 	"github.com/rlawnsxo131/madre-server-v3/lib/logger"
@@ -15,19 +17,12 @@ import (
 )
 
 var (
-	instanceDatabase *singletonDatabase
-	onceDatabase     sync.Once
+	database     *pgxpool.Pool
+	onceDatabase sync.Once
 )
 
-type Database interface {
-	Queryx(query string, args ...any) (*sqlx.Rows, error)
-	QueryRowx(query string, args ...any) *sqlx.Row
-	NamedQuery(query string, arg any) (*sqlx.Rows, error)
-	PrepareNamedGet(result any, query string, arg any) error
-}
-
-func DatabaseInstance() (*singletonDatabase, error) {
-	var resultError error
+func InitDatabase() error {
+	var err error
 
 	onceDatabase.Do(func() {
 		psqlInfo := fmt.Sprintf(
@@ -40,24 +35,29 @@ func DatabaseInstance() (*singletonDatabase, error) {
 			env.DatabaseSSLMode(),
 		)
 		logger.DefaultLogger().Info().
-			Timestamp().Str("database connection info", psqlInfo).Send()
+			Timestamp().Str("psqlInfo", psqlInfo).Send()
 
-		db, err := sqlx.Connect("postgres", psqlInfo)
+		config, err := pgxpool.ParseConfig(psqlInfo)
 		if err != nil {
-			resultError = errors.Wrap(err, "sqlx connect fail")
-			return
+			log.Println(err)
 		}
+		config.MaxConns = 10
+		config.MaxConnLifetime = time.Millisecond
+		config.MaxConnIdleTime = time.Second
+		config.ConnConfig.Logger = zerologadapter.NewLogger(
+			zerolog.New(os.Stdout).With().Timestamp().Logger(),
+		)
 
-		l := zerolog.New(os.Stderr).With().Logger()
-		instanceDatabase = &singletonDatabase{db, &l}
-		initDatabase(instanceDatabase.DB)
+		// connect
+		database, err = pgxpool.ConnectConfig(context.Background(), config)
+		if err != nil {
+			err = errors.Wrap(err, "database connect fail")
+		}
 	})
 
-	return instanceDatabase, resultError
+	return err
 }
 
-func initDatabase(db *sqlx.DB) {
-	db.SetMaxIdleConns(5)
-	db.SetMaxOpenConns(5)
-	db.SetConnMaxLifetime(time.Minute)
+func Connection() {
+
 }
