@@ -1,7 +1,7 @@
 package account
 
 type QueryUsecase interface {
-	CheckExistsSocialAccount(accessToken, provider string) bool
+	CheckExistsSocialAccount(accessToken, provider string) (bool, error)
 }
 
 type CommandUsecase interface {
