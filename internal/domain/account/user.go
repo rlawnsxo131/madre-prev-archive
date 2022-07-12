@@ -9,6 +9,8 @@ import (
 )
 
 var (
+	ErrInvalidUsername       = errors.New("username is required")
+	ErrInvalidEmail          = errors.New("email is required")
 	ErrInvalidUsernameFormat = errors.New("username regex MatchString error")
 )
 
@@ -22,10 +24,34 @@ type User struct {
 	UpdatedAt  time.Time      `db:"updated_at"`
 }
 
-func (u *User) ValidateUsername() error {
+func NewUser(
+	email string,
+	originName sql.NullString,
+	username string,
+	photoUrl sql.NullString,
+) (*User, error) {
+	if email == "" {
+		return nil, ErrInvalidEmail
+	}
+	if username == "" {
+		return nil, ErrInvalidUsername
+	}
+	if err := validateUsername(username); err != nil {
+		return nil, err
+	}
+
+	return &User{
+		Email:      email,
+		OriginName: originName,
+		Username:   username,
+		PhotoUrl:   photoUrl,
+	}, nil
+}
+
+func validateUsername(username string) error {
 	match, err := regexp.MatchString(
 		"^[a-zA-Z0-9]{1,20}$",
-		u.Username,
+		username,
 	)
 	if err != nil {
 		return errors.Wrap(err, "username regex MatchString error")
@@ -34,17 +60,4 @@ func (u *User) ValidateUsername() error {
 		return ErrInvalidUsernameFormat
 	}
 	return nil
-}
-
-const (
-	SOCIAL_PROVIDER_GOOGLE = "GOOGLE"
-)
-
-type SocialAccount struct {
-	ID        string    `db:"id"`
-	UserID    string    `db:"user_id"`
-	SocialID  string    `db:"social_id"`
-	Provider  string    `db:"provider"`
-	CreatedAt time.Time `db:"created_at"`
-	UpdatedAt time.Time `db:"updated_at"`
 }
