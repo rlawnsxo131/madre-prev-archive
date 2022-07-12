@@ -1,1 +1,1 @@
-package accountqueryrepository
+package queryrepository
