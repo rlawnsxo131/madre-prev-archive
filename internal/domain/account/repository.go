@@ -6,7 +6,6 @@ type AccountCommandRepository interface {
 }
 
 type AccountQueryRepository interface {
-	FindByUserId(userId string) (*Account, error)
 	FindUserById(id string) (*User, error)
 	FindUserByUsername(username string) (*User, error)
 	ExistsUserByUsername(username string) (bool, error)
