@@ -6,9 +6,8 @@ import (
 	"time"
 
 	chi_middleware "github.com/go-chi/chi/v5/middleware"
-
-	"github.com/rlawnsxo131/madre-server-v3/external/engine/httplogger"
-	"github.com/rlawnsxo131/madre-server-v3/external/engine/httpresponse"
+	"github.com/rlawnsxo131/madre-server-v3/core/engine/httplogger"
+	"github.com/rlawnsxo131/madre-server-v3/core/engine/httpresponse"
 )
 
 func Logger(next http.Handler) http.Handler {

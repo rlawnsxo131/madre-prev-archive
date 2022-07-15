@@ -3,9 +3,8 @@ package main
 import (
 	"log"
 
-	"github.com/rlawnsxo131/madre-server-v3/external/datastore/rdb"
-	"github.com/rlawnsxo131/madre-server-v3/external/engine"
-
+	"github.com/rlawnsxo131/madre-server-v3/core/datastore/rdb"
+	"github.com/rlawnsxo131/madre-server-v3/core/engine"
 	"github.com/rlawnsxo131/madre-server-v3/lib/env"
 	"github.com/rlawnsxo131/madre-server-v3/lib/logger"
 )

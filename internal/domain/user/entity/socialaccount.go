@@ -1,9 +1,9 @@
-package account
+package entity
 
-import (
-	"time"
+import "github.com/pkg/errors"
 
-	"github.com/pkg/errors"
+const (
+	SOCIAL_PROVIDER_GOOGLE = "GOOGLE"
 )
 
 var (
@@ -12,20 +12,15 @@ var (
 	ErrNotSupportedProvider = errors.New("not supported social account provider")
 )
 
-const (
-	SOCIAL_PROVIDER_GOOGLE = "GOOGLE"
-)
-
 type SocialAccount struct {
-	ID        string    `json:"id"`
-	UserID    string    `json:"user_id"`
-	SocialID  string    `json:"social_id"`
-	Provider  string    `json:"provider"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	Id             string `json:"id"`
+	UserId         string `json:"user_id"`
+	SocialId       string `json:"social_id"`
+	SocialUsername string `json:"social_username"`
+	Provider       string `json:"provider"`
 }
 
-func NewSocialAccount(socialId, provider string) (*SocialAccount, error) {
+func NewSignUpSocialAccount(socialId, socialUsername, provider string) (*SocialAccount, error) {
 	if socialId == "" {
 		return nil, ErrInvalidSocialId
 	}
@@ -35,10 +30,13 @@ func NewSocialAccount(socialId, provider string) (*SocialAccount, error) {
 	if err := isSupportProvider(provider); err != nil {
 		return nil, err
 	}
-	return &SocialAccount{
-		SocialID: socialId,
-		Provider: provider,
-	}, nil
+
+	sa := SocialAccount{
+		SocialId:       socialId,
+		SocialUsername: socialUsername,
+		Provider:       provider,
+	}
+	return &sa, nil
 }
 
 func isSupportProvider(provider string) error {

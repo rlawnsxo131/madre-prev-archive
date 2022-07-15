@@ -11,9 +11,8 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	chi_middleware "github.com/go-chi/chi/v5/middleware"
-	"github.com/rlawnsxo131/madre-server-v3/external/engine/httpmiddleware"
-	"github.com/rlawnsxo131/madre-server-v3/external/engine/httpresponse"
-
+	"github.com/rlawnsxo131/madre-server-v3/core/engine/httpmiddleware"
+	"github.com/rlawnsxo131/madre-server-v3/core/engine/httpresponse"
 	"github.com/rlawnsxo131/madre-server-v3/lib/env"
 	"github.com/rlawnsxo131/madre-server-v3/lib/logger"
 )

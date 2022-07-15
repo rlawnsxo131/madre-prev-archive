@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/pkg/errors"
-	"github.com/rlawnsxo131/madre-server-v3/external/engine/httplogger"
+	"github.com/rlawnsxo131/madre-server-v3/core/engine/httplogger"
 	"github.com/rs/zerolog"
 )
 
@@ -57,12 +57,16 @@ func (wt *writer) Write(data any) {
 }
 
 func (wt *writer) Error(err error) {
-	status := http.StatusInternalServerError
-	code := HTTP_CODE_INTERNAL_SERVER_ERROR
+	var status int
+	var code string
 
-	if err == sql.ErrNoRows {
+	switch {
+	case errors.Is(err, sql.ErrNoRows):
 		status = http.StatusNotFound
 		code = HTTP_CODE_NOT_FOUND
+	default:
+		status = http.StatusInternalServerError
+		code = HTTP_CODE_INTERNAL_SERVER_ERROR
 	}
 
 	wt.standardError(status, code, err)

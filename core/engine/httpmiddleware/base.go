@@ -5,7 +5,7 @@ import (
 	"runtime/debug"
 
 	"github.com/pkg/errors"
-	"github.com/rlawnsxo131/madre-server-v3/external/engine/httpresponse"
+	"github.com/rlawnsxo131/madre-server-v3/core/engine/httpresponse"
 )
 
 var (

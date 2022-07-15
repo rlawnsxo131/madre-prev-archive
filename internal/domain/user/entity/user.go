@@ -1,4 +1,4 @@
-package account
+package entity
 
 import (
 	"regexp"
@@ -14,16 +14,16 @@ var (
 )
 
 type User struct {
-	ID         string    `json:"id"`
-	Email      string    `json:"email"`
-	OriginName string    `json:"origin_name"`
-	Username   string    `json:"username"`
-	PhotoUrl   string    `json:"photo_url"`
-	CreatedAt  time.Time `json:"created_at"`
-	UpdatedAt  time.Time `json:"updated_at"`
+	Id            string         `json:"id"`
+	Email         string         `json:"email"`
+	Username      string         `json:"username"`
+	PhotoUrl      string         `json:"photo_url,omitempty"`
+	CreatedAt     time.Time      `json:"created_at"`
+	UpdatedAt     time.Time      `json:"updated_at"`
+	SocialAccount *SocialAccount `json:"social_account,omitempty"`
 }
 
-func NewUser(email, originName, username, photoUrl string) (*User, error) {
+func NewSignUpUser(email, username, photoUrl, socialId, socialUsername, provider string) (*User, error) {
 	if email == "" {
 		return nil, ErrInvalidEmail
 	}
@@ -34,11 +34,16 @@ func NewUser(email, originName, username, photoUrl string) (*User, error) {
 		return nil, err
 	}
 
+	sa, err := NewSignUpSocialAccount(socialId, socialUsername, provider)
+	if err != nil {
+		return nil, err
+	}
+
 	return &User{
-		Email:      email,
-		OriginName: originName,
-		Username:   username,
-		PhotoUrl:   photoUrl,
+		Email:         email,
+		Username:      username,
+		PhotoUrl:      photoUrl,
+		SocialAccount: sa,
 	}, nil
 }
 

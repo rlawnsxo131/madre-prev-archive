@@ -37,7 +37,6 @@ COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UU
 CREATE TABLE IF NOT EXISTS public.user(
   id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
   email character varying(255) NOT NULL,
-  origin_name character varying(50) DEFAULT NULL,
   username character varying(50) NOT NULL,
   photo_url character varying(255) DEFAULT NULL,
   created_at timestamp with time zone DEFAULT now() NOT NULL,
@@ -51,14 +50,14 @@ CREATE UNIQUE INDEX IF NOT EXISTS user_ix_username ON public.user USING btree (u
 -- ALTER TABLE public.user OWNER TO madre;
 
 --
--- social_account
+-- user_social_account
 --
-
 CREATE TABLE IF NOT EXISTS public.social_account (
   id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
   user_id uuid NOT NULL,
   social_id character varying(255) NOT NULL,
-  provider character varying(10) NOT NULL DEFAULT 'GOOGLE',
+  social_username character varying(50) NULL, 
+  provider character varying(10) NOT NULL DEFAULT 'GOOGLE', -- GOOGLE
   created_at timestamp with time zone DEFAULT now() NOT NULL,
   updated_at timestamp with time zone DEFAULT now() NOT NULL,
   PRIMARY KEY (id)
@@ -78,8 +77,7 @@ CREATE TABLE IF NOT EXISTS public.data (
   file_url character varying(255)  NOT NULL,
   title character varying(255)  NOT NULL,
   description character varying(255) DEFAULT NULL,
-  is_public boolean NOT NULL DEFAULT false,
-  -- status character varying(15) NOT NULL DEFAULT, // is_public 제거뒤 날짜랑 복합인덱스 걸지말지 고민해보기
+  is_public character varying(1) NOT NULL DEFAULT 'Y', -- Y,N
   created_at timestamp with time zone DEFAULT now() NOT NULL,
   updated_at timestamp with time zone DEFAULT now() NOT NULL,
   PRIMARY KEY (id)
