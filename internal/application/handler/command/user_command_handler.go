@@ -5,7 +5,9 @@ import (
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/user"
 )
 
-type UserCommandHandler interface{}
+type UserCommandHandler interface {
+	CreateUser(cmd *CreateUserCommand) (*user.User, error)
+}
 
 type userCommandHandler struct {
 	userRepository               user.UserRepository
@@ -17,7 +19,7 @@ func NewUserCommandHandler() UserCommandHandler {
 	return &userCommandHandler{}
 }
 
-func (uch *userCommandHandler) UserCreate(cmd *CreateUserCommand) (*user.User, error) {
+func (uch *userCommandHandler) CreateUser(cmd *CreateUserCommand) (*user.User, error) {
 	u, err := user.NewSignUpUser(
 		cmd.Email,
 		cmd.Username,
