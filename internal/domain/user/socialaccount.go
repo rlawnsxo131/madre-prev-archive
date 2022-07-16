@@ -11,11 +11,3 @@ type SocialAccount struct {
 	SocialUsername string `json:"social_username,omitempty"`
 	Provider       string `json:"provider"`
 }
-
-func NewSignUpSocialAccount(socialId, socialUsername, provider string) *SocialAccount {
-	return &SocialAccount{
-		SocialId:       socialId,
-		SocialUsername: socialUsername,
-		Provider:       provider,
-	}
-}

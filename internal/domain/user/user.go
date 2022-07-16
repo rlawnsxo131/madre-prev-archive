@@ -24,10 +24,10 @@ func NewSignUpUser(email, username, photoUrl, socialId, socialUsername, provider
 		return nil, common.ErrMissingRequiredValue
 	}
 	if err := validateUsername(username); err != nil {
-		return nil, common.ErrUnProcessableValue
+		return nil, err
 	}
 	if err := isSupportSocialProvider(provider); err != nil {
-		return nil, common.ErrNotSupportValue
+		return nil, err
 	}
 
 	sa := SocialAccount{
@@ -44,19 +44,23 @@ func NewSignUpUser(email, username, photoUrl, socialId, socialUsername, provider
 	return &u, nil
 }
 
+func (u *User) SetSocialAccount(sa *SocialAccount) {
+	u.SocialAccount = sa
+}
+
 // private
 func validateUsername(username string) error {
 	if match, err := regexp.MatchString("^[a-zA-Z0-9]{1,20}$", username); err != nil {
 		return errors.Wrap(err, "username regex MatchString error")
 	} else if !match {
-		return errors.New("username regex not matched")
+		return common.ErrUnProcessableValue
 	}
 	return nil
 }
 
 func isSupportSocialProvider(provider string) error {
 	if isContain := utils.Contains([]string{SOCIAL_PROVIDER_GOOGLE}, provider); !isContain {
-		return errors.New("not supported social account provider ")
+		return common.ErrNotSupportValue
 	}
 	return nil
 }
