@@ -4,6 +4,15 @@ import (
 	"database/sql"
 )
 
+func Contains[T int | string](ss []T, value T) bool {
+	for _, s := range ss {
+		if s == value {
+			return true
+		}
+	}
+	return false
+}
+
 func NewNullString(s string) sql.NullString {
 	if len(s) == 0 {
 		return sql.NullString{}

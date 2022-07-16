@@ -7,6 +7,7 @@ import (
 
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v3/core/engine/httplogger"
+	"github.com/rlawnsxo131/madre-server-v3/internal/domain/common"
 	"github.com/rs/zerolog"
 )
 
@@ -27,9 +28,7 @@ type Writer interface {
 	ErrorUnauthorized(err error)
 	ErrorForbidden(err error)
 	ErrorNotFound(err error)
-	ErrorConflict(err error)
-	ErrorUnprocessableEntity(err error)
-	standardError(status int, code string, err error)
+	writeError(status int, code string, err error)
 }
 
 type writer struct {
@@ -57,23 +56,12 @@ func (wt *writer) Write(data any) {
 }
 
 func (wt *writer) Error(err error) {
-	var status int
-	var code string
-
-	switch {
-	case errors.Is(err, sql.ErrNoRows):
-		status = http.StatusNotFound
-		code = HTTP_CODE_NOT_FOUND
-	default:
-		status = http.StatusInternalServerError
-		code = HTTP_CODE_INTERNAL_SERVER_ERROR
-	}
-
-	wt.standardError(status, code, err)
+	status, code := parseError(err)
+	wt.writeError(status, code, err)
 }
 
 func (wt *writer) ErrorBadRequest(err error) {
-	wt.standardError(
+	wt.writeError(
 		http.StatusBadRequest,
 		HTTP_CODE_BAD_REQUEST,
 		err,
@@ -81,7 +69,7 @@ func (wt *writer) ErrorBadRequest(err error) {
 }
 
 func (wt *writer) ErrorUnauthorized(err error) {
-	wt.standardError(
+	wt.writeError(
 		http.StatusUnauthorized,
 		HTTP_CODE_UNAUTHORIZED,
 		err,
@@ -89,7 +77,7 @@ func (wt *writer) ErrorUnauthorized(err error) {
 }
 
 func (wt *writer) ErrorForbidden(err error) {
-	wt.standardError(
+	wt.writeError(
 		http.StatusForbidden,
 		HTTP_CODE_FORBIDDEN,
 		err,
@@ -97,30 +85,14 @@ func (wt *writer) ErrorForbidden(err error) {
 }
 
 func (wt *writer) ErrorNotFound(err error) {
-	wt.standardError(
+	wt.writeError(
 		http.StatusNotFound,
 		HTTP_CODE_NOT_FOUND,
 		err,
 	)
 }
 
-func (wt *writer) ErrorConflict(err error) {
-	wt.standardError(
-		http.StatusConflict,
-		HTTP_CODE_CONFLICT,
-		err,
-	)
-}
-
-func (wt *writer) ErrorUnprocessableEntity(err error) {
-	wt.standardError(
-		http.StatusUnprocessableEntity,
-		HTTP_CODE_UNPROCESSABLE_ENTITY,
-		err,
-	)
-}
-
-func (wt *writer) standardError(status int, code string, err error) {
+func (wt *writer) writeError(status int, code string, err error) {
 	res, _ := json.Marshal(map[string]any{
 		"status": status,
 		"code":   code,
@@ -130,4 +102,37 @@ func (wt *writer) standardError(status int, code string, err error) {
 	httplogger.LoggerCtx(wt.r.Context()).Add(func(e *zerolog.Event) {
 		e.Err(err).RawJSON("response", res)
 	})
+}
+
+func parseError(err error) (int, string) {
+	var status int
+	var code string
+
+	switch {
+	case errors.Is(err, sql.ErrNoRows):
+		status = http.StatusNotFound
+		code = HTTP_CODE_NOT_FOUND
+
+	case errors.Is(err, common.ErrMissingRequiredValue):
+		status = http.StatusBadRequest
+		code = HTTP_CODE_BAD_REQUEST
+
+	case errors.Is(err, common.ErrNotSupportValue):
+		status = http.StatusBadRequest
+		code = HTTP_CODE_BAD_REQUEST
+
+	case errors.Is(err, common.ErrConflictUniqValue):
+		status = http.StatusConflict
+		code = HTTP_CODE_CONFLICT
+
+	case errors.Is(err, common.ErrUnProcessableValue):
+		status = http.StatusUnprocessableEntity
+		code = HTTP_CODE_UNPROCESSABLE_ENTITY
+
+	default:
+		status = http.StatusInternalServerError
+		code = HTTP_CODE_INTERNAL_SERVER_ERROR
+	}
+
+	return status, code
 }

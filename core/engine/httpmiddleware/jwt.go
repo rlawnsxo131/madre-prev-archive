@@ -59,7 +59,7 @@ func JWT(next http.Handler) http.Handler {
 							if err != nil {
 								logger.DefaultLogger().Err(err).Timestamp().Str("action", "JWT").Send()
 							} else {
-								ctx = token.SetProfile(ctx, p)
+								ctx = token.SetProfileCtx(ctx, p)
 							}
 						}
 					}
@@ -70,7 +70,7 @@ func JWT(next http.Handler) http.Handler {
 					claims.Username,
 					claims.PhotoUrl,
 				)
-				ctx = token.SetProfile(ctx, p)
+				ctx = token.SetProfileCtx(ctx, p)
 			}
 		}
 
@@ -101,7 +101,7 @@ func JWT(next http.Handler) http.Handler {
 					if err != nil {
 						logger.DefaultLogger().Err(err).Timestamp().Str("action", "JWT").Send()
 					} else {
-						ctx = token.SetProfile(ctx, p)
+						ctx = token.SetProfileCtx(ctx, p)
 					}
 				}
 			}

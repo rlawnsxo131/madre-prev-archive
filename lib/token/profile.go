@@ -24,6 +24,6 @@ func ProfileCtx(ctx context.Context) *profile {
 	return nil
 }
 
-func SetProfile(ctx context.Context, p *profile) context.Context {
+func SetProfileCtx(ctx context.Context, p *profile) context.Context {
 	return context.WithValue(ctx, KEY_USER_PROFILE_CTX, p)
 }
