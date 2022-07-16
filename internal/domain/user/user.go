@@ -6,6 +6,7 @@ import (
 
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/common"
+	"github.com/rlawnsxo131/madre-server-v3/lib/logger"
 	"github.com/rlawnsxo131/madre-server-v3/utils"
 )
 
@@ -53,6 +54,8 @@ func validateUsername(username string) error {
 	if match, err := regexp.MatchString("^[a-zA-Z0-9]{1,20}$", username); err != nil {
 		return errors.Wrap(err, "username regex MatchString error")
 	} else if !match {
+		logger.DefaultLogger().Error().Timestamp().
+			Str("username", username).Msgf("username regex validation failed")
 		return common.ErrUnProcessableValue
 	}
 	return nil
@@ -60,6 +63,8 @@ func validateUsername(username string) error {
 
 func isSupportSocialProvider(provider string) error {
 	if isContain := utils.Contains([]string{SOCIAL_PROVIDER_GOOGLE}, provider); !isContain {
+		logger.DefaultLogger().Error().Timestamp().
+			Str("provider", provider).Msg("not support provider")
 		return common.ErrNotSupportValue
 	}
 	return nil
