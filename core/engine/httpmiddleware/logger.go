@@ -20,8 +20,8 @@ func Logger(next http.Handler) http.Handler {
 		err := hl.ReadBody()
 		if err != nil {
 			res, _ := json.Marshal(map[string]any{
-				"status": http.StatusInternalServerError,
-				"code":   httpresponse.HTTP_CODE_INTERNAL_SERVER_ERROR,
+				"code":  http.StatusInternalServerError,
+				"error": httpresponse.HTTP_ERROR_INTERNAL_SERVER_ERROR,
 			})
 			ww.WriteHeader(http.StatusInternalServerError)
 			ww.Write(res)

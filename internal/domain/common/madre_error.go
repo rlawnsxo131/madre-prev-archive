@@ -1,6 +1,9 @@
 package common
 
-import "github.com/pkg/errors"
+import (
+	"github.com/pkg/errors"
+	"github.com/rlawnsxo131/madre-server-v3/utils"
+)
 
 var (
 	ErrMissingRequiredValue = errors.New("missing required value")
@@ -8,3 +11,15 @@ var (
 	ErrConflictUniqValue    = errors.New("conflict uniq value")
 	ErrUnProcessableValue   = errors.New("unprocessable value")
 )
+
+type MadreError struct {
+	Err     error
+	Message string
+}
+
+func NewMadreError(err error, message ...string) *MadreError {
+	return &MadreError{
+		Err:     err,
+		Message: utils.ParseOtionalString(message...),
+	}
+}

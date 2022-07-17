@@ -1,3 +1,9 @@
 package query
 
-type UserQueryHandler struct{}
+type UserQueryHandler interface{}
+
+type userQueryHandler struct{}
+
+func NewUserQueryHandler() UserQueryHandler {
+	return &userQueryHandler{}
+}

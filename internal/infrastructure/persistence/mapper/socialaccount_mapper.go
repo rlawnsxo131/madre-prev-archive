@@ -1,27 +1,17 @@
 package mapper
 
 import (
-	"database/sql"
 	"time"
 
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/user"
+	"github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/persistence/model"
 	"github.com/rlawnsxo131/madre-server-v3/utils"
 )
 
-type SocialAccountModel struct {
-	Id             string         `db:"id"`
-	UserId         string         `db:"user_id"`
-	SocialId       string         `db:"social_id"`
-	SocialUsername sql.NullString `db:"social_username"`
-	Provider       string         `db:"provider"`
-	CreatedAt      time.Time      `db:"created_at"`
-	UpdatedAt      time.Time      `db:"updated_at"`
-}
-
 type SocialAccountMapper struct{}
 
-func (sam SocialAccountMapper) MapToModel(sa *user.SocialAccount) *SocialAccountModel {
-	return &SocialAccountModel{
+func (sam SocialAccountMapper) MapToModel(sa *user.SocialAccount) *model.SocialAccount {
+	return &model.SocialAccount{
 		Id:             sa.Id,
 		UserId:         sa.UserId,
 		SocialId:       sa.SocialId,
@@ -31,7 +21,7 @@ func (sam SocialAccountMapper) MapToModel(sa *user.SocialAccount) *SocialAccount
 	}
 }
 
-func (sam SocialAccountMapper) MapToEntity(sa *SocialAccountModel) *user.SocialAccount {
+func (sam SocialAccountMapper) MapToEntity(sa *model.SocialAccount) *user.SocialAccount {
 	return &user.SocialAccount{
 		Id:             sa.Id,
 		UserId:         sa.UserId,

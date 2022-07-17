@@ -8,27 +8,28 @@ import (
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v3/core/engine/httplogger"
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/common"
+	"github.com/rlawnsxo131/madre-server-v3/utils"
 	"github.com/rs/zerolog"
 )
 
 const (
-	HTTP_CODE_BAD_REQUEST           = "BadRequest"          // 400
-	HTTP_CODE_UNAUTHORIZED          = "Unauthorized"        // 401
-	HTTP_CODE_FORBIDDEN             = "Forbidden"           // 403
-	HTTP_CODE_NOT_FOUND             = "NotFound"            // 404
-	HTTP_CODE_CONFLICT              = "Conflict"            // 409
-	HTTP_CODE_UNPROCESSABLE_ENTITY  = "UnprocessableEntity" // 422
-	HTTP_CODE_INTERNAL_SERVER_ERROR = "InternalServerError" // 500
+	HTTP_ERROR_BAD_REQUEST           = "BadRequest"          // 400
+	HTTP_ERROR_UNAUTHORIZED          = "Unauthorized"        // 401
+	HTTP_ERROR_FORBIDDEN             = "Forbidden"           // 403
+	HTTP_ERROR_NOT_FOUND             = "NotFound"            // 404
+	HTTP_ERROR_CONFLICT              = "Conflict"            // 409
+	HTTP_ERROR_UNPROCESSABLE_ENTITY  = "UnprocessableEntity" // 422
+	HTTP_ERROR_INTERNAL_SERVER_ERROR = "InternalServerError" // 500
 )
 
 type Writer interface {
 	Write(data any)
-	Error(err error)
-	ErrorBadRequest(err error)
-	ErrorUnauthorized(err error)
-	ErrorForbidden(err error)
-	ErrorNotFound(err error)
-	writeError(status int, code string, err error)
+	Error(err error, message ...string)
+	ErrorBadRequest(err error, message ...string)
+	ErrorUnauthorized(err error, message ...string)
+	ErrorForbidden(err error, message ...string)
+	ErrorNotFound(err error, message ...string)
+	writeError(code int, strErr string, err error, message ...string)
 }
 
 type writer struct {
@@ -55,49 +56,66 @@ func (wt *writer) Write(data any) {
 	})
 }
 
-func (wt *writer) Error(err error) {
-	status, code := parseError(err)
-	wt.writeError(status, code, err)
+func (wt *writer) Error(err error, message ...string) {
+	code, strErr := parseError(err)
+	wt.writeError(
+		code,
+		strErr,
+		err,
+		message...,
+	)
 }
 
-func (wt *writer) ErrorBadRequest(err error) {
+func (wt *writer) ErrorBadRequest(err error, message ...string) {
 	wt.writeError(
 		http.StatusBadRequest,
-		HTTP_CODE_BAD_REQUEST,
+		HTTP_ERROR_BAD_REQUEST,
 		err,
+		message...,
 	)
 }
 
-func (wt *writer) ErrorUnauthorized(err error) {
+func (wt *writer) ErrorUnauthorized(err error, message ...string) {
 	wt.writeError(
 		http.StatusUnauthorized,
-		HTTP_CODE_UNAUTHORIZED,
+		HTTP_ERROR_UNAUTHORIZED,
 		err,
+		message...,
 	)
 }
 
-func (wt *writer) ErrorForbidden(err error) {
+func (wt *writer) ErrorForbidden(err error, message ...string) {
 	wt.writeError(
 		http.StatusForbidden,
-		HTTP_CODE_FORBIDDEN,
+		HTTP_ERROR_FORBIDDEN,
 		err,
+		message...,
 	)
 }
 
-func (wt *writer) ErrorNotFound(err error) {
+func (wt *writer) ErrorNotFound(err error, message ...string) {
 	wt.writeError(
 		http.StatusNotFound,
-		HTTP_CODE_NOT_FOUND,
+		HTTP_ERROR_NOT_FOUND,
 		err,
+		message...,
 	)
 }
 
-func (wt *writer) writeError(status int, code string, err error) {
-	res, _ := json.Marshal(map[string]any{
-		"status": status,
-		"code":   code,
-	})
-	wt.w.WriteHeader(status)
+func (wt *writer) writeError(
+	code int,
+	strErr string,
+	err error,
+	message ...string,
+) {
+	res, _ := json.Marshal(
+		NewErrorResponse(
+			code,
+			strErr,
+			utils.ParseOtionalString(message...),
+		),
+	)
+	wt.w.WriteHeader(code)
 	wt.w.Write(res)
 	httplogger.LoggerCtx(wt.r.Context()).Add(func(e *zerolog.Event) {
 		e.Err(err).RawJSON("response", res)
@@ -105,34 +123,34 @@ func (wt *writer) writeError(status int, code string, err error) {
 }
 
 func parseError(err error) (int, string) {
-	var status int
-	var code string
+	var code int
+	var strErr string
 
 	switch {
 	case errors.Is(err, sql.ErrNoRows):
-		status = http.StatusNotFound
-		code = HTTP_CODE_NOT_FOUND
+		code = http.StatusNotFound
+		strErr = HTTP_ERROR_NOT_FOUND
 
 	case errors.Is(err, common.ErrMissingRequiredValue):
-		status = http.StatusBadRequest
-		code = HTTP_CODE_BAD_REQUEST
+		code = http.StatusBadRequest
+		strErr = HTTP_ERROR_BAD_REQUEST
 
 	case errors.Is(err, common.ErrNotSupportValue):
-		status = http.StatusBadRequest
-		code = HTTP_CODE_BAD_REQUEST
+		code = http.StatusBadRequest
+		strErr = HTTP_ERROR_BAD_REQUEST
 
 	case errors.Is(err, common.ErrConflictUniqValue):
-		status = http.StatusConflict
-		code = HTTP_CODE_CONFLICT
+		code = http.StatusConflict
+		strErr = HTTP_ERROR_CONFLICT
 
 	case errors.Is(err, common.ErrUnProcessableValue):
-		status = http.StatusUnprocessableEntity
-		code = HTTP_CODE_UNPROCESSABLE_ENTITY
+		code = http.StatusUnprocessableEntity
+		strErr = HTTP_ERROR_UNPROCESSABLE_ENTITY
 
 	default:
-		status = http.StatusInternalServerError
-		code = HTTP_CODE_INTERNAL_SERVER_ERROR
+		code = http.StatusInternalServerError
+		strErr = HTTP_ERROR_INTERNAL_SERVER_ERROR
 	}
 
-	return status, code
+	return code, strErr
 }

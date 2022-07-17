@@ -1,26 +1,15 @@
 package mapper
 
 import (
-	"database/sql"
-	"time"
-
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/user"
+	"github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/persistence/model"
 	"github.com/rlawnsxo131/madre-server-v3/utils"
 )
 
-type UserModel struct {
-	Id        string         `db:"id"`
-	Email     string         `db:"email"`
-	Username  string         `db:"username"`
-	PhotoUrl  sql.NullString `db:"photo_url"`
-	CreatedAt time.Time      `db:"created_at"`
-	UpdatedAt time.Time      `db:"updated_at"`
-}
-
 type UserMapper struct{}
 
-func (um UserMapper) MapToModel(u *user.User) *UserModel {
-	return &UserModel{
+func (um UserMapper) MapToModel(u *user.User) *model.User {
+	return &model.User{
 		Id:        u.Id,
 		Email:     u.Email,
 		Username:  u.Email,
@@ -30,7 +19,7 @@ func (um UserMapper) MapToModel(u *user.User) *UserModel {
 	}
 }
 
-func (um UserMapper) MapToEntity(u *UserModel) *user.User {
+func (um UserMapper) MapToEntity(u *model.User) *user.User {
 	return &user.User{
 		Id:        u.Id,
 		Email:     u.Email,

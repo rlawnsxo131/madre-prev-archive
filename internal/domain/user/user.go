@@ -14,10 +14,10 @@ type User struct {
 	Id            string         `json:"id"`
 	Email         string         `json:"email"`
 	Username      string         `json:"username"`
-	PhotoUrl      string         `json:"photo_url,omitempty"`
-	CreatedAt     time.Time      `json:"created_at"`
-	UpdatedAt     time.Time      `json:"updated_at"`
-	SocialAccount *SocialAccount `json:"social_account,omitempty"`
+	PhotoUrl      string         `json:"photoUrl,omitempty"`
+	CreatedAt     time.Time      `json:"createdAt"`
+	UpdatedAt     time.Time      `json:"updatedAt"`
+	SocialAccount *SocialAccount `json:"socialAccount,omitempty"`
 }
 
 func NewSignUpUser(email, username, photoUrl, socialId, socialUsername, provider string) (*User, error) {

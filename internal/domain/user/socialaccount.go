@@ -6,8 +6,8 @@ const (
 
 type SocialAccount struct {
 	Id             string `json:"id"`
-	UserId         string `json:"user_id"`
-	SocialId       string `json:"social_id"`
-	SocialUsername string `json:"social_username,omitempty"`
+	UserId         string `json:"userId"`
+	SocialId       string `json:"socialId"`
+	SocialUsername string `json:"socialUsername,omitempty"`
 	Provider       string `json:"provider"`
 }

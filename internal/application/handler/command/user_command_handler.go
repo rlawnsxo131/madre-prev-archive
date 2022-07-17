@@ -6,7 +6,7 @@ import (
 )
 
 type UserCommandHandler interface {
-	CreateUser(cmd *CreateUserCommand) (*user.User, error)
+	CreateUser(cmd *CreateUserCommand) (*user.User, *common.MadreError)
 }
 
 type userCommandHandler struct {
@@ -19,7 +19,7 @@ func NewUserCommandHandler() UserCommandHandler {
 	return &userCommandHandler{}
 }
 
-func (uch *userCommandHandler) CreateUser(cmd *CreateUserCommand) (*user.User, error) {
+func (uch *userCommandHandler) CreateUser(cmd *CreateUserCommand) (*user.User, *common.MadreError) {
 	u, err := user.NewSignUpUser(
 		cmd.Email,
 		cmd.Username,
@@ -29,14 +29,17 @@ func (uch *userCommandHandler) CreateUser(cmd *CreateUserCommand) (*user.User, e
 		cmd.Provider,
 	)
 	if err != nil {
-		return nil, err
+		return nil, common.NewMadreError(err)
 	}
 
 	exist, err := uch.userQueryRepository.ExistsByUsername(u.Username)
 	if err != nil {
-		return nil, err
+		return nil, common.NewMadreError(err)
 	} else if exist {
-		return nil, common.ErrConflictUniqValue
+		return nil, common.NewMadreError(
+			common.ErrConflictUniqValue,
+			"중복된 이름입니다.",
+		)
 	}
 
 	exist, err = uch.socialaccountQueryRepository.ExistsBySocialIdAndProvider(
@@ -44,9 +47,12 @@ func (uch *userCommandHandler) CreateUser(cmd *CreateUserCommand) (*user.User, e
 		u.SocialAccount.Provider,
 	)
 	if err != nil {
-		return nil, err
+		return nil, common.NewMadreError(err)
 	} else if exist {
-		return nil, common.ErrConflictUniqValue
+		return nil, common.NewMadreError(
+			common.ErrConflictUniqValue,
+			"이미 가입한 소셜 계정입니다.",
+		)
 	}
 
 	return u, nil
