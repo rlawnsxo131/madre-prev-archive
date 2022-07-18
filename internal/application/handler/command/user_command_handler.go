@@ -56,5 +56,7 @@ func (uch *userCommandHandler) CreateUser(cmd *CreateUserCommand) (*user.User, *
 		return nil, err
 	}
 
+	// TODO: save
+
 	return u, nil
 }
