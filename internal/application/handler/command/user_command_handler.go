@@ -3,6 +3,8 @@ package command
 import (
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/common"
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/user"
+	"github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/persistence/repository"
+	queryrepository "github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/persistence/repository/query"
 )
 
 type UserCommandHandler interface {
@@ -10,20 +12,30 @@ type UserCommandHandler interface {
 }
 
 type userCommandHandler struct {
-	userRepository               user.UserRepository
-	userQueryRepository          user.UserQueryRepository
-	socialaccountQueryRepository user.SocialAccountQueryRepository
+	userRepository    user.UserRepository
+	userDomainService user.UserDomainService
 }
 
 func NewUserCommandHandler() UserCommandHandler {
-	return &userCommandHandler{}
+	return &userCommandHandler{
+		repository.NewUserRepository(),
+		user.NewUserDomainService(
+			queryrepository.NewUserQueryRepository(),
+			queryrepository.NewSocialAccountQueryRepository(),
+		),
+	}
 }
 
 func (uch *userCommandHandler) CreateUser(cmd *CreateUserCommand) (*user.User, *common.MadreError) {
-	u, err := user.NewSignUpUser(
+	u, err := user.NewUserWithoutId(
 		cmd.Email,
 		cmd.Username,
 		cmd.PhotoUrl,
+	)
+	if err != nil {
+		return nil, common.NewMadreError(err, "이름을 다시 확인해 주세요.")
+	}
+	err = u.SetNewSocialAccount(
 		cmd.SocialId,
 		cmd.SocialUsername,
 		cmd.Provider,
@@ -32,27 +44,14 @@ func (uch *userCommandHandler) CreateUser(cmd *CreateUserCommand) (*user.User, *
 		return nil, common.NewMadreError(err)
 	}
 
-	exist, err := uch.userQueryRepository.ExistsByUsername(u.Username)
-	if err != nil {
-		return nil, common.NewMadreError(err)
-	} else if exist {
-		return nil, common.NewMadreError(
-			common.ErrConflictUniqValue,
-			"중복된 이름입니다.",
-		)
+	if err := uch.userDomainService.CheckConflictUsername(u.Username); err != nil {
+		return nil, err
 	}
-
-	exist, err = uch.socialaccountQueryRepository.ExistsBySocialIdAndProvider(
+	if err := uch.userDomainService.CheckConflictSocialAccount(
 		u.SocialAccount.SocialId,
-		u.SocialAccount.Provider,
-	)
-	if err != nil {
-		return nil, common.NewMadreError(err)
-	} else if exist {
-		return nil, common.NewMadreError(
-			common.ErrConflictUniqValue,
-			"이미 가입한 소셜 계정입니다.",
-		)
+		u.SocialAccount.SocialUsername,
+	); err != nil {
+		return nil, err
 	}
 
 	return u, nil

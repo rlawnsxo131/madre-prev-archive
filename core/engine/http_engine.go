@@ -96,6 +96,7 @@ func (e *httpEngine) RegisterHTTPMiddleware() {
 	e.r.Use(httpmiddleware.Recovery)
 	e.r.Use(httpmiddleware.AllowHost)
 	e.r.Use(httpmiddleware.Cors)
+	e.r.Use(httpmiddleware.DatabasePool)
 	e.r.Use(httpmiddleware.JWT)
 	e.r.Use(httpmiddleware.ContentTypeToJson)
 	e.r.Use(chi_middleware.Compress(5))

@@ -16,12 +16,12 @@ func main() {
 	// }
 	// defer db.DB.Close()
 
-	// if env.IsLocal() {
-	// 	rdb.ExcuteInitSQL(db.DB)
-	// }
-	err := rdb.InitDatabase()
+	pool, err := rdb.InitDatabase()
 	if err != nil {
 		log.Println(err)
+	}
+	if env.IsLocal() {
+		rdb.ExcuteInitSQL(pool)
 	}
 
 	e := engine.NewHTTPEngine()
