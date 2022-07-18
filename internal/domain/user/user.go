@@ -75,9 +75,11 @@ func (u *User) SetSocialAccount(sa *SocialAccount) {
 
 // private static
 func validateUsername(username string) error {
-	if match, err := regexp.MatchString("^[a-zA-Z0-9]{1,20}$", username); err != nil {
+	match, err := regexp.MatchString("^[a-zA-Z0-9]{1,20}$", username)
+	if err != nil {
 		return errors.Wrap(err, "username regex MatchString error")
-	} else if !match {
+	}
+	if !match {
 		logger.DefaultLogger().Error().Timestamp().
 			Str("username", username).Msg("username regex validation failed")
 		return common.ErrUnProcessableValue
@@ -86,7 +88,8 @@ func validateUsername(username string) error {
 }
 
 func (u *User) isSupportSocialProvider(provider string) error {
-	if isContain := utils.Contains([]string{SOCIAL_PROVIDER_GOOGLE}, provider); !isContain {
+	isContain := utils.Contains([]string{SOCIAL_PROVIDER_GOOGLE}, provider)
+	if !isContain {
 		logger.DefaultLogger().Error().Timestamp().
 			Str("provider", provider).Msg("not support provider")
 		return common.ErrNotSupportValue
