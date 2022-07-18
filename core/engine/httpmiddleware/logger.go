@@ -28,19 +28,14 @@ func Logger(next http.Handler) http.Handler {
 			return
 		}
 
+		loggerCtx := httplogger.SetLoggerCtx(
+			r.Context(),
+			hl,
+		)
+
 		next.ServeHTTP(
 			ww,
-			r.WithContext(
-				httplogger.SetLoggerCtx(
-					r.Context(),
-					hl,
-				),
-			),
+			r.WithContext(loggerCtx),
 		)
 	})
 }
-
-// func RequestWithHTTPLogger(r *http.Request, hl logger.HTTPLogger) *http.Request {
-// 	r = r.WithContext(r, hl))
-// 	return r
-// }
