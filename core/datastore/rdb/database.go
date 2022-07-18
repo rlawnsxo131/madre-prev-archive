@@ -16,10 +16,6 @@ import (
 	"github.com/rs/zerolog"
 )
 
-const (
-	KEY_DATABASE_CTX = "KEY_DATABASE_CTX"
-)
-
 var (
 	pool         *pgxpool.Pool
 	onceDatabase sync.Once
@@ -60,23 +56,4 @@ func InitDatabase() (*pgxpool.Pool, error) {
 	})
 
 	return pool, err
-}
-
-func Conn(ctx context.Context) (*pgxpool.Conn, error) {
-	conn, err := pool.Acquire(ctx)
-	if err != nil {
-		return nil, errors.Wrap(
-			err,
-			"pgx connection pool acquire error",
-		)
-	}
-	return conn, nil
-}
-
-func ConnCtx(ctx context.Context) (*pgxpool.Conn, error) {
-	v := ctx.Value(KEY_DATABASE_CTX)
-	if v, ok := v.(*pgxpool.Conn); ok {
-		return v, nil
-	}
-	return nil, errors.New("there is no database connection in the context")
 }
