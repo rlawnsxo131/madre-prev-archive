@@ -20,7 +20,7 @@ func DatabasePool(next http.Handler) http.Handler {
 
 		dbCtx := context.WithValue(
 			r.Context(),
-			rdb.KEY_DATABASE_CTX,
+			rdb.KEY_DATABASE_CONN_CTX,
 			conn,
 		)
 

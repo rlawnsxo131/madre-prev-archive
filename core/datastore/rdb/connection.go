@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	KEY_DATABASE_CTX = "KEY_DATABASE_CTX"
+	KEY_DATABASE_CONN_CTX = "KEY_DATABASE_CONN_CTX"
 )
 
 func Conn(ctx context.Context) (*pgxpool.Conn, error) {
@@ -23,7 +23,7 @@ func Conn(ctx context.Context) (*pgxpool.Conn, error) {
 }
 
 func ConnCtx(ctx context.Context) (*pgxpool.Conn, error) {
-	v := ctx.Value(KEY_DATABASE_CTX)
+	v := ctx.Value(KEY_DATABASE_CONN_CTX)
 	if v, ok := v.(*pgxpool.Conn); ok {
 		return v, nil
 	}

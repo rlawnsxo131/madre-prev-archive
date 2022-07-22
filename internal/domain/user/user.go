@@ -36,22 +36,6 @@ func NewUserWithoutId(email, username, photoUrl string) (*User, error) {
 	return &u, nil
 }
 
-func NewUserWithId(id, email, username, photoUrl string) (*User, error) {
-	if id == "" || email == "" || username == "" {
-		return nil, common.ErrMissingRequiredValue
-	}
-	if err := validateUsername(username); err != nil {
-		return nil, err
-	}
-	u := User{
-		Id:       id,
-		Email:    email,
-		Username: username,
-		PhotoUrl: photoUrl,
-	}
-	return &u, nil
-}
-
 // public method
 func (u *User) SetNewSocialAccount(socialId, socialUsername, provider string) error {
 	if socialId == "" || socialUsername == "" || provider == "" {
