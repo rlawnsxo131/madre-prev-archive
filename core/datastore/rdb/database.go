@@ -21,7 +21,7 @@ var (
 	onceDatabase sync.Once
 )
 
-func InitDatabase() (*pgxpool.Pool, error) {
+func InitDatabasePool() (*pgxpool.Pool, error) {
 	var err error
 
 	onceDatabase.Do(func() {

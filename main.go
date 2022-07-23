@@ -16,7 +16,7 @@ func main() {
 	// }
 	// defer db.DB.Close()
 
-	pool, err := rdb.InitDatabase()
+	pool, err := rdb.InitDatabasePool()
 	if err != nil {
 		log.Println(err)
 	}

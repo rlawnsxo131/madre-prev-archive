@@ -1,6 +1,8 @@
 package queryrepository
 
-import "github.com/rlawnsxo131/madre-server-v3/internal/domain/user"
+import (
+	"github.com/rlawnsxo131/madre-server-v3/internal/domain/user"
+)
 
 type userQueryRepository struct{}
 
