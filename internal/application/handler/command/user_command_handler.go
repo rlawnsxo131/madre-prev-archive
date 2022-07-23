@@ -3,8 +3,6 @@ package command
 import (
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/common"
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/user"
-	"github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/persistence/repository"
-	queryrepository "github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/persistence/repository/query"
 )
 
 type UserCommandHandler interface {
@@ -16,13 +14,13 @@ type userCommandHandler struct {
 	userDomainService user.UserDomainService
 }
 
-func NewUserCommandHandler() UserCommandHandler {
+func NewUserCommandHandler(
+	userRepository user.UserRepository,
+	userDomainService user.UserDomainService,
+) UserCommandHandler {
 	return &userCommandHandler{
-		repository.NewUserRepository(),
-		user.NewUserDomainService(
-			queryrepository.NewUserQueryRepository(),
-			queryrepository.NewSocialAccountQueryRepository(),
-		),
+		userRepository,
+		userDomainService,
 	}
 }
 
