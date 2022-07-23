@@ -12,7 +12,6 @@ import (
 	"time"
 
 	chi_middleware "github.com/go-chi/chi/v5/middleware"
-	"github.com/pkg/errors"
 	"github.com/rs/zerolog"
 )
 
@@ -45,9 +44,6 @@ func (hl *logger) ReadBody() error {
 	if hl.r.Body != nil {
 		body, err := ioutil.ReadAll(hl.r.Body)
 		if err != nil {
-			hl.add = append(hl.add, func(e *zerolog.Event) {
-				e.Err(errors.Wrap(err, "read http body error"))
-			})
 			return err
 		}
 		hl.body = append(hl.body, body...)
