@@ -20,7 +20,6 @@ type User struct {
 	SocialAccount *SocialAccount `json:"socialAccount,omitempty"`
 }
 
-// public static constructor
 func NewUserWithoutId(email, username, photoUrl string) (*User, error) {
 	if email == "" || username == "" {
 		return nil, common.ErrMissingRequiredValue
@@ -36,7 +35,6 @@ func NewUserWithoutId(email, username, photoUrl string) (*User, error) {
 	return &u, nil
 }
 
-// public method
 func (u *User) SetNewSocialAccount(socialId, socialUsername, provider string) error {
 	if socialId == "" || socialUsername == "" || provider == "" {
 		return common.ErrMissingRequiredValue
@@ -57,7 +55,6 @@ func (u *User) SetSocialAccount(sa *SocialAccount) {
 	u.SocialAccount = sa
 }
 
-// private method
 func (u *User) isSupportSocialProvider(provider string) error {
 	isContain := utils.Contains(
 		[]string{SOCIAL_PROVIDER_GOOGLE},
@@ -71,7 +68,6 @@ func (u *User) isSupportSocialProvider(provider string) error {
 	return nil
 }
 
-// private static
 func validateUsername(username string) error {
 	match, err := regexp.MatchString(
 		"^[a-zA-Z0-9]{1,20}$",

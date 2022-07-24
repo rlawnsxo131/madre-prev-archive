@@ -31,7 +31,7 @@ func (uch *userCommandHandler) CreateUser(cmd *CreateUserCommand) (*user.User, *
 		cmd.PhotoUrl,
 	)
 	if err != nil {
-		return nil, common.NewMadreError(err, "이름을 다시 확인해 주세요.")
+		return nil, common.NewMadreError(err)
 	}
 
 	// socialaccount is essential when creating a new user

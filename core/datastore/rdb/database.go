@@ -42,8 +42,9 @@ func InitDatabasePool() (*pgxpool.Pool, error) {
 			log.Println(err)
 		}
 		config.MaxConns = 10
-		config.MaxConnLifetime = time.Millisecond
-		config.MaxConnIdleTime = time.Second
+		config.MinConns = 5
+		config.MaxConnLifetime = time.Minute * 10
+		config.MaxConnIdleTime = time.Second * 10
 		config.ConnConfig.Logger = zerologadapter.NewLogger(
 			zerolog.New(os.Stdout).With().Timestamp().Logger(),
 		)
