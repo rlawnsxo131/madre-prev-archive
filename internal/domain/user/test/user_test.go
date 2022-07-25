@@ -22,9 +22,9 @@ func Test_SetNewUserWithoutId_Success(t *testing.T) {
 	)
 
 	assert.Nil(err)
-	assert.Equal(email, u.Email)
-	assert.Equal(username, u.Username)
-	assert.Equal(photoUrl, u.PhotoUrl)
+	assert.Equal(u.Email, email)
+	assert.Equal(u.Username, username)
+	assert.Equal(u.PhotoUrl, photoUrl)
 }
 
 func Test_SetNewUserWithoutId_Return_ErrMissingRequiredValue(t *testing.T) {
