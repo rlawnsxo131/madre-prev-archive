@@ -143,7 +143,7 @@ func parseError(err error) (int, string) {
 		code = http.StatusConflict
 		strErr = HTTP_ERROR_CONFLICT
 
-	case errors.Is(err, common.ErrUnProcessableValue):
+	case errors.Is(err, common.ErrUnprocessableValue):
 		code = http.StatusUnprocessableEntity
 		strErr = HTTP_ERROR_UNPROCESSABLE_ENTITY
 

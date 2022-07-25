@@ -82,7 +82,7 @@ func validateUsername(username string) error {
 	if !match {
 		logger.DefaultLogger().Error().Timestamp().
 			Str("username", username).Msg("username regex validation failed")
-		return common.ErrUnProcessableValue
+		return common.ErrUnprocessableValue
 	}
 	return nil
 }

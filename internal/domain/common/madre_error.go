@@ -9,7 +9,7 @@ var (
 	ErrMissingRequiredValue = errors.New("missing required value")
 	ErrNotSupportValue      = errors.New("not support value")
 	ErrConflictUniqValue    = errors.New("conflict uniq value")
-	ErrUnProcessableValue   = errors.New("unprocessable value")
+	ErrUnprocessableValue   = errors.New("unprocessable value")
 )
 
 type MadreError struct {

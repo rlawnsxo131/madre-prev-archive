@@ -1,6 +1,8 @@
 package user
 
-import "github.com/rlawnsxo131/madre-server-v3/internal/domain/common"
+import (
+	"github.com/rlawnsxo131/madre-server-v3/internal/domain/common"
+)
 
 type UserDomainService interface {
 	CheckConflictUsername(username string) *common.MadreError
