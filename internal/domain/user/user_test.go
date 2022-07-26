@@ -44,7 +44,7 @@ func Test_SetNewUserWithoutId_Return_ErrMissingRequiredValue(t *testing.T) {
 	assert.ErrorIs(err, common.ErrMissingRequiredValue)
 }
 
-func Test_SetSocialAccount_Success(t *testing.T) {
+func Test_SetNewSocialAccount_Success(t *testing.T) {
 	assert := assert.New(t)
 
 	u := &user.User{}
@@ -62,7 +62,7 @@ func Test_SetSocialAccount_Success(t *testing.T) {
 	assert.Nil(err)
 }
 
-func Test_SetSocialAccount_Return_ErrNotSupportValue(t *testing.T) {
+func Test_SetNewSocialAccount_Return_ErrNotSupportValue(t *testing.T) {
 	assert := assert.New(t)
 
 	u := &user.User{}
