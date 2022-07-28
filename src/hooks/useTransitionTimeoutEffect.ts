@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react';
 
 interface UseTransitionTimeoutEffectParams {
   visible: boolean;
-  delay?: number;
+  duration?: number;
 }
 
 export default function useTransitionTimeoutEffect({
   visible,
-  delay = 250,
+  duration = 250,
 }: UseTransitionTimeoutEffectParams) {
   const [closed, setClosed] = useState(true);
 
@@ -19,7 +19,7 @@ export default function useTransitionTimeoutEffect({
     } else {
       timeoutId = setTimeout(() => {
         setClosed(true);
-      }, delay);
+      }, duration);
     }
 
     return () => {
@@ -27,7 +27,7 @@ export default function useTransitionTimeoutEffect({
         clearTimeout(timeoutId);
       }
     };
-  }, [visible, delay]);
+  }, [visible, duration]);
 
   return closed;
 }
