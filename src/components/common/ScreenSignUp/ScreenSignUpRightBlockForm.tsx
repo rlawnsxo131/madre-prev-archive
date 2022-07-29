@@ -8,7 +8,7 @@ import useScreenSignUpRightBlockForm from './hooks/useScreenSignUpRightBlockForm
 interface ScreenSignUpRightBlockFormProps {}
 
 function ScreenSignUpRightBlockForm(props: ScreenSignUpRightBlockFormProps) {
-  const { inputRef, username, onChange, close, onSignUp } =
+  const { usernameInputRef, username, onChange, close, onSignUp } =
     useScreenSignUpRightBlockForm();
 
   return (
@@ -23,7 +23,7 @@ function ScreenSignUpRightBlockForm(props: ScreenSignUpRightBlockFormProps) {
           name="username"
           value={username}
           onChange={onChange}
-          ref={inputRef}
+          ref={usernameInputRef}
           minLength={1}
           maxLength={20}
           placeholder="중복 불가. 영문, 숫자 1~20자"

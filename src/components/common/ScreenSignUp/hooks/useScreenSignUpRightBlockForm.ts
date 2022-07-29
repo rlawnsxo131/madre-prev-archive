@@ -17,7 +17,7 @@ export default function useScreenSignUpRightBlockForm() {
     resetIsConflictError,
   } = useScreenSignUpActions();
 
-  const inputRef = useRef<HTMLInputElement>(null);
+  const usernameInputRef = useRef<HTMLInputElement>(null);
   const [username, setUsername] = useState('');
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,13 +54,13 @@ export default function useScreenSignUpRightBlockForm() {
 
   useEffect(() => {
     if (!isValidateError) return;
-    inputRef.current?.focus();
+    usernameInputRef.current?.focus();
     warn('이름을 다시 확인해 주세요.(영문, 숫자 1~20자)', 'top-center');
   }, [isValidateError, warn]);
 
   useEffect(() => {
     if (!isConflictError) return;
-    inputRef.current?.focus();
+    usernameInputRef.current?.focus();
     error('중복된 이름입니다.', 'top-center');
   }, [isConflictError, error]);
 
@@ -70,7 +70,7 @@ export default function useScreenSignUpRightBlockForm() {
   }, [isError, error]);
 
   return {
-    inputRef,
+    usernameInputRef,
     username,
     onChange,
     close,
