@@ -5,19 +5,15 @@ import { themePalette } from '../../../styles';
 type ParentsDirection = 'row' | 'column';
 
 interface LinkBasicProps {
+  children: React.ReactNode;
   to: string;
-  displayText: string;
   parentDirection?: ParentsDirection;
 }
 
-function LinkBasic({
-  to,
-  displayText,
-  parentDirection = 'row',
-}: LinkBasicProps) {
+function LinkBasic({ children, to, parentDirection = 'row' }: LinkBasicProps) {
   return (
     <NavLink css={link(parentDirection)} to={to}>
-      {displayText}
+      {children}
     </NavLink>
   );
 }

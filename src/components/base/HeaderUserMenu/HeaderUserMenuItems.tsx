@@ -28,11 +28,9 @@ function HeaderUserMenuItems({
     <div css={block(visible)}>
       <ul css={ul}>
         <li>
-          <LinkBasic
-            to={`/@${username}`}
-            displayText="마이 페이지"
-            parentDirection="column"
-          />
+          <LinkBasic to={`/@${username}`} parentDirection="column">
+            마이 페이지
+          </LinkBasic>
         </li>
         <li>
           <button css={[basicStyles.button, button]} onClick={signOut}>

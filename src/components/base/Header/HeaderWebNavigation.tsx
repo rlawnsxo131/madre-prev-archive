@@ -10,7 +10,7 @@ function HeaderWebNavigation(props: HeaderWebNavigationProps) {
       <ul css={ul}>
         {appInfoRoutes.map((v) => (
           <li key={`app_root_route_${v.path}`}>
-            <LinkBasic to={v.path} displayText={v.displayText} />
+            <LinkBasic to={v.path}>{v.displayText}</LinkBasic>
           </li>
         ))}
       </ul>
