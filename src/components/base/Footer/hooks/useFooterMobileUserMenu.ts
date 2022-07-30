@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
-import { useRef } from 'react';
-import { useMemo } from 'react';
+import { useRef, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import usePopupAuthActions from '../../../../hooks/popupAuth/usePopupAuthActions';
 import useIsUserPath from '../../../../hooks/useIsUserPath';
