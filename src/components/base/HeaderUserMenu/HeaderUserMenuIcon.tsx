@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import { css } from '@emotion/react';
 import { UserIcon } from '../../../image/icons';
 import { googlePhotoUrlSizeChange } from '../../../lib/utils';
@@ -10,14 +10,11 @@ interface HeaderUserMenuIconProps {
 }
 
 function HeaderUserMenuIcon({ onClick, photo_url }: HeaderUserMenuIconProps) {
-  const resizePhotoUrl = useMemo(() => {
-    if (!photo_url) return '';
-    return googlePhotoUrlSizeChange(photo_url);
-  }, [photo_url]);
+  const resizePhotoUrl = photo_url ? googlePhotoUrlSizeChange(photo_url) : '';
 
   return (
     <button css={[basicStyles.button, button]} onClick={onClick}>
-      {photo_url ? <img src={resizePhotoUrl} /> : <UserIcon />}
+      {resizePhotoUrl ? <img src={resizePhotoUrl} /> : <UserIcon />}
     </button>
   );
 }
