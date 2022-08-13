@@ -13,14 +13,25 @@ interface HeaderProps {}
 function Header(props: HeaderProps) {
   return (
     <header css={block}>
-      <HeaderWeb logo={<HeaderLogo />} navigation={<HeaderWebNavigation />}>
-        <HeaderUserNotification />
-        <HeaderUserMenu />
-        <ButtonThemeChange />
-      </HeaderWeb>
-      <HeaderMobile logo={<HeaderLogo />}>
-        <ButtonThemeChange />
-      </HeaderMobile>
+      <HeaderWeb
+        leftSideItems={
+          <>
+            <HeaderLogo />
+            <HeaderWebNavigation />
+          </>
+        }
+        rightSideItems={
+          <>
+            <HeaderUserNotification />
+            <HeaderUserMenu />
+            <ButtonThemeChange />
+          </>
+        }
+      />
+      <HeaderMobile
+        leftSideItems={<HeaderLogo />}
+        rightSideItems={<ButtonThemeChange />}
+      />
     </header>
   );
 }

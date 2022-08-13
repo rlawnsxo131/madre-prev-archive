@@ -2,19 +2,15 @@ import { css } from '@emotion/react';
 import { media, mediaQuery } from '../../../styles';
 
 interface HeaderWebProps {
-  children: React.ReactNode;
-  logo: React.ReactNode;
-  navigation: React.ReactNode;
+  leftSideItems: React.ReactNode;
+  rightSideItems: React.ReactNode;
 }
 
-function HeaderWeb({ children, logo, navigation }: HeaderWebProps) {
+function HeaderWeb({ leftSideItems, rightSideItems }: HeaderWebProps) {
   return (
     <div css={block}>
-      <div css={itemBlock}>
-        {logo}
-        {navigation}
-      </div>
-      <div css={iconItemsBlock}>{children}</div>
+      <div css={itemBlock}>{leftSideItems}</div>
+      <div css={iconItemsBlock}>{rightSideItems}</div>
     </div>
   );
 }

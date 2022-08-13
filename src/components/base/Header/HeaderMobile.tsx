@@ -2,15 +2,15 @@ import { css } from '@emotion/react';
 import { media } from '../../../styles';
 
 interface HeaderMobileProps {
-  children: React.ReactNode;
-  logo: React.ReactNode;
+  leftSideItems: React.ReactNode;
+  rightSideItems: React.ReactNode;
 }
 
-function HeaderMobile({ logo, children }: HeaderMobileProps) {
+function HeaderMobile({ leftSideItems, rightSideItems }: HeaderMobileProps) {
   return (
     <div css={block}>
-      {logo}
-      {children}
+      {leftSideItems}
+      {rightSideItems}
     </div>
   );
 }
