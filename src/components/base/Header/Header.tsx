@@ -2,14 +2,25 @@ import { css } from '@emotion/react';
 import { zIndexes } from '../../../styles';
 import HeaderWeb from './HeaderWeb';
 import HeaderMobile from './HeaderMobile';
+import HeaderLogo from './HeaderLogo';
+import HeaderWebNavigation from './HeaderWebNavigation';
+import HeaderUserNotification from '../HeaderUserNotification';
+import HeaderUserMenu from '../HeaderUserMenu';
+import ButtonThemeChange from '../../common/ButtonThemeChange';
 
 interface HeaderProps {}
 
 function Header(props: HeaderProps) {
   return (
     <header css={block}>
-      <HeaderWeb />
-      <HeaderMobile />
+      <HeaderWeb logo={<HeaderLogo />} navigation={<HeaderWebNavigation />}>
+        <HeaderUserNotification />
+        <HeaderUserMenu />
+        <ButtonThemeChange />
+      </HeaderWeb>
+      <HeaderMobile logo={<HeaderLogo />}>
+        <ButtonThemeChange />
+      </HeaderMobile>
     </header>
   );
 }

@@ -27,7 +27,6 @@
     "downlevelIteration": true,
     "forceConsistentCasingInFileNames": false,
     "jsxImportSource": "@emotion/react",
-    "baseUrl": "src",
   },
   "include": [
     "src/**/**/*",

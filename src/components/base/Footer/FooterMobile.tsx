@@ -1,30 +1,14 @@
 import { css } from '@emotion/react';
-import { HomeIcon, MenuIcon } from '../../../image/icons';
 import { media, themePalette } from '../../../styles';
-import LinkImage from '../../common/LinkImage';
-import FooterMobileNotification from './FooterMobileNotification';
-import FooterMobileUserMenu from './FooterMobileUserMenu';
-import useFooterMobileUserMenu from './hooks/useFooterMobileUserMenu';
 
-interface FooterMobileProps {}
+interface FooterMobileProps {
+  children: React.ReactNode;
+}
 
-function FooterMobile(props: FooterMobileProps) {
-  const { isActive, onClick } = useFooterMobileUserMenu();
-
+function FooterMobile({ children }: FooterMobileProps) {
   return (
     <div css={block}>
-      <div css={menuBlock}>
-        <LinkImage to="/">
-          <HomeIcon />
-        </LinkImage>
-        <FooterMobileUserMenu isActive={isActive} onClick={onClick} />
-        <LinkImage to="/notifications">
-          <FooterMobileNotification />
-        </LinkImage>
-        <LinkImage to="/m/all-menu">
-          <MenuIcon />
-        </LinkImage>
-      </div>
+      <div css={menuBlock}>{children}</div>
       <div css={fakeBlock} />
     </div>
   );

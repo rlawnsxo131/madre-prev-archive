@@ -1,25 +1,20 @@
 import { css } from '@emotion/react';
 import { media, mediaQuery } from '../../../styles';
-import HeaderLogo from './HeaderLogo';
-import HeaderWebNavigation from './HeaderWebNavigation';
-import HeaderUserNotification from '../HeaderUserNotification';
-import HeaderUserMenu from '../HeaderUserMenu';
-import ButtonThemeChange from '../../common/ButtonThemeChange';
 
-interface HeaderWebProps {}
+interface HeaderWebProps {
+  children: React.ReactNode;
+  logo: React.ReactNode;
+  navigation: React.ReactNode;
+}
 
-function HeaderWeb(props: HeaderWebProps) {
+function HeaderWeb({ children, logo, navigation }: HeaderWebProps) {
   return (
     <div css={block}>
       <div css={itemBlock}>
-        <HeaderLogo />
-        <HeaderWebNavigation />
+        {logo}
+        {navigation}
       </div>
-      <div css={iconItemsBlock}>
-        <HeaderUserNotification />
-        <HeaderUserMenu />
-        <ButtonThemeChange />
-      </div>
+      <div css={iconItemsBlock}>{children}</div>
     </div>
   );
 }

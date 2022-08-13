@@ -1,15 +1,16 @@
 import { css } from '@emotion/react';
 import { media } from '../../../styles';
-import ButtonThemeChange from '../../common/ButtonThemeChange';
-import HeaderLogo from './HeaderLogo';
 
-interface HeaderMobileProps {}
+interface HeaderMobileProps {
+  children: React.ReactNode;
+  logo: React.ReactNode;
+}
 
-function HeaderMobile(props: HeaderMobileProps) {
+function HeaderMobile({ logo, children }: HeaderMobileProps) {
   return (
     <div css={block}>
-      <HeaderLogo />
-      <ButtonThemeChange />
+      {logo}
+      {children}
     </div>
   );
 }
