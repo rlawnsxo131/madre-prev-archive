@@ -9,8 +9,8 @@ interface HeaderWebProps {
 function HeaderWeb({ leftSideItems, rightSideItems }: HeaderWebProps) {
   return (
     <div css={block}>
-      <div css={itemBlock}>{leftSideItems}</div>
-      <div css={iconItemsBlock}>{rightSideItems}</div>
+      <div css={leftSideItemsBlock}>{leftSideItems}</div>
+      <div css={rightSideItemsBlock}>{rightSideItems}</div>
     </div>
   );
 }
@@ -35,13 +35,13 @@ const block = css`
   }
 `;
 
-const itemBlock = css`
+const leftSideItemsBlock = css`
   display: flex;
   justify-content: center;
   gap: 1.5rem;
 `;
 
-const iconItemsBlock = css`
+const rightSideItemsBlock = css`
   display: flex;
   justify-content: center;
   align-items: center;
