@@ -45,7 +45,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@testing-library/user-event", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:14.4.3"],\
             ["@types/d3", "npm:7.4.0"],\
             ["@types/jest", "npm:28.1.6"],\
-            ["@types/node", "npm:18.7.1"],\
+            ["@types/node", "npm:18.7.3"],\
             ["@types/react", "npm:18.0.17"],\
             ["@types/react-dom", "npm:18.0.6"],\
             ["@types/react-redux", "npm:7.1.24"],\
@@ -4228,10 +4228,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["npm:18.7.1", {\
-          "packageLocation": "./.yarn/cache/@types-node-npm-18.7.1-bd305aa69a-f1e2b701b1.zip/node_modules/@types/node/",\
+        ["npm:18.7.3", {\
+          "packageLocation": "./.yarn/cache/@types-node-npm-18.7.3-88159f29e9-f51ed436a1.zip/node_modules/@types/node/",\
           "packageDependencies": [\
-            ["@types/node", "npm:18.7.1"]\
+            ["@types/node", "npm:18.7.3"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -10690,7 +10690,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@testing-library/user-event", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:14.4.3"],\
             ["@types/d3", "npm:7.4.0"],\
             ["@types/jest", "npm:28.1.6"],\
-            ["@types/node", "npm:18.7.1"],\
+            ["@types/node", "npm:18.7.3"],\
             ["@types/react", "npm:18.0.17"],\
             ["@types/react-dom", "npm:18.0.6"],\
             ["@types/react-redux", "npm:7.1.24"],\

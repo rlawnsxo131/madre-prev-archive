@@ -6,7 +6,13 @@ module.exports = {
   },
   testEnvironment: 'jsdom',
   moduleFileExtensions: ['js', 'json', 'jsx', 'ts', 'tsx', 'json'],
+  moduleNameMapper: {
+    '\\.(css|less)$': '<rootDir>/src/__test__/styleMock.ts',
+    '^uuid$': require.resolve('uuid'),
+  },
   testMatch: ['<rootDir>/src/**/**/*.test.(ts|tsx)'],
-  transformIgnorePatterns: ['<rootDir>/node_modules/'],
-  //   setupFiles: ['dotenv/config'],
+  transformIgnorePatterns: [
+    '<rootDir>/node_modules/',
+    '/node_modules/(?!(d3.*))',
+  ],
 };
