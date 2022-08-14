@@ -11,8 +11,5 @@ module.exports = {
     '^uuid$': require.resolve('uuid'),
   },
   testMatch: ['<rootDir>/src/**/**/*.test.(ts|tsx)'],
-  transformIgnorePatterns: [
-    '<rootDir>/node_modules/',
-    '/node_modules/(?!(d3.*))',
-  ],
+  transformIgnorePatterns: ['<rootDir>/node_modules/'],
 };
