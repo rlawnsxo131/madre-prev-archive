@@ -6,7 +6,7 @@ import screenSignUp from './screenSignUp';
 import theme from './theme';
 import user from './user';
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   common: common.reducer,
   theme: theme.reducer,
   user: user.reducer,
@@ -22,4 +22,6 @@ export const store = configureStore({
 });
 
 export type RootState = ReturnType<typeof store.getState>;
+export type RootReducer = typeof rootReducer;
 export type AppDispatch = typeof store.dispatch;
+export type AppStore = typeof store;

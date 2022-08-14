@@ -1,3 +1,5 @@
+const esModules = ['d3', 'd3-array', 'other-d3-module-if-needed'].join('|');
+
 module.exports = {
   preset: 'ts-jest',
   transform: {
@@ -7,9 +9,12 @@ module.exports = {
   testEnvironment: 'jsdom',
   moduleFileExtensions: ['js', 'json', 'jsx', 'ts', 'tsx', 'json'],
   moduleNameMapper: {
-    '\\.(css|less)$': '<rootDir>/src/__test__/styleMock.ts',
+    '\\.(css|less)$': '<rootDir>/src/__test__/mocks/styleMock.ts',
     '^uuid$': require.resolve('uuid'),
   },
   testMatch: ['<rootDir>/src/**/**/*.test.(ts|tsx)'],
-  transformIgnorePatterns: ['<rootDir>/node_modules/'],
+  transformIgnorePatterns: [
+    '<rootDir>/node_modules/',
+    `<rootDir>/node_modules/(?!${esModules})`,
+  ],
 };
