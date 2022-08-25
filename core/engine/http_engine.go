@@ -13,6 +13,7 @@ import (
 	chi_middleware "github.com/go-chi/chi/v5/middleware"
 	"github.com/rlawnsxo131/madre-server-v3/core/engine/httpmiddleware"
 	"github.com/rlawnsxo131/madre-server-v3/core/engine/httpresponse"
+	apiv1 "github.com/rlawnsxo131/madre-server-v3/internal/api/v1"
 	"github.com/rlawnsxo131/madre-server-v3/lib/env"
 	"github.com/rlawnsxo131/madre-server-v3/lib/logger"
 )
@@ -118,6 +119,8 @@ func (e *httpEngine) RegisterHealthRoute() {
 
 func (e *httpEngine) RegisterAPIRoute() {
 	e.r.Route("/api", func(r chi.Router) {
-
+		r.Route("/v1", func(r chi.Router) {
+			apiv1.NewAuthRoute().Register(r)
+		})
 	})
 }
