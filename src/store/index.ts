@@ -1,4 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import authApi from './api/authApi';
 import common from './common';
 import popupAuth from './popupAuth';
@@ -22,6 +23,9 @@ export const store = configureStore({
 });
 
 export type RootState = ReturnType<typeof store.getState>;
-export type RootReducer = typeof rootReducer;
-export type AppDispatch = typeof store.dispatch;
 export type AppStore = typeof store;
+export type RootReducer = ReturnType<typeof rootReducer>;
+export type AppDispatch = AppStore['dispatch'];
+
+export const useAppDispatch: () => AppDispatch = useDispatch;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

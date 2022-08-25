@@ -9,7 +9,7 @@ module.exports = {
   testEnvironment: 'jsdom',
   moduleFileExtensions: ['js', 'json', 'jsx', 'ts', 'tsx', 'json'],
   moduleNameMapper: {
-    '\\.(css|less)$': '<rootDir>/src/__test__/mocks/styleMock.ts',
+    '\\.(css|less)$': '<rootDir>/src/__tests__/mocks/styleMock.ts',
     '^uuid$': require.resolve('uuid'),
   },
   testMatch: ['<rootDir>/src/**/**/*.test.(ts|tsx)'],

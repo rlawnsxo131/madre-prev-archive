@@ -13,7 +13,7 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   store?: AppStore;
 }
 
-export function renderWithProviders(
+export default function renderWithProviders(
   ui: React.ReactElement,
   {
     preloadedState = {},
