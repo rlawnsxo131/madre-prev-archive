@@ -8,6 +8,7 @@ module.exports = {
   },
   testEnvironment: 'jsdom',
   moduleFileExtensions: ['js', 'json', 'jsx', 'ts', 'tsx', 'json'],
+  setupFilesAfterEnv: ['<rootDir>/src/__tests__/config/setupTests.ts'],
   moduleNameMapper: {
     '\\.(css|less)$': '<rootDir>/src/__tests__/mocks/styleMock.ts',
     '^uuid$': require.resolve('uuid'),

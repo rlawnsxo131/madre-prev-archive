@@ -50,6 +50,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/react-dom", "npm:18.0.6"],\
             ["@types/react-redux", "npm:7.1.24"],\
             ["@types/react-router-dom", "npm:5.3.3"],\
+            ["@types/testing-library__jest-dom", "npm:5.14.5"],\
             ["@types/uuid", "npm:8.3.4"],\
             ["@typescript-eslint/eslint-plugin", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:5.33.0"],\
             ["@typescript-eslint/parser", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:5.33.0"],\
@@ -10951,6 +10952,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/react-dom", "npm:18.0.6"],\
             ["@types/react-redux", "npm:7.1.24"],\
             ["@types/react-router-dom", "npm:5.3.3"],\
+            ["@types/testing-library__jest-dom", "npm:5.14.5"],\
             ["@types/uuid", "npm:8.3.4"],\
             ["@typescript-eslint/eslint-plugin", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:5.33.0"],\
             ["@typescript-eslint/parser", "virtual:c7ed6cd496d7f18c713abbe3f6e4685d415c75bdd94d897d89091d6273dd0d0a0a9d415d5d41b2f32dfd72c7220276d8f0d47d8528f015f8d3066733f620cd1f#npm:5.33.0"],\
