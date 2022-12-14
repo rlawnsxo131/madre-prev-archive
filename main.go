@@ -1,24 +1,30 @@
 package main
 
 import (
-	"github.com/rlawnsxo131/madre-server-v3/external/datastore/rdb"
-	"github.com/rlawnsxo131/madre-server-v3/external/engine"
+	"log"
+
+	"github.com/rlawnsxo131/madre-server-v3/core/datastore/rdb"
+	"github.com/rlawnsxo131/madre-server-v3/core/engine"
 	"github.com/rlawnsxo131/madre-server-v3/lib/env"
 	"github.com/rlawnsxo131/madre-server-v3/lib/logger"
 )
 
 func main() {
-	db, err := rdb.DatabaseInstance()
+	// db, err := rdb.DatabaseInstance()
+	// if err != nil {
+	// 	logger.DefaultLogger().Fatal().Timestamp().Err(err).Send()
+	// }
+	// defer db.DB.Close()
+
+	pool, err := rdb.InitDatabasePool()
 	if err != nil {
-		logger.DefaultLogger().Fatal().Timestamp().Err(err).Send()
+		log.Println(err)
 	}
-	defer db.DB.Close()
-
 	if env.IsLocal() {
-		rdb.ExcuteInitSQL(db.DB)
+		rdb.ExcuteInitSQL(pool)
 	}
 
-	e := engine.NewHTTPEngine(db)
+	e := engine.NewHTTPEngine()
 	e.Start()
 }
 
