@@ -19,6 +19,7 @@ func (ar *authRoute) Register(r chi.Router) {
 	r.Route("/auth", func(r chi.Router) {
 		r.Get("/", ar.Get())
 		r.Delete("/", ar.Delete())
+		r.Post("/google/check", ar.PostGoogleCheck())
 	})
 }
 
@@ -54,4 +55,8 @@ func (ar *authRoute) Delete() http.HandlerFunc {
 			nil,
 		))
 	}
+}
+
+func (ar *authRoute) PostGoogleCheck() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {}
 }

@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/golang-jwt/jwt"
+	"github.com/golang-jwt/jwt/v4"
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v3/lib/env"
@@ -24,7 +24,7 @@ type authTokenClaims struct {
 	UserID    string `json:"user_id"`
 	Username  string `json:"username"`
 	PhotoUrl  string `json:"photo_url"`
-	jwt.StandardClaims
+	jwt.RegisteredClaims
 }
 
 type manager struct{}
@@ -102,17 +102,17 @@ func (m *manager) generateTokens(p *profile) (string, string, error) {
 		}
 
 		if tokenType == ACCESS_TOKEN {
-			claims.StandardClaims = jwt.StandardClaims{
-				ExpiresAt: now.AddDate(0, 0, 1).Unix(),
+			claims.RegisteredClaims = jwt.RegisteredClaims{
+				ExpiresAt: jwt.NewNumericDate(now.AddDate(0, 0, 1)),
 				Issuer:    "madre",
-				IssuedAt:  now.Unix(),
+				IssuedAt:  jwt.NewNumericDate(now),
 			}
 		}
 		if tokenType == REFRESH_TOKEN {
-			claims.StandardClaims = jwt.StandardClaims{
-				ExpiresAt: now.AddDate(0, 0, 30).Unix(),
+			claims.RegisteredClaims = jwt.RegisteredClaims{
+				ExpiresAt: jwt.NewNumericDate(now.AddDate(0, 0, 30)),
 				Issuer:    "madre",
-				IssuedAt:  now.Unix(),
+				IssuedAt:  jwt.NewNumericDate(now),
 			}
 		}
 

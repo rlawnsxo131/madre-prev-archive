@@ -3,7 +3,7 @@ package httpmiddleware
 import (
 	"net/http"
 
-	"github.com/golang-jwt/jwt"
+	"github.com/golang-jwt/jwt/v4"
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v3/core/engine/httpresponse"
 	"github.com/rlawnsxo131/madre-server-v3/lib/logger"
