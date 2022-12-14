@@ -23,7 +23,7 @@ const (
 )
 
 type Writer interface {
-	Write(res *Response)
+	Write(res *response)
 	Error(err error, message ...string)
 	ErrorBadRequest(err error, message ...string)
 	ErrorUnauthorized(err error, message ...string)
@@ -41,7 +41,7 @@ func NewWriter(w http.ResponseWriter, r *http.Request) Writer {
 	return &writer{w, r}
 }
 
-func (wt *writer) Write(res *Response) {
+func (wt *writer) Write(res *response) {
 	jsonRes, err := json.Marshal(res)
 	if err != nil {
 		wt.Error(
