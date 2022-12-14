@@ -1,9 +1,5 @@
 # madre-server-v3
 
-### Now Working Branch
-
-- ddd-refactor
-
 ### Project Stack
 
 - PostgreSQL
