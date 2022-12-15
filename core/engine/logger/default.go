@@ -11,7 +11,7 @@ type defaultLogger struct {
 	add []func(e *zerolog.Event)
 }
 
-func DefaultLogger() *defaultLogger {
+func NewDefaultLogger() *defaultLogger {
 	l := zerolog.New(os.Stdout).With().Logger()
 	return &defaultLogger{
 		l:   &l,

@@ -66,7 +66,7 @@ func (s *httpEngine) Start() {
 		go func() {
 			<-shutdownCtx.Done()
 			if shutdownCtx.Err() == context.DeadlineExceeded {
-				logger.DefaultLogger().Add(func(e *zerolog.Event) {
+				logger.NewDefaultLogger().Add(func(e *zerolog.Event) {
 					e.Str("message", "graceful shutdown timed out.. forcing exit.")
 				}).SendFatal()
 			}
@@ -75,7 +75,7 @@ func (s *httpEngine) Start() {
 		// Trigger graceful shutdown
 		err := s.srv.Shutdown(shutdownCtx)
 		if err != nil {
-			logger.DefaultLogger().Add(func(e *zerolog.Event) {
+			logger.NewDefaultLogger().Add(func(e *zerolog.Event) {
 				e.Err(err)
 			}).SendFatal()
 		}
@@ -83,13 +83,13 @@ func (s *httpEngine) Start() {
 	}()
 
 	// Run the server
-	logger.DefaultLogger().Add(func(e *zerolog.Event) {
+	logger.NewDefaultLogger().Add(func(e *zerolog.Event) {
 		e.Str("message", "going to listen on port "+env.Port())
 	}).SendInfo()
 
 	err := s.srv.ListenAndServe()
 	if err != nil && err != http.ErrServerClosed {
-		logger.DefaultLogger().Add(func(e *zerolog.Event) {
+		logger.NewDefaultLogger().Add(func(e *zerolog.Event) {
 			e.Err(err)
 		}).SendFatal()
 	}

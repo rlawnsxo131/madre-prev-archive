@@ -36,7 +36,7 @@ func InitDatabasePool() (*pgxpool.Pool, error) {
 			env.DatabaseDBName(),
 			env.DatabaseSSLMode(),
 		)
-		logger.DefaultLogger().Add(func(e *zerolog.Event) {
+		logger.NewDefaultLogger().Add(func(e *zerolog.Event) {
 			e.Str("psqlInfo", psqlInfo)
 		}).SendInfo()
 

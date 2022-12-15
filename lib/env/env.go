@@ -59,7 +59,7 @@ func JWTSecretKey() string {
 func getEnv(key string) string {
 	v, ok := os.LookupEnv(key)
 	if !ok {
-		logger.DefaultLogger().Add(func(e *zerolog.Event) {
+		logger.NewDefaultLogger().Add(func(e *zerolog.Event) {
 			e.Err(
 				errors.New(
 					fmt.Sprintf("%s not set", key),

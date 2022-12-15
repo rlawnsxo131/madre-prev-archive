@@ -24,7 +24,7 @@ func main() {
 }
 
 func init() {
-	logger.DefaultLogger().Add(func(e *zerolog.Event) {
+	logger.NewDefaultLogger().Add(func(e *zerolog.Event) {
 		e.Str("message", "init main")
 	}).SendInfo()
 

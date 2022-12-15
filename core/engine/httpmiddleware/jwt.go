@@ -60,7 +60,7 @@ func JWT(next http.Handler) http.Handler {
 							)
 							err = tokenManager.GenerateAndSetCookies(p, w)
 							if err != nil {
-								logger.DefaultLogger().Add(func(e *zerolog.Event) {
+								logger.NewDefaultLogger().Add(func(e *zerolog.Event) {
 									e.Err(err).Str("action", "JWT")
 								}).Send()
 							} else {
@@ -104,7 +104,7 @@ func JWT(next http.Handler) http.Handler {
 					)
 					err = tokenManager.GenerateAndSetCookies(p, w)
 					if err != nil {
-						logger.DefaultLogger().Add(func(e *zerolog.Event) {
+						logger.NewDefaultLogger().Add(func(e *zerolog.Event) {
 							e.Err(err).Str("action", "JWT")
 						}).Send()
 					} else {

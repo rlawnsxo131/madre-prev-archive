@@ -62,7 +62,7 @@ func (u *User) isSupportSocialProvider(provider string) error {
 		provider,
 	)
 	if !isContain {
-		logger.DefaultLogger().Add(func(e *zerolog.Event) {
+		logger.NewDefaultLogger().Add(func(e *zerolog.Event) {
 			e.Str("provider", provider)
 			e.Str("message", "not support provider")
 		}).SendError()
@@ -83,7 +83,7 @@ func validateUsername(username string) error {
 		)
 	}
 	if !match {
-		logger.DefaultLogger().Add(func(e *zerolog.Event) {
+		logger.NewDefaultLogger().Add(func(e *zerolog.Event) {
 			e.Str("username", username)
 			e.Str("message", "username regex validation failed")
 		}).SendError()
