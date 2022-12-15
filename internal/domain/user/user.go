@@ -5,10 +5,8 @@ import (
 	"time"
 
 	"github.com/pkg/errors"
-	"github.com/rlawnsxo131/madre-server-v3/core/engine/logger"
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/common"
 	"github.com/rlawnsxo131/madre-server-v3/utils"
-	"github.com/rs/zerolog"
 )
 
 type User struct {
@@ -62,11 +60,10 @@ func (u *User) isSupportSocialProvider(provider string) error {
 		provider,
 	)
 	if !isContain {
-		logger.NewDefaultLogger().Add(func(e *zerolog.Event) {
-			e.Str("provider", provider)
-			e.Str("message", "not support provider")
-		}).SendError()
-		return common.ErrNotSupportValue
+		return errors.Wrap(
+			common.ErrNotSupportValue,
+			"not support provider",
+		)
 	}
 	return nil
 }
@@ -83,11 +80,11 @@ func validateUsername(username string) error {
 		)
 	}
 	if !match {
-		logger.NewDefaultLogger().Add(func(e *zerolog.Event) {
-			e.Str("username", username)
-			e.Str("message", "username regex validation failed")
-		}).SendError()
-		return common.ErrUnprocessableValue
+		return errors.Wrap(
+			common.ErrUnprocessableValue,
+			"username regex valdiation not matched",
+		)
+
 	}
 	return nil
 }

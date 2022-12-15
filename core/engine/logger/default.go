@@ -26,40 +26,32 @@ func (dl *defaultLogger) Add(f func(e *zerolog.Event)) *defaultLogger {
 
 func (dl *defaultLogger) Send() {
 	e := dl.l.Log().Timestamp()
-
 	for _, f := range dl.add {
 		f(e)
 	}
-
 	e.Send()
 }
 
 func (dl *defaultLogger) SendInfo() {
 	e := dl.l.Info().Timestamp()
-
 	for _, f := range dl.add {
 		f(e)
 	}
-
 	e.Send()
 }
 
 func (dl *defaultLogger) SendError() {
 	e := dl.l.Error().Timestamp()
-
 	for _, f := range dl.add {
 		f(e)
 	}
-
 	e.Send()
 }
 
 func (dl *defaultLogger) SendFatal() {
 	e := dl.l.Fatal().Timestamp()
-
 	for _, f := range dl.add {
 		f(e)
 	}
-
 	e.Send()
 }

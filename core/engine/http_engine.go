@@ -117,6 +117,7 @@ func (e *httpEngine) RegisterHealthRoute() {
 		data := map[string]string{
 			"Method":  r.Method,
 			"Host":    r.Host,
+			"Origin":  r.Header.Get("Origin"),
 			"Path":    r.URL.Path,
 			"Referer": r.Header.Get("Referer"),
 			"Cookies": fmt.Sprint(r.Cookies()),
