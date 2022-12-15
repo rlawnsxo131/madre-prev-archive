@@ -5,17 +5,12 @@ import (
 
 	"github.com/rlawnsxo131/madre-server-v3/core/datastore/rdb"
 	"github.com/rlawnsxo131/madre-server-v3/core/engine"
+	"github.com/rlawnsxo131/madre-server-v3/core/engine/logger"
 	"github.com/rlawnsxo131/madre-server-v3/lib/env"
-	"github.com/rlawnsxo131/madre-server-v3/lib/logger"
+	"github.com/rs/zerolog"
 )
 
 func main() {
-	// db, err := rdb.DatabaseInstance()
-	// if err != nil {
-	// 	logger.DefaultLogger().Fatal().Timestamp().Err(err).Send()
-	// }
-	// defer db.DB.Close()
-
 	pool, err := rdb.InitDatabasePool()
 	if err != nil {
 		log.Println(err)
@@ -29,6 +24,9 @@ func main() {
 }
 
 func init() {
-	logger.DefaultLogger().Info().Timestamp().Msg("init main")
+	logger.DefaultLogger().Add(func(e *zerolog.Event) {
+		e.Str("message", "init main")
+	}).SendInfo()
+
 	env.Load()
 }

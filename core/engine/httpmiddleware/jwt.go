@@ -6,7 +6,9 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v3/core/engine/httpresponse"
-	"github.com/rlawnsxo131/madre-server-v3/lib/logger"
+	"github.com/rlawnsxo131/madre-server-v3/core/engine/logger"
+	"github.com/rs/zerolog"
+
 	"github.com/rlawnsxo131/madre-server-v3/lib/token"
 )
 
@@ -18,6 +20,7 @@ func JWT(next http.Handler) http.Handler {
 		ctx := r.Context()
 		actk, err := r.Cookie(token.ACCESS_TOKEN)
 		tokenManager := token.NewManager()
+
 		if err != nil {
 			if err != http.ErrNoCookie {
 				rw := httpresponse.NewWriter(w, r)
@@ -57,7 +60,9 @@ func JWT(next http.Handler) http.Handler {
 							)
 							err = tokenManager.GenerateAndSetCookies(p, w)
 							if err != nil {
-								logger.DefaultLogger().Err(err).Timestamp().Str("action", "JWT").Send()
+								logger.DefaultLogger().Add(func(e *zerolog.Event) {
+									e.Err(err).Str("action", "JWT")
+								}).Send()
 							} else {
 								ctx = token.SetProfileCtx(ctx, p)
 							}
@@ -99,7 +104,9 @@ func JWT(next http.Handler) http.Handler {
 					)
 					err = tokenManager.GenerateAndSetCookies(p, w)
 					if err != nil {
-						logger.DefaultLogger().Err(err).Timestamp().Str("action", "JWT").Send()
+						logger.DefaultLogger().Add(func(e *zerolog.Event) {
+							e.Err(err).Str("action", "JWT")
+						}).Send()
 					} else {
 						ctx = token.SetProfileCtx(ctx, p)
 					}

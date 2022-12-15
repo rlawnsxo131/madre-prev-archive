@@ -1,10 +1,10 @@
-package httplogger
+package logger
 
 import (
 	"bytes"
 	"context"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net"
 	"net/http"
 	"os"
@@ -16,13 +16,7 @@ import (
 	"github.com/rs/zerolog"
 )
 
-type Logger interface {
-	ReadBody() error
-	Add(f func(e *zerolog.Event))
-	Write(t time.Time)
-}
-
-type logger struct {
+type httpLogger struct {
 	l    *zerolog.Logger
 	r    *http.Request
 	ww   chi_middleware.WrapResponseWriter
@@ -30,9 +24,9 @@ type logger struct {
 	add  []func(e *zerolog.Event)
 }
 
-func NewLogger(r *http.Request, ww chi_middleware.WrapResponseWriter) Logger {
+func NewHTTPLogger(r *http.Request, ww chi_middleware.WrapResponseWriter) *httpLogger {
 	l := zerolog.New(os.Stdout).With().Logger()
-	return &logger{
+	return &httpLogger{
 		l:    &l,
 		r:    r,
 		ww:   ww,
@@ -41,9 +35,9 @@ func NewLogger(r *http.Request, ww chi_middleware.WrapResponseWriter) Logger {
 	}
 }
 
-func (hl *logger) ReadBody() error {
+func (hl *httpLogger) ReadBody() error {
 	if hl.r.Body != nil {
-		body, err := ioutil.ReadAll(hl.r.Body)
+		body, err := io.ReadAll(hl.r.Body)
 		if err != nil {
 			hl.add = append(hl.add, func(e *zerolog.Event) {
 				e.Err(errors.Wrap(err, "read http body error"))
@@ -51,18 +45,18 @@ func (hl *logger) ReadBody() error {
 			return err
 		}
 		hl.body = append(hl.body, body...)
-		hl.r.Body = ioutil.NopCloser(
+		hl.r.Body = io.NopCloser(
 			bytes.NewBuffer(body),
 		)
 	}
 	return nil
 }
 
-func (hl *logger) Add(f func(e *zerolog.Event)) {
+func (hl *httpLogger) Add(f func(e *zerolog.Event)) {
 	hl.add = append(hl.add, f)
 }
 
-func (hl *logger) Write(t time.Time) {
+func (hl *httpLogger) Write(t time.Time) {
 	e := hl.l.Log().Timestamp().
 		Str("requestId", chi_middleware.GetReqID(hl.r.Context())).
 		Dur("elapsed(ms)", time.Since(t)).
@@ -120,14 +114,14 @@ const (
 	KEY_LOGGER_CTX = "KEY_LOGGER_CTX"
 )
 
-func LoggerCtx(ctx context.Context) Logger {
+func HTTPLoggerCtx(ctx context.Context) *httpLogger {
 	v := ctx.Value(KEY_LOGGER_CTX)
-	if v, ok := v.(Logger); ok {
+	if v, ok := v.(*httpLogger); ok {
 		return v
 	}
 	return nil
 }
 
-func SetLoggerCtx(ctx context.Context, hl Logger) context.Context {
+func SetHTTPLoggerCtx(ctx context.Context, hl *httpLogger) context.Context {
 	return context.WithValue(ctx, KEY_LOGGER_CTX, hl)
 }

@@ -1,12 +1,13 @@
 package env
 
 import (
-	"errors"
 	"fmt"
 	"os"
 
 	"github.com/joho/godotenv"
-	"github.com/rlawnsxo131/madre-server-v3/lib/logger"
+	"github.com/pkg/errors"
+	"github.com/rlawnsxo131/madre-server-v3/core/engine/logger"
+	"github.com/rs/zerolog"
 )
 
 func Load() {
@@ -58,11 +59,13 @@ func JWTSecretKey() string {
 func getEnv(key string) string {
 	v, ok := os.LookupEnv(key)
 	if !ok {
-		logger.DefaultLogger().Err(
-			errors.New(
-				fmt.Sprintf("%s not set", key),
-			),
-		).Timestamp().Send()
+		logger.DefaultLogger().Add(func(e *zerolog.Event) {
+			e.Err(
+				errors.New(
+					fmt.Sprintf("%s not set", key),
+				),
+			)
+		}).Send()
 	}
 	return v
 }

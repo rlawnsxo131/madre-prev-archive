@@ -5,7 +5,7 @@
 - PostgreSQL
 - Go
   - go-chi/chi
-  - jmoiron/sqlx
+  - jackc/pgx
   - rs/zerolog
 
 ### Prepare PostgreSQL Database

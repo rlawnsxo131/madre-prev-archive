@@ -13,9 +13,10 @@ import (
 	chi_middleware "github.com/go-chi/chi/v5/middleware"
 	"github.com/rlawnsxo131/madre-server-v3/core/engine/httpmiddleware"
 	"github.com/rlawnsxo131/madre-server-v3/core/engine/httpresponse"
+	"github.com/rlawnsxo131/madre-server-v3/core/engine/logger"
 	apiv1 "github.com/rlawnsxo131/madre-server-v3/internal/api/v1"
 	"github.com/rlawnsxo131/madre-server-v3/lib/env"
-	"github.com/rlawnsxo131/madre-server-v3/lib/logger"
+	"github.com/rs/zerolog"
 )
 
 const (
@@ -65,25 +66,32 @@ func (s *httpEngine) Start() {
 		go func() {
 			<-shutdownCtx.Done()
 			if shutdownCtx.Err() == context.DeadlineExceeded {
-				logger.DefaultLogger().Fatal().
-					Timestamp().Msg("graceful shutdown timed out.. forcing exit.")
+				logger.DefaultLogger().Add(func(e *zerolog.Event) {
+					e.Str("message", "graceful shutdown timed out.. forcing exit.")
+				}).SendFatal()
 			}
 		}()
 
 		// Trigger graceful shutdown
 		err := s.srv.Shutdown(shutdownCtx)
 		if err != nil {
-			logger.DefaultLogger().Fatal().Timestamp().Err(err).Send()
+			logger.DefaultLogger().Add(func(e *zerolog.Event) {
+				e.Err(err)
+			}).SendFatal()
 		}
 		srvCtxCancel()
 	}()
 
 	// Run the server
-	logger.DefaultLogger().Info().
-		Timestamp().Msg("going to listen on port " + env.Port())
+	logger.DefaultLogger().Add(func(e *zerolog.Event) {
+		e.Str("message", "going to listen on port "+env.Port())
+	}).SendInfo()
+
 	err := s.srv.ListenAndServe()
 	if err != nil && err != http.ErrServerClosed {
-		logger.DefaultLogger().Fatal().Timestamp().Err(err).Send()
+		logger.DefaultLogger().Add(func(e *zerolog.Event) {
+			e.Err(err)
+		}).SendFatal()
 	}
 
 	// Wait for server context to be stopped

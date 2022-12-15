@@ -12,8 +12,8 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/jackc/pgx/v5/tracelog"
 	"github.com/pkg/errors"
+	"github.com/rlawnsxo131/madre-server-v3/core/engine/logger"
 	"github.com/rlawnsxo131/madre-server-v3/lib/env"
-	"github.com/rlawnsxo131/madre-server-v3/lib/logger"
 	"github.com/rs/zerolog"
 )
 
@@ -36,8 +36,9 @@ func InitDatabasePool() (*pgxpool.Pool, error) {
 			env.DatabaseDBName(),
 			env.DatabaseSSLMode(),
 		)
-		logger.DefaultLogger().Info().
-			Timestamp().Str("psqlInfo", psqlInfo).Send()
+		logger.DefaultLogger().Add(func(e *zerolog.Event) {
+			e.Str("psqlInfo", psqlInfo)
+		}).SendInfo()
 
 		config, err = pgxpool.ParseConfig(psqlInfo)
 		if err != nil {
