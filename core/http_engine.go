@@ -1,4 +1,4 @@
-package engine
+package core
 
 import (
 	"context"
@@ -11,9 +11,9 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	chi_middleware "github.com/go-chi/chi/v5/middleware"
-	"github.com/rlawnsxo131/madre-server-v3/core/engine/httpmiddleware"
-	"github.com/rlawnsxo131/madre-server-v3/core/engine/httpresponse"
-	"github.com/rlawnsxo131/madre-server-v3/core/engine/logger"
+	"github.com/rlawnsxo131/madre-server-v3/core/httpmiddleware"
+	"github.com/rlawnsxo131/madre-server-v3/core/httpresponse"
+	"github.com/rlawnsxo131/madre-server-v3/core/logger"
 	apiv1 "github.com/rlawnsxo131/madre-server-v3/internal/api/v1"
 	"github.com/rlawnsxo131/madre-server-v3/lib/env"
 	"github.com/rs/zerolog"

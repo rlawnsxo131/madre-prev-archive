@@ -1,9 +1,13 @@
 package token
 
-import "context"
+import (
+	"context"
+
+	"github.com/rlawnsxo131/madre-server-v3/typeutil"
+)
 
 const (
-	KEY_USER_PROFILE_CTX = "KEY_USER_PROFILE_CTX"
+	KEY_USER_PROFILE_CTX = typeutil.ContextStringKey("KEY_USER_PROFILE_CTX")
 )
 
 type profile struct {

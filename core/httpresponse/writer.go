@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/pkg/errors"
-	"github.com/rlawnsxo131/madre-server-v3/core/engine/logger"
+	"github.com/rlawnsxo131/madre-server-v3/core/logger"
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/common"
 	"github.com/rlawnsxo131/madre-server-v3/utils"
 	"github.com/rs/zerolog"
@@ -112,7 +112,7 @@ func (wt *writer) writeError(
 		NewErrorResponse(
 			code,
 			strErr,
-			utils.ParseOtionalString(message...),
+			utils.ParseOptionalString(message...),
 		),
 	)
 	wt.w.WriteHeader(code)

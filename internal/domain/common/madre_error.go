@@ -20,6 +20,6 @@ type MadreError struct {
 func NewMadreError(err error, message ...string) *MadreError {
 	return &MadreError{
 		Err:     err,
-		Message: utils.ParseOtionalString(message...),
+		Message: utils.ParseOptionalString(message...),
 	}
 }

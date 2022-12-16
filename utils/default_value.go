@@ -16,7 +16,7 @@ func IfIsNotExistGetDefaultIntValue(value int, defaultValue int) int {
 	return value
 }
 
-func ParseOtionalString(ss ...string) string {
+func ParseOptionalString(ss ...string) string {
 	var result string
 	if len(ss) > 0 {
 		for _, v := range ss {

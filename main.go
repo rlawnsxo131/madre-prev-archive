@@ -3,9 +3,9 @@ package main
 import (
 	"log"
 
-	"github.com/rlawnsxo131/madre-server-v3/core/datastore/rdb"
-	"github.com/rlawnsxo131/madre-server-v3/core/engine"
-	"github.com/rlawnsxo131/madre-server-v3/core/engine/logger"
+	"github.com/rlawnsxo131/madre-server-v3/core"
+	"github.com/rlawnsxo131/madre-server-v3/core/logger"
+	"github.com/rlawnsxo131/madre-server-v3/datastore/rdb"
 	"github.com/rlawnsxo131/madre-server-v3/lib/env"
 	"github.com/rs/zerolog"
 )
@@ -19,7 +19,7 @@ func main() {
 		rdb.ExcuteInitSQL(pool)
 	}
 
-	e := engine.NewHTTPEngine()
+	e := core.NewHTTPEngine()
 	e.Start()
 }
 

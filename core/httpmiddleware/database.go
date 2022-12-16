@@ -1,16 +1,15 @@
 package httpmiddleware
 
 import (
-	"context"
 	"net/http"
 
-	"github.com/rlawnsxo131/madre-server-v3/core/datastore/rdb"
-	"github.com/rlawnsxo131/madre-server-v3/core/engine/httpresponse"
+	"github.com/rlawnsxo131/madre-server-v3/core/httpresponse"
+	"github.com/rlawnsxo131/madre-server-v3/datastore/rdb"
 )
 
 func DatabasePool(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		conn, err := rdb.Conn(r.Context())
+		conn, err := rdb.Conn()
 		if err != nil {
 			rw := httpresponse.NewWriter(w, r)
 			rw.Error(err)
@@ -18,9 +17,8 @@ func DatabasePool(next http.Handler) http.Handler {
 		}
 		defer conn.Release()
 
-		dbCtx := context.WithValue(
+		dbCtx := rdb.SetConnCtx(
 			r.Context(),
-			rdb.KEY_DATABASE_CONN_CTX,
 			conn,
 		)
 

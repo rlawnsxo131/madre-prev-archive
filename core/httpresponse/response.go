@@ -12,7 +12,7 @@ func NewResponse(code int, data any, message ...string) *response {
 	return &response{
 		Code:    code,
 		Data:    data,
-		Message: utils.ParseOtionalString(message...),
+		Message: utils.ParseOptionalString(message...),
 	}
 }
 
