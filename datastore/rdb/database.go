@@ -55,7 +55,9 @@ func InitDatabasePool() (*pgxpool.Pool, error) {
 		}
 
 		config.ConnConfig.Tracer = &tracelog.TraceLog{
-			Logger:   pgxlog.NewLogger(zerolog.New(os.Stdout).With().Timestamp().Logger()),
+			Logger: pgxlog.NewLogger(
+				zerolog.New(os.Stdout).With().Timestamp().Logger(),
+			),
 			LogLevel: logLevel,
 		}
 

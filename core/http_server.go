@@ -25,14 +25,14 @@ const (
 	IDLE_TIMEOUT  = time.Second * 60
 )
 
-type httpEngine struct {
+type httpServer struct {
 	r   *chi.Mux
 	srv *http.Server
 }
 
-func NewHTTPEngine() *httpEngine {
+func NewHTTPServer() *httpServer {
 	r := chi.NewRouter()
-	e := &httpEngine{
+	e := &httpServer{
 		r: r,
 		srv: &http.Server{
 			Addr: "0.0.0.0:" + env.Port(),
@@ -49,7 +49,9 @@ func NewHTTPEngine() *httpEngine {
 	return e
 }
 
-func (s *httpEngine) Start() {
+func (s *httpServer) Start() {
+	l := logger.NewDefaultLogger()
+
 	// Server run context
 	srvCtx, srvCtxCancel := context.WithCancel(context.Background())
 
@@ -66,7 +68,7 @@ func (s *httpEngine) Start() {
 		go func() {
 			<-shutdownCtx.Done()
 			if shutdownCtx.Err() == context.DeadlineExceeded {
-				logger.NewDefaultLogger().Add(func(e *zerolog.Event) {
+				l.Add(func(e *zerolog.Event) {
 					e.Str("message", "graceful shutdown timed out.. forcing exit.")
 				}).SendFatal()
 			}
@@ -75,7 +77,7 @@ func (s *httpEngine) Start() {
 		// Trigger graceful shutdown
 		err := s.srv.Shutdown(shutdownCtx)
 		if err != nil {
-			logger.NewDefaultLogger().Add(func(e *zerolog.Event) {
+			l.Add(func(e *zerolog.Event) {
 				e.Err(err)
 			}).SendFatal()
 		}
@@ -83,13 +85,12 @@ func (s *httpEngine) Start() {
 	}()
 
 	// Run the server
-	logger.NewDefaultLogger().Add(func(e *zerolog.Event) {
+	l.Add(func(e *zerolog.Event) {
 		e.Str("message", "going to listen on port "+env.Port())
 	}).SendInfo()
-
 	err := s.srv.ListenAndServe()
 	if err != nil && err != http.ErrServerClosed {
-		logger.NewDefaultLogger().Add(func(e *zerolog.Event) {
+		l.Add(func(e *zerolog.Event) {
 			e.Err(err)
 		}).SendFatal()
 	}
@@ -98,7 +99,7 @@ func (s *httpEngine) Start() {
 	<-srvCtx.Done()
 }
 
-func (e *httpEngine) RegisterHTTPMiddleware() {
+func (e *httpServer) RegisterHTTPMiddleware() {
 	e.r.Use(chi_middleware.RequestID)
 	e.r.Use(chi_middleware.RealIP)
 	e.r.Use(httpmiddleware.Logger)
@@ -111,7 +112,20 @@ func (e *httpEngine) RegisterHTTPMiddleware() {
 	e.r.Use(chi_middleware.Compress(5))
 }
 
-func (e *httpEngine) RegisterHealthRoute() {
+func (e *httpServer) RegisterHealthRoute() {
+	e.r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		rw := httpresponse.NewWriter(w, r)
+		data := map[string]string{
+			"hello": "world",
+		}
+		rw.Write(
+			httpresponse.NewResponse(
+				http.StatusOK,
+				data,
+			),
+		)
+	})
+
 	e.r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
 		rw := httpresponse.NewWriter(w, r)
 		data := map[string]string{
@@ -131,7 +145,7 @@ func (e *httpEngine) RegisterHealthRoute() {
 	})
 }
 
-func (e *httpEngine) RegisterAPIRoute() {
+func (e *httpServer) RegisterAPIRoute() {
 	e.r.Route("/api", func(r chi.Router) {
 		r.Route("/v1", func(r chi.Router) {
 			apiv1.NewAuthRoute().Register(r)

@@ -19,7 +19,7 @@ func main() {
 		rdb.ExcuteInitSQL(pool)
 	}
 
-	e := core.NewHTTPEngine()
+	e := core.NewHTTPServer()
 	e.Start()
 }
 
