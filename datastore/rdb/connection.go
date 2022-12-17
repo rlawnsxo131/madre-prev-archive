@@ -5,11 +5,12 @@ import (
 
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/pkg/errors"
-	"github.com/rlawnsxo131/madre-server-v3/typeutil"
 )
 
+type key int
+
 const (
-	KEY_DATABASE_CONN_CTX = typeutil.ContextStringKey("KEY_DATABASE_CONN_CTX")
+	KEY_DATABASE_CONN_CTX key = iota
 )
 
 func Conn() (*pgxpool.Conn, error) {

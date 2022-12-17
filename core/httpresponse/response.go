@@ -1,6 +1,6 @@
 package httpresponse
 
-import "github.com/rlawnsxo131/madre-server-v3/utils"
+import "github.com/rlawnsxo131/madre-server-v3/lib/utils"
 
 type response struct {
 	Code    int    `json:"code"`

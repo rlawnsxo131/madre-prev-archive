@@ -4,5 +4,4 @@ import (
 	"testing"
 )
 
-func Test_generateTokens_Success(t *testing.T) {
-}
+func Test_generateTokens_Success(t *testing.T) {}

@@ -2,12 +2,12 @@ package token
 
 import (
 	"context"
-
-	"github.com/rlawnsxo131/madre-server-v3/typeutil"
 )
 
+type key int
+
 const (
-	KEY_USER_PROFILE_CTX = typeutil.ContextStringKey("KEY_USER_PROFILE_CTX")
+	KEY_USER_PROFILE_CTX key = iota
 )
 
 type profile struct {
@@ -29,5 +29,9 @@ func ProfileCtx(ctx context.Context) *profile {
 }
 
 func SetProfileCtx(ctx context.Context, p *profile) context.Context {
-	return context.WithValue(ctx, KEY_USER_PROFILE_CTX, p)
+	return context.WithValue(
+		ctx,
+		KEY_USER_PROFILE_CTX,
+		p,
+	)
 }

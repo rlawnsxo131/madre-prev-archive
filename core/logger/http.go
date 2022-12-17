@@ -13,7 +13,6 @@ import (
 
 	chi_middleware "github.com/go-chi/chi/v5/middleware"
 	"github.com/pkg/errors"
-	"github.com/rlawnsxo131/madre-server-v3/typeutil"
 	"github.com/rs/zerolog"
 )
 
@@ -111,8 +110,10 @@ func clientIP(h http.Header) string {
 	return ""
 }
 
+type key int
+
 const (
-	KEY_LOGGER_CTX = typeutil.ContextStringKey("KEY_LOGGER_CTX")
+	KEY_LOGGER_CTX key = iota
 )
 
 func HTTPLoggerCtx(ctx context.Context) *httpLogger {

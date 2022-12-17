@@ -3,7 +3,7 @@ package mapper
 import (
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/user"
 	"github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/persistence/model"
-	"github.com/rlawnsxo131/madre-server-v3/utils"
+	"github.com/rlawnsxo131/madre-server-v3/lib/utils"
 )
 
 type UserMapper struct{}

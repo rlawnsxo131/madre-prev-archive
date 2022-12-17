@@ -8,7 +8,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v3/core/logger"
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/common"
-	"github.com/rlawnsxo131/madre-server-v3/utils"
+	"github.com/rlawnsxo131/madre-server-v3/lib/utils"
 	"github.com/rs/zerolog"
 )
 
