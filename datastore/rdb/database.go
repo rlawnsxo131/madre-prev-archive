@@ -12,8 +12,8 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/jackc/pgx/v5/tracelog"
 	"github.com/pkg/errors"
-	"github.com/rlawnsxo131/madre-server-v3/core/logger"
 	"github.com/rlawnsxo131/madre-server-v3/lib/env"
+	"github.com/rlawnsxo131/madre-server-v3/lib/logger"
 	"github.com/rs/zerolog"
 )
 

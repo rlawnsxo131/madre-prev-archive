@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/rlawnsxo131/madre-server-v3/core/httpresponse"
-	"github.com/rlawnsxo131/madre-server-v3/core/token"
+	"github.com/rlawnsxo131/madre-server-v3/lib/token"
+	"github.com/rlawnsxo131/madre-server-v3/server/httpresponse"
 )
 
 type authRoute struct{}

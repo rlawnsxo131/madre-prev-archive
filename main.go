@@ -3,10 +3,10 @@ package main
 import (
 	"log"
 
-	"github.com/rlawnsxo131/madre-server-v3/core"
-	"github.com/rlawnsxo131/madre-server-v3/core/logger"
 	"github.com/rlawnsxo131/madre-server-v3/datastore/rdb"
 	"github.com/rlawnsxo131/madre-server-v3/lib/env"
+	"github.com/rlawnsxo131/madre-server-v3/lib/logger"
+	"github.com/rlawnsxo131/madre-server-v3/server"
 	"github.com/rs/zerolog"
 )
 
@@ -21,7 +21,7 @@ func main() {
 		rdb.ExcuteInitSQL(pool)
 	}
 
-	e := core.NewHTTPServer()
+	e := server.NewHTTPServer()
 	e.Start()
 }
 

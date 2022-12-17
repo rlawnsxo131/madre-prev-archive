@@ -6,15 +6,15 @@ import (
 	"time"
 
 	chi_middleware "github.com/go-chi/chi/v5/middleware"
-	"github.com/rlawnsxo131/madre-server-v3/core/httpresponse"
-	"github.com/rlawnsxo131/madre-server-v3/core/logger"
+	"github.com/rlawnsxo131/madre-server-v3/server/httplogger"
+	"github.com/rlawnsxo131/madre-server-v3/server/httpresponse"
 )
 
 func Logger(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		t := time.Now()
 		ww := chi_middleware.NewWrapResponseWriter(w, r.ProtoMajor)
-		hl := logger.NewHTTPLogger(r, ww)
+		hl := httplogger.NewHTTPLogger(r, ww)
 		defer hl.Write(t)
 
 		err := hl.ReadBody()
@@ -28,7 +28,7 @@ func Logger(next http.Handler) http.Handler {
 			return
 		}
 
-		loggerCtx := logger.SetHTTPLoggerCtx(
+		loggerCtx := httplogger.SetHTTPLoggerCtx(
 			r.Context(),
 			hl,
 		)
