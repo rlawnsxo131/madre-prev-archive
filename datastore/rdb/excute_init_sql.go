@@ -21,6 +21,8 @@ func ExcuteInitSQL(pool *pgxpool.Pool) error {
 	if err != nil {
 		return err
 	}
+	defer tx.Conn().Close(ctx)
+
 	queries := strings.Split(string(file), "\n\n")
 	for _, query := range queries {
 		if _, err := tx.Exec(ctx, query); err != nil {

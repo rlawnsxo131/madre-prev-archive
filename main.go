@@ -15,6 +15,8 @@ func main() {
 	if err != nil {
 		log.Println(err)
 	}
+	defer pool.Close()
+
 	if env.IsLocal() {
 		rdb.ExcuteInitSQL(pool)
 	}

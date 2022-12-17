@@ -45,7 +45,7 @@ func InitDatabasePool() (*pgxpool.Pool, error) {
 			return
 		}
 		config.MaxConns = 10
-		config.MinConns = 5
+		config.MinConns = 0
 		config.MaxConnLifetime = time.Minute * 10
 		config.MaxConnIdleTime = time.Second * 10
 
