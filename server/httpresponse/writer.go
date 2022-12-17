@@ -48,7 +48,7 @@ func (wt *writer) Write(res *response) {
 func (wt *writer) Error(err error, msg ...string) {
 	wt.writeError(
 		err,
-		parseError(err),
+		getErrorCode(err),
 		msg...,
 	)
 }
@@ -99,28 +99,24 @@ func (wt *writer) writeError(err error, code int, msg ...string) {
 	})
 }
 
-func parseError(err error) int {
-	var code int
-
+func getErrorCode(err error) int {
 	switch {
 	case errors.Is(err, sql.ErrNoRows):
-		code = http.StatusNotFound
+		return http.StatusNotFound
 
 	case errors.Is(err, common.ErrMissingRequiredValue):
-		code = http.StatusBadRequest
+		return http.StatusBadRequest
 
 	case errors.Is(err, common.ErrNotSupportValue):
-		code = http.StatusBadRequest
+		return http.StatusBadRequest
 
 	case errors.Is(err, common.ErrConflictUniqValue):
-		code = http.StatusConflict
+		return http.StatusConflict
 
 	case errors.Is(err, common.ErrUnprocessableValue):
-		code = http.StatusUnprocessableEntity
+		return http.StatusUnprocessableEntity
 
 	default:
-		code = http.StatusInternalServerError
+		return http.StatusInternalServerError
 	}
-
-	return code
 }
