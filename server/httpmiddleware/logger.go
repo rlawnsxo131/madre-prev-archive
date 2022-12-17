@@ -6,8 +6,10 @@ import (
 	"time"
 
 	chi_middleware "github.com/go-chi/chi/v5/middleware"
+	"github.com/rlawnsxo131/madre-server-v3/lib/logger"
 	"github.com/rlawnsxo131/madre-server-v3/server/httplogger"
 	"github.com/rlawnsxo131/madre-server-v3/server/httpresponse"
+	"github.com/rs/zerolog"
 )
 
 func Logger(next http.Handler) http.Handler {
@@ -19,12 +21,15 @@ func Logger(next http.Handler) http.Handler {
 
 		err := hl.ReadBody()
 		if err != nil {
-			res, _ := json.Marshal(map[string]any{
-				"code":  http.StatusInternalServerError,
-				"error": httpresponse.HTTP_ERROR_INTERNAL_SERVER_ERROR,
-			})
+			res, _ := json.Marshal(httpresponse.NewErrorResponse(
+				http.StatusInternalServerError,
+			))
 			ww.WriteHeader(http.StatusInternalServerError)
 			ww.Write(res)
+
+			logger.NewDefaultLogger().Add(func(e *zerolog.Event) {
+				e.Err(err)
+			}).SendError()
 			return
 		}
 
