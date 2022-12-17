@@ -2,7 +2,6 @@ package httpresponse
 
 import (
 	"net/http"
-	"reflect"
 
 	"github.com/rlawnsxo131/madre-server-v3/lib/utils"
 )
@@ -24,18 +23,17 @@ func NewResponse(code int, data any) *response {
 type errorResponse struct {
 	Code   int            `json:"code"`
 	Status string         `json:"status"`
-	Error  map[string]any `json:"error"`
+	Error  map[string]any `json:"error,omitempty"`
 }
 
 func NewErrorResponse(code int, msg ...string) *errorResponse {
-	m := map[string]any{
-		"message": utils.ParseOptionalString(msg...),
-	}
-	for k, v := range m {
-		if reflect.ValueOf(v).IsZero() {
-			delete(m, k)
+	var m map[string]any
+	if len(msg) > 0 {
+		m = map[string]any{
+			"message": utils.ParseOptionalString(msg...),
 		}
 	}
+
 	return &errorResponse{
 		Code:   code,
 		Status: http.StatusText(code),
