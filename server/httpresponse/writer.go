@@ -11,22 +11,12 @@ import (
 	"github.com/rs/zerolog"
 )
 
-type Writer interface {
-	Write(res *response)
-	Error(err error, msg ...string)
-	ErrorBadRequest(err error, msg ...string)
-	ErrorUnauthorized(err error, msg ...string)
-	ErrorForbidden(err error, msg ...string)
-	ErrorNotFound(err error, msg ...string)
-	writeError(err error, code int, msg ...string)
-}
-
 type writer struct {
 	w http.ResponseWriter
 	r *http.Request
 }
 
-func NewWriter(w http.ResponseWriter, r *http.Request) Writer {
+func NewWriter(w http.ResponseWriter, r *http.Request) *writer {
 	return &writer{w, r}
 }
 
