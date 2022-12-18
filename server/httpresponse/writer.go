@@ -30,7 +30,7 @@ func (wt *writer) Write(res *response) {
 	}
 	wt.w.WriteHeader(res.Code)
 	wt.w.Write(jsonRes)
-	httplogger.HTTPLoggerCtx(wt.r.Context()).Add(func(e *zerolog.Event) {
+	httplogger.GetLogEntry(wt.r.Context()).Add(func(e *zerolog.Event) {
 		e.RawJSON("response", jsonRes)
 	})
 }
@@ -84,7 +84,7 @@ func (wt *writer) writeError(err error, code int, msg ...string) {
 	)
 	wt.w.WriteHeader(code)
 	wt.w.Write(res)
-	httplogger.HTTPLoggerCtx(wt.r.Context()).Add(func(e *zerolog.Event) {
+	httplogger.GetLogEntry(wt.r.Context()).Add(func(e *zerolog.Event) {
 		e.Err(err).RawJSON("response", res)
 	})
 }

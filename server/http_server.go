@@ -3,6 +3,7 @@ package server
 import (
 	"context"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"os/signal"
@@ -11,9 +12,11 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	chi_middleware "github.com/go-chi/chi/v5/middleware"
+	"github.com/rlawnsxo131/madre-server-v3/datastore/rdb"
 	apiv1 "github.com/rlawnsxo131/madre-server-v3/internal/api/v1"
 	"github.com/rlawnsxo131/madre-server-v3/lib/env"
 	"github.com/rlawnsxo131/madre-server-v3/lib/logger"
+	"github.com/rlawnsxo131/madre-server-v3/server/httplogger"
 	"github.com/rlawnsxo131/madre-server-v3/server/httpmiddleware"
 	"github.com/rlawnsxo131/madre-server-v3/server/httpresponse"
 	"github.com/rs/zerolog"
@@ -50,7 +53,7 @@ func NewHTTPServer() *httpServer {
 }
 
 func (s *httpServer) Start() {
-	l := logger.NewDefaultLogger()
+	le := logger.DefaultLogger.NewLogEntry()
 
 	// Server run context
 	srvCtx, srvCtxCancel := context.WithCancel(context.Background())
@@ -68,7 +71,7 @@ func (s *httpServer) Start() {
 		go func() {
 			<-shutdownCtx.Done()
 			if shutdownCtx.Err() == context.DeadlineExceeded {
-				l.Add(func(e *zerolog.Event) {
+				le.Add(func(e *zerolog.Event) {
 					e.Str("message", "graceful shutdown timed out.. forcing exit.")
 				}).SendFatal()
 			}
@@ -77,7 +80,7 @@ func (s *httpServer) Start() {
 		// Trigger graceful shutdown
 		err := s.srv.Shutdown(shutdownCtx)
 		if err != nil {
-			l.Add(func(e *zerolog.Event) {
+			le.Add(func(e *zerolog.Event) {
 				e.Err(err)
 			}).SendFatal()
 		}
@@ -85,12 +88,12 @@ func (s *httpServer) Start() {
 	}()
 
 	// Run the server
-	l.Add(func(e *zerolog.Event) {
+	le.Add(func(e *zerolog.Event) {
 		e.Str("message", "going to listen on port "+env.Port())
 	}).SendInfo()
 	err := s.srv.ListenAndServe()
 	if err != nil && err != http.ErrServerClosed {
-		l.Add(func(e *zerolog.Event) {
+		le.Add(func(e *zerolog.Event) {
 			e.Err(err)
 		}).SendFatal()
 	}
@@ -102,7 +105,7 @@ func (s *httpServer) Start() {
 func (e *httpServer) RegisterHTTPMiddleware() {
 	e.r.Use(chi_middleware.RequestID)
 	e.r.Use(chi_middleware.RealIP)
-	e.r.Use(httpmiddleware.Logger)
+	e.r.Use(httpmiddleware.Logger(httplogger.DefaultHTTPLogger))
 	e.r.Use(httpmiddleware.Recovery)
 	e.r.Use(httpmiddleware.AllowHost)
 	e.r.Use(httpmiddleware.Cors)
@@ -123,6 +126,12 @@ func (e *httpServer) RegisterHealthRoute() {
 			"Referer": r.Header.Get("Referer"),
 			"Cookies": fmt.Sprint(r.Cookies()),
 		}
+
+		le := httplogger.GetLogEntry(r.Context())
+		conn, _ := rdb.ConnCtx(r.Context())
+
+		log.Println("le", le)
+		log.Println("conn", conn)
 		rw.Write(
 			httpresponse.NewResponse(
 				http.StatusOK,

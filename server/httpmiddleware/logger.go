@@ -12,35 +12,37 @@ import (
 	"github.com/rs/zerolog"
 )
 
-func Logger(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		t := time.Now()
-		ww := chi_middleware.NewWrapResponseWriter(w, r.ProtoMajor)
-		hl := httplogger.NewHTTPLogger(r, ww)
-		defer hl.Write(t)
+func Logger(hl *httplogger.HTTPLogger) func(next http.Handler) http.Handler {
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			t := time.Now()
+			ww := chi_middleware.NewWrapResponseWriter(w, r.ProtoMajor)
+			hle := hl.NewLogEntry(r, ww)
+			defer hle.Write(t)
 
-		err := hl.ReadBody()
-		if err != nil {
-			res, _ := json.Marshal(httpresponse.NewErrorResponse(
-				http.StatusInternalServerError,
-			))
-			ww.WriteHeader(http.StatusInternalServerError)
-			ww.Write(res)
+			err := hle.ReadBody()
+			if err != nil {
+				res, _ := json.Marshal(httpresponse.NewErrorResponse(
+					http.StatusInternalServerError,
+				))
+				ww.WriteHeader(http.StatusInternalServerError)
+				ww.Write(res)
 
-			logger.NewDefaultLogger().Add(func(e *zerolog.Event) {
-				e.Err(err)
-			}).SendError()
-			return
-		}
+				logger.DefaultLogger.NewLogEntry().Add(func(e *zerolog.Event) {
+					e.Err(err)
+				}).SendError()
+				return
+			}
 
-		loggerCtx := httplogger.SetHTTPLoggerCtx(
-			r.Context(),
-			hl,
-		)
+			loggerCtx := httplogger.SetLogEntry(
+				r.Context(),
+				hle,
+			)
 
-		next.ServeHTTP(
-			ww,
-			r.WithContext(loggerCtx),
-		)
-	})
+			next.ServeHTTP(
+				ww,
+				r.WithContext(loggerCtx),
+			)
+		})
+	}
 }

@@ -1,56 +1,69 @@
 package logger
 
 import (
+	"io"
 	"os"
 
 	"github.com/rs/zerolog"
 )
 
+var DefaultLogger = NewDefaultLogger(os.Stdout)
+
 type defaultLogger struct {
-	l   *zerolog.Logger
-	add []func(e *zerolog.Event)
+	l *zerolog.Logger
 }
 
-func NewDefaultLogger() *defaultLogger {
-	l := zerolog.New(os.Stdout).With().Logger()
+func NewDefaultLogger(w io.Writer) *defaultLogger {
+	l := zerolog.New(w).With().Logger()
 	return &defaultLogger{
-		l:   &l,
+		l: &l,
+	}
+}
+
+func (dl *defaultLogger) NewLogEntry() *defaultLogEntry {
+	return &defaultLogEntry{
+		l:   dl.l,
 		add: []func(e *zerolog.Event){},
 	}
 }
 
-func (dl *defaultLogger) Add(f func(e *zerolog.Event)) *defaultLogger {
-	dl.add = append(dl.add, f)
-	return dl
+type defaultLogEntry struct {
+	l   *zerolog.Logger
+	add []func(e *zerolog.Event)
 }
 
-func (dl *defaultLogger) Send() {
-	e := dl.l.Log().Timestamp()
-	for _, f := range dl.add {
+func (dle *defaultLogEntry) Add(f func(e *zerolog.Event)) *defaultLogEntry {
+	dle.add = append(dle.add, f)
+	return dle
+}
+
+func (dle *defaultLogEntry) Send() {
+	e := dle.l.Log().Timestamp()
+	for _, f := range dle.add {
 		f(e)
 	}
 	e.Send()
 }
 
-func (dl *defaultLogger) SendInfo() {
-	e := dl.l.Info().Timestamp()
-	for _, f := range dl.add {
+func (dle *defaultLogEntry) SendInfo() {
+	e := dle.l.Info().Timestamp()
+	for _, f := range dle.add {
 		f(e)
 	}
 	e.Send()
 }
 
-func (dl *defaultLogger) SendError() {
-	e := dl.l.Error().Timestamp()
-	for _, f := range dl.add {
+func (dle *defaultLogEntry) SendError() {
+	e := dle.l.Error().Timestamp()
+	for _, f := range dle.add {
 		f(e)
 	}
 	e.Send()
 }
 
-func (dl *defaultLogger) SendFatal() {
-	e := dl.l.Fatal().Timestamp()
-	for _, f := range dl.add {
+func (dle *defaultLogEntry) SendFatal() {
+	e := dle.l.Fatal().Timestamp()
+	for _, f := range dle.add {
 		f(e)
 	}
 	e.Send()
