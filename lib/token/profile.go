@@ -20,7 +20,7 @@ func NewProfile(userId, username, photoUrl string) *profile {
 	return &profile{userId, username, photoUrl}
 }
 
-func ProfileCtx(ctx context.Context) *profile {
+func Profile(ctx context.Context) *profile {
 	v := ctx.Value(KEY_USER_PROFILE_CTX)
 	if v, ok := v.(*profile); ok {
 		return v
@@ -28,7 +28,7 @@ func ProfileCtx(ctx context.Context) *profile {
 	return nil
 }
 
-func SetProfileCtx(ctx context.Context, p *profile) context.Context {
+func SetProfile(ctx context.Context, p *profile) context.Context {
 	return context.WithValue(
 		ctx,
 		KEY_USER_PROFILE_CTX,

@@ -26,7 +26,7 @@ func (ar *authRoute) Register(r chi.Router) {
 func (ar *authRoute) Get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := httpresponse.NewWriter(w, r)
-		p := token.ProfileCtx(r.Context())
+		p := token.Profile(r.Context())
 
 		rw.Write(
 			httpresponse.NewResponse(
@@ -40,7 +40,7 @@ func (ar *authRoute) Get() http.HandlerFunc {
 func (ar *authRoute) Delete() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := httpresponse.NewWriter(w, r)
-		p := token.ProfileCtx(r.Context())
+		p := token.Profile(r.Context())
 
 		if p == nil {
 			rw.ErrorUnauthorized(

@@ -76,7 +76,7 @@ const (
 	KEY_LOG_ENTRY_CTX key = iota
 )
 
-func GetLogEntry(ctx context.Context) HTTPLogEntry {
+func LogEntry(ctx context.Context) HTTPLogEntry {
 	v := ctx.Value(KEY_LOG_ENTRY_CTX)
 	if v, ok := v.(HTTPLogEntry); ok {
 		return v
