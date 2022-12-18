@@ -3,7 +3,6 @@ package server
 import (
 	"context"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"os/signal"
@@ -12,7 +11,6 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	chi_middleware "github.com/go-chi/chi/v5/middleware"
-	"github.com/rlawnsxo131/madre-server-v3/datastore/rdb"
 	apiv1 "github.com/rlawnsxo131/madre-server-v3/internal/api/v1"
 	"github.com/rlawnsxo131/madre-server-v3/lib/env"
 	"github.com/rlawnsxo131/madre-server-v3/lib/logger"
@@ -126,12 +124,6 @@ func (e *httpServer) RegisterHealthRoute() {
 			"Referer": r.Header.Get("Referer"),
 			"Cookies": fmt.Sprint(r.Cookies()),
 		}
-
-		le := httplogger.GetLogEntry(r.Context())
-		conn, _ := rdb.ConnCtx(r.Context())
-
-		log.Println("le", le)
-		log.Println("conn", conn)
 		rw.Write(
 			httpresponse.NewResponse(
 				http.StatusOK,
