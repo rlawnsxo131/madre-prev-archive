@@ -17,10 +17,10 @@ func Logger(hl *httplogger.HTTPLogger) func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			t := time.Now()
 			ww := chi_middleware.NewWrapResponseWriter(w, r.ProtoMajor)
-			hle := hl.NewLogEntry(r, ww)
-			defer hle.Write(t)
+			le := hl.NewLogEntry(r, ww)
+			defer le.Write(t)
 
-			err := hle.ReadBody()
+			err := le.ReadBody()
 			if err != nil {
 				res, _ := json.Marshal(httpresponse.NewErrorResponse(
 					http.StatusInternalServerError,
@@ -36,7 +36,7 @@ func Logger(hl *httplogger.HTTPLogger) func(next http.Handler) http.Handler {
 
 			loggerCtx := httplogger.SetLogEntry(
 				r.Context(),
-				hle,
+				le,
 			)
 
 			next.ServeHTTP(

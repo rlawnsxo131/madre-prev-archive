@@ -27,43 +27,43 @@ type httpLogEntry struct {
 	add  []func(e *zerolog.Event)
 }
 
-func (hle *httpLogEntry) ReadBody() error {
-	if hle.r.Body != nil {
-		body, err := io.ReadAll(hle.r.Body)
+func (le *httpLogEntry) ReadBody() error {
+	if le.r.Body != nil {
+		body, err := io.ReadAll(le.r.Body)
 		if err != nil {
-			hle.add = append(hle.add, func(e *zerolog.Event) {
+			le.add = append(le.add, func(e *zerolog.Event) {
 				e.Err(errors.Wrap(err, "read http body error"))
 			})
 			return err
 		}
-		hle.body = append(hle.body, body...)
-		hle.r.Body = io.NopCloser(
+		le.body = append(le.body, body...)
+		le.r.Body = io.NopCloser(
 			bytes.NewBuffer(body),
 		)
 	}
 	return nil
 }
 
-func (hle *httpLogEntry) Add(f func(e *zerolog.Event)) {
-	hle.add = append(hle.add, f)
+func (le *httpLogEntry) Add(f func(e *zerolog.Event)) {
+	le.add = append(le.add, f)
 }
 
-func (hle *httpLogEntry) Write(t time.Time) {
-	e := hle.l.Log().Timestamp().
-		Str("requestId", chi_middleware.GetReqID(hle.r.Context())).
+func (le *httpLogEntry) Write(t time.Time) {
+	e := le.l.Log().Timestamp().
+		Str("requestId", chi_middleware.GetReqID(le.r.Context())).
 		Dur("elapsed(ms)", time.Since(t)).
-		Str("protocol", hle.r.Proto).
-		Str("method", hle.r.Method).
-		Str("uri", hle.r.URL.RequestURI()).
-		Bytes("body", hle.body).
-		Str("origin", hle.r.Header.Get("Origin")).
-		Str("referer", hle.r.Referer()).
-		Int("status", hle.ww.Status()).
-		Str("agent", hle.r.UserAgent()).
-		Str("remoteAddr", hle.r.RemoteAddr).
-		Str("cookies", fmt.Sprint(hle.r.Cookies()))
+		Str("protocol", le.r.Proto).
+		Str("method", le.r.Method).
+		Str("uri", le.r.URL.RequestURI()).
+		Bytes("body", le.body).
+		Str("origin", le.r.Header.Get("Origin")).
+		Str("referer", le.r.Referer()).
+		Int("status", le.ww.Status()).
+		Str("agent", le.r.UserAgent()).
+		Str("remoteAddr", le.r.RemoteAddr).
+		Str("cookies", fmt.Sprint(le.r.Cookies()))
 
-	for _, f := range hle.add {
+	for _, f := range le.add {
 		f(e)
 	}
 
