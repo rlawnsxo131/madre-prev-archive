@@ -50,10 +50,12 @@ func (ar *authRoute) Delete() http.HandlerFunc {
 		}
 		token.NewManager().ResetCookies(w)
 
-		rw.Write(httpresponse.NewResponse(
-			http.StatusOK,
-			nil,
-		))
+		rw.Write(
+			httpresponse.NewResponse(
+				http.StatusOK,
+				nil,
+			),
+		)
 	}
 }
 
