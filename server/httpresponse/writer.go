@@ -37,8 +37,8 @@ func (wt *writer) Write(res *response) {
 }
 
 func (wt *writer) Error(err error, res *errorResponse) {
-	jsonRes, err := json.Marshal(res)
-	if err == nil {
+	jsonRes, parseErr := json.Marshal(res)
+	if parseErr == nil {
 		jsonRes = json.RawMessage(
 			`{"code": 500, "status": "Internal Server Error", "error": {"message": "response json parse error"}}`,
 		)
@@ -50,5 +50,8 @@ func (wt *writer) Error(err error, res *errorResponse) {
 	wt.w.Write(jsonRes)
 	httplogger.LogEntry(wt.r.Context()).Add(func(e *zerolog.Event) {
 		e.Err(err).RawJSON("response", jsonRes)
+		if parseErr != nil {
+			e.Err(parseErr)
+		}
 	})
 }
