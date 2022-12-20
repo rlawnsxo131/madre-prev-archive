@@ -12,7 +12,12 @@ func DatabasePool(next http.Handler) http.Handler {
 		conn, err := rdb.Conn()
 		if err != nil {
 			rw := httpresponse.NewWriter(w, r)
-			rw.Error(err)
+			rw.Error(
+				err,
+				httpresponse.NewErrorResponse(
+					http.StatusInternalServerError,
+				),
+			)
 			return
 		}
 		defer conn.Release()

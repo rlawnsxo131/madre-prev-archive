@@ -1,6 +1,9 @@
 package common
 
 import (
+	"database/sql"
+	"net/http"
+
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v3/lib/utils"
 )
@@ -14,12 +17,40 @@ var (
 
 type MadreError struct {
 	Err     error
+	Code    int
 	Message string
 }
 
 func NewMadreError(err error, message ...string) *MadreError {
 	return &MadreError{
 		Err:     err,
+		Code:    getHttpStatusCodeFor(err),
 		Message: utils.ParseOptionalString(message...),
 	}
+}
+
+func getHttpStatusCodeFor(err error) int {
+	var code int
+
+	switch {
+	case errors.Is(err, sql.ErrNoRows):
+		code = http.StatusNotFound
+
+	case errors.Is(err, ErrMissingRequiredValue):
+		code = http.StatusBadRequest
+
+	case errors.Is(err, ErrNotSupportValue):
+		code = http.StatusBadRequest
+
+	case errors.Is(err, ErrConflictUniqValue):
+		code = http.StatusConflict
+
+	case errors.Is(err, ErrUnprocessableValue):
+		code = http.StatusUnprocessableEntity
+
+	default:
+		code = http.StatusInternalServerError
+	}
+
+	return code
 }

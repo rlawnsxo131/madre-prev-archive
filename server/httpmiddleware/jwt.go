@@ -25,6 +25,9 @@ func JWT(next http.Handler) http.Handler {
 				rw := httpresponse.NewWriter(w, r)
 				rw.Error(
 					errors.Wrap(err, "JWT get Access_token error"),
+					httpresponse.NewErrorResponse(
+						http.StatusInternalServerError,
+					),
 				)
 				return
 			}
@@ -41,6 +44,9 @@ func JWT(next http.Handler) http.Handler {
 							rw := httpresponse.NewWriter(w, r)
 							rw.Error(
 								errors.Wrap(err, "JWT get Refresh_token error"),
+								httpresponse.NewErrorResponse(
+									http.StatusInternalServerError,
+								),
 							)
 							return
 						}
@@ -85,6 +91,9 @@ func JWT(next http.Handler) http.Handler {
 					rw := httpresponse.NewWriter(w, r)
 					rw.Error(
 						errors.Wrap(err, "JWT get Refresh_token error"),
+						httpresponse.NewErrorResponse(
+							http.StatusInternalServerError,
+						),
 					)
 					return
 				}

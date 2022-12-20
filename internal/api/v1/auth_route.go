@@ -43,8 +43,11 @@ func (ar *authRoute) Delete() http.HandlerFunc {
 		p := token.Profile(r.Context())
 
 		if p == nil {
-			rw.ErrorUnauthorized(
+			rw.Error(
 				errors.New("not found token profile"),
+				httpresponse.NewErrorResponse(
+					http.StatusUnauthorized,
+				),
 			)
 			return
 		}

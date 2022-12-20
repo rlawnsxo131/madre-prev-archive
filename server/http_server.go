@@ -117,6 +117,7 @@ func (e *httpServer) RegisterHealthRoute() {
 	e.r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
 		rw := httpresponse.NewWriter(w, r)
 		data := map[string]string{
+			"Proto":   r.Proto,
 			"Method":  r.Method,
 			"Host":    r.Host,
 			"Origin":  r.Header.Get("Origin"),

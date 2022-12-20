@@ -27,11 +27,9 @@ type errorResponse struct {
 }
 
 func NewErrorResponse(code int, msg ...string) *errorResponse {
-	var m map[string]any
+	m := map[string]any{}
 	if len(msg) > 0 {
-		m = map[string]any{
-			"message": utils.ParseOptionalString(msg...),
-		}
+		m["message"] = utils.ParseOptionalString(msg...)
 	}
 
 	return &errorResponse{
