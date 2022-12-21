@@ -38,7 +38,7 @@ func (wt *writer) Write(res *response) {
 
 func (wt *writer) Error(err error, res *errorResponse) {
 	jsonRes, parseErr := json.Marshal(res)
-	if parseErr == nil {
+	if parseErr != nil {
 		jsonRes = json.RawMessage(
 			`{"code": 500, "status": "Internal Server Error", "error": {"message": "response json parse error"}}`,
 		)
