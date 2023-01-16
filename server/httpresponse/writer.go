@@ -45,7 +45,6 @@ func (wt *writer) Error(err error, res *errorResponse) {
 		wt.w.WriteHeader(http.StatusInternalServerError)
 	} else {
 		wt.w.WriteHeader(res.Code)
-
 	}
 	wt.w.Write(jsonRes)
 	httplogger.LogEntry(wt.r.Context()).Add(func(e *zerolog.Event) {
