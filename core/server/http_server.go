@@ -15,7 +15,6 @@ import (
 	"github.com/rlawnsxo131/madre-server-v3/core/server/httplogger"
 	"github.com/rlawnsxo131/madre-server-v3/core/server/httpmiddleware"
 	"github.com/rlawnsxo131/madre-server-v3/core/server/httpresponse"
-	apiv1 "github.com/rlawnsxo131/madre-server-v3/internal/api/v1"
 	"github.com/rlawnsxo131/madre-server-v3/lib/env"
 	"github.com/rs/zerolog"
 )
@@ -33,7 +32,7 @@ type httpServer struct {
 
 func NewHTTPServer() *httpServer {
 	r := chi.NewRouter()
-	e := &httpServer{
+	s := &httpServer{
 		r: r,
 		srv: &http.Server{
 			Addr: "0.0.0.0:" + env.Port(),
@@ -44,10 +43,7 @@ func NewHTTPServer() *httpServer {
 			Handler:      r,
 		},
 	}
-	e.RegisterHTTPMiddleware()
-	e.RegisterHealthRoute()
-	e.RegisterAPIRoute()
-	return e
+	return s
 }
 
 func (s *httpServer) Start() {
@@ -100,21 +96,21 @@ func (s *httpServer) Start() {
 	<-srvCtx.Done()
 }
 
-func (e *httpServer) RegisterHTTPMiddleware() {
-	e.r.Use(chi_middleware.RequestID)
-	e.r.Use(chi_middleware.RealIP)
-	e.r.Use(httpmiddleware.Logger(httplogger.DefaultHTTPLogger))
-	e.r.Use(httpmiddleware.Recovery)
-	e.r.Use(httpmiddleware.AllowHost)
-	e.r.Use(httpmiddleware.Cors)
-	e.r.Use(httpmiddleware.DatabasePool)
-	e.r.Use(httpmiddleware.JWT)
-	e.r.Use(httpmiddleware.ContentTypeToJson)
-	e.r.Use(chi_middleware.Compress(5))
+func (s *httpServer) RegisterHTTPMiddleware() {
+	s.r.Use(chi_middleware.RequestID)
+	s.r.Use(chi_middleware.RealIP)
+	s.r.Use(httpmiddleware.Logger(httplogger.DefaultHTTPLogger))
+	s.r.Use(httpmiddleware.Recovery)
+	s.r.Use(httpmiddleware.AllowHost)
+	s.r.Use(httpmiddleware.Cors)
+	s.r.Use(httpmiddleware.DatabasePool)
+	s.r.Use(httpmiddleware.JWT)
+	s.r.Use(httpmiddleware.ContentTypeToJson)
+	s.r.Use(chi_middleware.Compress(5))
 }
 
-func (e *httpServer) RegisterHealthRoute() {
-	e.r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
+func (s *httpServer) RegisterHealthRoute() {
+	s.r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
 		data := map[string]string{
 			"Proto":   r.Proto,
 			"Method":  r.Method,
@@ -133,10 +129,6 @@ func (e *httpServer) RegisterHealthRoute() {
 	})
 }
 
-func (e *httpServer) RegisterAPIRoute() {
-	e.r.Route("/api", func(r chi.Router) {
-		r.Route("/v1", func(r chi.Router) {
-			apiv1.NewAuthRoute().Register(r)
-		})
-	})
+func (s *httpServer) Route() *chi.Mux {
+	return s.r
 }
