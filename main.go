@@ -21,8 +21,8 @@ func main() {
 		rdb.ExcuteInitSQL(pool)
 	}
 
-	e := server.NewHTTPServer()
-	e.Start()
+	s := server.NewHTTPServer()
+	s.Start()
 }
 
 func init() {

@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"net/http"
 
+	"github.com/jackc/pgx/v5"
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v3/lib/utils"
 )
@@ -30,27 +31,26 @@ func NewMadreError(err error, message ...string) *MadreError {
 }
 
 func getHttpStatusCodeFor(err error) int {
-	var code int
-
 	switch {
 	case errors.Is(err, sql.ErrNoRows):
-		code = http.StatusNotFound
+		return http.StatusNotFound
+
+	case errors.Is(err, pgx.ErrNoRows):
+		return http.StatusNotFound
 
 	case errors.Is(err, ErrMissingRequiredValue):
-		code = http.StatusBadRequest
+		return http.StatusBadRequest
 
 	case errors.Is(err, ErrNotSupportValue):
-		code = http.StatusBadRequest
+		return http.StatusBadRequest
 
 	case errors.Is(err, ErrConflictUniqValue):
-		code = http.StatusConflict
+		return http.StatusConflict
 
 	case errors.Is(err, ErrUnprocessableValue):
-		code = http.StatusUnprocessableEntity
+		return http.StatusUnprocessableEntity
 
 	default:
-		code = http.StatusInternalServerError
+		return http.StatusInternalServerError
 	}
-
-	return code
 }
