@@ -11,8 +11,7 @@ func DatabasePool(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		conn, err := rdb.Conn()
 		if err != nil {
-			rw := httpresponse.NewWriter(w, r)
-			rw.Error(
+			httpresponse.NewWriter(w, r).Error(
 				err,
 				httpresponse.NewErrorResponse(
 					http.StatusInternalServerError,

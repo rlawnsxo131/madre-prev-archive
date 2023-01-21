@@ -115,7 +115,6 @@ func (e *httpServer) RegisterHTTPMiddleware() {
 
 func (e *httpServer) RegisterHealthRoute() {
 	e.r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
-		rw := httpresponse.NewWriter(w, r)
 		data := map[string]string{
 			"Proto":   r.Proto,
 			"Method":  r.Method,
@@ -125,7 +124,7 @@ func (e *httpServer) RegisterHealthRoute() {
 			"Referer": r.Header.Get("Referer"),
 			"Cookies": fmt.Sprint(r.Cookies()),
 		}
-		rw.Write(
+		httpresponse.NewWriter(w, r).Write(
 			httpresponse.NewResponse(
 				http.StatusOK,
 				data,
