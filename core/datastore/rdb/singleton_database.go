@@ -12,13 +12,13 @@ var (
 )
 
 type singletonDatabase struct {
-	Conn *pgxpool.Conn
+	pool *pgxpool.Pool
 }
 
-func Database(conn *pgxpool.Conn) *singletonDatabase {
+func Database(p *pgxpool.Pool) *singletonDatabase {
 	onceSingletonDatabase.Do(func() {
 		database = &singletonDatabase{
-			Conn: conn,
+			pool: p,
 		}
 	})
 	return database
