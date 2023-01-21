@@ -12,13 +12,13 @@ var (
 )
 
 type singletonDatabase struct {
-	pool *pgxpool.Pool
+	p *pgxpool.Pool
 }
 
 func Database(p *pgxpool.Pool) *singletonDatabase {
 	onceSingletonDatabase.Do(func() {
 		database = &singletonDatabase{
-			pool: p,
+			p,
 		}
 	})
 	return database
