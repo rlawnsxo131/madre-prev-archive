@@ -6,7 +6,7 @@ import (
 
 	"github.com/jackc/pgx/v5"
 	"github.com/pkg/errors"
-	"github.com/rlawnsxo131/madre-server-v3/lib/utils"
+	"github.com/rlawnsxo131/madre-server-v3/core/utils"
 )
 
 var (

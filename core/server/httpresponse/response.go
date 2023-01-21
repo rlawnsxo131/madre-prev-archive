@@ -3,7 +3,7 @@ package httpresponse
 import (
 	"net/http"
 
-	"github.com/rlawnsxo131/madre-server-v3/lib/utils"
+	"github.com/rlawnsxo131/madre-server-v3/core/utils"
 )
 
 type response struct {

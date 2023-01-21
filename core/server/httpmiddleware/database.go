@@ -3,8 +3,8 @@ package httpmiddleware
 import (
 	"net/http"
 
-	"github.com/rlawnsxo131/madre-server-v3/datastore/rdb"
-	"github.com/rlawnsxo131/madre-server-v3/server/httpresponse"
+	"github.com/rlawnsxo131/madre-server-v3/core/datastore/rdb"
+	"github.com/rlawnsxo131/madre-server-v3/core/server/httpresponse"
 )
 
 func DatabasePool(next http.Handler) http.Handler {

@@ -11,7 +11,7 @@ import (
 )
 
 func ExcuteInitSQL(pool *pgxpool.Pool) error {
-	file, err := os.ReadFile("./datastore/rdb/init.sql")
+	file, err := os.ReadFile("./core/datastore/rdb/init.sql")
 	if err != nil {
 		panic(err)
 	}
