@@ -8,7 +8,7 @@ import (
 )
 
 type UserCommandHandler interface {
-	CreateForSocial(ctx context.Context, cmd *CreateUserCommand) (*user.User, *common.MadreError)
+	CreateForSocial(ctx context.Context, cmd *CreateUserCommand) (*user.User, *common.DomainError)
 }
 
 type userCommandHandler struct {
@@ -26,14 +26,14 @@ func NewUserCommandHandler(
 	}
 }
 
-func (uch *userCommandHandler) CreateForSocial(ctx context.Context, cmd *CreateUserCommand) (*user.User, *common.MadreError) {
+func (uch *userCommandHandler) CreateForSocial(ctx context.Context, cmd *CreateUserCommand) (*user.User, *common.DomainError) {
 	u, err := user.NewUserWithoutId(
 		cmd.Email,
 		cmd.Username,
 		cmd.PhotoUrl,
 	)
 	if err != nil {
-		return nil, common.NewMadreError(err)
+		return nil, common.NewDomainError(err)
 	}
 
 	// socialAccount is essential when creating a new user
@@ -43,7 +43,7 @@ func (uch *userCommandHandler) CreateForSocial(ctx context.Context, cmd *CreateU
 		cmd.Provider,
 	)
 	if err != nil {
-		return nil, common.NewMadreError(err)
+		return nil, common.NewDomainError(err)
 	}
 
 	if err := uch.userDomainService.CheckConflictUsername(u.Username); err != nil {

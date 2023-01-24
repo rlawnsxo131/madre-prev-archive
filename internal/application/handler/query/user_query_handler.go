@@ -6,7 +6,7 @@ import (
 )
 
 type UserQueryHandler interface {
-	Get(q *GetUserQuery) (*user.User, *common.MadreError)
+	Get(q *GetUserQuery) (*user.User, *common.DomainError)
 }
 
 type userQueryHandler struct {
@@ -24,18 +24,18 @@ func NewUserQueryHandler(
 	}
 }
 
-func (uqr *userQueryHandler) Get(q *GetUserQuery) (*user.User, *common.MadreError) {
+func (uqr *userQueryHandler) Get(q *GetUserQuery) (*user.User, *common.DomainError) {
 	u, err := uqr.userQueryRepository.FindById(q.UserId)
 	if err != nil {
-		return nil, common.NewMadreError(err)
+		return nil, common.NewDomainError(err)
 	}
 
 	sa, err := uqr.userSocialQueryRepository.FindByUserId(q.UserId)
 	if err != nil {
-		return nil, common.NewMadreError(err)
+		return nil, common.NewDomainError(err)
 	}
 	if err := u.SetSocialAccount(sa); err != nil {
-		return nil, common.NewMadreError(err)
+		return nil, common.NewDomainError(err)
 	}
 
 	return u, nil

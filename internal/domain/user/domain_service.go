@@ -5,8 +5,8 @@ import (
 )
 
 type UserDomainService interface {
-	CheckConflictUsername(username string) *common.MadreError
-	CheckConflictSocialAccount(socialId, provider string) *common.MadreError
+	CheckConflictUsername(username string) *common.DomainError
+	CheckConflictSocialAccount(socialId, provider string) *common.DomainError
 }
 
 type userDomainService struct {
@@ -24,13 +24,13 @@ func NewUserDomainService(
 	}
 }
 
-func (uds *userDomainService) CheckConflictUsername(username string) *common.MadreError {
+func (uds *userDomainService) CheckConflictUsername(username string) *common.DomainError {
 	exist, err := uds.userQueryRepository.ExistsByUsername(username)
 	if err != nil {
-		return common.NewMadreError(err)
+		return common.NewDomainError(err)
 	}
 	if exist {
-		return common.NewMadreError(
+		return common.NewDomainError(
 			common.ErrConflictUniqValue,
 			"중복된 이름입니다.",
 		)
@@ -38,16 +38,16 @@ func (uds *userDomainService) CheckConflictUsername(username string) *common.Mad
 	return nil
 }
 
-func (uds *userDomainService) CheckConflictSocialAccount(socialId, provider string) *common.MadreError {
+func (uds *userDomainService) CheckConflictSocialAccount(socialId, provider string) *common.DomainError {
 	exist, err := uds.socialAccountQueryRepository.ExistsBySocialIdAndProvider(
 		socialId,
 		provider,
 	)
 	if err != nil {
-		return common.NewMadreError(err)
+		return common.NewDomainError(err)
 	}
 	if exist {
-		return common.NewMadreError(
+		return common.NewDomainError(
 			common.ErrConflictUniqValue,
 			"이미 가입한 소셜 계정입니다.",
 		)

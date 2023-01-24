@@ -12,18 +12,18 @@ import (
 var (
 	ErrMissingRequiredValue = errors.New("missing required value")
 	ErrNotSupportValue      = errors.New("not support value")
-	ErrConflictUniqValue    = errors.New("conflict uniq value")
+	ErrConflictUniqValue    = errors.New("conflict unique value")
 	ErrUnprocessableValue   = errors.New("unprocessable value")
 )
 
-type MadreError struct {
+type DomainError struct {
 	Err     error
 	Code    int
 	Message string
 }
 
-func NewMadreError(err error, message ...string) *MadreError {
-	return &MadreError{
+func NewDomainError(err error, message ...string) *DomainError {
+	return &DomainError{
 		Err:     err,
 		Code:    getHttpStatusCodeFor(err),
 		Message: utils.ParseOptionalString(message...),
