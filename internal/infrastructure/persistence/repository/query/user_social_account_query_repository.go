@@ -4,7 +4,7 @@ import "github.com/rlawnsxo131/madre-server-v3/internal/domain/user"
 
 type userSocialAccountQueryRepository struct{}
 
-func NewSocialAccountQueryRepository() user.UserSocialAccountQueryRepository {
+func NewUserSocialAccountQueryRepository() user.UserSocialAccountQueryRepository {
 	return &userSocialAccountQueryRepository{}
 }
 
