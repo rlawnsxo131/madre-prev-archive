@@ -19,13 +19,13 @@ func NewUserRoute() *userRoute {
 }
 
 func (ur *userRoute) Register(r chi.Router) {
-	r.Route("/user", func(r chi.Router) {
-		r.Get("/profile", ur.GetProfile())
-		r.Get("/me", ur.GetMe())
+	r.Route("/me", func(r chi.Router) {
+		r.Get("/", ur.Get())
+		r.Get("/info", ur.GetInfo())
 	})
 }
 
-func (ur *userRoute) GetProfile() http.HandlerFunc {
+func (ur *userRoute) Get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := httpresponse.NewWriter(w, r)
 		p := token.Profile(r.Context())
@@ -36,10 +36,11 @@ func (ur *userRoute) GetProfile() http.HandlerFunc {
 				p,
 			),
 		)
+
 	}
 }
 
-func (ur *userRoute) GetMe() http.HandlerFunc {
+func (ur *userRoute) GetInfo() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := httpresponse.NewWriter(w, r)
 		p := token.Profile(r.Context())

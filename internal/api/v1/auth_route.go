@@ -17,9 +17,13 @@ func NewAuthRoute() *authRoute {
 
 func (ar *authRoute) Register(r chi.Router) {
 	r.Route("/auth", func(r chi.Router) {
-		r.Delete("/", ar.Delete())
 		r.Post("/google/check", ar.PostGoogleCheck())
+		r.Delete("/", ar.Delete())
 	})
+}
+
+func (ar *authRoute) PostGoogleCheck() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {}
 }
 
 func (ar *authRoute) Delete() http.HandlerFunc {
@@ -40,13 +44,9 @@ func (ar *authRoute) Delete() http.HandlerFunc {
 
 		rw.Write(
 			httpresponse.NewResponse(
-				http.StatusOK,
+				http.StatusNoContent,
 				nil,
 			),
 		)
 	}
-}
-
-func (ar *authRoute) PostGoogleCheck() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {}
 }
