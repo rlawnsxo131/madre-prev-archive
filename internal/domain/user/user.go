@@ -16,7 +16,7 @@ type User struct {
 	PhotoUrl      string             `json:"photoUrl,omitempty"`
 	CreatedAt     time.Time          `json:"createdAt"`
 	UpdatedAt     time.Time          `json:"updatedAt"`
-	SocialAccount *UserSocialAccount `json:"userSocialAccount,omitempty"`
+	SocialAccount *UserSocialAccount `json:"socialAccount,omitempty"`
 }
 
 func NewUserWithoutId(email, username, photoUrl string) (*User, error) {
