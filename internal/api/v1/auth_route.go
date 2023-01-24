@@ -1,10 +1,10 @@
 package apiv1
 
 import (
-	"errors"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v3/core/server/httpresponse"
 	"github.com/rlawnsxo131/madre-server-v3/core/token"
 )
