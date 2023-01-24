@@ -10,22 +10,22 @@ import (
 	"github.com/rlawnsxo131/madre-server-v3/internal/application/handler/query"
 )
 
-type userRoute struct {
+type meRoute struct {
 	userQueryhandler query.UserQueryHandler
 }
 
-func NewUserRoute() *userRoute {
-	return &userRoute{}
+func NewMeRoute() *meRoute {
+	return &meRoute{}
 }
 
-func (ur *userRoute) Register(r chi.Router) {
+func (mr *meRoute) Register(r chi.Router) {
 	r.Route("/me", func(r chi.Router) {
-		r.Get("/", ur.Get())
-		r.Get("/info", ur.GetInfo())
+		r.Get("/", mr.Get())
+		r.Get("/info", mr.GetInfo())
 	})
 }
 
-func (ur *userRoute) Get() http.HandlerFunc {
+func (mr *meRoute) Get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := httpresponse.NewWriter(w, r)
 		p := token.Profile(r.Context())
@@ -40,7 +40,7 @@ func (ur *userRoute) Get() http.HandlerFunc {
 	}
 }
 
-func (ur *userRoute) GetInfo() http.HandlerFunc {
+func (mr *meRoute) GetInfo() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := httpresponse.NewWriter(w, r)
 		p := token.Profile(r.Context())
@@ -55,7 +55,7 @@ func (ur *userRoute) GetInfo() http.HandlerFunc {
 			return
 		}
 
-		u, err := ur.userQueryhandler.Get(&query.GetUserQuery{
+		u, err := mr.userQueryhandler.Get(&query.GetUserQuery{
 			UserId: p.UserId,
 		})
 
