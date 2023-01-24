@@ -6,7 +6,7 @@ import (
 )
 
 type UserQueryHandler interface {
-	Get(userId string) (*user.User, *common.MadreError)
+	Get(q *GetUserQuery) (*user.User, *common.MadreError)
 }
 
 type userQueryHandler struct {
@@ -24,13 +24,13 @@ func NewUserQueryHandler(
 	}
 }
 
-func (uqr *userQueryHandler) Get(userId string) (*user.User, *common.MadreError) {
-	u, err := uqr.userQueryRepository.FindById(userId)
+func (uqr *userQueryHandler) Get(q *GetUserQuery) (*user.User, *common.MadreError) {
+	u, err := uqr.userQueryRepository.FindById(q.UserId)
 	if err != nil {
 		return nil, common.NewMadreError(err)
 	}
 
-	sa, err := uqr.userSocialQueryRepository.FindByUserId(userId)
+	sa, err := uqr.userSocialQueryRepository.FindByUserId(q.UserId)
 	if err != nil {
 		return nil, common.NewMadreError(err)
 	}

@@ -11,19 +11,23 @@ const (
 )
 
 type profile struct {
-	UserID   string `json:"user_id"`
+	UserId   string `json:"user_id"`
 	Username string `json:"username"`
 	PhotoUrl string `json:"photo_url"`
 }
 
 func NewProfile(userId, username, photoUrl string) *profile {
-	return &profile{userId, username, photoUrl}
+	return &profile{
+		userId,
+		username,
+		photoUrl,
+	}
 }
 
 func Profile(ctx context.Context) *profile {
 	v := ctx.Value(KEY_USER_PROFILE_CTX)
-	if v, ok := v.(*profile); ok {
-		return v
+	if p, ok := v.(*profile); ok {
+		return p
 	}
 	return nil
 }

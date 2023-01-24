@@ -1,16 +1,13 @@
 package apiv1
 
 import (
+	"errors"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/rlawnsxo131/madre-server-v3/core/server/httpresponse"
 	"github.com/rlawnsxo131/madre-server-v3/core/token"
 	"github.com/rlawnsxo131/madre-server-v3/internal/application/handler/query"
-)
-
-const (
-	ME_KIND_PROFILE = "profile"
 )
 
 type userRoute struct {
@@ -46,7 +43,20 @@ func (ur *userRoute) GetMe() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := httpresponse.NewWriter(w, r)
 		p := token.Profile(r.Context())
-		u, err := ur.userQueryhandler.Get(p.UserID)
+
+		if p == nil {
+			rw.Error(
+				errors.New("not found token profile"),
+				httpresponse.NewErrorResponse(
+					http.StatusUnauthorized,
+				),
+			)
+			return
+		}
+
+		u, err := ur.userQueryhandler.Get(&query.GetUserQuery{
+			UserId: p.UserId,
+		})
 
 		if err != nil {
 			rw.Error(
@@ -58,6 +68,7 @@ func (ur *userRoute) GetMe() http.HandlerFunc {
 			)
 			return
 		}
+
 		rw.Write(
 			httpresponse.NewResponse(
 				http.StatusOK,

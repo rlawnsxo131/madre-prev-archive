@@ -21,7 +21,7 @@ var (
 
 type authTokenClaims struct {
 	TokenUUID string `json:"token_uuid"`
-	UserID    string `json:"user_id"`
+	UserId    string `json:"user_id"`
 	Username  string `json:"username"`
 	PhotoUrl  string `json:"photo_url"`
 	jwt.RegisteredClaims
@@ -96,7 +96,7 @@ func (m *manager) generateTokens(p *profile) (string, string, error) {
 	for _, tokenType := range tokenTypes {
 		claims := &authTokenClaims{
 			TokenUUID: uuid.NewString(),
-			UserID:    p.UserID,
+			UserId:    p.UserId,
 			Username:  p.Username,
 			PhotoUrl:  p.PhotoUrl,
 		}

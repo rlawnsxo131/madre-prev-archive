@@ -57,7 +57,7 @@ func JWT(next http.Handler) http.Handler {
 							tokenManager.ResetCookies(w)
 						} else {
 							p := token.NewProfile(
-								claims.UserID,
+								claims.UserId,
 								claims.Username,
 								claims.PhotoUrl,
 							)
@@ -74,7 +74,7 @@ func JWT(next http.Handler) http.Handler {
 				}
 			} else {
 				p := token.NewProfile(
-					claims.UserID,
+					claims.UserId,
 					claims.Username,
 					claims.PhotoUrl,
 				)
@@ -103,7 +103,7 @@ func JWT(next http.Handler) http.Handler {
 					tokenManager.ResetCookies(w)
 				} else {
 					p := token.NewProfile(
-						claims.UserID,
+						claims.UserId,
 						claims.Username,
 						claims.PhotoUrl,
 					)
