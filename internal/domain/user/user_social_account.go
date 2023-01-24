@@ -4,7 +4,7 @@ const (
 	SOCIAL_PROVIDER_GOOGLE = "GOOGLE"
 )
 
-type SocialAccount struct {
+type UserSocialAccount struct {
 	Id             string `json:"id"`
 	UserId         string `json:"userId"`
 	SocialId       string `json:"socialId"`

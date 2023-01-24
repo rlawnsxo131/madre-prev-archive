@@ -17,24 +17,9 @@ func NewAuthRoute() *authRoute {
 
 func (ar *authRoute) Register(r chi.Router) {
 	r.Route("/auth", func(r chi.Router) {
-		r.Get("/", ar.Get())
 		r.Delete("/", ar.Delete())
 		r.Post("/google/check", ar.PostGoogleCheck())
 	})
-}
-
-func (ar *authRoute) Get() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		rw := httpresponse.NewWriter(w, r)
-		p := token.Profile(r.Context())
-
-		rw.Write(
-			httpresponse.NewResponse(
-				http.StatusOK,
-				p,
-			),
-		)
-	}
 }
 
 func (ar *authRoute) Delete() http.HandlerFunc {

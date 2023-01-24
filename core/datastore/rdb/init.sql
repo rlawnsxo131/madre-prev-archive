@@ -52,7 +52,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS user_ix_username ON public.user USING btree (u
 --
 -- user_social_account
 --
-CREATE TABLE IF NOT EXISTS public.social_account (
+CREATE TABLE IF NOT EXISTS public.user_social_account (
   id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
   user_id uuid NOT NULL,
   social_id character varying(255) NOT NULL,
@@ -63,8 +63,8 @@ CREATE TABLE IF NOT EXISTS public.social_account (
   PRIMARY KEY (id)
 );
 
-CREATE UNIQUE INDEX IF NOT EXISTS social_account_ix_user_id ON public.social_account USING btree (user_id);
-CREATE UNIQUE INDEX IF NOT EXISTS social_account_ix_social_id_provider ON public.social_account USING btree (social_id, provider);
+CREATE UNIQUE INDEX IF NOT EXISTS user_social_account_ix_user_id ON public.user_social_account USING btree (user_id);
+CREATE UNIQUE INDEX IF NOT EXISTS user_social_account_ix_social_id_provider ON public.user_social_account USING btree (social_id, provider);
 
 -- ALTER TABLE public.social_account OWNER TO madre;
 

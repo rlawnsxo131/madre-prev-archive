@@ -11,16 +11,16 @@ type UserDomainService interface {
 
 type userDomainService struct {
 	userQueryRepository          UserQueryRepository
-	socialaccountQueryRepository SocialAccountQueryRepository
+	socialAccountQueryRepository UserSocialAccountQueryRepository
 }
 
 func NewUserDomainService(
 	userQueryRepository UserQueryRepository,
-	socialaccountQueryRepository SocialAccountQueryRepository,
+	userSocialAccountQueryRepository UserSocialAccountQueryRepository,
 ) UserDomainService {
 	return &userDomainService{
 		userQueryRepository,
-		socialaccountQueryRepository,
+		userSocialAccountQueryRepository,
 	}
 }
 
@@ -39,7 +39,7 @@ func (uds *userDomainService) CheckConflictUsername(username string) *common.Mad
 }
 
 func (uds *userDomainService) CheckConflictSocialAccount(socialId, provider string) *common.MadreError {
-	exist, err := uds.socialaccountQueryRepository.ExistsBySocialIdAndProvider(
+	exist, err := uds.socialAccountQueryRepository.ExistsBySocialIdAndProvider(
 		socialId,
 		provider,
 	)

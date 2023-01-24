@@ -8,9 +8,9 @@ import (
 	"github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/persistence/model"
 )
 
-type SocialAccountMapper struct{}
+type UserSocialAccountMapper struct{}
 
-func (sam SocialAccountMapper) MapToModel(sa *user.SocialAccount) *model.SocialAccount {
+func (sam UserSocialAccountMapper) MapToModel(sa *user.UserSocialAccount) *model.SocialAccount {
 	return &model.SocialAccount{
 		Id:             sa.Id,
 		UserId:         sa.UserId,
@@ -21,8 +21,8 @@ func (sam SocialAccountMapper) MapToModel(sa *user.SocialAccount) *model.SocialA
 	}
 }
 
-func (sam SocialAccountMapper) MapToEntity(sa *model.SocialAccount) *user.SocialAccount {
-	return &user.SocialAccount{
+func (sam UserSocialAccountMapper) MapToEntity(sa *model.SocialAccount) *user.UserSocialAccount {
+	return &user.UserSocialAccount{
 		Id:             sa.Id,
 		UserId:         sa.UserId,
 		SocialId:       sa.SocialId,

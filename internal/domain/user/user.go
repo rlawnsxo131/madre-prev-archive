@@ -10,13 +10,13 @@ import (
 )
 
 type User struct {
-	Id            string         `json:"id"`
-	Email         string         `json:"email"`
-	Username      string         `json:"username"`
-	PhotoUrl      string         `json:"photoUrl,omitempty"`
-	CreatedAt     time.Time      `json:"createdAt"`
-	UpdatedAt     time.Time      `json:"updatedAt"`
-	SocialAccount *SocialAccount `json:"socialAccount,omitempty"`
+	Id            string             `json:"id"`
+	Email         string             `json:"email"`
+	Username      string             `json:"username"`
+	PhotoUrl      string             `json:"photoUrl,omitempty"`
+	CreatedAt     time.Time          `json:"createdAt"`
+	UpdatedAt     time.Time          `json:"updatedAt"`
+	SocialAccount *UserSocialAccount `json:"userSocialAccount,omitempty"`
 }
 
 func NewUserWithoutId(email, username, photoUrl string) (*User, error) {
@@ -41,7 +41,7 @@ func (u *User) SetNewSocialAccount(socialId, socialUsername, provider string) er
 	if err := u.isSupportSocialProvider(provider); err != nil {
 		return err
 	}
-	sa := SocialAccount{
+	sa := UserSocialAccount{
 		SocialId:       socialId,
 		SocialUsername: socialUsername,
 		Provider:       provider,
@@ -50,8 +50,12 @@ func (u *User) SetNewSocialAccount(socialId, socialUsername, provider string) er
 	return nil
 }
 
-func (u *User) SetSocialAccount(sa *SocialAccount) {
+func (u *User) SetSocialAccount(sa *UserSocialAccount) error {
+	if sa == nil {
+		return common.ErrMissingRequiredValue
+	}
 	u.SocialAccount = sa
+	return nil
 }
 
 func (u *User) isSupportSocialProvider(provider string) error {

@@ -8,7 +8,7 @@ import (
 )
 
 type UserCommandHandler interface {
-	Create(ctx context.Context, cmd *CreateUserCommand) (*user.User, *common.MadreError)
+	CreateForSocial(ctx context.Context, cmd *CreateUserCommand) (*user.User, *common.MadreError)
 }
 
 type userCommandHandler struct {
@@ -26,7 +26,7 @@ func NewUserCommandHandler(
 	}
 }
 
-func (uch *userCommandHandler) Create(ctx context.Context, cmd *CreateUserCommand) (*user.User, *common.MadreError) {
+func (uch *userCommandHandler) CreateForSocial(ctx context.Context, cmd *CreateUserCommand) (*user.User, *common.MadreError) {
 	u, err := user.NewUserWithoutId(
 		cmd.Email,
 		cmd.Username,
@@ -36,7 +36,7 @@ func (uch *userCommandHandler) Create(ctx context.Context, cmd *CreateUserComman
 		return nil, common.NewMadreError(err)
 	}
 
-	// socialaccount is essential when creating a new user
+	// socialAccount is essential when creating a new user
 	err = u.SetNewSocialAccount(
 		cmd.SocialId,
 		cmd.SocialUsername,

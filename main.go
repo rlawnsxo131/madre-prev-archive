@@ -31,6 +31,7 @@ func main() {
 	s.Route().Route("/api", func(r chi.Router) {
 		r.Route("/v1", func(r chi.Router) {
 			apiv1.NewAuthRoute().Register(r)
+			apiv1.NewUserRoute().Register(r)
 		})
 	})
 
