@@ -24,13 +24,13 @@ func NewUserQueryHandler(
 	}
 }
 
-func (uqr *userQueryHandler) Get(q *GetUserQuery) (*user.User, *common.DomainError) {
-	u, err := uqr.userQueryRepository.FindById(q.UserId)
+func (uqh *userQueryHandler) Get(q *GetUserQuery) (*user.User, *common.DomainError) {
+	u, err := uqh.userQueryRepository.FindById(q.UserId)
 	if err != nil {
 		return nil, common.NewDomainError(err)
 	}
 
-	sa, err := uqr.userSocialQueryRepository.FindByUserId(q.UserId)
+	sa, err := uqh.userSocialQueryRepository.FindByUserId(q.UserId)
 	if err != nil {
 		return nil, common.NewDomainError(err)
 	}

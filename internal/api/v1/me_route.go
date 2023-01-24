@@ -36,7 +36,6 @@ func (mr *meRoute) Get() http.HandlerFunc {
 				p,
 			),
 		)
-
 	}
 }
 
