@@ -54,9 +54,11 @@ func (mr *meRoute) GetInfo() http.HandlerFunc {
 			return
 		}
 
-		u, err := mr.userQueryhandler.Get(&query.GetUserQuery{
-			UserId: p.UserId,
-		})
+		u, err := mr.userQueryhandler.Get(
+			&query.GetUserQuery{
+				UserId: p.UserId,
+			},
+		)
 
 		if err != nil {
 			rw.Error(
