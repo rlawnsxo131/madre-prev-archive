@@ -32,7 +32,7 @@ func (wt *writer) Write(res *response) {
 
 	wt.w.WriteHeader(res.Code)
 	wt.w.Write(jsonRes)
-	if entry, err := httplogger.LogEntry(wt.r.Context()); err != nil {
+	if entry, entryErr := httplogger.LogEntry(wt.r.Context()); entryErr != nil {
 		entry.Add(func(e *zerolog.Event) {
 			e.RawJSON("response", jsonRes)
 		})
