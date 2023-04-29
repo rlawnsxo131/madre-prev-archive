@@ -76,12 +76,12 @@ const (
 	KEY_LOG_ENTRY_CTX key = iota
 )
 
-func LogEntry(ctx context.Context) HTTPLogEntry {
+func LogEntry(ctx context.Context) (HTTPLogEntry, error) {
 	v := ctx.Value(KEY_LOG_ENTRY_CTX)
 	if v, ok := v.(HTTPLogEntry); ok {
-		return v
+		return v, nil
 	}
-	return nil
+	return nil, errors.New("there is no httpLogEntry in the context")
 }
 
 func SetLogEntry(ctx context.Context, le HTTPLogEntry) context.Context {
