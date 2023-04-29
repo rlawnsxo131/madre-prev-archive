@@ -7,7 +7,7 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
-	"github.com/rlawnsxo131/madre-server-v3/lib/env"
+	"github.com/rlawnsxo131/madre-server-v3/core/env"
 )
 
 const (
