@@ -54,7 +54,7 @@ func (wt *writer) Error(err error, res *errorResponse) {
 	}
 
 	wt.w.Write(jsonRes)
-	if entry, logEntryErr := httplogger.LogEntry(wt.r.Context()); logEntryErr != nil {
+	if entry, entryErr := httplogger.LogEntry(wt.r.Context()); entryErr != nil {
 		entry.Add(func(e *zerolog.Event) {
 			e.Err(err).RawJSON("response", jsonRes)
 			if parseErr != nil {
