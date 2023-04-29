@@ -25,10 +25,7 @@ $ air
 $ go run ./main.go
 ```
 
-### V1 Repository
+### Previous Repository
 
-<https://github.com/rlawnsxo131/madre-server>
-
-### V2 Repository
-
-<https://github.com/rlawnsxo131/madre-server-v2>
+- v2: <https://github.com/rlawnsxo131/madre-server-v2>
+- v1: <https://github.com/rlawnsxo131/madre-server>
