@@ -24,7 +24,7 @@ func Conn() (*pgxpool.Conn, error) {
 	return conn, nil
 }
 
-func ConnCtx(ctx context.Context) (*pgxpool.Conn, error) {
+func ConnFromCtx(ctx context.Context) (*pgxpool.Conn, error) {
 	v := ctx.Value(KEY_DATABASE_CONN_CTX)
 	if v, ok := v.(*pgxpool.Conn); ok {
 		return v, nil
