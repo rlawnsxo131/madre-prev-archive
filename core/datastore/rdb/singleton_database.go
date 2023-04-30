@@ -86,14 +86,15 @@ func initDatabasePool() (*pgxpool.Pool, error) {
 	config.MaxConnLifetime = time.Minute * 10
 	config.MaxConnIdleTime = time.Second * 10
 
-	logLevel := tracelog.LogLevelTrace
-	if !env.IsLocal() {
-		logLevel = tracelog.LogLevelDebug
+	logger := zerolog.New(os.Stdout).With().Timestamp().Logger()
+	logLevel := tracelog.LogLevelDebug
+	if env.IsLocal() {
+		logLevel = tracelog.LogLevelTrace
 	}
 
 	config.ConnConfig.Tracer = &tracelog.TraceLog{
 		Logger: pgxlog.NewLogger(
-			zerolog.New(os.Stdout).With().Timestamp().Logger(),
+			logger,
 		),
 		LogLevel: logLevel,
 	}

@@ -17,7 +17,7 @@ type HTTPLogger struct {
 }
 
 func NewHTTPLogger(w io.Writer, f HTTPLogFormatter) *HTTPLogger {
-	l := zerolog.New(w).With().Logger()
+	l := zerolog.New(w)
 	return &HTTPLogger{
 		l: &l,
 		f: f,

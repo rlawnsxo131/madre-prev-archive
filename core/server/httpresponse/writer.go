@@ -32,37 +32,49 @@ func (wt *writer) Write(res *response) {
 
 	wt.w.WriteHeader(res.Code)
 	wt.w.Write(jsonRes)
-	if entry, entryErr := httplogger.LogEntry(wt.r.Context()); entryErr != nil {
-		entry.Add(func(e *zerolog.Event) {
-			e.RawJSON("response", jsonRes)
-		})
+
+	entry, entryErr := httplogger.LogEntry(wt.r.Context())
+	if entryErr != nil {
+		// TODO force logging
 		return
 	}
 
-	// TODO force logging
+	entry.Add(func(e *zerolog.Event) {
+		e.RawJSON("response", jsonRes)
+	})
+
 }
 
 func (wt *writer) Error(err error, res *errorResponse) {
+	code := res.Code
 	jsonRes, parseErr := json.Marshal(res)
 	if parseErr != nil {
+		code = http.StatusInternalServerError
 		jsonRes = json.RawMessage(
-			`{"code": 500, "status": "Internal Server Error", "error": {"message": "response json parse error"}}`,
+			`{
+				"code": 500, 
+				"status": "Internal Server Error", 
+				"error": {
+					"message": "response json parse error"
+				}
+			}`,
 		)
-		wt.w.WriteHeader(http.StatusInternalServerError)
-	} else {
-		wt.w.WriteHeader(res.Code)
 	}
 
+	wt.w.WriteHeader(code)
 	wt.w.Write(jsonRes)
-	if entry, entryErr := httplogger.LogEntry(wt.r.Context()); entryErr != nil {
-		entry.Add(func(e *zerolog.Event) {
-			e.Err(err).RawJSON("response", jsonRes)
-			if parseErr != nil {
-				e.Err(parseErr)
-			}
-		})
+
+	entry, entryErr := httplogger.LogEntry(wt.r.Context())
+	if entryErr != nil {
+		// TODO force logging
 		return
 	}
 
-	// TODO force logging
+	entry.Add(func(e *zerolog.Event) {
+		e.Err(err).RawJSON("response", jsonRes)
+		if parseErr != nil {
+			e.Err(parseErr)
+		}
+	})
+
 }

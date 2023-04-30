@@ -49,7 +49,8 @@ func (le *httpLogEntry) Add(f func(e *zerolog.Event)) {
 }
 
 func (le *httpLogEntry) Write(t time.Time) {
-	e := le.l.Log().Timestamp().
+	e := le.l.Log().
+		Str("time", t.UTC().Format(time.RFC3339Nano)).
 		Str("requestId", chi_middleware.GetReqID(le.r.Context())).
 		Dur("elapsed(ms)", time.Since(t)).
 		Str("protocol", le.r.Proto).

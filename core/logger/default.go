@@ -3,6 +3,7 @@ package logger
 import (
 	"io"
 	"os"
+	"time"
 
 	"github.com/rs/zerolog"
 )
@@ -14,7 +15,7 @@ type defaultLogger struct {
 }
 
 func NewDefaultLogger(w io.Writer) *defaultLogger {
-	l := zerolog.New(w).With().Logger()
+	l := zerolog.New(w)
 	return &defaultLogger{
 		l: &l,
 	}
@@ -38,7 +39,7 @@ func (dle *defaultLogEntry) Add(f func(e *zerolog.Event)) *defaultLogEntry {
 }
 
 func (dle *defaultLogEntry) Send() {
-	e := dle.l.Log().Timestamp()
+	e := dle.l.Log().Str("time", time.Now().UTC().Format(time.RFC3339Nano))
 	for _, f := range dle.add {
 		f(e)
 	}
@@ -46,7 +47,7 @@ func (dle *defaultLogEntry) Send() {
 }
 
 func (dle *defaultLogEntry) SendInfo() {
-	e := dle.l.Info().Timestamp()
+	e := dle.l.Info().Str("time", time.Now().UTC().Format(time.RFC3339Nano))
 	for _, f := range dle.add {
 		f(e)
 	}
@@ -54,7 +55,7 @@ func (dle *defaultLogEntry) SendInfo() {
 }
 
 func (dle *defaultLogEntry) SendError() {
-	e := dle.l.Error().Timestamp()
+	e := dle.l.Error().Str("time", time.Now().UTC().Format(time.RFC3339Nano))
 	for _, f := range dle.add {
 		f(e)
 	}
@@ -62,7 +63,7 @@ func (dle *defaultLogEntry) SendError() {
 }
 
 func (dle *defaultLogEntry) SendFatal() {
-	e := dle.l.Fatal().Timestamp()
+	e := dle.l.Fatal().Str("time", time.Now().UTC().Format(time.RFC3339Nano))
 	for _, f := range dle.add {
 		f(e)
 	}
