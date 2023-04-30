@@ -9,7 +9,8 @@ import (
 
 func DatabasePool(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		conn, err := rdb.Conn()
+		db, err := rdb.DbInstance()
+
 		if err != nil {
 			httpresponse.NewWriter(w, r).Error(
 				err,
@@ -19,11 +20,11 @@ func DatabasePool(next http.Handler) http.Handler {
 			)
 			return
 		}
-		defer conn.Release()
+		defer db.Release()
 
-		dbCtx := rdb.SetConnCtx(
+		dbCtx := rdb.SetDbCtx(
 			r.Context(),
-			conn,
+			db,
 		)
 
 		next.ServeHTTP(

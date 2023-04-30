@@ -120,6 +120,7 @@ func (s *httpServer) RegisterHealthRoute() {
 			"Referer": r.Header.Get("Referer"),
 			"Cookies": fmt.Sprint(r.Cookies()),
 		}
+
 		httpresponse.NewWriter(w, r).Write(
 			httpresponse.NewResponse(
 				http.StatusOK,

@@ -13,14 +13,14 @@ import (
 )
 
 func main() {
-	pool, err := rdb.InitDatabasePool()
+	db, err := rdb.DbInstance()
 	if err != nil {
-		log.Println(err)
+		log.Fatal(err)
 	}
-	defer pool.Close()
+	defer db.ClosePool()
 
 	if env.IsLocal() {
-		rdb.ExcuteInitSQL(pool)
+		rdb.ExcuteInitSQL(db)
 	}
 
 	s := server.NewHTTPServer()
