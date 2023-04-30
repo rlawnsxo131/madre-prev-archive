@@ -103,7 +103,7 @@ func (s *httpServer) RegisterHTTPMiddleware() {
 	s.r.Use(httpmiddleware.Recovery)
 	s.r.Use(httpmiddleware.AllowHost)
 	s.r.Use(httpmiddleware.Cors)
-	s.r.Use(httpmiddleware.DatabasePool)
+	s.r.Use(httpmiddleware.Database)
 	s.r.Use(httpmiddleware.JWT)
 	s.r.Use(httpmiddleware.ContentTypeToJson)
 	s.r.Use(chi_middleware.Compress(5))

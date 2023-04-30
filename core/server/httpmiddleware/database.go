@@ -7,7 +7,7 @@ import (
 	"github.com/rlawnsxo131/madre-server-v3/core/server/httpresponse"
 )
 
-func DatabasePool(next http.Handler) http.Handler {
+func Database(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		db, err := rdb.DBInstance()
 
