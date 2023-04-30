@@ -40,6 +40,7 @@ func (ar *authRoute) Delete() http.HandlerFunc {
 			)
 			return
 		}
+
 		token.NewManager().ResetCookies(w)
 
 		rw.Write(
