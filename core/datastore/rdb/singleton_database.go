@@ -25,7 +25,7 @@ type singletonDatabase struct {
 	pool *pgxpool.Pool
 }
 
-func DbInstance() (*singletonDatabase, error) {
+func DBInstance() (*singletonDatabase, error) {
 	var err error
 
 	onceDatabase.Do(func() {

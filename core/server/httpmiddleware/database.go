@@ -9,7 +9,7 @@ import (
 
 func DatabasePool(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		db, err := rdb.DbInstance()
+		db, err := rdb.DBInstance()
 
 		if err != nil {
 			httpresponse.NewWriter(w, r).Error(
@@ -21,7 +21,7 @@ func DatabasePool(next http.Handler) http.Handler {
 			return
 		}
 
-		dbCtx := rdb.SetDbCtx(
+		dbCtx := rdb.SetDBCtx(
 			r.Context(),
 			db,
 		)

@@ -13,7 +13,7 @@ import (
 )
 
 func main() {
-	db, err := rdb.DbInstance()
+	db, err := rdb.DBInstance()
 	if err != nil {
 		log.Fatal(err)
 	}
