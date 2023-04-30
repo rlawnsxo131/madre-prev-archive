@@ -68,7 +68,7 @@ func (sd *singletonDatabase) Conn() (*pgxpool.Conn, error) {
 	return sd.conn, nil
 }
 
-func (sd *singletonDatabase) Release() {
+func (sd *singletonDatabase) ReleaseConn() {
 	if sd.conn != nil {
 		sd.conn.Release()
 		sd.conn = nil
