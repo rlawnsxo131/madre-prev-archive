@@ -20,7 +20,6 @@ func DatabasePool(next http.Handler) http.Handler {
 			)
 			return
 		}
-		defer db.ReleaseConn()
 
 		dbCtx := rdb.SetDbCtx(
 			r.Context(),

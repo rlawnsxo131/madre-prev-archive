@@ -23,7 +23,6 @@ var (
 
 type singletonDatabase struct {
 	pool *pgxpool.Pool
-	conn *pgxpool.Conn
 }
 
 func DbInstance() (*singletonDatabase, error) {
@@ -53,26 +52,14 @@ func (sd *singletonDatabase) ClosePool() {
 }
 
 func (sd *singletonDatabase) Conn() (*pgxpool.Conn, error) {
-	if sd.conn == nil {
-		conn, err := sd.pool.Acquire(context.Background())
-
-		if err != nil {
-			return nil, errors.Wrap(
-				err,
-				"pgx connection pool acquire error",
-			)
-		}
-		sd.conn = conn
+	conn, err := sd.pool.Acquire(context.Background())
+	if err != nil {
+		return nil, errors.Wrap(
+			err,
+			"pgx connection pool acquire error",
+		)
 	}
-
-	return sd.conn, nil
-}
-
-func (sd *singletonDatabase) ReleaseConn() {
-	if sd.conn != nil {
-		sd.conn.Release()
-		sd.conn = nil
-	}
+	return conn, nil
 }
 
 // initialize pgx pool
