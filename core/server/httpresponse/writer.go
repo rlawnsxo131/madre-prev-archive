@@ -42,7 +42,6 @@ func (wt *writer) Write(res *response) {
 	entry.Add(func(e *zerolog.Event) {
 		e.RawJSON("response", jsonRes)
 	})
-
 }
 
 func (wt *writer) Error(err error, res *errorResponse) {
@@ -76,5 +75,4 @@ func (wt *writer) Error(err error, res *errorResponse) {
 			e.Err(parseErr)
 		}
 	})
-
 }
