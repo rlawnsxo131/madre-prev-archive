@@ -89,32 +89,36 @@ func (m *manager) ResetCookies(w http.ResponseWriter) {
 }
 
 func (m *manager) generateTokens(p *profile) (string, string, error) {
-	now := time.Now()
 	var actk string
 	var rftk string
 
-	for _, tokenType := range tokenTypes {
-		claims := &authTokenClaims{
-			TokenUUID: uuid.NewString(),
-			UserId:    p.UserId,
-			Username:  p.Username,
-			PhotoUrl:  p.PhotoUrl,
-		}
-
-		if tokenType == ACCESS_TOKEN {
-			claims.RegisteredClaims = jwt.RegisteredClaims{
+	now := time.Now()
+	claimsFuncMap := map[string]func() jwt.RegisteredClaims{
+		ACCESS_TOKEN: func() jwt.RegisteredClaims {
+			return jwt.RegisteredClaims{
 				ExpiresAt: jwt.NewNumericDate(now.AddDate(0, 0, 1)),
 				Issuer:    "madre",
 				IssuedAt:  jwt.NewNumericDate(now),
 			}
-		}
-		if tokenType == REFRESH_TOKEN {
-			claims.RegisteredClaims = jwt.RegisteredClaims{
-				ExpiresAt: jwt.NewNumericDate(now.AddDate(0, 0, 30)),
+		},
+		REFRESH_TOKEN: func() jwt.RegisteredClaims {
+			return jwt.RegisteredClaims{
+				ExpiresAt: jwt.NewNumericDate(now.AddDate(0, 0, 7)),
 				Issuer:    "madre",
 				IssuedAt:  jwt.NewNumericDate(now),
 			}
-		}
+		},
+	}
+
+	claims := &authTokenClaims{
+		UserId:   p.UserId,
+		Username: p.Username,
+		PhotoUrl: p.PhotoUrl,
+	}
+
+	for _, tokenType := range tokenTypes {
+		claims.TokenUUID = uuid.NewString()
+		claims.RegisteredClaims = claimsFuncMap[tokenType]()
 
 		t := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 		ss, err := t.SignedString([]byte(env.JWTSecretKey()))
@@ -150,7 +154,7 @@ func (m *manager) setCookies(w http.ResponseWriter, actk, rftk string) {
 		Value: rftk,
 		Path:  "/",
 		// Domain:   ".juntae.kim",
-		Expires:  now.AddDate(0, 0, 30),
+		Expires:  now.AddDate(0, 0, 7),
 		Secure:   true,
 		HttpOnly: true,
 		SameSite: 2,
