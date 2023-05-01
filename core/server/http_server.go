@@ -95,10 +95,10 @@ func (s *httpServer) Start() {
 	<-srvCtx.Done()
 }
 
-func (s *httpServer) RegisterHTTPMiddleware(db rdb.SingletonDatabase) {
+func (s *httpServer) RegisterHTTPMiddleware(hl httplogger.HTTPLogger, db rdb.SingletonDatabase) {
 	s.r.Use(chi_middleware.RequestID)
 	s.r.Use(chi_middleware.RealIP)
-	s.r.Use(httpmiddleware.Logger(httplogger.DefaultHTTPLogger))
+	s.r.Use(httpmiddleware.Logger(hl))
 	s.r.Use(httpmiddleware.Recovery)
 	s.r.Use(httpmiddleware.AllowHost)
 	s.r.Use(httpmiddleware.Cors)

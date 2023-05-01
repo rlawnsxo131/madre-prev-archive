@@ -8,6 +8,7 @@ import (
 	"github.com/rlawnsxo131/madre-server-v3/core/env"
 	"github.com/rlawnsxo131/madre-server-v3/core/logger"
 	"github.com/rlawnsxo131/madre-server-v3/core/server"
+	"github.com/rlawnsxo131/madre-server-v3/core/server/httplogger"
 	api "github.com/rlawnsxo131/madre-server-v3/internal/api"
 	apiv1 "github.com/rlawnsxo131/madre-server-v3/internal/api/v1"
 	"github.com/rs/zerolog"
@@ -25,7 +26,10 @@ func main() {
 	}
 
 	s := server.NewHTTPServer()
-	s.RegisterHTTPMiddleware(db)
+	s.RegisterHTTPMiddleware(
+		httplogger.DefaultHTTPLogger,
+		db,
+	)
 
 	// routes
 	s.Route().Route("/", func(r chi.Router) {

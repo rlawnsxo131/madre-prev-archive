@@ -11,20 +11,24 @@ import (
 
 var DefaultHTTPLogger = NewHTTPLogger(os.Stdout, NewHTTPLogFormatter())
 
-type HTTPLogger struct {
+type HTTPLogger interface {
+	NewLogEntry(r *http.Request, ww chi_middleware.WrapResponseWriter) HTTPLogEntry
+}
+
+type httpLogger struct {
 	l *zerolog.Logger
 	f HTTPLogFormatter
 }
 
-func NewHTTPLogger(w io.Writer, f HTTPLogFormatter) *HTTPLogger {
+func NewHTTPLogger(w io.Writer, f HTTPLogFormatter) HTTPLogger {
 	l := zerolog.New(w)
-	return &HTTPLogger{
+	return &httpLogger{
 		l: &l,
 		f: f,
 	}
 }
 
-func (hl *HTTPLogger) NewLogEntry(r *http.Request, ww chi_middleware.WrapResponseWriter) HTTPLogEntry {
+func (hl *httpLogger) NewLogEntry(r *http.Request, ww chi_middleware.WrapResponseWriter) HTTPLogEntry {
 	return hl.f.NewLogEntry(hl.l, r, ww)
 }
 

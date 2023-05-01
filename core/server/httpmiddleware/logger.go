@@ -12,7 +12,7 @@ import (
 	"github.com/rs/zerolog"
 )
 
-func Logger(hl *httplogger.HTTPLogger) func(next http.Handler) http.Handler {
+func Logger(hl httplogger.HTTPLogger) func(next http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			t := time.Now()
