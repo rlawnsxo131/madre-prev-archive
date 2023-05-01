@@ -9,7 +9,7 @@ import (
 	"github.com/jackc/pgx/v5"
 )
 
-func ExcuteInitSQL(db *singletonDatabase) error {
+func ExcuteInitSQL(db SingletonDatabase) error {
 	file, err := os.ReadFile("./core/datastore/rdb/init.sql")
 	if err != nil {
 		panic(err)

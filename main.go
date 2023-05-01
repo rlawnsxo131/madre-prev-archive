@@ -8,6 +8,7 @@ import (
 	"github.com/rlawnsxo131/madre-server-v3/core/env"
 	"github.com/rlawnsxo131/madre-server-v3/core/logger"
 	"github.com/rlawnsxo131/madre-server-v3/core/server"
+	api "github.com/rlawnsxo131/madre-server-v3/internal/api"
 	apiv1 "github.com/rlawnsxo131/madre-server-v3/internal/api/v1"
 	"github.com/rs/zerolog"
 )
@@ -24,14 +25,19 @@ func main() {
 	}
 
 	s := server.NewHTTPServer()
-	s.RegisterHTTPMiddleware()
-	s.RegisterHealthRoute()
+	s.RegisterHTTPMiddleware(db)
 
-	// register routes
-	s.Route().Route("/api", func(r chi.Router) {
-		r.Route("/v1", func(r chi.Router) {
-			apiv1.NewAuthRoute().Register(r)
-			apiv1.NewMeRoute().Register(r)
+	// routes
+	s.Route().Route("/", func(r chi.Router) {
+		// health
+		api.NewHealthRoute().Register(r)
+
+		// api
+		r.Route("/api", func(r chi.Router) {
+			r.Route("/v1", func(r chi.Router) {
+				apiv1.NewAuthRoute().Register(r)
+				apiv1.NewMeRoute().Register(r)
+			})
 		})
 	})
 

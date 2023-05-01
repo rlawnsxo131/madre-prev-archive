@@ -21,11 +21,17 @@ var (
 	onceDatabase     sync.Once
 )
 
+type SingletonDatabase interface {
+	Pool() *pgxpool.Pool
+	ClosePool()
+	Conn() (*pgxpool.Conn, error)
+}
+
 type singletonDatabase struct {
 	pool *pgxpool.Pool
 }
 
-func DBInstance() (*singletonDatabase, error) {
+func DBInstance() (SingletonDatabase, error) {
 	var err error
 
 	onceDatabase.Do(func() {

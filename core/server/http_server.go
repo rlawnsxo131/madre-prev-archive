@@ -2,7 +2,6 @@ package server
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	"os"
 	"os/signal"
@@ -11,11 +10,11 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	chi_middleware "github.com/go-chi/chi/v5/middleware"
+	"github.com/rlawnsxo131/madre-server-v3/core/datastore/rdb"
 	"github.com/rlawnsxo131/madre-server-v3/core/env"
 	"github.com/rlawnsxo131/madre-server-v3/core/logger"
 	"github.com/rlawnsxo131/madre-server-v3/core/server/httplogger"
 	"github.com/rlawnsxo131/madre-server-v3/core/server/httpmiddleware"
-	"github.com/rlawnsxo131/madre-server-v3/core/server/httpresponse"
 	"github.com/rs/zerolog"
 )
 
@@ -96,38 +95,17 @@ func (s *httpServer) Start() {
 	<-srvCtx.Done()
 }
 
-func (s *httpServer) RegisterHTTPMiddleware() {
+func (s *httpServer) RegisterHTTPMiddleware(db rdb.SingletonDatabase) {
 	s.r.Use(chi_middleware.RequestID)
 	s.r.Use(chi_middleware.RealIP)
 	s.r.Use(httpmiddleware.Logger(httplogger.DefaultHTTPLogger))
 	s.r.Use(httpmiddleware.Recovery)
 	s.r.Use(httpmiddleware.AllowHost)
 	s.r.Use(httpmiddleware.Cors)
-	s.r.Use(httpmiddleware.Database)
+	s.r.Use(httpmiddleware.Database(db))
 	s.r.Use(httpmiddleware.JWT)
 	s.r.Use(httpmiddleware.ContentTypeToJson)
 	s.r.Use(chi_middleware.Compress(5))
-}
-
-func (s *httpServer) RegisterHealthRoute() {
-	s.r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
-		data := map[string]string{
-			"Proto":   r.Proto,
-			"Method":  r.Method,
-			"Host":    r.Host,
-			"Origin":  r.Header.Get("Origin"),
-			"Path":    r.URL.Path,
-			"Referer": r.Header.Get("Referer"),
-			"Cookies": fmt.Sprint(r.Cookies()),
-		}
-
-		httpresponse.NewWriter(w, r).Write(
-			httpresponse.NewResponse(
-				http.StatusOK,
-				data,
-			),
-		)
-	})
 }
 
 func (s *httpServer) Route() *chi.Mux {
