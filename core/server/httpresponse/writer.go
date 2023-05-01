@@ -33,7 +33,7 @@ func (wt *writer) Write(res *response) {
 	wt.w.WriteHeader(res.Code)
 	wt.w.Write(jsonRes)
 
-	entry, entryErr := httplogger.LogEntry(wt.r.Context())
+	entry, entryErr := httplogger.LogEntryFromCtx(wt.r.Context())
 	if entryErr != nil {
 		// TODO force logging
 		return
@@ -63,7 +63,7 @@ func (wt *writer) Error(err error, res *errorResponse) {
 	wt.w.WriteHeader(code)
 	wt.w.Write(jsonRes)
 
-	entry, entryErr := httplogger.LogEntry(wt.r.Context())
+	entry, entryErr := httplogger.LogEntryFromCtx(wt.r.Context())
 	if entryErr != nil {
 		// TODO force logging
 		return

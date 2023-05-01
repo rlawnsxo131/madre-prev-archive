@@ -36,7 +36,7 @@ func Logger(hl httplogger.HTTPLogger) func(next http.Handler) http.Handler {
 				return
 			}
 
-			loggerCtx := httplogger.SetLogEntry(
+			loggerCtx := httplogger.SetLogEntryCtx(
 				r.Context(),
 				le,
 			)

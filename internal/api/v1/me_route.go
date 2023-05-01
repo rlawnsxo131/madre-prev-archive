@@ -28,7 +28,7 @@ func (mr *meRoute) Register(r chi.Router) {
 func (mr *meRoute) Get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := httpresponse.NewWriter(w, r)
-		p := token.Profile(r.Context())
+		p := token.ProfileFromCtx(r.Context())
 
 		rw.Write(
 			httpresponse.NewResponse(
@@ -42,7 +42,7 @@ func (mr *meRoute) Get() http.HandlerFunc {
 func (mr *meRoute) GetInfo() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := httpresponse.NewWriter(w, r)
-		p := token.Profile(r.Context())
+		p := token.ProfileFromCtx(r.Context())
 
 		if p == nil {
 			rw.Error(

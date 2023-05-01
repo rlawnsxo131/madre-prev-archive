@@ -29,7 +29,7 @@ func (ar *authRoute) PostGoogleCheck() http.HandlerFunc {
 func (ar *authRoute) Delete() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := httpresponse.NewWriter(w, r)
-		p := token.Profile(r.Context())
+		p := token.ProfileFromCtx(r.Context())
 
 		if p == nil {
 			rw.Error(
