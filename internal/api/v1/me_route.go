@@ -20,12 +20,12 @@ func NewMeRoute() *meRoute {
 
 func (mr *meRoute) Register(r chi.Router) {
 	r.Route("/me", func(r chi.Router) {
-		r.Get("/", mr.Get())
-		r.Get("/info", mr.GetInfo())
+		r.Get("/", mr.get())
+		r.Get("/info", mr.getInfo())
 	})
 }
 
-func (mr *meRoute) Get() http.HandlerFunc {
+func (mr *meRoute) get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := httpresponse.NewWriter(w, r)
 		p := token.ProfileFromCtx(r.Context())
@@ -39,7 +39,7 @@ func (mr *meRoute) Get() http.HandlerFunc {
 	}
 }
 
-func (mr *meRoute) GetInfo() http.HandlerFunc {
+func (mr *meRoute) getInfo() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rw := httpresponse.NewWriter(w, r)
 		p := token.ProfileFromCtx(r.Context())

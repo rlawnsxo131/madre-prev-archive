@@ -16,11 +16,11 @@ func NewHealthRoute() *healthRoute {
 
 func (hr *healthRoute) Register(r chi.Router) {
 	r.Route("/health", func(r chi.Router) {
-		r.Get("/", hr.Get())
+		r.Get("/", hr.get())
 	})
 }
 
-func (hr *healthRoute) Get() http.HandlerFunc {
+func (hr *healthRoute) get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		data := map[string]string{
 			"Proto":   r.Proto,
