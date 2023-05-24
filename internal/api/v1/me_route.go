@@ -11,7 +11,7 @@ import (
 )
 
 type meRoute struct {
-	userQueryhandler query.UserQueryHandler
+	userQueryHandler query.UserQueryHandler
 }
 
 func NewMeRoute() *meRoute {
@@ -54,7 +54,7 @@ func (mr *meRoute) getInfo() http.HandlerFunc {
 			return
 		}
 
-		u, err := mr.userQueryhandler.Get(
+		u, err := mr.userQueryHandler.Get(
 			&query.GetUserQuery{
 				UserId: p.UserId,
 			},
