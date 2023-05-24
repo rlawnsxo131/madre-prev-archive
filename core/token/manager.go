@@ -93,7 +93,7 @@ func (m *manager) generateTokens(p *profile) (string, string, error) {
 	var rftk string
 
 	now := time.Now()
-	claimsFuncMap := map[string]jwt.RegisteredClaims{
+	claimsMap := map[string]jwt.RegisteredClaims{
 		ACCESS_TOKEN: {
 			ExpiresAt: jwt.NewNumericDate(now.AddDate(0, 0, 1)),
 			Issuer:    "madre",
@@ -114,7 +114,7 @@ func (m *manager) generateTokens(p *profile) (string, string, error) {
 
 	for _, tokenType := range tokenTypes {
 		claims.TokenUUID = uuid.NewString()
-		claims.RegisteredClaims = claimsFuncMap[tokenType]
+		claims.RegisteredClaims = claimsMap[tokenType]
 
 		t := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 		ss, err := t.SignedString([]byte(env.JWTSecretKey()))
