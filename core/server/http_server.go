@@ -104,7 +104,6 @@ func (s *httpServer) RegisterHTTPMiddleware(hl httplogger.HTTPLogger, db rdb.Sin
 	s.r.Use(httpmiddleware.Cors)
 	s.r.Use(httpmiddleware.Database(db))
 	s.r.Use(httpmiddleware.JWT)
-	s.r.Use(httpmiddleware.ContentTypeToJson)
 	s.r.Use(chi_middleware.Compress(5))
 }
 

@@ -30,6 +30,7 @@ func (wt *writer) Write(res *response) {
 		return
 	}
 
+	wt.w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	wt.w.WriteHeader(res.Code)
 	wt.w.Write(jsonRes)
 
@@ -60,6 +61,7 @@ func (wt *writer) Error(err error, res *errorResponse) {
 		)
 	}
 
+	wt.w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	wt.w.WriteHeader(code)
 	wt.w.Write(jsonRes)
 
