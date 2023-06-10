@@ -2,7 +2,7 @@ package social
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strings"
 
@@ -103,8 +103,8 @@ type googlePeopleApiResponse struct {
 type googlePeopleProfile struct {
 	SocialID    string
 	Email       string
-	PhotoUrl    string
-	DisplayName string
+	PhotoUrl    *string
+	DisplayName *string
 }
 
 type googlePeopleAPI struct {
@@ -157,7 +157,7 @@ func (g *googlePeopleAPI) excuteRequest(req *http.Request) (*http.Response, erro
 
 func (g *googlePeopleAPI) mapToGooglePeopleApiResponse(res *http.Response) (*googlePeopleApiResponse, error) {
 	defer res.Body.Close()
-	body, err := ioutil.ReadAll(res.Body)
+	body, err := io.ReadAll(res.Body)
 	if err != nil {
 		return nil, errors.Wrap(err, "social googlePeopleAPI mapTogooglePeopleApiResponse res.Body read")
 	}
@@ -172,8 +172,8 @@ func (g *googlePeopleAPI) mapToGooglePeopleApiResponse(res *http.Response) (*goo
 func (g *googlePeopleAPI) mapToGooglePeopleProfile(gapiRes *googlePeopleApiResponse) *googlePeopleProfile {
 	var socialId string
 	var email string
-	var photoUrl string
-	var displayName string
+	var photoUrl *string
+	var displayName *string
 
 	// uniq key
 	socialId = strings.ReplaceAll(
@@ -192,14 +192,14 @@ func (g *googlePeopleAPI) mapToGooglePeopleProfile(gapiRes *googlePeopleApiRespo
 	if len(gapiRes.Photos) > 0 {
 		url := gapiRes.Photos[0].Url
 		if len(url) != 0 {
-			photoUrl = url
+			photoUrl = &url
 		}
 	}
 
 	if len(gapiRes.Names) > 0 {
-		name := strings.Split(gapiRes.Names[0].DisplayName, " ")[0]
+		name := strings.Split(gapiRes.Names[0].DisplayName, " ")[0][:50]
 		if name != "" {
-			displayName = name
+			displayName = &name
 		}
 	}
 
