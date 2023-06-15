@@ -26,7 +26,7 @@ type errorResponse struct {
 	Error  map[string]any `json:"error,omitempty"`
 }
 
-func NewErrorResponse(code int, msg ...string) *errorResponse {
+func NewError(code int, msg ...string) *errorResponse {
 	m := map[string]any{}
 	if len(msg) > 0 {
 		m["message"] = utils.ParseOptionalString(msg...)

@@ -24,7 +24,7 @@ func JWT(next http.Handler) http.Handler {
 			if err != http.ErrNoCookie {
 				httpresponse.NewWriter(w, r).Error(
 					errors.Wrap(err, "JWT get Access_token error"),
-					httpresponse.NewErrorResponse(
+					httpresponse.NewError(
 						http.StatusInternalServerError,
 					),
 				)
@@ -42,7 +42,7 @@ func JWT(next http.Handler) http.Handler {
 						if err != http.ErrNoCookie {
 							httpresponse.NewWriter(w, r).Error(
 								errors.Wrap(err, "JWT get Refresh_token error"),
-								httpresponse.NewErrorResponse(
+								httpresponse.NewError(
 									http.StatusInternalServerError,
 								),
 							)
@@ -88,7 +88,7 @@ func JWT(next http.Handler) http.Handler {
 				if err != http.ErrNoCookie {
 					httpresponse.NewWriter(w, r).Error(
 						errors.Wrap(err, "JWT get Refresh_token error"),
-						httpresponse.NewErrorResponse(
+						httpresponse.NewError(
 							http.StatusInternalServerError,
 						),
 					)

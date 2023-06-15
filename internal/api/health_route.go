@@ -32,7 +32,17 @@ func (hr *healthRoute) get() http.HandlerFunc {
 			"Cookies": fmt.Sprint(r.Cookies()),
 		}
 
-		httpresponse.NewWriter(w, r).Write(
+		// Example
+		// id, err := uuid.Parse("asdf")
+
+		// db, _ := rdb.DBInstance()
+		// repo := queryrepository.NewUserQueryRepository(db)
+
+		// if u, _ := repo.FindById("959075a4-8de4-4edc-a95c-1a122275762a"); u != nil {
+		// 	log.Println(u.Id)
+		// }
+
+		httpresponse.NewWriter(w, r).Json(
 			httpresponse.NewResponse(
 				http.StatusOK,
 				data,

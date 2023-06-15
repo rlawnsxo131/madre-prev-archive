@@ -5,13 +5,14 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/pkg/errors"
+	"github.com/rlawnsxo131/madre-server-v3/core/datastore/rdb"
 	"github.com/rlawnsxo131/madre-server-v3/core/server/httpresponse"
 	"github.com/rlawnsxo131/madre-server-v3/core/token"
 )
 
 type authRoute struct{}
 
-func NewAuthRoute() *authRoute {
+func NewAuthRoute(db rdb.SingletonDatabase) *authRoute {
 	return &authRoute{}
 }
 
@@ -34,7 +35,7 @@ func (ar *authRoute) delete() http.HandlerFunc {
 		if p == nil {
 			rw.Error(
 				errors.New("not found token profile"),
-				httpresponse.NewErrorResponse(
+				httpresponse.NewError(
 					http.StatusUnauthorized,
 				),
 			)
@@ -43,7 +44,7 @@ func (ar *authRoute) delete() http.HandlerFunc {
 
 		token.NewManager().ResetCookies(w)
 
-		rw.Write(
+		rw.Json(
 			httpresponse.NewResponse(
 				http.StatusNoContent,
 				nil,

@@ -114,6 +114,7 @@ func (m *manager) generateTokens(p *profile) (string, string, error) {
 
 	for _, tokenType := range tokenTypes {
 		claims.TokenUUID = uuid.NewString()
+
 		claims.RegisteredClaims = claimsMap[tokenType]
 
 		t := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)

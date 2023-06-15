@@ -18,12 +18,12 @@ func NewWriter(w http.ResponseWriter, r *http.Request) *writer {
 	return &writer{w, r}
 }
 
-func (wt *writer) Write(res *response) {
+func (wt *writer) Json(res *response) {
 	jsonRes, err := json.Marshal(res)
 	if err != nil {
 		wt.Error(
 			errors.Wrap(err, "Write json parse error"),
-			NewErrorResponse(
+			NewError(
 				http.StatusInternalServerError,
 			),
 		)

@@ -1,14 +1,12 @@
 package command
 
 import (
-	"context"
-
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/common"
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/user"
 )
 
 type UserCommandHandler interface {
-	CreateForSocial(ctx context.Context, cmd *CreateUserCommand) (*user.User, *common.DomainError)
+	CreateForSocial(cmd *CreateUserCommand) (*user.User, *common.DomainError)
 }
 
 type userCommandHandler struct {
@@ -26,7 +24,7 @@ func NewUserCommandHandler(
 	}
 }
 
-func (uch *userCommandHandler) CreateForSocial(ctx context.Context, cmd *CreateUserCommand) (*user.User, *common.DomainError) {
+func (uch *userCommandHandler) CreateForSocial(cmd *CreateUserCommand) (*user.User, *common.DomainError) {
 	u, err := user.NewUserWithoutId(
 		cmd.Email,
 		cmd.Username,

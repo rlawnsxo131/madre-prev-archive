@@ -28,10 +28,7 @@ func main() {
 	}
 
 	s := server.NewHTTPServer()
-	s.RegisterHTTPMiddleware(
-		httplogger.DefaultHTTPLogger,
-		db,
-	)
+	s.RegisterHTTPMiddleware(httplogger.DefaultHTTPLogger)
 
 	// routes
 	s.Route().Route("/", func(r chi.Router) {
@@ -41,8 +38,8 @@ func main() {
 		// api
 		r.Route("/api", func(r chi.Router) {
 			r.Route("/v1", func(r chi.Router) {
-				apiv1.NewAuthRoute().Register(r)
-				apiv1.NewMeRoute().Register(r)
+				apiv1.NewAuthRoute(db).Register(r)
+				apiv1.NewMeRoute(db).Register(r)
 			})
 		})
 	})

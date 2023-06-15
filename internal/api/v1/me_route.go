@@ -5,17 +5,24 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/pkg/errors"
+	"github.com/rlawnsxo131/madre-server-v3/core/datastore/rdb"
 	"github.com/rlawnsxo131/madre-server-v3/core/server/httpresponse"
 	"github.com/rlawnsxo131/madre-server-v3/core/token"
 	"github.com/rlawnsxo131/madre-server-v3/internal/application/handler/query"
+	queryrepository "github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/persistence/repository/query"
 )
 
 type meRoute struct {
 	userQueryHandler query.UserQueryHandler
 }
 
-func NewMeRoute() *meRoute {
-	return &meRoute{}
+func NewMeRoute(db rdb.SingletonDatabase) *meRoute {
+	return &meRoute{
+		userQueryHandler: query.NewUserQueryHandler(
+			queryrepository.NewUserQueryRepository(db),
+			queryrepository.NewUserSocialAccountQueryRepository(db),
+		),
+	}
 }
 
 func (mr *meRoute) Register(r chi.Router) {
@@ -27,10 +34,9 @@ func (mr *meRoute) Register(r chi.Router) {
 
 func (mr *meRoute) get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		rw := httpresponse.NewWriter(w, r)
 		p := token.ProfileFromCtx(r.Context())
 
-		rw.Write(
+		httpresponse.NewWriter(w, r).Json(
 			httpresponse.NewResponse(
 				http.StatusOK,
 				p,
@@ -47,7 +53,7 @@ func (mr *meRoute) getInfo() http.HandlerFunc {
 		if p == nil {
 			rw.Error(
 				errors.New("not found token profile"),
-				httpresponse.NewErrorResponse(
+				httpresponse.NewError(
 					http.StatusUnauthorized,
 				),
 			)
@@ -63,7 +69,7 @@ func (mr *meRoute) getInfo() http.HandlerFunc {
 		if err != nil {
 			rw.Error(
 				err.Err,
-				httpresponse.NewErrorResponse(
+				httpresponse.NewError(
 					err.Code,
 					err.Message,
 				),
@@ -71,7 +77,7 @@ func (mr *meRoute) getInfo() http.HandlerFunc {
 			return
 		}
 
-		rw.Write(
+		rw.Json(
 			httpresponse.NewResponse(
 				http.StatusOK,
 				u,

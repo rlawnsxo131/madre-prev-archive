@@ -23,7 +23,7 @@ func Logger(hl httplogger.HTTPLogger) func(next http.Handler) http.Handler {
 			err := le.ReadBody()
 			if err != nil {
 				res, _ := json.Marshal(
-					httpresponse.NewErrorResponse(
+					httpresponse.NewError(
 						http.StatusInternalServerError,
 					),
 				)

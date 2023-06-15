@@ -10,7 +10,6 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	chi_middleware "github.com/go-chi/chi/v5/middleware"
-	"github.com/rlawnsxo131/madre-server-v3/core/datastore/rdb"
 	"github.com/rlawnsxo131/madre-server-v3/core/env"
 	"github.com/rlawnsxo131/madre-server-v3/core/logger"
 	"github.com/rlawnsxo131/madre-server-v3/core/server/httplogger"
@@ -95,14 +94,13 @@ func (s *httpServer) Start() {
 	<-srvCtx.Done()
 }
 
-func (s *httpServer) RegisterHTTPMiddleware(hl httplogger.HTTPLogger, db rdb.SingletonDatabase) {
+func (s *httpServer) RegisterHTTPMiddleware(hl httplogger.HTTPLogger) {
 	s.r.Use(chi_middleware.RequestID)
 	s.r.Use(chi_middleware.RealIP)
 	s.r.Use(httpmiddleware.Logger(hl))
 	s.r.Use(httpmiddleware.Recovery)
 	s.r.Use(httpmiddleware.AllowHost)
 	s.r.Use(httpmiddleware.Cors)
-	s.r.Use(httpmiddleware.Database(db))
 	s.r.Use(httpmiddleware.JWT)
 	s.r.Use(chi_middleware.Compress(5))
 }
