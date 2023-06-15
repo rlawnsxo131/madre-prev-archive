@@ -9,6 +9,13 @@ import (
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/common"
 )
 
+var (
+	ErrUsernameRegexNotMatched = errors.Wrap(
+		common.ErrUnprocessableValue,
+		"username regex valdiation not matched",
+	)
+)
+
 type User struct {
 	Id            string             `json:"id"`
 	Email         string             `json:"email"`
@@ -80,15 +87,11 @@ func validateUsername(username string) error {
 	if err != nil {
 		return errors.Wrap(
 			err,
-			"username regex MatchString error",
+			"username regex MatchString parse error",
 		)
 	}
 	if !match {
-		return errors.Wrap(
-			common.ErrUnprocessableValue,
-			"username regex valdiation not matched",
-		)
-
+		return ErrUsernameRegexNotMatched
 	}
 	return nil
 }

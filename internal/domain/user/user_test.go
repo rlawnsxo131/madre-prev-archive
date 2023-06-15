@@ -27,6 +27,23 @@ func Test_SetNewUserWithoutId_Success(t *testing.T) {
 	assert.Equal(u.PhotoUrl, photoUrl)
 }
 
+func Test_SetNewUserWithoutId_Return_ErrUsernameRegexNotMatched(t *testing.T) {
+	assert := assert.New(t)
+
+	email := "email"
+	username := "유저이름"
+	photoUrl := "photoUrl"
+
+	u, err := user.NewUserWithoutId(
+		email,
+		username,
+		photoUrl,
+	)
+
+	assert.Nil(u)
+	assert.ErrorIs(err, user.ErrUsernameRegexNotMatched)
+}
+
 func Test_SetNewUserWithoutId_Return_ErrMissingRequiredValue(t *testing.T) {
 	assert := assert.New(t)
 
