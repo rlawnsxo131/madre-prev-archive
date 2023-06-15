@@ -30,21 +30,22 @@ func (uqr *userQueryRepository) FindById(id string) (*user.User, error) {
 	}
 
 	u := model.User{}
-	sql := "SELECT id, username" +
+	sql := "SELECT id, email, username, photo_url, created_at, updated_at" +
 		" FROM public.user" +
-		" WHERE id = @id" +
-		" AND username = @username"
+		" WHERE id = @id"
 
-	row := conn.QueryRow(
-		context.TODO(),
-		sql,
-		pgx.NamedArgs{
-			"id":       id,
-			"username": "username",
-		},
+	row := conn.QueryRow(context.TODO(), sql, pgx.NamedArgs{
+		"id": id,
+	})
+	err = row.Scan(
+		&u.Id,
+		&u.Email,
+		&u.Username,
+		&u.PhotoUrl,
+		&u.CreatedAt,
+		&u.UpdatedAt,
 	)
-
-	if err := row.Scan(&u.Id, &u.Username); err != nil {
+	if err != nil {
 		return nil, err
 	}
 

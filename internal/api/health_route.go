@@ -39,7 +39,7 @@ func (hr *healthRoute) get() http.HandlerFunc {
 		// repo := queryrepository.NewUserQueryRepository(db)
 
 		// if u, _ := repo.FindById("959075a4-8de4-4edc-a95c-1a122275762a"); u != nil {
-		// 	log.Println(u.Id)
+		// 	log.Println(u)
 		// }
 
 		httpresponse.NewWriter(w, r).Json(

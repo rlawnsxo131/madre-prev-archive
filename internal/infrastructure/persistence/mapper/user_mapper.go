@@ -23,7 +23,7 @@ func (um UserMapper) MapToEntity(u *model.User) *user.User {
 	return &user.User{
 		Id:        u.Id,
 		Email:     u.Email,
-		Username:  u.Email,
+		Username:  u.Username,
 		PhotoUrl:  utils.NormalizeNullString(u.PhotoUrl),
 		CreatedAt: u.CreatedAt,
 		UpdatedAt: u.UpdatedAt,
