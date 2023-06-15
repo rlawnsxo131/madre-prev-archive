@@ -30,4 +30,6 @@ const (
 		" RETURNING id"
 )
 
-func (ur *userRepository) CreateForSocial(u *user.User) (string, error)
+func (ur *userRepository) CreateForSocial(u *user.User) (string, error) {
+	return "", nil
+}

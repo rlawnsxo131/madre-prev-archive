@@ -7,12 +7,17 @@ import (
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v3/core/server/httpresponse"
 	"github.com/rlawnsxo131/madre-server-v3/core/token"
+	"github.com/rlawnsxo131/madre-server-v3/internal/application/handler/command"
 )
 
-type authRoute struct{}
+type authRoute struct {
+	userCommandHandler command.UserCommandHandler
+}
 
-func NewAuthRoute(r chi.Router) *authRoute {
-	ar := &authRoute{}
+func NewAuthRoute(r chi.Router, userCommandHandler command.UserCommandHandler) *authRoute {
+	ar := &authRoute{
+		userCommandHandler,
+	}
 
 	r.Route("/auth", func(r chi.Router) {
 		r.Post("/google/check", ar.postGoogleCheck())

@@ -11,7 +11,10 @@ import (
 	"github.com/rlawnsxo131/madre-server-v3/core/server/httplogger"
 	api "github.com/rlawnsxo131/madre-server-v3/internal/api"
 	apiv1 "github.com/rlawnsxo131/madre-server-v3/internal/api/v1"
+	"github.com/rlawnsxo131/madre-server-v3/internal/application/handler/command"
 	"github.com/rlawnsxo131/madre-server-v3/internal/application/handler/query"
+	"github.com/rlawnsxo131/madre-server-v3/internal/domain/user"
+	"github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/persistence/repository"
 	queryrepository "github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/persistence/repository/query"
 	"github.com/rs/zerolog"
 )
@@ -42,7 +45,15 @@ func main() {
 			r.Route("/v1", func(r chi.Router) {
 				apiv1.NewAuthRoute(
 					r,
+					command.NewUserCommandHandler(
+						repository.NewUserRepository(db),
+						user.NewUserDomainService(
+							queryrepository.NewUserQueryRepository(db),
+							queryrepository.NewUserSocialAccountQueryRepository(db),
+						),
+					),
 				)
+
 				apiv1.NewMeRoute(
 					r,
 					query.NewUserQueryHandler(
