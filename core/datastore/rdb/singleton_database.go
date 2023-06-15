@@ -85,7 +85,7 @@ func initDatabasePool() (*pgxpool.Pool, error) {
 
 	config, err := pgxpool.ParseConfig(psqlInfo)
 	if err != nil {
-		return nil, errors.Wrap(err, "parse config error")
+		return nil, errors.Wrap(err, "initDatabasePool ParseConfig error")
 	}
 	config.MaxConns = 10
 	config.MinConns = 0
@@ -111,7 +111,7 @@ func initDatabasePool() (*pgxpool.Pool, error) {
 		config,
 	)
 	if err != nil {
-		return nil, errors.Wrap(err, "database connect fail")
+		return nil, errors.Wrap(err, "initDatabasePool NewWithConfig error")
 	}
 
 	return pool, nil

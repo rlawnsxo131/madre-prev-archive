@@ -31,7 +31,7 @@ func (le *httpLogEntry) ReadBody() error {
 		body, err := io.ReadAll(le.r.Body)
 		if err != nil {
 			le.add = append(le.add, func(e *zerolog.Event) {
-				e.Err(errors.Wrap(err, "read http body error"))
+				e.Err(errors.Wrap(err, "ReadBody readAll error"))
 			})
 			return err
 		}

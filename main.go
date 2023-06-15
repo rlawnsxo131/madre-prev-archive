@@ -22,7 +22,9 @@ func main() {
 	defer db.ClosePool()
 
 	if env.IsLocal() {
-		rdb.ExcuteInitSQL(db)
+		if err := rdb.ExcuteInitSQL(db); err != nil {
+			log.Fatal(err)
+		}
 	}
 
 	s := server.NewHTTPServer()
