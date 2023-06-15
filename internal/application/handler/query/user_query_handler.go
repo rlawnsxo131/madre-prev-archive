@@ -38,7 +38,5 @@ func (uqh *userQueryHandler) Get(q *GetUserQuery) (*user.User, *common.DomainErr
 		return nil, common.NewDomainError(err)
 	}
 
-	u.SetSocialAccount(sa)
-
 	return u, nil
 }
