@@ -10,14 +10,14 @@ import (
 
 type healthRoute struct{}
 
-func NewHealthRoute() *healthRoute {
-	return &healthRoute{}
-}
+func NewHealthRoute(r chi.Router) *healthRoute {
+	hr := &healthRoute{}
 
-func (hr *healthRoute) Register(r chi.Router) {
 	r.Route("/health", func(r chi.Router) {
 		r.Get("/", hr.get())
 	})
+
+	return hr
 }
 
 func (hr *healthRoute) get() http.HandlerFunc {

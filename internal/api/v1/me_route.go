@@ -5,31 +5,26 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/pkg/errors"
-	"github.com/rlawnsxo131/madre-server-v3/core/datastore/rdb"
 	"github.com/rlawnsxo131/madre-server-v3/core/server/httpresponse"
 	"github.com/rlawnsxo131/madre-server-v3/core/token"
 	"github.com/rlawnsxo131/madre-server-v3/internal/application/handler/query"
-	queryrepository "github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/persistence/repository/query"
 )
 
 type meRoute struct {
 	userQueryHandler query.UserQueryHandler
 }
 
-func NewMeRoute(db rdb.SingletonDatabase) *meRoute {
-	return &meRoute{
-		userQueryHandler: query.NewUserQueryHandler(
-			queryrepository.NewUserQueryRepository(db),
-			queryrepository.NewUserSocialAccountQueryRepository(db),
-		),
+func NewMeRoute(r chi.Router, userQueryHandler query.UserQueryHandler) *meRoute {
+	mr := &meRoute{
+		userQueryHandler,
 	}
-}
 
-func (mr *meRoute) Register(r chi.Router) {
 	r.Route("/me", func(r chi.Router) {
 		r.Get("/", mr.get())
 		r.Get("/info", mr.getInfo())
 	})
+
+	return mr
 }
 
 func (mr *meRoute) get() http.HandlerFunc {

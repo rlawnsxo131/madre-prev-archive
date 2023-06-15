@@ -5,22 +5,21 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/pkg/errors"
-	"github.com/rlawnsxo131/madre-server-v3/core/datastore/rdb"
 	"github.com/rlawnsxo131/madre-server-v3/core/server/httpresponse"
 	"github.com/rlawnsxo131/madre-server-v3/core/token"
 )
 
 type authRoute struct{}
 
-func NewAuthRoute(db rdb.SingletonDatabase) *authRoute {
-	return &authRoute{}
-}
+func NewAuthRoute(r chi.Router) *authRoute {
+	ar := &authRoute{}
 
-func (ar *authRoute) Register(r chi.Router) {
 	r.Route("/auth", func(r chi.Router) {
 		r.Post("/google/check", ar.postGoogleCheck())
 		r.Delete("/", ar.delete())
 	})
+
+	return ar
 }
 
 func (ar *authRoute) postGoogleCheck() http.HandlerFunc {
