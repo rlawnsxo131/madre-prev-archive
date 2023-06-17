@@ -20,14 +20,14 @@ func NewAuthRoute(r chi.Router, userCommandHandler command.UserCommandHandler) *
 	}
 
 	r.Route("/auth", func(r chi.Router) {
-		r.Post("/google/check", ar.postGoogleCheck())
+		r.Post("/google", ar.postGoogle())
 		r.Delete("/", ar.delete())
 	})
 
 	return ar
 }
 
-func (ar *authRoute) postGoogleCheck() http.HandlerFunc {
+func (ar *authRoute) postGoogle() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {}
 }
 

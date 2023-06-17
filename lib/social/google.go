@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/google/uuid"
 	"github.com/pkg/errors"
 )
 
@@ -170,17 +171,20 @@ func (g *googlePeopleAPI) mapToGooglePeopleApiResponse(res *http.Response) (*goo
 }
 
 func (g *googlePeopleAPI) mapToGooglePeopleProfile(gapiRes *googlePeopleApiResponse) *googlePeopleProfile {
-	var socialId string
-	var email string
-	var photoUrl *string
-	var displayName *string
-
 	// uniq key
-	socialId = strings.ReplaceAll(
+	var socialId string = strings.ReplaceAll(
 		gapiRes.ResourceName,
 		"people/",
 		"",
 	)
+	var email string
+	var photoUrl *string
+	var displayName *string
+
+	// must be not null
+	if socialId == "" {
+		socialId = uuid.NewString()
+	}
 
 	if len(gapiRes.EmailAddresses) > 0 {
 		value := gapiRes.EmailAddresses[0].Value

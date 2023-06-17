@@ -27,7 +27,6 @@ func NewUserCommandHandler(
 func (uch *userCommandHandler) CreateForSocial(cmd *CreateUserCommand) (*user.User, *common.DomainError) {
 	u, err := user.NewUserWithoutId(
 		cmd.Email,
-		cmd.Username,
 		cmd.PhotoUrl,
 	)
 	if err != nil {

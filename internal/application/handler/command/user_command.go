@@ -10,6 +10,7 @@ type CreateUserCommand struct {
 }
 
 type UpdateUserCommand struct {
+	UserId   string
 	Email    string
 	Username string
 	PhotoUrl string

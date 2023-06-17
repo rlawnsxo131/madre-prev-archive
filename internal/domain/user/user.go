@@ -2,8 +2,10 @@ package user
 
 import (
 	"regexp"
+	"strings"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v3/core/utils"
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/common"
@@ -26,34 +28,50 @@ type User struct {
 	SocialAccount *UserSocialAccount `json:"socialAccount,omitempty"`
 }
 
-func NewUserWithoutId(email, username, photoUrl string) (*User, error) {
-	if email == "" || username == "" {
+func NewUserWithoutId(email, photoUrl string) (*User, error) {
+	if email == "" {
 		return nil, common.ErrMissingRequiredValue
 	}
+
+	// initial name is generated as uuid
+	return &User{
+		Email:    email,
+		Username: strings.ReplaceAll(uuid.NewString(), "-", ""),
+		PhotoUrl: photoUrl,
+	}, nil
+}
+
+func NewUserWithId(id, username, email, photoUrl string) (*User, error) {
+	if id == "" || username == "" || email == "" {
+		return nil, common.ErrMissingRequiredValue
+	}
+
 	if err := validateUsername(username); err != nil {
 		return nil, err
 	}
-	u := User{
-		Email:    email,
+
+	return &User{
+		Id:       id,
 		Username: username,
+		Email:    email,
 		PhotoUrl: photoUrl,
-	}
-	return &u, nil
+	}, nil
 }
 
 func (u *User) SetNewSocialAccount(socialId, socialUsername, provider string) error {
-	if socialId == "" || socialUsername == "" || provider == "" {
+	if socialId == "" || provider == "" {
 		return common.ErrMissingRequiredValue
 	}
 	if err := u.isSupportSocialProvider(provider); err != nil {
 		return err
 	}
-	sa := UserSocialAccount{
+
+	u.SocialAccount = &UserSocialAccount{
 		SocialId:       socialId,
 		SocialUsername: socialUsername,
 		Provider:       provider,
 	}
-	u.SocialAccount = &sa
+
 	return nil
 }
 

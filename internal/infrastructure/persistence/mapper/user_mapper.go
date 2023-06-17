@@ -12,7 +12,7 @@ func (um UserMapper) MapToModel(u *user.User) *model.User {
 	return &model.User{
 		Id:        u.Id,
 		Email:     u.Email,
-		Username:  u.Email,
+		Username:  u.Username,
 		PhotoUrl:  utils.NewNullString(u.PhotoUrl),
 		CreatedAt: u.CreatedAt,
 		UpdatedAt: u.UpdatedAt,

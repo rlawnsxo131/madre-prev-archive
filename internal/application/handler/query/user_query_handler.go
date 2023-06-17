@@ -10,8 +10,8 @@ type UserQueryHandler interface {
 }
 
 type userQueryHandler struct {
-	userQueryRepository       user.UserQueryRepository
-	userSocialQueryRepository user.UserSocialAccountQueryRepository
+	userQueryRepository              user.UserQueryRepository
+	userSocialAccountQueryRepository user.UserSocialAccountQueryRepository
 }
 
 func NewUserQueryHandler(
@@ -30,7 +30,7 @@ func (uqh *userQueryHandler) Get(q *GetUserQuery) (*user.User, *common.DomainErr
 		return nil, common.NewDomainError(err)
 	}
 
-	sa, err := uqh.userSocialQueryRepository.FindByUserId(q.UserId)
+	sa, err := uqh.userSocialAccountQueryRepository.FindByUserId(q.UserId)
 	if err != nil {
 		return nil, common.NewDomainError(err)
 	}
