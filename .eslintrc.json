@@ -52,7 +52,7 @@
   },
   "overrides": [
     {
-      "files": ["*.js"],
+      "files": ["*.js", "*.mjs"],
       "rules": {
         "@typescript-eslint/no-var-requires": "off"
       }
