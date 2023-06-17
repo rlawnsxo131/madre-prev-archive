@@ -14,4 +14,4 @@
 
 ### Previous Repository
 
-- v1: <https://github.com/rlawnsxo131/madre-server>
+- v1: <https://github.com/rlawnsxo131/madre-client>
