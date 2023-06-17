@@ -15,7 +15,7 @@ function prepare(key: string) {
   );
 }
 
-describe('<SwitchCase />는', () => {
+describe('<SwitchCase /> 는', () => {
   it("'a' 라는 값을 주면 'Hello A' 가 렌더링 된다.", () => {
     const controls = prepare('a');
 
