@@ -5,9 +5,9 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v4"
-	"github.com/google/uuid"
 	"github.com/pkg/errors"
 	"github.com/rlawnsxo131/madre-server-v3/core/env"
+	valueutil "github.com/rlawnsxo131/madre-server-v3/core/utils/value-util"
 )
 
 const (
@@ -113,7 +113,7 @@ func (m *manager) generateTokens(p *profile) (string, string, error) {
 	}
 
 	for _, tokenType := range tokenTypes {
-		claims.TokenUUID = uuid.NewString()
+		claims.TokenUUID = valueutil.NewUUIDString()
 
 		claims.RegisteredClaims = claimsMap[tokenType]
 

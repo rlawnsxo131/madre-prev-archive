@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/google/uuid"
 	"github.com/pkg/errors"
+	valueutil "github.com/rlawnsxo131/madre-server-v3/core/utils/value-util"
 )
 
 // Google people api Response
@@ -183,7 +183,7 @@ func (g *googlePeopleAPI) mapToGooglePeopleProfile(gapiRes *googlePeopleApiRespo
 
 	// must be not null
 	if socialId == "" {
-		socialId = uuid.NewString()
+		socialId = valueutil.NewUUIDString()
 	}
 
 	if len(gapiRes.EmailAddresses) > 0 {

@@ -5,9 +5,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/google/uuid"
 	"github.com/pkg/errors"
-	"github.com/rlawnsxo131/madre-server-v3/core/utils"
+	valueutil "github.com/rlawnsxo131/madre-server-v3/core/utils/value-util"
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/common"
 )
 
@@ -36,7 +35,7 @@ func NewUserWithoutId(email, photoUrl string) (*User, error) {
 	// initial name is generated as uuid
 	return &User{
 		Email:    email,
-		Username: strings.ReplaceAll(uuid.NewString(), "-", ""),
+		Username: strings.ReplaceAll(valueutil.NewUUIDString(), "-", ""),
 		PhotoUrl: photoUrl,
 	}, nil
 }
@@ -84,7 +83,7 @@ func (u *User) SetSocialAccount(sa *UserSocialAccount) error {
 }
 
 func (u *User) isSupportSocialProvider(provider string) error {
-	isContain := utils.Contains(
+	isContain := valueutil.Contains(
 		[]string{SOCIAL_PROVIDER_GOOGLE},
 		provider,
 	)

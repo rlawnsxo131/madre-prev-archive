@@ -6,7 +6,7 @@ import (
 
 	"github.com/jackc/pgx/v5"
 	"github.com/pkg/errors"
-	"github.com/rlawnsxo131/madre-server-v3/core/utils"
+	valueutil "github.com/rlawnsxo131/madre-server-v3/core/utils/value-util"
 )
 
 var (
@@ -26,7 +26,7 @@ func NewDomainError(err error, message ...string) *DomainError {
 	return &DomainError{
 		Err:     err,
 		Code:    getHttpStatusCodeFor(err),
-		Message: utils.ParseOptionalString(message...),
+		Message: valueutil.ParseOptionalString(message...),
 	}
 }
 

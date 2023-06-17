@@ -3,7 +3,7 @@ package mapper
 import (
 	"time"
 
-	"github.com/rlawnsxo131/madre-server-v3/core/utils"
+	valueutil "github.com/rlawnsxo131/madre-server-v3/core/utils/value-util"
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/user"
 	"github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/persistence/model"
 )
@@ -15,7 +15,7 @@ func (sam UserSocialAccountMapper) MapToModel(sa *user.UserSocialAccount) *model
 		Id:             sa.Id,
 		UserId:         sa.UserId,
 		SocialId:       sa.SocialId,
-		SocialUsername: utils.NewNullString(sa.SocialUsername),
+		SocialUsername: valueutil.NewNullString(sa.SocialUsername),
 		Provider:       sa.Provider,
 		UpdatedAt:      time.Now(),
 	}
@@ -26,7 +26,7 @@ func (sam UserSocialAccountMapper) MapToEntity(sa *model.SocialAccount) *user.Us
 		Id:             sa.Id,
 		UserId:         sa.UserId,
 		SocialId:       sa.SocialId,
-		SocialUsername: utils.NormalizeNullString(sa.SocialUsername),
+		SocialUsername: valueutil.NormalizeNullString(sa.SocialUsername),
 		Provider:       sa.Provider,
 	}
 }

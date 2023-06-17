@@ -3,7 +3,7 @@ package user_test
 import (
 	"testing"
 
-	"github.com/google/uuid"
+	valueutil "github.com/rlawnsxo131/madre-server-v3/core/utils/value-util"
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/common"
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/user"
 	"github.com/stretchr/testify/assert"
@@ -28,7 +28,7 @@ func Test_SetNewUserWithoutId_Success(t *testing.T) {
 func Test_SetNewUserWithId_Return_ErrUsernameRegexNotMatched(t *testing.T) {
 	assert := assert.New(t)
 
-	id := uuid.NewString()
+	id := valueutil.NewUUIDString()
 	username := "유저이름"
 	email := "email"
 	photoUrl := "photoUrl"

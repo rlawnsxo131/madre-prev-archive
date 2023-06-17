@@ -3,7 +3,7 @@ package httpresponse
 import (
 	"net/http"
 
-	"github.com/rlawnsxo131/madre-server-v3/core/utils"
+	valueutil "github.com/rlawnsxo131/madre-server-v3/core/utils/value-util"
 )
 
 type response struct {
@@ -12,7 +12,7 @@ type response struct {
 	Data   any    `json:"data"`
 }
 
-func NewResponse(code int, data any) *response {
+func New(code int, data any) *response {
 	return &response{
 		Code:   code,
 		Status: http.StatusText(code),
@@ -29,7 +29,7 @@ type errorResponse struct {
 func NewError(code int, msg ...string) *errorResponse {
 	m := map[string]any{}
 	if len(msg) > 0 {
-		m["message"] = utils.ParseOptionalString(msg...)
+		m["message"] = valueutil.ParseOptionalString(msg...)
 	}
 
 	return &errorResponse{

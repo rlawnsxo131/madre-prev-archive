@@ -1,8 +1,9 @@
-package utils
+package valueutil
 
 import (
 	"database/sql"
 
+	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 )
 
@@ -14,13 +15,6 @@ func Contains[T int | string](ss []T, value T) bool {
 		}
 	}
 	return false
-}
-
-func IfIsNotExistGetDefaultIntValue(value int, defaultValue int) int {
-	if value == 0 {
-		value = defaultValue
-	}
-	return value
 }
 
 func ParseOptionalString(ss ...string) string {
@@ -56,4 +50,9 @@ func ErrNoRowsReturnRawError(err error, customError error) error {
 		return err
 	}
 	return customError
+}
+
+// uuid
+func NewUUIDString() string {
+	return uuid.NewString()
 }
