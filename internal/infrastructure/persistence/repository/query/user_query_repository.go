@@ -24,7 +24,6 @@ func NewUserQueryRepository(db rdb.SingletonDatabase) user.UserQueryRepository {
 
 func (uqr *userQueryRepository) FindById(id string) (*user.User, error) {
 	conn, err := uqr.db.Conn()
-
 	if err != nil {
 		return nil, err
 	}
