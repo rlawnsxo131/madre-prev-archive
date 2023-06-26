@@ -42,6 +42,27 @@ func (hr *healthRoute) get() http.HandlerFunc {
 		// 	log.Println(u)
 		// }
 
+		// conn, _ := db.Conn()
+		// tx, _ := conn.BeginTx(context.Background(), pgx.TxOptions{})
+		// sql := "INSERT INTO public.user (email, username, photo_url)" +
+		// 	" VALUES (@email, @username, @photo_url)" +
+		// 	"RETURNING id"
+
+		// var id string
+
+		// row := tx.QueryRow(context.Background(), sql,
+		// 	pgx.NamedArgs{
+		// 		"email":     "email2",
+		// 		"username":  "username2",
+		// 		"photo_url": "photo_url",
+		// 	})
+
+		// if err := row.Scan(&id); err != nil {
+		// 	log.Println(err)
+		// } else {
+		// 	log.Println(id)
+		// }
+
 		httpresponse.NewWriter(w, r).Json(
 			httpresponse.NewResponse(
 				http.StatusOK,

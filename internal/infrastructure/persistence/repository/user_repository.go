@@ -18,18 +18,6 @@ func NewUserRepository(db rdb.SingletonDatabase) user.UserRepository {
 	}
 }
 
-const (
-	INSERT_USER_SQL = "INSERT INTO public.user" +
-		"(email, origin_name, username, photo_url)" +
-		" VALUES(:email, :username, :photo_url)" +
-		" RETURNING id"
-
-	INSERT_USER_SOCIAL_ACCOUNT_SQL = "INSERT INTO public.user_social_account" +
-		"(user_id, social_id, social_username, provider)" +
-		" VALUES(:user_id, :social_id, :social_username, :provider)" +
-		" RETURNING id"
-)
-
 func (ur *userRepository) CreateForSocial(u *user.User) (string, error) {
 	return "", nil
 }
