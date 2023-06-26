@@ -12,7 +12,7 @@ type response struct {
 	Data   any    `json:"data"`
 }
 
-func New(code int, data any) *response {
+func NewResponse(code int, data any) *response {
 	return &response{
 		Code:   code,
 		Status: http.StatusText(code),

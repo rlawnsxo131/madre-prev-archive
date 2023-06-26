@@ -49,7 +49,7 @@ func (ar *authRoute) delete() http.HandlerFunc {
 		token.NewManager().ResetCookies(w)
 
 		rw.Json(
-			httpresponse.New(
+			httpresponse.NewResponse(
 				http.StatusNoContent,
 				nil,
 			),

@@ -32,7 +32,7 @@ func (mr *meRoute) get() http.HandlerFunc {
 		p := token.ProfileFromCtx(r.Context())
 
 		httpresponse.NewWriter(w, r).Json(
-			httpresponse.New(
+			httpresponse.NewResponse(
 				http.StatusOK,
 				p,
 			),
@@ -73,7 +73,7 @@ func (mr *meRoute) getInfo() http.HandlerFunc {
 		}
 
 		rw.Json(
-			httpresponse.New(
+			httpresponse.NewResponse(
 				http.StatusOK,
 				u,
 			),

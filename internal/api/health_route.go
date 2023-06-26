@@ -43,7 +43,7 @@ func (hr *healthRoute) get() http.HandlerFunc {
 		// }
 
 		httpresponse.NewWriter(w, r).Json(
-			httpresponse.New(
+			httpresponse.NewResponse(
 				http.StatusOK,
 				data,
 			),
