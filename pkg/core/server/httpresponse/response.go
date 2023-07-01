@@ -3,7 +3,7 @@ package httpresponse
 import (
 	"net/http"
 
-	valueutil "github.com/rlawnsxo131/madre-server-v3/core/utils/value-util"
+	valueutil "github.com/rlawnsxo131/madre-server-v3/pkg/core/utils/value-util"
 )
 
 type response struct {

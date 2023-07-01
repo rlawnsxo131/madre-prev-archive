@@ -6,8 +6,8 @@ import (
 
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/pkg/errors"
-	"github.com/rlawnsxo131/madre-server-v3/core/env"
-	valueutil "github.com/rlawnsxo131/madre-server-v3/core/utils/value-util"
+	"github.com/rlawnsxo131/madre-server-v3/pkg/core/env"
+	valueutil "github.com/rlawnsxo131/madre-server-v3/pkg/core/utils/value-util"
 )
 
 const (

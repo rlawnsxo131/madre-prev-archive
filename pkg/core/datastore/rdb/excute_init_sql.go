@@ -11,7 +11,7 @@ import (
 )
 
 func ExcuteInitSQL(db SingletonDatabase) error {
-	file, err := os.ReadFile("./core/datastore/rdb/init.sql")
+	file, err := os.ReadFile("pkg/core/datastore/rdb/init.sql")
 	if err != nil {
 		return errors.Wrap(err, "ExcuteInitSQL ReadFile error")
 	}

@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/pkg/errors"
-	valueutil "github.com/rlawnsxo131/madre-server-v3/core/utils/value-util"
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/common"
+	valueutil "github.com/rlawnsxo131/madre-server-v3/pkg/core/utils/value-util"
 )
 
 var (

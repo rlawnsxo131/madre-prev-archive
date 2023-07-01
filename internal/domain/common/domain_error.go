@@ -6,7 +6,7 @@ import (
 
 	"github.com/jackc/pgx/v5"
 	"github.com/pkg/errors"
-	valueutil "github.com/rlawnsxo131/madre-server-v3/core/utils/value-util"
+	valueutil "github.com/rlawnsxo131/madre-server-v3/pkg/core/utils/value-util"
 )
 
 var (
