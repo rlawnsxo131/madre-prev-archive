@@ -10,10 +10,14 @@ type Row interface {
 }
 
 // function interfaces
-type QueryLayer interface {
+type CommonQueryLayer interface {
 	QueryRow(ctx context.Context, sql string, args ...any) Row
 }
 
+type QueryLayer interface {
+	CommonQueryLayer
+}
+
 type TxQueryLayer interface {
-	QueryRow(ctx context.Context, sql string, args ...any) Row
+	CommonQueryLayer
 }

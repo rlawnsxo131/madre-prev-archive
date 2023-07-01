@@ -52,9 +52,7 @@ func (uqr *userQueryRepository) FindById(id string) (*user.User, error) {
 }
 
 func (uqr *userQueryRepository) FindByUsername(username string) (*user.User, error) {
-	u := model.User{}
-
-	return uqr.mapper.MapToEntity(&u), nil
+	return nil, nil
 }
 
 func (uqr *userQueryRepository) ExistsByUsername(username string) (bool, error) {
