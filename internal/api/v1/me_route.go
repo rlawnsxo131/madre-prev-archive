@@ -5,9 +5,9 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/pkg/errors"
-	"github.com/rlawnsxo131/madre-server-v3/core/server/httpresponse"
-	"github.com/rlawnsxo131/madre-server-v3/core/token"
 	"github.com/rlawnsxo131/madre-server-v3/internal/application/handler/query"
+	"github.com/rlawnsxo131/madre-server-v3/pkg/core/server/httpresponse"
+	"github.com/rlawnsxo131/madre-server-v3/pkg/core/token"
 )
 
 type meRoute struct {

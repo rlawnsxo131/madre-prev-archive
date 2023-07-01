@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/pkg/errors"
-	"github.com/rlawnsxo131/madre-server-v3/core/server/httplogger"
+	"github.com/rlawnsxo131/madre-server-v3/pkg/core/server/httplogger"
 	"github.com/rs/zerolog"
 )
 

@@ -3,9 +3,9 @@ package mapper
 import (
 	"time"
 
-	valueutil "github.com/rlawnsxo131/madre-server-v3/core/utils/value-util"
 	"github.com/rlawnsxo131/madre-server-v3/internal/domain/user"
 	"github.com/rlawnsxo131/madre-server-v3/internal/infrastructure/persistence/model"
+	valueutil "github.com/rlawnsxo131/madre-server-v3/pkg/core/utils/value-util"
 )
 
 type UserSocialAccountMapper struct{}
