@@ -2,6 +2,7 @@ package user
 
 import (
 	"errors"
+	"net/mail"
 	"regexp"
 	"strings"
 	"time"
@@ -44,6 +45,10 @@ func NewUserWithId(id, username, email, photoUrl string) (*User, error) {
 		return nil, common.ErrMissingRequiredValue
 	}
 
+	if _, err := mail.ParseAddress(email); err != nil {
+		return nil, common.ErrNotSupportValue
+	}
+
 	if err := validateUsername(username); err != nil {
 		return nil, err
 	}
@@ -58,9 +63,11 @@ func NewUserWithId(id, username, email, photoUrl string) (*User, error) {
 
 func (u *User) SetNewSocialAccount(socialId, provider string) error {
 	socialAccount, err := newUserSocialAccount(socialId, provider)
+
 	if err != nil {
 		return err
 	}
+
 	u.SocialAccount = socialAccount
 
 	return nil
@@ -70,6 +77,7 @@ func (u *User) SetSocialAccount(sa *userSocialAccount) error {
 	if sa == nil {
 		return common.ErrMissingRequiredValue
 	}
+
 	u.SocialAccount = sa
 
 	return nil
@@ -80,14 +88,17 @@ func validateUsername(username string) error {
 		"^[a-zA-Z0-9]{1,25}$",
 		username,
 	)
+
 	if err != nil {
 		return errors.Join(
 			err,
 			errors.New("username regex MatchString parse error"),
 		)
 	}
+
 	if !match {
 		return ErrUsernameRegexNotMatched
 	}
+
 	return nil
 }
