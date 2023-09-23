@@ -34,9 +34,11 @@ func Reduce[S any, R any](
 	initValue R,
 ) R {
 	acc := initValue
+
 	for idx, v := range ss {
 		acc = f(acc, v, idx, ss)
 	}
+
 	return acc
 }
 
@@ -46,5 +48,6 @@ func Contains[T comparable](ss []T, value T) bool {
 			return true
 		}
 	}
+
 	return false
 }
