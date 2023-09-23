@@ -1,12 +1,14 @@
 package main
 
 import (
+	"encoding/json"
 	"errors"
 	"log"
 	"strconv"
 
 	"github.com/rlawnsxo131/madre-server/core/errorz"
 	"github.com/rlawnsxo131/madre-server/core/utils/funk"
+	"github.com/rlawnsxo131/madre-server/domain/user"
 )
 
 func main() {
@@ -14,8 +16,14 @@ func main() {
 
 	log.Println(errors.Join(errors.New("11"), errors.New("22")))
 	log.Println(errorz.New(errors.New("asdf")))
-	v := funk.Map[int, string]([]int{1, 2, 3, 4}, func(v, idx int, ss []string) string {
+
+	ss := funk.Map[int, string]([]int{1, 2, 3, 4}, func(v, idx int, ss []string) string {
 		return strconv.Itoa(v)
 	})
-	log.Println(v)
+	log.Println("ss: ", ss)
+
+	u, _ := user.NewUserWithoutId("email", "photoUrl")
+	u.SetNewSocialAccount("socialId", "GOOGLE")
+	jsonRes, _ := json.Marshal(u)
+	log.Println(string(jsonRes))
 }
