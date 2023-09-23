@@ -1,6 +1,8 @@
 package common
 
-import "errors"
+import (
+	"errors"
+)
 
 var (
 	ErrMissingRequiredValue = errors.New("missing required value")

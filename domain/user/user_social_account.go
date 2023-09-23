@@ -9,7 +9,7 @@ var (
 	_socialProviders = []string{"GOOGLE"}
 )
 
-type UserSocialAccount struct {
+type userSocialAccount struct {
 	Id             string `json:"id"`
 	UserId         string `json:"userId"`
 	SocialId       string `json:"socialId"`
@@ -17,7 +17,7 @@ type UserSocialAccount struct {
 	Provider       string `json:"provider"`
 }
 
-func NewUserSocialAccount(socialId, provider string) (*UserSocialAccount, error) {
+func newUserSocialAccount(socialId, provider string) (*userSocialAccount, error) {
 	if socialId == "" || provider == "" {
 		return nil, common.ErrMissingRequiredValue
 	}
@@ -26,7 +26,7 @@ func NewUserSocialAccount(socialId, provider string) (*UserSocialAccount, error)
 		return nil, common.ErrNotSupportValue
 	}
 
-	return &UserSocialAccount{
+	return &userSocialAccount{
 		SocialId: socialId,
 		Provider: provider,
 	}, nil

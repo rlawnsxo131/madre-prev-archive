@@ -23,7 +23,7 @@ type User struct {
 	PhotoUrl      string             `json:"photoUrl,omitempty"`
 	CreatedAt     time.Time          `json:"createdAt"`
 	UpdatedAt     time.Time          `json:"updatedAt"`
-	SocialAccount *UserSocialAccount `json:"socialAccount,omitempty"`
+	SocialAccount *userSocialAccount `json:"socialAccount,omitempty"`
 }
 
 func NewUserWithoutId(email, photoUrl string) (*User, error) {
@@ -57,7 +57,7 @@ func NewUserWithId(id, username, email, photoUrl string) (*User, error) {
 }
 
 func (u *User) SetNewSocialAccount(socialId, provider string) error {
-	socialAccount, err := NewUserSocialAccount(provider, provider)
+	socialAccount, err := newUserSocialAccount(socialId, provider)
 	if err != nil {
 		return err
 	}
@@ -66,7 +66,7 @@ func (u *User) SetNewSocialAccount(socialId, provider string) error {
 	return nil
 }
 
-func (u *User) SetSocialAccount(sa *UserSocialAccount) error {
+func (u *User) SetSocialAccount(sa *userSocialAccount) error {
 	if sa == nil {
 		return common.ErrMissingRequiredValue
 	}
