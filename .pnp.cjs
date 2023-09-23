@@ -16,30 +16,25 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:."\
       },\
       {\
-        "name": "app",\
-        "reference": "workspace:apps/app"\
-      },\
-      {\
-        "name": "@madre/common",\
-        "reference": "workspace:packages/common"\
-      },\
-      {\
         "name": "@madre/react",\
         "reference": "workspace:packages/react"\
       },\
       {\
         "name": "@madre/ui",\
         "reference": "workspace:packages/ui"\
+      },\
+      {\
+        "name": "@madre/utils",\
+        "reference": "workspace:packages/utils"\
       }\
     ],\
     "enableTopLevelFallback": true,\
     "ignorePatternData": "(^(?:\\\\.yarn\\\\/sdks(?:\\\\/(?!\\\\.{1,2}(?:\\\\/|$))(?:(?:(?!(?:^|\\\\/)\\\\.{1,2}(?:\\\\/|$)).)*?)|$))$)",\
     "fallbackExclusionList": [\
       ["@madre/client", ["workspace:."]],\
-      ["@madre/common", ["workspace:packages/common"]],\
       ["@madre/react", ["workspace:packages/react"]],\
       ["@madre/ui", ["workspace:packages/ui"]],\
-      ["app", ["workspace:apps/app"]]\
+      ["@madre/utils", ["workspace:packages/utils"]]\
     ],\
     "fallbackPool": [\
     ],\
@@ -3296,22 +3291,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
-      ["@madre/common", [\
-        ["workspace:packages/common", {\
-          "packageLocation": "./packages/common/",\
-          "packageDependencies": [\
-            ["@madre/common", "workspace:packages/common"],\
-            ["typescript", "patch:typescript@npm%3A5.2.2#~builtin<compat/typescript>::version=5.2.2&hash=f3b441"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
       ["@madre/react", [\
         ["workspace:packages/react", {\
           "packageLocation": "./packages/react/",\
           "packageDependencies": [\
             ["@madre/react", "workspace:packages/react"],\
-            ["@madre/common", "workspace:packages/common"],\
+            ["@madre/utils", "workspace:packages/utils"],\
             ["@testing-library/jest-dom", "virtual:e25defd80cd12dc27eb3838db674983a5b182a6568dbcc32c682ac631015ed24c9dcae41858e76f897f41dc821d084a2bf8e81658ca9b739708d46f2563a28c1#npm:6.1.3"],\
             ["@testing-library/react", "virtual:e25defd80cd12dc27eb3838db674983a5b182a6568dbcc32c682ac631015ed24c9dcae41858e76f897f41dc821d084a2bf8e81658ca9b739708d46f2563a28c1#npm:14.0.0"],\
             ["@testing-library/user-event", "virtual:e25defd80cd12dc27eb3838db674983a5b182a6568dbcc32c682ac631015ed24c9dcae41858e76f897f41dc821d084a2bf8e81658ca9b739708d46f2563a28c1#npm:14.5.1"],\
@@ -3331,8 +3316,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/ui/",\
           "packageDependencies": [\
             ["@madre/ui", "workspace:packages/ui"],\
-            ["@madre/common", "workspace:packages/common"],\
             ["@madre/react", "workspace:packages/react"],\
+            ["@madre/utils", "workspace:packages/utils"],\
             ["@storybook/addon-essentials", "virtual:349cd534ff4100362b32762c7bde3388c59b30b54450d44075378a4d695d03021da5e3431b38327b359f7c25a1d43e4ad10b112baaad16df29b92d1917405087#npm:7.4.2"],\
             ["@storybook/addon-interactions", "virtual:349cd534ff4100362b32762c7bde3388c59b30b54450d44075378a4d695d03021da5e3431b38327b359f7c25a1d43e4ad10b112baaad16df29b92d1917405087#npm:7.4.2"],\
             ["@storybook/addon-links", "virtual:349cd534ff4100362b32762c7bde3388c59b30b54450d44075378a4d695d03021da5e3431b38327b359f7c25a1d43e4ad10b112baaad16df29b92d1917405087#npm:7.4.2"],\
@@ -3347,6 +3332,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["storybook", "npm:7.4.2"],\
             ["typescript", "patch:typescript@npm%3A5.2.2#~builtin<compat/typescript>::version=5.2.2&hash=f3b441"],\
             ["vite", "virtual:df6dad177b2aa9c01db6c617da8de4d3559a6438651c3152aaa85f6f59569ee7cc47bbd88402c5a1f75d0679628a5d015a8690c0c481c11d8893844ba1fe5832#npm:4.4.9"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@madre/utils", [\
+        ["workspace:packages/utils", {\
+          "packageLocation": "./packages/utils/",\
+          "packageDependencies": [\
+            ["@madre/utils", "workspace:packages/utils"],\
+            ["typescript", "patch:typescript@npm%3A5.2.2#~builtin<compat/typescript>::version=5.2.2&hash=f3b441"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -6743,16 +6738,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["picomatch", "npm:2.3.1"]\
           ],\
           "linkType": "HARD"\
-        }]\
-      ]],\
-      ["app", [\
-        ["workspace:apps/app", {\
-          "packageLocation": "./apps/app/",\
-          "packageDependencies": [\
-            ["app", "workspace:apps/app"],\
-            ["typescript", "patch:typescript@npm%3A5.2.2#~builtin<compat/typescript>::version=5.2.2&hash=f3b441"]\
-          ],\
-          "linkType": "SOFT"\
         }]\
       ]],\
       ["app-root-dir", [\
