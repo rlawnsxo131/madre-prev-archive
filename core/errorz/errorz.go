@@ -5,6 +5,7 @@ import (
 	"strings"
 )
 
+/* @TODO stack 관련 고민 해보기 */
 type withStack struct {
 	err   error
 	stack string
