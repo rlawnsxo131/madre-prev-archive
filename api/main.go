@@ -4,10 +4,12 @@ import (
 	"encoding/json"
 	"errors"
 	"log"
+	"net/http"
 	"strconv"
 
 	"github.com/rlawnsxo131/madre-server/core/errorz"
 	"github.com/rlawnsxo131/madre-server/core/funk"
+	"github.com/rlawnsxo131/madre-server/core/httpserver"
 	"github.com/rlawnsxo131/madre-server/domain/user"
 )
 
@@ -22,8 +24,18 @@ func main() {
 	})
 	log.Println("ss: ", ss)
 
-	u, _ := user.NewUserWithoutId("email", "photoUrl")
+	u, err := user.NewUserWithoutId("asdf@gmail.com", "photoUrl")
+	if err != nil {
+		log.Fatal(err)
+	}
 	u.SetNewSocialAccount("socialId", "GOOGLE")
 	jsonRes, _ := json.Marshal(u)
 	log.Println(string(jsonRes))
+
+	s := httpserver.New("0.0.0.0:5001")
+	s.Route().Get("/ping", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("pong"))
+	})
+
+	s.Start()
 }
