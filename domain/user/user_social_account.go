@@ -1,8 +1,8 @@
 package user
 
 import (
-	"github.com/rlawnsxo131/madre-server/core/utils/funk"
-	"github.com/rlawnsxo131/madre-server/domain/common"
+	"github.com/rlawnsxo131/madre-server/core/funk"
+	"github.com/rlawnsxo131/madre-server/domain/domainerr"
 )
 
 var (
@@ -18,12 +18,14 @@ type userSocialAccount struct {
 }
 
 func newUserSocialAccount(socialId, provider string) (*userSocialAccount, error) {
-	if socialId == "" || provider == "" {
-		return nil, common.ErrMissingRequiredValue
+	if socialId == "" {
+		return nil, domainerr.NewErrMissingRequiredValue(socialId)
+	} else if provider == "" {
+		return nil, domainerr.NewErrMissingRequiredValue(provider)
 	}
 
-	if isContain := funk.Contains[string](_socialProviders, provider); !isContain {
-		return nil, common.ErrNotSupportValue
+	if !funk.Contains[string](_socialProviders, provider) {
+		return nil, domainerr.NewErrNotSupportValue(provider)
 	}
 
 	return &userSocialAccount{

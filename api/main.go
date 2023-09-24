@@ -7,7 +7,7 @@ import (
 	"strconv"
 
 	"github.com/rlawnsxo131/madre-server/core/errorz"
-	"github.com/rlawnsxo131/madre-server/core/utils/funk"
+	"github.com/rlawnsxo131/madre-server/core/funk"
 	"github.com/rlawnsxo131/madre-server/domain/user"
 )
 

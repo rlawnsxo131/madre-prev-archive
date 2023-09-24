@@ -7,14 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/rlawnsxo131/madre-server/domain/common"
-)
-
-var (
-	ErrUsernameRegexNotMatched = errors.Join(
-		common.ErrUnprocessableValue,
-		errors.New("username regex valdiation not matched"),
-	)
+	"github.com/rlawnsxo131/madre-server/domain/domainerr"
 )
 
 type User struct {
@@ -28,8 +21,14 @@ type User struct {
 }
 
 func NewUserWithoutId(email, photoUrl string) (*User, error) {
-	if email == "" || photoUrl == "" {
-		return nil, common.ErrMissingRequiredValue
+	if email == "" {
+		return nil, domainerr.NewErrMissingRequiredValue(email)
+	} else if photoUrl == "" {
+		return nil, domainerr.NewErrMissingRequiredValue(photoUrl)
+	}
+
+	if _, err := mail.ParseAddress(email); err != nil {
+		return nil, domainerr.NewErrNotSupportValue(email)
 	}
 
 	// initial name is generated as uuid
@@ -41,12 +40,16 @@ func NewUserWithoutId(email, photoUrl string) (*User, error) {
 }
 
 func NewUserWithId(id, username, email, photoUrl string) (*User, error) {
-	if id == "" || username == "" || email == "" {
-		return nil, common.ErrMissingRequiredValue
+	if id == "" {
+		return nil, domainerr.NewErrMissingRequiredValue(id)
+	} else if username == "" {
+		return nil, domainerr.NewErrMissingRequiredValue(username)
+	} else if email == "" {
+		return nil, domainerr.NewErrMissingRequiredValue(email)
 	}
 
 	if _, err := mail.ParseAddress(email); err != nil {
-		return nil, common.ErrNotSupportValue
+		return nil, domainerr.NewErrNotSupportValue(email)
 	}
 
 	if err := validateUsername(username); err != nil {
@@ -75,7 +78,7 @@ func (u *User) SetNewSocialAccount(socialId, provider string) error {
 
 func (u *User) SetSocialAccount(sa *userSocialAccount) error {
 	if sa == nil {
-		return common.ErrMissingRequiredValue
+		return domainerr.NewErrMissingRequiredValue(sa)
 	}
 
 	u.SocialAccount = sa
@@ -92,12 +95,12 @@ func validateUsername(username string) error {
 	if err != nil {
 		return errors.Join(
 			err,
-			errors.New("username regex MatchString parse error"),
+			domainerr.NewErrUnprocessableValue(username),
 		)
 	}
 
 	if !match {
-		return ErrUsernameRegexNotMatched
+		return domainerr.NewErrNotSupportValue(username)
 	}
 
 	return nil
