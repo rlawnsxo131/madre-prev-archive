@@ -12,7 +12,7 @@
     "zeroinstall": "yarn install --immutable --immutable-cache",
     "@madre/ui": "yarn workspace @madre/ui",
     "@madre/react": "yarn workspace @madre/react",
-    "@madre/utils": "yarn workspace @madre/utils",
+    "@madre/util": "yarn workspace @madre/util",
     "test:all": "yarn workspace @madre/react test",
     "start:ui": "yarn workspace @madre/ui storybook"
   },

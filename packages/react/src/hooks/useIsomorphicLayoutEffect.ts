@@ -1,4 +1,4 @@
-import { isClient } from '@madre/utils';
+import { isClient } from '@madre/util';
 import { useEffect, useLayoutEffect } from 'react';
 
 /**

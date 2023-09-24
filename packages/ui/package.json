@@ -7,7 +7,7 @@
   },
   "devDependencies": {
     "@madre/react": "workspace:*",
-    "@madre/utils": "workspace:*",
+    "@madre/util": "workspace:*",
     "@storybook/addon-essentials": "^7.4.2",
     "@storybook/addon-interactions": "^7.4.2",
     "@storybook/addon-links": "^7.4.2",

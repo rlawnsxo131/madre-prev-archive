@@ -1,5 +1,5 @@
 {
-  "name": "@madre/utils",
+  "name": "@madre/util",
   "packageManager": "yarn@3.6.3",
   "main": "src/index.ts",
   "devDependencies": {
