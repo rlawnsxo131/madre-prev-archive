@@ -48,6 +48,5 @@ func Contains[T comparable](ss []T, value T) bool {
 			return true
 		}
 	}
-
 	return false
 }

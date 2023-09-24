@@ -23,7 +23,8 @@ type User struct {
 func NewUserWithoutId(email, photoUrl string) (*User, error) {
 	if email == "" {
 		return nil, domainerr.NewErrMissingRequiredValue(email)
-	} else if photoUrl == "" {
+	}
+	if photoUrl == "" {
 		return nil, domainerr.NewErrMissingRequiredValue(photoUrl)
 	}
 
@@ -42,16 +43,17 @@ func NewUserWithoutId(email, photoUrl string) (*User, error) {
 func NewUserWithId(id, username, email, photoUrl string) (*User, error) {
 	if id == "" {
 		return nil, domainerr.NewErrMissingRequiredValue(id)
-	} else if username == "" {
+	}
+	if username == "" {
 		return nil, domainerr.NewErrMissingRequiredValue(username)
-	} else if email == "" {
+	}
+	if email == "" {
 		return nil, domainerr.NewErrMissingRequiredValue(email)
 	}
 
 	if _, err := mail.ParseAddress(email); err != nil {
 		return nil, domainerr.NewErrNotSupportValue(email)
 	}
-
 	if err := validateUsername(username); err != nil {
 		return nil, err
 	}

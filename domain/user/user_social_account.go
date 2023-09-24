@@ -20,7 +20,8 @@ type userSocialAccount struct {
 func newUserSocialAccount(socialId, provider string) (*userSocialAccount, error) {
 	if socialId == "" {
 		return nil, domainerr.NewErrMissingRequiredValue(socialId)
-	} else if provider == "" {
+	}
+	if provider == "" {
 		return nil, domainerr.NewErrMissingRequiredValue(provider)
 	}
 

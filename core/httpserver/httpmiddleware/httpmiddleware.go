@@ -1,10 +1,10 @@
 package httpmiddleware
 
 import (
+	"fmt"
 	"net/http"
-	"runtime/debug"
 
-	"github.com/pkg/errors"
+	"github.com/rlawnsxo131/madre-server/core/errorz"
 )
 
 func AllowHost(allowHostsWithoutProtocol []string) func(next http.Handler) http.Handler {
@@ -67,12 +67,11 @@ func Recover(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer func() {
 			if err := recover(); err != nil {
-				err := errors.Wrap(
-					errors.New(string(debug.Stack())),
-					"Recovery",
+				newErr := errorz.New(
+					fmt.Errorf("panic recover: %v", err),
 				)
 				w.WriteHeader(http.StatusInternalServerError)
-				w.Write([]byte(err.Error()))
+				w.Write([]byte(newErr.Error()))
 			}
 		}()
 		next.ServeHTTP(w, r)
