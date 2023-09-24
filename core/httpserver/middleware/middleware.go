@@ -1,4 +1,4 @@
-package httpmiddleware
+package middleware
 
 import (
 	"fmt"
@@ -11,6 +11,7 @@ func AllowHost(allowHostsWithoutProtocol []string) func(next http.Handler) http.
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			reqHost := r.Host
+
 			valid := false
 			for _, host := range allowHostsWithoutProtocol {
 				if reqHost == host {
@@ -22,6 +23,7 @@ func AllowHost(allowHostsWithoutProtocol []string) func(next http.Handler) http.
 				w.Write([]byte("forbidden host"))
 				return
 			}
+
 			next.ServeHTTP(w, r)
 		})
 	}
@@ -31,6 +33,7 @@ func Cors(allowHosts []string) func(next http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			origin := r.Header.Get("Origin")
+
 			valid := false
 			for _, host := range allowHosts {
 				if origin == host {
@@ -58,6 +61,7 @@ func Cors(allowHosts []string) func(next http.Handler) http.Handler {
 					}
 				}
 			}
+
 			next.ServeHTTP(w, r)
 		})
 	}

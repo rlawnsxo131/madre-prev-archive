@@ -41,7 +41,7 @@ func New(addr string) *httpServer {
 
 func (s *httpServer) Start() {
 	// Server run context
-	srvCtx, srvCtxCancel := context.WithCancel(context.Background())
+	srvCtx, srvStopCtx := context.WithCancel(context.Background())
 
 	// Listen for syscall signals for process to interrupt/quit
 	sig := make(chan os.Signal, 1)
@@ -50,29 +50,29 @@ func (s *httpServer) Start() {
 		<-sig
 
 		// Shutdown signal with grace period of 30 seconds
-		shutdownCtx, shutdownCtxCancel := context.WithTimeout(srvCtx, 30*time.Second)
-		defer shutdownCtxCancel()
+		shutdownCtx, shutdownStopCtx := context.WithTimeout(srvCtx, 30*time.Second)
+		defer shutdownStopCtx()
 
 		go func() {
 			<-shutdownCtx.Done()
 			if shutdownCtx.Err() == context.DeadlineExceeded {
-
+				log.Fatal("graceful shutdown timed out.. forcing exit.")
 			}
 		}()
 
 		// Trigger graceful shutdown
 		err := s.srv.Shutdown(shutdownCtx)
 		if err != nil {
-
+			log.Fatal(err)
 		}
-		srvCtxCancel()
+		srvStopCtx()
 	}()
 
 	// Run the server
 	log.Printf("server start at %v", s.srv.Addr)
 	err := s.srv.ListenAndServe()
 	if err != nil && err != http.ErrServerClosed {
-
+		log.Fatal(err)
 	}
 
 	// Wait for server context to be stopped

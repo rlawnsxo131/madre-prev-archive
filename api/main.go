@@ -6,8 +6,9 @@ import (
 	"runtime"
 
 	chi_middleware "github.com/go-chi/chi/v5/middleware"
+
 	"github.com/rlawnsxo131/madre-server/core/httpserver"
-	"github.com/rlawnsxo131/madre-server/core/httpserver/httpmiddleware"
+	http_middleware "github.com/rlawnsxo131/madre-server/core/httpserver/middleware"
 )
 
 func main() {
@@ -24,17 +25,17 @@ func main() {
 
 	s.Use(chi_middleware.RequestID)
 	s.Use(chi_middleware.RealIP)
-	// s.Use(httpmiddleware.Logger(hl))
-	s.Use(httpmiddleware.Recover)
+	// s.Use(http_middleware.Logger(hl))
+	s.Use(http_middleware.Recover)
 	s.Use(
-		httpmiddleware.AllowHost(
+		http_middleware.AllowHost(
 			[]string{"localhost:8080", "localhost:5001"},
 		),
 	)
-	s.Use(httpmiddleware.Cors(
+	s.Use(http_middleware.Cors(
 		[]string{"http://localhost:8080", "http://localhost:5001"},
 	))
-	// s.r.Use(httpmiddleware.JWT)
+	// s.r.Use(http_middleware.JWT)
 	s.Use(chi_middleware.Compress(5))
 
 	s.Route().Get("/ping", func(w http.ResponseWriter, r *http.Request) {
