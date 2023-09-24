@@ -1,7 +1,9 @@
 package main
 
 import (
+	"log"
 	"net/http"
+	"runtime"
 
 	chi_middleware "github.com/go-chi/chi/v5/middleware"
 	"github.com/rlawnsxo131/madre-server/core/httpserver"
@@ -9,6 +11,15 @@ import (
 )
 
 func main() {
+	coreCount := runtime.NumCPU()
+	runtime.GOMAXPROCS(coreCount - 1)
+
+	log.Printf(
+		"core count: %v, current max use cpu count: %v",
+		coreCount,
+		runtime.GOMAXPROCS(0),
+	)
+
 	s := httpserver.New("0.0.0.0:5001")
 
 	s.Use(chi_middleware.RequestID)
