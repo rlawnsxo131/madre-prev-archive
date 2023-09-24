@@ -14,7 +14,7 @@ func NewErrConflictUniqValue(value any) error {
 }
 
 func (e *errConflictUniqValue) Error() string {
-	return fmt.Sprintf("conflict unique value : %+v", e.value)
+	return fmt.Sprintf("conflict unique value: %+v", e.value)
 }
 
 func IsErrConflictUniqValue(err error) bool {

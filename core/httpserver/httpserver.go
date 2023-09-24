@@ -2,6 +2,7 @@ package httpserver
 
 import (
 	"context"
+	"log"
 	"net/http"
 	"os"
 	"os/signal"
@@ -68,6 +69,7 @@ func (s *httpServer) Start() {
 	}()
 
 	// Run the server
+	log.Printf("server start at %v", s.srv.Addr)
 	err := s.srv.ListenAndServe()
 	if err != nil && err != http.ErrServerClosed {
 
@@ -77,16 +79,9 @@ func (s *httpServer) Start() {
 	<-srvCtx.Done()
 }
 
-// func (s *httpServer) RegisterHTTPMiddleware(hl httplogger.HTTPLogger) {
-// 	s.r.Use(chi_middleware.RequestID)
-// 	s.r.Use(chi_middleware.RealIP)
-// 	s.r.Use(httpmiddleware.Logger(hl))
-// 	s.r.Use(httpmiddleware.Recovery)
-// 	s.r.Use(httpmiddleware.AllowHost)
-// 	s.r.Use(httpmiddleware.Cors)
-// 	s.r.Use(httpmiddleware.JWT)
-// 	s.r.Use(chi_middleware.Compress(5))
-// }
+func (s *httpServer) Use(middleware func(http.Handler) http.Handler) {
+	s.r.Use(middleware)
+}
 
 func (s *httpServer) Route() *chi.Mux {
 	return s.r
