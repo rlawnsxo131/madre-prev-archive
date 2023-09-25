@@ -10,14 +10,17 @@ var (
 )
 
 type userSocialAccount struct {
-	Id             string `json:"id"`
-	UserId         string `json:"userId"`
+	Id             int64  `json:"id"`
+	UserId         int64  `json:"userId"`
 	SocialId       string `json:"socialId"`
 	SocialUsername string `json:"socialUsername,omitempty"`
 	Provider       string `json:"provider"`
 }
 
-func newUserSocialAccount(socialId, provider string) (*userSocialAccount, error) {
+func newUserSocialAccount(userId int64, socialId, provider string) (*userSocialAccount, error) {
+	if userId == 0 {
+		return nil, domainerr.NewErrMissingRequiredValue(userId)
+	}
 	if socialId == "" {
 		return nil, domainerr.NewErrMissingRequiredValue(socialId)
 	}

@@ -11,7 +11,7 @@ import (
 )
 
 type User struct {
-	Id            string             `json:"id"`
+	Id            int64              `json:"id"`
 	Email         string             `json:"email"`
 	Username      string             `json:"username"`
 	PhotoUrl      string             `json:"photoUrl,omitempty"`
@@ -40,8 +40,8 @@ func NewUserWithoutId(email, photoUrl string) (*User, error) {
 	}, nil
 }
 
-func NewUserWithId(id, username, email, photoUrl string) (*User, error) {
-	if id == "" {
+func NewUserWithId(id int64, username, email, photoUrl string) (*User, error) {
+	if id == 0 {
 		return nil, domainerr.NewErrMissingRequiredValue(id)
 	}
 	if username == "" {
@@ -66,8 +66,8 @@ func NewUserWithId(id, username, email, photoUrl string) (*User, error) {
 	}, nil
 }
 
-func (u *User) SetNewSocialAccount(socialId, provider string) error {
-	socialAccount, err := newUserSocialAccount(socialId, provider)
+func (u *User) SetNewSocialAccount(userId int64, socialId, provider string) error {
+	socialAccount, err := newUserSocialAccount(userId, socialId, provider)
 
 	if err != nil {
 		return err
