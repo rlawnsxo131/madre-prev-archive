@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"database/sql"
 	"log"
 	"net/http"
@@ -46,15 +45,7 @@ func main() {
 	}
 
 	db := sql.OpenDB(connector)
-	ctx, ctxCancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer ctxCancel()
-
-	tx, err := db.BeginTx(ctx, &sql.TxOptions{})
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	err = persistence.ExcuteInitSQL(tx)
+	err = persistence.ExcuteInitSQL(db)
 	if err != nil {
 		log.Fatal(err)
 	}
