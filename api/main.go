@@ -27,6 +27,7 @@ func main() {
 	)
 
 	// @TODO 임시 테스트용 db connection
+	// db, err := sql.Open("mysql", "user:password@/dbname")
 	cfg := mysql.Config{
 		User:                 "root",
 		Passwd:               "1234",
