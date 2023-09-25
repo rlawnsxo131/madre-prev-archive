@@ -4,11 +4,11 @@
 
 - Go(workspace)
 
-### Prepare PostgreSQL Database
+### Prepare MySQL Database
 
 ```shell
 $ cd ./docker
-$ docker compose up -d
+$ docker-compose up -d
 ```
 
 ### Start

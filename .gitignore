@@ -36,4 +36,5 @@ tmp
 .env.prod
 
 # docker
-/docker/postgresql/data
+/docker/mysql/data/*
+/docker/mysql/log/*
