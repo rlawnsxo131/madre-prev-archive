@@ -1,6 +1,8 @@
 package repository
 
 import (
+	"context"
+
 	"github.com/huandu/go-sqlbuilder"
 	"github.com/rlawnsxo131/madre-server/domain/entity/user"
 	"github.com/rlawnsxo131/madre-server/domain/persistence"
@@ -19,7 +21,7 @@ func NewUserRepository() *userRepository {
 
 var _userStruct = sqlbuilder.NewStruct(&model.User{})
 
-func (ur *userRepository) FindById(queryLayer persistence.QueryLayer, id int64) (*user.User, error) {
+func (ur *userRepository) FindById(ctx context.Context, ql persistence.QueryLayer, id int64) (*user.User, error) {
 	sb := _userStruct.SelectFrom("user")
 	sb.Where(sb.Equal("id", id))
 
@@ -27,8 +29,8 @@ func (ur *userRepository) FindById(queryLayer persistence.QueryLayer, id int64) 
 
 	var u model.User
 
-	err := queryLayer.
-		QueryRow(sql, args).
+	err := ql.
+		QueryRowContext(ctx, sql, args).
 		Scan(_userStruct.Addr(&u)...)
 
 	if err != nil {

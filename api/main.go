@@ -1,14 +1,19 @@
 package main
 
 import (
+	"context"
+	"database/sql"
 	"log"
 	"net/http"
 	"runtime"
+	"time"
 
 	chi_middleware "github.com/go-chi/chi/v5/middleware"
 
+	"github.com/go-sql-driver/mysql"
 	"github.com/rlawnsxo131/madre-server/core/httpserver"
 	http_middleware "github.com/rlawnsxo131/madre-server/core/httpserver/middleware"
+	"github.com/rlawnsxo131/madre-server/domain/persistence"
 )
 
 func main() {
@@ -20,6 +25,38 @@ func main() {
 		coreCount,
 		runtime.GOMAXPROCS(0),
 	)
+
+	// @TODO 임시 테스트용 db connection
+	cfg := mysql.Config{
+		User:                 "root",
+		Passwd:               "1234",
+		Net:                  "tcp",
+		Addr:                 "127.0.0.1:3306",
+		Collation:            "utf8mb4_0900_ai_ci",
+		Loc:                  time.Local,
+		MaxAllowedPacket:     4 << 20.,
+		AllowNativePasswords: true,
+		CheckConnLiveness:    true,
+		DBName:               "madre",
+	}
+	connector, err := mysql.NewConnector(&cfg)
+	if err != nil {
+		panic(err)
+	}
+
+	db := sql.OpenDB(connector)
+	ctx, ctxCancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer ctxCancel()
+
+	tx, err := db.BeginTx(ctx, &sql.TxOptions{})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = persistence.ExcuteInitSQL(tx)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	s := httpserver.New("0.0.0.0:5001")
 

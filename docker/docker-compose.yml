@@ -17,7 +17,6 @@ services:
       - --collation-server=utf8mb4_unicode_ci
     environment:
       MYSQL_HOST: localhost
-      # MYSQL_USER: root
       MYSQL_ROOT_PASSWORD: 1234
       MYSQL_DATABASE: madre
       MYSQL_PASSWORD: 1234
