@@ -26,7 +26,6 @@ type httpServer struct {
 func New(addr string) *httpServer {
 	r := chi.NewRouter()
 	s := &httpServer{
-		r: r,
 		srv: &http.Server{
 			Addr: addr,
 			// Good practice to set timeouts to avoid Slowloris attacks.
@@ -83,6 +82,6 @@ func (s *httpServer) Use(middleware func(http.Handler) http.Handler) {
 	s.r.Use(middleware)
 }
 
-func (s *httpServer) Route() *chi.Mux {
+func (s *httpServer) Router() *chi.Mux {
 	return s.r
 }

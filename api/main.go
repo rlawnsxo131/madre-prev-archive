@@ -67,13 +67,13 @@ func main() {
 	// s.r.Use(http_middleware.JWT)
 	s.Use(chi_middleware.Compress(5))
 
-	s.Route().Get("/ping", func(w http.ResponseWriter, r *http.Request) {
+	s.Router().Get("/ping", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("pong"))
 	})
 
 	// @TODO dev 에서만 사용하도록 처리
 	// mux 가 모두 붙은 이후 사용해야 한다
-	s.Route().Mount("/debug", chi_middleware.Profiler())
+	s.Router().Mount("/debug", chi_middleware.Profiler())
 
 	s.Start()
 }
