@@ -38,6 +38,7 @@ func ExcuteInitSQL(db *sql.DB) error {
 			return err
 		}
 	}
+	tx.Commit()
 
 	return nil
 }

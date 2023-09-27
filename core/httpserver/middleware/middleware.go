@@ -71,11 +71,12 @@ func Recover(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer func() {
 			if err := recover(); err != nil {
-				newErr := errorz.New(
-					fmt.Errorf("panic recover: %v", err),
-				)
 				w.WriteHeader(http.StatusInternalServerError)
-				w.Write([]byte(newErr.Error()))
+				w.Write(
+					[]byte(
+						errorz.New(fmt.Errorf("panic recover: %v", err)).Error(),
+					),
+				)
 			}
 		}()
 		next.ServeHTTP(w, r)
