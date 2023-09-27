@@ -11,6 +11,7 @@ import (
 
 	"github.com/rlawnsxo131/madre-server/core/httpserver"
 	http_middleware "github.com/rlawnsxo131/madre-server/core/httpserver/middleware"
+	"github.com/rlawnsxo131/madre-server/core/logger"
 
 	"github.com/rlawnsxo131/madre-server/domain/persistence"
 
@@ -56,7 +57,7 @@ func main() {
 
 	s.Use(chi_middleware.RequestID)
 	s.Use(chi_middleware.RealIP)
-	// s.Use(http_middleware.Logger(hl))
+	s.Use(logger.HTTPMiddleware(logger.DefaultHTTPLogger))
 	s.Use(http_middleware.Recover)
 	s.Use(
 		http_middleware.AllowHost(
@@ -74,7 +75,6 @@ func main() {
 	})
 
 	// @TODO dev 에서만 사용하도록 처리
-	// mux 가 모두 붙은 이후 사용해야 한다
 	s.Router().Mount("/debug", chi_middleware.Profiler())
 
 	s.Start()
