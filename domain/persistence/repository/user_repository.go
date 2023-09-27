@@ -45,11 +45,6 @@ func (ur *userRepository) FindById(ctx context.Context, db *sql.DB, id int64) (*
 
 // sql, args := sb.Build()
 
-// var u model.User
-// err := db.
-// 	QueryRowContext(ctx, sql, args...).
-// 	Scan(_userStruct.Addr(&u)...)
-
 // var users []*user.User
 // rows, err := db.Query(sql, args...)
 // if err != nil {
