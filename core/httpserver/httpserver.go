@@ -26,6 +26,7 @@ type httpServer struct {
 func New(addr string) *httpServer {
 	r := chi.NewRouter()
 	s := &httpServer{
+		r: r,
 		srv: &http.Server{
 			Addr: addr,
 			// Good practice to set timeouts to avoid Slowloris attacks.

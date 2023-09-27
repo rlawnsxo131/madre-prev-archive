@@ -9,10 +9,12 @@ import (
 
 	chi_middleware "github.com/go-chi/chi/v5/middleware"
 
-	"github.com/go-sql-driver/mysql"
 	"github.com/rlawnsxo131/madre-server/core/httpserver"
 	http_middleware "github.com/rlawnsxo131/madre-server/core/httpserver/middleware"
+
 	"github.com/rlawnsxo131/madre-server/domain/persistence"
+
+	"github.com/go-sql-driver/mysql"
 )
 
 func main() {
@@ -50,7 +52,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	s := httpserver.New("0.0.0.0:5001")
+	s := httpserver.New("127.0.0.1:5001")
 
 	s.Use(chi_middleware.RequestID)
 	s.Use(chi_middleware.RealIP)
@@ -64,7 +66,7 @@ func main() {
 	s.Use(http_middleware.Cors(
 		[]string{"http://localhost:8080", "http://localhost:5001"},
 	))
-	// s.r.Use(http_middleware.JWT)
+	// s.Use(http_middleware.JWT)
 	s.Use(chi_middleware.Compress(5))
 
 	s.Router().Get("/ping", func(w http.ResponseWriter, r *http.Request) {
@@ -76,4 +78,5 @@ func main() {
 	s.Router().Mount("/debug", chi_middleware.Profiler())
 
 	s.Start()
+
 }
