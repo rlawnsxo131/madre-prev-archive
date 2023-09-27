@@ -20,7 +20,7 @@ type User struct {
 	SocialAccount *userSocialAccount `json:"socialAccount,omitempty"`
 }
 
-func NewUserWithoutId(email, photoUrl string) (*User, error) {
+func New(email, photoUrl string) (*User, error) {
 	if email == "" {
 		return nil, domainerr.NewErrMissingRequiredValue(email)
 	}
@@ -36,32 +36,6 @@ func NewUserWithoutId(email, photoUrl string) (*User, error) {
 	return &User{
 		Email:    email,
 		Username: strings.ReplaceAll("uuid 만들어야 함", "-", ""),
-		PhotoUrl: photoUrl,
-	}, nil
-}
-
-func NewUserWithId(id int64, username, email, photoUrl string) (*User, error) {
-	if id == 0 {
-		return nil, domainerr.NewErrMissingRequiredValue(id)
-	}
-	if username == "" {
-		return nil, domainerr.NewErrMissingRequiredValue(username)
-	}
-	if email == "" {
-		return nil, domainerr.NewErrMissingRequiredValue(email)
-	}
-
-	if _, err := mail.ParseAddress(email); err != nil {
-		return nil, domainerr.NewErrNotSupportValue(email)
-	}
-	if err := validateUsername(username); err != nil {
-		return nil, err
-	}
-
-	return &User{
-		Id:       id,
-		Username: username,
-		Email:    email,
 		PhotoUrl: photoUrl,
 	}, nil
 }

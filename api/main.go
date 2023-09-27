@@ -23,7 +23,7 @@ func main() {
 	runtime.GOMAXPROCS(coreCount - 1)
 
 	log.Printf(
-		"core count: %v, current max use cpu count: %v",
+		"core count: %v, max use cpu count: %v",
 		coreCount,
 		runtime.GOMAXPROCS(0),
 	)
@@ -40,6 +40,7 @@ func main() {
 		MaxAllowedPacket:     4 << 20.,
 		AllowNativePasswords: true,
 		CheckConnLiveness:    true,
+		ParseTime:            true,
 		DBName:               "madre",
 	}
 	connector, err := mysql.NewConnector(&cfg)

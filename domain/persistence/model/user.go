@@ -2,7 +2,6 @@ package model
 
 import (
 	"database/sql"
-
 	"time"
 
 	"github.com/rlawnsxo131/madre-server/core/utils"
