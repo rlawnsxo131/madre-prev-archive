@@ -29,7 +29,7 @@ func NewHTTPLogger(w io.Writer, f *httpLogFormatter) *HTTPLogger {
 	}
 }
 
-func (hl *HTTPLogger) NewLogEntry(r *http.Request, ww chi_middleware.WrapResponseWriter) HTTPLogEntry {
+func (hl *HTTPLogger) NewLogEntry(r *http.Request, ww chi_middleware.WrapResponseWriter) LogEntry {
 	return hl.f.NewLogEntry(hl.l, r, ww)
 }
 
@@ -40,7 +40,7 @@ func NewHTTPLogFormatter() *httpLogFormatter {
 	return &httpLogFormatter{}
 }
 
-func (hlf *httpLogFormatter) NewLogEntry(l *zerolog.Logger, r *http.Request, ww chi_middleware.WrapResponseWriter) HTTPLogEntry {
+func (hlf *httpLogFormatter) NewLogEntry(l *zerolog.Logger, r *http.Request, ww chi_middleware.WrapResponseWriter) LogEntry {
 	return &httpLogEntry{
 		l:    l,
 		r:    r,
@@ -51,12 +51,6 @@ func (hlf *httpLogFormatter) NewLogEntry(l *zerolog.Logger, r *http.Request, ww 
 }
 
 // entry
-type HTTPLogEntry interface {
-	ReadBody() error
-	Add(func(e *zerolog.Event))
-	Write(t time.Time)
-}
-
 type httpLogEntry struct {
 	l    *zerolog.Logger
 	r    *http.Request

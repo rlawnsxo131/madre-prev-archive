@@ -2,7 +2,7 @@ package persistence
 
 import (
 	"context"
-	"database/sql"
+	"log"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -15,7 +15,7 @@ var (
 	_basePath   = filepath.Dir(_b)
 )
 
-func ExcuteInitSQL(db *sql.DB) error {
+func ExcuteInitSQL(db QueryLayer) error {
 	file, err := os.ReadFile(
 		filepath.Join(_basePath, "init.sql"),
 	)
@@ -26,19 +26,13 @@ func ExcuteInitSQL(db *sql.DB) error {
 	ctx, ctxCancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer ctxCancel()
 
-	tx, err := db.BeginTx(ctx, &sql.TxOptions{})
-	if err != nil {
-		return err
-	}
-
 	queries := strings.Split(string(file), "\n\n")
 	for _, query := range queries {
-		if _, err := tx.Exec(query); err != nil {
-			tx.Rollback()
+		log.Printf("exec query: %s", query)
+		if _, err := db.ExecContext(ctx, query); err != nil {
 			return err
 		}
 	}
-	tx.Commit()
 
 	return nil
 }

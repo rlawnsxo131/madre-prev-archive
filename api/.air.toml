@@ -1,5 +1,3 @@
-# check the .air file located inside each module.
-
 root = "."
 testdata_dir = "testdata"
 tmp_dir = "tmp"

@@ -1,21 +1,24 @@
 package main
 
 import (
-	"database/sql"
+	"context"
 	"log"
 	"net/http"
+	"os"
 	"runtime"
 	"time"
 
 	chi_middleware "github.com/go-chi/chi/v5/middleware"
+	"github.com/go-sql-driver/mysql"
 
+	"github.com/rlawnsxo131/madre-server/core/funk"
 	"github.com/rlawnsxo131/madre-server/core/httpserver"
 	http_middleware "github.com/rlawnsxo131/madre-server/core/httpserver/middleware"
+
 	"github.com/rlawnsxo131/madre-server/core/logger"
+	"github.com/rlawnsxo131/madre-server/core/rdb"
 
 	"github.com/rlawnsxo131/madre-server/domain/persistence"
-
-	"github.com/go-sql-driver/mysql"
 )
 
 func main() {
@@ -28,30 +31,30 @@ func main() {
 		runtime.GOMAXPROCS(0),
 	)
 
-	// @TODO 임시 테스트용 db connection
-	// db, err := sql.Open("mysql", "user:password@/dbname")
-	cfg := mysql.Config{
+	db, err := rdb.CreateConnection(&mysql.Config{
 		User:                 "root",
 		Passwd:               "1234",
 		Net:                  "tcp",
 		Addr:                 "127.0.0.1:3306",
 		Collation:            "utf8mb4_0900_ai_ci",
 		Loc:                  time.Local,
-		MaxAllowedPacket:     4 << 20.,
 		AllowNativePasswords: true,
 		CheckConnLiveness:    true,
 		ParseTime:            true,
 		DBName:               "madre",
-	}
-	connector, err := mysql.NewConnector(&cfg)
-	if err != nil {
-		panic(err)
-	}
-
-	db := sql.OpenDB(connector)
-	err = persistence.ExcuteInitSQL(db)
+	})
 	if err != nil {
 		log.Fatal(err)
+	}
+
+	if os.Getenv("APP_ENV") == "local" {
+		if tx, err := db.BeginTx(context.Background(), nil); err != nil {
+			log.Fatal(err)
+			if err := persistence.ExcuteInitSQL(tx); err != nil {
+				tx.Rollback()
+				log.Fatal(err)
+			}
+		}
 	}
 
 	s := httpserver.New("127.0.0.1:5001")
@@ -75,9 +78,9 @@ func main() {
 		w.Write([]byte("pong"))
 	})
 
-	// @TODO dev 에서만 사용하도록 처리
-	s.Router().Mount("/debug", chi_middleware.Profiler())
+	if funk.Contains[string]([]string{"local", "dev"}, os.Getenv("APP_ENV")) {
+		s.Router().Mount("/debug", chi_middleware.Profiler())
+	}
 
 	s.Start()
-
 }

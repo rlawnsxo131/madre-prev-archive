@@ -2,6 +2,7 @@ package logger
 
 import (
 	"context"
+	"os"
 	"time"
 
 	"github.com/rs/zerolog"
@@ -26,4 +27,9 @@ func GetLogEntry(ctx context.Context) LogEntry {
 
 func SetLogEntry(ctx context.Context, le LogEntry) context.Context {
 	return context.WithValue(ctx, _key, le)
+}
+
+func NewDefaultZeroLogger() *zerolog.Logger {
+	l := zerolog.New(os.Stdout)
+	return &l
 }

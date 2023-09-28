@@ -2,33 +2,40 @@ package repository
 
 import (
 	"context"
-	"database/sql"
 
 	"github.com/huandu/go-sqlbuilder"
 	"github.com/rlawnsxo131/madre-server/domain/entity/user"
+	"github.com/rlawnsxo131/madre-server/domain/persistence"
 	"github.com/rlawnsxo131/madre-server/domain/persistence/model"
 )
 
 type userRepository struct {
+	l      *persistence.QueryLogger
 	mapper model.UserMapper
 }
 
 func NewUserRepository() *userRepository {
 	return &userRepository{
+		l:      persistence.NewQueryLogger(),
 		mapper: model.UserMapper{},
 	}
 }
 
 var _userStruct = sqlbuilder.NewStruct(&model.User{})
 
-func (ur *userRepository) FindById(ctx context.Context, db *sql.DB, id int64) (*user.User, error) {
+func (ur *userRepository) FindById(ctx context.Context, id int64, opts *persistence.QueryOptions) (*user.User, error) {
 	sb := _userStruct.SelectFrom("user")
 	sb.Where(sb.Equal("id", id))
 
+	if opts != nil && opts.WithTx {
+		sb.ForUpdate()
+	}
+
 	sql, args := sb.Build()
+	ur.l.Logging(sql, args)
 
 	var u model.User
-	err := db.
+	err := opts.DB.
 		QueryRowContext(ctx, sql, args...).
 		Scan(_userStruct.Addr(&u)...)
 
@@ -38,6 +45,16 @@ func (ur *userRepository) FindById(ctx context.Context, db *sql.DB, id int64) (*
 
 	return ur.mapper.MapToEntity(&u), nil
 }
+
+// use
+// repo := repository.NewUserRepository()
+// u, err := repo.FindById(
+// 	context.Background(), 1,
+// 	&persistence.QueryOptions{
+// 		DB:     db,
+// 		WithTx: true,
+// 	},
+// )
 
 // List select
 // sb := _userStruct.SelectFrom("user")
