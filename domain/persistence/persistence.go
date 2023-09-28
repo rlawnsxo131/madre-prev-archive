@@ -24,13 +24,13 @@ type QueryLogger struct {
 	l *zerolog.Logger
 }
 
-func NewQueryLogger() *QueryLogger {
-	return &QueryLogger{
+func NewQueryLogger() QueryLogger {
+	return QueryLogger{
 		l: logger.NewDefaultZeroLogger(),
 	}
 }
 
-func (ql *QueryLogger) Logging(sql string, args ...any) {
+func (ql QueryLogger) Logging(sql string, args ...any) {
 	ql.l.Log().
 		Str("time", time.Now().UTC().Format(time.RFC3339Nano)).
 		Str("SQL", sql).
