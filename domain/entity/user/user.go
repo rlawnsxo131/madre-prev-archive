@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/rlawnsxo131/madre-server/domain/domainerr"
+	"github.com/rlawnsxo131/madre-server/domain/errz"
 )
 
 type User struct {
@@ -22,14 +22,14 @@ type User struct {
 
 func New(email, photoUrl string) (*User, error) {
 	if email == "" {
-		return nil, domainerr.NewErrMissingRequiredValue(email)
+		return nil, errz.NewErrMissingRequiredValue(email)
 	}
 	if photoUrl == "" {
-		return nil, domainerr.NewErrMissingRequiredValue(photoUrl)
+		return nil, errz.NewErrMissingRequiredValue(photoUrl)
 	}
 
 	if _, err := mail.ParseAddress(email); err != nil {
-		return nil, domainerr.NewErrNotSupportValue(email)
+		return nil, errz.NewErrNotSupportValue(email)
 	}
 
 	// initial name is generated as uuid
@@ -42,11 +42,11 @@ func New(email, photoUrl string) (*User, error) {
 
 func (u *User) SetUsername(username string) error {
 	if username == "" {
-		return domainerr.NewErrMissingRequiredValue(username)
+		return errz.NewErrMissingRequiredValue(username)
 	}
 
 	if err := validateUsername(username); err != nil {
-		return domainerr.NewErrNotSupportValue(username)
+		return errz.NewErrNotSupportValue(username)
 	}
 
 	u.Username = username
@@ -68,7 +68,7 @@ func (u *User) SetNewSocialAccount(socialId, provider string) error {
 
 func (u *User) SetSocialAccount(sa *userSocialAccount) error {
 	if sa == nil {
-		return domainerr.NewErrMissingRequiredValue(sa)
+		return errz.NewErrMissingRequiredValue(sa)
 	}
 
 	u.SocialAccount = sa
@@ -85,12 +85,12 @@ func validateUsername(username string) error {
 	if err != nil {
 		return errors.Join(
 			err,
-			domainerr.NewErrUnprocessableValue(username),
+			errz.NewErrUnprocessableValue(username),
 		)
 	}
 
 	if !match {
-		return domainerr.NewErrNotSupportValue(username)
+		return errz.NewErrNotSupportValue(username)
 	}
 
 	return nil

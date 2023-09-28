@@ -1,4 +1,4 @@
-package domainerr
+package errz
 
 import (
 	"fmt"

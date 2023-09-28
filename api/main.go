@@ -7,9 +7,11 @@ import (
 	"runtime"
 	"time"
 
+	"github.com/go-chi/chi/v5"
 	chi_middleware "github.com/go-chi/chi/v5/middleware"
 	"github.com/go-sql-driver/mysql"
 
+	routerv1 "github.com/rlawnsxo131/madre-server/api/router/v1"
 	"github.com/rlawnsxo131/madre-server/core/funk"
 	"github.com/rlawnsxo131/madre-server/core/httpserver"
 	http_middleware "github.com/rlawnsxo131/madre-server/core/httpserver/middleware"
@@ -76,8 +78,18 @@ func main() {
 	// s.Use(http_middleware.JWT)
 	s.Use(chi_middleware.Compress(5))
 
-	s.Router().Get("/ping", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("pong"))
+	// register routes
+	s.Router().Route("/", func(r chi.Router) {
+		r.Get("/ping", func(w http.ResponseWriter, r *http.Request) {
+			w.WriteHeader(http.StatusOK)
+			w.Write([]byte("pong"))
+		})
+
+		r.Route("/api", func(r chi.Router) {
+			r.Route("/v1", func(r chi.Router) {
+				routerv1.NewAuthRouter(r)
+			})
+		})
 	})
 
 	if funk.Contains[string]([]string{"local", "dev"}, os.Getenv("APP_ENV")) {

@@ -3,7 +3,7 @@ package user
 import (
 	"testing"
 
-	"github.com/rlawnsxo131/madre-server/domain/domainerr"
+	"github.com/rlawnsxo131/madre-server/domain/errz"
 )
 
 func Test_User(t *testing.T) {
@@ -26,7 +26,7 @@ func Test_User(t *testing.T) {
 				photoUrl: "",
 			},
 			want: func(err error) bool {
-				return domainerr.IsErrMissingRequiredValue(err)
+				return errz.IsErrMissingRequiredValue(err)
 			},
 		},
 		{
@@ -39,7 +39,7 @@ func Test_User(t *testing.T) {
 				photoUrl: "photoUrl",
 			},
 			want: func(err error) bool {
-				return domainerr.IsErrMissingRequiredValue(err)
+				return errz.IsErrMissingRequiredValue(err)
 			},
 		},
 		{
@@ -52,7 +52,7 @@ func Test_User(t *testing.T) {
 				photoUrl: "",
 			},
 			want: func(err error) bool {
-				return domainerr.IsErrMissingRequiredValue(err)
+				return errz.IsErrMissingRequiredValue(err)
 			},
 		},
 		{
@@ -65,7 +65,7 @@ func Test_User(t *testing.T) {
 				photoUrl: "photo_url",
 			},
 			want: func(err error) bool {
-				return domainerr.IsErrNotSupportValue(err)
+				return errz.IsErrNotSupportValue(err)
 			},
 		},
 	}
@@ -115,7 +115,7 @@ func Test_User(t *testing.T) {
 				username: "",
 			},
 			want: func(err error) bool {
-				return domainerr.IsErrMissingRequiredValue(err)
+				return errz.IsErrMissingRequiredValue(err)
 			},
 		},
 		{
@@ -128,7 +128,7 @@ func Test_User(t *testing.T) {
 				username: "$@@!",
 			},
 			want: func(err error) bool {
-				return domainerr.IsErrNotSupportValue(err)
+				return errz.IsErrNotSupportValue(err)
 			},
 		},
 	}

@@ -1,4 +1,4 @@
-package domainerr
+package errz
 
 import (
 	"database/sql"
@@ -15,13 +15,12 @@ type DomainError struct {
 
 func New(err error, message ...string) *DomainError {
 	return &DomainError{
-		Err:  err,
-		Code: getHttpStatusCodeFor(err),
-		Msg:  strings.Join(message, ""),
+		Err: err,
+		Msg: strings.Join(message, ""),
 	}
 }
 
-func getHttpStatusCodeFor(err error) int {
+func GetHttpStatusCodeFor(err error) int {
 	switch {
 	case errors.Is(err, sql.ErrNoRows):
 		return http.StatusNotFound

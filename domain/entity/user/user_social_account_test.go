@@ -3,7 +3,7 @@ package user
 import (
 	"testing"
 
-	"github.com/rlawnsxo131/madre-server/domain/domainerr"
+	"github.com/rlawnsxo131/madre-server/domain/errz"
 )
 
 func Test_UserSocialAccount(t *testing.T) {
@@ -29,7 +29,7 @@ func Test_UserSocialAccount(t *testing.T) {
 				provider: "provider",
 			},
 			want: func(err error) bool {
-				return domainerr.IsErrMissingRequiredValue(err)
+				return errz.IsErrMissingRequiredValue(err)
 			},
 		},
 		{
@@ -44,7 +44,7 @@ func Test_UserSocialAccount(t *testing.T) {
 				provider: "provider",
 			},
 			want: func(err error) bool {
-				return domainerr.IsErrMissingRequiredValue(err)
+				return errz.IsErrMissingRequiredValue(err)
 			},
 		},
 		{
@@ -59,7 +59,7 @@ func Test_UserSocialAccount(t *testing.T) {
 				provider: "",
 			},
 			want: func(err error) bool {
-				return domainerr.IsErrMissingRequiredValue(err)
+				return errz.IsErrMissingRequiredValue(err)
 			},
 		},
 		{
@@ -74,7 +74,7 @@ func Test_UserSocialAccount(t *testing.T) {
 				provider: "provider",
 			},
 			want: func(err error) bool {
-				return domainerr.IsErrNotSupportValue(err)
+				return errz.IsErrNotSupportValue(err)
 			},
 		},
 	}

@@ -92,16 +92,6 @@ func (ur *UserRepository) ExistsUsername(
 	return exists, nil
 }
 
-// use
-// repo := repository.NewUserRepository()
-// u, err := repo.FindById(
-// 	context.Background(), 1,
-// 	&persistence.QueryOptions{
-// 		DB:     db,
-// 		WithTx: true,
-// 	},
-// )
-
 // List select
 // sb := _userStruct.SelectFrom("user")
 // sb.Where(sb.Equal("id", id))
