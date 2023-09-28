@@ -56,6 +56,7 @@ func main() {
 			tx.Rollback()
 			logger.DefaultLogger().Fatal().Err(err).Send()
 		}
+		tx.Commit()
 	}
 
 	s := httpserver.New("127.0.0.1:5001")
