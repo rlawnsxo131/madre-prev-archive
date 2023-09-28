@@ -40,8 +40,22 @@ func New(email, photoUrl string) (*User, error) {
 	}, nil
 }
 
-func (u *User) SetNewSocialAccount(userId int64, socialId, provider string) error {
-	socialAccount, err := newUserSocialAccount(userId, socialId, provider)
+func (u *User) SetUsername(username string) error {
+	if username == "" {
+		return domainerr.NewErrMissingRequiredValue(username)
+	}
+
+	if err := validateUsername(username); err != nil {
+		return domainerr.NewErrNotSupportValue(username)
+	}
+
+	u.Username = username
+
+	return nil
+}
+
+func (u *User) SetNewSocialAccount(socialId, provider string) error {
+	socialAccount, err := newUserSocialAccount(u.Id, socialId, provider)
 
 	if err != nil {
 		return err
@@ -64,7 +78,7 @@ func (u *User) SetSocialAccount(sa *userSocialAccount) error {
 
 func validateUsername(username string) error {
 	match, err := regexp.MatchString(
-		"^[a-zA-Z0-9]{1,25}$",
+		"^[a-zA-Z0-9]{1,50}$",
 		username,
 	)
 
