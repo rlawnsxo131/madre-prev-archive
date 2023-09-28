@@ -24,8 +24,8 @@ type QueryLogger struct {
 	l *zerolog.Logger
 }
 
-func NewQueryLogger() QueryLogger {
-	return QueryLogger{
+func NewQueryLogger() *QueryLogger {
+	return &QueryLogger{
 		l: logger.NewDefaultZeroLogger(),
 	}
 }

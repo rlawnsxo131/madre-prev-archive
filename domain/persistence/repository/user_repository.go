@@ -10,7 +10,7 @@ import (
 )
 
 type userRepository struct {
-	l      persistence.QueryLogger
+	l      *persistence.QueryLogger
 	mapper model.UserMapper
 }
 
@@ -23,7 +23,7 @@ func NewUserRepository() *userRepository {
 
 var _userStruct = sqlbuilder.NewStruct(&model.User{})
 
-func (ur *userRepository) FindById(ctx context.Context, id int64, opts persistence.QueryOptions) (*user.User, error) {
+func (ur *userRepository) FindById(ctx context.Context, id int64, opts *persistence.QueryOptions) (*user.User, error) {
 	sb := _userStruct.SelectFrom("user")
 	sb.Where(sb.Equal("id", id))
 
