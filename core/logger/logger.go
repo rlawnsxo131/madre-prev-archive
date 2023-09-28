@@ -32,15 +32,15 @@ func SetLogEntry(ctx context.Context, le LogEntry) context.Context {
 
 // thread safe singleton default logger
 var (
-	_defaultLogger     *zerolog.Logger
 	_onceDefaultLogger sync.Once
+	defaultLogger      *zerolog.Logger
 )
 
 func DefaultLogger() *zerolog.Logger {
 	_onceDefaultLogger.Do(func() {
-		_defaultLogger = NewDefaultLogger()
+		defaultLogger = NewDefaultLogger()
 	})
-	return _defaultLogger
+	return defaultLogger
 }
 
 // new instance logger
