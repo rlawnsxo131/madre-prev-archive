@@ -3,6 +3,7 @@ package logger
 import (
 	"context"
 	"os"
+	"sync"
 	"time"
 
 	"github.com/rs/zerolog"
@@ -29,7 +30,21 @@ func SetLogEntry(ctx context.Context, le LogEntry) context.Context {
 	return context.WithValue(ctx, _key, le)
 }
 
-func NewDefaultZeroLogger() *zerolog.Logger {
+// thread safe singleton default logger
+var (
+	_defaultLogger     *zerolog.Logger
+	_onceDefaultLogger sync.Once
+)
+
+func DefaultLogger() *zerolog.Logger {
+	_onceDefaultLogger.Do(func() {
+		_defaultLogger = NewDefaultLogger()
+	})
+	return _defaultLogger
+}
+
+// new instance logger
+func NewDefaultLogger() *zerolog.Logger {
 	l := zerolog.New(os.Stdout)
 	return &l
 }

@@ -1,13 +1,13 @@
 -- user
 CREATE TABLE IF NOT EXISTS madre.user(
   `id` BIGINT unsigned NOT NULL AUTO_INCREMENT,
-  `email` VARCHAR(255) NOT NULL,
   `username` VARCHAR(50) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
   `photo_url` VARCHAR(255) NULL DEFAULT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `ix_email` (`email`)
+  UNIQUE KEY `ix_username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- user_social_account

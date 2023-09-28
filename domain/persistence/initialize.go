@@ -2,12 +2,13 @@ package persistence
 
 import (
 	"context"
-	"log"
 	"os"
 	"path/filepath"
 	"runtime"
 	"strings"
 	"time"
+
+	"github.com/rlawnsxo131/madre-server/core/logger"
 )
 
 var (
@@ -28,7 +29,7 @@ func ExcuteInitSQL(db QueryLayer) error {
 
 	queries := strings.Split(string(file), "\n\n")
 	for _, query := range queries {
-		log.Printf("exec query: %s", query)
+		logger.DefaultLogger().Debug().Msgf("exec query: %s", query)
 		if _, err := db.ExecContext(ctx, query); err != nil {
 			return err
 		}

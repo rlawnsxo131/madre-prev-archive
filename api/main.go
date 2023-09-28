@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"log"
 	"net/http"
 	"os"
 	"runtime"
@@ -25,11 +24,10 @@ func main() {
 	coreCount := runtime.NumCPU()
 	runtime.GOMAXPROCS(coreCount - 1)
 
-	log.Printf(
-		"core count: %v, max use cpu count: %v",
-		coreCount,
-		runtime.GOMAXPROCS(0),
-	)
+	logger.DefaultLogger().
+		Info().
+		Int("core count", coreCount).
+		Int("max use cpu count", runtime.GOMAXPROCS(0)).Send()
 
 	db, err := rdb.CreateConnection(&mysql.Config{
 		User:                 "root",
@@ -44,16 +42,19 @@ func main() {
 		DBName:               "madre",
 	})
 	if err != nil {
-		log.Fatal(err)
+		logger.DefaultLogger().Fatal().Err(err).Send()
 	}
 
 	if os.Getenv("APP_ENV") == "local" {
-		if tx, err := db.BeginTx(context.Background(), nil); err != nil {
-			log.Fatal(err)
-			if err := persistence.ExcuteInitSQL(tx); err != nil {
-				tx.Rollback()
-				log.Fatal(err)
-			}
+		tx, err := db.BeginTx(context.Background(), nil)
+		if err != nil {
+			logger.DefaultLogger().Fatal().Err(err).Send()
+		}
+
+		err = persistence.ExcuteInitSQL(tx)
+		if err != nil {
+			tx.Rollback()
+			logger.DefaultLogger().Fatal().Err(err).Send()
 		}
 	}
 

@@ -2,7 +2,6 @@ package httpserver
 
 import (
 	"context"
-	"log"
 	"net/http"
 	"os"
 	"os/signal"
@@ -10,6 +9,7 @@ import (
 	"time"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/rlawnsxo131/madre-server/core/logger"
 )
 
 const (
@@ -56,23 +56,23 @@ func (s *httpServer) Start() {
 		go func() {
 			<-shutdownCtx.Done()
 			if shutdownCtx.Err() == context.DeadlineExceeded {
-				log.Fatal("graceful shutdown timed out.. forcing exit.")
+				logger.DefaultLogger().Fatal().Msg("graceful shutdown timed out.. forcing exit.")
 			}
 		}()
 
 		// Trigger graceful shutdown
 		err := s.srv.Shutdown(shutdownCtx)
 		if err != nil {
-			log.Fatal(err)
+			logger.DefaultLogger().Fatal().Err(err).Send()
 		}
 		srvStopCtx()
 	}()
 
 	// Run the server
-	log.Printf("server start at %v", s.srv.Addr)
+	logger.DefaultLogger().Info().Msgf("server start at %v", s.srv.Addr)
 	err := s.srv.ListenAndServe()
 	if err != nil && err != http.ErrServerClosed {
-		log.Fatal(err)
+		logger.DefaultLogger().Fatal().Err(err).Send()
 	}
 
 	// Wait for server context to be stopped

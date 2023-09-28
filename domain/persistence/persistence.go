@@ -10,8 +10,9 @@ import (
 )
 
 type QueryLayer interface {
-	ExecContext(ctx context.Context, query string, args ...any) (sql.Result, error)
 	QueryRowContext(ctx context.Context, query string, args ...any) *sql.Row
+	QueryContext(ctx context.Context, query string, args ...any) (*sql.Rows, error)
+	ExecContext(ctx context.Context, query string, args ...any) (sql.Result, error)
 }
 
 type QueryOptions struct {
@@ -26,7 +27,7 @@ type QueryLogger struct {
 
 func NewQueryLogger() *QueryLogger {
 	return &QueryLogger{
-		l: logger.NewDefaultZeroLogger(),
+		l: logger.NewDefaultLogger(),
 	}
 }
 

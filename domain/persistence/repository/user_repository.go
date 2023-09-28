@@ -2,6 +2,8 @@ package repository
 
 import (
 	"context"
+	"database/sql"
+	"errors"
 
 	"github.com/huandu/go-sqlbuilder"
 	"github.com/rlawnsxo131/madre-server/domain/entity/user"
@@ -9,13 +11,13 @@ import (
 	"github.com/rlawnsxo131/madre-server/domain/persistence/model"
 )
 
-type userRepository struct {
+type UserRepository struct {
 	l      *persistence.QueryLogger
 	mapper model.UserMapper
 }
 
-func NewUserRepository() *userRepository {
-	return &userRepository{
+func NewUserRepository() *UserRepository {
+	return &UserRepository{
 		l:      persistence.NewQueryLogger(),
 		mapper: model.UserMapper{},
 	}
@@ -23,7 +25,11 @@ func NewUserRepository() *userRepository {
 
 var _userStruct = sqlbuilder.NewStruct(&model.User{})
 
-func (ur *userRepository) FindById(ctx context.Context, id int64, opts *persistence.QueryOptions) (*user.User, error) {
+func (ur *UserRepository) FindById(
+	ctx context.Context,
+	id int64,
+	opts *persistence.QueryOptions,
+) (*user.User, error) {
 	sb := _userStruct.SelectFrom("user")
 	sb.Where(sb.Equal("id", id))
 
@@ -31,12 +37,13 @@ func (ur *userRepository) FindById(ctx context.Context, id int64, opts *persiste
 		sb.ForUpdate()
 	}
 
-	sql, args := sb.Build()
-	ur.l.Logging(sql, args)
+	query, args := sb.Build()
+
+	ur.l.Logging(query, args)
 
 	var u model.User
 	err := opts.DB.
-		QueryRowContext(ctx, sql, args...).
+		QueryRowContext(ctx, query, args...).
 		Scan(_userStruct.Addr(&u)...)
 
 	if err != nil {
@@ -44,6 +51,45 @@ func (ur *userRepository) FindById(ctx context.Context, id int64, opts *persiste
 	}
 
 	return ur.mapper.MapToEntity(&u), nil
+}
+
+func (ur *UserRepository) ExistsUsername(
+	ctx context.Context,
+	username string,
+	opts *persistence.QueryOptions,
+) (bool, error) {
+	sb := sqlbuilder.NewSelectBuilder()
+	existsSb := sqlbuilder.NewSelectBuilder()
+
+	query, args := sb.
+		Select("true").
+		From("user").
+		Where(
+			sb.Exists(
+				existsSb.
+					Select("1").
+					From("user").
+					Where(
+						existsSb.Equal("username", username),
+					),
+			),
+		).Build()
+
+	ur.l.Logging(query, args)
+
+	var exists bool
+	err := opts.DB.
+		QueryRowContext(ctx, query, args...).
+		Scan(&exists)
+
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return false, nil
+		}
+		return false, err
+	}
+
+	return exists, nil
 }
 
 // use
