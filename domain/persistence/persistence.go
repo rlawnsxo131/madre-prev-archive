@@ -9,14 +9,14 @@ import (
 	"github.com/rs/zerolog"
 )
 
-type QueryLayer interface {
+type Conn interface {
 	QueryRowContext(ctx context.Context, query string, args ...any) *sql.Row
 	QueryContext(ctx context.Context, query string, args ...any) (*sql.Rows, error)
 	ExecContext(ctx context.Context, query string, args ...any) (sql.Result, error)
 }
 
 type QueryOptions struct {
-	DB     QueryLayer
+	Conn   Conn
 	WithTx bool
 }
 

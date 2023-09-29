@@ -42,7 +42,7 @@ func (ur *UserRepository) FindById(
 	ur.l.Logging(query, args)
 
 	var u model.User
-	err := opts.DB.
+	err := opts.Conn.
 		QueryRowContext(ctx, query, args...).
 		Scan(_userStruct.Addr(&u)...)
 
@@ -53,7 +53,7 @@ func (ur *UserRepository) FindById(
 	return ur.mapper.MapToEntity(&u), nil
 }
 
-func (ur *UserRepository) ExistsUsername(
+func (ur *UserRepository) ExistsByUsername(
 	ctx context.Context,
 	username string,
 	opts *persistence.QueryOptions,
@@ -78,7 +78,7 @@ func (ur *UserRepository) ExistsUsername(
 	ur.l.Logging(query, args)
 
 	var exists bool
-	err := opts.DB.
+	err := opts.Conn.
 		QueryRowContext(ctx, query, args...).
 		Scan(&exists)
 

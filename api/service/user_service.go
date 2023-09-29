@@ -7,26 +7,26 @@ import (
 	"github.com/rlawnsxo131/madre-server/domain/persistence/repository"
 )
 
-type UserAccountService struct {
-	db       persistence.QueryLayer
+type UserService struct {
+	db       persistence.Conn
 	userRepo *repository.UserRepository
 }
 
 func NewUserAccountService(
-	db persistence.QueryLayer,
-) *UserAccountService {
-	return &UserAccountService{
+	db persistence.Conn,
+) *UserService {
+	return &UserService{
 		db:       db,
 		userRepo: repository.NewUserRepository(),
 	}
 }
 
-func (uas *UserAccountService) IsConflictUsername(username string) (bool, error) {
-	exists, err := uas.userRepo.ExistsUsername(
+func (us *UserService) IsExistsUsername(username string) (bool, error) {
+	exists, err := us.userRepo.ExistsByUsername(
 		context.Background(),
 		username,
 		&persistence.QueryOptions{
-			DB: uas.db,
+			Conn: us.db,
 		},
 	)
 

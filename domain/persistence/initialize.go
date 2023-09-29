@@ -16,7 +16,7 @@ var (
 	_basePath   = filepath.Dir(_b)
 )
 
-func ExcuteInitSQL(db QueryLayer) error {
+func ExcuteInitSQL(conn Conn) error {
 	file, err := os.ReadFile(
 		filepath.Join(_basePath, "init.sql"),
 	)
@@ -30,7 +30,7 @@ func ExcuteInitSQL(db QueryLayer) error {
 	queries := strings.Split(string(file), "\n\n")
 	for _, query := range queries {
 		logger.DefaultLogger().Debug().Msgf("exec query: %s", query)
-		if _, err := db.ExecContext(ctx, query); err != nil {
+		if _, err := conn.ExecContext(ctx, query); err != nil {
 			return err
 		}
 	}
