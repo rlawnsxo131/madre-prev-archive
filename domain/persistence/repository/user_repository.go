@@ -55,8 +55,8 @@ func (ur *UserRepository) FindById(
 
 func (ur *UserRepository) ExistsByUsername(
 	ctx context.Context,
-	username string,
 	opts *persistence.QueryOptions,
+	username string,
 ) (bool, error) {
 	sb := sqlbuilder.NewSelectBuilder()
 	existsSb := sqlbuilder.NewSelectBuilder()

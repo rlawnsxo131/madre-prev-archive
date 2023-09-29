@@ -22,8 +22,9 @@ func NewAuthRouter(r chi.Router, db persistence.Conn) *authRouter {
 
 	r.Route("/auth", func(r chi.Router) {
 		r.Post("/check-registration/{provider}", ar.checkRegistration())
-		r.Post("/signup", func(w http.ResponseWriter, r *http.Request) {})
-		r.Post("/login", func(w http.ResponseWriter, r *http.Request) {})
+		r.Post("/signup/{provider}", ar.signup())
+		r.Post("/login/{provider}", ar.login())
+		r.Delete("/logout", ar.logout())
 	})
 
 	return ar
@@ -33,7 +34,7 @@ func (ar *authRouter) checkRegistration() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		provider := chi.URLParam(r, "provider")
 		var body = struct {
-			AccessToken string `json:"accessToken" validate:"min=8,max=50,regexp=^[a-zA-Z0-9]"`
+			AccessToken string `json:"accessToken" validate:"min=8,max=25,regexp=^[a-zA-Z0-9]"`
 		}{}
 
 		if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
@@ -42,19 +43,33 @@ func (ar *authRouter) checkRegistration() http.HandlerFunc {
 			return
 		}
 		if err := validator.Validate(body); err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
+			w.WriteHeader(http.StatusUnprocessableEntity)
 			w.Write([]byte(err.Error()))
 			return
 		}
 
-		httpresponse.Json(w, r,
-			httpresponse.NewResponse(
+		jsonRes, _ := json.Marshal(
+			httpresponse.New(
 				http.StatusOK,
 				map[string]any{
-					"provider": provider,
-					"token":    body.AccessToken,
+					"provider":    provider,
+					"accessToken": body.AccessToken,
 				},
+				nil,
 			),
 		)
+		w.Write(jsonRes)
 	}
+}
+
+func (ar *authRouter) signup() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {}
+}
+
+func (ar *authRouter) login() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {}
+}
+
+func (ar *authRouter) logout() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {}
 }

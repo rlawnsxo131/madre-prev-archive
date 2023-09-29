@@ -8,15 +8,15 @@ import (
 )
 
 type UserService struct {
-	db       persistence.Conn
+	conn     persistence.Conn
 	userRepo *repository.UserRepository
 }
 
 func NewUserService(
-	db persistence.Conn,
+	conn persistence.Conn,
 ) *UserService {
 	return &UserService{
-		db:       db,
+		conn:     conn,
 		userRepo: repository.NewUserRepository(),
 	}
 }
@@ -24,10 +24,10 @@ func NewUserService(
 func (us *UserService) IsExistsUsername(username string) (bool, error) {
 	exists, err := us.userRepo.ExistsByUsername(
 		context.Background(),
-		username,
 		&persistence.QueryOptions{
-			Conn: us.db,
+			Conn: us.conn,
 		},
+		username,
 	)
 
 	if err != nil {
