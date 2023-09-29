@@ -2,7 +2,11 @@
 
 ### Project Stack
 
-- Go(workspace)
+- Golang(workspace)
+    - go-chi
+    - go-sqlbuilder
+- MySQL
+- Docker
 
 ### Prepare MySQL Database
 

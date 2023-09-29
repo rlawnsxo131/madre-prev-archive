@@ -12,7 +12,7 @@ type UserService struct {
 	userRepo *repository.UserRepository
 }
 
-func NewUserAccountService(
+func NewUserService(
 	db persistence.Conn,
 ) *UserService {
 	return &UserService{

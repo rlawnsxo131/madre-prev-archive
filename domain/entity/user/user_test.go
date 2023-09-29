@@ -68,6 +68,19 @@ func Test_User(t *testing.T) {
 				return errz.IsErrNotSupportValue(err)
 			},
 		},
+		{
+			name: "photoUrl 형식이 잘못 되었을때 errMissingRequiredValue 에러를 리턴한다",
+			args: struct {
+				email    string
+				photoUrl string
+			}{
+				email:    "email",
+				photoUrl: "photo_url",
+			},
+			want: func(err error) bool {
+				return errz.IsErrNotSupportValue(err)
+			},
+		},
 	}
 
 	for _, tt := range newTests {
@@ -82,7 +95,7 @@ func Test_User(t *testing.T) {
 	// New Success
 	t.Run("user 를 올바른 값으로 만들고, 에러는 nil 을 리턴한다", func(t *testing.T) {
 		email := "rlawnsxo131@gmail.com"
-		photoUrl := "photoUrl"
+		photoUrl := "https://google.com"
 		u, err := New(email, photoUrl)
 
 		if err != nil {

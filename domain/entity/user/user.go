@@ -3,6 +3,7 @@ package user
 import (
 	"errors"
 	"net/mail"
+	"net/url"
 	"regexp"
 	"strings"
 	"time"
@@ -30,6 +31,9 @@ func New(email, photoUrl string) (*User, error) {
 
 	if _, err := mail.ParseAddress(email); err != nil {
 		return nil, errz.NewErrNotSupportValue(email)
+	}
+	if _, err := url.ParseRequestURI(photoUrl); err != nil {
+		return nil, errz.NewErrNotSupportValue(photoUrl)
 	}
 
 	// initial name is generated as uuid

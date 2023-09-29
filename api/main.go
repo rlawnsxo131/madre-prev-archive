@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"net/http"
 	"os"
 	"runtime"
@@ -18,8 +17,6 @@ import (
 
 	"github.com/rlawnsxo131/madre-server/core/logger"
 	"github.com/rlawnsxo131/madre-server/core/rdb"
-
-	"github.com/rlawnsxo131/madre-server/domain/persistence"
 )
 
 func main() {
@@ -47,20 +44,6 @@ func main() {
 		logger.DefaultLogger().Fatal().Err(err).Send()
 	}
 
-	if os.Getenv("APP_ENV") == "local" {
-		tx, err := db.BeginTx(context.Background(), nil)
-		if err != nil {
-			logger.DefaultLogger().Fatal().Err(err).Send()
-		}
-
-		err = persistence.ExcuteInitSQL(tx)
-		if err != nil {
-			tx.Rollback()
-			logger.DefaultLogger().Fatal().Err(err).Send()
-		}
-		tx.Commit()
-	}
-
 	s := httpserver.New("127.0.0.1:5001")
 
 	s.Use(chi_middleware.RequestID)
@@ -75,6 +58,10 @@ func main() {
 	s.Use(http_middleware.Cors(
 		[]string{"http://localhost:8080", "http://localhost:5001"},
 	))
+	s.Use(chi_middleware.NoCache)
+	s.Use(chi_middleware.Throttle(100))
+	// s.Use(chi_middleware.ContentCharset([]string{"UTF-8", ""}...))
+	// s.Use(chi_middleware.AllowContentEncoding("gzip", "deflate", "compress")) // this middleware doesn't support br encoding
 	// s.Use(http_middleware.JWT)
 	s.Use(chi_middleware.Compress(5))
 
@@ -87,7 +74,7 @@ func main() {
 
 		r.Route("/api", func(r chi.Router) {
 			r.Route("/v1", func(r chi.Router) {
-				routerv1.NewAuthRouter(r)
+				routerv1.NewAuthRouter(r, db)
 			})
 		})
 	})
