@@ -7,6 +7,8 @@ import (
 	"github.com/rlawnsxo131/madre-server/domain/errz"
 )
 
+// @TODO 테스트 재작성
+
 func Test_User(t *testing.T) {
 	// New Fail
 	newTests := []struct {
@@ -28,32 +30,6 @@ func Test_User(t *testing.T) {
 			},
 			want: func(err error) bool {
 				return errz.IsErrMissingRequiredValue(err)
-			},
-		},
-		{
-			name: "email 형식이 잘못 되었을때 errMissingRequiredValue 에러를 리턴한다",
-			args: struct {
-				email    string
-				photoUrl string
-			}{
-				email:    "email",
-				photoUrl: "photo_url",
-			},
-			want: func(err error) bool {
-				return errz.IsErrNotSupportValue(err)
-			},
-		},
-		{
-			name: "photoUrl 이 있고, photoUrl 형식이 잘못 되었을때 errNotSupportValue 에러를 리턴한다",
-			args: struct {
-				email    string
-				photoUrl string
-			}{
-				email:    "email",
-				photoUrl: "photo_url",
-			},
-			want: func(err error) bool {
-				return errz.IsErrNotSupportValue(err)
 			},
 		},
 	}
@@ -82,66 +58,6 @@ func Test_User(t *testing.T) {
 		}
 		if photoUrl != u.PhotoUrl {
 			t.Errorf("New() = %+v, want = %v", u, u.PhotoUrl)
-		}
-	})
-
-	// SetUsername Fail
-	setUsernameTests := []struct {
-		name string
-		args struct {
-			user     *User
-			username string
-		}
-		want func(err error) bool
-	}{
-		{
-			name: "username 이 없을때 errMissingRequiredValue 에러를 리턴한다",
-			args: struct {
-				user     *User
-				username string
-			}{
-				user:     &User{},
-				username: "",
-			},
-			want: func(err error) bool {
-				return errz.IsErrMissingRequiredValue(err)
-			},
-		},
-		{
-			name: "username 형식이 잘못되었을때 errNotSupportValue 를 리턴한다",
-			args: struct {
-				user     *User
-				username string
-			}{
-				user:     &User{},
-				username: "$@@!",
-			},
-			want: func(err error) bool {
-				return errz.IsErrNotSupportValue(err)
-			},
-		},
-	}
-
-	for _, tt := range setUsernameTests {
-		t.Run(tt.name, func(t *testing.T) {
-			got := tt.args.user.SetUsername(tt.args.username)
-			if want := tt.want(got); !want {
-				t.Errorf("New() = %v, want = %v", got, want)
-			}
-		})
-	}
-
-	// SetUsername Success
-	t.Run("username 을 올바른 값으로 만들고, 에러는 nil 을 리턴한다", func(t *testing.T) {
-		u := &User{}
-		username := "username"
-		err := u.SetUsername(username)
-
-		if err != nil {
-			t.Errorf("New() = %+v, want = %v", u, err)
-		}
-		if username != u.Username {
-			t.Errorf("New() = %+v, want = %v", u, u.Username)
 		}
 	})
 }

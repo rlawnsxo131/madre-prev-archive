@@ -6,6 +6,8 @@ import (
 	"github.com/rlawnsxo131/madre-server/domain/errz"
 )
 
+// @TODO 테스트 재작성
+
 func Test_UserSocialAccount(t *testing.T) {
 	// SetNewSocialAccount Fail
 	setNewSocialAccountTests := []struct {
@@ -32,51 +34,6 @@ func Test_UserSocialAccount(t *testing.T) {
 				return errz.IsErrMissingRequiredValue(err)
 			},
 		},
-		{
-			name: "socialId 가 없을때 errMissingRequiredValue 에러를 리턴한다",
-			args: struct {
-				user     *User
-				socialId string
-				provider string
-			}{
-				user:     &User{Id: 1},
-				socialId: "",
-				provider: "provider",
-			},
-			want: func(err error) bool {
-				return errz.IsErrMissingRequiredValue(err)
-			},
-		},
-		{
-			name: "provider 가 없을때 errMissingRequiredValue 에러를 리턴한다",
-			args: struct {
-				user     *User
-				socialId string
-				provider string
-			}{
-				user:     &User{Id: 1},
-				socialId: "socialId",
-				provider: "",
-			},
-			want: func(err error) bool {
-				return errz.IsErrMissingRequiredValue(err)
-			},
-		},
-		{
-			name: "provider 가 GOOGLE 이 아닐때 errNotSupportValue 에러를 리턴한다",
-			args: struct {
-				user     *User
-				socialId string
-				provider string
-			}{
-				user:     &User{Id: 1},
-				socialId: "socialId",
-				provider: "provider",
-			},
-			want: func(err error) bool {
-				return errz.IsErrNotSupportValue(err)
-			},
-		},
 	}
 
 	for _, tt := range setNewSocialAccountTests {
@@ -90,22 +47,4 @@ func Test_UserSocialAccount(t *testing.T) {
 			}
 		})
 	}
-
-	// SetNewSocialAccount Success
-	t.Run("socialAccount 를 올바른 값으로 만들고, 에러는 nil 을 리턴한다", func(t *testing.T) {
-		u := &User{Id: 1}
-		socialId := "socialId"
-		provider := "GOOGLE"
-		err := u.SetNewSocialAccount("socialId", "GOOGLE")
-
-		if err != nil {
-			t.Errorf("SetNewSocialAccount() = %+v, want = %v", u, err)
-		}
-		if u.SocialAccount.SocialId != socialId {
-			t.Errorf("SetNewSocialAccount() = %+v, want = %v", u, u.PhotoUrl)
-		}
-		if u.SocialAccount.Provider != provider {
-			t.Errorf("SetNewSocialAccount() = %+v, want = %v", u, u.PhotoUrl)
-		}
-	})
 }

@@ -6,7 +6,11 @@ import (
 	"net/http"
 )
 
+// @TODO 에러 처리 어떻게할지 고민중
+
 func GetHttpStatusCodeFor(err error) int {
+	// validationErrors, ok := err.(validator.ValidationErrors)
+
 	switch {
 	case errors.Is(err, sql.ErrNoRows):
 		return http.StatusNotFound

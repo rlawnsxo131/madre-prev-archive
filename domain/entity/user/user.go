@@ -1,15 +1,14 @@
 package user
 
 import (
-	"errors"
-	"net/mail"
-	"net/url"
-	"regexp"
 	"strings"
 	"time"
 
+	"github.com/rlawnsxo131/madre-server/core/adapter"
 	"github.com/rlawnsxo131/madre-server/domain/errz"
 )
+
+// @TODO 테스트 재작성
 
 type User struct {
 	Id            int64              `json:"id"`
@@ -22,17 +21,16 @@ type User struct {
 }
 
 func New(email, photoUrl string) (*User, error) {
-	if email == "" {
-		return nil, errz.NewErrMissingRequiredValue(email)
+	var params = struct {
+		Email    string `validate:"required,email"`
+		PhotoUrl string `validate:"omitempty,url"`
+	}{
+		Email:    email,
+		PhotoUrl: photoUrl,
 	}
 
-	if _, err := mail.ParseAddress(email); err != nil {
-		return nil, errz.NewErrNotSupportValue(email)
-	}
-	if photoUrl != "" {
-		if _, err := url.ParseRequestURI(photoUrl); err != nil {
-			return nil, errz.NewErrNotSupportValue(photoUrl)
-		}
+	if err := adapter.Validator().Struct(params); err != nil {
+		return nil, err
 	}
 
 	// initial name is generated as uuid
@@ -44,12 +42,14 @@ func New(email, photoUrl string) (*User, error) {
 }
 
 func (u *User) SetUsername(username string) error {
-	if username == "" {
-		return errz.NewErrMissingRequiredValue(username)
+	var params = struct {
+		Username string `validate:"required,alphanum,max=50"`
+	}{
+		Username: username,
 	}
 
-	if err := validateUsername(username); err != nil {
-		return errz.NewErrNotSupportValue(username)
+	if err := adapter.Validator().Struct(params); err != nil {
+		return err
 	}
 
 	u.Username = username
@@ -75,26 +75,6 @@ func (u *User) SetSocialAccount(sa *userSocialAccount) error {
 	}
 
 	u.SocialAccount = sa
-
-	return nil
-}
-
-func validateUsername(username string) error {
-	match, err := regexp.MatchString(
-		"^[a-zA-Z0-9]{1,50}$",
-		username,
-	)
-
-	if err != nil {
-		return errors.Join(
-			err,
-			errz.NewErrUnprocessableValue(username),
-		)
-	}
-
-	if !match {
-		return errz.NewErrNotSupportValue(username)
-	}
 
 	return nil
 }

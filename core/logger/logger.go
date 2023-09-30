@@ -2,11 +2,13 @@ package logger
 
 import (
 	"context"
+	"fmt"
 	"os"
 	"sync"
 	"time"
 
 	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/diode"
 )
 
 type logEntryCtxKey int
@@ -38,7 +40,11 @@ var (
 
 func DefaultLogger() *zerolog.Logger {
 	_onceDefaultLogger.Do(func() {
-		defaultLogger = NewDefaultLogger()
+		wr := diode.NewWriter(os.Stdout, 1000, 10*time.Millisecond, func(missed int) {
+			fmt.Printf("Logger Dropped %d messages", missed)
+		})
+		l := zerolog.New(wr)
+		defaultLogger = &l
 	})
 	return defaultLogger
 }
