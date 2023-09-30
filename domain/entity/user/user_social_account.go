@@ -1,9 +1,6 @@
 package user
 
-import (
-	"github.com/rlawnsxo131/madre-server/core/funk"
-	"github.com/rlawnsxo131/madre-server/domain/errz"
-)
+import "github.com/rlawnsxo131/madre-server/core/of"
 
 var (
 	_socialProviders = []string{"GOOGLE"}
@@ -18,21 +15,22 @@ type userSocialAccount struct {
 }
 
 func newUserSocialAccount(userId int64, socialId, provider string) (*userSocialAccount, error) {
-	if userId == 0 {
-		return nil, errz.NewErrMissingRequiredValue(userId)
-	}
-	if socialId == "" {
-		return nil, errz.NewErrMissingRequiredValue(socialId)
-	}
-	if provider == "" {
-		return nil, errz.NewErrMissingRequiredValue(provider)
+	var params = struct {
+		UserId   int64  `validate:"required,number"`
+		SocialId string `validate:"required,alphanum"`
+		Provider string `validate:"required,oneof=GOOGLE"`
+	}{
+		UserId:   userId,
+		SocialId: socialId,
+		Provider: provider,
 	}
 
-	if !funk.Contains[string](_socialProviders, provider) {
-		return nil, errz.NewErrNotSupportValue(provider)
+	if err := of.Validator().Struct(params); err != nil {
+		return nil, err
 	}
 
 	return &userSocialAccount{
+		UserId:   userId,
 		SocialId: socialId,
 		Provider: provider,
 	}, nil

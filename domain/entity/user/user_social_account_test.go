@@ -2,8 +2,6 @@ package user
 
 import (
 	"testing"
-
-	"github.com/rlawnsxo131/madre-server/domain/errz"
 )
 
 // @TODO 테스트 재작성
@@ -20,7 +18,7 @@ func Test_UserSocialAccount(t *testing.T) {
 		want func(err error) bool
 	}{
 		{
-			name: "userId 가 없을때 errMissingRequiredValue 에러를 리턴한다",
+			name: "userId 가 없을때 에러를 리턴한다",
 			args: struct {
 				user     *User
 				socialId string
@@ -31,7 +29,7 @@ func Test_UserSocialAccount(t *testing.T) {
 				provider: "provider",
 			},
 			want: func(err error) bool {
-				return errz.IsErrMissingRequiredValue(err)
+				return err != nil
 			},
 		},
 	}

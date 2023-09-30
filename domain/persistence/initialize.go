@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/rlawnsxo131/madre-server/core/logger"
+	"github.com/rlawnsxo131/madre-server/core/of"
 )
 
 var (
@@ -29,7 +29,7 @@ func ExcuteInitSQL(conn Conn) error {
 
 	queries := strings.Split(string(file), "\n\n")
 	for _, query := range queries {
-		logger.DefaultLogger().Debug().Msgf("exec query: %s", query)
+		of.DefaultLogger().Debug().Msgf("exec query: %s", query)
 		if _, err := conn.ExecContext(ctx, query); err != nil {
 			return err
 		}

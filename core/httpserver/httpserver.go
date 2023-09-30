@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/rlawnsxo131/madre-server/core/logger"
+	"github.com/rlawnsxo131/madre-server/core/of"
 )
 
 const (
@@ -56,23 +56,23 @@ func (s *httpServer) Start() {
 		go func() {
 			<-shutdownCtx.Done()
 			if shutdownCtx.Err() == context.DeadlineExceeded {
-				logger.DefaultLogger().Fatal().Msg("graceful shutdown timed out.. forcing exit.")
+				of.DefaultLogger().Fatal().Msg("graceful shutdown timed out.. forcing exit.")
 			}
 		}()
 
 		// Trigger graceful shutdown
 		err := s.srv.Shutdown(shutdownCtx)
 		if err != nil {
-			logger.DefaultLogger().Fatal().Err(err).Send()
+			of.DefaultLogger().Fatal().Err(err).Send()
 		}
 		srvStopCtx()
 	}()
 
 	// Run the server
-	logger.DefaultLogger().Info().Msgf("server start at %v", s.srv.Addr)
+	of.DefaultLogger().Info().Msgf("server start at %v", s.srv.Addr)
 	err := s.srv.ListenAndServe()
 	if err != nil && err != http.ErrServerClosed {
-		logger.DefaultLogger().Fatal().Err(err).Send()
+		of.DefaultLogger().Fatal().Err(err).Send()
 	}
 
 	// Wait for server context to be stopped

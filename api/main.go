@@ -14,6 +14,7 @@ import (
 	"github.com/rlawnsxo131/madre-server/core/funk"
 	"github.com/rlawnsxo131/madre-server/core/httpserver"
 	http_middleware "github.com/rlawnsxo131/madre-server/core/httpserver/middleware"
+	"github.com/rlawnsxo131/madre-server/core/of"
 
 	"github.com/rlawnsxo131/madre-server/core/logger"
 	"github.com/rlawnsxo131/madre-server/core/rdb"
@@ -23,10 +24,11 @@ func main() {
 	coreCount := runtime.NumCPU()
 	runtime.GOMAXPROCS(coreCount - 1)
 
-	logger.DefaultLogger().
+	of.DefaultLogger().
 		Info().
 		Int("core count", coreCount).
-		Int("max use cpu count", runtime.GOMAXPROCS(0)).Send()
+		Int("max use cpu count", runtime.GOMAXPROCS(0)).
+		Send()
 
 	db, err := rdb.CreateConnection(&mysql.Config{
 		User:                 "root",
@@ -41,7 +43,7 @@ func main() {
 		DBName:               "madre",
 	})
 	if err != nil {
-		logger.DefaultLogger().Fatal().Err(err).Send()
+		of.DefaultLogger().Fatal().Err(err).Send()
 	}
 
 	s := httpserver.New("127.0.0.1:5001")

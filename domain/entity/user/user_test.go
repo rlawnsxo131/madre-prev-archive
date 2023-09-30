@@ -3,8 +3,6 @@ package user
 import (
 	"log"
 	"testing"
-
-	"github.com/rlawnsxo131/madre-server/domain/errz"
 )
 
 // @TODO 테스트 재작성
@@ -20,7 +18,7 @@ func Test_User(t *testing.T) {
 		want func(err error) bool
 	}{
 		{
-			name: "email 이 없을때 errMissingRequiredValue 에러를 리턴한다",
+			name: "email 이 없을때 에러를",
 			args: struct {
 				email    string
 				photoUrl string
@@ -29,7 +27,7 @@ func Test_User(t *testing.T) {
 				photoUrl: "photoUrl",
 			},
 			want: func(err error) bool {
-				return errz.IsErrMissingRequiredValue(err)
+				return err != nil
 			},
 		},
 	}

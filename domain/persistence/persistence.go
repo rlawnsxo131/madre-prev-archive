@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"time"
 
-	"github.com/rlawnsxo131/madre-server/core/logger"
+	"github.com/rlawnsxo131/madre-server/core/of"
 	"github.com/rs/zerolog"
 )
 
@@ -27,7 +27,7 @@ type QueryLogger struct {
 
 func NewQueryLogger() *QueryLogger {
 	return &QueryLogger{
-		l: logger.NewDefaultLogger(),
+		l: of.NewDefaultLogger(),
 	}
 }
 

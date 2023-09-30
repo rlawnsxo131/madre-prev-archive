@@ -4,11 +4,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/rlawnsxo131/madre-server/core/adapter"
+	"github.com/rlawnsxo131/madre-server/core/of"
 	"github.com/rlawnsxo131/madre-server/domain/errz"
 )
-
-// @TODO 테스트 재작성
 
 type User struct {
 	Id            int64              `json:"id"`
@@ -29,7 +27,7 @@ func New(email, photoUrl string) (*User, error) {
 		PhotoUrl: photoUrl,
 	}
 
-	if err := adapter.Validator().Struct(params); err != nil {
+	if err := of.Validator().Struct(params); err != nil {
 		return nil, err
 	}
 
@@ -48,7 +46,7 @@ func (u *User) SetUsername(username string) error {
 		Username: username,
 	}
 
-	if err := adapter.Validator().Struct(params); err != nil {
+	if err := of.Validator().Struct(params); err != nil {
 		return err
 	}
 

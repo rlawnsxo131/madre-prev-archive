@@ -1,4 +1,4 @@
-package adapter
+package of
 
 import (
 	"sync"

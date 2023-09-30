@@ -9,7 +9,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-playground/validator/v10"
 	"github.com/rlawnsxo131/madre-server/api/service/command"
-	"github.com/rlawnsxo131/madre-server/core/adapter"
+	"github.com/rlawnsxo131/madre-server/core/of"
 	"github.com/rlawnsxo131/madre-server/core/response"
 	"github.com/rlawnsxo131/madre-server/domain/persistence"
 )
@@ -23,7 +23,7 @@ type authRouter struct {
 func NewAuthRouter(r chi.Router, db persistence.Conn) *authRouter {
 	ar := &authRouter{
 		writer:             response.NewHTTPResponseWriter(),
-		validator:          adapter.Validator(),
+		validator:          of.Validator(),
 		userCommandService: command.NewUserCommandService(db),
 	}
 
