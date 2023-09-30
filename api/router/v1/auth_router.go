@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-playground/validator/v10"
@@ -47,16 +48,16 @@ func (ar *authRouter) signupLogin() http.HandlerFunc {
 
 		var params = struct {
 			Provider    string `validate:"required,oneof=GOOGLE"`
-			AccessToken string `validate:"min=8,max=25"`
+			AccessToken string `validate:"required,min=8,max=25"`
 		}{
 			Provider:    chi.URLParam(r, "provider"),
 			AccessToken: body.AccessToken,
 		}
 		if err := ar.validator.Struct(params); err != nil {
+			var fields []string
 			if validationErrors, ok := err.(validator.ValidationErrors); ok {
-				fields := make([]string, len(validationErrors))
 				for _, validationError := range validationErrors {
-					fields = append(fields, validationError.Field())
+					fields = append(fields, strings.ToLower(validationError.Field()))
 				}
 				log.Printf("fields: %+v", fields)
 			}
@@ -65,7 +66,9 @@ func (ar *authRouter) signupLogin() http.HandlerFunc {
 				err,
 				httpresponse.NewError(
 					http.StatusUnprocessableEntity,
-					nil,
+					map[string][]string{
+						"fields": fields,
+					},
 					"잘못된 형식입니다",
 				),
 			)
