@@ -9,17 +9,19 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-playground/validator/v10"
 	"github.com/rlawnsxo131/madre-server/api/service/command"
-	"github.com/rlawnsxo131/madre-server/core/httpresponse"
+	"github.com/rlawnsxo131/madre-server/core/response"
 	"github.com/rlawnsxo131/madre-server/domain/persistence"
 )
 
 type authRouter struct {
+	writer             *response.HTTPResponseWriter
 	validator          *validator.Validate
 	userCommandService *command.UserCommandService
 }
 
 func NewAuthRouter(r chi.Router, db persistence.Conn) *authRouter {
 	ar := &authRouter{
+		writer:             response.NewHTTPResponseWriter(),
 		validator:          validator.New(validator.WithRequiredStructEnabled()),
 		userCommandService: command.NewUserCommandService(db),
 	}
@@ -35,7 +37,7 @@ func NewAuthRouter(r chi.Router, db persistence.Conn) *authRouter {
 
 func (ar *authRouter) signupLogin() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		rw := httpresponse.NewWriter(w, r)
+		ar.writer.Init(w, r)
 
 		var body struct {
 			AccessToken string `json:"accessToken"`
@@ -55,6 +57,7 @@ func (ar *authRouter) signupLogin() http.HandlerFunc {
 		}
 		if err := ar.validator.Struct(params); err != nil {
 			var fields []string
+
 			if validationErrors, ok := err.(validator.ValidationErrors); ok {
 				for _, validationError := range validationErrors {
 					fields = append(fields, strings.ToLower(validationError.Field()))
@@ -62,9 +65,9 @@ func (ar *authRouter) signupLogin() http.HandlerFunc {
 				log.Printf("fields: %+v", fields)
 			}
 
-			rw.ERROR(
+			ar.writer.Error(
 				err,
-				httpresponse.NewError(
+				response.NewHTTPErrorResponse(
 					http.StatusUnprocessableEntity,
 					map[string][]string{
 						"fields": fields,
@@ -75,8 +78,8 @@ func (ar *authRouter) signupLogin() http.HandlerFunc {
 			return
 		}
 
-		rw.JSON(
-			httpresponse.New(
+		ar.writer.Json(
+			response.NewHTTPResponse(
 				http.StatusOK,
 				map[string]any{
 					"provider":    params.Provider,

@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/rlawnsxo131/madre-server/core/errorz"
-	"github.com/rlawnsxo131/madre-server/core/httpresponse"
+	"github.com/rlawnsxo131/madre-server/core/response"
 )
 
 func AllowHost(allowHostsWithoutProtocol []string) func(next http.Handler) http.Handler {
@@ -72,21 +72,15 @@ func Recover(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer func() {
 			if err := recover(); err != nil {
-				httpresponse.NewWriter(w, r).ERROR(
+				response.NewHTTPResponseWriter().Init(w, r).Error(
 					errorz.New(fmt.Errorf("panic recover: %v", err)),
-					httpresponse.NewError(
+					response.NewHTTPErrorResponse(
 						http.StatusInternalServerError,
 						nil,
 						"시스템 에러",
 					),
 				)
 				return
-				// w.WriteHeader(http.StatusInternalServerError)
-				// w.Write(
-				// 	[]byte(
-				// 		errorz.New(fmt.Errorf("panic recover: %v", err)).Error(),
-				// 	),
-				// )
 			}
 		}()
 		next.ServeHTTP(w, r)

@@ -1,32 +1,32 @@
-package httpresponse
+package response
 
 import (
 	"net/http"
 	"strings"
 )
 
-type response struct {
+type httpResponse struct {
 	Code   int    `json:"code"`
 	Status string `json:"status"`
 	Data   any    `json:"data,omitempty"`
 }
 
-func New(code int, data any) *response {
-	return &response{
+func NewHTTPResponse(code int, data any) *httpResponse {
+	return &httpResponse{
 		Code:   code,
 		Status: http.StatusText(code),
 		Data:   data,
 	}
 }
 
-type errorResponse struct {
+type httpErrorResponse struct {
 	Code   int            `json:"code"`
 	Status string         `json:"status"`
 	Error  map[string]any `json:"error,omitempty"`
 }
 
-func NewError(code int, data any, message ...string) *errorResponse {
-	return &errorResponse{
+func NewHTTPErrorResponse(code int, data any, message ...string) *httpErrorResponse {
+	return &httpErrorResponse{
 		Code:   code,
 		Status: http.StatusText(code),
 		Error: map[string]any{

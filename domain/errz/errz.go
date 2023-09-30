@@ -14,14 +14,11 @@ func GetHttpStatusCodeFor(err error) int {
 	case IsErrMissingRequiredValue(err):
 		return http.StatusBadRequest
 
-	case IsErrNotSupportValue(err):
-		return http.StatusBadRequest
+	case IsErrNotSupportValue(err) || IsErrUnprocessableValue(err):
+		return http.StatusUnprocessableEntity
 
 	case IsErrConflictUniqValue(err):
 		return http.StatusConflict
-
-	case IsErrUnprocessableValue(err):
-		return http.StatusUnprocessableEntity
 
 	default:
 		return http.StatusInternalServerError
