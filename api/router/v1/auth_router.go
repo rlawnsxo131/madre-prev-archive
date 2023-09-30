@@ -2,74 +2,92 @@ package routerv1
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/rlawnsxo131/madre-server/api/service"
+	"github.com/go-playground/validator/v10"
+	"github.com/rlawnsxo131/madre-server/api/service/command"
 	"github.com/rlawnsxo131/madre-server/core/httpresponse"
 	"github.com/rlawnsxo131/madre-server/domain/persistence"
-	"gopkg.in/validator.v2"
 )
 
 type authRouter struct {
-	userService *service.UserService
+	validator          *validator.Validate
+	userCommandService *command.UserCommandService
 }
 
 func NewAuthRouter(r chi.Router, db persistence.Conn) *authRouter {
 	ar := &authRouter{
-		userService: service.NewUserService(db),
+		validator:          validator.New(validator.WithRequiredStructEnabled()),
+		userCommandService: command.NewUserCommandService(db),
 	}
 
 	r.Route("/auth", func(r chi.Router) {
-		r.Post("/check-registration/{provider}", ar.checkRegistration())
-		r.Post("/signup/{provider}", ar.signup())
-		r.Post("/login/{provider}", ar.login())
+		r.Post("/signup-login/{provider}", ar.signupLogin())
 		r.Delete("/logout", ar.logout())
+		r.Delete("/", ar.deleteAccount())
 	})
 
 	return ar
 }
 
-func (ar *authRouter) checkRegistration() http.HandlerFunc {
+func (ar *authRouter) signupLogin() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		provider := chi.URLParam(r, "provider")
-		var body = struct {
-			AccessToken string `json:"accessToken" validate:"min=8,max=25,regexp=^[a-zA-Z0-9]"`
-		}{}
+		rw := httpresponse.NewWriter(w, r)
 
+		var body struct {
+			AccessToken string `json:"accessToken"`
+		}
 		if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte(err.Error()))
 			return
 		}
-		if err := validator.Validate(body); err != nil {
-			w.WriteHeader(http.StatusUnprocessableEntity)
-			w.Write([]byte(err.Error()))
+
+		var params = struct {
+			Provider    string `validate:"required,oneof=GOOGLE"`
+			AccessToken string `validate:"min=8,max=25"`
+		}{
+			Provider:    chi.URLParam(r, "provider"),
+			AccessToken: body.AccessToken,
+		}
+		if err := ar.validator.Struct(params); err != nil {
+			if validationErrors, ok := err.(validator.ValidationErrors); ok {
+				fields := make([]string, len(validationErrors))
+				for _, validationError := range validationErrors {
+					fields = append(fields, validationError.Field())
+				}
+				log.Printf("fields: %+v", fields)
+			}
+
+			rw.ERROR(
+				err,
+				httpresponse.NewError(
+					http.StatusUnprocessableEntity,
+					nil,
+					"잘못된 형식입니다",
+				),
+			)
 			return
 		}
 
-		jsonRes, _ := json.Marshal(
+		rw.JSON(
 			httpresponse.New(
 				http.StatusOK,
 				map[string]any{
-					"provider":    provider,
-					"accessToken": body.AccessToken,
+					"provider":    params.Provider,
+					"accessToken": params.AccessToken,
 				},
-				nil,
 			),
 		)
-		w.Write(jsonRes)
 	}
 }
 
-func (ar *authRouter) signup() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {}
-}
-
-func (ar *authRouter) login() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {}
-}
-
 func (ar *authRouter) logout() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {}
+}
+
+func (ar *authRouter) deleteAccount() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {}
 }

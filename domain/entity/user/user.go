@@ -25,15 +25,14 @@ func New(email, photoUrl string) (*User, error) {
 	if email == "" {
 		return nil, errz.NewErrMissingRequiredValue(email)
 	}
-	if photoUrl == "" {
-		return nil, errz.NewErrMissingRequiredValue(photoUrl)
-	}
 
 	if _, err := mail.ParseAddress(email); err != nil {
 		return nil, errz.NewErrNotSupportValue(email)
 	}
-	if _, err := url.ParseRequestURI(photoUrl); err != nil {
-		return nil, errz.NewErrNotSupportValue(photoUrl)
+	if photoUrl != "" {
+		if _, err := url.ParseRequestURI(photoUrl); err != nil {
+			return nil, errz.NewErrNotSupportValue(photoUrl)
+		}
 	}
 
 	// initial name is generated as uuid

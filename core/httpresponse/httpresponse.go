@@ -2,43 +2,36 @@ package httpresponse
 
 import (
 	"net/http"
+	"strings"
 )
 
 type response struct {
-	Code   int            `json:"code"`
-	Status string         `json:"status"`
-	Data   any            `json:"data,omitempty"`
-	Error  *errorResponse `json:"error,omitempty"`
+	Code   int    `json:"code"`
+	Status string `json:"status"`
+	Data   any    `json:"data,omitempty"`
 }
 
-type errorResponse struct {
-	Code    int
-	Message string
-}
-
-func New(code int, data any, err *errorResponse) *response {
+func New(code int, data any) *response {
 	return &response{
 		Code:   code,
 		Status: http.StatusText(code),
 		Data:   data,
-		Error:  err,
 	}
 }
 
-// jsonRes = json.RawMessage(
-// 	`{
-// 		"code": 500,
-// 		"status": "Internal Server Error",
-// 		"error": {
-// 			"message": "response json parse error"
-// 		}
-// 	}`,
-// )
+type errorResponse struct {
+	Code   int            `json:"code"`
+	Status string         `json:"status"`
+	Error  map[string]any `json:"error,omitempty"`
+}
 
-// w.Header().Set("Content-Type", "application/json; charset=utf-8")
-// w.WriteHeader(code)
-// w.Write(jsonRes)
-
-// logger.GetLogEntry(r.Context()).Add(func(e *zerolog.Event) {
-// 	e.RawJSON("response", jsonRes)
-// })
+func NewError(code int, data any, message ...string) *errorResponse {
+	return &errorResponse{
+		Code:   code,
+		Status: http.StatusText(code),
+		Error: map[string]any{
+			"message": strings.Join(message, ""),
+			"data":    data,
+		},
+	}
+}

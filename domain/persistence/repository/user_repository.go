@@ -27,8 +27,8 @@ var _userStruct = sqlbuilder.NewStruct(&model.User{})
 
 func (ur *UserRepository) FindById(
 	ctx context.Context,
-	id int64,
 	opts *persistence.QueryOptions,
+	id int64,
 ) (*user.User, error) {
 	sb := _userStruct.SelectFrom("user")
 	sb.Where(sb.Equal("id", id))

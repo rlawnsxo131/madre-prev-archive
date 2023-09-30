@@ -60,8 +60,6 @@ func main() {
 	))
 	s.Use(chi_middleware.NoCache)
 	s.Use(chi_middleware.Throttle(100))
-	// s.Use(chi_middleware.ContentCharset([]string{"UTF-8", ""}...))
-	// s.Use(chi_middleware.AllowContentEncoding("gzip", "deflate", "compress")) // this middleware doesn't support br encoding
 	// s.Use(http_middleware.JWT)
 	s.Use(chi_middleware.Compress(5))
 

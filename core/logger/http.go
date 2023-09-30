@@ -40,7 +40,11 @@ func NewHTTPLogFormatter() *httpLogFormatter {
 	return &httpLogFormatter{}
 }
 
-func (hlf *httpLogFormatter) NewLogEntry(l *zerolog.Logger, r *http.Request, ww chi_middleware.WrapResponseWriter) LogEntry {
+func (hlf *httpLogFormatter) NewLogEntry(
+	l *zerolog.Logger,
+	r *http.Request,
+	ww chi_middleware.WrapResponseWriter,
+) LogEntry {
 	return &httpLogEntry{
 		l:    l,
 		r:    r,

@@ -4,21 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	"net/http"
-	"strings"
 )
-
-type DomainError struct {
-	Err  error
-	Code int
-	Msg  string
-}
-
-func New(err error, message ...string) *DomainError {
-	return &DomainError{
-		Err: err,
-		Msg: strings.Join(message, ""),
-	}
-}
 
 func GetHttpStatusCodeFor(err error) int {
 	switch {
