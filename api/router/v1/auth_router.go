@@ -44,8 +44,13 @@ func (ar *authRouter) signupLogin() http.HandlerFunc {
 			AccessToken string `json:"accessToken"`
 		}
 		if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte(err.Error()))
+			ar.writer.Error(
+				err,
+				response.NewHTTPErrorResponse(
+					http.StatusInternalServerError,
+					nil,
+				),
+			)
 			return
 		}
 
@@ -75,7 +80,7 @@ func (ar *authRouter) signupLogin() http.HandlerFunc {
 					map[string][]string{
 						"fields": fields,
 					},
-					"잘못된 형식입니다",
+					"잘못된 값입니다",
 				),
 			)
 			return
