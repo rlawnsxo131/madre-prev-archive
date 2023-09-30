@@ -36,7 +36,7 @@ func (uqs *UserQueryService) IsExistsUsername(query IsExistsUsernameQuery) *serv
 	case err != nil:
 		return service.NewErrWithHTTPCode(
 			errorz.New(err),
-			http.StatusConflict,
+			http.StatusInternalServerError,
 			"시스템 에러",
 		)
 	case exists:
