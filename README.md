@@ -24,7 +24,3 @@ $ air
 # If air is not installed
 $ go run ./main.go
 ```
-
-### Previous Repository
-
-- archive: <https://github.com/rlawnsxo131/madre-prev-archive>
