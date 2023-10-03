@@ -2,7 +2,7 @@
   "name": "@madre/client",
   "packageManager": "yarn@3.6.3",
   "workspaces": [
-    "packages/*",
+    "packages/**/*",
     "apps/*"
   ],
   "scripts": {
@@ -13,6 +13,7 @@
     "@madre/ui": "yarn workspace @madre/ui",
     "@madre/react": "yarn workspace @madre/react",
     "@madre/utils": "yarn workspace @madre/utils",
+    "@madre/storage": "yarn workspace @madre/storage",
     "test:all": "yarn workspace @madre/react test",
     "start:ui": "yarn workspace @madre/ui storybook"
   },
