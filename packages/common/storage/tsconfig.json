@@ -6,8 +6,5 @@
     "declaration": true,
     "composite": true
   },
-  "paths": {
-    "@/*": ["src/*"]
-  },
   "exclude": ["dist/*"]
 }

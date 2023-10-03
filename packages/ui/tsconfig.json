@@ -7,8 +7,6 @@
     "jsx": "react-jsx",
     "composite": true
   },
-  "paths": {
-    "@/*": ["src/*"]
-  },
+  "include": ["src"],
   "exclude": ["dist/*"]
 }

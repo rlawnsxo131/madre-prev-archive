@@ -2274,6 +2274,7 @@ __metadata:
   dependencies:
     "@madre/react": "workspace:*"
     "@madre/utils": "workspace:*"
+    "@radix-ui/colors": ^3.0.0
     "@storybook/addon-essentials": ^7.4.2
     "@storybook/addon-interactions": ^7.4.2
     "@storybook/addon-links": ^7.4.2
@@ -2282,6 +2283,7 @@ __metadata:
     "@storybook/react": ^7.4.2
     "@storybook/react-vite": ^7.4.2
     "@storybook/testing-library": ^0.2.1
+    "@types/node": ^20.8.2
     "@types/react": ^18.2.21
     "@vanilla-extract/css": ^1.13.0
     "@vanilla-extract/vite-plugin": ^3.9.0
@@ -2365,6 +2367,13 @@ __metadata:
   version: 0.11.0
   resolution: "@pkgjs/parseargs@npm:0.11.0"
   checksum: 6ad6a00fc4f2f2cfc6bff76fb1d88b8ee20bc0601e18ebb01b6d4be583733a860239a521a7fbca73b612e66705078809483549d2b18f370eb346c5155c8e4a0f
+  languageName: node
+  linkType: hard
+
+"@radix-ui/colors@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@radix-ui/colors@npm:3.0.0"
+  checksum: 5ac1b69df7a77525e2031c2d2948d6ef8d81c6b163809ee8e17a2138c4977678e3a9f67342595d2c88f0300f51fd2c64e24355008cda6c9db8dfd4ed3eaf9e8f
   languageName: node
   linkType: hard
 
@@ -4260,6 +4269,13 @@ __metadata:
   version: 16.18.52
   resolution: "@types/node@npm:16.18.52"
   checksum: 6b1f27a848a69a70039cb27c2583317b5d051990933955c42bc2a2f299266ffa360f7cc3c7089d04fdf39144c476d475931900f00dabbc4f933eeb2d664f9778
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^20.8.2":
+  version: 20.8.2
+  resolution: "@types/node@npm:20.8.2"
+  checksum: 3da73e25d821bfcdb7de98589027e08bb4848e55408671c4a83ec0341e124b5313a0b20e1e4b4eff1168ea17a86f622ad73fcb04b761abd77496b9a27cbd5de5
   languageName: node
   linkType: hard
 
