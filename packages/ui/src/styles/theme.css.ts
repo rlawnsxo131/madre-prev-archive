@@ -27,7 +27,5 @@ export const vars = createGlobalThemeContract(
   (value) => `--color-${value}`,
 );
 
-export function initThemeStyleVars() {
-  createGlobalTheme('[data-theme="light"]', { ...lightColors });
-  createGlobalTheme('[data-theme="dark"]', { ...darkColors });
-}
+createGlobalTheme('[data-theme="light"]', { ...lightColors });
+createGlobalTheme('[data-theme="dark"]', { ...darkColors });
