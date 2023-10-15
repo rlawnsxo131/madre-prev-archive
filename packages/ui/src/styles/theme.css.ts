@@ -10,10 +10,13 @@ const darkColors = Object.assign({}, cyanDark, grayDark, redDark);
 type ColorKeys = keyof typeof lightColors;
 type Keys = Record<ColorKeys, ColorKeys>;
 
-const keys = (Object.keys(lightColors) as ColorKeys[]).reduce((acc, key) => {
-  acc[key] = key;
-  return acc;
-}, {} as Keys);
+const keys = (Object.keys(lightColors) as ColorKeys[]).reduce<Keys>(
+  (acc, key) => {
+    acc[key] = key;
+    return acc;
+  },
+  {} as Keys,
+);
 
 export const vars = createGlobalThemeContract(
   {
@@ -24,5 +27,7 @@ export const vars = createGlobalThemeContract(
   (value) => `--color-${value}`,
 );
 
-createGlobalTheme('[data-theme="light"]', { ...lightColors });
-createGlobalTheme('[data-theme="dark"]', { ...darkColors });
+export function initThemeStyleVars() {
+  createGlobalTheme('[data-theme="light"]', { ...lightColors });
+  createGlobalTheme('[data-theme="dark"]', { ...darkColors });
+}
