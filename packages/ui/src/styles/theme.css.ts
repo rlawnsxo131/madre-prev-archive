@@ -1,11 +1,21 @@
 import { cyan, cyanDark, gray, grayDark, red, redDark } from '@radix-ui/colors';
-import {
-  createGlobalTheme,
-  createGlobalThemeContract,
-} from '@vanilla-extract/css';
+import { createGlobalThemeContract } from '@vanilla-extract/css';
 
-const lightColors = Object.assign({}, cyan, gray, red);
-const darkColors = Object.assign({}, cyanDark, grayDark, redDark);
+const baseColors = {
+  black: '#000000',
+  white: '#FFFFFF',
+};
+
+/**
+ * @TODO 컬러 수정
+ */
+export const lightColors = Object.assign({ ...baseColors }, cyan, gray, red);
+export const darkColors = Object.assign(
+  { ...baseColors },
+  cyanDark,
+  grayDark,
+  redDark,
+);
 
 type ColorKeys = keyof typeof lightColors;
 type Keys = Record<ColorKeys, ColorKeys>;
@@ -26,6 +36,3 @@ export const vars = createGlobalThemeContract(
   },
   (value) => `--color-${value}`,
 );
-
-createGlobalTheme('[data-theme="light"]', { ...lightColors });
-createGlobalTheme('[data-theme="dark"]', { ...darkColors });

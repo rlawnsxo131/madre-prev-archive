@@ -2288,6 +2288,7 @@ __metadata:
     "@vanilla-extract/css": ^1.13.0
     "@vanilla-extract/vite-plugin": ^3.9.0
     "@vitejs/plugin-react": ^4.1.0
+    classnames: ^2.3.2
     react: ^18.2.0
     react-dom: ^18.2.0
     storybook: ^7.4.2
@@ -5474,6 +5475,13 @@ __metadata:
   version: 3.8.0
   resolution: "ci-info@npm:3.8.0"
   checksum: d0a4d3160497cae54294974a7246202244fff031b0a6ea20dd57b10ec510aa17399c41a1b0982142c105f3255aff2173e5c0dd7302ee1b2f28ba3debda375098
+  languageName: node
+  linkType: hard
+
+"classnames@npm:^2.3.2":
+  version: 2.3.2
+  resolution: "classnames@npm:2.3.2"
+  checksum: 2c62199789618d95545c872787137262e741f9db13328e216b093eea91c85ef2bfb152c1f9e63027204e2559a006a92eb74147d46c800a9f96297ae1d9f96f4e
   languageName: node
   linkType: hard
 
