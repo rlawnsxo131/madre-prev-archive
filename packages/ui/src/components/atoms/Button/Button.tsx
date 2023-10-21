@@ -5,27 +5,33 @@ import {
   block,
   radius as _radius,
   size as _size,
-  theme as _theme,
+  themeOutline,
+  themeSolid,
 } from './Button.css';
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  theme?: 'primary' | 'secondary' | 'warn';
-  size?: 'small' | 'medium' | 'large' | 'responsive';
-  radius?: 'none' | 'medium' | 'full';
   variant?: 'solid' | 'outline';
+  theme?: 'primary' | 'secondary' | 'warn';
+  radius?: 'none' | 'medium' | 'full';
+  size?: 'small' | 'medium' | 'large' | 'responsive';
 };
 
 export function Button({
   children,
-  theme = 'primary',
-  size = 'medium',
-  radius = 'medium',
   variant = 'solid',
+  theme = 'primary',
+  radius = 'medium',
+  size = 'medium',
   ...props
 }: ButtonProps) {
+  const _theme = {
+    solid: themeSolid,
+    outline: themeOutline,
+  }[variant][theme];
+
   return (
     <button
-      className={classNames(block, _theme[theme], _size[size], _radius[radius])}
+      className={classNames(block, _theme, _size[size], _radius[radius])}
       {...props}
     >
       {children}

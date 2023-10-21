@@ -21,7 +21,12 @@ export const Primary: Story = {
     theme: 'primary',
     size: 'medium',
     radius: 'medium',
+    onClick: () => alert('click'),
   },
+  // play: async ({ canvasElement }) => {
+  //   const canvas = within(canvasElement);
+  //   await userEvent.click(canvas.getByRole('button'));
+  // },
 };
 
 export const Secondary: Story = {
@@ -36,7 +41,7 @@ export const Secondary: Story = {
 export const Warn: Story = {
   args: {
     children: 'button',
-    size: 'large',
+    size: 'medium',
     theme: 'warn',
     radius: 'medium',
   },

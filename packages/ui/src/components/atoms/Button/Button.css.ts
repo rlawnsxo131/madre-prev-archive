@@ -9,7 +9,44 @@ export const block = style({
   cursor: 'pointer',
 });
 
-export const theme = styleVariants({
+export const size = styleVariants({
+  small: {
+    height: '1.725rem',
+    fontSize: '0.825rem',
+    padding: '0.25rem 0.725rem',
+  },
+  medium: {
+    height: '2rem',
+    fontSize: '1rem',
+    padding: '0.25rem 0.725rem',
+  },
+  large: {
+    height: '2.5rem',
+    fontSize: '1.125rem',
+    padding: '0.25rem 1.125rem',
+  },
+  responsive: {
+    flex: '1',
+    width: '100%',
+    height: '2.5rem',
+    fontSize: '1.125rem',
+    padding: '0.25rem 1.125rem',
+  },
+});
+
+export const radius = styleVariants({
+  none: {
+    borderRadius: '0',
+  },
+  medium: {
+    borderRadius: '0.5rem',
+  },
+  full: {
+    borderRadius: '2rem',
+  },
+});
+
+export const themeSolid = styleVariants({
   primary: {
     color: vars.color.white,
     background: vars.color.cyan10,
@@ -51,39 +88,8 @@ export const theme = styleVariants({
   },
 });
 
-export const size = styleVariants({
-  small: {
-    height: '1.725rem',
-    fontSize: '0.825rem',
-    padding: '0.25rem 0.725rem',
-  },
-  medium: {
-    height: '2rem',
-    fontSize: '1rem',
-    padding: '0.25rem 0.725rem',
-  },
-  large: {
-    height: '2.5rem',
-    fontSize: '1.125rem',
-    padding: '0.25rem 1.125rem',
-  },
-  responsive: {
-    flex: '1',
-    width: '100%',
-    height: '2.5rem',
-    fontSize: '1.125rem',
-    padding: '0.25rem 1.125rem',
-  },
-});
-
-export const radius = styleVariants({
-  none: {
-    borderRadius: '0',
-  },
-  medium: {
-    borderRadius: '0.5rem',
-  },
-  full: {
-    borderRadius: '2rem',
-  },
+export const themeOutline = styleVariants({
+  primary: {},
+  secondary: {},
+  warn: {},
 });
