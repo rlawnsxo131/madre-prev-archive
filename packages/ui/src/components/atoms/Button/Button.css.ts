@@ -36,19 +36,16 @@ export const size = styleVariants({
     fontSize: '0.825rem',
     padding: '0.25rem 0.725rem',
   },
-
   medium: {
     height: '2rem',
     fontSize: '1rem',
     padding: '0.25rem 0.725rem',
   },
-
   large: {
     height: '2.5rem',
     fontSize: '1.125rem',
     padding: '0.25rem 1.125rem',
   },
-
   responsive: {
     flex: '1',
     width: '100%',
