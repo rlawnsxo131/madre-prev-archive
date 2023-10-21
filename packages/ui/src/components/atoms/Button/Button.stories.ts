@@ -18,13 +18,26 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     children: 'button',
-    size: 'small',
+    theme: 'primary',
+    size: 'medium',
+    radius: 'medium',
   },
 };
 
 export const Secondary: Story = {
   args: {
     children: 'button',
+    theme: 'secondary',
+    size: 'medium',
+    radius: 'medium',
+  },
+};
+
+export const Warn: Story = {
+  args: {
+    children: 'button',
     size: 'large',
+    theme: 'warn',
+    radius: 'medium',
   },
 };

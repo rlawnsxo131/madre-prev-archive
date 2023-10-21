@@ -6,9 +6,6 @@ const baseColors = {
   white: '#FFFFFF',
 };
 
-/**
- * @TODO 컬러 수정
- */
 export const lightColors = Object.assign({ ...baseColors }, cyan, gray, red);
 export const darkColors = Object.assign(
   { ...baseColors },

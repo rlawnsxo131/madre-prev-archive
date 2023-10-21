@@ -9,9 +9,10 @@ import {
 } from './Button.css';
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  theme?: 'primary' | 'secondary' | 'ghost';
+  theme?: 'primary' | 'secondary' | 'warn';
   size?: 'small' | 'medium' | 'large' | 'responsive';
   radius?: 'none' | 'medium' | 'full';
+  variant?: 'solid' | 'outline';
 };
 
 export function Button({
@@ -19,6 +20,7 @@ export function Button({
   theme = 'primary',
   size = 'medium',
   radius = 'medium',
+  variant = 'solid',
   ...props
 }: ButtonProps) {
   return (

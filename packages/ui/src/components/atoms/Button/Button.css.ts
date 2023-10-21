@@ -9,9 +9,6 @@ export const block = style({
   cursor: 'pointer',
 });
 
-/**
- * @TODO 컬러 수정
- */
 export const theme = styleVariants({
   primary: {
     color: vars.color.white,
@@ -26,8 +23,32 @@ export const theme = styleVariants({
       },
     },
   },
-  secondary: {},
-  ghost: {},
+  secondary: {
+    color: vars.color.white,
+    background: vars.color.gray10,
+    border: `1px solid ${vars.color.gray10}`,
+    outlineColor: vars.color.gray10,
+    selectors: {
+      '&:hover': {
+        background: vars.color.gray11,
+        border: `1px solid ${vars.color.gray11}`,
+        outlineColor: vars.color.gray11,
+      },
+    },
+  },
+  warn: {
+    color: vars.color.white,
+    background: vars.color.red9,
+    border: `1px solid ${vars.color.red9}`,
+    outlineColor: vars.color.red9,
+    selectors: {
+      '&:hover': {
+        background: vars.color.red11,
+        border: `1px solid ${vars.color.red11}`,
+        outlineColor: vars.color.red11,
+      },
+    },
+  },
 });
 
 export const size = styleVariants({
@@ -56,7 +77,9 @@ export const size = styleVariants({
 });
 
 export const radius = styleVariants({
-  none: {},
+  none: {
+    borderRadius: '0',
+  },
   medium: {
     borderRadius: '0.5rem',
   },
