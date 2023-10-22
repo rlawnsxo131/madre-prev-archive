@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { type ButtonHTMLAttributes } from 'react';
+import type { ButtonHTMLAttributes } from 'react';
 
 import {
   block,
@@ -9,7 +9,7 @@ import {
   themeSolid,
 } from './Button.css';
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: 'solid' | 'outline';
   theme?: 'primary' | 'secondary' | 'warn';
   radius?: 'none' | 'medium' | 'full';
