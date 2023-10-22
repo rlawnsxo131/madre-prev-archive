@@ -3,13 +3,13 @@ import { useEffect, useRef, useState } from 'react';
 
 export type OpaqueLayerProps = PropsWithChildren<{
   visible: boolean;
-  delay?: number;
+  duration?: number;
 }>;
 
 export function OpaqueLayer({
   children,
   visible,
-  delay = 250,
+  duration = 250,
 }: OpaqueLayerProps) {
   const [closed, setClosed] = useState(true);
   const [animate, setAnimate] = useState(false);
@@ -28,7 +28,7 @@ export function OpaqueLayer({
         if (!visible) {
           setClosed(true);
         }
-      }, delay);
+      }, duration);
     }
 
     if (visible) {
@@ -42,7 +42,7 @@ export function OpaqueLayer({
         clearTimeout(timeoutId.current);
       }
     };
-  }, [visible, delay]);
+  }, [visible, duration]);
 
   if (!animate && !visible && closed) return null;
 
