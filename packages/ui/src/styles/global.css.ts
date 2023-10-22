@@ -6,7 +6,7 @@ import { darkColors, lightColors, vars } from './theme.css';
 createGlobalTheme(`:root, :root${dataThemeSelector.light}`, vars, {
   color: { ...lightColors },
 });
-createGlobalTheme(`:root${dataThemeSelector.light}`, vars, {
+createGlobalTheme(`:root${dataThemeSelector.dark}`, vars, {
   color: { ...darkColors },
 });
 
@@ -28,13 +28,13 @@ globalStyle('html, body, #root *', {
   boxSizing: 'inherit',
 });
 
-// globalStyle(`:root${themeDatasetSelector.dark} :where(body, #root)`, {
-//   background: vars.color.gray2,
-// });
+globalStyle(`:root, :root${dataThemeSelector.light} :where(body, #root)`, {
+  background: vars.color.white,
+});
 
-// globalStyle(`:root${themeDatasetSelector.light} :where(body, #root)`, {
-//   background: vars.color.white,
-// });
+globalStyle(`:root${dataThemeSelector.dark} :where(body, #root)`, {
+  background: vars.color.gray2,
+});
 
 // globalStyle('h1, h2, h3, h4, h5, h6, p', {
 //   color: vars.color.gray12,

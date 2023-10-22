@@ -21,7 +21,6 @@ export const Primary: Story = {
     theme: 'primary',
     size: 'medium',
     radius: 'medium',
-    onClick: () => alert('click'),
   },
   // play: async ({ canvasElement }) => {
   //   const canvas = within(canvasElement);
