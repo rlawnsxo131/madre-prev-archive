@@ -2869,6 +2869,25 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@emotion/is-prop-valid", [\
+        ["npm:0.8.8", {\
+          "packageLocation": "./.yarn/cache/@emotion-is-prop-valid-npm-0.8.8-261a0f2426-bb7ec6d48c.zip/node_modules/@emotion/is-prop-valid/",\
+          "packageDependencies": [\
+            ["@emotion/is-prop-valid", "npm:0.8.8"],\
+            ["@emotion/memoize", "npm:0.7.4"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@emotion/memoize", [\
+        ["npm:0.7.4", {\
+          "packageLocation": "./.yarn/cache/@emotion-memoize-npm-0.7.4-5648cf11b8-4e3920d4ec.zip/node_modules/@emotion/memoize/",\
+          "packageDependencies": [\
+            ["@emotion/memoize", "npm:0.7.4"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@emotion/use-insertion-effect-with-fallbacks", [\
         ["npm:1.0.1", {\
           "packageLocation": "./.yarn/cache/@emotion-use-insertion-effect-with-fallbacks-npm-1.0.1-730758c66c-700b6e5bbb.zip/node_modules/@emotion/use-insertion-effect-with-fallbacks/",\
@@ -3666,6 +3685,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@vanilla-extract/vite-plugin", "virtual:349cd534ff4100362b32762c7bde3388c59b30b54450d44075378a4d695d03021da5e3431b38327b359f7c25a1d43e4ad10b112baaad16df29b92d1917405087#npm:3.9.0"],\
             ["@vitejs/plugin-react", "virtual:349cd534ff4100362b32762c7bde3388c59b30b54450d44075378a4d695d03021da5e3431b38327b359f7c25a1d43e4ad10b112baaad16df29b92d1917405087#npm:4.1.0"],\
             ["classnames", "npm:2.3.2"],\
+            ["framer-motion", "virtual:349cd534ff4100362b32762c7bde3388c59b30b54450d44075378a4d695d03021da5e3431b38327b359f7c25a1d43e4ad10b112baaad16df29b92d1917405087#npm:10.16.4"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:e25defd80cd12dc27eb3838db674983a5b182a6568dbcc32c682ac631015ed24c9dcae41858e76f897f41dc821d084a2bf8e81658ca9b739708d46f2563a28c1#npm:18.2.0"],\
             ["storybook", "npm:7.4.2"],\
@@ -9765,6 +9785,34 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/forwarded-npm-0.2.0-6473dabe35-fd27e2394d.zip/node_modules/forwarded/",\
           "packageDependencies": [\
             ["forwarded", "npm:0.2.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["framer-motion", [\
+        ["npm:10.16.4", {\
+          "packageLocation": "./.yarn/cache/framer-motion-npm-10.16.4-aea0dc4fd7-57eb252f25.zip/node_modules/framer-motion/",\
+          "packageDependencies": [\
+            ["framer-motion", "npm:10.16.4"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:349cd534ff4100362b32762c7bde3388c59b30b54450d44075378a4d695d03021da5e3431b38327b359f7c25a1d43e4ad10b112baaad16df29b92d1917405087#npm:10.16.4", {\
+          "packageLocation": "./.yarn/__virtual__/framer-motion-virtual-5802ac78b4/0/cache/framer-motion-npm-10.16.4-aea0dc4fd7-57eb252f25.zip/node_modules/framer-motion/",\
+          "packageDependencies": [\
+            ["framer-motion", "virtual:349cd534ff4100362b32762c7bde3388c59b30b54450d44075378a4d695d03021da5e3431b38327b359f7c25a1d43e4ad10b112baaad16df29b92d1917405087#npm:10.16.4"],\
+            ["@emotion/is-prop-valid", "npm:0.8.8"],\
+            ["@types/react", "npm:18.2.21"],\
+            ["@types/react-dom", null],\
+            ["react", "npm:18.2.0"],\
+            ["react-dom", "virtual:e25defd80cd12dc27eb3838db674983a5b182a6568dbcc32c682ac631015ed24c9dcae41858e76f897f41dc821d084a2bf8e81658ca9b739708d46f2563a28c1#npm:18.2.0"],\
+            ["tslib", "npm:2.6.2"]\
+          ],\
+          "packagePeers": [\
+            "@types/react-dom",\
+            "@types/react",\
+            "react-dom",\
+            "react"\
           ],\
           "linkType": "HARD"\
         }]\

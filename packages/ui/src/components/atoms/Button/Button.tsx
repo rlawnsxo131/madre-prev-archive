@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import type { ButtonHTMLAttributes } from 'react';
+import { type ButtonHTMLAttributes } from 'react';
 
 import {
   block,

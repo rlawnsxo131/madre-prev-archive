@@ -21,6 +21,7 @@ export const Primary: Story = {
     theme: 'primary',
     size: 'medium',
     radius: 'medium',
+    variant: 'solid',
   },
   // play: async ({ canvasElement }) => {
   //   const canvas = within(canvasElement);
@@ -34,14 +35,16 @@ export const Secondary: Story = {
     theme: 'secondary',
     size: 'medium',
     radius: 'medium',
+    variant: 'solid',
   },
 };
 
 export const Warn: Story = {
   args: {
     children: 'button',
-    size: 'medium',
     theme: 'warn',
+    size: 'medium',
     radius: 'medium',
+    variant: 'solid',
   },
 };
