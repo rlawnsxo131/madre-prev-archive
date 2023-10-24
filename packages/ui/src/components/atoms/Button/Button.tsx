@@ -22,6 +22,7 @@ export function Button({
   theme = 'primary',
   radius = 'medium',
   size = 'medium',
+  className,
   ...props
 }: ButtonProps) {
   const _theme = {
@@ -31,7 +32,13 @@ export function Button({
 
   return (
     <button
-      className={classNames(block, _theme, _size[size], _radius[radius])}
+      className={classNames(
+        block,
+        _theme,
+        _size[size],
+        _radius[radius],
+        className,
+      )}
       {...props}
     >
       {children}

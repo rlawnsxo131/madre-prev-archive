@@ -3682,6 +3682,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:20.8.2"],\
             ["@types/react", "npm:18.2.21"],\
             ["@vanilla-extract/css", "npm:1.13.0"],\
+            ["@vanilla-extract/dynamic", "npm:2.0.3"],\
+            ["@vanilla-extract/sprinkles", "virtual:349cd534ff4100362b32762c7bde3388c59b30b54450d44075378a4d695d03021da5e3431b38327b359f7c25a1d43e4ad10b112baaad16df29b92d1917405087#npm:1.6.1"],\
             ["@vanilla-extract/vite-plugin", "virtual:349cd534ff4100362b32762c7bde3388c59b30b54450d44075378a4d695d03021da5e3431b38327b359f7c25a1d43e4ad10b112baaad16df29b92d1917405087#npm:3.9.0"],\
             ["@vitejs/plugin-react", "virtual:349cd534ff4100362b32762c7bde3388c59b30b54450d44075378a4d695d03021da5e3431b38327b359f7c25a1d43e4ad10b112baaad16df29b92d1917405087#npm:4.1.0"],\
             ["classnames", "npm:2.3.2"],\
@@ -7047,6 +7049,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@vanilla-extract/dynamic", [\
+        ["npm:2.0.3", {\
+          "packageLocation": "./.yarn/cache/@vanilla-extract-dynamic-npm-2.0.3-5224c4cda8-9ad4068d7e.zip/node_modules/@vanilla-extract/dynamic/",\
+          "packageDependencies": [\
+            ["@vanilla-extract/dynamic", "npm:2.0.3"],\
+            ["@vanilla-extract/private", "npm:1.0.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@vanilla-extract/integration", [\
         ["npm:6.2.2", {\
           "packageLocation": "./.yarn/cache/@vanilla-extract-integration-npm-6.2.2-078d3e693e-dbff14a919.zip/node_modules/@vanilla-extract/integration/",\
@@ -7074,6 +7086,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@vanilla-extract-private-npm-1.0.3-27ba5cf703-866a71ba68.zip/node_modules/@vanilla-extract/private/",\
           "packageDependencies": [\
             ["@vanilla-extract/private", "npm:1.0.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@vanilla-extract/sprinkles", [\
+        ["npm:1.6.1", {\
+          "packageLocation": "./.yarn/cache/@vanilla-extract-sprinkles-npm-1.6.1-e524ee399f-13c53a94b1.zip/node_modules/@vanilla-extract/sprinkles/",\
+          "packageDependencies": [\
+            ["@vanilla-extract/sprinkles", "npm:1.6.1"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:349cd534ff4100362b32762c7bde3388c59b30b54450d44075378a4d695d03021da5e3431b38327b359f7c25a1d43e4ad10b112baaad16df29b92d1917405087#npm:1.6.1", {\
+          "packageLocation": "./.yarn/__virtual__/@vanilla-extract-sprinkles-virtual-d3f6af7754/0/cache/@vanilla-extract-sprinkles-npm-1.6.1-e524ee399f-13c53a94b1.zip/node_modules/@vanilla-extract/sprinkles/",\
+          "packageDependencies": [\
+            ["@vanilla-extract/sprinkles", "virtual:349cd534ff4100362b32762c7bde3388c59b30b54450d44075378a4d695d03021da5e3431b38327b359f7c25a1d43e4ad10b112baaad16df29b92d1917405087#npm:1.6.1"],\
+            ["@types/vanilla-extract__css", null],\
+            ["@vanilla-extract/css", "npm:1.13.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/vanilla-extract__css",\
+            "@vanilla-extract/css"\
           ],\
           "linkType": "HARD"\
         }]\

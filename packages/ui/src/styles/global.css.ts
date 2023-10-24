@@ -1,15 +1,13 @@
 import { createGlobalTheme, globalStyle } from '@vanilla-extract/css';
 
 import { dataThemeSelector } from './selector';
-import { darkColors, lightColors, vars, zIndices } from './vars.css';
+import { darkColors, lightColors, themes } from './themes';
 
-createGlobalTheme(`:root, :root${dataThemeSelector.light}`, vars, {
+createGlobalTheme(`:root, :root${dataThemeSelector.light}`, themes, {
   color: { ...lightColors },
-  zIndices: { ...zIndices },
 });
-createGlobalTheme(`:root${dataThemeSelector.dark}`, vars, {
+createGlobalTheme(`:root${dataThemeSelector.dark}`, themes, {
   color: { ...darkColors },
-  zIndices: { ...zIndices },
 });
 
 globalStyle('html, body, #root', {
@@ -31,13 +29,13 @@ globalStyle('html, body, #root *', {
 });
 
 globalStyle(`:root, :root${dataThemeSelector.light} :where(body, #root)`, {
-  background: vars.color.white,
+  background: themes.color['white'],
 });
 
 globalStyle(`:root${dataThemeSelector.dark} :where(body, #root)`, {
-  background: vars.color.gray2,
+  background: themes.color['gray2'],
 });
 
 globalStyle('h1, h2, h3, h4, h5, h6, p', {
-  color: vars.color.gray12,
+  color: themes.color['gray12'],
 });

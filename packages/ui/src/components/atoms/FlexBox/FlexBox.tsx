@@ -1,6 +1,8 @@
-import type { CSSProperties } from '@vanilla-extract/css';
-import type { HTMLAttributes } from 'react';
-import { Children } from 'react';
+import { assignInlineVars } from '@vanilla-extract/dynamic';
+import classNames from 'classnames';
+import type { CSSProperties, HTMLAttributes } from 'react';
+
+import { block, flexVar, sprinkles } from './FlexBox.css';
 
 export type FlexBoxProps = HTMLAttributes<HTMLDivElement> & {
   flex?: CSSProperties['flex'];
@@ -13,12 +15,6 @@ export type FlexBoxProps = HTMLAttributes<HTMLDivElement> & {
   alignContent?: CSSProperties['alignContent'];
   alignItems?: CSSProperties['alignItems'];
   alignSelf?: CSSProperties['alignSelf'];
-  gap?: {
-    x?: number | string;
-    y?: number | string;
-    withFirstX?: boolean;
-    withFirstY?: boolean;
-  };
 };
 
 export function FlexBox({
@@ -33,13 +29,12 @@ export function FlexBox({
   alignContent,
   alignItems,
   alignSelf,
-  gap,
+  className,
   ...props
 }: FlexBoxProps) {
   const containerStyle = Object.fromEntries(
     Object.entries({
       display: 'flex',
-      flex,
       flexBasis,
       flexDirection,
       flexFlow,
@@ -53,19 +48,12 @@ export function FlexBox({
   );
 
   return (
-    <div style={containerStyle} {...props}>
-      {gap
-        ? Children.map(children, (child, idx) => (
-            <div
-              style={{
-                marginLeft: gap.withFirstX ? gap.x : idx !== 0 ? gap.x : 0,
-                marginTop: gap.withFirstY ? gap.y : idx !== 0 ? gap.y : 0,
-              }}
-            >
-              {child}
-            </div>
-          ))
-        : children}
+    <div
+      className={classNames(block, sprinkles({ ...containerStyle }), className)}
+      style={flex ? assignInlineVars({ [flexVar]: `${flex}` }) : undefined}
+      {...props}
+    >
+      {children}
     </div>
   );
 }

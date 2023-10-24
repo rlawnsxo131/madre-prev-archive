@@ -2303,6 +2303,8 @@ __metadata:
     "@types/node": ^20.8.2
     "@types/react": ^18.2.21
     "@vanilla-extract/css": ^1.13.0
+    "@vanilla-extract/dynamic": ^2.0.3
+    "@vanilla-extract/sprinkles": ^1.6.1
     "@vanilla-extract/vite-plugin": ^3.9.0
     "@vitejs/plugin-react": ^4.1.0
     classnames: ^2.3.2
@@ -2316,6 +2318,7 @@ __metadata:
   peerDependencies:
     "@radix-ui/colors": ">=3.0.0"
     "@vanilla-extract/css": ">=1.13.0"
+    "@vanilla-extract/sprinkles": ">=1.6.1"
     classnames: ">=2.3.2"
     framer-motion: ">=10.16.4"
     react: ">=18.2.0"
@@ -4761,6 +4764,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vanilla-extract/dynamic@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "@vanilla-extract/dynamic@npm:2.0.3"
+  dependencies:
+    "@vanilla-extract/private": ^1.0.3
+  checksum: 9ad4068d7e28361a7aca46b5f14094e74613428fb600e54227d8ba7a35926c0d7339de1876eb2b3563f6d97c0f08fa09d5ff597f76776f8edca37510165682b0
+  languageName: node
+  linkType: hard
+
 "@vanilla-extract/integration@npm:^6.0.2":
   version: 6.2.2
   resolution: "@vanilla-extract/integration@npm:6.2.2"
@@ -4786,6 +4798,15 @@ __metadata:
   version: 1.0.3
   resolution: "@vanilla-extract/private@npm:1.0.3"
   checksum: 866a71ba6804edeb0735684e7723ba78f5cf0bb40d4fb538fe6bf7d73928099e341312337b2a510ac0ce96ff8a4b39eb7f7a5fad0c842532353dd20e7278f29b
+  languageName: node
+  linkType: hard
+
+"@vanilla-extract/sprinkles@npm:^1.6.1":
+  version: 1.6.1
+  resolution: "@vanilla-extract/sprinkles@npm:1.6.1"
+  peerDependencies:
+    "@vanilla-extract/css": ^1.0.0
+  checksum: 13c53a94b19f9226c2684b0da06b98022d2faaf504cb5a4a8e5a0abae499aaa7855c17aa6d88534800d9427696b3248f4fc1a5332bde336c445d837017569f3b
   languageName: node
   linkType: hard
 

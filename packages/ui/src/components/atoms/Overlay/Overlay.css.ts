@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css';
 
-import { vars } from '@/styles';
+import { themes, zIndices } from '@/styles';
 
 export const block = style({
   position: 'fixed',
@@ -8,8 +8,8 @@ export const block = style({
   top: 0,
   width: '100%',
   height: '100%',
-  background: vars.color.overlay,
-  zIndex: vars.zIndices.overlay,
+  background: themes.color['overlay'],
+  zIndex: zIndices['overlay'],
   selectors: {
     '&': {
       '@supports': {

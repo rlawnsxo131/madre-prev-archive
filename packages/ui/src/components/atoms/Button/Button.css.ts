@@ -1,6 +1,6 @@
 import { style, styleVariants } from '@vanilla-extract/css';
 
-import { vars } from '@/styles';
+import { themes } from '@/styles';
 
 export const block = style({
   display: 'inline-flex',
@@ -48,41 +48,41 @@ export const radius = styleVariants({
 
 export const themeSolid = styleVariants({
   primary: {
-    color: vars.color.white,
-    background: vars.color.cyan10,
-    border: `1px solid ${vars.color.cyan10}`,
-    outlineColor: vars.color.cyan10,
+    color: themes.color['white'],
+    background: themes.color['cyan10'],
+    border: `1px solid ${themes.color['cyan10']}`,
+    outlineColor: themes.color['cyan10'],
     selectors: {
       '&:hover': {
-        background: vars.color.cyan11,
-        border: `1px solid ${vars.color.cyan11}`,
-        outlineColor: vars.color.cyan11,
+        background: themes.color['cyan11'],
+        border: `1px solid ${themes.color['cyan11']}`,
+        outlineColor: themes.color['cyan11'],
       },
     },
   },
   secondary: {
-    color: vars.color.white,
-    background: vars.color.gray10,
-    border: `1px solid ${vars.color.gray10}`,
-    outlineColor: vars.color.gray10,
+    color: themes.color.white,
+    background: themes.color['gray10'],
+    border: `1px solid ${themes.color['gray10']}`,
+    outlineColor: themes.color['gray10'],
     selectors: {
       '&:hover': {
-        background: vars.color.gray11,
-        border: `1px solid ${vars.color.gray11}`,
-        outlineColor: vars.color.gray11,
+        background: themes.color['gray11'],
+        border: `1px solid ${themes.color['gray11']}`,
+        outlineColor: themes.color['gray11'],
       },
     },
   },
   warn: {
-    color: vars.color.white,
-    background: vars.color.red9,
-    border: `1px solid ${vars.color.red9}`,
-    outlineColor: vars.color.red9,
+    color: themes.color['white'],
+    background: themes.color['red9'],
+    border: `1px solid ${themes.color['red9']}`,
+    outlineColor: themes.color['red9'],
     selectors: {
       '&:hover': {
-        background: vars.color.red11,
-        border: `1px solid ${vars.color.red11}`,
-        outlineColor: vars.color.red11,
+        background: themes.color['red11'],
+        border: `1px solid ${themes.color['red11']}`,
+        outlineColor: themes.color['red11'],
       },
     },
   },
