@@ -19,7 +19,7 @@ export type FlexBoxProps = HTMLAttributes<HTMLDivElement> & {
 
 export function FlexBox({
   children,
-  flex,
+  flex = '0 1 auto',
   flexBasis,
   flexDirection,
   flexFlow,
@@ -50,7 +50,7 @@ export function FlexBox({
   return (
     <div
       className={classNames(block, sprinkles({ ...containerStyle }), className)}
-      style={flex ? assignInlineVars({ [flexVar]: `${flex}` }) : undefined}
+      style={assignInlineVars({ [flexVar]: `${flex}` })}
       {...props}
     >
       {children}
