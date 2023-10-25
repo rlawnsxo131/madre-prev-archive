@@ -43,7 +43,7 @@ export const Button: ButtonComponent = forwardRef(function <
     full,
     ...props
   }: ButtonProps<E>,
-  ref: ComponentPropsWithRef<E>['ref'],
+  ref?: ComponentPropsWithRef<E>['ref'],
 ) {
   const Element = as || 'button';
 
