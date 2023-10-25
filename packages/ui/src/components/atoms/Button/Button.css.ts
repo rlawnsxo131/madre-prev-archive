@@ -46,7 +46,7 @@ export const radius = styleVariants({
   },
 });
 
-export const themeSolid = styleVariants({
+const themeSolid = styleVariants({
   primary: {
     color: themes.color['white'],
     background: themes.color['cyan10'],
@@ -61,7 +61,7 @@ export const themeSolid = styleVariants({
     },
   },
   secondary: {
-    color: themes.color.white,
+    color: themes.color['white'],
     background: themes.color['gray10'],
     border: `1px solid ${themes.color['gray10']}`,
     outlineColor: themes.color['gray10'],
@@ -88,8 +88,13 @@ export const themeSolid = styleVariants({
   },
 });
 
-export const themeOutline = styleVariants({
+const themeOutline = styleVariants({
   primary: {},
   secondary: {},
   warn: {},
 });
+
+export const theme = {
+  solid: themeSolid,
+  outline: themeOutline,
+};

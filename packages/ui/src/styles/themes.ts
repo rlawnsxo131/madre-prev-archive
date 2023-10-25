@@ -14,15 +14,17 @@ export const darkColors = Object.assign(
   redDark,
 );
 
+type ColorKey = keyof typeof lightColors;
+
 export const themes = createGlobalThemeContract(
   {
     color: {
-      ...Object.keys(lightColors).reduce(
-        (acc, key: string) => {
+      ...(Object.keys(lightColors) as ColorKey[]).reduce(
+        (acc, key) => {
           acc[key] = key;
           return acc;
         },
-        {} as Record<string, string>,
+        {} as Record<ColorKey, ColorKey>,
       ),
     },
   },

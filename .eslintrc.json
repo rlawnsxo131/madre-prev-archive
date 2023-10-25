@@ -35,11 +35,13 @@
         "caughtErrorsIgnorePattern": "^_|^props"
       }
     ],
+    // https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/consistent-type-imports.md
     "@typescript-eslint/consistent-type-imports": [
       "error",
       {
         "prefer": "type-imports",
-        "disallowTypeAnnotations": false
+        "disallowTypeAnnotations": false,
+        "fixStyle": "separate-type-imports"
       }
     ],
     "@typescript-eslint/ban-types": [

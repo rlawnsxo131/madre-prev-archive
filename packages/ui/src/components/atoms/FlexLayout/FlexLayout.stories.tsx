@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { FlexBox } from './FlexBox';
+import { FlexLayout } from './FlexLayout';
 
 const meta = {
-  title: 'atoms/FlexBox',
-  component: FlexBox,
+  title: 'atoms/FlexLayout',
+  component: FlexLayout,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
   argTypes: {},
-} satisfies Meta<typeof FlexBox>;
+} satisfies Meta<typeof FlexLayout>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -30,9 +30,9 @@ export const Default: Story = {
     className: '',
   },
   render: (args) => (
-    <FlexBox {...args}>
+    <FlexLayout {...args}>
       <div>flex</div>
       <div>box</div>
-    </FlexBox>
+    </FlexLayout>
   ),
 };

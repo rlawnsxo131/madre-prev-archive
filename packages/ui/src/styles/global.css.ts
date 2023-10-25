@@ -39,3 +39,7 @@ globalStyle(`:root${dataThemeSelector.dark} :where(body, #root)`, {
 globalStyle('h1, h2, h3, h4, h5, h6, p', {
   color: themes.color['gray12'],
 });
+
+globalStyle('a', {
+  all: 'unset',
+});

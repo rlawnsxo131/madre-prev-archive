@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { AnimatePresence, motion } from 'framer-motion';
-import type { ComponentProps } from 'react';
+import type { ComponentProps, PropsWithoutRef } from 'react';
+import { forwardRef } from 'react';
 
 import { block } from './Overlay.css';
 
@@ -10,20 +11,22 @@ import { block } from './Overlay.css';
  *
  * react-dom.development.js:86 Warning: Unknown event handler property `onPointerEnterCapture`. It will be ignored.
  */
-export type OverlayProps = ComponentProps<typeof motion.div> & {
-  visible: boolean;
-  duration?: string;
-};
+export type OverlayProps = PropsWithoutRef<
+  ComponentProps<typeof motion.div> & {
+    visible: boolean;
+    duration?: string;
+  }
+>;
 
-export function Overlay({
-  visible,
-  duration = '.15',
-  className,
-}: OverlayProps) {
+export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(function (
+  { className, visible, duration = '.15' },
+  ref,
+) {
   return (
     <AnimatePresence initial={false}>
       {visible && (
         <motion.div
+          ref={ref}
           className={classNames(block, className)}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -36,4 +39,4 @@ export function Overlay({
       )}
     </AnimatePresence>
   );
-}
+});
