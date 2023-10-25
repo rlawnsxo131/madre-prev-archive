@@ -22,11 +22,8 @@ export const Primary: Story = {
     size: 'medium',
     radius: 'medium',
     variant: 'solid',
+    full: false,
   },
-  // play: async ({ canvasElement }) => {
-  //   const canvas = within(canvasElement);
-  //   await userEvent.click(canvas.getByRole('button'));
-  // },
 };
 
 export const Secondary: Story = {
@@ -36,6 +33,7 @@ export const Secondary: Story = {
     size: 'medium',
     radius: 'medium',
     variant: 'solid',
+    full: false,
   },
 };
 
@@ -46,5 +44,6 @@ export const Warn: Story = {
     size: 'medium',
     radius: 'medium',
     variant: 'solid',
+    full: false,
   },
 };

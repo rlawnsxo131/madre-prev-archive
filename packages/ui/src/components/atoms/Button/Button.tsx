@@ -9,6 +9,7 @@ import { forwardRef } from 'react';
 
 import {
   block,
+  full as _full,
   radius as _radius,
   size as _size,
   theme as _theme,
@@ -20,7 +21,8 @@ export type ButtonProps<E extends ElementType> = ComponentPropsWithoutRef<E> & {
   variant?: 'solid' | 'outline';
   theme?: 'primary' | 'secondary' | 'warn';
   radius?: 'none' | 'medium' | 'full';
-  size?: 'small' | 'medium' | 'large' | 'responsive';
+  size?: 'small' | 'medium' | 'large';
+  full?: boolean;
 };
 
 export type ButtonComponent = <E extends ElementType = 'button'>(
@@ -38,6 +40,7 @@ export const Button: ButtonComponent = forwardRef(function <
     theme = 'primary',
     radius = 'medium',
     size = 'medium',
+    full,
     ...props
   }: ButtonProps<E>,
   ref: ComponentPropsWithRef<E>['ref'],
@@ -49,9 +52,10 @@ export const Button: ButtonComponent = forwardRef(function <
       ref={ref}
       className={classNames(
         block,
-        _theme[variant][theme],
         _size[size],
+        _theme[variant][theme],
         _radius[radius],
+        { [_full]: full },
         className,
       )}
       {...props}

@@ -25,13 +25,11 @@ export const size = styleVariants({
     fontSize: '1.125rem',
     padding: '0.25rem 1.125rem',
   },
-  responsive: {
-    flex: '1',
-    width: '100%',
-    height: '2.5rem',
-    fontSize: '1.125rem',
-    padding: '0.25rem 1.125rem',
-  },
+});
+
+export const full = style({
+  flex: '1',
+  width: '100%',
 });
 
 export const radius = styleVariants({
