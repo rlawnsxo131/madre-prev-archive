@@ -59,6 +59,7 @@ export const radius = styleVariants({
 });
 
 const solidDisabledColor = {
+  color: themes.color['white'],
   backgroundColor: themes.color['gray5'],
   border: `1px solid ${themes.color['gray5']}`,
   outlineColor: themes.color['gray5'],
@@ -82,15 +83,15 @@ const themeSolid = styleVariants({
     },
   },
   secondary: {
-    color: themes.color['white'],
-    backgroundColor: themes.color['gray10'],
-    border: `1px solid ${themes.color['gray10']}`,
-    outlineColor: themes.color['gray10'],
+    color: themes.color['cyan11'],
+    backgroundColor: themes.color['cyan4'],
+    border: `1px solid ${themes.color['cyan4']}`,
+    outlineColor: themes.color['cyan4'],
     selectors: {
       '&:hover': {
-        backgroundColor: themes.color['gray11'],
-        border: `1px solid ${themes.color['gray11']}`,
-        outlineColor: themes.color['gray11'],
+        backgroundColor: themes.color['cyan5'],
+        border: `1px solid ${themes.color['cyan5']}`,
+        outlineColor: themes.color['cyan5'],
       },
       '&:disabled': {
         ...solidDisabledColor,
