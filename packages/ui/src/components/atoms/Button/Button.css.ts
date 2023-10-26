@@ -1,18 +1,32 @@
-import { style, styleVariants } from '@vanilla-extract/css';
+import { keyframes, style, styleVariants } from '@vanilla-extract/css';
 
 import { themes } from '@/styles';
+
+const scale = keyframes({
+  '0%': { transform: 'scale(1)' },
+  '50%': { transform: 'scale(0.95)' },
+  '100%': { transform: 'scale(1)' },
+});
 
 export const block = style({
   display: 'inline-flex',
   justifyContent: 'center',
   alignItems: 'center',
   cursor: 'pointer',
+  selectors: {
+    '&:active:not([disabled])': {
+      animation: `${scale} .15s`,
+    },
+    '&:disabled': {
+      cursor: 'not-allowed',
+    },
+  },
 });
 
 export const size = styleVariants({
   small: {
-    height: '1.725rem',
-    fontSize: '0.825rem',
+    height: '1.825rem',
+    fontSize: '0.9rem',
     padding: '0.25rem 0.725rem',
   },
   medium: {
@@ -47,12 +61,12 @@ export const radius = styleVariants({
 const themeSolid = styleVariants({
   primary: {
     color: themes.color['white'],
-    background: themes.color['cyan10'],
+    backgroundColor: themes.color['cyan10'],
     border: `1px solid ${themes.color['cyan10']}`,
     outlineColor: themes.color['cyan10'],
     selectors: {
-      '&:hover': {
-        background: themes.color['cyan11'],
+      '&:hover:not([disabled])': {
+        backgroundColor: themes.color['cyan11'],
         border: `1px solid ${themes.color['cyan11']}`,
         outlineColor: themes.color['cyan11'],
       },
@@ -60,12 +74,12 @@ const themeSolid = styleVariants({
   },
   secondary: {
     color: themes.color['white'],
-    background: themes.color['gray10'],
+    backgroundColor: themes.color['gray10'],
     border: `1px solid ${themes.color['gray10']}`,
     outlineColor: themes.color['gray10'],
     selectors: {
-      '&:hover': {
-        background: themes.color['gray11'],
+      '&:hover:not([disabled])': {
+        backgroundColor: themes.color['gray11'],
         border: `1px solid ${themes.color['gray11']}`,
         outlineColor: themes.color['gray11'],
       },
@@ -73,12 +87,12 @@ const themeSolid = styleVariants({
   },
   warn: {
     color: themes.color['white'],
-    background: themes.color['red9'],
+    backgroundColor: themes.color['red9'],
     border: `1px solid ${themes.color['red9']}`,
     outlineColor: themes.color['red9'],
     selectors: {
-      '&:hover': {
-        background: themes.color['red11'],
+      '&:hover:not([disabled])': {
+        backgroundColor: themes.color['red11'],
         border: `1px solid ${themes.color['red11']}`,
         outlineColor: themes.color['red11'],
       },

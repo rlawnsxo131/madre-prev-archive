@@ -8,7 +8,7 @@ export const block = style({
   top: 0,
   width: '100%',
   height: '100%',
-  background: themes.color['overlay'],
+  backgroundColor: themes.color['overlay'],
   zIndex: zIndices['overlay'],
   selectors: {
     '&': {

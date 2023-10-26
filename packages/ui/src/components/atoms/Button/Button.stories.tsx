@@ -22,7 +22,8 @@ export const Primary: Story = {
     size: 'medium',
     radius: 'medium',
     variant: 'solid',
-    full: false,
+    fullWidth: false,
+    disabled: false,
   },
 };
 
@@ -33,7 +34,8 @@ export const Secondary: Story = {
     size: 'medium',
     radius: 'medium',
     variant: 'solid',
-    full: false,
+    fullWidth: false,
+    disabled: false,
   },
 };
 
@@ -44,6 +46,7 @@ export const Warn: Story = {
     size: 'medium',
     radius: 'medium',
     variant: 'solid',
-    full: false,
+    fullWidth: false,
+    disabled: false,
   },
 };
