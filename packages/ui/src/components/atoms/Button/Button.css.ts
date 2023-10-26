@@ -2,6 +2,9 @@ import { keyframes, style, styleVariants } from '@vanilla-extract/css';
 
 import { themes } from '@/styles';
 
+/**
+ * base
+ */
 const scale = keyframes({
   '0%': { transform: 'scale(1)' },
   '50%': { transform: 'scale(0.95)' },
@@ -23,6 +26,9 @@ export const block = style({
   },
 });
 
+/**
+ * size
+ */
 export const size = styleVariants({
   small: {
     height: '1.825rem',
@@ -46,6 +52,9 @@ export const fullWidth = style({
   width: '100%',
 });
 
+/**
+ * shape
+ */
 export const radius = styleVariants({
   none: {
     borderRadius: '0',
@@ -58,6 +67,9 @@ export const radius = styleVariants({
   },
 });
 
+/**
+ * theme
+ */
 const solidDisabledColor = {
   color: themes.color['white'],
   backgroundColor: themes.color['gray5'],
