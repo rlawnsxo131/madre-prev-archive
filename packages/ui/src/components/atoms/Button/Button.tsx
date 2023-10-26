@@ -9,7 +9,7 @@ import { forwardRef } from 'react';
 
 import {
   block,
-  full as _full,
+  fullWidth as _fullWidth,
   radius as _radius,
   size as _size,
   theme as _theme,
@@ -18,11 +18,11 @@ import {
 export type ButtonProps<E extends ElementType> = ComponentPropsWithoutRef<E> & {
   as?: E;
   children?: ReactNode;
-  variant?: 'solid' | 'outline';
-  theme?: 'primary' | 'secondary' | 'warn';
-  radius?: 'none' | 'medium' | 'full';
-  size?: 'small' | 'medium' | 'large';
-  full?: boolean;
+  variant?: keyof typeof _theme;
+  theme?: keyof (typeof _theme)['solid' | 'outline'];
+  radius?: keyof typeof _radius;
+  size?: keyof typeof _size;
+  fullWidth?: boolean;
 };
 
 export type ButtonComponent = <E extends ElementType = 'button'>(
@@ -40,7 +40,7 @@ export const Button: ButtonComponent = forwardRef(function <
     theme = 'primary',
     radius = 'medium',
     size = 'medium',
-    full,
+    fullWidth = false,
     ...props
   }: ButtonProps<E>,
   ref?: ComponentPropsWithRef<E>['ref'],
@@ -55,7 +55,7 @@ export const Button: ButtonComponent = forwardRef(function <
         _size[size],
         _theme[variant][theme],
         _radius[radius],
-        { [_full]: full },
+        { [_fullWidth]: fullWidth },
         className,
       )}
       {...props}

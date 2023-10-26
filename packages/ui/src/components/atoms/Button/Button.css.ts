@@ -27,7 +27,7 @@ export const size = styleVariants({
   },
 });
 
-export const full = style({
+export const fullWidth = style({
   flex: '1',
   width: '100%',
 });
