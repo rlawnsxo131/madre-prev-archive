@@ -58,6 +58,12 @@ export const radius = styleVariants({
   },
 });
 
+const solidDisabledColor = {
+  backgroundColor: themes.color['gray5'],
+  border: `1px solid ${themes.color['gray5']}`,
+  outlineColor: themes.color['gray5'],
+};
+
 const themeSolid = styleVariants({
   primary: {
     color: themes.color['white'],
@@ -65,10 +71,13 @@ const themeSolid = styleVariants({
     border: `1px solid ${themes.color['cyan10']}`,
     outlineColor: themes.color['cyan10'],
     selectors: {
-      '&:hover:not([disabled])': {
+      '&:hover': {
         backgroundColor: themes.color['cyan11'],
         border: `1px solid ${themes.color['cyan11']}`,
         outlineColor: themes.color['cyan11'],
+      },
+      '&:disabled': {
+        ...solidDisabledColor,
       },
     },
   },
@@ -78,10 +87,13 @@ const themeSolid = styleVariants({
     border: `1px solid ${themes.color['gray10']}`,
     outlineColor: themes.color['gray10'],
     selectors: {
-      '&:hover:not([disabled])': {
+      '&:hover': {
         backgroundColor: themes.color['gray11'],
         border: `1px solid ${themes.color['gray11']}`,
         outlineColor: themes.color['gray11'],
+      },
+      '&:disabled': {
+        ...solidDisabledColor,
       },
     },
   },
@@ -91,10 +103,13 @@ const themeSolid = styleVariants({
     border: `1px solid ${themes.color['red9']}`,
     outlineColor: themes.color['red9'],
     selectors: {
-      '&:hover:not([disabled])': {
+      '&:hover': {
         backgroundColor: themes.color['red11'],
         border: `1px solid ${themes.color['red11']}`,
         outlineColor: themes.color['red11'],
+      },
+      '&:disabled': {
+        ...solidDisabledColor,
       },
     },
   },
