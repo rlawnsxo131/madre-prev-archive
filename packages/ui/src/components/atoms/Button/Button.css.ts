@@ -70,7 +70,7 @@ export const radius = styleVariants({
 /**
  * theme
  */
-const solidDisabledColor = {
+const solidDisabled = {
   color: themes.color['white'],
   backgroundColor: themes.color['gray5'],
   border: `1px solid ${themes.color['gray5']}`,
@@ -90,7 +90,7 @@ const themeSolid = styleVariants({
         outlineColor: themes.color['cyan11'],
       },
       '&:disabled': {
-        ...solidDisabledColor,
+        ...solidDisabled,
       },
     },
   },
@@ -106,7 +106,7 @@ const themeSolid = styleVariants({
         outlineColor: themes.color['cyan5'],
       },
       '&:disabled': {
-        ...solidDisabledColor,
+        ...solidDisabled,
       },
     },
   },
@@ -122,7 +122,7 @@ const themeSolid = styleVariants({
         outlineColor: themes.color['red11'],
       },
       '&:disabled': {
-        ...solidDisabledColor,
+        ...solidDisabled,
       },
     },
   },
