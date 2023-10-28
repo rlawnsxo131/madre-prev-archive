@@ -6,7 +6,7 @@ const meta = {
   title: 'atoms/Overlay',
   component: Overlay,
   parameters: {
-    layout: 'centered',
+    layout: 'fullscreen',
   },
   tags: ['autodocs'],
   argTypes: {},
@@ -20,4 +20,9 @@ export const Default: Story = {
     visible: false,
     duration: '.15',
   },
+  render: (args) => (
+    <div style={{ width: '320px', height: '320px' }}>
+      <Overlay {...args} />
+    </div>
+  ),
 };

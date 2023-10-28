@@ -19,7 +19,7 @@ export const Default: Story = {
   args: {
     flex: 1,
     flexBasis: '',
-    flexDirection: 'column',
+    flexDirection: 'row',
     flexFlow: '',
     flexGrow: '',
     flexShrink: '',
@@ -29,10 +29,17 @@ export const Default: Story = {
     alignSelf: '',
     className: '',
   },
-  render: (args) => (
-    <FlexLayout {...args}>
-      <div>flex</div>
-      <div>box</div>
-    </FlexLayout>
-  ),
+  render: (args) => {
+    const itemStyle = {
+      padding: '1rem',
+      border: '1px solid black',
+    };
+
+    return (
+      <FlexLayout {...args}>
+        <div style={itemStyle}>item1</div>
+        <div style={itemStyle}>item2</div>
+      </FlexLayout>
+    );
+  },
 };
