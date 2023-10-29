@@ -5,7 +5,6 @@ import { themes } from '@/styles';
 /**
  * base
  */
-
 export const block = style({
   display: 'inline-flex',
   justifyContent: 'center',
@@ -13,9 +12,6 @@ export const block = style({
   cursor: 'pointer',
   transition: 'all .15s',
   selectors: {
-    '& + &': {
-      marginLeft: '1rem',
-    },
     '&:active:not([disabled])': {
       transform: 'scale(.99, .98)',
     },

@@ -35,6 +35,7 @@ export const Default: Story = {
     const argsStyle: ButtonProps<'button'> = {
       children: args.children,
       radius: args.radius,
+      style: { marginRight: '1rem' },
     };
 
     return (
