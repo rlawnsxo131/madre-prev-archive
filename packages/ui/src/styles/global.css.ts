@@ -1,12 +1,11 @@
 import { createGlobalTheme, globalStyle } from '@vanilla-extract/css';
 
-import { dataThemeSelector } from './selector';
 import { darkColors, lightColors, themes } from './themes';
 
-createGlobalTheme(`:root, :root${dataThemeSelector.light}`, themes, {
+createGlobalTheme(`:root, :root[data-theme="light"]`, themes, {
   color: { ...lightColors },
 });
-createGlobalTheme(`:root${dataThemeSelector.dark}`, themes, {
+createGlobalTheme(`:root[data-theme="dark"]`, themes, {
   color: { ...darkColors },
 });
 
@@ -24,22 +23,23 @@ globalStyle('html, body, #root', {
   WebkitTextSizeAdjust: '100%',
 });
 
-globalStyle('html, body, #root *', {
+globalStyle('*', {
   boxSizing: 'inherit',
+  fontFamily: 'inherit',
 });
 
-globalStyle(`:root, :root${dataThemeSelector.light} :where(body, #root)`, {
+globalStyle('a', {
+  textDecoration: 'none',
+});
+
+globalStyle(`:root, :root[data-theme="dark"] :where(body, #root)`, {
   backgroundColor: themes.color['white'],
 });
 
-globalStyle(`:root${dataThemeSelector.dark} :where(body, #root)`, {
+globalStyle(`:root[data-theme="dark"] :where(body, #root)`, {
   backgroundColor: themes.color['gray2'],
 });
 
 globalStyle('h1, h2, h3, h4, h5, h6, p', {
   color: themes.color['gray12'],
-});
-
-globalStyle('a', {
-  all: 'unset',
 });

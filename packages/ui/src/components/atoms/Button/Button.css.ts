@@ -1,27 +1,23 @@
-import { keyframes, style, styleVariants } from '@vanilla-extract/css';
+import { style, styleVariants } from '@vanilla-extract/css';
 
 import { themes } from '@/styles';
 
 /**
  * base
  */
-const scale = keyframes({
-  '0%': { transform: 'scale(1)' },
-  '50%': { transform: 'scale(0.98)' },
-  '100%': { transform: 'scale(1)' },
-});
 
 export const block = style({
   display: 'inline-flex',
   justifyContent: 'center',
   alignItems: 'center',
   cursor: 'pointer',
+  transition: 'all .15s',
   selectors: {
     '& + &': {
       marginLeft: '1rem',
     },
     '&:active:not([disabled])': {
-      animation: `${scale} .15s`,
+      transform: 'scale(.99, .98)',
     },
     '&:disabled': {
       cursor: 'not-allowed',
@@ -73,6 +69,10 @@ export const radius = styleVariants({
 /**
  * theme
  */
+
+/**
+ * solid
+ */
 const solidDisabled = {
   color: themes.color['gray1'],
   backgroundColor: themes.color['gray5'],
@@ -84,9 +84,8 @@ const themeSolid = styleVariants({
     color: themes.color['white'],
     backgroundColor: themes.color['cyan10'],
     border: `1px solid ${themes.color['cyan10']}`,
-    outlineColor: themes.color['cyan10'],
     selectors: {
-      '&:hover': {
+      '&:hover:not([disabled])': {
         backgroundColor: themes.color['cyan11'],
         border: `1px solid ${themes.color['cyan11']}`,
       },
@@ -99,9 +98,8 @@ const themeSolid = styleVariants({
     color: themes.color['cyan11'],
     backgroundColor: themes.color['cyan4'],
     border: `1px solid ${themes.color['cyan4']}`,
-    outlineColor: themes.color['cyan4'],
     selectors: {
-      '&:hover': {
+      '&:hover:not([disabled])': {
         backgroundColor: themes.color['cyan5'],
         border: `1px solid ${themes.color['cyan5']}`,
       },
@@ -114,9 +112,8 @@ const themeSolid = styleVariants({
     color: themes.color['white'],
     backgroundColor: themes.color['red9'],
     border: `1px solid ${themes.color['red9']}`,
-    outlineColor: themes.color['red9'],
     selectors: {
-      '&:hover': {
+      '&:hover:not([disabled])': {
         backgroundColor: themes.color['red11'],
         border: `1px solid ${themes.color['red11']}`,
       },
@@ -127,9 +124,11 @@ const themeSolid = styleVariants({
   },
 });
 
+/**
+ * outline
+ */
 const outlineDisabled = {
   color: themes.color['gray6'],
-  backgroundColor: 'transparent',
   border: `1px solid ${themes.color['gray6']}`,
 };
 
@@ -138,9 +137,8 @@ const themeOutline = styleVariants({
     color: themes.color['cyan11'],
     backgroundColor: 'transparent',
     border: `1px solid ${themes.color['cyan10']}`,
-    outlineColor: themes.color['cyan10'],
     selectors: {
-      '&:hover': {
+      '&:hover:not([disabled])': {
         backgroundColor: themes.color['cyan2'],
         border: `1px solid ${themes.color['cyan11']}`,
       },
@@ -153,9 +151,8 @@ const themeOutline = styleVariants({
     color: themes.color['cyan11'],
     backgroundColor: themes.color['cyan2'],
     border: `1px solid ${themes.color['cyan10']}`,
-    outlineColor: themes.color['cyan10'],
     selectors: {
-      '&:hover': {
+      '&:hover:not([disabled])': {
         backgroundColor: themes.color['cyan3'],
       },
       '&:disabled': {
@@ -167,9 +164,8 @@ const themeOutline = styleVariants({
     color: themes.color['red11'],
     backgroundColor: themes.color['red2'],
     border: `1px solid ${themes.color['red10']}`,
-    outlineColor: themes.color['red10'],
     selectors: {
-      '&:hover': {
+      '&:hover:not([disabled])': {
         backgroundColor: themes.color['red3'],
       },
       '&:disabled': {
@@ -179,28 +175,48 @@ const themeOutline = styleVariants({
   },
 });
 
-const ghostDisabled = {};
+/**
+ * ghost
+ */
+const ghostDisabled = {
+  color: themes.color['gray6'],
+};
 
 const themeGhost = styleVariants({
   primary: {
+    color: themes.color['cyan11'],
+    backgroundColor: 'transparent',
+    border: 'transparent',
     selectors: {
-      '&:hover': {},
+      '&:hover:not([disabled])': {
+        backgroundColor: themes.color['cyan3'],
+      },
       '&:disabled': {
         ...ghostDisabled,
       },
     },
   },
   secondary: {
+    color: themes.color['cyan11'],
+    backgroundColor: 'transparent',
+    border: 'transparent',
     selectors: {
-      '&:hover': {},
+      '&:hover:not([disabled])': {
+        backgroundColor: themes.color['gray3'],
+      },
       '&:disabled': {
         ...ghostDisabled,
       },
     },
   },
   warn: {
+    color: themes.color['red11'],
+    backgroundColor: 'transparent',
+    border: 'transparent',
     selectors: {
-      '&:hover': {},
+      '&:hover:not([disabled])': {
+        backgroundColor: themes.color['red3'],
+      },
       '&:disabled': {
         ...ghostDisabled,
       },

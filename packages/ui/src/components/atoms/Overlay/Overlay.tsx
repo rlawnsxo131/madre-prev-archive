@@ -33,7 +33,7 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(function (
           exit={{ opacity: 0 }}
           transition={{
             duration,
-            ease: 'easeIn',
+            ease: 'easeInOut',
           }}
         />
       )}

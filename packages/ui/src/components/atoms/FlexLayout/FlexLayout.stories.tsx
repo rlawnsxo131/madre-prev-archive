@@ -17,7 +17,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    flex: 1,
     flexBasis: '',
     flexDirection: 'row',
     flexFlow: '',
@@ -33,6 +32,8 @@ export const Default: Story = {
     const itemStyle = {
       padding: '1rem',
       border: '1px solid black',
+      display: 'flex',
+      flex: '0',
     };
 
     return (

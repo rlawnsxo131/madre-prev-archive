@@ -1,13 +1,19 @@
-import { assignInlineVars } from '@vanilla-extract/dynamic';
 import classNames from 'classnames';
-import type { CSSProperties, HTMLAttributes, PropsWithoutRef } from 'react';
+import type {
+  ComponentPropsWithoutRef,
+  ComponentPropsWithRef,
+  CSSProperties,
+  ElementType,
+  ReactNode,
+} from 'react';
 import { forwardRef } from 'react';
 
-import { block, flexVar, sprinkles } from './FlexLayout.css';
+import { block, sprinkles } from './FlexLayout.css';
 
-export type FlexLayoutProps = PropsWithoutRef<
-  HTMLAttributes<HTMLDivElement> & {
-    flex?: CSSProperties['flex'];
+export type FlexLayoutProps<E extends ElementType> =
+  ComponentPropsWithoutRef<E> & {
+    as?: E;
+    children?: ReactNode;
     flexBasis?: CSSProperties['flexBasis'];
     flexDirection?: CSSProperties['flexDirection'];
     flexFlow?: CSSProperties['flexFlow'];
@@ -17,14 +23,19 @@ export type FlexLayoutProps = PropsWithoutRef<
     alignContent?: CSSProperties['alignContent'];
     alignItems?: CSSProperties['alignItems'];
     alignSelf?: CSSProperties['alignSelf'];
-  }
->;
+  };
 
-export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(function (
+export type FlexLayoutComponent = <E extends ElementType = 'div'>(
+  Props: FlexLayoutProps<E> & { ref?: ComponentPropsWithRef<E>['ref'] },
+) => ReactNode;
+
+export const FlexLayout: FlexLayoutComponent = forwardRef(function <
+  E extends ElementType,
+>(
   {
+    as,
     children,
     className,
-    flex = '0 1 auto',
     flexBasis,
     flexDirection,
     flexFlow,
@@ -35,9 +46,11 @@ export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(function (
     alignItems,
     alignSelf,
     ...props
-  },
-  ref,
+  }: FlexLayoutProps<E>,
+  ref?: ComponentPropsWithRef<E>['ref'],
 ) {
+  const Element = as || 'div';
+
   const flexStyles = Object.fromEntries(
     Object.entries({
       display: 'flex',
@@ -54,13 +67,12 @@ export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(function (
   );
 
   return (
-    <div
+    <Element
       ref={ref}
       className={classNames(block, sprinkles({ ...flexStyles }), className)}
-      style={assignInlineVars({ [flexVar]: `${flex}` })}
       {...props}
     >
       {children}
-    </div>
+    </Element>
   );
 });

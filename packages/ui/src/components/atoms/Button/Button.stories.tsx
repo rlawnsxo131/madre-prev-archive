@@ -39,16 +39,15 @@ export const Default: Story = {
 
     return (
       <FlexLayout
-        flex="1"
         flexDirection="column"
         alignItems="center"
-        style={{ width: '100%', height: '100%', padding: '1rem 0' }}
+        style={{ width: '100%', padding: '1rem 0' }}
       >
         <FlexLayout
           justifyContent="center"
           style={{ width: itemBoxStyle.width }}
         >
-          <Button {...args} />
+          <Button {...args} as="a" />
         </FlexLayout>
 
         {/* variant full */}
