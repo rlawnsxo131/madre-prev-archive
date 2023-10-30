@@ -18,6 +18,7 @@ import {
 export type ButtonProps<E extends ElementType> = ComponentPropsWithoutRef<E> & {
   as?: E;
   children?: ReactNode;
+  className?: string;
   variant?: keyof typeof _theme;
   theme?: keyof (typeof _theme)['solid' | 'outline'];
   radius?: keyof typeof _radius;

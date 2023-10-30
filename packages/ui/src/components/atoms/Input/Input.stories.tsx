@@ -1,6 +1,8 @@
+import { useInputs } from '@madre/react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { useState } from 'react';
 
+import { FlexLayout } from '../FlexLayout';
+import type { InputProps } from './Input';
 import { Input } from './Input';
 
 const meta = {
@@ -17,14 +19,86 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 function DefaultComponent(args: Story['args']) {
-  const [state, setState] = useState('');
+  const {
+    state: { state1, state2, state3 },
+    onChange,
+  } = useInputs({ state1: '', state2: '', state3: '' });
+
+  const itemBoxStyle = {
+    marginTop: '1rem',
+  };
+
+  const _args: InputProps = {
+    style: { marginTop: '1rem' },
+  };
 
   return (
-    <Input value={state} onChange={(e) => setState(e.target.value)} {...args} />
+    <FlexLayout flexDirection="column">
+      <FlexLayout justifyContent="center">
+        <Input {...args} name="name" id="name" />
+      </FlexLayout>
+
+      {/* default */}
+      <FlexLayout flexDirection="column" style={itemBoxStyle}>
+        <Input
+          size="small"
+          name="state1"
+          value={state1}
+          onChange={onChange}
+          {..._args}
+        />
+        <Input
+          size="medium"
+          name="state2"
+          value={state2}
+          onChange={onChange}
+          {..._args}
+        />
+        <Input
+          size="large"
+          name="state3"
+          value={state3}
+          onChange={onChange}
+          {..._args}
+        />
+      </FlexLayout>
+
+      {/* warn */}
+      <FlexLayout flexDirection="column" style={itemBoxStyle}>
+        <Input
+          size="small"
+          name="state1"
+          value={state1}
+          onChange={onChange}
+          error
+          {..._args}
+        />
+        <Input
+          size="medium"
+          name="state2"
+          value={state2}
+          onChange={onChange}
+          error
+          {..._args}
+        />
+        <Input
+          size="large"
+          name="state3"
+          value={state3}
+          onChange={onChange}
+          error
+          {..._args}
+        />
+      </FlexLayout>
+    </FlexLayout>
   );
 }
 
 export const Default: Story = {
-  args: {},
+  args: {
+    error: false,
+    size: 'medium',
+    value: 'value',
+  },
   render: (args) => <DefaultComponent {...args} />,
 };

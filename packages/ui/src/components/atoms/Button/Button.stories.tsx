@@ -28,22 +28,18 @@ export const Default: Story = {
   },
   render: (args) => {
     const itemBoxStyle = {
-      width: 'calc(100% - 2rem)',
+      width: '100%',
       marginTop: '1rem',
     };
 
-    const argsStyle: ButtonProps<'button'> = {
+    const _args: ButtonProps<'button'> = {
       children: args.children,
       radius: args.radius,
       style: { marginRight: '1rem' },
     };
 
     return (
-      <FlexLayout
-        flexDirection="column"
-        alignItems="center"
-        style={{ width: '100%', padding: '1rem 0' }}
-      >
+      <FlexLayout flexDirection="column" alignItems="center">
         <FlexLayout
           justifyContent="center"
           style={{ width: itemBoxStyle.width }}
@@ -53,158 +49,122 @@ export const Default: Story = {
 
         {/* variant full */}
         <FlexLayout alignItems="center" style={itemBoxStyle}>
-          <Button theme="primary" size="small" {...argsStyle} />
-          <Button theme="primary" {...argsStyle} />
-          <Button theme="primary" size="large" {...argsStyle} />
-          <Button theme="primary" size="large" fullWidth {...argsStyle} />
+          <Button theme="primary" size="small" {..._args} />
+          <Button theme="primary" {..._args} />
+          <Button theme="primary" size="large" {..._args} />
+          <Button theme="primary" size="large" fullWidth {..._args} />
         </FlexLayout>
         <FlexLayout alignItems="center" style={itemBoxStyle}>
-          <Button theme="secondary" size="small" {...argsStyle} />
-          <Button theme="secondary" {...argsStyle} />
-          <Button theme="secondary" size="large" {...argsStyle} />
-          <Button theme="secondary" size="large" fullWidth {...argsStyle} />
+          <Button theme="secondary" size="small" {..._args} />
+          <Button theme="secondary" {..._args} />
+          <Button theme="secondary" size="large" {..._args} />
+          <Button theme="secondary" size="large" fullWidth {..._args} />
         </FlexLayout>
         <FlexLayout alignItems="center" style={itemBoxStyle}>
-          <Button theme="warn" size="small" {...argsStyle} />
-          <Button theme="warn" {...argsStyle} />
-          <Button theme="warn" size="large" {...argsStyle} />
-          <Button theme="warn" size="large" fullWidth {...argsStyle} />
+          <Button theme="warn" size="small" {..._args} />
+          <Button theme="warn" {..._args} />
+          <Button theme="warn" size="large" {..._args} />
+          <Button theme="warn" size="large" fullWidth {..._args} />
         </FlexLayout>
         <FlexLayout alignItems="center" style={itemBoxStyle}>
-          <Button size="small" disabled {...argsStyle} />
-          <Button disabled {...argsStyle} />
-          <Button size="large" disabled {...argsStyle} />
-          <Button size="large" disabled fullWidth {...argsStyle} />
+          <Button size="small" disabled {..._args} />
+          <Button disabled {..._args} />
+          <Button size="large" disabled {..._args} />
+          <Button size="large" disabled fullWidth {..._args} />
         </FlexLayout>
 
         {/* variant outline */}
         <FlexLayout alignItems="center" style={itemBoxStyle}>
-          <Button
-            theme="primary"
-            variant="outline"
-            size="small"
-            {...argsStyle}
-          />
-          <Button theme="primary" variant="outline" {...argsStyle} />
-          <Button
-            theme="primary"
-            variant="outline"
-            size="large"
-            {...argsStyle}
-          />
+          <Button theme="primary" variant="outline" size="small" {..._args} />
+          <Button theme="primary" variant="outline" {..._args} />
+          <Button theme="primary" variant="outline" size="large" {..._args} />
           <Button
             theme="primary"
             variant="outline"
             size="large"
             fullWidth
-            {...argsStyle}
+            {..._args}
           />
         </FlexLayout>
         <FlexLayout alignItems="center" style={itemBoxStyle}>
-          <Button
-            theme="secondary"
-            variant="outline"
-            size="small"
-            {...argsStyle}
-          />
-          <Button theme="secondary" variant="outline" {...argsStyle} />
-          <Button
-            theme="secondary"
-            variant="outline"
-            size="large"
-            {...argsStyle}
-          />
+          <Button theme="secondary" variant="outline" size="small" {..._args} />
+          <Button theme="secondary" variant="outline" {..._args} />
+          <Button theme="secondary" variant="outline" size="large" {..._args} />
           <Button
             theme="secondary"
             variant="outline"
             size="large"
             fullWidth
-            {...argsStyle}
+            {..._args}
           />
         </FlexLayout>
         <FlexLayout alignItems="center" style={itemBoxStyle}>
-          <Button theme="warn" variant="outline" size="small" {...argsStyle} />
-          <Button theme="warn" variant="outline" {...argsStyle} />
-          <Button theme="warn" variant="outline" size="large" {...argsStyle} />
+          <Button theme="warn" variant="outline" size="small" {..._args} />
+          <Button theme="warn" variant="outline" {..._args} />
+          <Button theme="warn" variant="outline" size="large" {..._args} />
           <Button
             theme="warn"
             variant="outline"
             size="large"
             fullWidth
-            {...argsStyle}
+            {..._args}
           />
         </FlexLayout>
         <FlexLayout alignItems="center" style={itemBoxStyle}>
-          <Button variant="outline" size="small" disabled {...argsStyle} />
-          <Button variant="outline" disabled {...argsStyle} />
-          <Button variant="outline" size="large" disabled {...argsStyle} />
+          <Button variant="outline" size="small" disabled {..._args} />
+          <Button variant="outline" disabled {..._args} />
+          <Button variant="outline" size="large" disabled {..._args} />
           <Button
             variant="outline"
             size="large"
             fullWidth
             disabled
-            {...argsStyle}
+            {..._args}
           />
         </FlexLayout>
 
         {/* variant ghost */}
         <FlexLayout alignItems="center" style={itemBoxStyle}>
-          <Button theme="primary" variant="ghost" size="small" {...argsStyle} />
-          <Button theme="primary" variant="ghost" {...argsStyle} />
-          <Button theme="primary" variant="ghost" size="large" {...argsStyle} />
+          <Button theme="primary" variant="ghost" size="small" {..._args} />
+          <Button theme="primary" variant="ghost" {..._args} />
+          <Button theme="primary" variant="ghost" size="large" {..._args} />
           <Button
             theme="primary"
             variant="ghost"
             size="large"
             fullWidth
-            {...argsStyle}
+            {..._args}
           />
         </FlexLayout>
         <FlexLayout alignItems="center" style={itemBoxStyle}>
-          <Button
-            theme="secondary"
-            variant="ghost"
-            size="small"
-            {...argsStyle}
-          />
-          <Button theme="secondary" variant="ghost" {...argsStyle} />
-          <Button
-            theme="secondary"
-            variant="ghost"
-            size="large"
-            {...argsStyle}
-          />
+          <Button theme="secondary" variant="ghost" size="small" {..._args} />
+          <Button theme="secondary" variant="ghost" {..._args} />
+          <Button theme="secondary" variant="ghost" size="large" {..._args} />
           <Button
             theme="secondary"
             variant="ghost"
             size="large"
             fullWidth
-            {...argsStyle}
+            {..._args}
           />
         </FlexLayout>
         <FlexLayout alignItems="center" style={itemBoxStyle}>
-          <Button theme="warn" variant="ghost" size="small" {...argsStyle} />
-          <Button theme="warn" variant="ghost" {...argsStyle} />
-          <Button theme="warn" variant="ghost" size="large" {...argsStyle} />
+          <Button theme="warn" variant="ghost" size="small" {..._args} />
+          <Button theme="warn" variant="ghost" {..._args} />
+          <Button theme="warn" variant="ghost" size="large" {..._args} />
           <Button
             theme="warn"
             variant="ghost"
             size="large"
             fullWidth
-            {...argsStyle}
+            {..._args}
           />
         </FlexLayout>
         <FlexLayout alignItems="center" style={itemBoxStyle}>
-          <Button variant="ghost" size="small" disabled {...argsStyle} />
-          <Button variant="ghost" disabled {...argsStyle} />
-          <Button variant="ghost" size="large" disabled {...argsStyle} />
-          <Button
-            variant="ghost"
-            size="large"
-            fullWidth
-            disabled
-            {...argsStyle}
-          />
+          <Button variant="ghost" size="small" disabled {..._args} />
+          <Button variant="ghost" disabled {..._args} />
+          <Button variant="ghost" size="large" disabled {..._args} />
+          <Button variant="ghost" size="large" fullWidth disabled {..._args} />
         </FlexLayout>
       </FlexLayout>
     );

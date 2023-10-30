@@ -32,7 +32,18 @@ const preview: Preview = {
         return () => channel.off(DARK_MODE_EVENT_NAME, handler);
       }, [channel]);
 
-      return <Story />;
+      return (
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100%',
+            padding: '1rem',
+          }}
+        >
+          <Story />
+        </div>
+      );
     },
   ],
 };

@@ -8,7 +8,7 @@ import type {
 } from 'react';
 import { forwardRef } from 'react';
 
-import { block, sprinkles } from './FlexLayout.css';
+import { sprinkles } from './FlexLayout.css';
 
 export type FlexLayoutProps<E extends ElementType> =
   ComponentPropsWithoutRef<E> & {
@@ -50,7 +50,6 @@ export const FlexLayout: FlexLayoutComponent = forwardRef(function <
   ref?: ComponentPropsWithRef<E>['ref'],
 ) {
   const Element = as || 'div';
-
   const flexStyles = Object.fromEntries(
     Object.entries({
       display: 'flex',
@@ -69,7 +68,7 @@ export const FlexLayout: FlexLayoutComponent = forwardRef(function <
   return (
     <Element
       ref={ref}
-      className={classNames(block, sprinkles({ ...flexStyles }), className)}
+      className={classNames(sprinkles({ ...flexStyles }), className)}
       {...props}
     >
       {children}

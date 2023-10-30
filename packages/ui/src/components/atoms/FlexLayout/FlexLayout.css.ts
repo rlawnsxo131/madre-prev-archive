@@ -1,11 +1,4 @@
-import { createVar, style } from '@vanilla-extract/css';
 import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles';
-
-export const flexVar = createVar();
-
-export const block = style({
-  flex: flexVar,
-});
 
 const properties = defineProperties({
   properties: {

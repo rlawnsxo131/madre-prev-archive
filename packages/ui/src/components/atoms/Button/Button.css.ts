@@ -13,7 +13,7 @@ export const block = style({
   transition: 'all .15s',
   selectors: {
     '&:active:not([disabled])': {
-      transform: 'scale(.99, .98)',
+      transform: 'scale(.97, .95)',
     },
     '&:disabled': {
       cursor: 'not-allowed',
