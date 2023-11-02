@@ -1,8 +1,0 @@
-{
-  "name": "@madre/storage",
-  "packageManager": "yarn@3.6.3",
-  "main": "src/index.ts",
-  "devDependencies": {
-    "typescript": "5.2.2"
-  }
-}
