@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { AnimatePresence, motion } from 'framer-motion';
-import type { ComponentProps, PropsWithoutRef } from 'react';
+import type { ComponentProps, MouseEvent, PropsWithoutRef } from 'react';
 import { forwardRef } from 'react';
 
 import { block } from './Overlay.css';
@@ -14,12 +14,13 @@ import { block } from './Overlay.css';
 export type OverlayProps = PropsWithoutRef<
   ComponentProps<typeof motion.div> & {
     visible: boolean;
-    duration?: string;
+    onClick?: (e: MouseEvent<HTMLDivElement>) => void;
+    duration?: number;
   }
 >;
 
 export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(function (
-  { className, visible, duration = '.15' },
+  { className, visible, onClick, duration = 0.15 },
   ref,
 ) {
   return (
@@ -28,6 +29,7 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(function (
         <motion.div
           ref={ref}
           className={classNames(block, className)}
+          onClick={onClick}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

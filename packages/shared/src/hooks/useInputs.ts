@@ -1,8 +1,10 @@
 import type { ChangeEvent } from 'react';
 import { useCallback, useState } from 'react';
 
-export function useInputs(initialState: Record<string, string>) {
-  const [state, setState] = useState(initialState);
+export function useInputs<
+  Value extends Record<string, string> = Record<string, string>,
+>(defaultValue: Value) {
+  const [state, setState] = useState(defaultValue);
 
   const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -13,5 +15,8 @@ export function useInputs(initialState: Record<string, string>) {
     }));
   }, []);
 
-  return { state, onChange };
+  return {
+    state,
+    onChange,
+  };
 }

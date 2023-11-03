@@ -1,5 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import type { BaseSyntheticEvent } from 'react';
 import { useState } from 'react';
+
+import { useRefEffect } from '@/hooks';
 
 import { Button } from '../../Button';
 import { FlexLayout } from '../FlexLayout';
@@ -21,15 +24,28 @@ type Story = StoryObj<typeof meta>;
 function DefaultComponent() {
   const [visible, setVisible] = useState(false);
 
+  const ref = useRefEffect<HTMLDivElement>((div) => {
+    const handler = (e: BaseSyntheticEvent | Event | TouchEvent) => {
+      if (!div.contains(e.target)) return;
+      setVisible(false);
+    };
+
+    document.addEventListener('mousedown', handler);
+    document.addEventListener('touchstart', handler);
+
+    return () => {
+      document.removeEventListener('mousedown', handler);
+      document.removeEventListener('touchstart', handler);
+    };
+  }, []);
+
   return (
     <>
       <Button onClick={() => setVisible(true)}>click</Button>
-      <ModalLayout visible={visible}>
+      <ModalLayout visible={visible} ref={ref}>
         <FlexLayout flexDirection="column" style={{ padding: '0.5rem 1rem' }}>
-          <div>content</div>
-          <div>
-            <button onClick={() => setVisible(false)}>ok</button>
-          </div>
+          <h1>ModalLayout</h1>
+          <button onClick={() => setVisible(false)}>ok</button>
         </FlexLayout>
       </ModalLayout>
     </>

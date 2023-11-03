@@ -18,11 +18,13 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     visible: false,
-    duration: '.15',
+    duration: 0.15,
   },
-  render: (args) => (
-    <div style={{ height: '320px' }}>
-      <Overlay {...args} />
-    </div>
-  ),
+  render: (args) => {
+    return (
+      <div style={{ height: '320px' }}>
+        <Overlay {...args} />
+      </div>
+    );
+  },
 };
