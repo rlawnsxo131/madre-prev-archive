@@ -1,3 +1,4 @@
+'use client';
 export * from './useInputs';
 export * from './useIsomorphicLayoutEffect';
 export * from './usePreservedCallback';
